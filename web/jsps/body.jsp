@@ -39,7 +39,7 @@
 <div class="container-fluid">
     <div class="row-fluid" style="border: 1px solid lightgray;margin-top: 10px;">
         <div class="span12">
-            <div style="background:#3873D6;color: white; height:30px;margin-top: -10px;">
+            <div style="background:#3873D6;color: white; height:35px;margin-top: -10px;">
                 <h4 style="margin-left: 10px;">
                     资源工组管理
                 </h4>
@@ -202,10 +202,11 @@
 
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="width: 98%;margin-left: 5px;">
                     <thead>
-                    <tr>
+                    <tr style="color: white;background: #3873D6;">
                         <th>
+                            <input type="checkbox">
                         </th>
                         <th>
                             工组编码
@@ -224,6 +225,7 @@
                     <tbody>
                     <tr>
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             1
@@ -240,6 +242,7 @@
                     </tr>
                     <tr class="success">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             1
@@ -256,6 +259,7 @@
                     </tr>
                     <tr class="error">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             2
@@ -272,6 +276,7 @@
                     </tr>
                     <tr class="warning">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             3
@@ -288,6 +293,7 @@
                     </tr>
                     <tr class="info">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             4
