@@ -47,7 +47,7 @@
     </tr>
     <tr>
         <td width="200" style="padding:5px;background: #3873D6;" align="center" valign="top">
-            <iframe frameborder="0" width="120" src="<c:url value='/jsps/left.jsp'/>" name="left"></iframe>
+            <iframe frameborder="0" width="120" src="<c:url value='/jsps/NavMenu.jsp'/>" name="NavMenu"></iframe>
         </td>
         <td>
             <iframe frameborder="0" src="<c:url value='/jsps/body.jsp'/>" name="body"></iframe>
