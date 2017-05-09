@@ -15,43 +15,48 @@
     <script src="../lib/bootstrap/js/bootstrap.min.js"></script>
 
     <style type="text/css">
-        .icon {
-            width: 100px;
+        .micon {
+            width: 115px;
             height: 50px;
             float: left;
         }
 
-        .search {
+        .msearch {
             width: 100px;
             height: 30px;
             float: left;
+        }
+
+        .mbtn {
+            width: 60px;
+            float: left;
+            margin-left: 15px;
         }
 
     </style>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row-fluid" style="border: 1px solid lightgray">
+    <div class="row-fluid" style="border: 1px solid lightgray;margin-top: 10px;">
         <div class="span12">
-            <div style="background:#3873D6;color: white; height:30px;">
+            <div style="background:#3873D6;color: white; height:35px;margin-top: -10px;">
                 <h4 style="margin-left: 10px;">
                     资源工组管理
                 </h4>
             </div>
-
+            <br/>
         </div>
+        <br/>
 
 
-        <div class="icon">
+        <div class="micon" style="margin-left: 5px;">
             <form class="form-search" style="width: 110px;height: 30px">
-                <input class="search" value="输入关键字" type="text" style=" width: 100px;height: 30px;
-            float: left;"/>
+                <input class="search" value="输入关键字" type="text" style=" width: 105px;height: 30px;float: left;"/>
             </form>
         </div>
-        <div class="icon">
+        <div class="micon">
             <div class="btn-group">
-                <input class="search" value="工组编码" type="text"/>
-                <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                <input class="msearch" value="工组编码" type="text" style=" width: 105px;height: 30px;float: left;"/>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#">操作</a>
@@ -81,78 +86,9 @@
                 </ul>
             </div>
         </div>
-        <div class="icon">
+        <div class="micon">
             <div class="btn-group">
-                <input class="search" value="工作名称" type="text"/>
-                <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">操作</a>
-                    </li>
-                    <li>
-                        <a href="#">设置栏目</a>
-                    </li>
-                    <li>
-                        <a href="#">更多设置</a>
-                    </li>
-                    <li class="divider">
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">更多选项</a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">操作</a>
-                            </li>
-                            <li>
-                                <a href="#">设置栏目</a>
-                            </li>
-                            <li>
-                                <a href="#">更多设置</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="icon">
-            <div class="btn-group">
-                <input class="search" value="初始位置编码" type="text"/>
-                <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">操作</a>
-                    </li>
-                    <li>
-                        <a href="#">设置栏目</a>
-                    </li>
-                    <li>
-                        <a href="#">更多设置</a>
-                    </li>
-                    <li class="divider">
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">更多选项</a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">操作</a>
-                            </li>
-                            <li>
-                                <a href="#">设置栏目</a>
-                            </li>
-                            <li>
-                                <a href="#">更多设置</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="icon">
-            <div class="btn-group">
-                <input class="search" value="可工作位置" type="text"/>
-                <button data-toggle="dropdown" class="btn dropdown-toggle"><span class="caret"></span></button>
+                <input class="msearch" value="工作名称" type="text" style=" width: 105px;height: 30px;float: left;"/>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#">操作</a>
@@ -184,26 +120,93 @@
         </div>
 
 
-        <div class="span1">
+        <div class="micon">
+            <div class="btn-group">
+                <input class="search" value="初始位置编码" type="text" style=" width: 105px;height: 30px;float: left;"/>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">操作</a>
+                    </li>
+                    <li>
+                        <a href="#">设置栏目</a>
+                    </li>
+                    <li>
+                        <a href="#">更多设置</a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">更多选项</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">操作</a>
+                            </li>
+                            <li>
+                                <a href="#">设置栏目</a>
+                            </li>
+                            <li>
+                                <a href="#">更多设置</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="micon">
+            <div class="btn-group">
+                <input class="search" value="可工作位置" type="text" style=" width: 105px;height: 30px;float: left;"/>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">操作</a>
+                    </li>
+                    <li>
+                        <a href="#">设置栏目</a>
+                    </li>
+                    <li>
+                        <a href="#">更多设置</a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">更多选项</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#">操作</a>
+                            </li>
+                            <li>
+                                <a href="#">设置栏目</a>
+                            </li>
+                            <li>
+                                <a href="#">更多设置</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="mbtn">
             <button class="btn btn-info" type="button">新增</button>
         </div>
-        <div class="span1">
+        <div class="mbtn">
             <button class="btn btn-info" type="button">修改</button>
         </div>
-        <div class="span1">
+        <div class="mbtn">
             <button class="btn btn-info" type="button">删除</button>
         </div>
-        <div class="span1">
+        <div class="mbtn">
             <button class="btn btn-info" type="button">查询</button>
         </div>
 
 
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="width: 98%;margin-left: 5px;">
                     <thead>
-                    <tr>
+                    <tr style="color: white;background: #3873D6;">
                         <th>
+                            <input type="checkbox">
                         </th>
                         <th>
                             工组编码
@@ -222,6 +225,7 @@
                     <tbody>
                     <tr>
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             1
@@ -238,6 +242,7 @@
                     </tr>
                     <tr class="success">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             1
@@ -254,6 +259,7 @@
                     </tr>
                     <tr class="error">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             2
@@ -270,6 +276,7 @@
                     </tr>
                     <tr class="warning">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             3
@@ -286,6 +293,7 @@
                     </tr>
                     <tr class="info">
                         <td>
+                            <input type="checkbox">
                         </td>
                         <td>
                             4
