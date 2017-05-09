@@ -30,6 +30,6 @@
         <property name="c3p0.idleConnectionTestPeriod">18000</property>
         <property name="c3p0.maxIdleTime">25000</property>
         <property name="c3p0.idle_test_period">120</property>
-        <mapping class="com.rengu.entity.StudentEntity"/>
+        <mapping class="com.rengu.entity.WorkinggroupEntity"/>
     </session-factory>
 </hibernate-configuration>
