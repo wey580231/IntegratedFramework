@@ -9,13 +9,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <link rel="stylesheet" href="/lib/UIKit/css/uikit.min.css"/>
+    <link rel="stylesheet" href="../lib/UIKit/css/uikit.min.css"/>
 </head>
 <body>
-<table class="uk-table uk-table-divider uk-table-hover">
+<table class="uk-table uk-table-striped uk-table-hover">
     <thead>
     <tr>
-        <th></th>
         <th>项目一</th>
         <th>项目二</th>
         <th>项目三</th>
@@ -47,7 +46,8 @@
     </tr>
     </tbody>
 </table>
-<script src="/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="/lib/UIKit/js/uikit.min.js"></script>
+<script src="../lib/jquery/jquery-3.2.1.min.js"></script>
+<script src="../lib/UIKit/js/uikit.min.js"></script>
+<script src="../lib/UIKit/js/uikit-icons.min.js"></script>
 </body>
 </html>

@@ -9,12 +9,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <link rel="stylesheet" href="/lib/UIKit/css/uikit.min.css"/>
+    <link rel="stylesheet" href="../lib/UIKit/css/uikit.min.css"/>
 </head>
 <body>
-<div class="uk-panel uk-panel-box">
-    <h3 class="uk-panel-title">集成框架</h3>
-    <ul class="uk-nav uk-nav-side" data-uk-nav="{multiple:true}">
+<div class="uk-width-1-2@s uk-width-2-5@m">
+    <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">
+        <li class="uk-active"><a href="#">集成框架</a></li>
         <li class="uk-parent">
             <a href="#">订单任务管理</a>
             <ul class="uk-nav-sub">
@@ -62,7 +62,8 @@
         </li>
     </ul>
 </div>
-<script src="/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="/lib/UIKit/js/uikit.min.js"></script>
+<script src="../lib/jquery/jquery-3.2.1.min.js"></script>
+<script src="../lib/UIKit/js/uikit.min.js"></script>
+<script src="../lib/UIKit/js/uikit-icons.min.js"></script>
 </body>
 </html>
