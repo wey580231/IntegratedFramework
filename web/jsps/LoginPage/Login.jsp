@@ -13,26 +13,30 @@
 </head>
 <body>
 <div style="width:100%;text-align:center">
-    <form>
+    <form method="post" onsubmit="return formValidate()">
         <div class="uk-margin">
-            <div class="uk-form-controls">
-                <div class="uk-inline uk-width-1-2">
-                    <span class="uk-form-icon" uk-icon="icon: user"></span>
-                    <input class="uk-input" id="username" type="text" placeholder="Username">
-                </div>
+            <div class="uk-inline uk-width-1-2">
+                <span class="uk-form-icon" uk-icon="icon: mail"></span>
+                <input class="uk-input" id="EMailAddress" type="email" placeholder="E-Mail">
             </div>
-            <div class="uk-form-controls">
-                <div class="uk-inline uk-width-1-2">
-                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input class="uk-input" id="password" type="text" placeholder="Password">
-                </div>
-            </div>
-            <button class="uk-button uk-button-default">Submit</button>
         </div>
+
+        <div class="uk-margin">
+            <div class="uk-inline uk-width-1-2">
+                <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                <input class="uk-input" id="password" type="password" placeholder="Password">
+            </div>
+        </div>
+        <button class="uk-button uk-button-primary uk-width-1-2" type="submit">登录</button>
     </form>
+    <div class="uk-margin uk-align-center uk-width-1-2">
+        <button class="uk-button uk-button-text uk-align-left">用户注册</button>
+        <button class="uk-button uk-button-text uk-align-right" type="submit">忘记密码</button>
+    </div>
 </div>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit/js/uikit.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit/js/uikit-icons.min.js"></script>
+<script src="FormValidate.js"></script>
 </body>
 </html>
