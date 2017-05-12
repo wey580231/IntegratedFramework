@@ -14,8 +14,10 @@
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <!-- show sql in the console -->
         <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
         <!-- create and update the database automaticlly -->
         <property name="hbm2ddl.auto">update</property>
+        <property name="hibernate.current_session_context_class">thread</property>
         <!--C3P0配置 -->
         <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider
         </property>
@@ -30,6 +32,6 @@
         <property name="c3p0.idleConnectionTestPeriod">18000</property>
         <property name="c3p0.maxIdleTime">25000</property>
         <property name="c3p0.idle_test_period">120</property>
-        <mapping class="com.rengu.entity.WorkinggroupEntity"/>
+        <mapping class="com.rengu.entity.UsersEntity"/>
     </session-factory>
 </hibernate-configuration>
