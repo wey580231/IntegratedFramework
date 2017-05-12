@@ -6,24 +6,26 @@ import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import java.util.List;
 
 /**
  * Created by hanchangming on 2017/5/11.
  */
-public class UsersDAOImpl implements UsersDAO {
+public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
 
     public boolean userLogin(UsersEntity usersEntity) {
         Transaction transaction = null;
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-            String hql = "from UsersEntity";
-            Query query = session.createQuery(hql);
-//            query.setParameter(0, usersEntity.getUsername());
-//            query.setParameter(1, usersEntity.getPassword());
-//            query.setParameter(2, usersEntity.getId());
+//            String hql = "from com.rengu.entity.UsersEntity userEntity where userEntity.username=:username and userEntity.password=:password";
+            String sql = "select * from users where username=? and password=?";
+//            Query query = session.createQuery(hql);
+            Query query = session.createSQLQuery(sql);
+            query.setParameter(0, usersEntity.getUsername());
+            query.setParameter(1, usersEntity.getPassword());
             List list = query.list();
             transaction.commit();
             if (list.size() <= 0) {
