@@ -11,6 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <a href="jsps/source.jsp">资源</a>
+  <a href="jsps/Login/Login.jsp">用户登录</a>
   </body>
 </html>
