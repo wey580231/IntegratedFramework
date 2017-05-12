@@ -23,7 +23,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 20)
+    @Column(name = "username", nullable = false, length = 50)
     public String getUsername() {
         return username;
     }

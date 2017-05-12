@@ -9,8 +9,8 @@
 
     <package name="default" extends="struts-default" namespace="/">
         <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
-            <result name="success">/index.jsp</result>
-            <result name="error">/jsps/source.jsp</result>
+            <result name="error">/jsps/Login/Login.jsp</result>
+            <result name="success">/jsps/source.jsp</result>
         </action>
     </package>
 </struts>
