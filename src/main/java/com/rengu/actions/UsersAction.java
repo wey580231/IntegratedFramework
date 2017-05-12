@@ -9,13 +9,11 @@ import com.rengu.util.SuperAction;
 /**
  * Created by hanchangming on 2017/5/11.
  */
-public class doLoginAction extends SuperAction implements ModelDriven<UsersEntity> {
+public class UsersAction extends SuperAction implements ModelDriven<UsersEntity> {
 
     UsersEntity usersEntity = new UsersEntity();
 
-    @Override
-    public String execute() throws Exception {
-//        return super.execute();
+    public String doLogin() {
         UsersDAO usersDAO = new UsersDAOImpl();
         if (usersDAO.userLogin(usersEntity)) {
             return "success";

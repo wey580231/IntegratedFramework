@@ -7,12 +7,10 @@
 <struts>
     <constant name="struts.devMode" value="true"></constant>
 
-    <package name="default" extends="struts-default" namespace="/"></package>
-
-    <package name="Login" namespace="/Login" extends="default">
-        <action name="doLoginAction" class="com.rengu.actions.doLoginAction">
+    <package name="default" extends="struts-default" namespace="/">
+        <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
             <result name="success">/index.jsp</result>
-            <result name="error">/jsps/LoginPage/Login.jsp</result>
+            <result name="error">/jsps/source.jsp</result>
         </action>
     </package>
 </struts>

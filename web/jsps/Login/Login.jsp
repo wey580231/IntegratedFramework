@@ -13,7 +13,7 @@
 </head>
 <body>
 <div style="width:100%;text-align:center">
-    <form method="post" onsubmit="return formValidate()">
+    <form method="post" action="/UsersAction.action" onsubmit="return formValidate()">
         <div class="uk-margin">
             <div class="uk-inline uk-width-1-2">
                 <span class="uk-form-icon" uk-icon="icon: mail"></span>

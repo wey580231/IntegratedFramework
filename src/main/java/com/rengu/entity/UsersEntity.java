@@ -3,10 +3,10 @@ package com.rengu.entity;
 import javax.persistence.*;
 
 /**
- * Created by hanchangming on 2017/5/11.
+ * Created by hanchangming on 2017/5/12.
  */
 @Entity
-@Table(name = "Users", schema = "TestDatabase", catalog = "")
+@Table(name = "Users", schema = "TestDatabase")
 public class UsersEntity {
     private int id;
     private String username;

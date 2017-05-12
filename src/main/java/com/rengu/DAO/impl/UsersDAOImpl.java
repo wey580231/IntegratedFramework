@@ -16,15 +16,14 @@ public class UsersDAOImpl implements UsersDAO {
 
     public boolean userLogin(UsersEntity usersEntity) {
         Transaction transaction = null;
-        String hql = "";
-
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-            hql = "from Users where username=? and password=?";
+            String hql = "from UsersEntity";
             Query query = session.createQuery(hql);
-            query.setParameter(0, usersEntity.getUsername());
-            query.setParameter(1, usersEntity.getPassword());
+//            query.setParameter(0, usersEntity.getUsername());
+//            query.setParameter(1, usersEntity.getPassword());
+//            query.setParameter(2, usersEntity.getId());
             List list = query.list();
             transaction.commit();
             if (list.size() <= 0) {
