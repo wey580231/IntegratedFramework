@@ -19,7 +19,7 @@
 </head>
 <body>
 <br/>
-<div id="all" style="margin-left: 10px;">
+<div id="all" style="margin-left: 3%;">
     <div id="hs">
         <p uk-margin>
             <button class="uk-button uk-button-primary uk-button-small" style="background-color: #3873D6">Step 1
@@ -31,7 +31,7 @@
         </p>
     </div>
     <br/>
-    <div style="border: 1px solid lightgray">
+    <div style="border: 1px solid lightgray;width: 90%;">
         <table class="uk-table uk-table-striped uk-table-hover">
             <thead>
             <tr>
