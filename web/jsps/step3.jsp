@@ -39,7 +39,25 @@
     </div>
     <br/>
     <div style="border: 1px solid #e6e451;width: 80%;height: 350px;">
+        <progress id="progressbar" class="uk-progress" value="10" max="100"></progress>
 
+        <script>
+
+            jQuery(function () {
+
+                var animate = setInterval(function () {
+
+                    window.progressbar && (progressbar.value += 10);
+
+                    if (!window.progressbar || progressbar.value >= progressbar.max) {
+                        clearInterval(animate);
+                    }
+
+                }, 200);
+
+            });
+
+        </script>
     </div>
 
     <br/>
