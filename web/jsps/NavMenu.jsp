@@ -23,7 +23,7 @@
             </ul>
         </li>
         <li class="uk-parent">
-            <a href="#">资源设备管理</a>
+            <a href="body.jsp">资源设备管理</a>
             <ul class="uk-nav-sub">
                 <li><a href="#">资源列表管理</a></li>
                 <li><a href="#">资源分类管理</a></li>
@@ -33,7 +33,7 @@
             </ul>
         </li>
         <li class="uk-parent">
-            <a href="#">计划排程管理</a>
+            <a href="body2.jsp" target="body">计划排程管理</a>
             <ul class="uk-nav-sub">
                 <li><a href="#">Sub item</a></li>
                 <li><a href="#">Sub item</a></li>

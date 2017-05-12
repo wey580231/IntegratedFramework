@@ -51,7 +51,7 @@
         </td>
         <td>
             <%--<iframe frameborder="0" src="<c:url value='/jsps/body.jsp'/>" name="body"></iframe>--%>
-            <iframe frameborder="0" src="<c:url value='/jsps/OrderList.jsp'/>" name="OrderList"></iframe>
+            <iframe frameborder="0" src="<c:url value='/jsps/guide.jsp'/>" name="OrderList"></iframe>
         </td>
     </tr>
 </table>
