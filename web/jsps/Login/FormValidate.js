@@ -10,7 +10,7 @@ function formValidate() {
     if (checkEMailAddress(EMailAddress) && checkPassword(password)) {
         return true;
     } else {
-        UIkit.notification({
+        UIkit.notify({
             message: '请输入合法的用户名和密码！',
             status: 'danger',
             pos: 'top-right',
