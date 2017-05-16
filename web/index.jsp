@@ -7,12 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  <a href="jsps/source.jsp">资源</a>
-  <a href="jsps/Login/Login.jsp">用户登录</a>
-  <a href="jsps/Login/MainPage.jsp">MianPage</a>
-  </body>
+<head>
+</head>
+<body>
+<a href="jsps/source.jsp">资源</a>
+<a href="jsps/Login/Login.jsp">用户登录</a>
+<a href="jsps/Login/MainPage.jsp">MianPage</a>
+<a href="jsps/TestPage/FullCalendar.jsp">FullCalendar-Test</a>
+</body>
 </html>
