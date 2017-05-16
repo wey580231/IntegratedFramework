@@ -3,5 +3,8 @@
  */
 'use strict';
 angular.module("app", [
-    'ngRoute'
-]);
+    'ngRoute',
+    'app.order'
+]).config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.otherwise({redirectTo: 'jsps/order/order.html'});
+}]);
