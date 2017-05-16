@@ -3,5 +3,8 @@
  */
 'use strict';
 angular.module("app", [
-    'ngRoute'
-]);
+    'ngRoute',
+    'app.OrderManagementController'
+]).config(['$routeProvider', function ($routeProvider) {
+    // $routeProvider.otherwise({redirectTo: '/OrderManagement'});
+}]);

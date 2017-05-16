@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>系统登陆</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit/css/uikit.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-3.0/css/uikit.min.css"/>
 </head>
 <body>
 <div style="width:100%;text-align:center">
@@ -35,8 +35,8 @@
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit/js/uikit.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit/js/uikit-icons.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit-icons.min.js"></script>
 <script src="FormValidate.js"></script>
 </body>
 </html>

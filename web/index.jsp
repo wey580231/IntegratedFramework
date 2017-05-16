@@ -13,5 +13,6 @@
   <body>
   <a href="jsps/source.jsp">资源</a>
   <a href="jsps/Login/Login.jsp">用户登录</a>
+  <a href="jsps/Login/MainPage.jsp">MianPage</a>
   </body>
 </html>
