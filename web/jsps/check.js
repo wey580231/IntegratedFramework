@@ -17,8 +17,13 @@ function Submit() {
     }
 
     if (!SelectFalse) {
-        alert("对不起：至少要选一项");
-
+        /*alert("对不起：至少要选一项");*/
+        UIkit.notification({
+            message: '对不起：至少要选一项！',
+            status: 'danger',
+            pos: 'top-right',
+            timeout: 500
+        });
         return false;
     } else window.location.href = "step2.jsp";
 

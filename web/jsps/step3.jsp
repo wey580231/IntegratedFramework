@@ -16,7 +16,12 @@
     <script src="../lib/UIKit/js/uikit.min.js"></script>
     <script src="../lib/UIKit/js/uikit-icons.min.js"></script>
     <style type="text/css">
-
+        #progressbar {
+            width: 90%;
+            height: 25px;
+            margin-top: 15%;
+            margin-left: 5%;
+        }
     </style>
 </head>
 <body>
@@ -33,9 +38,28 @@
         </p>
     </div>
     <br/>
-    <div style="border: 1px solid lightgray;width: 300px;height: 300px;">
-        第三步
+    <div style="border: 1px solid #e6e451;width: 80%;height: 350px;">
+        <progress id="progressbar" class="uk-progress" value="10" max="100"></progress>
+
+        <script>
+
+            jQuery(function () {
+
+                var animate = setInterval(function () {
+
+                    window.progressbar && (progressbar.value += 10);
+
+                    if (!window.progressbar || progressbar.value >= progressbar.max) {
+                        clearInterval(animate);
+                    }
+
+                }, 200);
+
+            });
+
+        </script>
     </div>
+
     <br/>
     <div id="next">
         <a href="step2.jsp">
