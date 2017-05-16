@@ -21,11 +21,11 @@ public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
 //            String hql = "from com.rengu.entity.UsersEntity userEntity where userEntity.username=:username and userEntity.password=:password";
-            String sql = "select * from users where username=? and password=?";
+            String sql = "select * from users where username=:username and password=:password";
 //            Query query = session.createQuery(hql);
             Query query = session.createSQLQuery(sql);
-            query.setParameter(0, usersEntity.getUsername());
-            query.setParameter(1, usersEntity.getPassword());
+            query.setParameter("username", usersEntity.getUsername());
+            query.setParameter("password", usersEntity.getPassword());
             List list = query.list();
             transaction.commit();
             if (list.size() <= 0) {
