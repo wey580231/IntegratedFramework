@@ -2,9 +2,11 @@
  * Created by hanchangming on 2017/5/15.
  */
 'use strict';
-angular.module("app", [
+angular.module("IntegratedFramework", [
     'ngRoute',
-    'app.OrderManagementController'
-]).config(['$routeProvider', function ($routeProvider) {
-    // $routeProvider.otherwise({redirectTo: '/OrderManagement'});
+    'IntegratedFramework.OrderManagementController',
+    'IntegratedFramework.BOMManagementController'
+]).config(['$routeProvider', function ($routeProvider, $locationProvider) {
+    // $locationProvider.hashPrefix('!');
+    // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OrderManagement.jsp'});
 }]);

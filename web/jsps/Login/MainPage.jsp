@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html ng-app="app">
+<html ng-app="IntegratedFramework">
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-3.0/css/uikit.min.css"/>
 </head>
@@ -19,9 +19,8 @@
         <li class="uk-parent">
             <a href="#">订单任务管理</a>
             <ul class="uk-nav-sub">
-                <li><a href="#OrderManagement">订单管理</a></li>
-                <li><a href="#viewRepos">订单管理</a></li>
-                <li><a href="#">制造BOM管理</a></li>
+                <li><a href="#!/OrderManagement">订单管理</a></li>
+                <li><a href="#!/BOMManagement">制造BOM管理</a></li>
                 <li><a href="#">工序资源分配管理</a></li>
             </ul>
         </li>
@@ -78,5 +77,6 @@
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
 <script src="/app.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/OrderManagement/OrderManagementController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/OrderManagement/BOMManagementController.js"></script>
 </body>
 </html>
