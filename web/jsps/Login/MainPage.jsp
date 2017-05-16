@@ -8,14 +8,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html ng-app="IntegratedFramework">
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-3.0/css/uikit.min.css"/>
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-3.0/css/uikit.min.css"/>--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/uikit.gradient.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/search.min.css"/>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/datepicker.min.css"/>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/form-select.min.css"/>
 </head>
 <body>
 <div>
-    <h1 class="uk-heading-divider uk-text-center">集成框架</h1>
+    <h1 class="uk-text-center">集成框架</h1>
 </div>
 <div class="uk-width-1-6" style="float: left;">
-    <ul class="uk-nav-default uk-nav-parent-icon" uk-nav="multiple: true">
+    <ul class="uk-nav uk-nav-parent-icon uk-nav-side" data-uk-nav="{multiple:true}">
         <li class="uk-parent">
             <a href="#">订单任务管理</a>
             <ul class="uk-nav-sub">
@@ -25,7 +31,7 @@
             </ul>
         </li>
         <li class="uk-parent">
-            <a href="body.jsp">资源设备管理</a>
+            <a href="#">资源设备管理</a>
             <ul class="uk-nav-sub">
                 <li><a href="#">资源列表管理</a></li>
                 <li><a href="#">资源分类管理</a></li>
@@ -35,7 +41,7 @@
             </ul>
         </li>
         <li class="uk-parent">
-            <a href="body2.jsp" target="body">计划排程管理</a>
+            <a href="#" target="body">计划排程管理</a>
             <ul class="uk-nav-sub">
                 <li><a href="#">计划排程向导</a></li>
                 <li><a href="#">计划排程快照管理</a></li>
@@ -69,10 +75,13 @@
 <div class="uk-width-5-6" style="float:right">
     <ng-view></ng-view>
 </div>
-
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit-icons.min.js"></script>
+<%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit.min.js"></script>--%>
+<%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit-icons.min.js"></script>--%>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/uikit.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/search.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/form-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/datepicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
 <script src="/app.js"></script>

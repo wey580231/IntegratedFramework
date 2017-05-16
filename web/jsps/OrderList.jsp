@@ -21,7 +21,6 @@
 </head>
 <body>
 <div>
-    <br>
     <div>
         <%--搜索框--%>
         <div class="uk-margin" id="hs">
