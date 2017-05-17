@@ -33,8 +33,8 @@
         <li class="uk-parent">
             <a href="#">资源设备管理</a>
             <ul class="uk-nav-sub">
-                <li><a href="#">资源列表管理</a></li>
-                <li><a href="#">资源分类管理</a></li>
+                <li><a href="#!/ResourceList">资源列表管理</a></li>
+                <li><a href="#!/ResourceClassify">资源分类管理</a></li>
                 <li><a href="#">资源工组管理</a></li>
                 <li><a href="#">资源工位管理</a></li>
                 <li><a href="#">资源工作班次管理</a></li>
@@ -51,7 +51,7 @@
             <a href="#">在线监控管理</a>
             <ul class="uk-nav-sub">
                 <li><a href="#">设备监控</a></li>
-                <li><a href="#">订单执行监控</a></li>
+                <li><a href="#!/OnlineManagement">订单执行监控</a></li>
             </ul>
         </li>
         <li class="uk-parent">
@@ -87,5 +87,8 @@
 <script src="/app.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/OrderManagement/OrderManagementController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/OrderManagement/BOMManagementController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceListController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceClassifyController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/OnlineMonitor/OnlineManagementController.js"></script>
 </body>
 </html>
