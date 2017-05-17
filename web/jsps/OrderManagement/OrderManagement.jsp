@@ -15,11 +15,13 @@
     <div class="uk-width-1-4">
         <div class="uk-button uk-form-select uk-active" data-uk-form-select>
             <span>请选择</span>
-            <select>
-                <option value="1">选项一</option>
-                <option value="2">选项二</option>
-                <option value="2">选项三</option>
-            </select>
+            <label>
+                <select>
+                    <option value="1">选项一</option>
+                    <option value="2">选项二</option>
+                    <option value="2">选项三</option>
+                </select>
+            </label>
         </div>
     </div>
     <div class="uk-width-1-4">
@@ -62,6 +64,142 @@
         <td>表格项目二</td>
         <td>表格项目二</td>
         <td>表格项目二</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
+        <td>表格项目三</td>
     </tr>
     <tr>
         <td><input type="checkbox"></td>
