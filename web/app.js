@@ -5,8 +5,11 @@
 angular.module("IntegratedFramework", [
     'ngRoute',
     'IntegratedFramework.OrderManagementController',
-    'IntegratedFramework.BOMManagementController'
+    'IntegratedFramework.BOMManagementController',
+    'IntegratedFramework.ResourceListController',
+    'IntegratedFramework.OnlineManagementController',
+    'IntegratedFramework.ResourceClassifyController'
 ]).config(['$routeProvider', function ($routeProvider, $locationProvider) {
     // $locationProvider.hashPrefix('!');
-    // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OrderManagement.jsp'});
+    // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OnlineManagement'});
 }]);
