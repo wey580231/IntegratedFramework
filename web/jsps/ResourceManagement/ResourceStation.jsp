@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: zhaoqi
-  Date: 2017/5/16
-  Time: 16:56
+  Date: 2017/5/18
+  Time: 17:05
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -24,10 +24,10 @@
     </div>
     <div class="uk-width-1-4">
         <form class="uk-form">
-            <input type="text" id="datepicker" class="uk-icon-calendar" data-uk-datepicker="{format:'DD.MM.YYYY'}"
-                   placeholder="2017/5/17">
+            <input type="text" id="datepicker" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="2017/5/17">
             <i class="uk-icon-calendar"></i>
         </form>
+
     </div>
     <div class="uk-width-1-4">
         <div class="data-uk-button-radio">
@@ -45,14 +45,11 @@
             <th></th>
             <th>编码</th>
             <th>名称</th>
-            <th>资源类型</th>
-            <th>移动速度（米/秒）</th>
-            <th>串行能力</th>
-            <th>并行能力下限</th>
-            <th>并行能力上限</th>
-            <th>能力恢复（秒）</th>
-            <th>正常班次</th>
-            <th>状态信息</th>
+            <th>工位类型</th>
+            <th>订单数量</th>
+            <th>资源数</th>
+            <th>计划开工</th>
+            <th>计划完工</th>
         </tr>
         </thead>
         <tbody>
@@ -65,9 +62,6 @@
             <td>表格项目一</td>
             <td>表格项目一</td>
             <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
         </tr>
         <tr>
             <td><input type="checkbox"></td>
@@ -78,11 +72,12 @@
             <td>表格项目二</td>
             <td>表格项目二</td>
             <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
         </tr>
         </tbody>
+        <tfoot>
+
+        </tfoot>
+
     </table>
 
     <div>
@@ -97,7 +92,6 @@
             <li><a class="uk-icon-angle-double-right"></a></li>
         </ul>
     </div>
-
 </div>
 
 <div id="dialog-form" title="创建新表单">
@@ -153,86 +147,3 @@
         $("#datepicker").datepicker();
     });
 </script>
-
-<script>
-    $(function () {
-        var number = $("#number"),
-            name = $("#name"),
-            allFields = $([]).add(number).add(name),
-            tips = $(".validateTips");
-
-        function updateTips(t) {
-            tips
-                .text(t)
-                .addClass("ui-state-highlight");
-            setTimeout(function () {
-                tips.removeClass("ui-state-highlight", 1500);
-            }, 500);
-        }
-
-        function checkLength(o, n, min, max) {
-            if (o.val().length > max || o.val().length < min) {
-                o.addClass("ui-state-error");
-                updateTips("" + n + " 的长度必须在 " +
-                    min + " 和 " + max + " 之间。");
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        function checkRegexp(o, regexp, n) {
-            if (!( regexp.test(o.val()) )) {
-                o.addClass("ui-state-error");
-                updateTips(n);
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        $("#dialog-form").dialog({
-            autoOpen: false,
-            height: 300,
-            width: 350,
-            modal: true,
-            buttons: {
-                "+": function () {
-                    var bValid = true;
-                    allFields.removeClass("ui-state-error");
-
-                    bValid = bValid && checkLength(number, "number", 3, 16);
-                    bValid = bValid && checkLength(name, "name", 6, 80);
-
-                    bValid = bValid && checkRegexp(number, /^([0-9a-zA-Z])+$/, "编号只允许： a-z 0-9");
-                    bValid = bValid && checkRegexp(name, /^[a-z]([0-9a-z_])+$/i, "用户名必须由 a-z、0-9、下划线组成，且必须以字母开头。");
-                    // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-
-                    if (bValid) {
-                        $("#order tbody").append("<tr>" +
-                            "<td>" + "</td>" +
-                            "<td>" + number.val() + "</td>" +
-                            "<td>" + name.val() + "</td>" + +
-                                "</tr>");
-                        $(this).dialog("close");
-                    }
-                },
-                Cancel: function () {
-                    $(this).dialog("close");
-                }
-            },
-            close: function () {
-                allFields.val("").removeClass("ui-state-error");
-            }
-        });
-
-        $("#create-order")
-            .button()
-            .click(function () {
-                $("#dialog-form").dialog("open");
-            });
-    });
-</script>
-
-
-

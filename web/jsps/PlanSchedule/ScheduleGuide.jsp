@@ -1,17 +1,22 @@
 <%--
   Created by IntelliJ IDEA.
   User: zhaoqi
-  Date: 2017/5/17
-  Time: 16:52
+  Date: 2017/5/18
+  Time: 21:01
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div id="tabs">
     <ul>
-        <li><a href="#tabs-1">交期承诺分析</a></li>
-        <li><a href="#tabs-2">紧急插单分析</a></li>
+        <li><a href="#tabs-1">计划排成向导</a></li>
+        <li><a href="#tabs-2">订单管理</a></li>
+        <li><a href="#tabs-3">参数配置管理</a></li>
 
     </ul>
+
+    <div id="tabs-3">
+
+    </div>
     <div id="tabs-1">
         <div class="uk-grid">
             <div class="uk-width-1-4">
@@ -199,14 +204,14 @@
 
 </div>
 
-<script>
-    $(function() {
-        $( "#tabs" ).tabs();
-    });
-</script>
 
 <script>
     $(function () {
-        $("#Order").tabs();
+        $("#datepicker").datepicker();
+    });
+</script>
+<script>
+    $(function() {
+        $( "#tabs" ).tabs();
     });
 </script>

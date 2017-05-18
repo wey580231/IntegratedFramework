@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: hanchangming
-  Date: 2017/5/16
-  Time: 08:48
+  User: zhaoqi
+  Date: 2017/5/18
+  Time: 20:23
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -40,20 +40,13 @@
 
 <div class="uk-overflow-container">
     <table class="uk-table uk-table-striped uk-table-hover " id="order">
-        <caption></caption>
+        <caption>工序异常信息</caption>
         <thead>
         <tr>
             <th></th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
+            <th>工厂名称</th>
+            <th>工厂位置</th>
+            <th>创建时间</th>
         </tr>
         </thead>
         <tfoot>
@@ -65,23 +58,9 @@
             <td>表格项目一</td>
             <td>表格项目一</td>
             <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
         </tr>
         <tr>
             <td><input type="checkbox"></td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
             <td>表格项目二</td>
             <td>表格项目二</td>
             <td>表格项目二</td>
@@ -102,43 +81,34 @@
     </div>
 </div>
 
-<hr class="uk-article-divider">
-<button class="uk-button" data-uk-toggle="{target:'#group'}">排成</button>
-<div id="group">
-    <table class="uk-table uk-table-striped uk-table-hover uk-overflow-container">
-        <thead>
-        <tr>
-            <th></th>
-            <th>项目一</th>
-            <th>项目二</th>
-            <th>项目三</th>
-            <th>项目四</th>
-            <th>项目五</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-        </tr>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
+<hr class="uk-article-divider">
+<button class="uk-button" data-uk-modal="{target:'#dialog-form'}"
+        style="border-radius:15px;">可视化展示
+</button>
+
+<div id="dialog-form" class="uk-modal" title="可视化展示">
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">工厂一</a></li>
+            <li><a href="#tabs-2">工厂二</a></li>
+        </ul>
+        <div id="tabs-1">
+
+        </div>
+        <div id="tabs-2">
+
+        </div>
+</div>
+</div>
 <script>
     $(function () {
         $("#datepicker").datepicker();
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#Order").tabs();
     });
 </script>

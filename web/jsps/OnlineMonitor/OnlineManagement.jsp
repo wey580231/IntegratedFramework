@@ -25,16 +25,19 @@
     <div class="uk-width-1-4">
         <form class="uk-form">
             <input class="uk-search-field" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="请选择查找日期">
+            <i class="uk-icon-calendar"></i>
         </form>
+
     </div>
     <div class="uk-width-1-4">
         <div class="data-uk-button-radio">
-            <button class="uk-button">修改</button>
-            <button class="uk-button">新增</button>
-            <button class="uk-button">删除</button>
+            <button class="uk-button uk-icon-edit">修改</button>
+            <button class="uk-button uk-icon-plus">新增</button>
+            <button class="uk-button uk-icon-trash">删除</button>
         </div>
     </div>
 </div>
+
 <table class="uk-table uk-table-striped uk-table-hover">
     <thead>
     <tr>
@@ -87,33 +90,94 @@
 <div id="Order" class="uk-modal">
     <div class="uk-modal-dialog">
         <a class="uk-modal-close uk-close"></a>
-        <table>
-            <thead>
-            <tr>
-                <th></th>
-                <th>项目一</th>
-                <th>项目二</th>
-                <th>项目三</th>
-                <th>项目四</th>
-                <th>项目五</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-            </tr>
-            </tbody>
-        </table>
+        <ul>
+            <li><a href="#Order-1">主计划滚动报表</a></li>
+            <li><a href="#Order-2">车间日报表</a></li>
+            <li><a href="#Order-3">工序日报表</a></li>
+        </ul>
+        <div id="Order-1">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>项目一</th>
+                    <th>项目二</th>
+                    <th>项目三</th>
+                    <th>项目四</th>
+                    <th>项目五</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="Order-2">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>项目一</th>
+                    <th>项目二</th>
+                    <th>项目三</th>
+                    <th>项目四</th>
+                    <th>项目五</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="Order-3">
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>项目一</th>
+                    <th>项目二</th>
+                    <th>项目三</th>
+                    <th>项目四</th>
+                    <th>项目五</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                    <td>表格项目一</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
     $(function () {
         $("#datepicker").datepicker();
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#Order").tabs();
     });
 </script>
