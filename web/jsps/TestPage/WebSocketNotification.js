@@ -1,10 +1,17 @@
 /**
  * Created by hanchangming on 2017/5/17.
  */
-var webSocketUrl = "ws://192.168.0.101:8080/notification";
 var webSocket;
+var username;
+var webSocketUrl;
+
+function getUsername() {
+    username = navigator.appName;
+    webSocketUrl = "ws://192.168.0.101:8080/notification/" + username;
+}
 
 function webSocketInit() {
+    getUsername();
     if (typeof WebSocket !== 'undefined') {
         webSocket = new WebSocket(webSocketUrl);
         //连接发生错误的回调方法
