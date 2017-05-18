@@ -28,7 +28,7 @@
         </form>
     </div>
     <div class="uk-width-1-4">
-        <div class="uk-button-group">
+        <div class="data-uk-button-radio">
             <button class="uk-button">修改</button>
             <button class="uk-button">新增</button>
             <button class="uk-button">删除</button>
