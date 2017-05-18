@@ -8,7 +8,10 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.BOMManagementController',
     'IntegratedFramework.ResourceListController',
     'IntegratedFramework.OnlineManagementController',
-    'IntegratedFramework.ResourceClassifyController'
+    'IntegratedFramework.ResourceClassifyController',
+    'IntegratedFramework.WorkListController',
+    'IntegratedFramework.AdjustOrderController',
+    'IntegratedFramework.ResourceGroupController'
 ]).config(['$routeProvider', function ($routeProvider, $locationProvider) {
     // $locationProvider.hashPrefix('!');
     // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OnlineManagement'});

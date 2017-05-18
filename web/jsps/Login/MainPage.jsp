@@ -15,6 +15,7 @@
           href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/datepicker.min.css"/>
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/form-select.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 </head>
 <body>
 <div>
@@ -35,9 +36,9 @@
             <ul class="uk-nav-sub">
                 <li><a href="#!/ResourceList">资源列表管理</a></li>
                 <li><a href="#!/ResourceClassify">资源分类管理</a></li>
-                <li><a href="#">资源工组管理</a></li>
+                <li><a href="#!/ResourceGroup">资源工组管理</a></li>
                 <li><a href="#">资源工位管理</a></li>
-                <li><a href="#">资源工作班次管理</a></li>
+                <li><a href="#!/WorkList">资源工作班次管理</a></li>
             </ul>
         </li>
         <li class="uk-parent">
@@ -58,7 +59,7 @@
             <a href="#">高级调整分析</a>
             <ul class="uk-nav-sub">
                 <li><a href="#">调整工序</a></li>
-                <li><a href="#">调整订单任务</a></li>
+                <li><a href="#!AdjustOrder">调整订单任务</a></li>
                 <li><a href="#">调整设备资源</a></li>
                 <li><a href="#">调整工厂布局</a></li>
             </ul>
@@ -84,11 +85,15 @@
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/datepicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.js"></script>
 <script src="/app.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/OrderManagement/OrderManagementController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/OrderManagement/BOMManagementController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceListController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceClassifyController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/OnlineMonitor/OnlineManagementController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/WorkListController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceGroupController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustOrderController.js"></script>
 </body>
 </html>
