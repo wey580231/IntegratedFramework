@@ -3,35 +3,36 @@
         "-//Hibernate/Hibernate Configuration DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <!-- configure the database setting -->
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/TestDatabase</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
-        <!-- configure the hibernate setting -->
-        <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
-        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <!-- show sql in the console -->
-        <property name="show_sql">true</property>
-        <property name="format_sql">true</property>
-        <!-- create and update the database automaticlly -->
-        <property name="hbm2ddl.auto">update</property>
-        <property name="hibernate.current_session_context_class">thread</property>
-        <!--C3P0配置 -->
-        <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider
-        </property>
-        <property name="hibernate.c3p0.max_size">20</property>
-        <property name="hibernate.c3p0.min_size">5</property>
-        <property name="hibernate.c3p0.timeout">120</property>
-        <property name="automaticTestTable">Test</property>
-        <property name="hibernate.c3p0.max_statements">100</property>
-        <property name="hibernate.c3p0.idle_test_period">120</property>
-        <property name="hibernate.c3p0.acquire_increment">1</property>
-        <property name="c3p0.testConnectionOnCheckout">true</property>
-        <property name="c3p0.idleConnectionTestPeriod">18000</property>
-        <property name="c3p0.maxIdleTime">25000</property>
-        <property name="c3p0.idle_test_period">120</property>
-        <mapping class="com.rengu.entity.UsersEntity"></mapping>
-    </session-factory>
+  <session-factory>
+    <!-- configure the database setting -->
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/TestDatabase</property>
+    <property name="connection.username">root</property>
+    <property name="connection.password">root</property>
+    <!-- configure the hibernate setting -->
+    <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
+    <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+    <!-- show sql in the console -->
+    <property name="show_sql">true</property>
+    <property name="format_sql">true</property>
+    <!-- create and update the database automaticlly -->
+    <property name="hbm2ddl.auto">update</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <!--C3P0配置 -->
+    <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider
+    </property>
+    <property name="hibernate.c3p0.max_size">20</property>
+    <property name="hibernate.c3p0.min_size">5</property>
+    <property name="hibernate.c3p0.timeout">120</property>
+    <property name="automaticTestTable">Test</property>
+    <property name="hibernate.c3p0.max_statements">100</property>
+    <property name="hibernate.c3p0.idle_test_period">120</property>
+    <property name="hibernate.c3p0.acquire_increment">1</property>
+    <property name="c3p0.testConnectionOnCheckout">true</property>
+    <property name="c3p0.idleConnectionTestPeriod">18000</property>
+    <property name="c3p0.maxIdleTime">25000</property>
+    <property name="c3p0.idle_test_period">120</property>
+    <mapping class="com.rengu.entity.ClubEntity"/>
+    <mapping class="com.rengu.entity.UserEntity"/>
+  </session-factory>
 </hibernate-configuration>
