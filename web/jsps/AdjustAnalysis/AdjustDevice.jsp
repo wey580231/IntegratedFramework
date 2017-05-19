@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: hanchangming
-  Date: 2017/5/16
-  Time: 08:48
+  User: zhaoqi
+  Date: 2017/5/18
+  Time: 17:15
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -40,25 +40,16 @@
 
 <div class="uk-overflow-container">
     <table class="uk-table uk-table-striped uk-table-hover " id="order">
-        <caption></caption>
         <thead>
         <tr>
             <th></th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
-            <th>项目一</th>
+            <th>上报时间</th>
+            <th>设备名称</th>
+            <th>设备编号</th>
+            <th>故障类型</th>
+            <th>预计维修时间</th>
         </tr>
         </thead>
-        <tfoot>
-
-        </tfoot>
         <tbody>
         <tr>
             <td><input type="checkbox"></td>
@@ -67,11 +58,7 @@
             <td>表格项目一</td>
             <td>表格项目一</td>
             <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
+
         </tr>
         <tr>
             <td><input type="checkbox"></td>
@@ -80,18 +67,17 @@
             <td>表格项目二</td>
             <td>表格项目二</td>
             <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
+
         </tr>
         </tbody>
+        <tfoot>
 
+        </tfoot>
 
     </table>
 
     <div>
+
         <ul class="uk-pagination" data-uk-pagination="{items:20, itemsOnPage:5, currentPage:50}">
             <li><a class="uk-icon-angle-double-left"></a></li>
             <li><a href="#">1</a></li>
@@ -102,8 +88,10 @@
     </div>
 </div>
 
+
+
 <hr class="uk-article-divider">
-<button class="uk-button" data-uk-toggle="{target:'#group'}">排成</button>
+<button class="uk-button" data-uk-toggle="{target:'#group'}">故障应急</button>
 <div id="group">
     <table class="uk-table uk-table-striped uk-table-hover uk-overflow-container">
         <thead>
@@ -142,3 +130,4 @@
         $("#datepicker").datepicker();
     });
 </script>
+

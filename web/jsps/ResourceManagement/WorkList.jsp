@@ -25,19 +25,20 @@
     <div class="uk-width-1-4">
         <form class="uk-form">
             <input type="text" id="datepicker" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="请选择日期">
+            <i class="uk-icon-calendar"></i>
         </form>
     </div>
     <div class="uk-width-1-4">
         <div class="data-uk-button-radio">
-            <button class="uk-button">修改</button>
-            <button class="uk-button">新增</button>
-            <button class="uk-button">删除</button>
+            <button class="uk-button uk-icon-edit">修改</button>
+            <button class="uk-button uk-icon-plus">新增</button>
+            <button class="uk-button uk-icon-trash">删除</button>
         </div>
     </div>
 </div>
 
 <div class="uk-overflow-container">
-    <table class="uk-table  uk-table-hover " id="order">
+    <table class="uk-table uk-table-striped uk-table-hover " id="order">
         <thead>
         <tr>
             <th></th>
@@ -52,31 +53,40 @@
         <tr>
             <td><input type="checkbox"></td>
             <td>表格项目一</td>
-            <td>
-                <input type="text" class="uk-form-select" data-uk-form-select>
-                <select>
-                    <option value="1">选项一</option>
-                    <option value="2">选项二</option>
-                    <option value="3">选项三</option>
+            <td class="uk-grid">
+                <select class="uk-grid">
+                    <option value="1"></option>
+                    <option value="2">选项一</option>
+                    <option value="3">选项二</option>
+                    <option value="4">选项三</option>
                 </select>
             </td>
-            <td><input type="text" class="uk-form-select" data-uk-form-select>
+            <td class="uk-grid">
+                <select class="uk-grid">
+                    <option value="1"></option>
+                    <option value="2">上午班</option>
+                    <option value="3">中午班</option>
+                    <option value="4">下午班</option>
+                </select>
+            </td>
+            <!--<td><input type="text" class="uk-form-select" data-uk-form-select>
                 <select>
                     <option value="1">上午班</option>
                     <option value="2">中午班</option>
                     <option value="2">下午班</option>
                 </select>
-            </td>
+            </td>-->
             <td>
                 <form class="uk-form">
                     <input type="text" id="datepicker2" data-uk-datepicker="{format:'DD.MM.YYYY'}"
                            placeholder="请选择查找日期">
                 </form>
             </td>
-            <td><input type="text" class="uk-form-select" data-uk-form-select>
-                <select>
-                    <option value="1">加班</option>
-                    <option value="2">不加班</option>
+            <td class="uk-grid">
+                <select class="uk-grid">
+                    <option value="1"></option>
+                    <option value="2">加班</option>
+                    <option value="3">不加班</option>
                 </select>
             </td>
         </tr>

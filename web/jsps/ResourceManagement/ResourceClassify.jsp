@@ -25,13 +25,15 @@
     <div class="uk-width-1-4">
         <form class="uk-form">
             <input type="text" id="datepicker" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="2017/5/17">
+            <i class="uk-icon-calendar"></i>
         </form>
+
     </div>
     <div class="uk-width-1-4">
         <div class="data-uk-button-radio">
-            <button class="uk-button">修改</button>
-            <button class="uk-button">新增</button>
-            <button class="uk-button">删除</button>
+            <button class="uk-button uk-icon-edit">修改</button>
+            <button class="uk-button uk-icon-plus">新增</button>
+            <button class="uk-button uk-icon-trash">删除</button>
         </div>
     </div>
 </div>
