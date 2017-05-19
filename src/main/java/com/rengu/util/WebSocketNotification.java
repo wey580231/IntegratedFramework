@@ -60,19 +60,6 @@ public class WebSocketNotification {
     @OnMessage
     public void onMessage(@PathParam("username") String username, String message, Session session) {
         System.out.println("来自客户端的消息:" + message);
-        //群发消息
-        for (WebSocketNotification item : webSocketSet) {
-            try {
-                if (item.session == session) {
-                    item.sendMessage(message);
-                    break;
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                continue;
-            }
-        }
     }
 
     /**
@@ -93,9 +80,17 @@ public class WebSocketNotification {
      * @param message
      * @throws IOException
      */
-    public void sendMessage(String message) throws IOException {
-        this.session.getBasicRemote().sendText(message);
-        //this.session.getAsyncRemote().sendText(message);
+    public void sendMessage(String message, String username) {
+        for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
+            if (webSocketNotification.getUsername().equals(username)) {
+                try {
+                    webSocketNotification.session.getBasicRemote().sendText(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
     }
 
     public static synchronized int getOnlineCount() {
