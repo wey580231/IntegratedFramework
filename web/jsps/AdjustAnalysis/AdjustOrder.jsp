@@ -113,9 +113,6 @@
     </div>
     <div id="tabs-2">
 
-
-
-
         <div class="uk-overflow-container">
             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                 <thead>

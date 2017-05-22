@@ -143,6 +143,21 @@
     </div>
 </div>
 
+
+<!--<div class="uk-clearfix">
+    <button class="uk-button uk-float-right " id="create-order" data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
+            data-uk-modal style="border-radius:15px; "
+            data-uk-tooltip="{pos:'top'}" title="快捷菜单">+
+    </button>
+    <div class=" uk-modal-dialog-blank uk-float-right" id="button">
+        <div class="uk-panel uk-panel-box" style="margin-top: 100px;margin-left: 85%; padding: 3px;width: 120px">
+            <div class="data-uk-button-radio">
+                <button class="uk-button" style="margin: 3px" data-uk-modal="{target:'#group'}">资源排班面板</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+
 <div class="uk-modal" id="group">
     <div class="uk-modal-dialog" >
         <table class="uk-table uk-table-striped uk-table-hover uk-overflow-container">
