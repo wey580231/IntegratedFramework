@@ -15,6 +15,10 @@
           href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/datepicker.min.css"/>
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/form-select.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/sticky.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/progress.css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/accordion.css"/>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 </head>
 <body>
@@ -46,6 +50,7 @@
             <ul class="uk-nav-sub">
                 <li><a href="#!/ScheduleGuide">计划排程向导</a></li>
                 <li><a href="#!/ScheduleSnap">计划排程快照管理</a></li>
+                <li><a href="#!/Interactive">交互式优化与结果可视化</a></li>
             </ul>
         </li>
         <li class="uk-parent">
@@ -83,9 +88,14 @@
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/search.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/form-select.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/datepicker.min.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/accordion.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/sticky.js"></script>
+
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
+
 <script src="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.js"></script>
+
 <script src="/app.js"></script>
 
 <script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/PlusProject.js"></script>
@@ -103,6 +113,7 @@
 <script src="${pageContext.request.contextPath}/jsps/OrderManagement/ResourceDistributionController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/PlanSchedule/ScheduleGuideController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/PlanSchedule/ScheduleSnapController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/PlanSchedule/InteractiveController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceListController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceClassifyController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceStationController.js"></script>

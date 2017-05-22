@@ -22,6 +22,7 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ViewConfigureController',
     'IntegratedFramework.ScheduleGuideController',
     'IntegratedFramework.ScheduleSnapController',
+    'IntegratedFramework.InteractiveController'
 ]).config(['$routeProvider', function ($routeProvider, $locationProvider) {
     // $locationProvider.hashPrefix('!');
     // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OnlineManagement'});
