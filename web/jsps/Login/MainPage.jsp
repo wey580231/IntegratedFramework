@@ -27,6 +27,7 @@
 </div>
 <div class="uk-width-1-6" style="float: left;">
     <ul class="uk-nav uk-nav-parent-icon uk-nav-side" data-uk-nav="{multiple:true}">
+        <li class="uk-active"><a href="#">集成框架</a></li>
         <li class="uk-parent">
             <a href="#">订单任务管理</a>
             <ul class="uk-nav-sub">

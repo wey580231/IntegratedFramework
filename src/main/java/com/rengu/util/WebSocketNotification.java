@@ -80,17 +80,19 @@ public class WebSocketNotification {
      * @param message
      * @throws IOException
      */
-    public void sendMessage(String message, String username) {
+    public static boolean sendMessage(String message, String username) {
         for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
             if (webSocketNotification.getUsername().equals(username)) {
                 try {
                     webSocketNotification.session.getBasicRemote().sendText(message);
+                    return true;
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return false;
                 }
-                break;
             }
         }
+        return false;
     }
 
     public static synchronized int getOnlineCount() {
