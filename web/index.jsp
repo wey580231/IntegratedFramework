@@ -10,9 +10,8 @@
 <head>
 </head>
 <body>
-<a href="jsps/source.jsp">资源</a>
 <a href="jsps/Login/Login.jsp">用户登录</a>
-<a href="jsps/Login/MainPage.jsp">MianPage</a>
+<a href="jsps/Login/MainPage.jsp">MainPage</a>
 <a href="jsps/TestPage/FullCalendar.jsp">FullCalendar-Test</a>
 <a href="jsps/TestPage/NotificationTest.jsp">NotificationTest</a>
 </body>
