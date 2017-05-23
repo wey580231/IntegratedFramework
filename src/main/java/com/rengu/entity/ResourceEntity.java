@@ -12,6 +12,7 @@ public class ResourceEntity {
     private String id;
     private String name;
     private String idTypeResource;
+    private String idGroupResource;
     private String idFeatureResource;
     private String idSite;
     private String idSiteGroupResource;
@@ -34,6 +35,8 @@ public class ResourceEntity {
     private Byte sizeIcon;
     private String idIcon;
     private String idSite0;
+    private String idUser;
+    private String idClub;
     private String unit;
     private Collection<PlanEntity> plansById;
     private GroupresourceEntity groupresourceByIdGroupResource;
@@ -68,6 +71,16 @@ public class ResourceEntity {
 
     public void setIdTypeResource(String idTypeResource) {
         this.idTypeResource = idTypeResource;
+    }
+
+    @Basic
+    @Column(name = "idGroupResource")
+    public String getIdGroupResource() {
+        return idGroupResource;
+    }
+
+    public void setIdGroupResource(String idGroupResource) {
+        this.idGroupResource = idGroupResource;
     }
 
     @Basic
@@ -291,6 +304,26 @@ public class ResourceEntity {
     }
 
     @Basic
+    @Column(name = "idUser")
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    @Basic
+    @Column(name = "idClub")
+    public String getIdClub() {
+        return idClub;
+    }
+
+    public void setIdClub(String idClub) {
+        this.idClub = idClub;
+    }
+
+    @Basic
     @Column(name = "unit")
     public String getUnit() {
         return unit;
@@ -310,6 +343,8 @@ public class ResourceEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (idTypeResource != null ? !idTypeResource.equals(that.idTypeResource) : that.idTypeResource != null)
+            return false;
+        if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
             return false;
         if (idFeatureResource != null ? !idFeatureResource.equals(that.idFeatureResource) : that.idFeatureResource != null)
             return false;
@@ -338,6 +373,8 @@ public class ResourceEntity {
         if (sizeIcon != null ? !sizeIcon.equals(that.sizeIcon) : that.sizeIcon != null) return false;
         if (idIcon != null ? !idIcon.equals(that.idIcon) : that.idIcon != null) return false;
         if (idSite0 != null ? !idSite0.equals(that.idSite0) : that.idSite0 != null) return false;
+        if (idUser != null ? !idUser.equals(that.idUser) : that.idUser != null) return false;
+        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (unit != null ? !unit.equals(that.unit) : that.unit != null) return false;
 
         return true;
@@ -348,6 +385,7 @@ public class ResourceEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (idTypeResource != null ? idTypeResource.hashCode() : 0);
+        result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
         result = 31 * result + (idFeatureResource != null ? idFeatureResource.hashCode() : 0);
         result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
         result = 31 * result + (idSiteGroupResource != null ? idSiteGroupResource.hashCode() : 0);
@@ -370,6 +408,8 @@ public class ResourceEntity {
         result = 31 * result + (sizeIcon != null ? sizeIcon.hashCode() : 0);
         result = 31 * result + (idIcon != null ? idIcon.hashCode() : 0);
         result = 31 * result + (idSite0 != null ? idSite0.hashCode() : 0);
+        result = 31 * result + (idUser != null ? idUser.hashCode() : 0);
+        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (unit != null ? unit.hashCode() : 0);
         return result;
     }

@@ -8,9 +8,17 @@ import javax.persistence.*;
 @Entity
 @Table(name = "plan", schema = "testdatabase", catalog = "")
 public class PlanEntity {
+    private String idClub;
     private String idTask;
+    private String idProcess;
+    private String idOrder;
+    private String idResource;
     private String idJob;
+    private String idSite;
+    private String idGroupResource;
+    private String idTypeResource;
     private String idProductOrder;
+    private String idProvider;
     private String nameTask;
     private String nameProcess;
     private String nameOrder;
@@ -83,6 +91,16 @@ public class PlanEntity {
     private ProviderEntity providerByIdProvider;
 
     @Basic
+    @Column(name = "idClub")
+    public String getIdClub() {
+        return idClub;
+    }
+
+    public void setIdClub(String idClub) {
+        this.idClub = idClub;
+    }
+
+    @Basic
     @Column(name = "idTask")
     public String getIdTask() {
         return idTask;
@@ -90,6 +108,36 @@ public class PlanEntity {
 
     public void setIdTask(String idTask) {
         this.idTask = idTask;
+    }
+
+    @Basic
+    @Column(name = "idProcess")
+    public String getIdProcess() {
+        return idProcess;
+    }
+
+    public void setIdProcess(String idProcess) {
+        this.idProcess = idProcess;
+    }
+
+    @Basic
+    @Column(name = "idOrder")
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    @Basic
+    @Column(name = "idResource")
+    public String getIdResource() {
+        return idResource;
+    }
+
+    public void setIdResource(String idResource) {
+        this.idResource = idResource;
     }
 
     @Basic
@@ -103,6 +151,36 @@ public class PlanEntity {
     }
 
     @Basic
+    @Column(name = "idSite")
+    public String getIdSite() {
+        return idSite;
+    }
+
+    public void setIdSite(String idSite) {
+        this.idSite = idSite;
+    }
+
+    @Basic
+    @Column(name = "idGroupResource")
+    public String getIdGroupResource() {
+        return idGroupResource;
+    }
+
+    public void setIdGroupResource(String idGroupResource) {
+        this.idGroupResource = idGroupResource;
+    }
+
+    @Basic
+    @Column(name = "idTypeResource")
+    public String getIdTypeResource() {
+        return idTypeResource;
+    }
+
+    public void setIdTypeResource(String idTypeResource) {
+        this.idTypeResource = idTypeResource;
+    }
+
+    @Basic
     @Column(name = "idProductOrder")
     public String getIdProductOrder() {
         return idProductOrder;
@@ -110,6 +188,16 @@ public class PlanEntity {
 
     public void setIdProductOrder(String idProductOrder) {
         this.idProductOrder = idProductOrder;
+    }
+
+    @Basic
+    @Column(name = "idProvider")
+    public String getIdProvider() {
+        return idProvider;
+    }
+
+    public void setIdProvider(String idProvider) {
+        this.idProvider = idProvider;
     }
 
     @Basic
@@ -740,10 +828,20 @@ public class PlanEntity {
         PlanEntity that = (PlanEntity) o;
 
         if (id != that.id) return false;
+        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
+        if (idProcess != null ? !idProcess.equals(that.idProcess) : that.idProcess != null) return false;
+        if (idOrder != null ? !idOrder.equals(that.idOrder) : that.idOrder != null) return false;
+        if (idResource != null ? !idResource.equals(that.idResource) : that.idResource != null) return false;
         if (idJob != null ? !idJob.equals(that.idJob) : that.idJob != null) return false;
+        if (idSite != null ? !idSite.equals(that.idSite) : that.idSite != null) return false;
+        if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
+            return false;
+        if (idTypeResource != null ? !idTypeResource.equals(that.idTypeResource) : that.idTypeResource != null)
+            return false;
         if (idProductOrder != null ? !idProductOrder.equals(that.idProductOrder) : that.idProductOrder != null)
             return false;
+        if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
         if (nameTask != null ? !nameTask.equals(that.nameTask) : that.nameTask != null) return false;
         if (nameProcess != null ? !nameProcess.equals(that.nameProcess) : that.nameProcess != null) return false;
         if (nameOrder != null ? !nameOrder.equals(that.nameOrder) : that.nameOrder != null) return false;
@@ -838,9 +936,17 @@ public class PlanEntity {
 
     @Override
     public int hashCode() {
-        int result = idTask != null ? idTask.hashCode() : 0;
+        int result = idClub != null ? idClub.hashCode() : 0;
+        result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
+        result = 31 * result + (idProcess != null ? idProcess.hashCode() : 0);
+        result = 31 * result + (idOrder != null ? idOrder.hashCode() : 0);
+        result = 31 * result + (idResource != null ? idResource.hashCode() : 0);
         result = 31 * result + (idJob != null ? idJob.hashCode() : 0);
+        result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
+        result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
+        result = 31 * result + (idTypeResource != null ? idTypeResource.hashCode() : 0);
         result = 31 * result + (idProductOrder != null ? idProductOrder.hashCode() : 0);
+        result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (nameTask != null ? nameTask.hashCode() : 0);
         result = 31 * result + (nameProcess != null ? nameProcess.hashCode() : 0);
         result = 31 * result + (nameOrder != null ? nameOrder.hashCode() : 0);

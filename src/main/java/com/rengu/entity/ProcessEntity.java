@@ -13,6 +13,7 @@ public class ProcessEntity {
     private String name;
     private String idRoot;
     private String idParent;
+    private String idProduct;
     private Short ordToRoot;
     private String ordToRootChild;
     private Short ordToParent;
@@ -112,6 +113,16 @@ public class ProcessEntity {
 
     public void setIdParent(String idParent) {
         this.idParent = idParent;
+    }
+
+    @Basic
+    @Column(name = "idProduct")
+    public String getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
     }
 
     @Basic
@@ -695,6 +706,7 @@ public class ProcessEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (idRoot != null ? !idRoot.equals(that.idRoot) : that.idRoot != null) return false;
         if (idParent != null ? !idParent.equals(that.idParent) : that.idParent != null) return false;
+        if (idProduct != null ? !idProduct.equals(that.idProduct) : that.idProduct != null) return false;
         if (ordToRoot != null ? !ordToRoot.equals(that.ordToRoot) : that.ordToRoot != null) return false;
         if (ordToRootChild != null ? !ordToRootChild.equals(that.ordToRootChild) : that.ordToRootChild != null)
             return false;
@@ -781,6 +793,7 @@ public class ProcessEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (idRoot != null ? idRoot.hashCode() : 0);
         result = 31 * result + (idParent != null ? idParent.hashCode() : 0);
+        result = 31 * result + (idProduct != null ? idProduct.hashCode() : 0);
         result = 31 * result + (ordToRoot != null ? ordToRoot.hashCode() : 0);
         result = 31 * result + (ordToRootChild != null ? ordToRootChild.hashCode() : 0);
         result = 31 * result + (ordToParent != null ? ordToParent.hashCode() : 0);
