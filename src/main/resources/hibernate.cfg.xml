@@ -30,7 +30,20 @@
         <property name="c3p0.idleConnectionTestPeriod">18000</property>
         <property name="c3p0.maxIdleTime">25000</property>
         <property name="c3p0.idle_test_period">120</property>
+
         <mapping class="com.rengu.entity.ClubEntity"/>
         <mapping class="com.rengu.entity.UserEntity"/>
+        <mapping class="com.rengu.entity.AssisantprocessEntity"/>
+        <mapping class="com.rengu.entity.ConfigEntity"/>
+        <mapping class="com.rengu.entity.GroupresourceEntity"/>
+        <mapping class="com.rengu.entity.OrderEntity"/>
+        <mapping class="com.rengu.entity.PlanEntity"/>
+        <mapping class="com.rengu.entity.ProcessEntity"/>
+        <mapping class="com.rengu.entity.ProductEntity"/>
+        <mapping class="com.rengu.entity.ProviderEntity"/>
+        <mapping class="com.rengu.entity.ResourceEntity"/>
+        <mapping class="com.rengu.entity.ShiftEntity"/>
+        <mapping class="com.rengu.entity.SiteEntity"/>
+        <mapping class="com.rengu.entity.TyperescourceEntity"/>
     </session-factory>
 </hibernate-configuration>
