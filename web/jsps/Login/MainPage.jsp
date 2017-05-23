@@ -22,63 +22,77 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 </head>
 <body>
-<div>
-    <h1 class="uk-text-center">集成框架</h1>
+<!--头部-->
+<div style="height: 70px;border-bottom: 1px solid gray;">
+    <div  class="uk-width-1-6" style="background-color: #1c4f7a; height: 70px;width: 16%;float: left;">
+        <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
+    </div>
+    <div style="float: left;width: 80%;height: 65px;margin-top: 5px;">
+        <img src="../../images/user.png" style="margin-left: 87%;"> 欢迎登录
+    </div>
+    <div style="height: 70px;">
+        <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
+    </div>
+
 </div>
-<div class="uk-width-1-6" style="float: left;">
-    <ul class="uk-nav uk-nav-parent-icon uk-nav-side" data-uk-nav="{multiple:true}">
-        <li class="uk-nav-default"><a href="#!/Guide">集成框架</a></li>
-        <li class="uk-parent">
-            <a href="#">订单任务管理</a>
-            <ul class="uk-nav-sub">
-                <li><a href="#!/OrderManagement">订单管理</a></li>
-                <li><a href="#!/BOMManagement">制造BOM管理</a></li>
-                <li><a href="#!/ResourceDistribution">工序资源分配管理</a></li>
-            </ul>
-        </li>
-        <li class="uk-parent">
-            <a href="#">资源设备管理</a>
-            <ul class="uk-nav-sub">
-                <li><a href="#!/ResourceList">资源列表管理</a></li>
-                <li><a href="#!/ResourceClassify">资源分类管理</a></li>
-                <li><a href="#!/ResourceGroup">资源工组管理</a></li>
-                <li><a href="#!/ResourceStation">资源工位管理</a></li>
-                <li><a href="#!/WorkList">资源工作班次管理</a></li>
-            </ul>
-        </li>
-        <li class="uk-parent">
-            <a href="#" target="body">计划排程管理</a>
-            <ul class="uk-nav-sub">
-                <li><a href="#!/ScheduleGuide">计划排程向导</a></li>
-                <li><a href="#!/ScheduleSnap">计划排程快照管理</a></li>
-                <li><a href="#!/Interactive">交互式优化与结果可视化</a></li>
-            </ul>
-        </li>
-        <li class="uk-parent">
-            <a href="#">在线监控管理</a>
-            <ul class="uk-nav-sub">
-                <li><a href="#!/DeviceMonitor">设备监控</a></li>
-                <li><a href="#!/OnlineManagement">订单执行监控</a></li>
-            </ul>
-        </li>
-        <li class="uk-parent">
-            <a href="#">高级调整分析</a>
-            <ul class="uk-nav-sub">
-                <li><a href="#!/AdjustProcedure">调整工序</a></li>
-                <li><a href="#!/AdjustOrder">调整订单任务</a></li>
-                <li><a href="#!/AdjustDevice">调整设备资源</a></li>
-                <li><a href="#!/AdjustFactory">调整工厂布局</a></li>
-            </ul>
-        </li>
-        <li class="uk-parent">
-            <a href="#">三维可视化</a>
-            <ul class="uk-nav-sub">
-                <li><a href="#!/Show">可视化显示</a></li>
-                <li><a href="#!/ViewConfigure">可视化配置</a></li>
-            </ul>
-        </li>
-    </ul>
+<!--左侧-->
+<div class="uk-width-1-6">
+    <div style="float: left;margin-top: 10px;">
+        <ul class="uk-nav uk-nav-parent-icon uk-nav-side" data-uk-nav="{multiple:true}">
+            <li class="uk-parent">
+                <a href="#"><img src="../../images/left_img/order.png">  订单任务管理</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="#!/OrderManagement">订单管理</a></li>
+                    <li><a href="#!/BOMManagement">制造BOM管理</a></li>
+                    <li><a href="#!/ResourceDistribution">工序资源分配管理</a></li>
+                </ul>
+            </li>
+            <li class="uk-parent">
+                <a href="#"><img src="../../images/left_img/resource.png">  资源设备管理</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="#!/ResourceList">资源列表管理</a></li>
+                    <li><a href="#!/ResourceClassify">资源分类管理</a></li>
+                    <li><a href="#!/ResourceGroup">资源工组管理</a></li>
+                    <li><a href="#!/ResourceStation">资源工位管理</a></li>
+                    <li><a href="#!/WorkList">资源工作班次管理</a></li>
+                </ul>
+            </li>
+            <li class="uk-parent">
+                <a href="#" target="body"><img src="../../images/left_img/plan.png">  计划排程管理</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="#!/ScheduleGuide">计划排程向导</a></li>
+                    <li><a href="#!/ScheduleSnap">计划排程快照管理</a></li>
+                    <li><a href="#!/Interactive">交互式优化与结果可视化</a></li>
+                </ul>
+            </li>
+            <li class="uk-parent">
+                <a href="#"><img src="../../images/left_img/online.png">  在线监控管理</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="#!/DeviceMonitor">设备监控</a></li>
+                    <li><a href="#!/OnlineManagement">订单执行监控</a></li>
+                </ul>
+            </li>
+            <li class="uk-parent">
+                <a href="#"><img src="../../images/left_img/adjust.png">  高级调整分析</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="#!/AdjustProcedure">调整工序</a></li>
+                    <li><a href="#!/AdjustOrder">调整订单任务</a></li>
+                    <li><a href="#!/AdjustDevice">调整设备资源</a></li>
+                    <li><a href="#!/AdjustFactory">调整工厂布局</a></li>
+                </ul>
+            </li>
+            <li class="uk-parent">
+                <a href="#"><img src="../../images/left_img/3D.png">  三维可视化</a>
+                <ul class="uk-nav-sub">
+                    <li><a href="#!/Show">可视化显示</a></li>
+                    <li><a href="#!/ViewConfigure">可视化配置</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>
+
+<!--右侧-->
 <div class="uk-width-5-6" style="float:right">
     <ng-view></ng-view>
 </div>
