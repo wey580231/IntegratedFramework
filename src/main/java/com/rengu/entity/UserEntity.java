@@ -1,22 +1,27 @@
 package com.rengu.entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by hanchangming on 2017/5/18.
+ * Created by wey580231 on 2017/5/23.
  */
 @Entity
-@Table(name = "user", schema = "TestDatabase")
+@Table(name = "user", schema = "testdatabase", catalog = "")
 public class UserEntity {
     private String id;
     private String name;
+    private String idClub;
     private String idClient;
     private String idProvider;
     private Byte authority;
     private String password;
+    private Collection<ConfigEntity> configsById;
+    private Collection<ResourceEntity> resourcesById;
+    private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id", nullable = false, length = 50)
     public String getId() {
         return id;
     }
@@ -33,6 +38,16 @@ public class UserEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "idClub", nullable = true, length = 20)
+    public String getIdClub() {
+        return idClub;
+    }
+
+    public void setIdClub(String idClub) {
+        this.idClub = idClub;
     }
 
     @Basic
@@ -84,6 +99,7 @@ public class UserEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (idClient != null ? !idClient.equals(that.idClient) : that.idClient != null) return false;
         if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
         if (authority != null ? !authority.equals(that.authority) : that.authority != null) return false;
@@ -96,10 +112,39 @@ public class UserEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (idClient != null ? idClient.hashCode() : 0);
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (authority != null ? authority.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "userByIdUser")
+    public Collection<ConfigEntity> getConfigsById() {
+        return configsById;
+    }
+
+    public void setConfigsById(Collection<ConfigEntity> configsById) {
+        this.configsById = configsById;
+    }
+
+    @OneToMany(mappedBy = "userByIdUser")
+    public Collection<ResourceEntity> getResourcesById() {
+        return resourcesById;
+    }
+
+    public void setResourcesById(Collection<ResourceEntity> resourcesById) {
+        this.resourcesById = resourcesById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "idClub", referencedColumnName = "id")
+    public ClubEntity getClubByIdClub() {
+        return clubByIdClub;
+    }
+
+    public void setClubByIdClub(ClubEntity clubByIdClub) {
+        this.clubByIdClub = clubByIdClub;
     }
 }
