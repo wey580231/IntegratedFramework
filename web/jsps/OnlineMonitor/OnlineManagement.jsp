@@ -24,8 +24,11 @@
     </div>
     <div class="uk-width-1-4">
         <form class="uk-form">
-            <input class="uk-search-field" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="请选择查找日期">
-            <i class="uk-icon-calendar"></i>
+            <div class="uk-form-icon">
+                <i class="uk-icon-calendar"></i>
+                <input type="text" id="datepicker"  data-uk-datepicker="{format:'DD.MM.YYYY'}"
+                       placeholder="2017/5/17">
+            </div>
         </form>
 
     </div>
@@ -99,9 +102,10 @@
     </div>
 </div>
 
-<div id="Order" class="uk-modal">
+<div class="uk-modal" id="Order">
     <div class="uk-modal-dialog">
         <a class="uk-modal-close uk-close"></a>
+        <div id="Tabs">
         <ul>
             <li><a href="#Order-1">主计划滚动报表</a></li>
             <li><a href="#Order-2">车间日报表</a></li>
@@ -179,6 +183,7 @@
                 </tbody>
             </table>
         </div>
+        </div>
     </div>
 </div>
 
@@ -229,6 +234,6 @@
 
 <script>
     $(function () {
-        $("#Order").tabs();
+        $("#Tabs").tabs();
     });
 </script>
