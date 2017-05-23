@@ -7,6 +7,5 @@ import com.rengu.entity.UserEntity;
  */
 public interface UsersDAO {
     boolean userLogin(UserEntity usersEntity);
-
     boolean userSignin(UserEntity userEntity);
 }

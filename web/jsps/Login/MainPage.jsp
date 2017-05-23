@@ -27,7 +27,7 @@
 </div>
 <div class="uk-width-1-6" style="float: left;">
     <ul class="uk-nav uk-nav-parent-icon uk-nav-side" data-uk-nav="{multiple:true}">
-        <li class="uk-active"><a href="#">集成框架</a></li>
+        <li class="uk-nav-default"><a href="#!/Guide">集成框架</a></li>
         <li class="uk-parent">
             <a href="#">订单任务管理</a>
             <ul class="uk-nav-sub">
@@ -99,8 +99,6 @@
 
 <script src="/app.js"></script>
 
-<script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/PlusProject.js"></script>
-
 <script src="${pageContext.request.contextPath}/jsps/3DView/ShowController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/3DView/ViewConfigureController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustOrderController.js"></script>
@@ -120,6 +118,6 @@
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceStationController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/WorkListController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceGroupController.js"></script>
-
+<script src="${pageContext.request.contextPath}/jsps/Login/GuideController.js"></script>
 </body>
 </html>
