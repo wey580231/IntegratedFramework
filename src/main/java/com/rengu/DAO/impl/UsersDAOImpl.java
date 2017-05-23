@@ -1,7 +1,7 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.UsersDAO;
-import com.rengu.entity.UsersEntity;
+import com.rengu.entity.UserEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,16 +15,15 @@ import java.util.List;
  */
 public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
 
-    public boolean userLogin(UsersEntity usersEntity) {
+    @Override
+    public boolean userLogin(UserEntity usersEntity) {
         Transaction transaction = null;
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-//            String hql = "from com.rengu.entity.UsersEntity userEntity where userEntity.username=:username and userEntity.password=:password";
-            String sql = "select * from users where username=:username and password=:password";
-//            Query query = session.createQuery(hql);
-            Query query = session.createSQLQuery(sql);
-            query.setParameter("username", usersEntity.getUsername());
+            String hql = "from UserEntity userEntity where userEntity.name=:username and userEntity.password=:password";
+            Query query = session.createQuery(hql);
+            query.setParameter("username", usersEntity.getName());
             query.setParameter("password", usersEntity.getPassword());
             List list = query.list();
             transaction.commit();
@@ -34,6 +33,26 @@ public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
             return true;
         } catch (Exception exception) {
             exception.printStackTrace();
+            return false;
+        } finally {
+            if (transaction != null) {
+                transaction = null;
+            }
+        }
+    }
+
+    @Override
+    public boolean userSignin(UserEntity userEntity) {
+        Transaction transaction = null;
+        try {
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
+            session.save(userEntity);
+            transaction.commit();
+            session.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         } finally {
             if (transaction != null) {
