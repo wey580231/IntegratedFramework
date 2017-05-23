@@ -11,6 +11,8 @@ import java.util.Collection;
 public class GroupresourceEntity {
     private String id;
     private String name;
+    private String idProvider;
+    private String idClub;
     private Byte external;
     private String idSite0;
     private Byte state;
@@ -39,6 +41,26 @@ public class GroupresourceEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "idProvider")
+    public String getIdProvider() {
+        return idProvider;
+    }
+
+    public void setIdProvider(String idProvider) {
+        this.idProvider = idProvider;
+    }
+
+    @Basic
+    @Column(name = "idClub")
+    public String getIdClub() {
+        return idClub;
+    }
+
+    public void setIdClub(String idClub) {
+        this.idClub = idClub;
     }
 
     @Basic
@@ -100,6 +122,8 @@ public class GroupresourceEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
+        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (external != null ? !external.equals(that.external) : that.external != null) return false;
         if (idSite0 != null ? !idSite0.equals(that.idSite0) : that.idSite0 != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
@@ -113,6 +137,8 @@ public class GroupresourceEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
+        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (external != null ? external.hashCode() : 0);
         result = 31 * result + (idSite0 != null ? idSite0.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);

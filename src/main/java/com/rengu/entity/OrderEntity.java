@@ -16,6 +16,7 @@ public class OrderEntity {
     private String idClient;
     private String idProvider;
     private String idGroupResource;
+    private String idProduct;
     private Short quantity;
     private Short priority;
     private String t0;
@@ -35,6 +36,7 @@ public class OrderEntity {
     private String color;
     private Byte state;
     private Byte selected;
+    private String idClub;
     private Short nbTask;
     private ProductEntity productByIdProduct;
     private ClubEntity clubByIdClub;
@@ -108,6 +110,16 @@ public class OrderEntity {
 
     public void setIdGroupResource(String idGroupResource) {
         this.idGroupResource = idGroupResource;
+    }
+
+    @Basic
+    @Column(name = "idProduct")
+    public String getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
     }
 
     @Basic
@@ -301,6 +313,16 @@ public class OrderEntity {
     }
 
     @Basic
+    @Column(name = "idClub")
+    public String getIdClub() {
+        return idClub;
+    }
+
+    public void setIdClub(String idClub) {
+        this.idClub = idClub;
+    }
+
+    @Basic
     @Column(name = "nbTask")
     public Short getNbTask() {
         return nbTask;
@@ -325,6 +347,7 @@ public class OrderEntity {
         if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
         if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
             return false;
+        if (idProduct != null ? !idProduct.equals(that.idProduct) : that.idProduct != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
         if (priority != null ? !priority.equals(that.priority) : that.priority != null) return false;
         if (t0 != null ? !t0.equals(that.t0) : that.t0 != null) return false;
@@ -346,6 +369,7 @@ public class OrderEntity {
         if (color != null ? !color.equals(that.color) : that.color != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (selected != null ? !selected.equals(that.selected) : that.selected != null) return false;
+        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
 
         return true;
@@ -360,6 +384,7 @@ public class OrderEntity {
         result = 31 * result + (idClient != null ? idClient.hashCode() : 0);
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
+        result = 31 * result + (idProduct != null ? idProduct.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
         result = 31 * result + (t0 != null ? t0.hashCode() : 0);
@@ -379,6 +404,7 @@ public class OrderEntity {
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
+        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
         return result;
     }

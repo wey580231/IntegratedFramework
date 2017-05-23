@@ -13,6 +13,8 @@ public class ConfigEntity {
     private String value;
     private String description;
     private String editable;
+    private String idUser;
+    private String idClub;
     private UserEntity userByIdUser;
     private ClubEntity clubByIdClub;
 
@@ -66,6 +68,26 @@ public class ConfigEntity {
         this.editable = editable;
     }
 
+    @Basic
+    @Column(name = "idUser")
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+    @Basic
+    @Column(name = "idClub")
+    public String getIdClub() {
+        return idClub;
+    }
+
+    public void setIdClub(String idClub) {
+        this.idClub = idClub;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,6 +100,8 @@ public class ConfigEntity {
         if (value != null ? !value.equals(that.value) : that.value != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (editable != null ? !editable.equals(that.editable) : that.editable != null) return false;
+        if (idUser != null ? !idUser.equals(that.idUser) : that.idUser != null) return false;
+        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
 
         return true;
     }
@@ -89,6 +113,8 @@ public class ConfigEntity {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (editable != null ? editable.hashCode() : 0);
+        result = 31 * result + (idUser != null ? idUser.hashCode() : 0);
+        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         return result;
     }
 

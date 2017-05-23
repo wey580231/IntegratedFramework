@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "assisantprocess", schema = "testdatabase", catalog = "")
 public class AssisantprocessEntity {
+    private String idProcess;
     private String idTypeResource;
     private Short grp;
     private String typeSite;
@@ -21,6 +22,16 @@ public class AssisantprocessEntity {
     private Short weightSequence;
     private int id;
     private ProcessEntity processByIdProcess;
+
+    @Basic
+    @Column(name = "idProcess")
+    public String getIdProcess() {
+        return idProcess;
+    }
+
+    public void setIdProcess(String idProcess) {
+        this.idProcess = idProcess;
+    }
 
     @Basic
     @Column(name = "IdTypeResource")
@@ -150,6 +161,7 @@ public class AssisantprocessEntity {
         AssisantprocessEntity that = (AssisantprocessEntity) o;
 
         if (id != that.id) return false;
+        if (idProcess != null ? !idProcess.equals(that.idProcess) : that.idProcess != null) return false;
         if (idTypeResource != null ? !idTypeResource.equals(that.idTypeResource) : that.idTypeResource != null)
             return false;
         if (grp != null ? !grp.equals(that.grp) : that.grp != null) return false;
@@ -171,7 +183,8 @@ public class AssisantprocessEntity {
 
     @Override
     public int hashCode() {
-        int result = idTypeResource != null ? idTypeResource.hashCode() : 0;
+        int result = idProcess != null ? idProcess.hashCode() : 0;
+        result = 31 * result + (idTypeResource != null ? idTypeResource.hashCode() : 0);
         result = 31 * result + (grp != null ? grp.hashCode() : 0);
         result = 31 * result + (typeSite != null ? typeSite.hashCode() : 0);
         result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
