@@ -13,13 +13,11 @@ public class ConfigEntity {
     private String value;
     private String description;
     private String editable;
-    private String idUser;
-    private String idClub;
     private UserEntity userByIdUser;
     private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -29,7 +27,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 100)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -39,7 +37,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "value", nullable = true, length = 100)
+    @Column(name = "value")
     public String getValue() {
         return value;
     }
@@ -49,7 +47,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "description", nullable = true, length = 200)
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -59,33 +57,13 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "editable", nullable = true, length = 10)
+    @Column(name = "editable")
     public String getEditable() {
         return editable;
     }
 
     public void setEditable(String editable) {
         this.editable = editable;
-    }
-
-    @Basic
-    @Column(name = "idUser", nullable = true, length = 20)
-    public String getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
-    }
-
-    @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
-    public String getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
     }
 
     @Override
@@ -100,8 +78,6 @@ public class ConfigEntity {
         if (value != null ? !value.equals(that.value) : that.value != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (editable != null ? !editable.equals(that.editable) : that.editable != null) return false;
-        if (idUser != null ? !idUser.equals(that.idUser) : that.idUser != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
 
         return true;
     }
@@ -113,8 +89,6 @@ public class ConfigEntity {
         result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (editable != null ? editable.hashCode() : 0);
-        result = 31 * result + (idUser != null ? idUser.hashCode() : 0);
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         return result;
     }
 

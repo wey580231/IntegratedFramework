@@ -11,7 +11,6 @@ import java.util.Collection;
 public class UserEntity {
     private String id;
     private String name;
-    private String idClub;
     private String idClient;
     private String idProvider;
     private Byte authority;
@@ -21,7 +20,7 @@ public class UserEntity {
     private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 50)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -31,7 +30,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -41,17 +40,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
-    public String getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
-    }
-
-    @Basic
-    @Column(name = "idClient", nullable = true, length = 20)
+    @Column(name = "idClient")
     public String getIdClient() {
         return idClient;
     }
@@ -61,7 +50,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "idProvider", nullable = true, length = 20)
+    @Column(name = "idProvider")
     public String getIdProvider() {
         return idProvider;
     }
@@ -71,7 +60,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "authority", nullable = true)
+    @Column(name = "authority")
     public Byte getAuthority() {
         return authority;
     }
@@ -81,7 +70,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -99,7 +88,6 @@ public class UserEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (idClient != null ? !idClient.equals(that.idClient) : that.idClient != null) return false;
         if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
         if (authority != null ? !authority.equals(that.authority) : that.authority != null) return false;
@@ -112,7 +100,6 @@ public class UserEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (idClient != null ? idClient.hashCode() : 0);
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (authority != null ? authority.hashCode() : 0);

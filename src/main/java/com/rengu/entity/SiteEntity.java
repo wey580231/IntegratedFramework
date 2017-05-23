@@ -21,7 +21,7 @@ public class SiteEntity {
     private Collection<PlanEntity> plansById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -31,7 +31,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 100)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -41,7 +41,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "type", nullable = true, length = 100)
+    @Column(name = "type")
     public String getType() {
         return type;
     }
@@ -51,7 +51,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "x", nullable = true)
+    @Column(name = "x")
     public Short getX() {
         return x;
     }
@@ -61,7 +61,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "y", nullable = true)
+    @Column(name = "y")
     public Short getY() {
         return y;
     }
@@ -71,7 +71,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "color", nullable = true, length = 50)
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -81,7 +81,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "idIcon", nullable = true, length = 50)
+    @Column(name = "idIcon")
     public String getIdIcon() {
         return idIcon;
     }
@@ -91,7 +91,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "sizeIcon", nullable = true)
+    @Column(name = "sizeIcon")
     public Short getSizeIcon() {
         return sizeIcon;
     }
@@ -101,7 +101,7 @@ public class SiteEntity {
     }
 
     @Basic
-    @Column(name = "capacity", nullable = true)
+    @Column(name = "capacity")
     public Short getCapacity() {
         return capacity;
     }

@@ -13,7 +13,6 @@ public class ProcessEntity {
     private String name;
     private String idRoot;
     private String idParent;
-    private String idProduct;
     private Short ordToRoot;
     private String ordToRootChild;
     private Short ordToParent;
@@ -48,7 +47,6 @@ public class ProcessEntity {
     private Short maxTimeSucc;
     private Short quantity;
     private Short unitQuantity;
-    private Short RG_switch;
     private Short minQtySwitch;
     private Short maxQtySwitch;
     private Short modQtySwitch;
@@ -71,12 +69,13 @@ public class ProcessEntity {
     private String batch;
     private String idIcon;
     private Short nbTask;
+    private Short rgSwitch;
     private Collection<AssisantprocessEntity> assisantprocessesById;
     private Collection<PlanEntity> plansById;
     private ProductEntity productByIdProduct;
 
     @Id
-    @Column(name = "id", nullable = false, length = 100)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -86,7 +85,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -96,7 +95,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "idRoot", nullable = true, length = 255)
+    @Column(name = "idRoot")
     public String getIdRoot() {
         return idRoot;
     }
@@ -106,7 +105,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "idParent", nullable = true, length = 255)
+    @Column(name = "idParent")
     public String getIdParent() {
         return idParent;
     }
@@ -116,17 +115,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "idProduct", nullable = true, length = 100)
-    public String getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(String idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    @Basic
-    @Column(name = "ordToRoot", nullable = true)
+    @Column(name = "ordToRoot")
     public Short getOrdToRoot() {
         return ordToRoot;
     }
@@ -136,7 +125,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "OrdToRootChild", nullable = true, length = 100)
+    @Column(name = "OrdToRootChild")
     public String getOrdToRootChild() {
         return ordToRootChild;
     }
@@ -146,7 +135,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "ordToParent", nullable = true)
+    @Column(name = "ordToParent")
     public Short getOrdToParent() {
         return ordToParent;
     }
@@ -156,7 +145,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "typeShift", nullable = true)
+    @Column(name = "typeShift")
     public Byte getTypeShift() {
         return typeShift;
     }
@@ -166,7 +155,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "preemptive", nullable = true, length = 1)
+    @Column(name = "preemptive")
     public String getPreemptive() {
         return preemptive;
     }
@@ -176,7 +165,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "exclusiveJob", nullable = true, length = 1)
+    @Column(name = "exclusiveJob")
     public String getExclusiveJob() {
         return exclusiveJob;
     }
@@ -186,7 +175,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "exclusiveOrder", nullable = true, length = 1)
+    @Column(name = "exclusiveOrder")
     public String getExclusiveOrder() {
         return exclusiveOrder;
     }
@@ -196,7 +185,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "coupledTypeOrder", nullable = true, length = 1)
+    @Column(name = "coupledTypeOrder")
     public String getCoupledTypeOrder() {
         return coupledTypeOrder;
     }
@@ -206,7 +195,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupled", nullable = true, length = 200)
+    @Column(name = "IdCoupled")
     public String getIdCoupled() {
         return idCoupled;
     }
@@ -216,7 +205,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledT1", nullable = true, length = 200)
+    @Column(name = "IdCoupledT1")
     public String getIdCoupledT1() {
         return idCoupledT1;
     }
@@ -226,7 +215,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledT2", nullable = true, length = 200)
+    @Column(name = "IdCoupledT2")
     public String getIdCoupledT2() {
         return idCoupledT2;
     }
@@ -236,7 +225,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledTypeShift", nullable = true, length = 200)
+    @Column(name = "IdCoupledTypeShift")
     public String getIdCoupledTypeShift() {
         return idCoupledTypeShift;
     }
@@ -246,7 +235,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledShift", nullable = true, length = 200)
+    @Column(name = "IdCoupledShift")
     public String getIdCoupledShift() {
         return idCoupledShift;
     }
@@ -256,7 +245,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledGroupResource", nullable = true, length = 200)
+    @Column(name = "IdCoupledGroupResource")
     public String getIdCoupledGroupResource() {
         return idCoupledGroupResource;
     }
@@ -266,7 +255,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledTypeResource", nullable = true, length = 200)
+    @Column(name = "IdCoupledTypeResource")
     public String getIdCoupledTypeResource() {
         return idCoupledTypeResource;
     }
@@ -276,7 +265,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledResouce", nullable = true, length = 200)
+    @Column(name = "IdCoupledResouce")
     public String getIdCoupledResouce() {
         return idCoupledResouce;
     }
@@ -286,7 +275,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledTypeSite", nullable = true, length = 200)
+    @Column(name = "IdCoupledTypeSite")
     public String getIdCoupledTypeSite() {
         return idCoupledTypeSite;
     }
@@ -296,7 +285,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdCoupledSite", nullable = true, length = 200)
+    @Column(name = "IdCoupledSite")
     public String getIdCoupledSite() {
         return idCoupledSite;
     }
@@ -306,7 +295,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "Slot1", nullable = true, length = 200)
+    @Column(name = "Slot1")
     public String getSlot1() {
         return slot1;
     }
@@ -316,7 +305,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "Slot2", nullable = true, length = 200)
+    @Column(name = "Slot2")
     public String getSlot2() {
         return slot2;
     }
@@ -326,7 +315,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "initTime", nullable = true)
+    @Column(name = "initTime")
     public Short getInitTime() {
         return initTime;
     }
@@ -336,7 +325,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "unitTime", nullable = true)
+    @Column(name = "unitTime")
     public Short getUnitTime() {
         return unitTime;
     }
@@ -346,7 +335,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "postTime", nullable = true)
+    @Column(name = "postTime")
     public Short getPostTime() {
         return postTime;
     }
@@ -356,7 +345,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "checkTime", nullable = true)
+    @Column(name = "checkTime")
     public Short getCheckTime() {
         return checkTime;
     }
@@ -366,7 +355,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "delta", nullable = true)
+    @Column(name = "delta")
     public Short getDelta() {
         return delta;
     }
@@ -376,7 +365,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "estimate", nullable = true)
+    @Column(name = "estimate")
     public Short getEstimate() {
         return estimate;
     }
@@ -386,7 +375,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "continuous", nullable = true, length = 10)
+    @Column(name = "continuous")
     public String getContinuous() {
         return continuous;
     }
@@ -396,7 +385,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdExclusive", nullable = true, length = 1000)
+    @Column(name = "IdExclusive")
     public String getIdExclusive() {
         return idExclusive;
     }
@@ -406,7 +395,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdPrec", nullable = true, length = 1000)
+    @Column(name = "IdPrec")
     public String getIdPrec() {
         return idPrec;
     }
@@ -416,7 +405,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdSucc", nullable = true, length = 1000)
+    @Column(name = "IdSucc")
     public String getIdSucc() {
         return idSucc;
     }
@@ -426,7 +415,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "minTimeSucc", nullable = true)
+    @Column(name = "minTimeSucc")
     public Short getMinTimeSucc() {
         return minTimeSucc;
     }
@@ -436,7 +425,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "maxTimeSucc", nullable = true)
+    @Column(name = "maxTimeSucc")
     public Short getMaxTimeSucc() {
         return maxTimeSucc;
     }
@@ -446,7 +435,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "quantity", nullable = true)
+    @Column(name = "quantity")
     public Short getQuantity() {
         return quantity;
     }
@@ -456,7 +445,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "unitQuantity", nullable = true)
+    @Column(name = "unitQuantity")
     public Short getUnitQuantity() {
         return unitQuantity;
     }
@@ -466,17 +455,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "switch", nullable = true)
-    public Short getRG_switch() {
-        return RG_switch;
-    }
-
-    public void setRG_switch(Short RG_switch) {
-        this.RG_switch = RG_switch;
-    }
-
-    @Basic
-    @Column(name = "minQtySwitch", nullable = true)
+    @Column(name = "minQtySwitch")
     public Short getMinQtySwitch() {
         return minQtySwitch;
     }
@@ -486,7 +465,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "maxQtySwitch", nullable = true)
+    @Column(name = "maxQtySwitch")
     public Short getMaxQtySwitch() {
         return maxQtySwitch;
     }
@@ -496,7 +475,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "modQtySwitch", nullable = true)
+    @Column(name = "modQtySwitch")
     public Short getModQtySwitch() {
         return modQtySwitch;
     }
@@ -506,7 +485,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "IdSwitch", nullable = true, length = 255)
+    @Column(name = "IdSwitch")
     public String getIdSwitch() {
         return idSwitch;
     }
@@ -516,7 +495,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "maxResourceDivision", nullable = true)
+    @Column(name = "maxResourceDivision")
     public Short getMaxResourceDivision() {
         return maxResourceDivision;
     }
@@ -526,7 +505,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "minResourceDivision", nullable = true)
+    @Column(name = "minResourceDivision")
     public Short getMinResourceDivision() {
         return minResourceDivision;
     }
@@ -536,7 +515,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "modResourceDivision", nullable = true)
+    @Column(name = "modResourceDivision")
     public Short getModResourceDivision() {
         return modResourceDivision;
     }
@@ -546,7 +525,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "minTimeDivision", nullable = true)
+    @Column(name = "minTimeDivision")
     public Short getMinTimeDivision() {
         return minTimeDivision;
     }
@@ -556,7 +535,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "maxTimeDivision", nullable = true)
+    @Column(name = "maxTimeDivision")
     public Short getMaxTimeDivision() {
         return maxTimeDivision;
     }
@@ -566,7 +545,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "modTimeDivision", nullable = true)
+    @Column(name = "modTimeDivision")
     public Short getModTimeDivision() {
         return modTimeDivision;
     }
@@ -576,7 +555,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "minQtyDivision", nullable = true)
+    @Column(name = "minQtyDivision")
     public Short getMinQtyDivision() {
         return minQtyDivision;
     }
@@ -586,7 +565,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "maxQtyDivision", nullable = true)
+    @Column(name = "maxQtyDivision")
     public Short getMaxQtyDivision() {
         return maxQtyDivision;
     }
@@ -596,7 +575,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "modQtyDivision", nullable = true)
+    @Column(name = "modQtyDivision")
     public Short getModQtyDivision() {
         return modQtyDivision;
     }
@@ -606,7 +585,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "minQtyBatch", nullable = true)
+    @Column(name = "minQtyBatch")
     public Short getMinQtyBatch() {
         return minQtyBatch;
     }
@@ -616,7 +595,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "maxQtyBatch", nullable = true)
+    @Column(name = "maxQtyBatch")
     public Short getMaxQtyBatch() {
         return maxQtyBatch;
     }
@@ -626,7 +605,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "modQtyBatch", nullable = true)
+    @Column(name = "modQtyBatch")
     public Short getModQtyBatch() {
         return modQtyBatch;
     }
@@ -636,7 +615,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "minTimeBatch", nullable = true)
+    @Column(name = "minTimeBatch")
     public Short getMinTimeBatch() {
         return minTimeBatch;
     }
@@ -646,7 +625,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "maxTimeBatch", nullable = true)
+    @Column(name = "maxTimeBatch")
     public Short getMaxTimeBatch() {
         return maxTimeBatch;
     }
@@ -656,7 +635,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "modTimeBatch", nullable = true)
+    @Column(name = "modTimeBatch")
     public Short getModTimeBatch() {
         return modTimeBatch;
     }
@@ -666,7 +645,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "batch", nullable = true, length = 10)
+    @Column(name = "batch")
     public String getBatch() {
         return batch;
     }
@@ -676,7 +655,7 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "idIcon", nullable = true, length = 10)
+    @Column(name = "idIcon")
     public String getIdIcon() {
         return idIcon;
     }
@@ -686,13 +665,23 @@ public class ProcessEntity {
     }
 
     @Basic
-    @Column(name = "nbTask", nullable = true)
+    @Column(name = "nbTask")
     public Short getNbTask() {
         return nbTask;
     }
 
     public void setNbTask(Short nbTask) {
         this.nbTask = nbTask;
+    }
+
+    @Basic
+    @Column(name = "RG_switch")
+    public Short getRgSwitch() {
+        return rgSwitch;
+    }
+
+    public void setRgSwitch(Short rgSwitch) {
+        this.rgSwitch = rgSwitch;
     }
 
     @Override
@@ -706,7 +695,6 @@ public class ProcessEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (idRoot != null ? !idRoot.equals(that.idRoot) : that.idRoot != null) return false;
         if (idParent != null ? !idParent.equals(that.idParent) : that.idParent != null) return false;
-        if (idProduct != null ? !idProduct.equals(that.idProduct) : that.idProduct != null) return false;
         if (ordToRoot != null ? !ordToRoot.equals(that.ordToRoot) : that.ordToRoot != null) return false;
         if (ordToRootChild != null ? !ordToRootChild.equals(that.ordToRootChild) : that.ordToRootChild != null)
             return false;
@@ -751,7 +739,6 @@ public class ProcessEntity {
         if (maxTimeSucc != null ? !maxTimeSucc.equals(that.maxTimeSucc) : that.maxTimeSucc != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
         if (unitQuantity != null ? !unitQuantity.equals(that.unitQuantity) : that.unitQuantity != null) return false;
-        if (RG_switch != null ? !RG_switch.equals(that.RG_switch) : that.RG_switch != null) return false;
         if (minQtySwitch != null ? !minQtySwitch.equals(that.minQtySwitch) : that.minQtySwitch != null) return false;
         if (maxQtySwitch != null ? !maxQtySwitch.equals(that.maxQtySwitch) : that.maxQtySwitch != null) return false;
         if (modQtySwitch != null ? !modQtySwitch.equals(that.modQtySwitch) : that.modQtySwitch != null) return false;
@@ -783,6 +770,7 @@ public class ProcessEntity {
         if (batch != null ? !batch.equals(that.batch) : that.batch != null) return false;
         if (idIcon != null ? !idIcon.equals(that.idIcon) : that.idIcon != null) return false;
         if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
+        if (rgSwitch != null ? !rgSwitch.equals(that.rgSwitch) : that.rgSwitch != null) return false;
 
         return true;
     }
@@ -793,7 +781,6 @@ public class ProcessEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (idRoot != null ? idRoot.hashCode() : 0);
         result = 31 * result + (idParent != null ? idParent.hashCode() : 0);
-        result = 31 * result + (idProduct != null ? idProduct.hashCode() : 0);
         result = 31 * result + (ordToRoot != null ? ordToRoot.hashCode() : 0);
         result = 31 * result + (ordToRootChild != null ? ordToRootChild.hashCode() : 0);
         result = 31 * result + (ordToParent != null ? ordToParent.hashCode() : 0);
@@ -828,7 +815,6 @@ public class ProcessEntity {
         result = 31 * result + (maxTimeSucc != null ? maxTimeSucc.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (unitQuantity != null ? unitQuantity.hashCode() : 0);
-        result = 31 * result + (RG_switch != null ? RG_switch.hashCode() : 0);
         result = 31 * result + (minQtySwitch != null ? minQtySwitch.hashCode() : 0);
         result = 31 * result + (maxQtySwitch != null ? maxQtySwitch.hashCode() : 0);
         result = 31 * result + (modQtySwitch != null ? modQtySwitch.hashCode() : 0);
@@ -851,6 +837,7 @@ public class ProcessEntity {
         result = 31 * result + (batch != null ? batch.hashCode() : 0);
         result = 31 * result + (idIcon != null ? idIcon.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
+        result = 31 * result + (rgSwitch != null ? rgSwitch.hashCode() : 0);
         return result;
     }
 
