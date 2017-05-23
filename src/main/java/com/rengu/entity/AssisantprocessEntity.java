@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "assisantprocess", schema = "testdatabase", catalog = "")
 public class AssisantprocessEntity {
-    private String idProcess;
     private String idTypeResource;
     private Short grp;
     private String typeSite;
@@ -20,20 +19,11 @@ public class AssisantprocessEntity {
     private String primary;
     private Short weightParallel;
     private Short weightSequence;
+    private int id;
     private ProcessEntity processByIdProcess;
 
     @Basic
-    @Column(name = "idProcess", nullable = false, length = 255)
-    public String getIdProcess() {
-        return idProcess;
-    }
-
-    public void setIdProcess(String idProcess) {
-        this.idProcess = idProcess;
-    }
-
-    @Basic
-    @Column(name = "IdTypeResource", nullable = true, length = 255)
+    @Column(name = "IdTypeResource")
     public String getIdTypeResource() {
         return idTypeResource;
     }
@@ -43,7 +33,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "grp", nullable = true)
+    @Column(name = "grp")
     public Short getGrp() {
         return grp;
     }
@@ -53,7 +43,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "TypeSite", nullable = true, length = 255)
+    @Column(name = "TypeSite")
     public String getTypeSite() {
         return typeSite;
     }
@@ -63,7 +53,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "IdSite", nullable = true, length = 255)
+    @Column(name = "IdSite")
     public String getIdSite() {
         return idSite;
     }
@@ -73,7 +63,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "minResource", nullable = true)
+    @Column(name = "minResource")
     public Short getMinResource() {
         return minResource;
     }
@@ -83,7 +73,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "maxResource", nullable = true)
+    @Column(name = "maxResource")
     public Short getMaxResource() {
         return maxResource;
     }
@@ -93,7 +83,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "siteInGroupResource", nullable = true, length = 5)
+    @Column(name = "siteInGroupResource")
     public String getSiteInGroupResource() {
         return siteInGroupResource;
     }
@@ -103,7 +93,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "modResource", nullable = true)
+    @Column(name = "modResource")
     public Short getModResource() {
         return modResource;
     }
@@ -113,7 +103,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "primary", nullable = true, length = 255)
+    @Column(name = "primary")
     public String getPrimary() {
         return primary;
     }
@@ -123,7 +113,7 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "weightParallel", nullable = true)
+    @Column(name = "weightParallel")
     public Short getWeightParallel() {
         return weightParallel;
     }
@@ -133,13 +123,23 @@ public class AssisantprocessEntity {
     }
 
     @Basic
-    @Column(name = "weightSequence", nullable = true)
+    @Column(name = "weightSequence")
     public Short getWeightSequence() {
         return weightSequence;
     }
 
     public void setWeightSequence(Short weightSequence) {
         this.weightSequence = weightSequence;
+    }
+
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class AssisantprocessEntity {
 
         AssisantprocessEntity that = (AssisantprocessEntity) o;
 
-        if (idProcess != null ? !idProcess.equals(that.idProcess) : that.idProcess != null) return false;
+        if (id != that.id) return false;
         if (idTypeResource != null ? !idTypeResource.equals(that.idTypeResource) : that.idTypeResource != null)
             return false;
         if (grp != null ? !grp.equals(that.grp) : that.grp != null) return false;
@@ -171,8 +171,7 @@ public class AssisantprocessEntity {
 
     @Override
     public int hashCode() {
-        int result = idProcess != null ? idProcess.hashCode() : 0;
-        result = 31 * result + (idTypeResource != null ? idTypeResource.hashCode() : 0);
+        int result = idTypeResource != null ? idTypeResource.hashCode() : 0;
         result = 31 * result + (grp != null ? grp.hashCode() : 0);
         result = 31 * result + (typeSite != null ? typeSite.hashCode() : 0);
         result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
@@ -183,11 +182,12 @@ public class AssisantprocessEntity {
         result = 31 * result + (primary != null ? primary.hashCode() : 0);
         result = 31 * result + (weightParallel != null ? weightParallel.hashCode() : 0);
         result = 31 * result + (weightSequence != null ? weightSequence.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "idProcess", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "idProcess", referencedColumnName = "id")
     public ProcessEntity getProcessByIdProcess() {
         return processByIdProcess;
     }

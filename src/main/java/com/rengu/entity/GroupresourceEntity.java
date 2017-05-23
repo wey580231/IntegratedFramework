@@ -11,8 +11,6 @@ import java.util.Collection;
 public class GroupresourceEntity {
     private String id;
     private String name;
-    private String idProvider;
-    private String idClub;
     private Byte external;
     private String idSite0;
     private Byte state;
@@ -24,7 +22,7 @@ public class GroupresourceEntity {
     private Collection<ResourceEntity> resourcesById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -34,7 +32,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 100)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -44,27 +42,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "idProvider", nullable = true, length = 20)
-    public String getIdProvider() {
-        return idProvider;
-    }
-
-    public void setIdProvider(String idProvider) {
-        this.idProvider = idProvider;
-    }
-
-    @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
-    public String getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
-    }
-
-    @Basic
-    @Column(name = "external", nullable = true)
+    @Column(name = "external")
     public Byte getExternal() {
         return external;
     }
@@ -74,7 +52,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "idSite0", nullable = true, length = 20)
+    @Column(name = "idSite0")
     public String getIdSite0() {
         return idSite0;
     }
@@ -84,7 +62,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "state", nullable = true)
+    @Column(name = "state")
     public Byte getState() {
         return state;
     }
@@ -94,7 +72,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "color", nullable = true, length = 50)
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -104,7 +82,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "IdSite", nullable = true, length = 100)
+    @Column(name = "IdSite")
     public String getIdSite() {
         return idSite;
     }
@@ -122,8 +100,6 @@ public class GroupresourceEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (external != null ? !external.equals(that.external) : that.external != null) return false;
         if (idSite0 != null ? !idSite0.equals(that.idSite0) : that.idSite0 != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
@@ -137,8 +113,6 @@ public class GroupresourceEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (external != null ? external.hashCode() : 0);
         result = 31 * result + (idSite0 != null ? idSite0.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);

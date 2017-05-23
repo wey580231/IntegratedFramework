@@ -12,14 +12,13 @@ public class ProviderEntity {
     private String id;
     private String name;
     private String idSite;
-    private String idClub;
     private String color;
     private Collection<GroupresourceEntity> groupresourcesById;
     private Collection<PlanEntity> plansById;
     private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -29,7 +28,7 @@ public class ProviderEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -39,7 +38,7 @@ public class ProviderEntity {
     }
 
     @Basic
-    @Column(name = "idSite", nullable = true, length = 20)
+    @Column(name = "idSite")
     public String getIdSite() {
         return idSite;
     }
@@ -49,17 +48,7 @@ public class ProviderEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
-    public String getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
-    }
-
-    @Basic
-    @Column(name = "color", nullable = true, length = 255)
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -78,7 +67,6 @@ public class ProviderEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (idSite != null ? !idSite.equals(that.idSite) : that.idSite != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (color != null ? !color.equals(that.color) : that.color != null) return false;
 
         return true;
@@ -89,7 +77,6 @@ public class ProviderEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (color != null ? color.hashCode() : 0);
         return result;
     }

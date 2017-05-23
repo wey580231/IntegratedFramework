@@ -16,7 +16,7 @@ public class ShiftEntity {
     private Short extra;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -26,7 +26,7 @@ public class ShiftEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -36,7 +36,7 @@ public class ShiftEntity {
     }
 
     @Basic
-    @Column(name = "type", nullable = true)
+    @Column(name = "type")
     public Byte getType() {
         return type;
     }
@@ -46,7 +46,7 @@ public class ShiftEntity {
     }
 
     @Basic
-    @Column(name = "Slot", nullable = true, length = 255)
+    @Column(name = "Slot")
     public String getSlot() {
         return slot;
     }
@@ -56,7 +56,7 @@ public class ShiftEntity {
     }
 
     @Basic
-    @Column(name = "id0", nullable = true, length = 20)
+    @Column(name = "id0")
     public String getId0() {
         return id0;
     }
@@ -66,7 +66,7 @@ public class ShiftEntity {
     }
 
     @Basic
-    @Column(name = "extra", nullable = true)
+    @Column(name = "extra")
     public Short getExtra() {
         return extra;
     }

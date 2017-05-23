@@ -20,7 +20,7 @@ public class ClubEntity {
     private Collection<UserEntity> usersById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 255)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -30,7 +30,7 @@ public class ClubEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }

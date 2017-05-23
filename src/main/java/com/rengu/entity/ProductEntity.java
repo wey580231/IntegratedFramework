@@ -23,7 +23,7 @@ public class ProductEntity {
     private Collection<ProcessEntity> processesById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 100)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -33,7 +33,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -43,7 +43,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "type", nullable = true, length = 255)
+    @Column(name = "type")
     public String getType() {
         return type;
     }
@@ -53,7 +53,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "ref", nullable = true, length = 255)
+    @Column(name = "ref")
     public String getRef() {
         return ref;
     }
@@ -63,7 +63,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "depth", nullable = true, length = 255)
+    @Column(name = "depth")
     public String getDepth() {
         return depth;
     }
@@ -73,7 +73,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "stock", nullable = true)
+    @Column(name = "stock")
     public Short getStock() {
         return stock;
     }
@@ -83,7 +83,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "unit", nullable = true, length = 20)
+    @Column(name = "unit")
     public String getUnit() {
         return unit;
     }
@@ -93,7 +93,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "model", nullable = true, length = 100)
+    @Column(name = "model")
     public String getModel() {
         return model;
     }
@@ -103,7 +103,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "state", nullable = true, length = 20)
+    @Column(name = "state")
     public String getState() {
         return state;
     }
@@ -113,7 +113,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "supplyMethod", nullable = true, length = 20)
+    @Column(name = "supplyMethod")
     public String getSupplyMethod() {
         return supplyMethod;
     }
