@@ -19,7 +19,7 @@ public class ConfigEntity {
     private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -29,7 +29,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 100)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -39,7 +39,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "value", nullable = true, length = 100)
+    @Column(name = "value")
     public String getValue() {
         return value;
     }
@@ -49,7 +49,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "description", nullable = true, length = 200)
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -59,7 +59,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "editable", nullable = true, length = 10)
+    @Column(name = "editable")
     public String getEditable() {
         return editable;
     }
@@ -69,7 +69,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "idUser", nullable = true, length = 20)
+    @Column(name = "idUser")
     public String getIdUser() {
         return idUser;
     }
@@ -79,7 +79,7 @@ public class ConfigEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
+    @Column(name = "idClub")
     public String getIdClub() {
         return idClub;
     }

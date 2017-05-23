@@ -19,7 +19,7 @@ public class ProviderEntity {
     private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -29,7 +29,7 @@ public class ProviderEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -39,7 +39,7 @@ public class ProviderEntity {
     }
 
     @Basic
-    @Column(name = "idSite", nullable = true, length = 20)
+    @Column(name = "idSite")
     public String getIdSite() {
         return idSite;
     }
@@ -49,7 +49,7 @@ public class ProviderEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
+    @Column(name = "idClub")
     public String getIdClub() {
         return idClub;
     }
@@ -59,7 +59,7 @@ public class ProviderEntity {
     }
 
     @Basic
-    @Column(name = "color", nullable = true, length = 255)
+    @Column(name = "color")
     public String getColor() {
         return color;
     }

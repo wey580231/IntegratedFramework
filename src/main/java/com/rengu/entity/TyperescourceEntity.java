@@ -16,7 +16,7 @@ public class TyperescourceEntity {
     private Collection<PlanEntity> plansById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 100)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -26,7 +26,7 @@ public class TyperescourceEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -36,7 +36,7 @@ public class TyperescourceEntity {
     }
 
     @Basic
-    @Column(name = "attribute", nullable = true, length = 20)
+    @Column(name = "attribute")
     public String getAttribute() {
         return attribute;
     }
@@ -46,7 +46,7 @@ public class TyperescourceEntity {
     }
 
     @Basic
-    @Column(name = "ratio", nullable = true, precision = 0)
+    @Column(name = "ratio")
     public Double getRatio() {
         return ratio;
     }
