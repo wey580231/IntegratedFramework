@@ -4,7 +4,6 @@ import com.rengu.DAO.OrdersDAO;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -31,10 +30,7 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             session.save(rg_orderEntity);
-            transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,10 +46,7 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             session.delete(rg_orderEntity);
-            transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,10 +62,7 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             session.update(rg_orderEntity);
-            transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,11 +73,9 @@ public class OrdersDAOImpl implements OrdersDAO {
     @Override
     public List<?> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
-//        transaction.commit();
         return list;
     }
 
@@ -99,12 +87,10 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return null;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", rg_orderEntity.getClubByIdClub().getName());
             List list = query.list();
-            transaction.commit();
             return list;
         } catch (Exception exception) {
             exception.printStackTrace();

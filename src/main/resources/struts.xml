@@ -11,13 +11,15 @@
     <!--过滤websocket连接。-->
     <constant name="struts.action.excludePattern" value="/notification/.*"/>
 
+    <package name="Orders" namespace="/orders" extends="struts-default">
+        <action name="findAllByUsername" class="com.rengu.actions.OrdersAction" method="getOrders"/>
+    </package>
+
 
     <package name="default" extends="struts-default" namespace="/">
         <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
             <result name="error">/jsps/Login/Login_Fail.jsp</result>
             <result name="success">/jsps/Login/Login_Success.jsp</result>
-        </action>
-        <action name="OrdersAction" class="com.rengu.actions.OrdersAction" method="findAllByUsername">
         </action>
     </package>
 </struts>

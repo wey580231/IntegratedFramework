@@ -34,7 +34,6 @@
           <element id="library" level="project" name="Maven: javax.websocket:javax.websocket-api:1.1" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="IntegratedFramework/web/Web2" />
     </root>
   </artifact>
 </component>

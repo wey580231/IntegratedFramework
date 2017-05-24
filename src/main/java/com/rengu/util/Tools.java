@@ -1,6 +1,7 @@
 package com.rengu.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -21,5 +22,18 @@ public class Tools {
             e.printStackTrace();
         }
         return object;
+    }
+
+    public static String entityConvertToJsonString(Object object) {
+        String jsonString = null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        try {
+            jsonString = objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return jsonString;
     }
 }
