@@ -1,7 +1,7 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.UsersDAO;
-import com.rengu.entity.UserEntity;
+import com.rengu.entity.RG_UserEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,12 +16,12 @@ import java.util.List;
 public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
 
     @Override
-    public boolean userLogin(UserEntity usersEntity) {
+    public boolean userLogin(RG_UserEntity usersEntity) {
         Transaction transaction = null;
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
-            String hql = "from UserEntity userEntity where userEntity.name=:username and userEntity.password=:password";
+            String hql = "from RG_UserEntity userEntity where userEntity.name=:username and userEntity.password=:password";
             Query query = session.createQuery(hql);
             query.setParameter("username", usersEntity.getName());
             query.setParameter("password", usersEntity.getPassword());
@@ -42,7 +42,7 @@ public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
     }
 
     @Override
-    public boolean userSignin(UserEntity userEntity) {
+    public boolean userSignin(RG_UserEntity userEntity) {
         Transaction transaction = null;
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();

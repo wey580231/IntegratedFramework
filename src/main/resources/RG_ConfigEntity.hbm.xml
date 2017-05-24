@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_ConfigEntity" table="RG_Config" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(20)" length="20"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="value">
+            <column name="value" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="description">
+            <column name="description" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="editable">
+            <column name="editable" sql-type="varchar(10)" length="10" not-null="false"/>
+        </property>
+        <many-to-one name="userByIdUser" class="com.rengu.entity.RG_UserEntity">
+            <column name="idUser" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
+            <column name="idClub" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

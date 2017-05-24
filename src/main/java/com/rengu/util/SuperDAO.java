@@ -1,4 +1,6 @@
-package com.rengu.DAO;
+package com.rengu.util;
+
+import java.util.List;
 
 /**
  * Created by hanchangming on 2017/5/22.
@@ -10,7 +12,7 @@ public interface SuperDAO {
 
     boolean update(Object object);
 
-    boolean findAll();
+    List<?> findAll();
 
-    boolean findAllByUsername(Object object);
+    List<?> findAllByUsername(Object object);
 }

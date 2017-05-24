@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_GroupresourceEntity" table="RG_Groupresource" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(20)" length="20"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="external">
+            <column name="external" sql-type="tinyint(4)" not-null="false"/>
+        </property>
+        <property name="idSite0">
+            <column name="idSite0" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="state">
+            <column name="state" sql-type="tinyint(4)" not-null="false"/>
+        </property>
+        <property name="color">
+            <column name="color" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="idSite">
+            <column name="IdSite" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <many-to-one name="providerByIdProvider" class="com.rengu.entity.RG_ProviderEntity">
+            <column name="idProvider" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
+            <column name="idClub" not-null="false"/>
+        </many-to-one>
+        <set name="resourcesById" cascade="all" outer-join="true">
+            <key column="idGroupResource" foreign-key="id"></key>
+            <one-to-many class="com.rengu.entity.RG_ResourceEntity"/>
+        </set>
+        <set name="sitesById" cascade="all">
+            <key column="groupresourceId"></key>
+            <one-to-many class="com.rengu.entity.RG_SiteEntity"/>
+        </set>
+    </class>
+</hibernate-mapping>

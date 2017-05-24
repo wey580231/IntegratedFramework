@@ -1,14 +1,11 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "site", schema = "testdatabase", catalog = "")
-public class SiteEntity {
+public class RG_SiteEntity {
     private String id;
     private String name;
     private String type;
@@ -18,10 +15,8 @@ public class SiteEntity {
     private String idIcon;
     private Short sizeIcon;
     private Short capacity;
-    private Collection<PlanEntity> plansById;
+    private Set<RG_ResourceEntity> resources;
 
-    @Id
-    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -30,8 +25,6 @@ public class SiteEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -40,8 +33,6 @@ public class SiteEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "type")
     public String getType() {
         return type;
     }
@@ -50,8 +41,6 @@ public class SiteEntity {
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "x")
     public Short getX() {
         return x;
     }
@@ -60,8 +49,6 @@ public class SiteEntity {
         this.x = x;
     }
 
-    @Basic
-    @Column(name = "y")
     public Short getY() {
         return y;
     }
@@ -70,8 +57,6 @@ public class SiteEntity {
         this.y = y;
     }
 
-    @Basic
-    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -80,8 +65,6 @@ public class SiteEntity {
         this.color = color;
     }
 
-    @Basic
-    @Column(name = "idIcon")
     public String getIdIcon() {
         return idIcon;
     }
@@ -90,8 +73,6 @@ public class SiteEntity {
         this.idIcon = idIcon;
     }
 
-    @Basic
-    @Column(name = "sizeIcon")
     public Short getSizeIcon() {
         return sizeIcon;
     }
@@ -100,8 +81,6 @@ public class SiteEntity {
         this.sizeIcon = sizeIcon;
     }
 
-    @Basic
-    @Column(name = "capacity")
     public Short getCapacity() {
         return capacity;
     }
@@ -115,7 +94,7 @@ public class SiteEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SiteEntity that = (SiteEntity) o;
+        RG_SiteEntity that = (RG_SiteEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -144,12 +123,11 @@ public class SiteEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "siteByIdSite")
-    public Collection<PlanEntity> getPlansById() {
-        return plansById;
+    public Set<RG_ResourceEntity> getResources() {
+        return resources;
     }
 
-    public void setPlansById(Collection<PlanEntity> plansById) {
-        this.plansById = plansById;
+    public void setResources(Set<RG_ResourceEntity> resources) {
+        this.resources = resources;
     }
 }
