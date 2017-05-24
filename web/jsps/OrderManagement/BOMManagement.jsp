@@ -41,11 +41,12 @@
     .nav-ml li a {
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
-        border: 1px solid #f5f215;
+
         border-radius: 5px;
         display: inline-block;
         padding: 3px 8px;
-        text-decoration: none
+        text-decoration: none;
+        background-color: #f9fcfc;
     }
 
     .fold {
@@ -74,14 +75,31 @@
         background-size: 100% 100%;
     }
 
+    /*
+        所有input的背景色
+    */
     .uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
         vertical-align: middle;
         background-color: #eef7fc;
         height: 23px;
     }
+    /*
+        表格奇数行颜色
+    */
+    .uk-table-striped tbody tr:nth-of-type(2n+1) {
+        background: #f3f8fb;
+    }
+
+    /*
+        BOM树字体颜色
+    */
+   /* .uk-link, a {
+        color: black;
+        cursor: pointer;
+    }*/
 </style>
 
-<div class="uk-grid" style="height: 40px;margin-top: 10px;">
+<div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
 
     &nbsp;&nbsp;
     <span style="font-size: 18px;font-weight: 700;margin-top: 10px;">制造BOM管理</span>
@@ -104,17 +122,18 @@
     </div>
 </div>
 <hr class="uk-article-divider">
-<div class="uk-grid">
+<div class="uk-grid" style="margin-top: -25px;">
     <!--BOM树-->
     <div  class="uk-width-1-5" style="width: 23%;">
-        <div style="border-bottom: 1px solid lightgray;">
+        <!--BOM树上部-->
+        <div style="border-bottom: 1px solid lightgray;background-color: white;">
             <form class="uk-form uk-form-horizontal">
                 <fieldset data-uk-margin>
-                    <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 5px;">
-                        <span class="bomspan" style="">BOM  </span>&nbsp;&nbsp;
+                    <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <span class="bomspan" style="margin-top: 8px;">BOM  </span>&nbsp;&nbsp;
                     </div>
 
-                    <div class="uk-form-row">
+                    <div class="uk-form-row" style="margin-top: 6px;">
                         <select class="uk-grid" style="width: 130px;height: 27px;">
                             <option value="1">产品A</option>
                             <option value="2">产品B</option>
@@ -126,35 +145,42 @@
         </div>
 
         <p></p>
-        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 610px">
+        <!--BOM树下部-->
+        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 610px;margin-top: -15px;background-color: #e2ebf2;">
             <div class="uk-form-row">
                 <div class="wrapper">
                     <div class="nav-ml">
                         <ul>
                             <li>
                                 <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>一级</a>
+                                    <li><a class="item-1"><i></i>零件1</a>
                                         <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>二级</a>
+                                            <li><a class="item-2"><i></i>自产零件A</a>
                                                 <ul class="nav-three fold">
-                                                    <li><a>三级</a></li>
-                                                    <li><a>三级</a></li>
+                                                    <li><a>自产零件A1</a></li>
+                                                    <li><a>自产零件A2</a></li>
+                                                    <li><a>自产零件A3</a></li>
                                                 </ul>
                                             </li>
+                                            <li><a class="item-2"><i></i>自产零件B</a></li>
+                                            <li><a class="item-2"><i></i>自产零件C</a></li>
+                                            <li><a class="item-2"><i></i>自产零件D</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
                             <li>
                                 <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>一级</a>
+                                    <li><a class="item-1"><i></i>零件2</a>
                                         <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>二级</a>
+                                            <li><a class="item-2"><i></i>子零件2-1</a>
                                                 <ul class="nav-three fold">
-                                                    <li><a>三级</a></li>
-                                                    <li><a>三级</a></li>
+                                                    <li><a>外购部件AA</a></li>
+                                                    <li><a>外购部件BB</a></li>
                                                 </ul>
                                             </li>
+                                            <li><a class="item-2"><i></i>自产零件CD</a></li>
+                                            <li><a class="item-2"><i></i>自产零件DD</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -166,7 +192,7 @@
         </div>
     </div>
     <!--右侧表格-->
-    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 714px;">
+    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 695px;background-color: white;">
        <div style="margin-top: 15px;margin-left: -10px;">
            <!--表格上部-->
            <form class="uk-form">
