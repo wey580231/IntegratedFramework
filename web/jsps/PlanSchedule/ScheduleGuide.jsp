@@ -24,9 +24,11 @@
     </div>
     <div class="uk-width-1-4">
         <form class="uk-form">
-            <input type="text" id="datepicker" class="uk-icon-calendar" data-uk-datepicker="{format:'DD.MM.YYYY'}"
-                   placeholder="2017/5/17">
-            <i class="uk-icon-calendar"></i>
+            <div class="uk-form-icon">
+                <i class="uk-icon-calendar"></i>
+                <input type="text" id="datepicker"  data-uk-datepicker="{format:'DD.MM.YYYY'}"
+                       placeholder="2017/5/17">
+            </div>
         </form>
     </div>
     <div class="uk-width-1-4">
@@ -68,7 +70,7 @@
         <tr>
             <td>1</td>
             <td>KQD生产</td>
-            <td class="uk-progress uk-progress-striped uk-active" style="width: 40%;">40%</td>
+            <td class="uk-progress uk-progress-striped uk-active" style="width: 30px;">40%</td>
             <td>2017-05-17 08：00</td>
             <td>2017-05-17 08：00</td>
             <td>2017-05-17 08：00</td>
