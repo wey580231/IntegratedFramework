@@ -87,7 +87,7 @@ public class OrdersDAOImpl implements OrdersDAO {
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
-        transaction.commit();
+//        transaction.commit();
         return list;
     }
 
