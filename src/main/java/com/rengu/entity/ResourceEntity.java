@@ -44,7 +44,7 @@ public class ResourceEntity {
     private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 100)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -54,7 +54,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -64,7 +64,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "IdTypeResource", nullable = true, length = -1)
+    @Column(name = "IdTypeResource")
     public String getIdTypeResource() {
         return idTypeResource;
     }
@@ -74,7 +74,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "idGroupResource", nullable = true, length = 20)
+    @Column(name = "idGroupResource")
     public String getIdGroupResource() {
         return idGroupResource;
     }
@@ -84,7 +84,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "idFeatureResource", nullable = true, length = 100)
+    @Column(name = "idFeatureResource")
     public String getIdFeatureResource() {
         return idFeatureResource;
     }
@@ -94,7 +94,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "IdSite", nullable = true, length = 20)
+    @Column(name = "IdSite")
     public String getIdSite() {
         return idSite;
     }
@@ -104,7 +104,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "IdSiteGroupResource", nullable = true, length = 100)
+    @Column(name = "IdSiteGroupResource")
     public String getIdSiteGroupResource() {
         return idSiteGroupResource;
     }
@@ -114,7 +114,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "TypeSite", nullable = true, length = 20)
+    @Column(name = "TypeSite")
     public String getTypeSite() {
         return typeSite;
     }
@@ -124,7 +124,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "mobility", nullable = true)
+    @Column(name = "mobility")
     public Short getMobility() {
         return mobility;
     }
@@ -134,7 +134,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "sameTypeSequence", nullable = true, length = 20)
+    @Column(name = "sameTypeSequence")
     public String getSameTypeSequence() {
         return sameTypeSequence;
     }
@@ -144,7 +144,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "idSiteSequence", nullable = true, length = 100)
+    @Column(name = "idSiteSequence")
     public String getIdSiteSequence() {
         return idSiteSequence;
     }
@@ -154,7 +154,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "quantity0", nullable = true)
+    @Column(name = "quantity0")
     public Short getQuantity0() {
         return quantity0;
     }
@@ -164,7 +164,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "critical", nullable = true, length = 1)
+    @Column(name = "critical")
     public String getCritical() {
         return critical;
     }
@@ -174,7 +174,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "IdShift", nullable = true, length = 1000)
+    @Column(name = "IdShift")
     public String getIdShift() {
         return idShift;
     }
@@ -184,7 +184,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "NameShift", nullable = true, length = 4000)
+    @Column(name = "NameShift")
     public String getNameShift() {
         return nameShift;
     }
@@ -194,7 +194,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "Calendar", nullable = true, length = -1)
+    @Column(name = "Calendar")
     public String getCalendar() {
         return calendar;
     }
@@ -204,7 +204,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "Slot", nullable = true, length = 200)
+    @Column(name = "Slot")
     public String getSlot() {
         return slot;
     }
@@ -214,7 +214,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "DateForbidden", nullable = true, length = 2000)
+    @Column(name = "DateForbidden")
     public String getDateForbidden() {
         return dateForbidden;
     }
@@ -224,7 +224,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "weekend", nullable = true, length = 20)
+    @Column(name = "weekend")
     public String getWeekend() {
         return weekend;
     }
@@ -234,7 +234,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "color", nullable = true, length = 50)
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -244,7 +244,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "makespan", nullable = true, length = 50)
+    @Column(name = "makespan")
     public String getMakespan() {
         return makespan;
     }
@@ -254,7 +254,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "rate", nullable = true, precision = 0)
+    @Column(name = "rate")
     public Double getRate() {
         return rate;
     }
@@ -264,7 +264,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "state", nullable = true)
+    @Column(name = "state")
     public Byte getState() {
         return state;
     }
@@ -274,7 +274,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "sizeIcon", nullable = true)
+    @Column(name = "sizeIcon")
     public Byte getSizeIcon() {
         return sizeIcon;
     }
@@ -284,7 +284,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "idIcon", nullable = true, length = 255)
+    @Column(name = "idIcon")
     public String getIdIcon() {
         return idIcon;
     }
@@ -294,7 +294,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "idSite0", nullable = true, length = 20)
+    @Column(name = "idSite0")
     public String getIdSite0() {
         return idSite0;
     }
@@ -304,7 +304,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "idUser", nullable = true, length = 20)
+    @Column(name = "idUser")
     public String getIdUser() {
         return idUser;
     }
@@ -314,7 +314,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
+    @Column(name = "idClub")
     public String getIdClub() {
         return idClub;
     }
@@ -324,7 +324,7 @@ public class ResourceEntity {
     }
 
     @Basic
-    @Column(name = "unit", nullable = true, length = 20)
+    @Column(name = "unit")
     public String getUnit() {
         return unit;
     }

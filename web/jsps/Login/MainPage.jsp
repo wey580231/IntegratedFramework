@@ -17,7 +17,8 @@
           href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/form-select.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/sticky.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/progress.css"/>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/accordion.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/accordion.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/autocomplete.css"/>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 
@@ -107,7 +108,6 @@
     </div>
 
 </div>
-<!--左侧-->
 <div class="uk-width-1-6" style="float: left;height: 830px;background-color: #164360;">
     <div  class="uk-width-1-1" style="margin-top: 10px;">
         <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
@@ -203,6 +203,7 @@
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/datepicker.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/accordion.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/sticky.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/autocomplete.js"></script>
 
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
@@ -212,7 +213,6 @@
 <script src="/app.js"></script>
 
 <script src="${pageContext.request.contextPath}/jsps/3DView/ShowController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/3DView/ViewConfigureController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustOrderController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustProcedureController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustDeviceController.js"></script>
@@ -231,5 +231,7 @@
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/WorkListController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceGroupController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/Login/GuideController.js"></script>
+
+
 </body>
 </html>

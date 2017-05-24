@@ -57,12 +57,16 @@ public class OrdersDAOImpl implements OrdersDAO {
     @Override
     public boolean findAllByUsername(Object object) {
         try {
+            if (object == null) {
+                findAll();
+                return false;
+            }
             OrderEntity orderEntity = getOrderEntity(object);
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
             String hql = "from OrderEntity orderEntity where orderEntity.idClub =:idClub";
             Query query = session.createQuery(hql);
-//            query.setParameter("idClub", orderEntity.getIdClub());
+            query.setParameter("idClub", orderEntity.getIdClub());
             List list = query.list();
             transaction.commit();
             if (list.size() <= 0) {

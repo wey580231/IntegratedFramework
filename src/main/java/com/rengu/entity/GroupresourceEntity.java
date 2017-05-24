@@ -24,7 +24,7 @@ public class GroupresourceEntity {
     private Collection<ResourceEntity> resourcesById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 20)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -34,7 +34,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 100)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -44,7 +44,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "idProvider", nullable = true, length = 20)
+    @Column(name = "idProvider")
     public String getIdProvider() {
         return idProvider;
     }
@@ -54,7 +54,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
+    @Column(name = "idClub")
     public String getIdClub() {
         return idClub;
     }
@@ -64,7 +64,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "external", nullable = true)
+    @Column(name = "external")
     public Byte getExternal() {
         return external;
     }
@@ -74,7 +74,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "idSite0", nullable = true, length = 20)
+    @Column(name = "idSite0")
     public String getIdSite0() {
         return idSite0;
     }
@@ -84,7 +84,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "state", nullable = true)
+    @Column(name = "state")
     public Byte getState() {
         return state;
     }
@@ -94,7 +94,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "color", nullable = true, length = 50)
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -104,7 +104,7 @@ public class GroupresourceEntity {
     }
 
     @Basic
-    @Column(name = "IdSite", nullable = true, length = 100)
+    @Column(name = "IdSite")
     public String getIdSite() {
         return idSite;
     }

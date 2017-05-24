@@ -43,7 +43,7 @@ public class OrderEntity {
     private Collection<PlanEntity> plansById;
 
     @Id
-    @Column(name = "id", nullable = false, length = 100)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -53,7 +53,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -63,7 +63,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "origin", nullable = true, length = 50)
+    @Column(name = "origin")
     public String getOrigin() {
         return origin;
     }
@@ -73,7 +73,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "type", nullable = true, length = 100)
+    @Column(name = "type")
     public String getType() {
         return type;
     }
@@ -83,7 +83,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "idClient", nullable = true, length = 20)
+    @Column(name = "idClient")
     public String getIdClient() {
         return idClient;
     }
@@ -93,7 +93,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "IdProvider", nullable = true, length = 255)
+    @Column(name = "IdProvider")
     public String getIdProvider() {
         return idProvider;
     }
@@ -103,7 +103,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "IdGroupResource", nullable = true, length = 255)
+    @Column(name = "IdGroupResource")
     public String getIdGroupResource() {
         return idGroupResource;
     }
@@ -113,7 +113,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "idProduct", nullable = true, length = 100)
+    @Column(name = "idProduct")
     public String getIdProduct() {
         return idProduct;
     }
@@ -123,7 +123,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "quantity", nullable = true)
+    @Column(name = "quantity")
     public Short getQuantity() {
         return quantity;
     }
@@ -133,7 +133,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "priority", nullable = true)
+    @Column(name = "priority")
     public Short getPriority() {
         return priority;
     }
@@ -143,7 +143,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "t0", nullable = true, length = 20)
+    @Column(name = "t0")
     public String getT0() {
         return t0;
     }
@@ -153,7 +153,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "t1", nullable = true, length = 20)
+    @Column(name = "t1")
     public String getT1() {
         return t1;
     }
@@ -163,7 +163,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "t2", nullable = true, length = 20)
+    @Column(name = "t2")
     public String getT2() {
         return t2;
     }
@@ -173,7 +173,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "ord", nullable = true)
+    @Column(name = "ord")
     public Short getOrd() {
         return ord;
     }
@@ -183,7 +183,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "IdPree", nullable = true, length = 255)
+    @Column(name = "IdPree")
     public String getIdPree() {
         return idPree;
     }
@@ -193,7 +193,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "IdSucc", nullable = true, length = 255)
+    @Column(name = "IdSucc")
     public String getIdSucc() {
         return idSucc;
     }
@@ -203,7 +203,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "IdExclusive", nullable = true, length = 255)
+    @Column(name = "IdExclusive")
     public String getIdExclusive() {
         return idExclusive;
     }
@@ -213,7 +213,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "t1Interaction", nullable = true, length = 255)
+    @Column(name = "t1Interaction")
     public String getT1Interaction() {
         return t1Interaction;
     }
@@ -223,7 +223,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "t2Interaction", nullable = true, length = 255)
+    @Column(name = "t2Interaction")
     public String getT2Interaction() {
         return t2Interaction;
     }
@@ -233,7 +233,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "t1Plan", nullable = true, length = 50)
+    @Column(name = "t1Plan")
     public String getT1Plan() {
         return t1Plan;
     }
@@ -243,7 +243,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "t2Plan", nullable = true, length = 50)
+    @Column(name = "t2Plan")
     public String getT2Plan() {
         return t2Plan;
     }
@@ -253,7 +253,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "estimate", nullable = true)
+    @Column(name = "estimate")
     public Short getEstimate() {
         return estimate;
     }
@@ -263,7 +263,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "advance", nullable = true)
+    @Column(name = "advance")
     public Short getAdvance() {
         return advance;
     }
@@ -273,7 +273,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "delay", nullable = true)
+    @Column(name = "delay")
     public Short getDelay() {
         return delay;
     }
@@ -283,7 +283,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "color", nullable = true, length = 50)
+    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -293,7 +293,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "state", nullable = true)
+    @Column(name = "state")
     public Byte getState() {
         return state;
     }
@@ -303,7 +303,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "selected", nullable = true)
+    @Column(name = "selected")
     public Byte getSelected() {
         return selected;
     }
@@ -313,7 +313,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
+    @Column(name = "idClub")
     public String getIdClub() {
         return idClub;
     }
@@ -323,7 +323,7 @@ public class OrderEntity {
     }
 
     @Basic
-    @Column(name = "nbTask", nullable = true)
+    @Column(name = "nbTask")
     public Short getNbTask() {
         return nbTask;
     }

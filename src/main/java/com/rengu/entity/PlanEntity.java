@@ -80,6 +80,7 @@ public class PlanEntity {
     private Short timeTypeResourceProvider;
     private Short timeSlotTypeResourceProvider;
     private Short capacitySlotGroupTypeResource;
+    private int id;
     private ClubEntity clubByIdClub;
     private ProcessEntity processByIdProcess;
     private OrderEntity orderByIdOrder;
@@ -90,7 +91,7 @@ public class PlanEntity {
     private ProviderEntity providerByIdProvider;
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 60)
+    @Column(name = "idClub")
     public String getIdClub() {
         return idClub;
     }
@@ -100,7 +101,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idTask", nullable = true, length = 60)
+    @Column(name = "idTask")
     public String getIdTask() {
         return idTask;
     }
@@ -110,7 +111,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idProcess", nullable = true, length = 100)
+    @Column(name = "idProcess")
     public String getIdProcess() {
         return idProcess;
     }
@@ -120,7 +121,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idOrder", nullable = true, length = 100)
+    @Column(name = "idOrder")
     public String getIdOrder() {
         return idOrder;
     }
@@ -130,7 +131,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idResource", nullable = true, length = 100)
+    @Column(name = "idResource")
     public String getIdResource() {
         return idResource;
     }
@@ -140,7 +141,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idJob", nullable = true, length = 60)
+    @Column(name = "idJob")
     public String getIdJob() {
         return idJob;
     }
@@ -150,7 +151,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idSite", nullable = true, length = 20)
+    @Column(name = "idSite")
     public String getIdSite() {
         return idSite;
     }
@@ -160,7 +161,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idGroupResource", nullable = true, length = 20)
+    @Column(name = "idGroupResource")
     public String getIdGroupResource() {
         return idGroupResource;
     }
@@ -170,7 +171,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idTypeResource", nullable = true, length = 20)
+    @Column(name = "idTypeResource")
     public String getIdTypeResource() {
         return idTypeResource;
     }
@@ -180,7 +181,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idProductOrder", nullable = true, length = 30)
+    @Column(name = "idProductOrder")
     public String getIdProductOrder() {
         return idProductOrder;
     }
@@ -190,7 +191,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idProvider", nullable = true, length = 20)
+    @Column(name = "idProvider")
     public String getIdProvider() {
         return idProvider;
     }
@@ -200,7 +201,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameTask", nullable = true, length = 100)
+    @Column(name = "nameTask")
     public String getNameTask() {
         return nameTask;
     }
@@ -210,7 +211,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameProcess", nullable = true, length = 100)
+    @Column(name = "nameProcess")
     public String getNameProcess() {
         return nameProcess;
     }
@@ -220,7 +221,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameOrder", nullable = true, length = 100)
+    @Column(name = "nameOrder")
     public String getNameOrder() {
         return nameOrder;
     }
@@ -230,7 +231,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameJob", nullable = true, length = 100)
+    @Column(name = "nameJob")
     public String getNameJob() {
         return nameJob;
     }
@@ -240,7 +241,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameResource", nullable = true, length = 100)
+    @Column(name = "nameResource")
     public String getNameResource() {
         return nameResource;
     }
@@ -250,7 +251,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameGroupResource", nullable = true, length = 100)
+    @Column(name = "nameGroupResource")
     public String getNameGroupResource() {
         return nameGroupResource;
     }
@@ -260,7 +261,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameTypeResource", nullable = true, length = 100)
+    @Column(name = "nameTypeResource")
     public String getNameTypeResource() {
         return nameTypeResource;
     }
@@ -270,7 +271,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameSite", nullable = true, length = 100)
+    @Column(name = "nameSite")
     public String getNameSite() {
         return nameSite;
     }
@@ -280,7 +281,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameProductOrder", nullable = true, length = 100)
+    @Column(name = "nameProductOrder")
     public String getNameProductOrder() {
         return nameProductOrder;
     }
@@ -290,7 +291,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nameProvider", nullable = true, length = 20)
+    @Column(name = "nameProvider")
     public String getNameProvider() {
         return nameProvider;
     }
@@ -300,7 +301,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "ordToParentTask", nullable = true)
+    @Column(name = "ordToParentTask")
     public Short getOrdToParentTask() {
         return ordToParentTask;
     }
@@ -310,7 +311,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idTaskResourceSucc", nullable = true, length = 100)
+    @Column(name = "idTaskResourceSucc")
     public String getIdTaskResourceSucc() {
         return idTaskResourceSucc;
     }
@@ -320,7 +321,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "preemptiveTask", nullable = true, length = 10)
+    @Column(name = "preemptiveTask")
     public String getPreemptiveTask() {
         return preemptiveTask;
     }
@@ -330,7 +331,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "divisibleTask", nullable = true, length = 10)
+    @Column(name = "divisibleTask")
     public String getDivisibleTask() {
         return divisibleTask;
     }
@@ -340,7 +341,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "continuousTask", nullable = true, length = 10)
+    @Column(name = "continuousTask")
     public String getContinuousTask() {
         return continuousTask;
     }
@@ -350,7 +351,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idTaskGroupTypeResourceSucc", nullable = true, length = 100)
+    @Column(name = "idTaskGroupTypeResourceSucc")
     public String getIdTaskGroupTypeResourceSucc() {
         return idTaskGroupTypeResourceSucc;
     }
@@ -360,7 +361,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "quantityTask", nullable = true)
+    @Column(name = "quantityTask")
     public Short getQuantityTask() {
         return quantityTask;
     }
@@ -370,7 +371,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "quantityResourceTask", nullable = true)
+    @Column(name = "quantityResourceTask")
     public Short getQuantityResourceTask() {
         return quantityResourceTask;
     }
@@ -380,7 +381,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "quantityBatchTask", nullable = true)
+    @Column(name = "quantityBatchTask")
     public Short getQuantityBatchTask() {
         return quantityBatchTask;
     }
@@ -390,7 +391,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "qtySequence", nullable = true)
+    @Column(name = "qtySequence")
     public Short getQtySequence() {
         return qtySequence;
     }
@@ -400,7 +401,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t1Task", nullable = true, length = 50)
+    @Column(name = "t1Task")
     public String getT1Task() {
         return t1Task;
     }
@@ -410,7 +411,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t2Task", nullable = true, length = 50)
+    @Column(name = "t2Task")
     public String getT2Task() {
         return t2Task;
     }
@@ -420,7 +421,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t2ExtendedTask", nullable = true, length = 50)
+    @Column(name = "t2ExtendedTask")
     public String getT2ExtendedTask() {
         return t2ExtendedTask;
     }
@@ -430,7 +431,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "advice", nullable = true, length = 2000)
+    @Column(name = "advice")
     public String getAdvice() {
         return advice;
     }
@@ -440,7 +441,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "CalendarTask", nullable = true, length = -1)
+    @Column(name = "CalendarTask")
     public String getCalendarTask() {
         return calendarTask;
     }
@@ -450,7 +451,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "SlotTask", nullable = true, length = 255)
+    @Column(name = "SlotTask")
     public String getSlotTask() {
         return slotTask;
     }
@@ -460,7 +461,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "estimateTask", nullable = true, length = 12)
+    @Column(name = "estimateTask")
     public String getEstimateTask() {
         return estimateTask;
     }
@@ -470,7 +471,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "timeTask", nullable = true, length = 20)
+    @Column(name = "timeTask")
     public String getTimeTask() {
         return timeTask;
     }
@@ -480,7 +481,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "initTimeTask", nullable = true, length = 12)
+    @Column(name = "initTimeTask")
     public String getInitTimeTask() {
         return initTimeTask;
     }
@@ -490,7 +491,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "unitTimeTask", nullable = true, length = 12)
+    @Column(name = "unitTimeTask")
     public String getUnitTimeTask() {
         return unitTimeTask;
     }
@@ -500,7 +501,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "postTimeTask", nullable = true, length = 12)
+    @Column(name = "postTimeTask")
     public String getPostTimeTask() {
         return postTimeTask;
     }
@@ -510,7 +511,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "checkTimeTask", nullable = true, length = 12)
+    @Column(name = "checkTimeTask")
     public String getCheckTimeTask() {
         return checkTimeTask;
     }
@@ -520,7 +521,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idGroupResource0Task", nullable = true, length = 20)
+    @Column(name = "idGroupResource0Task")
     public String getIdGroupResource0Task() {
         return idGroupResource0Task;
     }
@@ -530,7 +531,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idResource0Task", nullable = true, length = 20)
+    @Column(name = "idResource0Task")
     public String getIdResource0Task() {
         return idResource0Task;
     }
@@ -540,7 +541,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "idSite0Task", nullable = true, length = 20)
+    @Column(name = "idSite0Task")
     public String getIdSite0Task() {
         return idSite0Task;
     }
@@ -550,7 +551,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "quantity0Task", nullable = true)
+    @Column(name = "quantity0Task")
     public Short getQuantity0Task() {
         return quantity0Task;
     }
@@ -560,7 +561,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t10Task", nullable = true, length = 20)
+    @Column(name = "t10Task")
     public String getT10Task() {
         return t10Task;
     }
@@ -570,7 +571,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t20Task", nullable = true, length = 20)
+    @Column(name = "t20Task")
     public String getT20Task() {
         return t20Task;
     }
@@ -580,7 +581,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t20ExtendedTask", nullable = true, length = 20)
+    @Column(name = "t20ExtendedTask")
     public String getT20ExtendedTask() {
         return t20ExtendedTask;
     }
@@ -590,7 +591,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t1RealTask", nullable = true, length = 20)
+    @Column(name = "t1RealTask")
     public String getT1RealTask() {
         return t1RealTask;
     }
@@ -600,7 +601,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t2RealTask", nullable = true, length = 20)
+    @Column(name = "t2RealTask")
     public String getT2RealTask() {
         return t2RealTask;
     }
@@ -610,7 +611,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t1Job", nullable = true, length = 50)
+    @Column(name = "t1Job")
     public String getT1Job() {
         return t1Job;
     }
@@ -620,7 +621,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t2Job", nullable = true, length = 50)
+    @Column(name = "t2Job")
     public String getT2Job() {
         return t2Job;
     }
@@ -630,7 +631,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "quantityJob", nullable = true)
+    @Column(name = "quantityJob")
     public Short getQuantityJob() {
         return quantityJob;
     }
@@ -640,7 +641,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "quantityProviderTask", nullable = true)
+    @Column(name = "quantityProviderTask")
     public Short getQuantityProviderTask() {
         return quantityProviderTask;
     }
@@ -650,7 +651,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "nbTaskJob", nullable = true)
+    @Column(name = "nbTaskJob")
     public Short getNbTaskJob() {
         return nbTaskJob;
     }
@@ -660,7 +661,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "refProductJob", nullable = true, length = 100)
+    @Column(name = "refProductJob")
     public String getRefProductJob() {
         return refProductJob;
     }
@@ -670,7 +671,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "ordToRootJob", nullable = true)
+    @Column(name = "ordToRootJob")
     public Short getOrdToRootJob() {
         return ordToRootJob;
     }
@@ -680,7 +681,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "OrdToRootChildJob", nullable = true, length = 1000)
+    @Column(name = "OrdToRootChildJob")
     public String getOrdToRootChildJob() {
         return ordToRootChildJob;
     }
@@ -690,7 +691,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "minQtyBatchTask", nullable = true)
+    @Column(name = "minQtyBatchTask")
     public Short getMinQtyBatchTask() {
         return minQtyBatchTask;
     }
@@ -700,7 +701,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "minTimeBatchTask", nullable = true)
+    @Column(name = "minTimeBatchTask")
     public Short getMinTimeBatchTask() {
         return minTimeBatchTask;
     }
@@ -710,7 +711,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t1Order", nullable = true, length = 20)
+    @Column(name = "t1Order")
     public String getT1Order() {
         return t1Order;
     }
@@ -720,7 +721,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "t2Order", nullable = true, length = 20)
+    @Column(name = "t2Order")
     public String getT2Order() {
         return t2Order;
     }
@@ -730,7 +731,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "quantityOrder", nullable = true)
+    @Column(name = "quantityOrder")
     public Short getQuantityOrder() {
         return quantityOrder;
     }
@@ -740,7 +741,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "priorityOrder", nullable = true)
+    @Column(name = "priorityOrder")
     public Short getPriorityOrder() {
         return priorityOrder;
     }
@@ -750,7 +751,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "colorOrder", nullable = true, length = 50)
+    @Column(name = "colorOrder")
     public String getColorOrder() {
         return colorOrder;
     }
@@ -760,7 +761,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "state", nullable = true)
+    @Column(name = "state")
     public Byte getState() {
         return state;
     }
@@ -770,7 +771,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "selected", nullable = true)
+    @Column(name = "selected")
     public Byte getSelected() {
         return selected;
     }
@@ -780,7 +781,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "timeTypeResourceProvider", nullable = true)
+    @Column(name = "timeTypeResourceProvider")
     public Short getTimeTypeResourceProvider() {
         return timeTypeResourceProvider;
     }
@@ -790,7 +791,7 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "timeSlotTypeResourceProvider", nullable = true)
+    @Column(name = "timeSlotTypeResourceProvider")
     public Short getTimeSlotTypeResourceProvider() {
         return timeSlotTypeResourceProvider;
     }
@@ -800,13 +801,23 @@ public class PlanEntity {
     }
 
     @Basic
-    @Column(name = "capacitySlotGroupTypeResource", nullable = true)
+    @Column(name = "capacitySlotGroupTypeResource")
     public Short getCapacitySlotGroupTypeResource() {
         return capacitySlotGroupTypeResource;
     }
 
     public void setCapacitySlotGroupTypeResource(Short capacitySlotGroupTypeResource) {
         this.capacitySlotGroupTypeResource = capacitySlotGroupTypeResource;
+    }
+
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -816,6 +827,7 @@ public class PlanEntity {
 
         PlanEntity that = (PlanEntity) o;
 
+        if (id != that.id) return false;
         if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
         if (idProcess != null ? !idProcess.equals(that.idProcess) : that.idProcess != null) return false;
@@ -996,6 +1008,7 @@ public class PlanEntity {
         result = 31 * result + (timeTypeResourceProvider != null ? timeTypeResourceProvider.hashCode() : 0);
         result = 31 * result + (timeSlotTypeResourceProvider != null ? timeSlotTypeResourceProvider.hashCode() : 0);
         result = 31 * result + (capacitySlotGroupTypeResource != null ? capacitySlotGroupTypeResource.hashCode() : 0);
+        result = 31 * result + id;
         return result;
     }
 

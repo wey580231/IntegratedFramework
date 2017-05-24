@@ -21,7 +21,7 @@ public class UserEntity {
     private ClubEntity clubByIdClub;
 
     @Id
-    @Column(name = "id", nullable = false, length = 50)
+    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -31,7 +31,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -41,7 +41,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "idClub", nullable = true, length = 20)
+    @Column(name = "idClub")
     public String getIdClub() {
         return idClub;
     }
@@ -51,7 +51,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "idClient", nullable = true, length = 20)
+    @Column(name = "idClient")
     public String getIdClient() {
         return idClient;
     }
@@ -61,7 +61,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "idProvider", nullable = true, length = 20)
+    @Column(name = "idProvider")
     public String getIdProvider() {
         return idProvider;
     }
@@ -71,7 +71,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "authority", nullable = true)
+    @Column(name = "authority")
     public Byte getAuthority() {
         return authority;
     }
@@ -81,7 +81,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
