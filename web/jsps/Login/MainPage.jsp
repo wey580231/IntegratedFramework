@@ -189,8 +189,8 @@
 </div>
 
 <!--右侧-->
-<div class="uk-width-5-6" style="float:right;height: 830px;margin-top: 20px;padding-left: 20px;">
-    <div>
+<div class="uk-width-5-6" style="float:right;">
+    <div  style="height: 750px;margin-top: 15px;border: 1px solid lightgray;margin-left: 2%;width: 96%;height: 814px;">
         <ng-view></ng-view>
     </div>
 </div>

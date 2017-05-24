@@ -1,42 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: hanchangming
-  Date: 2017/5/16
-  Time: 08:48
-  To change this template use File | Settings | File Templates.
---%>
-<!--l, li, i {
-list-style: none;
-padding: 0;
-margin: 0;
-font-style: normal;
-}
-
-.nav-ml a {
-display: block;
-font-size: 14px;
-height: 20px;
-padding: 5px 0;
-color: #00CC33;
-overflow: hidden;
-}
-
-.nav-first, .nav-second, .nav-three {
-margin-left: 20px;
-}
-
-.fold {
-display: none;
-}
-
-.nav-three li:hover {
-background-color: #fffceb;
-}
-
-.nav-first, .nav-second, .nav-three li:before, .nav-first, .nav-second, .nav-three li:after {
-
-position: absolute;
-}-->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
 
@@ -103,59 +64,67 @@ position: absolute;
         height: 30px;
     }
 
+    .bomspan{
+        font-size: 16px;
+        /*background: url("../../images/bom_img/bomqie.png");*/
 
+    }
+    .bomdiv{
+        background: url("../../images/bom_img/bomqie.png") no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
+        vertical-align: middle;
+        background-color: #eef7fc;
+        height: 23px;
+    }
 </style>
 
-<div class="uk-grid">
-    <div class="uk-width-1-4">
-        <form class="uk-search" data-uk-sear <form class="uk-search" data-uk-sear <form class="uk-search" data-uk-sear <form class="uk-search" data-uk-sear <form class="uk-search"m class="uk-search" data-uk-sear <form class="uk-search" data-uk-sear <form class="uk-search" data-uk-search>
-            <input cm class="uk-search" data-uk-sear <form class="uk-search" data-uk-search>
-            <input class="uk-search-field" type="search" m class="uk-search" data-uk-search>
-            <input class="uk-search-field" type="search" placeholder="请输入关键字">
-        </form>           <input class="uk-search-field" type="search" placeholder="请输入关键字">
-        </form>
-    </div>
-    <div class="uk-width-1-4">
-        <div class="uk-button uk-form-select uk-active" data-uk-form-select>
-            <span>请选择</span>
-            <select>
-                <option value="1">选项一</option>
-                <option value="2">选项二</option>
-                <option value="2">选项三</option>
-            </select>
+<div class="uk-grid" style="height: 40px;margin-top: 10px;">
+
+    &nbsp;&nbsp;
+    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;">制造BOM管理</span>
+    <!--搜索-->
+    <div class="uk-width-1-4 " >
+        <div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">
+            <form class="uk-search" data-uk-search style="margin-top: 5px;background-color: #e8edf1;">
+                <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
+                       style="width: 150px;border: 1px solid lightgray;">
+            </form>
         </div>
     </div>
-    <div class="uk-width-1-4">
-        <form class="uk-form">
-            <div class="uk-form-icon">
-                <i class="uk-icon-calendar"></i>
-                <input type="text" id="datepicker" data-uk-datepicker="{format:'DD.MM.YYYY'}"
-                       placeholder="2017/5/17">
-            </div>
-        </form>
-    </div>
-    <div class="uk-width-1-4">
-        <div class="data-uk-button-radio">
-            <button class="uk-button uk-icon-edit" data-uk-modal="{target:'#edit'}">修改</button>
-            <button class="uk-button uk-icon-plus">新增</button>
-            <button class="uk-button uk-icon-trash">删除</button>
+    <!--按钮-->
+    <div class="uk-width-1-4" style="margin-left: 33%;">
+        <div class="data-uk-button-radio" style="margin-top: 5px;">
+            <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
+            <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
+            <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
         </div>
     </div>
 </div>
 <hr class="uk-article-divider">
 <div class="uk-grid">
-    <div class="uk-width-1-5">
-        <form class="uk-form uk-form-horizontal">
-            <fieldset data-uk-margin>
-                <div class="uk-form-row">
-                    <select class="uk-grid" style="width: 140px">
-                        <option value="1">产品A</option>
-                        <option value="2">产品B</option>
-                    </select>
-                </div>
+    <!--BOM树-->
+    <div  class="uk-width-1-5" style="width: 23%;">
+        <div style="border-bottom: 1px solid lightgray;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset data-uk-margin>
+                    <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 5px;">
+                        <span class="bomspan" style="">BOM  </span>&nbsp;&nbsp;
+                    </div>
 
-            </fieldset>
-        </form>
+                    <div class="uk-form-row">
+                        <select class="uk-grid" style="width: 130px;height: 27px;">
+                            <option value="1">产品A</option>
+                            <option value="2">产品B</option>
+                        </select>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+
         <p></p>
         <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 610px">
             <div class="uk-form-row">
@@ -196,148 +165,124 @@ position: absolute;
             </div>
         </div>
     </div>
-    <div class="uk-width-4-5">
-        <form class="uk-form">
-            <fieldset data-uk-margin>
-                <div class="uk-form-row" style="margin: 3px">
-                    <label style="margin-right: 3px">产品名称</label>
-                    <input type="text" placeholder="零件1">
-                    <label style="margin-right: 3px">产品编码</label>
-                    <input type="text" placeholder="CH1">
-                    <label style="margin-right: 3px">规格型号</label>
-                    <input type="text" placeholder="60*80">
-                </div>
-                <br>
-                <div class="uk-form-row" style="margin: 3px">
-                    <label style="margin-right: 3px">计量单位</label>
-                    <input type="text" placeholder="套">
-                    <label style="margin-right: 3px">物料单位</label>
-                    <input type="text" placeholder="1">
-                </div>
-                <br>
-            </fieldset>
-        </form>
+    <!--右侧表格-->
+    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 714px;">
+       <div style="margin-top: 15px;margin-left: -10px;">
+           <!--表格上部-->
+           <form class="uk-form">
+               <fieldset data-uk-margin>
+                   <div class="uk-form-row" style="margin: 3px">
+                       <label style="margin-right: 3px;">产品名称</label>
+                       <input type="text" placeholder="零件1">&nbsp;
+                       <label style="margin-right: 3px">产品编码</label>
+                       <input type="text" placeholder="CH1">&nbsp;
+                       <label style="margin-right: 3px">规格型号</label>
+                       <input type="text" placeholder="60*80">
+                   </div>
+                   <br>
+                   <div class="uk-form-row" style="margin: 3px">
+                       <label style="margin-right: 3px">计量单位</label>
+                       <input type="text" placeholder="套">&nbsp;
+                       <label style="margin-right: 3px">物料单位</label>
+                       <input type="text" placeholder="1">
+                   </div>
+                   <br>
+               </fieldset>
+           </form>
+           <!--tab-->
+           <div style="width: 98%;border: 0px;margin-top: -10px;">
+               <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab>
+                   <li><a href="#tabs-1">工序</a></li>
+                   <li><a href="#tabs-2">DAG图</a></li>
 
-        <div id="tabs">
-            <ul>
-                <li><a href="#tabs-1">工序</a></li>
-                <li><a href="#tabs-2">DAG图</a></li>
+               </ul>
 
-            </ul>
-            <div id="tabs-1">
+               <div id="tabs-2" style="width: 100%;">
 
-                <div class="uk-overflow-container">
-                    <table class="uk-table uk-table-striped uk-table-hover " id="order1">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>工序准备时间</th>
-                            <th>单件加工时间</th>
-                            <th>冷却时间</th>
-                            <th>校验时间</th>
-                            <th>资源类型</th>
-                            <th>资源数量</th>
-                            <th>工时</th>
-                            <th>首选加工时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
+                   <div class="uk-overflow-container">
+                       <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                           <thead>
+                           <tr style="background-color: #e1eaf1;">
+                               <th>
+                                   <img src="../../images/bom_img/select.png" style="width: 15px;">
+                               </th>
+                               <th>准备时间</th>
+                               <th>单件时间</th>
+                               <th>冷却时间</th>
+                               <th>校验时间</th>
+                               <th>资源类型</th>
+                               <th>资源数量</th>
+                               <th>工时</th>
+                               <th>首选时间</th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                        </tr>
-                        </tbody>
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                    </table>
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                    <div>
-                        <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
-                            <li><a href="#">首页</a></li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#">末页</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="tabs-2">
+                           </tr>
+                           </tbody>
 
-                <div class="uk-overflow-container">
-                    <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>工序准备时间</th>
-                            <th>单件加工时间</th>
-                            <th>冷却时间</th>
-                            <th>校验时间</th>
-                            <th>资源类型</th>
-                            <th>资源数量</th>
-                            <th>工时</th>
-                            <th>首选加工时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
+                       </table>
 
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
+                       <div>
+                           <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
+                               <li><a href="#">首页</a></li>
+                               <li><a href="#">上一页</a></li>
+                               <li><a href="#">下一页</a></li>
+                               <li><a href="#">末页</a></li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
 
-                        </tr>
-                        </tbody>
+           </div>
+       </div>
 
-                    </table>
-
-                    <div>
-                        <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
-                            <li><a href="#">首页</a></li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#">末页</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
         <div class="uk-clearfix">
             <button class="uk-button uk-float-right " id="create-order"
