@@ -30,7 +30,7 @@
                 margin-left: 30px;
             }
             ul.uk-nav-sub > li{
-                height: 30px;
+                height: 35px;
             }
             .uk-nav-side ul a{
                 color: white;
@@ -96,7 +96,7 @@
 </head>
 <body>
 <!--头部-->
-<div style="height: 70px;border-bottom: 1px solid gray;">
+<%--<div style="height: 70px;border-bottom: 1px solid gray;">
     <div  class="uk-width-1-6" style="background-color: #1c4f7a; height: 70px;float: left;">
         <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
     </div>
@@ -107,8 +107,14 @@
         <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
     </div>
 
-</div>
-<div class="uk-width-1-6" style="float: left;height: 830px;background-color: #164360;">
+</div>--%>
+<!--左侧-->
+<div class="uk-width-1-6" style="float: left;height: 900px;background-color: #164360;">
+    <!--图标-->
+    <div  class="uk-width-1-1" style="background-color: #1c4f7a; height: 60px;">
+        <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
+    </div>
+    <!--左侧列表-->
     <div  class="uk-width-1-1" style="margin-top: 10px;">
         <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
             <li class="uk-parent">
@@ -189,10 +195,21 @@
 </div>
 
 <!--右侧-->
-<div class="uk-width-5-6" style="float:right;background-color: #bdcbd8;height: 830px;">
-    <div  style="height: 750px;margin-top: 15px;border: 1px solid lightgray;margin-left: 2%;width: 96%;height: 805px;background-color: #dfe8ef;">
-        <ng-view></ng-view>
+<div class="uk-width-5-6" style="float: left;">
+    <!--欢迎登录-->
+    <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
+        <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
     </div>
+    <div style="height: 60px;">
+        <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
+    </div>
+    <div style="float:right;background-color: #bdcbd8;height: 830px;">
+
+        <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 800px;background-color: #dfe8ef;">
+            <ng-view></ng-view>
+        </div>
+    </div>
+
 </div>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit.min.js"></script>--%>

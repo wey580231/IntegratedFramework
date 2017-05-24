@@ -41,7 +41,7 @@
     .nav-ml li a {
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
-
+        border: 1px solid lightgrey;
         border-radius: 5px;
         display: inline-block;
         padding: 3px 8px;
@@ -93,16 +93,22 @@
     /*
         BOM树字体颜色
     */
-   /* .uk-link, a {
+    .uk-link, a {
         color: black;
         cursor: pointer;
-    }*/
+    }
+    tr{
+        height: 45px;
+    }
+    .uk-tab-grid > li:first-child > a :hover {
+        background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
+    }
 </style>
 
 <div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
 
-    &nbsp;&nbsp;
-    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;">制造BOM管理</span>
+    &nbsp;
+    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;margin-left: -24px;font-family: 微软雅黑">制造BOM管理</span>
     <!--搜索-->
     <div class="uk-width-1-4 " >
         <div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">
@@ -113,7 +119,7 @@
         </div>
     </div>
     <!--按钮-->
-    <div class="uk-width-1-4" style="margin-left: 33%;">
+    <div class="uk-width-1-4" style="margin-left: 34%;">
         <div class="data-uk-button-radio" style="margin-top: 5px;">
             <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
             <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
@@ -153,27 +159,47 @@
                         <ul>
                             <li>
                                 <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>零件1</a>
+                                    <li>
+                                        <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                        <a class="item-1"><i></i>零件1</a>
                                         <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>自产零件A</a>
+                                            <li>
+                                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a class="item-2"><i></i>自产零件A</a>
                                                 <ul class="nav-three fold">
-                                                    <li><a>自产零件A1</a></li>
-                                                    <li><a>自产零件A2</a></li>
-                                                    <li><a>自产零件A3</a></li>
+                                                    <li>
+                                                        <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                        <a>自产零件A1</a></li>
+                                                    <li>
+                                                        <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                        <a>自产零件A2</a></li>
+                                                    <li>
+                                                        <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                        <a>自产零件A3</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="item-2"><i></i>自产零件B</a></li>
-                                            <li><a class="item-2"><i></i>自产零件C</a></li>
-                                            <li><a class="item-2"><i></i>自产零件D</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a class="item-2"><i></i>自产零件B</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a class="item-2"><i></i>自产零件C</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a class="item-2"><i></i>自产零件D</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
                             <li>
                                 <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>零件2</a>
+                                    <li>
+                                        <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                        <a class="item-1"><i></i>零件2</a>
                                         <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>子零件2-1</a>
+                                            <li>
+                                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a class="item-2"><i></i>子零件2-1</a>
                                                 <ul class="nav-three fold">
                                                     <li><a>外购部件AA</a></li>
                                                     <li><a>外购部件BB</a></li>
@@ -229,17 +255,20 @@
                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
                            <thead>
                            <tr style="background-color: #e1eaf1;">
-                               <th>
-                                   <img src="../../images/bom_img/select.png" style="width: 15px;">
-                               </th>
-                               <th>准备时间</th>
-                               <th>单件时间</th>
-                               <th>冷却时间</th>
-                               <th>校验时间</th>
-                               <th>资源类型</th>
-                               <th>资源数量</th>
-                               <th>工时</th>
-                               <th>首选时间</th>
+                               <td>
+                                   <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
+                                       <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                   </div>
+
+                               </td>
+                               <td>准备时间</td>
+                               <td>单件时间</td>
+                               <td>冷却时间</td>
+                               <td>校验时间</td>
+                               <td>资源类型</td>
+                               <td>资源数量</td>
+                               <td>工时</td>
+                               <td>首选时间</td>
                            </tr>
                            </thead>
                            <tbody>
@@ -247,48 +276,48 @@
                                <td><input type="checkbox"></td>
                                <td>1</td>
                                <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
 
                            </tr>
                            <tr>
                                <td><input type="checkbox"></td>
                                <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
 
                            </tr>
                            <tr>
                                <td><input type="checkbox"></td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
 
                            </tr>
                            <tr>
                                <td><input type="checkbox"></td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
-                               <td>1</td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
+                               <td></td>
 
                            </tr>
                            </tbody>
