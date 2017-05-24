@@ -1,22 +1,19 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "shift", schema = "testdatabase", catalog = "")
-public class ShiftEntity {
+public class RG_ShiftEntity {
     private String id;
     private String name;
     private Byte type;
     private String slot;
     private String id0;
     private Short extra;
+    private Set<RG_ResourceEntity> resources;
 
-    @Id
-    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -25,8 +22,6 @@ public class ShiftEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -35,8 +30,6 @@ public class ShiftEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "type")
     public Byte getType() {
         return type;
     }
@@ -45,8 +38,6 @@ public class ShiftEntity {
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "Slot")
     public String getSlot() {
         return slot;
     }
@@ -55,8 +46,6 @@ public class ShiftEntity {
         this.slot = slot;
     }
 
-    @Basic
-    @Column(name = "id0")
     public String getId0() {
         return id0;
     }
@@ -65,8 +54,6 @@ public class ShiftEntity {
         this.id0 = id0;
     }
 
-    @Basic
-    @Column(name = "extra")
     public Short getExtra() {
         return extra;
     }
@@ -80,7 +67,7 @@ public class ShiftEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ShiftEntity that = (ShiftEntity) o;
+        RG_ShiftEntity that = (RG_ShiftEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -101,5 +88,13 @@ public class ShiftEntity {
         result = 31 * result + (id0 != null ? id0.hashCode() : 0);
         result = 31 * result + (extra != null ? extra.hashCode() : 0);
         return result;
+    }
+
+    public Set<RG_ResourceEntity> getResources() {
+        return resources;
+    }
+
+    public void setResources(Set<RG_ResourceEntity> resources) {
+        this.resources = resources;
     }
 }

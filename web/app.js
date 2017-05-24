@@ -19,7 +19,6 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.AdjustFactoryController',
     'IntegratedFramework.AdjustProcedureController',
     'IntegratedFramework.ShowController',
-    'IntegratedFramework.ViewConfigureController',
     'IntegratedFramework.ScheduleGuideController',
     'IntegratedFramework.ScheduleSnapController',
     'IntegratedFramework.InteractiveController',

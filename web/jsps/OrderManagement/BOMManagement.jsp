@@ -1,182 +1,189 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: hanchangming
-  Date: 2017/5/16
-  Time: 08:48
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
-    ul, li, i {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        font-style: normal;
-    }
-
-    i {
-        width: 14px;
-        height: 14px;
-        float: left;
-    }
-
-    .box {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-
-    .nav-ml {
-        width: 100%;
-    }
 
     .nav-ml ul {
-        margin-left: 20px;
+        margin-bottom: 0px;
     }
 
-    .nav-ml i {
-        width: 14px;
-        height: 14px;
-        background: no-repeat 0 0;
-        margin-right: 10px;
+    .nav-ml ul > li {
+        list-style-type: none;
+        margin: 0;
+        padding: 10px 0px 5px 5px;
+        position: relative;
+        left: 0px;
+        font-size: 12px;
+        cursor: pointer;
+        width: 440px;
     }
 
-    .nav-ml i.unfold {
-        width: 14px;
-        height: 14px;
-        background: no-repeat -14px 0;
+    .nav-ml li::before, .nav-ml li::after {
+        content: '';
+        left: -40px;
+        position: absolute;
+        right: auto
     }
 
-    .nav-ml a {
-        display: block;
-        font-size: 14px;
+    .nav-ml li::before {
+        border-left: 1px solid #213299;
+        bottom: 50px;
+        height: 100%;
+        top: 0px;
+        width: 1px
+    }
+
+    .nav-ml li::after {
+        border-top: 1px solid #d34738;
         height: 20px;
-        padding: 3px 0;
-        color: #666;
-        overflow: hidden;
+        top: 25px;
+        width: 20px
     }
 
-    .nav-first, .nav-second, .nav-three {
-        margin-left: 20px;
-    }
+    .nav-ml li a {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
 
-    .nav-three li {
-        background: no-repeat 0 8px;
-        padding-left: 10px;
+        border-radius: 5px;
+        display: inline-block;
+        padding: 3px 8px;
+        text-decoration: none;
+        background-color: #f9fcfc;
     }
 
     .fold {
         display: none;
     }
 
-    .nav-three li:hover {
-        background-color: #fffceb;
+    .nav-ml li.nav-first_li > a {
+        cursor: pointer
     }
+
+    .nav-ml > ul > li::before, .nav-ml > ul > li::after {
+        border: 1px;
+    }
+
+    .nav-ml li:last-child::before {
+        height: 30px;
+    }
+
+    .bomspan{
+        font-size: 16px;
+        /*background: url("../../images/bom_img/bomqie.png");*/
+
+    }
+    .bomdiv{
+        background: url("../../images/bom_img/bomqie.png") no-repeat;
+        background-size: 100% 100%;
+    }
+
+    /*
+        所有input的背景色
+    */
+    .uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
+        vertical-align: middle;
+        background-color: #eef7fc;
+        height: 23px;
+    }
+    /*
+        表格奇数行颜色
+    */
+    .uk-table-striped tbody tr:nth-of-type(2n+1) {
+        background: #f3f8fb;
+    }
+
+    /*
+        BOM树字体颜色
+    */
+   /* .uk-link, a {
+        color: black;
+        cursor: pointer;
+    }*/
 </style>
 
-<div class="uk-grid">
-    <div class="uk-width-1-4">
-        <form class="uk-search" data-uk-search>
-            <input class="uk-search-field" type="search" placeholder="请输入关键字">
-        </form>
-    </div>
-    <div class="uk-width-1-4">
-        <div class="uk-button uk-form-select uk-active" data-uk-form-select>
-            <span>请选择</span>
-            <select>
-                <option value="1">选项一</option>
-                <option value="2">选项二</option>
-                <option value="2">选项三</option>
-            </select>
+<div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
+
+    &nbsp;&nbsp;
+    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;">制造BOM管理</span>
+    <!--搜索-->
+    <div class="uk-width-1-4 " >
+        <div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">
+            <form class="uk-search" data-uk-search style="margin-top: 5px;background-color: #e8edf1;">
+                <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
+                       style="width: 150px;border: 1px solid lightgray;">
+            </form>
         </div>
     </div>
-    <div class="uk-width-1-4">
-        <form class="uk-form">
-            <input type="text" id="datepicker" class="uk-icon-calendar" data-uk-datepicker="{format:'DD.MM.YYYY'}"
-                   placeholder="2017/5/17">
-            <i class="uk-icon-calendar"></i>
-        </form>
-    </div>
-    <div class="uk-width-1-4">
-        <div class="data-uk-button-radio">
-            <button class="uk-button uk-icon-edit" data-uk-modal="{target:'#edit'}">修改</button>
-            <button class="uk-button uk-icon-plus">新增</button>
-            <button class="uk-button uk-icon-trash">删除</button>
+    <!--按钮-->
+    <div class="uk-width-1-4" style="margin-left: 33%;">
+        <div class="data-uk-button-radio" style="margin-top: 5px;">
+            <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
+            <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
+            <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
         </div>
     </div>
 </div>
 <hr class="uk-article-divider">
-<div class="uk-grid">
-    <div class="uk-width-1-5">
+<div class="uk-grid" style="margin-top: -25px;">
+    <!--BOM树-->
+    <div  class="uk-width-1-5" style="width: 23%;">
+        <!--BOM树上部-->
+        <div style="border-bottom: 1px solid lightgray;background-color: white;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset data-uk-margin>
+                    <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <span class="bomspan" style="margin-top: 8px;">BOM  </span>&nbsp;&nbsp;
+                    </div>
 
-        <div class="uk-form-row">
-            <select class="uk-grid" style="margin-left: 3px;width: 80px">
-                <option value="1">产品A</option>
-                <option value="2">产品B</option>
-            </select>
+                    <div class="uk-form-row" style="margin-top: 6px;">
+                        <select class="uk-grid" style="width: 130px;height: 27px;">
+                            <option value="1">产品A</option>
+                            <option value="2">产品B</option>
+                        </select>
+                    </div>
+
+                </fieldset>
+            </form>
         </div>
+
         <p></p>
-        <div class="uk-panel uk-panel-box" style="height: 610px">
+        <!--BOM树下部-->
+        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 610px;margin-top: -15px;background-color: #e2ebf2;">
             <div class="uk-form-row">
                 <div class="wrapper">
                     <div class="nav-ml">
                         <ul>
                             <li>
                                 <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>一级</a>
+                                    <li><a class="item-1"><i></i>零件1</a>
                                         <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>二级</a>
+                                            <li><a class="item-2"><i></i>自产零件A</a>
                                                 <ul class="nav-three fold">
-                                                    <li><a>三级</a></li>
-                                                    <li><a>三级</a></li>
+                                                    <li><a>自产零件A1</a></li>
+                                                    <li><a>自产零件A2</a></li>
+                                                    <li><a>自产零件A3</a></li>
                                                 </ul>
                                             </li>
+                                            <li><a class="item-2"><i></i>自产零件B</a></li>
+                                            <li><a class="item-2"><i></i>自产零件C</a></li>
+                                            <li><a class="item-2"><i></i>自产零件D</a></li>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
                             <li>
                                 <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>一级</a>
+                                    <li><a class="item-1"><i></i>零件2</a>
                                         <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>二级</a>
+                                            <li><a class="item-2"><i></i>子零件2-1</a>
                                                 <ul class="nav-three fold">
-                                                    <li><a>三级</a></li>
-                                                    <li><a>三级</a></li>
+                                                    <li><a>外购部件AA</a></li>
+                                                    <li><a>外购部件BB</a></li>
                                                 </ul>
                                             </li>
+                                            <li><a class="item-2"><i></i>自产零件CD</a></li>
+                                            <li><a class="item-2"><i></i>自产零件DD</a></li>
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
-                            <li>
-                                <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>一级</a>
-                                        <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>二级</a>
-                                                <ul class="nav-three fold">
-                                                    <li><a>三级</a></li>
-                                                    <li><a>三级</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul class="nav-first">
-                                    <li><a class="item-1"><i></i>一级</a>
-                                        <ul class="nav-second fold ">
-                                            <li><a class="item-2"><i></i>二级</a>
-                                                <ul class="nav-three fold">
-                                                    <li><a>三级</a></li>
-                                                    <li><a>三级</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-
                             </li>
                         </ul>
                     </div>
@@ -184,148 +191,124 @@
             </div>
         </div>
     </div>
-    <div class="uk-width-4-5">
-        <form class="uk-form">
-            <fieldset data-uk-margin>
-                <div class="uk-form-row" style="margin: 3px">
-                    <label style="margin-right: 3px">产品名称</label>
-                    <input type="text" placeholder="零件1">
-                    <label style="margin-right: 3px">产品编码</label>
-                    <input type="text" placeholder="CH1">
-                    <label style="margin-right: 3px">规格型号</label>
-                    <input type="text" placeholder="60*80">
-                </div>
-                <br>
-                <div class="uk-form-row" style="margin: 3px">
-                    <label style="margin-right: 3px">计量单位</label>
-                    <input type="text" placeholder="套">
-                    <label style="margin-right: 3px">物料单位</label>
-                    <input type="text" placeholder="1">
-                </div>
-                <br>
-            </fieldset>
-        </form>
+    <!--右侧表格-->
+    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 695px;background-color: white;">
+       <div style="margin-top: 15px;margin-left: -10px;">
+           <!--表格上部-->
+           <form class="uk-form">
+               <fieldset data-uk-margin>
+                   <div class="uk-form-row" style="margin: 3px">
+                       <label style="margin-right: 3px;">产品名称</label>
+                       <input type="text" placeholder="零件1">&nbsp;
+                       <label style="margin-right: 3px">产品编码</label>
+                       <input type="text" placeholder="CH1">&nbsp;
+                       <label style="margin-right: 3px">规格型号</label>
+                       <input type="text" placeholder="60*80">
+                   </div>
+                   <br>
+                   <div class="uk-form-row" style="margin: 3px">
+                       <label style="margin-right: 3px">计量单位</label>
+                       <input type="text" placeholder="套">&nbsp;
+                       <label style="margin-right: 3px">物料单位</label>
+                       <input type="text" placeholder="1">
+                   </div>
+                   <br>
+               </fieldset>
+           </form>
+           <!--tab-->
+           <div style="width: 98%;border: 0px;margin-top: -10px;">
+               <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab>
+                   <li><a href="#tabs-1">工序</a></li>
+                   <li><a href="#tabs-2">DAG图</a></li>
 
-        <div id="tabs">
-            <ul>
-                <li><a href="#tabs-1">工序</a></li>
-                <li><a href="#tabs-2">DAG图</a></li>
+               </ul>
 
-            </ul>
-            <div id="tabs-1">
+               <div id="tabs-2" style="width: 100%;">
 
-                <div class="uk-overflow-container">
-                    <table class="uk-table uk-table-striped uk-table-hover " id="order1">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>工序准备时间</th>
-                            <th>单件加工时间</th>
-                            <th>冷却时间</th>
-                            <th>校验时间</th>
-                            <th>资源类型</th>
-                            <th>资源数量</th>
-                            <th>工时</th>
-                            <th>首选加工时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
+                   <div class="uk-overflow-container">
+                       <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                           <thead>
+                           <tr style="background-color: #e1eaf1;">
+                               <th>
+                                   <img src="../../images/bom_img/select.png" style="width: 15px;">
+                               </th>
+                               <th>准备时间</th>
+                               <th>单件时间</th>
+                               <th>冷却时间</th>
+                               <th>校验时间</th>
+                               <th>资源类型</th>
+                               <th>资源数量</th>
+                               <th>工时</th>
+                               <th>首选时间</th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                        </tr>
-                        </tbody>
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                    </table>
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox"></td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
+                               <td>1</td>
 
-                    <div>
-                        <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
-                            <li><a href="#">首页</a></li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#">末页</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div id="tabs-2">
+                           </tr>
+                           </tbody>
 
-                <div class="uk-overflow-container">
-                    <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>工序准备时间</th>
-                            <th>单件加工时间</th>
-                            <th>冷却时间</th>
-                            <th>校验时间</th>
-                            <th>资源类型</th>
-                            <th>资源数量</th>
-                            <th>工时</th>
-                            <th>首选加工时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
-                            <td>表格项目一</td>
+                       </table>
 
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
-                            <td>表格项目二</td>
+                       <div>
+                           <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
+                               <li><a href="#">首页</a></li>
+                               <li><a href="#">上一页</a></li>
+                               <li><a href="#">下一页</a></li>
+                               <li><a href="#">末页</a></li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
 
-                        </tr>
-                        </tbody>
+           </div>
+       </div>
 
-                    </table>
-
-                    <div>
-                        <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
-                            <li><a href="#">首页</a></li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#">末页</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
         <div class="uk-clearfix">
             <button class="uk-button uk-float-right " id="create-order"

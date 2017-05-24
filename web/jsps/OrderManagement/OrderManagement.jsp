@@ -6,30 +6,32 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.rengu.DAO.DAOFactory" %>
-<%@ page import="com.rengu.DAO.UsersDAO" %>
 <div class="uk-grid">
-    <div class="uk-width-1-4">
-        <form class="uk-search" data-uk-search>
+    <div class="uk-width-1-4 " >
+        <div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">
+        <form class="uk-search" data-uk-search >
             <input class="uk-search-field" type="search" placeholder="请输入关键字">
         </form>
+        </div>
+    </div>
+    <div class="uk-width-1-4">
+        <div class="uk-button uk-form-select uk-active" data-uk-form-select>
+            <span>请选择</span>
+            <select>
+                <option value="1">选项一</option>
+                <option value="2">选项二</option>
+                <option value="2">选项三</option>
+            </select>
+        </div>
     </div>
     <div class="uk-width-1-4">
         <form class="uk-form">
-            <i class="uk-icon-calendar"></i>
-            <input data-uk-datepicker="{format:'DD.MM.YYYY'}">
+            <div class="uk-form-icon">
+                <i class="uk-icon-calendar"></i>
+                <input type="text" id="datepicker"  data-uk-datepicker="{format:'DD.MM.YYYY'}"
+                       placeholder="2017/5/17">
+            </div>
         </form>
-    </div>
-    <div class="uk-width-1-4">
-        <div class="uk-button uk-form-select uk-active uk-width-expand" data-uk-form-select>
-            <span>请选择类型</span>
-            <select>
-                <option value="1">请选择类型</option>
-                <option value="2">选项一</option>
-                <option value="3">选项二</option>
-                <option value="4">选项三</option>
-            </select>
-        </div>
     </div>
     <div class="uk-width-1-4">
         <div class="data-uk-button-radio">
@@ -39,8 +41,9 @@
         </div>
     </div>
 </div>
+<hr class="uk-article-divider">
 <div class="uk-overflow-container">
-    <table class="uk-table uk-table-hover " id="order">
+    <table class="uk-table uk-table-striped uk-table-hover " id="order">
         <thead>
         <tr>
             <th></th>
@@ -56,10 +59,6 @@
         </tr>
         </thead>
         <tbody>
-        <%
-            UsersDAO usersDAO = DAOFactory.getUserDAOInstance();
-            usersDAO.
-        %>
         <tr>
             <td><input type="checkbox"></td>
             <td>表格项目二</td>
@@ -86,6 +85,16 @@
         </tr>
         </tbody>
     </table>
+
+    <div>
+        <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">上一页</a></li>
+            <li><a href="#">下一页</a></li>
+            <li><a href="#">末页</a></li>
+        </ul>
+    </div>
+
 </div>
 
 <!--<div id="dialog-form" title="创建新表单">
@@ -154,7 +163,7 @@
 </div>
 
 <div class="uk-modal" id="group">
-    <div class="uk-modal-dialog">
+    <div class="uk-modal-dialog" >
         <table class="uk-table uk-table-striped uk-table-hover uk-overflow-container">
             <thead>
             <tr>
@@ -187,3 +196,8 @@
         </table>
     </div>
 </div>
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+</script>
