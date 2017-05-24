@@ -1,22 +1,17 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "typerescource", schema = "testdatabase", catalog = "")
-public class TyperescourceEntity {
+public class RG_TyperescourceEntity {
     private String id;
     private String name;
     private String attribute;
     private Double ratio;
-    private Collection<PlanEntity> plansById;
+    private Set<RG_ResourceEntity> resources;
 
-    @Id
-    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -25,8 +20,6 @@ public class TyperescourceEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -35,8 +28,6 @@ public class TyperescourceEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "attribute")
     public String getAttribute() {
         return attribute;
     }
@@ -45,8 +36,6 @@ public class TyperescourceEntity {
         this.attribute = attribute;
     }
 
-    @Basic
-    @Column(name = "ratio")
     public Double getRatio() {
         return ratio;
     }
@@ -60,7 +49,7 @@ public class TyperescourceEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TyperescourceEntity that = (TyperescourceEntity) o;
+        RG_TyperescourceEntity that = (RG_TyperescourceEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -79,12 +68,11 @@ public class TyperescourceEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "typerescourceByIdTypeResource")
-    public Collection<PlanEntity> getPlansById() {
-        return plansById;
+    public Set<RG_ResourceEntity> getResources() {
+        return resources;
     }
 
-    public void setPlansById(Collection<PlanEntity> plansById) {
-        this.plansById = plansById;
+    public void setResources(Set<RG_ResourceEntity> resources) {
+        this.resources = resources;
     }
 }

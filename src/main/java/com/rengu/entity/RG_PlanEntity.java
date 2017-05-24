@@ -1,24 +1,12 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "plan", schema = "testdatabase", catalog = "")
-public class PlanEntity {
-    private String idClub;
+public class RG_PlanEntity {
+    private int id;
     private String idTask;
-    private String idProcess;
-    private String idOrder;
-    private String idResource;
     private String idJob;
-    private String idSite;
-    private String idGroupResource;
-    private String idTypeResource;
-    private String idProductOrder;
-    private String idProvider;
     private String nameTask;
     private String nameProcess;
     private String nameOrder;
@@ -80,738 +68,17 @@ public class PlanEntity {
     private Short timeTypeResourceProvider;
     private Short timeSlotTypeResourceProvider;
     private Short capacitySlotGroupTypeResource;
-    private int id;
-    private ClubEntity clubByIdClub;
-    private ProcessEntity processByIdProcess;
-    private OrderEntity orderByIdOrder;
-    private ResourceEntity resourceByIdResource;
-    private SiteEntity siteByIdSite;
-    private GroupresourceEntity groupresourceByIdGroupResource;
-    private TyperescourceEntity typerescourceByIdTypeResource;
-    private ProviderEntity providerByIdProvider;
 
-    @Basic
-    @Column(name = "idClub")
-    public String getIdClub() {
-        return idClub;
-    }
+    private RG_ClubEntity clubByIdClub;
+    private RG_ProcessEntity processByIdProcess;
+    private RG_OrderEntity orderByIdOrder;
+    private RG_ResourceEntity resourceByIdResource;
+    private RG_SiteEntity siteByIdSite;
+    private RG_GroupresourceEntity groupresourceByIdGroupResource;
+    private RG_TyperescourceEntity typerescourceByIdTypeResource;
+    private RG_ProviderEntity providerByIdProvider;
+    private RG_ProductEntity productByIdProduct;
 
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
-    }
-
-    @Basic
-    @Column(name = "idTask")
-    public String getIdTask() {
-        return idTask;
-    }
-
-    public void setIdTask(String idTask) {
-        this.idTask = idTask;
-    }
-
-    @Basic
-    @Column(name = "idProcess")
-    public String getIdProcess() {
-        return idProcess;
-    }
-
-    public void setIdProcess(String idProcess) {
-        this.idProcess = idProcess;
-    }
-
-    @Basic
-    @Column(name = "idOrder")
-    public String getIdOrder() {
-        return idOrder;
-    }
-
-    public void setIdOrder(String idOrder) {
-        this.idOrder = idOrder;
-    }
-
-    @Basic
-    @Column(name = "idResource")
-    public String getIdResource() {
-        return idResource;
-    }
-
-    public void setIdResource(String idResource) {
-        this.idResource = idResource;
-    }
-
-    @Basic
-    @Column(name = "idJob")
-    public String getIdJob() {
-        return idJob;
-    }
-
-    public void setIdJob(String idJob) {
-        this.idJob = idJob;
-    }
-
-    @Basic
-    @Column(name = "idSite")
-    public String getIdSite() {
-        return idSite;
-    }
-
-    public void setIdSite(String idSite) {
-        this.idSite = idSite;
-    }
-
-    @Basic
-    @Column(name = "idGroupResource")
-    public String getIdGroupResource() {
-        return idGroupResource;
-    }
-
-    public void setIdGroupResource(String idGroupResource) {
-        this.idGroupResource = idGroupResource;
-    }
-
-    @Basic
-    @Column(name = "idTypeResource")
-    public String getIdTypeResource() {
-        return idTypeResource;
-    }
-
-    public void setIdTypeResource(String idTypeResource) {
-        this.idTypeResource = idTypeResource;
-    }
-
-    @Basic
-    @Column(name = "idProductOrder")
-    public String getIdProductOrder() {
-        return idProductOrder;
-    }
-
-    public void setIdProductOrder(String idProductOrder) {
-        this.idProductOrder = idProductOrder;
-    }
-
-    @Basic
-    @Column(name = "idProvider")
-    public String getIdProvider() {
-        return idProvider;
-    }
-
-    public void setIdProvider(String idProvider) {
-        this.idProvider = idProvider;
-    }
-
-    @Basic
-    @Column(name = "nameTask")
-    public String getNameTask() {
-        return nameTask;
-    }
-
-    public void setNameTask(String nameTask) {
-        this.nameTask = nameTask;
-    }
-
-    @Basic
-    @Column(name = "nameProcess")
-    public String getNameProcess() {
-        return nameProcess;
-    }
-
-    public void setNameProcess(String nameProcess) {
-        this.nameProcess = nameProcess;
-    }
-
-    @Basic
-    @Column(name = "nameOrder")
-    public String getNameOrder() {
-        return nameOrder;
-    }
-
-    public void setNameOrder(String nameOrder) {
-        this.nameOrder = nameOrder;
-    }
-
-    @Basic
-    @Column(name = "nameJob")
-    public String getNameJob() {
-        return nameJob;
-    }
-
-    public void setNameJob(String nameJob) {
-        this.nameJob = nameJob;
-    }
-
-    @Basic
-    @Column(name = "nameResource")
-    public String getNameResource() {
-        return nameResource;
-    }
-
-    public void setNameResource(String nameResource) {
-        this.nameResource = nameResource;
-    }
-
-    @Basic
-    @Column(name = "nameGroupResource")
-    public String getNameGroupResource() {
-        return nameGroupResource;
-    }
-
-    public void setNameGroupResource(String nameGroupResource) {
-        this.nameGroupResource = nameGroupResource;
-    }
-
-    @Basic
-    @Column(name = "nameTypeResource")
-    public String getNameTypeResource() {
-        return nameTypeResource;
-    }
-
-    public void setNameTypeResource(String nameTypeResource) {
-        this.nameTypeResource = nameTypeResource;
-    }
-
-    @Basic
-    @Column(name = "nameSite")
-    public String getNameSite() {
-        return nameSite;
-    }
-
-    public void setNameSite(String nameSite) {
-        this.nameSite = nameSite;
-    }
-
-    @Basic
-    @Column(name = "nameProductOrder")
-    public String getNameProductOrder() {
-        return nameProductOrder;
-    }
-
-    public void setNameProductOrder(String nameProductOrder) {
-        this.nameProductOrder = nameProductOrder;
-    }
-
-    @Basic
-    @Column(name = "nameProvider")
-    public String getNameProvider() {
-        return nameProvider;
-    }
-
-    public void setNameProvider(String nameProvider) {
-        this.nameProvider = nameProvider;
-    }
-
-    @Basic
-    @Column(name = "ordToParentTask")
-    public Short getOrdToParentTask() {
-        return ordToParentTask;
-    }
-
-    public void setOrdToParentTask(Short ordToParentTask) {
-        this.ordToParentTask = ordToParentTask;
-    }
-
-    @Basic
-    @Column(name = "idTaskResourceSucc")
-    public String getIdTaskResourceSucc() {
-        return idTaskResourceSucc;
-    }
-
-    public void setIdTaskResourceSucc(String idTaskResourceSucc) {
-        this.idTaskResourceSucc = idTaskResourceSucc;
-    }
-
-    @Basic
-    @Column(name = "preemptiveTask")
-    public String getPreemptiveTask() {
-        return preemptiveTask;
-    }
-
-    public void setPreemptiveTask(String preemptiveTask) {
-        this.preemptiveTask = preemptiveTask;
-    }
-
-    @Basic
-    @Column(name = "divisibleTask")
-    public String getDivisibleTask() {
-        return divisibleTask;
-    }
-
-    public void setDivisibleTask(String divisibleTask) {
-        this.divisibleTask = divisibleTask;
-    }
-
-    @Basic
-    @Column(name = "continuousTask")
-    public String getContinuousTask() {
-        return continuousTask;
-    }
-
-    public void setContinuousTask(String continuousTask) {
-        this.continuousTask = continuousTask;
-    }
-
-    @Basic
-    @Column(name = "idTaskGroupTypeResourceSucc")
-    public String getIdTaskGroupTypeResourceSucc() {
-        return idTaskGroupTypeResourceSucc;
-    }
-
-    public void setIdTaskGroupTypeResourceSucc(String idTaskGroupTypeResourceSucc) {
-        this.idTaskGroupTypeResourceSucc = idTaskGroupTypeResourceSucc;
-    }
-
-    @Basic
-    @Column(name = "quantityTask")
-    public Short getQuantityTask() {
-        return quantityTask;
-    }
-
-    public void setQuantityTask(Short quantityTask) {
-        this.quantityTask = quantityTask;
-    }
-
-    @Basic
-    @Column(name = "quantityResourceTask")
-    public Short getQuantityResourceTask() {
-        return quantityResourceTask;
-    }
-
-    public void setQuantityResourceTask(Short quantityResourceTask) {
-        this.quantityResourceTask = quantityResourceTask;
-    }
-
-    @Basic
-    @Column(name = "quantityBatchTask")
-    public Short getQuantityBatchTask() {
-        return quantityBatchTask;
-    }
-
-    public void setQuantityBatchTask(Short quantityBatchTask) {
-        this.quantityBatchTask = quantityBatchTask;
-    }
-
-    @Basic
-    @Column(name = "qtySequence")
-    public Short getQtySequence() {
-        return qtySequence;
-    }
-
-    public void setQtySequence(Short qtySequence) {
-        this.qtySequence = qtySequence;
-    }
-
-    @Basic
-    @Column(name = "t1Task")
-    public String getT1Task() {
-        return t1Task;
-    }
-
-    public void setT1Task(String t1Task) {
-        this.t1Task = t1Task;
-    }
-
-    @Basic
-    @Column(name = "t2Task")
-    public String getT2Task() {
-        return t2Task;
-    }
-
-    public void setT2Task(String t2Task) {
-        this.t2Task = t2Task;
-    }
-
-    @Basic
-    @Column(name = "t2ExtendedTask")
-    public String getT2ExtendedTask() {
-        return t2ExtendedTask;
-    }
-
-    public void setT2ExtendedTask(String t2ExtendedTask) {
-        this.t2ExtendedTask = t2ExtendedTask;
-    }
-
-    @Basic
-    @Column(name = "advice")
-    public String getAdvice() {
-        return advice;
-    }
-
-    public void setAdvice(String advice) {
-        this.advice = advice;
-    }
-
-    @Basic
-    @Column(name = "CalendarTask")
-    public String getCalendarTask() {
-        return calendarTask;
-    }
-
-    public void setCalendarTask(String calendarTask) {
-        this.calendarTask = calendarTask;
-    }
-
-    @Basic
-    @Column(name = "SlotTask")
-    public String getSlotTask() {
-        return slotTask;
-    }
-
-    public void setSlotTask(String slotTask) {
-        this.slotTask = slotTask;
-    }
-
-    @Basic
-    @Column(name = "estimateTask")
-    public String getEstimateTask() {
-        return estimateTask;
-    }
-
-    public void setEstimateTask(String estimateTask) {
-        this.estimateTask = estimateTask;
-    }
-
-    @Basic
-    @Column(name = "timeTask")
-    public String getTimeTask() {
-        return timeTask;
-    }
-
-    public void setTimeTask(String timeTask) {
-        this.timeTask = timeTask;
-    }
-
-    @Basic
-    @Column(name = "initTimeTask")
-    public String getInitTimeTask() {
-        return initTimeTask;
-    }
-
-    public void setInitTimeTask(String initTimeTask) {
-        this.initTimeTask = initTimeTask;
-    }
-
-    @Basic
-    @Column(name = "unitTimeTask")
-    public String getUnitTimeTask() {
-        return unitTimeTask;
-    }
-
-    public void setUnitTimeTask(String unitTimeTask) {
-        this.unitTimeTask = unitTimeTask;
-    }
-
-    @Basic
-    @Column(name = "postTimeTask")
-    public String getPostTimeTask() {
-        return postTimeTask;
-    }
-
-    public void setPostTimeTask(String postTimeTask) {
-        this.postTimeTask = postTimeTask;
-    }
-
-    @Basic
-    @Column(name = "checkTimeTask")
-    public String getCheckTimeTask() {
-        return checkTimeTask;
-    }
-
-    public void setCheckTimeTask(String checkTimeTask) {
-        this.checkTimeTask = checkTimeTask;
-    }
-
-    @Basic
-    @Column(name = "idGroupResource0Task")
-    public String getIdGroupResource0Task() {
-        return idGroupResource0Task;
-    }
-
-    public void setIdGroupResource0Task(String idGroupResource0Task) {
-        this.idGroupResource0Task = idGroupResource0Task;
-    }
-
-    @Basic
-    @Column(name = "idResource0Task")
-    public String getIdResource0Task() {
-        return idResource0Task;
-    }
-
-    public void setIdResource0Task(String idResource0Task) {
-        this.idResource0Task = idResource0Task;
-    }
-
-    @Basic
-    @Column(name = "idSite0Task")
-    public String getIdSite0Task() {
-        return idSite0Task;
-    }
-
-    public void setIdSite0Task(String idSite0Task) {
-        this.idSite0Task = idSite0Task;
-    }
-
-    @Basic
-    @Column(name = "quantity0Task")
-    public Short getQuantity0Task() {
-        return quantity0Task;
-    }
-
-    public void setQuantity0Task(Short quantity0Task) {
-        this.quantity0Task = quantity0Task;
-    }
-
-    @Basic
-    @Column(name = "t10Task")
-    public String getT10Task() {
-        return t10Task;
-    }
-
-    public void setT10Task(String t10Task) {
-        this.t10Task = t10Task;
-    }
-
-    @Basic
-    @Column(name = "t20Task")
-    public String getT20Task() {
-        return t20Task;
-    }
-
-    public void setT20Task(String t20Task) {
-        this.t20Task = t20Task;
-    }
-
-    @Basic
-    @Column(name = "t20ExtendedTask")
-    public String getT20ExtendedTask() {
-        return t20ExtendedTask;
-    }
-
-    public void setT20ExtendedTask(String t20ExtendedTask) {
-        this.t20ExtendedTask = t20ExtendedTask;
-    }
-
-    @Basic
-    @Column(name = "t1RealTask")
-    public String getT1RealTask() {
-        return t1RealTask;
-    }
-
-    public void setT1RealTask(String t1RealTask) {
-        this.t1RealTask = t1RealTask;
-    }
-
-    @Basic
-    @Column(name = "t2RealTask")
-    public String getT2RealTask() {
-        return t2RealTask;
-    }
-
-    public void setT2RealTask(String t2RealTask) {
-        this.t2RealTask = t2RealTask;
-    }
-
-    @Basic
-    @Column(name = "t1Job")
-    public String getT1Job() {
-        return t1Job;
-    }
-
-    public void setT1Job(String t1Job) {
-        this.t1Job = t1Job;
-    }
-
-    @Basic
-    @Column(name = "t2Job")
-    public String getT2Job() {
-        return t2Job;
-    }
-
-    public void setT2Job(String t2Job) {
-        this.t2Job = t2Job;
-    }
-
-    @Basic
-    @Column(name = "quantityJob")
-    public Short getQuantityJob() {
-        return quantityJob;
-    }
-
-    public void setQuantityJob(Short quantityJob) {
-        this.quantityJob = quantityJob;
-    }
-
-    @Basic
-    @Column(name = "quantityProviderTask")
-    public Short getQuantityProviderTask() {
-        return quantityProviderTask;
-    }
-
-    public void setQuantityProviderTask(Short quantityProviderTask) {
-        this.quantityProviderTask = quantityProviderTask;
-    }
-
-    @Basic
-    @Column(name = "nbTaskJob")
-    public Short getNbTaskJob() {
-        return nbTaskJob;
-    }
-
-    public void setNbTaskJob(Short nbTaskJob) {
-        this.nbTaskJob = nbTaskJob;
-    }
-
-    @Basic
-    @Column(name = "refProductJob")
-    public String getRefProductJob() {
-        return refProductJob;
-    }
-
-    public void setRefProductJob(String refProductJob) {
-        this.refProductJob = refProductJob;
-    }
-
-    @Basic
-    @Column(name = "ordToRootJob")
-    public Short getOrdToRootJob() {
-        return ordToRootJob;
-    }
-
-    public void setOrdToRootJob(Short ordToRootJob) {
-        this.ordToRootJob = ordToRootJob;
-    }
-
-    @Basic
-    @Column(name = "OrdToRootChildJob")
-    public String getOrdToRootChildJob() {
-        return ordToRootChildJob;
-    }
-
-    public void setOrdToRootChildJob(String ordToRootChildJob) {
-        this.ordToRootChildJob = ordToRootChildJob;
-    }
-
-    @Basic
-    @Column(name = "minQtyBatchTask")
-    public Short getMinQtyBatchTask() {
-        return minQtyBatchTask;
-    }
-
-    public void setMinQtyBatchTask(Short minQtyBatchTask) {
-        this.minQtyBatchTask = minQtyBatchTask;
-    }
-
-    @Basic
-    @Column(name = "minTimeBatchTask")
-    public Short getMinTimeBatchTask() {
-        return minTimeBatchTask;
-    }
-
-    public void setMinTimeBatchTask(Short minTimeBatchTask) {
-        this.minTimeBatchTask = minTimeBatchTask;
-    }
-
-    @Basic
-    @Column(name = "t1Order")
-    public String getT1Order() {
-        return t1Order;
-    }
-
-    public void setT1Order(String t1Order) {
-        this.t1Order = t1Order;
-    }
-
-    @Basic
-    @Column(name = "t2Order")
-    public String getT2Order() {
-        return t2Order;
-    }
-
-    public void setT2Order(String t2Order) {
-        this.t2Order = t2Order;
-    }
-
-    @Basic
-    @Column(name = "quantityOrder")
-    public Short getQuantityOrder() {
-        return quantityOrder;
-    }
-
-    public void setQuantityOrder(Short quantityOrder) {
-        this.quantityOrder = quantityOrder;
-    }
-
-    @Basic
-    @Column(name = "priorityOrder")
-    public Short getPriorityOrder() {
-        return priorityOrder;
-    }
-
-    public void setPriorityOrder(Short priorityOrder) {
-        this.priorityOrder = priorityOrder;
-    }
-
-    @Basic
-    @Column(name = "colorOrder")
-    public String getColorOrder() {
-        return colorOrder;
-    }
-
-    public void setColorOrder(String colorOrder) {
-        this.colorOrder = colorOrder;
-    }
-
-    @Basic
-    @Column(name = "state")
-    public Byte getState() {
-        return state;
-    }
-
-    public void setState(Byte state) {
-        this.state = state;
-    }
-
-    @Basic
-    @Column(name = "selected")
-    public Byte getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Byte selected) {
-        this.selected = selected;
-    }
-
-    @Basic
-    @Column(name = "timeTypeResourceProvider")
-    public Short getTimeTypeResourceProvider() {
-        return timeTypeResourceProvider;
-    }
-
-    public void setTimeTypeResourceProvider(Short timeTypeResourceProvider) {
-        this.timeTypeResourceProvider = timeTypeResourceProvider;
-    }
-
-    @Basic
-    @Column(name = "timeSlotTypeResourceProvider")
-    public Short getTimeSlotTypeResourceProvider() {
-        return timeSlotTypeResourceProvider;
-    }
-
-    public void setTimeSlotTypeResourceProvider(Short timeSlotTypeResourceProvider) {
-        this.timeSlotTypeResourceProvider = timeSlotTypeResourceProvider;
-    }
-
-    @Basic
-    @Column(name = "capacitySlotGroupTypeResource")
-    public Short getCapacitySlotGroupTypeResource() {
-        return capacitySlotGroupTypeResource;
-    }
-
-    public void setCapacitySlotGroupTypeResource(Short capacitySlotGroupTypeResource) {
-        this.capacitySlotGroupTypeResource = capacitySlotGroupTypeResource;
-    }
-
-    @Id
-    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -820,28 +87,518 @@ public class PlanEntity {
         this.id = id;
     }
 
+    public String getIdTask() {
+        return idTask;
+    }
+
+    public void setIdTask(String idTask) {
+        this.idTask = idTask;
+    }
+
+    public String getIdJob() {
+        return idJob;
+    }
+
+    public void setIdJob(String idJob) {
+        this.idJob = idJob;
+    }
+
+    public String getNameTask() {
+        return nameTask;
+    }
+
+    public void setNameTask(String nameTask) {
+        this.nameTask = nameTask;
+    }
+
+    public String getNameProcess() {
+        return nameProcess;
+    }
+
+    public void setNameProcess(String nameProcess) {
+        this.nameProcess = nameProcess;
+    }
+
+    public String getNameOrder() {
+        return nameOrder;
+    }
+
+    public void setNameOrder(String nameOrder) {
+        this.nameOrder = nameOrder;
+    }
+
+    public String getNameJob() {
+        return nameJob;
+    }
+
+    public void setNameJob(String nameJob) {
+        this.nameJob = nameJob;
+    }
+
+    public String getNameResource() {
+        return nameResource;
+    }
+
+    public void setNameResource(String nameResource) {
+        this.nameResource = nameResource;
+    }
+
+    public String getNameGroupResource() {
+        return nameGroupResource;
+    }
+
+    public void setNameGroupResource(String nameGroupResource) {
+        this.nameGroupResource = nameGroupResource;
+    }
+
+    public String getNameTypeResource() {
+        return nameTypeResource;
+    }
+
+    public void setNameTypeResource(String nameTypeResource) {
+        this.nameTypeResource = nameTypeResource;
+    }
+
+    public String getNameSite() {
+        return nameSite;
+    }
+
+    public void setNameSite(String nameSite) {
+        this.nameSite = nameSite;
+    }
+
+    public String getNameProductOrder() {
+        return nameProductOrder;
+    }
+
+    public void setNameProductOrder(String nameProductOrder) {
+        this.nameProductOrder = nameProductOrder;
+    }
+
+    public String getNameProvider() {
+        return nameProvider;
+    }
+
+    public void setNameProvider(String nameProvider) {
+        this.nameProvider = nameProvider;
+    }
+
+    public Short getOrdToParentTask() {
+        return ordToParentTask;
+    }
+
+    public void setOrdToParentTask(Short ordToParentTask) {
+        this.ordToParentTask = ordToParentTask;
+    }
+
+    public String getIdTaskResourceSucc() {
+        return idTaskResourceSucc;
+    }
+
+    public void setIdTaskResourceSucc(String idTaskResourceSucc) {
+        this.idTaskResourceSucc = idTaskResourceSucc;
+    }
+
+    public String getPreemptiveTask() {
+        return preemptiveTask;
+    }
+
+    public void setPreemptiveTask(String preemptiveTask) {
+        this.preemptiveTask = preemptiveTask;
+    }
+
+    public String getDivisibleTask() {
+        return divisibleTask;
+    }
+
+    public void setDivisibleTask(String divisibleTask) {
+        this.divisibleTask = divisibleTask;
+    }
+
+    public String getContinuousTask() {
+        return continuousTask;
+    }
+
+    public void setContinuousTask(String continuousTask) {
+        this.continuousTask = continuousTask;
+    }
+
+    public String getIdTaskGroupTypeResourceSucc() {
+        return idTaskGroupTypeResourceSucc;
+    }
+
+    public void setIdTaskGroupTypeResourceSucc(String idTaskGroupTypeResourceSucc) {
+        this.idTaskGroupTypeResourceSucc = idTaskGroupTypeResourceSucc;
+    }
+
+    public Short getQuantityTask() {
+        return quantityTask;
+    }
+
+    public void setQuantityTask(Short quantityTask) {
+        this.quantityTask = quantityTask;
+    }
+
+    public Short getQuantityResourceTask() {
+        return quantityResourceTask;
+    }
+
+    public void setQuantityResourceTask(Short quantityResourceTask) {
+        this.quantityResourceTask = quantityResourceTask;
+    }
+
+    public Short getQuantityBatchTask() {
+        return quantityBatchTask;
+    }
+
+    public void setQuantityBatchTask(Short quantityBatchTask) {
+        this.quantityBatchTask = quantityBatchTask;
+    }
+
+    public Short getQtySequence() {
+        return qtySequence;
+    }
+
+    public void setQtySequence(Short qtySequence) {
+        this.qtySequence = qtySequence;
+    }
+
+    public String getT1Task() {
+        return t1Task;
+    }
+
+    public void setT1Task(String t1Task) {
+        this.t1Task = t1Task;
+    }
+
+    public String getT2Task() {
+        return t2Task;
+    }
+
+    public void setT2Task(String t2Task) {
+        this.t2Task = t2Task;
+    }
+
+    public String getT2ExtendedTask() {
+        return t2ExtendedTask;
+    }
+
+    public void setT2ExtendedTask(String t2ExtendedTask) {
+        this.t2ExtendedTask = t2ExtendedTask;
+    }
+
+    public String getAdvice() {
+        return advice;
+    }
+
+    public void setAdvice(String advice) {
+        this.advice = advice;
+    }
+
+    public String getCalendarTask() {
+        return calendarTask;
+    }
+
+    public void setCalendarTask(String calendarTask) {
+        this.calendarTask = calendarTask;
+    }
+
+    public String getSlotTask() {
+        return slotTask;
+    }
+
+    public void setSlotTask(String slotTask) {
+        this.slotTask = slotTask;
+    }
+
+    public String getEstimateTask() {
+        return estimateTask;
+    }
+
+    public void setEstimateTask(String estimateTask) {
+        this.estimateTask = estimateTask;
+    }
+
+    public String getTimeTask() {
+        return timeTask;
+    }
+
+    public void setTimeTask(String timeTask) {
+        this.timeTask = timeTask;
+    }
+
+    public String getInitTimeTask() {
+        return initTimeTask;
+    }
+
+    public void setInitTimeTask(String initTimeTask) {
+        this.initTimeTask = initTimeTask;
+    }
+
+    public String getUnitTimeTask() {
+        return unitTimeTask;
+    }
+
+    public void setUnitTimeTask(String unitTimeTask) {
+        this.unitTimeTask = unitTimeTask;
+    }
+
+    public String getPostTimeTask() {
+        return postTimeTask;
+    }
+
+    public void setPostTimeTask(String postTimeTask) {
+        this.postTimeTask = postTimeTask;
+    }
+
+    public String getCheckTimeTask() {
+        return checkTimeTask;
+    }
+
+    public void setCheckTimeTask(String checkTimeTask) {
+        this.checkTimeTask = checkTimeTask;
+    }
+
+    public String getIdGroupResource0Task() {
+        return idGroupResource0Task;
+    }
+
+    public void setIdGroupResource0Task(String idGroupResource0Task) {
+        this.idGroupResource0Task = idGroupResource0Task;
+    }
+
+    public String getIdResource0Task() {
+        return idResource0Task;
+    }
+
+    public void setIdResource0Task(String idResource0Task) {
+        this.idResource0Task = idResource0Task;
+    }
+
+    public String getIdSite0Task() {
+        return idSite0Task;
+    }
+
+    public void setIdSite0Task(String idSite0Task) {
+        this.idSite0Task = idSite0Task;
+    }
+
+    public Short getQuantity0Task() {
+        return quantity0Task;
+    }
+
+    public void setQuantity0Task(Short quantity0Task) {
+        this.quantity0Task = quantity0Task;
+    }
+
+    public String getT10Task() {
+        return t10Task;
+    }
+
+    public void setT10Task(String t10Task) {
+        this.t10Task = t10Task;
+    }
+
+    public String getT20Task() {
+        return t20Task;
+    }
+
+    public void setT20Task(String t20Task) {
+        this.t20Task = t20Task;
+    }
+
+    public String getT20ExtendedTask() {
+        return t20ExtendedTask;
+    }
+
+    public void setT20ExtendedTask(String t20ExtendedTask) {
+        this.t20ExtendedTask = t20ExtendedTask;
+    }
+
+    public String getT1RealTask() {
+        return t1RealTask;
+    }
+
+    public void setT1RealTask(String t1RealTask) {
+        this.t1RealTask = t1RealTask;
+    }
+
+    public String getT2RealTask() {
+        return t2RealTask;
+    }
+
+    public void setT2RealTask(String t2RealTask) {
+        this.t2RealTask = t2RealTask;
+    }
+
+    public String getT1Job() {
+        return t1Job;
+    }
+
+    public void setT1Job(String t1Job) {
+        this.t1Job = t1Job;
+    }
+
+    public String getT2Job() {
+        return t2Job;
+    }
+
+    public void setT2Job(String t2Job) {
+        this.t2Job = t2Job;
+    }
+
+    public Short getQuantityJob() {
+        return quantityJob;
+    }
+
+    public void setQuantityJob(Short quantityJob) {
+        this.quantityJob = quantityJob;
+    }
+
+    public Short getQuantityProviderTask() {
+        return quantityProviderTask;
+    }
+
+    public void setQuantityProviderTask(Short quantityProviderTask) {
+        this.quantityProviderTask = quantityProviderTask;
+    }
+
+    public Short getNbTaskJob() {
+        return nbTaskJob;
+    }
+
+    public void setNbTaskJob(Short nbTaskJob) {
+        this.nbTaskJob = nbTaskJob;
+    }
+
+    public String getRefProductJob() {
+        return refProductJob;
+    }
+
+    public void setRefProductJob(String refProductJob) {
+        this.refProductJob = refProductJob;
+    }
+
+    public Short getOrdToRootJob() {
+        return ordToRootJob;
+    }
+
+    public void setOrdToRootJob(Short ordToRootJob) {
+        this.ordToRootJob = ordToRootJob;
+    }
+
+    public String getOrdToRootChildJob() {
+        return ordToRootChildJob;
+    }
+
+    public void setOrdToRootChildJob(String ordToRootChildJob) {
+        this.ordToRootChildJob = ordToRootChildJob;
+    }
+
+    public Short getMinQtyBatchTask() {
+        return minQtyBatchTask;
+    }
+
+    public void setMinQtyBatchTask(Short minQtyBatchTask) {
+        this.minQtyBatchTask = minQtyBatchTask;
+    }
+
+    public Short getMinTimeBatchTask() {
+        return minTimeBatchTask;
+    }
+
+    public void setMinTimeBatchTask(Short minTimeBatchTask) {
+        this.minTimeBatchTask = minTimeBatchTask;
+    }
+
+    public String getT1Order() {
+        return t1Order;
+    }
+
+    public void setT1Order(String t1Order) {
+        this.t1Order = t1Order;
+    }
+
+    public String getT2Order() {
+        return t2Order;
+    }
+
+    public void setT2Order(String t2Order) {
+        this.t2Order = t2Order;
+    }
+
+    public Short getQuantityOrder() {
+        return quantityOrder;
+    }
+
+    public void setQuantityOrder(Short quantityOrder) {
+        this.quantityOrder = quantityOrder;
+    }
+
+    public Short getPriorityOrder() {
+        return priorityOrder;
+    }
+
+    public void setPriorityOrder(Short priorityOrder) {
+        this.priorityOrder = priorityOrder;
+    }
+
+    public String getColorOrder() {
+        return colorOrder;
+    }
+
+    public void setColorOrder(String colorOrder) {
+        this.colorOrder = colorOrder;
+    }
+
+    public Byte getState() {
+        return state;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
+    }
+
+    public Byte getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Byte selected) {
+        this.selected = selected;
+    }
+
+    public Short getTimeTypeResourceProvider() {
+        return timeTypeResourceProvider;
+    }
+
+    public void setTimeTypeResourceProvider(Short timeTypeResourceProvider) {
+        this.timeTypeResourceProvider = timeTypeResourceProvider;
+    }
+
+    public Short getTimeSlotTypeResourceProvider() {
+        return timeSlotTypeResourceProvider;
+    }
+
+    public void setTimeSlotTypeResourceProvider(Short timeSlotTypeResourceProvider) {
+        this.timeSlotTypeResourceProvider = timeSlotTypeResourceProvider;
+    }
+
+    public Short getCapacitySlotGroupTypeResource() {
+        return capacitySlotGroupTypeResource;
+    }
+
+    public void setCapacitySlotGroupTypeResource(Short capacitySlotGroupTypeResource) {
+        this.capacitySlotGroupTypeResource = capacitySlotGroupTypeResource;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PlanEntity that = (PlanEntity) o;
+        RG_PlanEntity that = (RG_PlanEntity) o;
 
         if (id != that.id) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
-        if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
-        if (idProcess != null ? !idProcess.equals(that.idProcess) : that.idProcess != null) return false;
-        if (idOrder != null ? !idOrder.equals(that.idOrder) : that.idOrder != null) return false;
-        if (idResource != null ? !idResource.equals(that.idResource) : that.idResource != null) return false;
-        if (idJob != null ? !idJob.equals(that.idJob) : that.idJob != null) return false;
-        if (idSite != null ? !idSite.equals(that.idSite) : that.idSite != null) return false;
-        if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
-            return false;
-        if (idTypeResource != null ? !idTypeResource.equals(that.idTypeResource) : that.idTypeResource != null)
-            return false;
-        if (idProductOrder != null ? !idProductOrder.equals(that.idProductOrder) : that.idProductOrder != null)
-            return false;
-        if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
         if (nameTask != null ? !nameTask.equals(that.nameTask) : that.nameTask != null) return false;
         if (nameProcess != null ? !nameProcess.equals(that.nameProcess) : that.nameProcess != null) return false;
         if (nameOrder != null ? !nameOrder.equals(that.nameOrder) : that.nameOrder != null) return false;
@@ -936,17 +693,8 @@ public class PlanEntity {
 
     @Override
     public int hashCode() {
-        int result = idClub != null ? idClub.hashCode() : 0;
+        int result = id;
         result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
-        result = 31 * result + (idProcess != null ? idProcess.hashCode() : 0);
-        result = 31 * result + (idOrder != null ? idOrder.hashCode() : 0);
-        result = 31 * result + (idResource != null ? idResource.hashCode() : 0);
-        result = 31 * result + (idJob != null ? idJob.hashCode() : 0);
-        result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
-        result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
-        result = 31 * result + (idTypeResource != null ? idTypeResource.hashCode() : 0);
-        result = 31 * result + (idProductOrder != null ? idProductOrder.hashCode() : 0);
-        result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (nameTask != null ? nameTask.hashCode() : 0);
         result = 31 * result + (nameProcess != null ? nameProcess.hashCode() : 0);
         result = 31 * result + (nameOrder != null ? nameOrder.hashCode() : 0);
@@ -1008,87 +756,78 @@ public class PlanEntity {
         result = 31 * result + (timeTypeResourceProvider != null ? timeTypeResourceProvider.hashCode() : 0);
         result = 31 * result + (timeSlotTypeResourceProvider != null ? timeSlotTypeResourceProvider.hashCode() : 0);
         result = 31 * result + (capacitySlotGroupTypeResource != null ? capacitySlotGroupTypeResource.hashCode() : 0);
-        result = 31 * result + id;
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idClub", referencedColumnName = "id")
-    public ClubEntity getClubByIdClub() {
+    public RG_ClubEntity getClubByIdClub() {
         return clubByIdClub;
     }
 
-    public void setClubByIdClub(ClubEntity clubByIdClub) {
+    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
         this.clubByIdClub = clubByIdClub;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idProcess", referencedColumnName = "id")
-    public ProcessEntity getProcessByIdProcess() {
+    public RG_ProcessEntity getProcessByIdProcess() {
         return processByIdProcess;
     }
 
-    public void setProcessByIdProcess(ProcessEntity processByIdProcess) {
+    public void setProcessByIdProcess(RG_ProcessEntity processByIdProcess) {
         this.processByIdProcess = processByIdProcess;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idOrder", referencedColumnName = "id")
-    public OrderEntity getOrderByIdOrder() {
+    public RG_OrderEntity getOrderByIdOrder() {
         return orderByIdOrder;
     }
 
-    public void setOrderByIdOrder(OrderEntity orderByIdOrder) {
+    public void setOrderByIdOrder(RG_OrderEntity orderByIdOrder) {
         this.orderByIdOrder = orderByIdOrder;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idResource", referencedColumnName = "id")
-    public ResourceEntity getResourceByIdResource() {
+    public RG_ResourceEntity getResourceByIdResource() {
         return resourceByIdResource;
     }
 
-    public void setResourceByIdResource(ResourceEntity resourceByIdResource) {
+    public void setResourceByIdResource(RG_ResourceEntity resourceByIdResource) {
         this.resourceByIdResource = resourceByIdResource;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idSite", referencedColumnName = "id")
-    public SiteEntity getSiteByIdSite() {
+    public RG_SiteEntity getSiteByIdSite() {
         return siteByIdSite;
     }
 
-    public void setSiteByIdSite(SiteEntity siteByIdSite) {
+    public void setSiteByIdSite(RG_SiteEntity siteByIdSite) {
         this.siteByIdSite = siteByIdSite;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idGroupResource", referencedColumnName = "id")
-    public GroupresourceEntity getGroupresourceByIdGroupResource() {
+    public RG_GroupresourceEntity getGroupresourceByIdGroupResource() {
         return groupresourceByIdGroupResource;
     }
 
-    public void setGroupresourceByIdGroupResource(GroupresourceEntity groupresourceByIdGroupResource) {
+    public void setGroupresourceByIdGroupResource(RG_GroupresourceEntity groupresourceByIdGroupResource) {
         this.groupresourceByIdGroupResource = groupresourceByIdGroupResource;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idTypeResource", referencedColumnName = "id")
-    public TyperescourceEntity getTyperescourceByIdTypeResource() {
+    public RG_TyperescourceEntity getTyperescourceByIdTypeResource() {
         return typerescourceByIdTypeResource;
     }
 
-    public void setTyperescourceByIdTypeResource(TyperescourceEntity typerescourceByIdTypeResource) {
+    public void setTyperescourceByIdTypeResource(RG_TyperescourceEntity typerescourceByIdTypeResource) {
         this.typerescourceByIdTypeResource = typerescourceByIdTypeResource;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idProvider", referencedColumnName = "id")
-    public ProviderEntity getProviderByIdProvider() {
+    public RG_ProviderEntity getProviderByIdProvider() {
         return providerByIdProvider;
     }
 
-    public void setProviderByIdProvider(ProviderEntity providerByIdProvider) {
+    public void setProviderByIdProvider(RG_ProviderEntity providerByIdProvider) {
         this.providerByIdProvider = providerByIdProvider;
+    }
+
+    public RG_ProductEntity getProductByIdProduct() {
+        return productByIdProduct;
+    }
+
+    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
+        this.productByIdProduct = productByIdProduct;
     }
 }

@@ -1,19 +1,12 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-import java.util.Collection;
-
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "process", schema = "testdatabase", catalog = "")
-public class ProcessEntity {
+public class RG_ProcessEntity {
     private String id;
     private String name;
     private String idRoot;
-    private String idParent;
-    private String idProduct;
     private Short ordToRoot;
     private String ordToRootChild;
     private Short ordToParent;
@@ -48,6 +41,7 @@ public class ProcessEntity {
     private Short maxTimeSucc;
     private Short quantity;
     private Short unitQuantity;
+    private Short rgSwitch;
     private Short minQtySwitch;
     private Short maxQtySwitch;
     private Short modQtySwitch;
@@ -70,13 +64,9 @@ public class ProcessEntity {
     private String batch;
     private String idIcon;
     private Short nbTask;
-    private Short rgSwitch;
-    private Collection<AssisantprocessEntity> assisantprocessesById;
-    private Collection<PlanEntity> plansById;
-    private ProductEntity productByIdProduct;
+    private RG_ProductEntity productByIdProduct;
+    private RG_ProcessEntity processByIdProcess;
 
-    @Id
-    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -85,8 +75,6 @@ public class ProcessEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -95,8 +83,6 @@ public class ProcessEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "idRoot")
     public String getIdRoot() {
         return idRoot;
     }
@@ -105,28 +91,6 @@ public class ProcessEntity {
         this.idRoot = idRoot;
     }
 
-    @Basic
-    @Column(name = "idParent")
-    public String getIdParent() {
-        return idParent;
-    }
-
-    public void setIdParent(String idParent) {
-        this.idParent = idParent;
-    }
-
-    @Basic
-    @Column(name = "idProduct")
-    public String getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(String idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    @Basic
-    @Column(name = "ordToRoot")
     public Short getOrdToRoot() {
         return ordToRoot;
     }
@@ -135,8 +99,6 @@ public class ProcessEntity {
         this.ordToRoot = ordToRoot;
     }
 
-    @Basic
-    @Column(name = "OrdToRootChild")
     public String getOrdToRootChild() {
         return ordToRootChild;
     }
@@ -145,8 +107,6 @@ public class ProcessEntity {
         this.ordToRootChild = ordToRootChild;
     }
 
-    @Basic
-    @Column(name = "ordToParent")
     public Short getOrdToParent() {
         return ordToParent;
     }
@@ -155,8 +115,6 @@ public class ProcessEntity {
         this.ordToParent = ordToParent;
     }
 
-    @Basic
-    @Column(name = "typeShift")
     public Byte getTypeShift() {
         return typeShift;
     }
@@ -165,8 +123,6 @@ public class ProcessEntity {
         this.typeShift = typeShift;
     }
 
-    @Basic
-    @Column(name = "preemptive")
     public String getPreemptive() {
         return preemptive;
     }
@@ -175,8 +131,6 @@ public class ProcessEntity {
         this.preemptive = preemptive;
     }
 
-    @Basic
-    @Column(name = "exclusiveJob")
     public String getExclusiveJob() {
         return exclusiveJob;
     }
@@ -185,8 +139,6 @@ public class ProcessEntity {
         this.exclusiveJob = exclusiveJob;
     }
 
-    @Basic
-    @Column(name = "exclusiveOrder")
     public String getExclusiveOrder() {
         return exclusiveOrder;
     }
@@ -195,8 +147,6 @@ public class ProcessEntity {
         this.exclusiveOrder = exclusiveOrder;
     }
 
-    @Basic
-    @Column(name = "coupledTypeOrder")
     public String getCoupledTypeOrder() {
         return coupledTypeOrder;
     }
@@ -205,8 +155,6 @@ public class ProcessEntity {
         this.coupledTypeOrder = coupledTypeOrder;
     }
 
-    @Basic
-    @Column(name = "IdCoupled")
     public String getIdCoupled() {
         return idCoupled;
     }
@@ -215,8 +163,6 @@ public class ProcessEntity {
         this.idCoupled = idCoupled;
     }
 
-    @Basic
-    @Column(name = "IdCoupledT1")
     public String getIdCoupledT1() {
         return idCoupledT1;
     }
@@ -225,8 +171,6 @@ public class ProcessEntity {
         this.idCoupledT1 = idCoupledT1;
     }
 
-    @Basic
-    @Column(name = "IdCoupledT2")
     public String getIdCoupledT2() {
         return idCoupledT2;
     }
@@ -235,8 +179,6 @@ public class ProcessEntity {
         this.idCoupledT2 = idCoupledT2;
     }
 
-    @Basic
-    @Column(name = "IdCoupledTypeShift")
     public String getIdCoupledTypeShift() {
         return idCoupledTypeShift;
     }
@@ -245,8 +187,6 @@ public class ProcessEntity {
         this.idCoupledTypeShift = idCoupledTypeShift;
     }
 
-    @Basic
-    @Column(name = "IdCoupledShift")
     public String getIdCoupledShift() {
         return idCoupledShift;
     }
@@ -255,8 +195,6 @@ public class ProcessEntity {
         this.idCoupledShift = idCoupledShift;
     }
 
-    @Basic
-    @Column(name = "IdCoupledGroupResource")
     public String getIdCoupledGroupResource() {
         return idCoupledGroupResource;
     }
@@ -265,8 +203,6 @@ public class ProcessEntity {
         this.idCoupledGroupResource = idCoupledGroupResource;
     }
 
-    @Basic
-    @Column(name = "IdCoupledTypeResource")
     public String getIdCoupledTypeResource() {
         return idCoupledTypeResource;
     }
@@ -275,8 +211,6 @@ public class ProcessEntity {
         this.idCoupledTypeResource = idCoupledTypeResource;
     }
 
-    @Basic
-    @Column(name = "IdCoupledResouce")
     public String getIdCoupledResouce() {
         return idCoupledResouce;
     }
@@ -285,8 +219,6 @@ public class ProcessEntity {
         this.idCoupledResouce = idCoupledResouce;
     }
 
-    @Basic
-    @Column(name = "IdCoupledTypeSite")
     public String getIdCoupledTypeSite() {
         return idCoupledTypeSite;
     }
@@ -295,8 +227,6 @@ public class ProcessEntity {
         this.idCoupledTypeSite = idCoupledTypeSite;
     }
 
-    @Basic
-    @Column(name = "IdCoupledSite")
     public String getIdCoupledSite() {
         return idCoupledSite;
     }
@@ -305,8 +235,6 @@ public class ProcessEntity {
         this.idCoupledSite = idCoupledSite;
     }
 
-    @Basic
-    @Column(name = "Slot1")
     public String getSlot1() {
         return slot1;
     }
@@ -315,8 +243,6 @@ public class ProcessEntity {
         this.slot1 = slot1;
     }
 
-    @Basic
-    @Column(name = "Slot2")
     public String getSlot2() {
         return slot2;
     }
@@ -325,8 +251,6 @@ public class ProcessEntity {
         this.slot2 = slot2;
     }
 
-    @Basic
-    @Column(name = "initTime")
     public Short getInitTime() {
         return initTime;
     }
@@ -335,8 +259,6 @@ public class ProcessEntity {
         this.initTime = initTime;
     }
 
-    @Basic
-    @Column(name = "unitTime")
     public Short getUnitTime() {
         return unitTime;
     }
@@ -345,8 +267,6 @@ public class ProcessEntity {
         this.unitTime = unitTime;
     }
 
-    @Basic
-    @Column(name = "postTime")
     public Short getPostTime() {
         return postTime;
     }
@@ -355,8 +275,6 @@ public class ProcessEntity {
         this.postTime = postTime;
     }
 
-    @Basic
-    @Column(name = "checkTime")
     public Short getCheckTime() {
         return checkTime;
     }
@@ -365,8 +283,6 @@ public class ProcessEntity {
         this.checkTime = checkTime;
     }
 
-    @Basic
-    @Column(name = "delta")
     public Short getDelta() {
         return delta;
     }
@@ -375,8 +291,6 @@ public class ProcessEntity {
         this.delta = delta;
     }
 
-    @Basic
-    @Column(name = "estimate")
     public Short getEstimate() {
         return estimate;
     }
@@ -385,8 +299,6 @@ public class ProcessEntity {
         this.estimate = estimate;
     }
 
-    @Basic
-    @Column(name = "continuous")
     public String getContinuous() {
         return continuous;
     }
@@ -395,8 +307,6 @@ public class ProcessEntity {
         this.continuous = continuous;
     }
 
-    @Basic
-    @Column(name = "IdExclusive")
     public String getIdExclusive() {
         return idExclusive;
     }
@@ -405,8 +315,6 @@ public class ProcessEntity {
         this.idExclusive = idExclusive;
     }
 
-    @Basic
-    @Column(name = "IdPrec")
     public String getIdPrec() {
         return idPrec;
     }
@@ -415,8 +323,6 @@ public class ProcessEntity {
         this.idPrec = idPrec;
     }
 
-    @Basic
-    @Column(name = "IdSucc")
     public String getIdSucc() {
         return idSucc;
     }
@@ -425,8 +331,6 @@ public class ProcessEntity {
         this.idSucc = idSucc;
     }
 
-    @Basic
-    @Column(name = "minTimeSucc")
     public Short getMinTimeSucc() {
         return minTimeSucc;
     }
@@ -435,8 +339,6 @@ public class ProcessEntity {
         this.minTimeSucc = minTimeSucc;
     }
 
-    @Basic
-    @Column(name = "maxTimeSucc")
     public Short getMaxTimeSucc() {
         return maxTimeSucc;
     }
@@ -445,8 +347,6 @@ public class ProcessEntity {
         this.maxTimeSucc = maxTimeSucc;
     }
 
-    @Basic
-    @Column(name = "quantity")
     public Short getQuantity() {
         return quantity;
     }
@@ -455,8 +355,6 @@ public class ProcessEntity {
         this.quantity = quantity;
     }
 
-    @Basic
-    @Column(name = "unitQuantity")
     public Short getUnitQuantity() {
         return unitQuantity;
     }
@@ -465,228 +363,6 @@ public class ProcessEntity {
         this.unitQuantity = unitQuantity;
     }
 
-    @Basic
-    @Column(name = "minQtySwitch")
-    public Short getMinQtySwitch() {
-        return minQtySwitch;
-    }
-
-    public void setMinQtySwitch(Short minQtySwitch) {
-        this.minQtySwitch = minQtySwitch;
-    }
-
-    @Basic
-    @Column(name = "maxQtySwitch")
-    public Short getMaxQtySwitch() {
-        return maxQtySwitch;
-    }
-
-    public void setMaxQtySwitch(Short maxQtySwitch) {
-        this.maxQtySwitch = maxQtySwitch;
-    }
-
-    @Basic
-    @Column(name = "modQtySwitch")
-    public Short getModQtySwitch() {
-        return modQtySwitch;
-    }
-
-    public void setModQtySwitch(Short modQtySwitch) {
-        this.modQtySwitch = modQtySwitch;
-    }
-
-    @Basic
-    @Column(name = "IdSwitch")
-    public String getIdSwitch() {
-        return idSwitch;
-    }
-
-    public void setIdSwitch(String idSwitch) {
-        this.idSwitch = idSwitch;
-    }
-
-    @Basic
-    @Column(name = "maxResourceDivision")
-    public Short getMaxResourceDivision() {
-        return maxResourceDivision;
-    }
-
-    public void setMaxResourceDivision(Short maxResourceDivision) {
-        this.maxResourceDivision = maxResourceDivision;
-    }
-
-    @Basic
-    @Column(name = "minResourceDivision")
-    public Short getMinResourceDivision() {
-        return minResourceDivision;
-    }
-
-    public void setMinResourceDivision(Short minResourceDivision) {
-        this.minResourceDivision = minResourceDivision;
-    }
-
-    @Basic
-    @Column(name = "modResourceDivision")
-    public Short getModResourceDivision() {
-        return modResourceDivision;
-    }
-
-    public void setModResourceDivision(Short modResourceDivision) {
-        this.modResourceDivision = modResourceDivision;
-    }
-
-    @Basic
-    @Column(name = "minTimeDivision")
-    public Short getMinTimeDivision() {
-        return minTimeDivision;
-    }
-
-    public void setMinTimeDivision(Short minTimeDivision) {
-        this.minTimeDivision = minTimeDivision;
-    }
-
-    @Basic
-    @Column(name = "maxTimeDivision")
-    public Short getMaxTimeDivision() {
-        return maxTimeDivision;
-    }
-
-    public void setMaxTimeDivision(Short maxTimeDivision) {
-        this.maxTimeDivision = maxTimeDivision;
-    }
-
-    @Basic
-    @Column(name = "modTimeDivision")
-    public Short getModTimeDivision() {
-        return modTimeDivision;
-    }
-
-    public void setModTimeDivision(Short modTimeDivision) {
-        this.modTimeDivision = modTimeDivision;
-    }
-
-    @Basic
-    @Column(name = "minQtyDivision")
-    public Short getMinQtyDivision() {
-        return minQtyDivision;
-    }
-
-    public void setMinQtyDivision(Short minQtyDivision) {
-        this.minQtyDivision = minQtyDivision;
-    }
-
-    @Basic
-    @Column(name = "maxQtyDivision")
-    public Short getMaxQtyDivision() {
-        return maxQtyDivision;
-    }
-
-    public void setMaxQtyDivision(Short maxQtyDivision) {
-        this.maxQtyDivision = maxQtyDivision;
-    }
-
-    @Basic
-    @Column(name = "modQtyDivision")
-    public Short getModQtyDivision() {
-        return modQtyDivision;
-    }
-
-    public void setModQtyDivision(Short modQtyDivision) {
-        this.modQtyDivision = modQtyDivision;
-    }
-
-    @Basic
-    @Column(name = "minQtyBatch")
-    public Short getMinQtyBatch() {
-        return minQtyBatch;
-    }
-
-    public void setMinQtyBatch(Short minQtyBatch) {
-        this.minQtyBatch = minQtyBatch;
-    }
-
-    @Basic
-    @Column(name = "maxQtyBatch")
-    public Short getMaxQtyBatch() {
-        return maxQtyBatch;
-    }
-
-    public void setMaxQtyBatch(Short maxQtyBatch) {
-        this.maxQtyBatch = maxQtyBatch;
-    }
-
-    @Basic
-    @Column(name = "modQtyBatch")
-    public Short getModQtyBatch() {
-        return modQtyBatch;
-    }
-
-    public void setModQtyBatch(Short modQtyBatch) {
-        this.modQtyBatch = modQtyBatch;
-    }
-
-    @Basic
-    @Column(name = "minTimeBatch")
-    public Short getMinTimeBatch() {
-        return minTimeBatch;
-    }
-
-    public void setMinTimeBatch(Short minTimeBatch) {
-        this.minTimeBatch = minTimeBatch;
-    }
-
-    @Basic
-    @Column(name = "maxTimeBatch")
-    public Short getMaxTimeBatch() {
-        return maxTimeBatch;
-    }
-
-    public void setMaxTimeBatch(Short maxTimeBatch) {
-        this.maxTimeBatch = maxTimeBatch;
-    }
-
-    @Basic
-    @Column(name = "modTimeBatch")
-    public Short getModTimeBatch() {
-        return modTimeBatch;
-    }
-
-    public void setModTimeBatch(Short modTimeBatch) {
-        this.modTimeBatch = modTimeBatch;
-    }
-
-    @Basic
-    @Column(name = "batch")
-    public String getBatch() {
-        return batch;
-    }
-
-    public void setBatch(String batch) {
-        this.batch = batch;
-    }
-
-    @Basic
-    @Column(name = "idIcon")
-    public String getIdIcon() {
-        return idIcon;
-    }
-
-    public void setIdIcon(String idIcon) {
-        this.idIcon = idIcon;
-    }
-
-    @Basic
-    @Column(name = "nbTask")
-    public Short getNbTask() {
-        return nbTask;
-    }
-
-    public void setNbTask(Short nbTask) {
-        this.nbTask = nbTask;
-    }
-
-    @Basic
-    @Column(name = "RG_switch")
     public Short getRgSwitch() {
         return rgSwitch;
     }
@@ -695,18 +371,192 @@ public class ProcessEntity {
         this.rgSwitch = rgSwitch;
     }
 
+    public Short getMinQtySwitch() {
+        return minQtySwitch;
+    }
+
+    public void setMinQtySwitch(Short minQtySwitch) {
+        this.minQtySwitch = minQtySwitch;
+    }
+
+    public Short getMaxQtySwitch() {
+        return maxQtySwitch;
+    }
+
+    public void setMaxQtySwitch(Short maxQtySwitch) {
+        this.maxQtySwitch = maxQtySwitch;
+    }
+
+    public Short getModQtySwitch() {
+        return modQtySwitch;
+    }
+
+    public void setModQtySwitch(Short modQtySwitch) {
+        this.modQtySwitch = modQtySwitch;
+    }
+
+    public String getIdSwitch() {
+        return idSwitch;
+    }
+
+    public void setIdSwitch(String idSwitch) {
+        this.idSwitch = idSwitch;
+    }
+
+    public Short getMaxResourceDivision() {
+        return maxResourceDivision;
+    }
+
+    public void setMaxResourceDivision(Short maxResourceDivision) {
+        this.maxResourceDivision = maxResourceDivision;
+    }
+
+    public Short getMinResourceDivision() {
+        return minResourceDivision;
+    }
+
+    public void setMinResourceDivision(Short minResourceDivision) {
+        this.minResourceDivision = minResourceDivision;
+    }
+
+    public Short getModResourceDivision() {
+        return modResourceDivision;
+    }
+
+    public void setModResourceDivision(Short modResourceDivision) {
+        this.modResourceDivision = modResourceDivision;
+    }
+
+    public Short getMinTimeDivision() {
+        return minTimeDivision;
+    }
+
+    public void setMinTimeDivision(Short minTimeDivision) {
+        this.minTimeDivision = minTimeDivision;
+    }
+
+    public Short getMaxTimeDivision() {
+        return maxTimeDivision;
+    }
+
+    public void setMaxTimeDivision(Short maxTimeDivision) {
+        this.maxTimeDivision = maxTimeDivision;
+    }
+
+    public Short getModTimeDivision() {
+        return modTimeDivision;
+    }
+
+    public void setModTimeDivision(Short modTimeDivision) {
+        this.modTimeDivision = modTimeDivision;
+    }
+
+    public Short getMinQtyDivision() {
+        return minQtyDivision;
+    }
+
+    public void setMinQtyDivision(Short minQtyDivision) {
+        this.minQtyDivision = minQtyDivision;
+    }
+
+    public Short getMaxQtyDivision() {
+        return maxQtyDivision;
+    }
+
+    public void setMaxQtyDivision(Short maxQtyDivision) {
+        this.maxQtyDivision = maxQtyDivision;
+    }
+
+    public Short getModQtyDivision() {
+        return modQtyDivision;
+    }
+
+    public void setModQtyDivision(Short modQtyDivision) {
+        this.modQtyDivision = modQtyDivision;
+    }
+
+    public Short getMinQtyBatch() {
+        return minQtyBatch;
+    }
+
+    public void setMinQtyBatch(Short minQtyBatch) {
+        this.minQtyBatch = minQtyBatch;
+    }
+
+    public Short getMaxQtyBatch() {
+        return maxQtyBatch;
+    }
+
+    public void setMaxQtyBatch(Short maxQtyBatch) {
+        this.maxQtyBatch = maxQtyBatch;
+    }
+
+    public Short getModQtyBatch() {
+        return modQtyBatch;
+    }
+
+    public void setModQtyBatch(Short modQtyBatch) {
+        this.modQtyBatch = modQtyBatch;
+    }
+
+    public Short getMinTimeBatch() {
+        return minTimeBatch;
+    }
+
+    public void setMinTimeBatch(Short minTimeBatch) {
+        this.minTimeBatch = minTimeBatch;
+    }
+
+    public Short getMaxTimeBatch() {
+        return maxTimeBatch;
+    }
+
+    public void setMaxTimeBatch(Short maxTimeBatch) {
+        this.maxTimeBatch = maxTimeBatch;
+    }
+
+    public Short getModTimeBatch() {
+        return modTimeBatch;
+    }
+
+    public void setModTimeBatch(Short modTimeBatch) {
+        this.modTimeBatch = modTimeBatch;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
+
+    public String getIdIcon() {
+        return idIcon;
+    }
+
+    public void setIdIcon(String idIcon) {
+        this.idIcon = idIcon;
+    }
+
+    public Short getNbTask() {
+        return nbTask;
+    }
+
+    public void setNbTask(Short nbTask) {
+        this.nbTask = nbTask;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProcessEntity that = (ProcessEntity) o;
+        RG_ProcessEntity that = (RG_ProcessEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (idRoot != null ? !idRoot.equals(that.idRoot) : that.idRoot != null) return false;
-        if (idParent != null ? !idParent.equals(that.idParent) : that.idParent != null) return false;
-        if (idProduct != null ? !idProduct.equals(that.idProduct) : that.idProduct != null) return false;
         if (ordToRoot != null ? !ordToRoot.equals(that.ordToRoot) : that.ordToRoot != null) return false;
         if (ordToRootChild != null ? !ordToRootChild.equals(that.ordToRootChild) : that.ordToRootChild != null)
             return false;
@@ -751,6 +601,7 @@ public class ProcessEntity {
         if (maxTimeSucc != null ? !maxTimeSucc.equals(that.maxTimeSucc) : that.maxTimeSucc != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
         if (unitQuantity != null ? !unitQuantity.equals(that.unitQuantity) : that.unitQuantity != null) return false;
+        if (rgSwitch != null ? !rgSwitch.equals(that.rgSwitch) : that.rgSwitch != null) return false;
         if (minQtySwitch != null ? !minQtySwitch.equals(that.minQtySwitch) : that.minQtySwitch != null) return false;
         if (maxQtySwitch != null ? !maxQtySwitch.equals(that.maxQtySwitch) : that.maxQtySwitch != null) return false;
         if (modQtySwitch != null ? !modQtySwitch.equals(that.modQtySwitch) : that.modQtySwitch != null) return false;
@@ -782,7 +633,6 @@ public class ProcessEntity {
         if (batch != null ? !batch.equals(that.batch) : that.batch != null) return false;
         if (idIcon != null ? !idIcon.equals(that.idIcon) : that.idIcon != null) return false;
         if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
-        if (rgSwitch != null ? !rgSwitch.equals(that.rgSwitch) : that.rgSwitch != null) return false;
 
         return true;
     }
@@ -792,8 +642,6 @@ public class ProcessEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (idRoot != null ? idRoot.hashCode() : 0);
-        result = 31 * result + (idParent != null ? idParent.hashCode() : 0);
-        result = 31 * result + (idProduct != null ? idProduct.hashCode() : 0);
         result = 31 * result + (ordToRoot != null ? ordToRoot.hashCode() : 0);
         result = 31 * result + (ordToRootChild != null ? ordToRootChild.hashCode() : 0);
         result = 31 * result + (ordToParent != null ? ordToParent.hashCode() : 0);
@@ -828,6 +676,7 @@ public class ProcessEntity {
         result = 31 * result + (maxTimeSucc != null ? maxTimeSucc.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (unitQuantity != null ? unitQuantity.hashCode() : 0);
+        result = 31 * result + (rgSwitch != null ? rgSwitch.hashCode() : 0);
         result = 31 * result + (minQtySwitch != null ? minQtySwitch.hashCode() : 0);
         result = 31 * result + (maxQtySwitch != null ? maxQtySwitch.hashCode() : 0);
         result = 31 * result + (modQtySwitch != null ? modQtySwitch.hashCode() : 0);
@@ -850,35 +699,22 @@ public class ProcessEntity {
         result = 31 * result + (batch != null ? batch.hashCode() : 0);
         result = 31 * result + (idIcon != null ? idIcon.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
-        result = 31 * result + (rgSwitch != null ? rgSwitch.hashCode() : 0);
         return result;
     }
 
-    @OneToMany(mappedBy = "processByIdProcess")
-    public Collection<AssisantprocessEntity> getAssisantprocessesById() {
-        return assisantprocessesById;
-    }
-
-    public void setAssisantprocessesById(Collection<AssisantprocessEntity> assisantprocessesById) {
-        this.assisantprocessesById = assisantprocessesById;
-    }
-
-    @OneToMany(mappedBy = "processByIdProcess")
-    public Collection<PlanEntity> getPlansById() {
-        return plansById;
-    }
-
-    public void setPlansById(Collection<PlanEntity> plansById) {
-        this.plansById = plansById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "idProduct", referencedColumnName = "id")
-    public ProductEntity getProductByIdProduct() {
+    public RG_ProductEntity getProductByIdProduct() {
         return productByIdProduct;
     }
 
-    public void setProductByIdProduct(ProductEntity productByIdProduct) {
+    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
         this.productByIdProduct = productByIdProduct;
+    }
+
+    public RG_ProcessEntity getProcessByIdProcess() {
+        return processByIdProcess;
+    }
+
+    public void setProcessByIdProcess(RG_ProcessEntity processByIdProcess) {
+        this.processByIdProcess = processByIdProcess;
     }
 }

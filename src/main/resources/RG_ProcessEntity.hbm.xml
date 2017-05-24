@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_ProcessEntity" table="RG_Process" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(100)" length="100"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="idRoot">
+            <column name="idRoot" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="ordToRoot">
+            <column name="ordToRoot" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="ordToRootChild">
+            <column name="OrdToRootChild" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="ordToParent">
+            <column name="ordToParent" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="typeShift">
+            <column name="typeShift" sql-type="tinyint(4)" not-null="false"/>
+        </property>
+        <property name="preemptive">
+            <column name="preemptive" sql-type="varchar(1)" length="1" not-null="false"/>
+        </property>
+        <property name="exclusiveJob">
+            <column name="exclusiveJob" sql-type="varchar(1)" length="1" not-null="false"/>
+        </property>
+        <property name="exclusiveOrder">
+            <column name="exclusiveOrder" sql-type="varchar(1)" length="1" not-null="false"/>
+        </property>
+        <property name="coupledTypeOrder">
+            <column name="coupledTypeOrder" sql-type="varchar(1)" length="1" not-null="false"/>
+        </property>
+        <property name="idCoupled">
+            <column name="IdCoupled" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledT1">
+            <column name="IdCoupledT1" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledT2">
+            <column name="IdCoupledT2" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledTypeShift">
+            <column name="IdCoupledTypeShift" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledShift">
+            <column name="IdCoupledShift" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledGroupResource">
+            <column name="IdCoupledGroupResource" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledTypeResource">
+            <column name="IdCoupledTypeResource" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledResouce">
+            <column name="IdCoupledResouce" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledTypeSite">
+            <column name="IdCoupledTypeSite" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="idCoupledSite">
+            <column name="IdCoupledSite" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="slot1">
+            <column name="Slot1" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="slot2">
+            <column name="Slot2" sql-type="varchar(200)" length="200" not-null="false"/>
+        </property>
+        <property name="initTime">
+            <column name="initTime" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="unitTime">
+            <column name="unitTime" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="postTime">
+            <column name="postTime" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="checkTime">
+            <column name="checkTime" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="delta">
+            <column name="delta" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="estimate">
+            <column name="estimate" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="continuous">
+            <column name="continuous" sql-type="varchar(10)" length="10" not-null="false"/>
+        </property>
+        <property name="idExclusive">
+            <column name="IdExclusive" sql-type="varchar(1000)" length="1000" not-null="false"/>
+        </property>
+        <property name="idPrec">
+            <column name="IdPrec" sql-type="varchar(1000)" length="1000" not-null="false"/>
+        </property>
+        <property name="idSucc">
+            <column name="IdSucc" sql-type="varchar(1000)" length="1000" not-null="false"/>
+        </property>
+        <property name="minTimeSucc">
+            <column name="minTimeSucc" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="maxTimeSucc">
+            <column name="maxTimeSucc" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="quantity">
+            <column name="quantity" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="unitQuantity">
+            <column name="unitQuantity" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="rgSwitch">
+            <column name="RG_switch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="minQtySwitch">
+            <column name="minQtySwitch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="maxQtySwitch">
+            <column name="maxQtySwitch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="modQtySwitch">
+            <column name="modQtySwitch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="idSwitch">
+            <column name="IdSwitch" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="maxResourceDivision">
+            <column name="maxResourceDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="minResourceDivision">
+            <column name="minResourceDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="modResourceDivision">
+            <column name="modResourceDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="minTimeDivision">
+            <column name="minTimeDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="maxTimeDivision">
+            <column name="maxTimeDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="modTimeDivision">
+            <column name="modTimeDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="minQtyDivision">
+            <column name="minQtyDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="maxQtyDivision">
+            <column name="maxQtyDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="modQtyDivision">
+            <column name="modQtyDivision" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="minQtyBatch">
+            <column name="minQtyBatch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="maxQtyBatch">
+            <column name="maxQtyBatch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="modQtyBatch">
+            <column name="modQtyBatch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="minTimeBatch">
+            <column name="minTimeBatch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="maxTimeBatch">
+            <column name="maxTimeBatch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="modTimeBatch">
+            <column name="modTimeBatch" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="batch">
+            <column name="batch" sql-type="varchar(10)" length="10" not-null="false"/>
+        </property>
+        <property name="idIcon">
+            <column name="idIcon" sql-type="varchar(10)" length="10" not-null="false"/>
+        </property>
+        <property name="nbTask">
+            <column name="nbTask" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
+            <column name="idProduct" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="processByIdProcess" class="com.rengu.entity.RG_ProcessEntity">
+            <column name="idParent" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

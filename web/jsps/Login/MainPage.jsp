@@ -23,18 +23,22 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 
         <style>
-            .uk-nav-side > li > a{
+            .uk-nav-side > li > a {
                 color: white;
             }
-            ul.uk-nav-sub{
+
+            ul.uk-nav-sub {
                 margin-left: 30px;
             }
-            ul.uk-nav-sub > li{
+
+            ul.uk-nav-sub > li {
                 height: 30px;
             }
-            .uk-nav-side ul a{
+
+            .uk-nav-side ul a {
                 color: white;
             }
+
             /*
                 里层li背景
             */
@@ -42,6 +46,7 @@
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
             }
+
             /*
                 ！！！！
             */
@@ -49,29 +54,33 @@
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
             }
+
             /*
                 外层li悬浮
             */
-            .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover{
+            .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover {
                 background: #1d5880;
                 color: white;
                 text-shadow: 0 0px 0 #fff;
             }
+
             /*
                 外层li高度
             */
-            .uk-nav-side > li > a{
+            .uk-nav-side > li > a {
                 height: 30px;
             }
+
             /*
                 外层li中的div样式
             */
-            .uk-nav li > a > div{
+            .uk-nav li > a > div {
                 margin-top: 8px;
                 float: left;
                 font-size: 14px;
                 line-height: 10px;
             }
+
             /*
                 li右侧箭头
             */
@@ -84,6 +93,7 @@
                 text-align: center;
                 margin-top: 4px;
             }
+
             /*
                 li底线
             */
@@ -97,7 +107,7 @@
 <body>
 <!--头部-->
 <div style="height: 70px;border-bottom: 1px solid gray;">
-    <div  class="uk-width-1-6" style="background-color: #1c4f7a; height: 70px;float: left;">
+    <div class="uk-width-1-6" style="background-color: #1c4f7a; height: 70px;float: left;">
         <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
     </div>
     <div style="float: left;width: 80%;height: 65px;margin-top: 5px;">
@@ -109,12 +119,12 @@
 
 </div>
 <div class="uk-width-1-6" style="float: left;height: 830px;background-color: #164360;">
-    <div  class="uk-width-1-1" style="margin-top: 10px;">
+    <div class="uk-width-1-1" style="margin-top: 10px;">
         <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/order.png">  <span style="margin-left: 10px;">订单任务管理</span>
+                        <img src="../../images/left_img/order.png"> <span style="margin-left: 10px;">订单任务管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -126,7 +136,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/resource.png">    <span style="margin-left: 10px;">资源设备管理</span>
+                        <img src="../../images/left_img/resource.png"> <span style="margin-left: 10px;">资源设备管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -140,7 +150,7 @@
             <li class="uk-parent">
                 <a href="#" target="body">
                     <div>
-                        <img src="../../images/left_img/plan.png">    <span style="margin-left: 10px;">计划排程管理</span>
+                        <img src="../../images/left_img/plan.png"> <span style="margin-left: 10px;">计划排程管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -152,7 +162,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/online.png">    <span style="margin-left: 10px;">在线监控管理</span>
+                        <img src="../../images/left_img/online.png"> <span style="margin-left: 10px;">在线监控管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -163,7 +173,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/adjust.png">    <span style="margin-left: 10px;">高级调整分析</span>
+                        <img src="../../images/left_img/adjust.png"> <span style="margin-left: 10px;">高级调整分析</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -176,7 +186,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/3D.png">    <span style="margin-left: 10px;">三维可视化</span>
+                        <img src="../../images/left_img/3D.png"> <span style="margin-left: 10px;">三维可视化</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
