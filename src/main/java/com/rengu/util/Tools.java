@@ -28,7 +28,7 @@ public class Tools {
         String jsonString = null;
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         try {
             jsonString = objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {

@@ -12,7 +12,7 @@
     <constant name="struts.action.excludePattern" value="/notification/.*"/>
 
     <package name="Orders" namespace="/orders" extends="struts-default">
-        <action name="findAllByUsername" class="com.rengu.actions.OrdersAction" method="getOrders"/>
+        <action name="getAllOrders" class="com.rengu.actions.OrdersAction" method="getAllOrders"/>
     </package>
 
 

@@ -4,10 +4,8 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
-import com.rengu.util.MySessionFactory;
 import com.rengu.util.SuperAction;
 import com.rengu.util.Tools;
-import org.hibernate.Transaction;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -23,12 +21,10 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
         return this.rg_orderEntity;
     }
 
-    public void getOrders() throws Exception {
-        Transaction transaction = MySessionFactory.getSessionFactory().getCurrentSession().beginTransaction();
+    public void getAllOrders() throws Exception {
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAll();
-        String jsonString = Tools.entityConvertToJsonString(list.get(0));
-
+        String jsonString = Tools.entityConvertToJsonString(list);
         httpServletResponse.setContentType("text/html");
         PrintWriter printWriter = httpServletResponse.getWriter();
         printWriter.println(jsonString);
