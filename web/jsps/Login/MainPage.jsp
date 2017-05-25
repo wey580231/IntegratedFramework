@@ -36,12 +36,19 @@
                 color: white;
             }
             /*
-                里层li背景
+                里层li中超链接的背景
             */
             .uk-nav-side ul a:hover {
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
             }
+            /*
+                里层li的背景
+            */
+            /*.uk-nav-sub ul li:hover {
+                background: url("../../images/left_img/click.png") no-repeat 30px;
+                color: #ecc412;
+            }*/
             /*
                 ！！！！
             */
@@ -50,13 +57,14 @@
                 color: #ecc412;
             }
             /*
-                外层li悬浮
+                外层li中的超链接悬浮
             */
             .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover{
                 background: #1d5880;
                 color: white;
                 text-shadow: 0 0px 0 #fff;
             }
+
             /*
                 外层li高度
             */

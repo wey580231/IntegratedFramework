@@ -7,7 +7,7 @@
 
     .nav-ml ul > li {
         list-style-type: none;
-        margin: 0;
+        margin: -5px;
         padding: 10px 0px 5px 5px;
         position: relative;
         left: 0px;
@@ -23,7 +23,7 @@
         right: auto
     }
 
-    .nav-ml li::before {
+   /* .nav-ml li::before {
         border-left: 1px solid #213299;
         bottom: 50px;
         height: 100%;
@@ -36,7 +36,7 @@
         height: 20px;
         top: 25px;
         width: 20px
-    }
+    }*/
 
     .nav-ml li a {
         -moz-border-radius: 5px;
@@ -100,10 +100,66 @@
     tr{
         height: 45px;
     }
-    .uk-tab-grid > li:first-child > a :hover {
+
+    .uk-tab-grid > li:first-child > a:hover {
         background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
+        background-position: 15px;
+    }
+    .uk-tab > li:nth-child(n+2) > a:hover{
+        background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
+        background-position: 20px;
+    }
+
+    /*
+        BOM树左侧的线条（竖线）
+    */
+    .nav-ml li::before {
+        border-left: 2px solid white;
+        bottom: 50px;
+        height: 100%;
+        top: 0px;
+        width: 1px;
+        margin-top: -4px;
+    }
+    /*
+        BOM树左侧的线条（横线）
+    */
+    .nav-ml li::after {
+        border-top: 2px solid white;
+        height: 20px;
+        top: 25px;
+        width: 20px;
+    }
+    .bg{
+        background-color: #c1edfa;
     }
 </style>
+
+<%--<script type="text/javascript">
+    //除了表头（第一行）以外所有的行添加click事件.
+    $("tr").first().nextAll().click(function () {
+        //如果没有某个样式则加上，否则去除
+        $(this).children().toggleClass("bg");
+        if ($(this).children().hasClass("bg")){//如果有某个样式则表明，这一行已经被选中
+            $(this).children().first().children().attr("checked", true);
+        } else {                                  //如果没有被选中
+            $(this).children().first().children().attr("checked", false);
+        }
+    });
+</script>--%>
+
+<script>
+    function changeColor(obj) {
+        var f = obj.checked;
+        var chkColor = "#c1edfa"; //选中后颜色
+        var ouColor = "#f3f8fb";  //偶数行取消选中后的颜色
+        var jiColor = "#FFFFFF";
+        if(f)
+            obj.parentElement.parentElement.style.backgroundColor = chkColor;
+        else
+            obj.parentElement.parentElement.style.backgroundColor = jiColor;
+    }
+</script>
 
 <div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
 
@@ -157,6 +213,7 @@
                 <div class="wrapper">
                     <div class="nav-ml">
                         <ul>
+                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
                             <li>
                                 <ul class="nav-first">
                                     <li>
@@ -191,6 +248,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
                             <li>
                                 <ul class="nav-first">
                                     <li>
@@ -201,12 +259,20 @@
                                                 <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
                                                 <a class="item-2"><i></i>子零件2-1</a>
                                                 <ul class="nav-three fold">
-                                                    <li><a>外购部件AA</a></li>
-                                                    <li><a>外购部件BB</a></li>
+                                                    <li>
+                                                        <img src="../../images/bom_img/4.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                        <a>外购部件AA</a></li>
+                                                    <li>
+                                                        <img src="../../images/bom_img/4.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                        <a>外购部件BB</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a class="item-2"><i></i>自产零件CD</a></li>
-                                            <li><a class="item-2"><i></i>自产零件DD</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a class="item-2"><i></i>自产零件CD</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a class="item-2"><i></i>自产零件DD</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -251,6 +317,7 @@
 
                <div id="tabs-2" style="width: 100%;">
 
+                   <!--表格-->
                    <div class="uk-overflow-container">
                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
                            <thead>
@@ -273,7 +340,7 @@
                            </thead>
                            <tbody>
                            <tr>
-                               <td><input type="checkbox"></td>
+                               <td><input type="checkbox" onclick="changeColor(this)"></td>
                                <td>1</td>
                                <td>1</td>
                                <td></td>
@@ -285,7 +352,7 @@
 
                            </tr>
                            <tr>
-                               <td><input type="checkbox"></td>
+                               <td><input type="checkbox" onclick="changeColor(this)"></td>
                                <td>1</td>
                                <td></td>
                                <td></td>
@@ -297,7 +364,7 @@
 
                            </tr>
                            <tr>
-                               <td><input type="checkbox"></td>
+                               <td><input type="checkbox" onclick="changeColor(this)"></td>
                                <td></td>
                                <td></td>
                                <td></td>
@@ -309,7 +376,7 @@
 
                            </tr>
                            <tr>
-                               <td><input type="checkbox"></td>
+                               <td><input type="checkbox" onclick="changeColor(this)"></td>
                                <td></td>
                                <td></td>
                                <td></td>
@@ -324,7 +391,8 @@
 
                        </table>
 
-                       <div>
+                       <!--底部页码-->
+                       <div style="margin-top: -25px;">
                            <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
                                <li><a href="#">首页</a></li>
                                <li><a href="#">上一页</a></li>
