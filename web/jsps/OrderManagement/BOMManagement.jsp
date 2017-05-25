@@ -101,13 +101,27 @@
         height: 45px;
     }
 
-    .uk-tab-grid > li:first-child > a:hover {
+    /*
+        tab样式
+    */
+    .uk-tab-grid > li:first-child >a:hover {
         background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
         background-position: 15px;
     }
-    .uk-tab > li:nth-child(n+2) > a:hover{
+
+    .uk-tab > li:nth-child(n+2)> a:hover {
+          background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
+          background-position: 15px;
+      }
+    .uk-tab > li:nth-child(n+2) > a:focus{
         background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
-        background-position: 20px;
+        background-position: 15px;
+
+    }
+    .uk-tab-grid > li:first-child >a:focus {
+        background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
+        background-position: 15px;
+
     }
 
     /*
@@ -119,7 +133,7 @@
         height: 100%;
         top: 0px;
         width: 1px;
-        margin-top: -4px;
+        margin-top: -2px;
     }
     /*
         BOM树左侧的线条（横线）
@@ -152,7 +166,7 @@
     function changeColor(obj) {
         var f = obj.checked;
         var chkColor = "#c1edfa"; //选中后颜色
-        var ouColor = "#f3f8fb";  //偶数行取消选中后的颜色
+        //var back = obj.parentElement.parentElement.style.backgroundColor;  //偶数行取消选中后的颜色
         var jiColor = "#FFFFFF";
         if(f)
             obj.parentElement.parentElement.style.backgroundColor = chkColor;
@@ -213,9 +227,9 @@
             <div class="uk-form-row">
                 <div class="wrapper">
                     <div class="nav-ml">
-                        <ul>
+                        <%--<ul>
                             <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
-                            <li>
+                            <li>--%>
                                 <ul class="nav-first">
                                     <li>
                                         <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
@@ -228,6 +242,7 @@
                                                     <li>
                                                         <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
                                                         <a>自产零件A1</a></li>
+
                                                     <li>
                                                         <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
                                                         <a>自产零件A2</a></li>
@@ -248,9 +263,9 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </li>
+                           <%-- </li>
                             <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
-                            <li>
+                            <li>--%>
                                 <ul class="nav-first">
                                     <li>
                                         <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
@@ -278,7 +293,7 @@
                                     </li>
                                 </ul>
                             </li>
-                        </ul>
+                        <%--</ul>--%>
                     </div>
                 </div>
             </div>
@@ -344,49 +359,73 @@
                            <tr>
                                <td><input type="checkbox" onclick="changeColor(this)"></td>
                                <td>1</td>
-                               <td>1</td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                               <td>12</td>
+                               <td>4</td>
+                               <td>4</td>
+                               <td>待定</td>
+                               <td>80</td>
+                               <td>78</td>
+                               <td>待定</td>
 
                            </tr>
                            <tr>
                                <td><input type="checkbox" onclick="changeColor(this)"></td>
                                <td>1</td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                               <td>12</td>
+                               <td>4</td>
+                               <td>4</td>
+                               <td>待定</td>
+                               <td>80</td>
+                               <td>78</td>
+                               <td>待定</td>
 
                            </tr>
                            <tr>
                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                               <td>1</td>
+                               <td>12</td>
+                               <td>4</td>
+                               <td>4</td>
+                               <td>待定</td>
+                               <td>80</td>
+                               <td>78</td>
+                               <td>待定</td>
 
                            </tr>
                            <tr>
                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
-                               <td></td>
+                               <td>1</td>
+                               <td>12</td>
+                               <td>4</td>
+                               <td>4</td>
+                               <td>待定</td>
+                               <td>80</td>
+                               <td>78</td>
+                               <td>待定</td>
+
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox" onclick="changeColor(this)"></td>
+                               <td>1</td>
+                               <td>12</td>
+                               <td>4</td>
+                               <td>4</td>
+                               <td>待定</td>
+                               <td>80</td>
+                               <td>78</td>
+                               <td>待定</td>
+
+                           </tr>
+                           <tr>
+                               <td><input type="checkbox" onclick="changeColor(this)"></td>
+                               <td>1</td>
+                               <td>12</td>
+                               <td>4</td>
+                               <td>4</td>
+                               <td>待定</td>
+                               <td>80</td>
+                               <td>78</td>
+                               <td>待定</td>
 
                            </tr>
                            </tbody>
@@ -395,7 +434,7 @@
 
                        <!--底部页码-->
                        <div style="margin-top: -25px;">
-                           <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
+                           <ul class="uk-pagination" style="margin-top:190px " data-uk-pagination="{currentPage:50}">
                                <li><a href="#">首页</a></li>
                                <li><a href="#">上一页</a></li>
                                <li><a href="#">下一页</a></li>

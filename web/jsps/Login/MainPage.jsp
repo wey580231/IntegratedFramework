@@ -39,9 +39,10 @@
                 里层li中超链接的背景
             */
             .uk-nav-side ul a:hover {
-                background: url("../../images/left_img/click.png") no-repeat 30px;
-                color: #ecc412;
-            }
+                 background: url("../../images/left_img/click.png") no-repeat 30px;
+                 color: #ecc412;
+             }
+
             /*
                 里层li的背景
             */
@@ -52,7 +53,7 @@
             /*
                 ！！！！
             */
-            .uk-nav-side ul a:checked {
+            .uk-nav-side ul a:focus {
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
             }
@@ -99,6 +100,16 @@
                 margin-top: 5px;
                 padding-top: 5px;
                 border-top: 1px solid #335d78;
+            }
+
+            /*
+                缺省值
+            */
+            html,body{
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
             }
         </style>
 </head>

@@ -204,11 +204,11 @@
                 <fieldset data-uk-margin>
                     <div class="uk-form-row" style="margin: 3px">
                         <label style="margin-right: 3px;">产品名称</label>
-                        <input type="text" placeholder="零件1">&nbsp;
+                        <input type="text" placeholder="零件1">&nbsp;&nbsp;
                         <label style="margin-right: 3px">产品编码</label>
-                        <input type="text" placeholder="CH1">&nbsp;
+                        <input type="text" placeholder="CH1">&nbsp;&nbsp;
                         <label style="margin-right: 3px">规格型号</label>
-                        <input type="text" placeholder="60*80">&nbsp;
+                        <input type="text" placeholder="60*80">&nbsp;&nbsp;
                         <label style="margin-right: 3px">计量单位</label>
                         <input type="text" placeholder="套">
                     </div>
@@ -247,54 +247,54 @@
                             <tbody>
                             <tr>
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
 
                             </tr>
                             <tr>
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
 
                             </tr>
                             <tr>
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
 
                             </tr>
                             <tr>
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
 
                             </tr>
                             </tbody>
