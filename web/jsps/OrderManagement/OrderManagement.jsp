@@ -161,7 +161,7 @@
     }
 </script>
 
-<div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 171px;">
+<div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
 
     &nbsp;
     <span style="font-size: 18px;font-weight: 700;margin-top: 10px;margin-left: -24px;font-family: 微软雅黑">订单管理</span>
@@ -169,13 +169,13 @@
     <div class="uk-width-1-4 " >
         <div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">
             <form class="uk-search" data-uk-search style="margin-top: 5px;background-color: #e8edf1;">
-                <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
+                <input class="uk-search-field" type="search" placeholder="请输入搜索项"
                        style="width: 150px;border: 1px solid lightgray;">
             </form>
         </div>
     </div>
     <!--日历-->
-    <div class="uk-width-1-4">
+    <div class="uk-width-1-4" style="float: left;margin-top: 10px;margin-left: -70px;">
         <form class="uk-form">
             <div class="uk-form-icon">
                 <i class="uk-icon-calendar"></i>
@@ -185,7 +185,7 @@
         </form>
     </div>
     <!--按钮-->
-    <div class="uk-width-1-4" style="margin-left: 34%;">
+    <div class="uk-width-1-4" style="margin-left: 20%;float: right;">
         <div class="data-uk-button-radio" style="margin-top: 5px;">
             <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
             <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
@@ -197,7 +197,7 @@
 <div class="uk-grid" style="margin-top: -25px;">
 
     <!--右侧表格-->
-    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 695px;background-color: white;">
+    <div class="uk-width-4-5" style="width: 93%;border: 1px solid lightgray;margin-left: 5%;height: 695px;background-color: white;">
         <div style="margin-top: 15px;margin-left: -10px;">
             <!--表格上部-->
             <form class="uk-form">

@@ -211,7 +211,7 @@
     <div style="height: 60px;">
         <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
     </div>
-    <div style="float:right;background-color: #bdcbd8;height: 830px;">
+    <div style="float:right;background-color: #bdcbd8;height: 830px;width: 100%;">
 
         <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 800px;background-color: #dfe8ef;">
             <ng-view></ng-view>
