@@ -162,7 +162,7 @@
 </script>
 
 <div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
-
+    <img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">
     &nbsp;
     <span style="font-size: 18px;font-weight: 700;margin-top: 10px;margin-left: -24px;font-family: 微软雅黑">订单管理</span>
     <!--搜索-->
@@ -208,25 +208,17 @@
                         <label style="margin-right: 3px">产品编码</label>
                         <input type="text" placeholder="CH1">&nbsp;
                         <label style="margin-right: 3px">规格型号</label>
-                        <input type="text" placeholder="60*80">
-                    </div>
-                    <br>
-                    <div class="uk-form-row" style="margin: 3px">
+                        <input type="text" placeholder="60*80">&nbsp;
                         <label style="margin-right: 3px">计量单位</label>
-                        <input type="text" placeholder="套">&nbsp;
-                        <label style="margin-right: 3px">物料单位</label>
-                        <input type="text" placeholder="1">
+                        <input type="text" placeholder="套">
                     </div>
+
                     <br>
                 </fieldset>
             </form>
             <!--tab-->
             <div style="width: 98%;border: 0px;margin-top: -10px;">
-                <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab>
-                    <li><a href="#tabs-1">工序</a></li>
-                    <li><a href="#tabs-2">DAG图</a></li>
 
-                </ul>
 
                 <div id="tabs-2" style="width: 100%;">
 
