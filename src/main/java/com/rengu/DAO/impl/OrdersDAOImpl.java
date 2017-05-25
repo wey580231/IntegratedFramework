@@ -31,10 +31,7 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             session.save(rg_orderEntity);
-            transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,10 +47,7 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             session.delete(rg_orderEntity);
-            transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,10 +63,7 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             session.update(rg_orderEntity);
-            transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,7 +78,6 @@ public class OrdersDAOImpl implements OrdersDAO {
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
-//        transaction.commit();
         return list;
     }
 
@@ -110,5 +100,16 @@ public class OrdersDAOImpl implements OrdersDAO {
             exception.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public List<?> search(String keyWord) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.name = 'han'";
+        Query query = session.createQuery(hql);
+        List list = query.list();
+        transaction.commit();
+        return list;
     }
 }

@@ -34,6 +34,7 @@ public class RG_OrderEntity {
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
 
+
     public String getId() {
         return id;
     }
