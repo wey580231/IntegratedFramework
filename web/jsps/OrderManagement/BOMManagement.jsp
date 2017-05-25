@@ -163,6 +163,7 @@
 
 <div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
 
+    <img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">
     &nbsp;
     <span style="font-size: 18px;font-weight: 700;margin-top: 10px;margin-left: -24px;font-family: 微软雅黑">制造BOM管理</span>
     <!--搜索-->
@@ -285,7 +286,7 @@
     </div>
     <!--右侧表格-->
     <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 695px;background-color: white;">
-       <div style="margin-top: 15px;margin-left: -10px;">
+       <div style="margin-top: 15px;margin-left: -25px;">
            <!--表格上部-->
            <form class="uk-form">
                <fieldset data-uk-margin>
@@ -308,7 +309,8 @@
                </fieldset>
            </form>
            <!--tab-->
-           <div style="width: 98%;border: 0px;margin-top: -10px;">
+           <div style="width: 99%;border: 0px;margin-top: -10px;">
+               <img src="../../images/bom_img/shu.png" style="margin-left: -10px;width: 5px;float: left;height: 35px;">
                <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab>
                    <li><a href="#tabs-1">工序</a></li>
                    <li><a href="#tabs-2">DAG图</a></li>
