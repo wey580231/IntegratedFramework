@@ -149,14 +149,14 @@
     .my {
         background-color: #009dd8;
         color: #fff;
-        background-image: linear-gradient(to bottom,black,#50FCF9);
+        background-image:url("../../images/bom_img/ye3.png");
         border-color: rgba(0,0,0,.2);
         border-bottom-color: rgba(0,0,0,.4);
         text-shadow: 0 -1px 0 rgba(0,0,0,.2);
     }
-    .my:hover{
+    /*.my:hover{
         background-color: #50FCF9;;
-    }
+    }*/
 
     /*
         表格固定
@@ -257,7 +257,7 @@
                 <div id="tabs-2" style="width: 100%;height: 86%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 86%;">
+                    <div class="uk-overflow-container" style="height: 93%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
                                 <thead>
@@ -282,7 +282,7 @@
                             </table>
                         </div>
 
-                        <div class="fixtable-body">
+                        <div class="fixtable-body" style="height: 83%;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                                 <%--<thead>--%>
                                 <%--<tbody>
@@ -412,13 +412,14 @@
                                 </tbody>
 
                             </table>
+
                             <!--底部页码-->
-                            <div style="margin-top: 7%;">
+                            <div style="margin-top: -25px;">
                                 <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                                    <li><button class="uk-button uk-button-primary"><a href="" style="color: white;">首页</a></button></li>
-                                    <li><button class="uk-button my"><a href="" style="color: white;">上一页</a></button></li>
-                                    <li><button class="uk-button my"><a href="" style="color: white;">下一页</a></button></li>
-                                    <li><button class="uk-button my"><a href="" style="color: white;">尾页</a></button></li>
+                                    <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                                    <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                                    <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                                    <li><button class="uk-button my"><a href="">尾页</a></button></li>
                                     <%--<li><a href="#">上一页</a></li>
                                     <li><a href="#">下一页</a></li>
                                     <li><a href="#">尾页</a></li>--%>
@@ -427,12 +428,9 @@
                                         到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
                                     </li>
                                     <li>
-                                        <button class="uk-button uk-button-primary">确定</button>
+                                        <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                                     </li>
                                 </ul>
-
-
-
                             </div>
                         </div>
                         <%--<table class="uk-table uk-table-striped uk-table-hover " id="order">
@@ -593,7 +591,7 @@
         </div>
 
 
-        <div class="uk-clearfix">
+        <div class="uk-clearfix" style="margin-top: -3%;">
             <button class="uk-button uk-float-right " id="create-order"
                     data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
                     data-uk-toggle="{target:'#button'}" style="border-radius:15px; "
