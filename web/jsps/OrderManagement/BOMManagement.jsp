@@ -175,7 +175,7 @@
     }
 </script>
 
-<div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
+<div class="uk-grid" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;">
 
     <img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">
     &nbsp;
@@ -198,12 +198,14 @@
         </div>
     </div>
 </div>
-<hr class="uk-article-divider">
-<div class="uk-grid" style="margin-top: -25px;">
+<%--<hr class="uk-article-divider">--%>
+<br/>
+
+<div class="uk-grid" style="height: 85%;">
     <!--BOM树-->
-    <div  class="uk-width-1-5" style="width: 23%;">
+    <div  class="uk-width-1-5" style="width: 23%;height: 100%;">
         <!--BOM树上部-->
-        <div style="border-bottom: 1px solid lightgray;background-color: white;">
+        <div style="border-bottom: 1px solid lightgray;background-color: white;height: 10%;">
             <form class="uk-form uk-form-horizontal">
                 <fieldset data-uk-margin>
                     <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
@@ -223,7 +225,7 @@
 
         <p></p>
         <!--BOM树下部-->
-        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 610px;margin-top: -15px;background-color: #e2ebf2;">
+        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 80%;margin-top: -15px;background-color: #e2ebf2;">
             <div class="uk-form-row">
                 <div class="wrapper">
                     <div class="nav-ml">
@@ -300,12 +302,12 @@
         </div>
     </div>
     <!--右侧表格-->
-    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 695px;background-color: white;">
-       <div style="margin-top: 15px;margin-left: -25px;">
+    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height:  98%;background-color: white;">
+       <div style="margin-top: 15px;margin-left: -25px;height: 95%;">
            <!--表格上部-->
-           <form class="uk-form">
+           <form class="uk-form" style="height: 22%;">
                <fieldset data-uk-margin>
-                   <div class="uk-form-row" style="margin: 3px">
+                   <div class="uk-form-row" style="margin: 3px;height: 10px;">
                        <label style="margin-right: 3px;">产品名称</label>
                        <input type="text" placeholder="零件1">&nbsp;
                        <label style="margin-right: 3px">产品编码</label>
@@ -326,7 +328,7 @@
            <!--tab-->
            <div style="width: 99%;border: 0px;margin-top: -10px;">
                <img src="../../images/bom_img/shu.png" style="margin-left: -10px;width: 5px;float: left;height: 35px;">
-               <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab>
+               <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab style="height: 10%;">
                    <li><a href="#tabs-1">工序</a></li>
                    <li><a href="#tabs-2">DAG图</a></li>
 
@@ -335,7 +337,7 @@
                <div id="tabs-2" style="width: 100%;">
 
                    <!--表格-->
-                   <div class="uk-overflow-container">
+                   <div class="uk-overflow-container" style="height: 65%;">
                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
                            <thead>
                            <tr style="background-color: #e1eaf1;">

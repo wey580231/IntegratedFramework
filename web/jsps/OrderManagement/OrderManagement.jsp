@@ -221,10 +221,10 @@
             <div style="width: 98%;border: 0px;margin-top: -10px;">
 
 
-                <div id="tabs-2" style="width: 100%;">
+                <div id="tabs-2" style="width: 100%;height: 86%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 80%;">
+                    <div class="uk-overflow-container" style="height: 86%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <thead>
                             <tr style="background-color: #e1eaf1;">
