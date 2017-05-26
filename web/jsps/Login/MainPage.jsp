@@ -116,9 +116,7 @@
             */
             html,body{
                 margin: 0;
-                padding: 0;
                 height: 100%;
-                width: 100%;
             }
         </style>
 </head>
@@ -137,13 +135,13 @@
 
 </div>--%>
 <!--左侧-->
-<div class="uk-width-1-6" style="float: left;height: 900px;background-color: #164360;">
+<div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;">
     <!--图标-->
-    <div  class="uk-width-1-1" style="background-color: #1c4f7a; height: 60px;">
+    <div  class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
         <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
     </div>
     <!--左侧列表-->
-    <div  class="uk-width-1-1" style="margin-top: 10px;">
+    <div  class="uk-width-1-1" style="height: 90%;">
         <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
             <li class="uk-parent">
                 <a href="#">
@@ -223,17 +221,20 @@
 </div>
 
 <!--右侧-->
-<div class="uk-width-5-6" style="float: left;">
-    <!--欢迎登录-->
-    <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
-        <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
+<div class="uk-width-5-6 uk-height-viewport" style="float: right;height: 100%;">
+    <div style="height: 10%;">
+        <!--欢迎登录-->
+        <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
+            <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
+        </div>
+        <div style="height: 60px;">
+            <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
+        </div>
     </div>
-    <div style="height: 60px;">
-        <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
-    </div>
-    <div style="float:right;background-color: #bdcbd8;height: 830px;width: 100%;">
 
-        <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 800px;background-color: #dfe8ef;">
+    <div style="float:right;background-color: #bdcbd8;height: 90%;width: 100%;">
+
+        <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
             <ng-view></ng-view>
         </div>
     </div>

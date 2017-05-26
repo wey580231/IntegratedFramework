@@ -147,6 +147,41 @@
     .bg{
         background-color: #c1edfa;
     }
+    /*
+           页码li样式
+    */
+    .uk-pagination > li {
+        display: inline-block;
+        font-size: 1rem;
+        vertical-align: middle;
+    }
+
+    /*
+           页码样式
+    */
+    .my {
+        background-color: #009dd8;
+        color: #fff;
+        background-image:url("../../images/bom_img/ye3.png");
+        border-color: rgba(0,0,0,.2);
+        border-bottom-color: rgba(0,0,0,.4);
+        text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+    }
+    /*.my:hover{
+        background-color: #50FCF9;;
+    }*/
+
+    /*
+        表格固定
+    */
+
+    .fixtable-head table,.table-body table{width:100%;text-align:left;}
+    .fixtable-body{width:100%; height:250px;overflow-y:scroll;text-align:left;}
+
+    .uk-table td {
+        vertical-align: top;
+        width: 40px;
+    }
 </style>
 
 <%--<script type="text/javascript">
@@ -175,7 +210,7 @@
     }
 </script>
 
-<div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
+<div class="uk-grid" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;">
 
     <img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">
     &nbsp;
@@ -190,7 +225,7 @@
         </div>
     </div>
     <!--按钮-->
-    <div class="uk-width-1-4" style="margin-left: 34%;">
+    <div class="uk-width-1-4" style="margin-left: 36%;">
         <div class="data-uk-button-radio" style="margin-top: 5px;">
             <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
             <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
@@ -198,12 +233,14 @@
         </div>
     </div>
 </div>
-<hr class="uk-article-divider">
-<div class="uk-grid" style="margin-top: -25px;">
+<%--<hr class="uk-article-divider">--%>
+<br/>
+
+<div class="uk-grid" style="height: 85%;">
     <!--BOM树-->
-    <div  class="uk-width-1-5" style="width: 23%;">
+    <div  class="uk-width-1-5" style="width: 23%;height: 100%;">
         <!--BOM树上部-->
-        <div style="border-bottom: 1px solid lightgray;background-color: white;">
+        <div style="border-bottom: 1px solid lightgray;background-color: white;height: 10%;">
             <form class="uk-form uk-form-horizontal">
                 <fieldset data-uk-margin>
                     <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
@@ -223,7 +260,7 @@
 
         <p></p>
         <!--BOM树下部-->
-        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 610px;margin-top: -15px;background-color: #e2ebf2;">
+        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 80%;margin-top: -15px;background-color: #e2ebf2;">
             <div class="uk-form-row">
                 <div class="wrapper">
                     <div class="nav-ml">
@@ -300,12 +337,12 @@
         </div>
     </div>
     <!--右侧表格-->
-    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height: 695px;background-color: white;">
-       <div style="margin-top: 15px;margin-left: -25px;">
+    <div class="uk-width-4-5" style="width: 75%;border: 1px solid lightgray;margin-left: 15px;height:  98%;background-color: white;">
+       <div style="margin-top: 15px;margin-left: -25px;height: 95%;">
            <!--表格上部-->
-           <form class="uk-form">
+           <form class="uk-form" style="height: 22%;">
                <fieldset data-uk-margin>
-                   <div class="uk-form-row" style="margin: 3px">
+                   <div class="uk-form-row" style="margin: 3px;height: 10px;">
                        <label style="margin-right: 3px;">产品名称</label>
                        <input type="text" placeholder="零件1">&nbsp;
                        <label style="margin-right: 3px">产品编码</label>
@@ -324,9 +361,9 @@
                </fieldset>
            </form>
            <!--tab-->
-           <div style="width: 99%;border: 0px;margin-top: -10px;">
+           <div style="width: 99%;border: 0px;margin-top: -15px;">
                <img src="../../images/bom_img/shu.png" style="margin-left: -10px;width: 5px;float: left;height: 35px;">
-               <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab>
+               <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab style="height: 10%;">
                    <li><a href="#tabs-1">工序</a></li>
                    <li><a href="#tabs-2">DAG图</a></li>
 
@@ -335,112 +372,147 @@
                <div id="tabs-2" style="width: 100%;">
 
                    <!--表格-->
-                   <div class="uk-overflow-container">
-                       <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                           <thead>
-                           <tr style="background-color: #e1eaf1;">
-                               <td>
-                                   <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
-                                       <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                   </div>
+                   <div class="uk-overflow-container" style="height: 77%;">
+                       <div class="fixtable-head">
+                           <table class="uk-table uk-table-striped uk-table-hover ">
+                               <thead class="uk-text-center">
+                               <tr style="background-color: #e1eaf1;">
+                                   <td>
+                                       <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
+                                           <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                       </div>
 
-                               </td>
-                               <td>准备时间</td>
-                               <td>单件时间</td>
-                               <td>冷却时间</td>
-                               <td>校验时间</td>
-                               <td>资源类型</td>
-                               <td>资源数量</td>
-                               <td>工时</td>
-                               <td>首选时间</td>
-                           </tr>
-                           </thead>
-                           <tbody>
-                           <tr>
-                               <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td>1</td>
-                               <td>12</td>
-                               <td>4</td>
-                               <td>4</td>
-                               <td>待定</td>
-                               <td>80</td>
-                               <td>78</td>
-                               <td>待定</td>
-
-                           </tr>
-                           <tr>
-                               <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td>1</td>
-                               <td>12</td>
-                               <td>4</td>
-                               <td>4</td>
-                               <td>待定</td>
-                               <td>80</td>
-                               <td>78</td>
-                               <td>待定</td>
-
-                           </tr>
-                           <tr>
-                               <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td>1</td>
-                               <td>12</td>
-                               <td>4</td>
-                               <td>4</td>
-                               <td>待定</td>
-                               <td>80</td>
-                               <td>78</td>
-                               <td>待定</td>
-
-                           </tr>
-                           <tr>
-                               <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td>1</td>
-                               <td>12</td>
-                               <td>4</td>
-                               <td>4</td>
-                               <td>待定</td>
-                               <td>80</td>
-                               <td>78</td>
-                               <td>待定</td>
-
-                           </tr>
-                           <tr>
-                               <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td>1</td>
-                               <td>12</td>
-                               <td>4</td>
-                               <td>4</td>
-                               <td>待定</td>
-                               <td>80</td>
-                               <td>78</td>
-                               <td>待定</td>
-
-                           </tr>
-                           <tr>
-                               <td><input type="checkbox" onclick="changeColor(this)"></td>
-                               <td>1</td>
-                               <td>12</td>
-                               <td>4</td>
-                               <td>4</td>
-                               <td>待定</td>
-                               <td>80</td>
-                               <td>78</td>
-                               <td>待定</td>
-
-                           </tr>
-                           </tbody>
-
-                       </table>
-
-                       <!--底部页码-->
-                       <div style="margin-top: -25px;">
-                           <ul class="uk-pagination" style="margin-top:190px " data-uk-pagination="{currentPage:50}">
-                               <li><a href="#">首页</a></li>
-                               <li><a href="#">上一页</a></li>
-                               <li><a href="#">下一页</a></li>
-                               <li><a href="#">末页</a></li>
-                           </ul>
+                                   </td>
+                                   <td>准备时间</td>
+                                   <td>单件时间</td>
+                                   <td>冷却时间</td>
+                                   <td>校验时间</td>
+                                   <td>资源类型</td>
+                                   <td>资源数量</td>
+                                   <td>工时</td>
+                                   <td>首选时间</td>
+                               </tr>
+                               </thead>
+                           </table>
                        </div>
+                       <div class="fixtable-body" style="height: 69%;">
+                           <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                               <%-- <thead>
+                                <tr style="background-color: #e1eaf1;">
+                                    <td>
+                                        <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
+                                            <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                        </div>
+
+                                    </td>
+                                    <td>准备时间</td>
+                                    <td>单件时间</td>
+                                    <td>冷却时间</td>
+                                    <td>校验时间</td>
+                                    <td>资源类型</td>
+                                    <td>资源数量</td>
+                                    <td>工时</td>
+                                    <td>首选时间</td>
+                                </tr>
+                                </thead>--%>
+                               <tbody class="uk-text-center">
+                               <tr>
+                                   <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                   <td>1</td>
+                                   <td>12</td>
+                                   <td>4</td>
+                                   <td>4</td>
+                                   <td>待定</td>
+                                   <td>80</td>
+                                   <td>78</td>
+                                   <td>待定</td>
+
+                               </tr>
+                               <tr>
+                                   <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                   <td>1</td>
+                                   <td>12</td>
+                                   <td>4</td>
+                                   <td>4</td>
+                                   <td>待定</td>
+                                   <td>80</td>
+                                   <td>78</td>
+                                   <td>待定</td>
+
+                               </tr>
+                               <tr>
+                                   <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                   <td>1</td>
+                                   <td>12</td>
+                                   <td>4</td>
+                                   <td>4</td>
+                                   <td>待定</td>
+                                   <td>80</td>
+                                   <td>78</td>
+                                   <td>待定</td>
+
+                               </tr>
+                               <tr>
+                                   <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                   <td>1</td>
+                                   <td>12</td>
+                                   <td>4</td>
+                                   <td>4</td>
+                                   <td>待定</td>
+                                   <td>80</td>
+                                   <td>78</td>
+                                   <td>待定</td>
+
+                               </tr>
+                               <tr>
+                                   <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                   <td>1</td>
+                                   <td>12</td>
+                                   <td>4</td>
+                                   <td>4</td>
+                                   <td>待定</td>
+                                   <td>80</td>
+                                   <td>78</td>
+                                   <td>待定</td>
+
+                               </tr>
+                               <tr>
+                                   <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                   <td>1</td>
+                                   <td>12</td>
+                                   <td>4</td>
+                                   <td>4</td>
+                                   <td>待定</td>
+                                   <td>80</td>
+                                   <td>78</td>
+                                   <td>待定</td>
+
+                               </tr>
+                               </tbody>
+
+                           </table>
+
+                           <!--底部页码-->
+                           <div style="margin-top: -25px;">
+                               <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
+                                   <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                                   <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                                   <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                                   <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                                   <%--<li><a href="#">上一页</a></li>
+                                   <li><a href="#">下一页</a></li>
+                                   <li><a href="#">尾页</a></li>--%>
+                                   <li>共88</li>&nbsp;
+                                   <li>
+                                       到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
+                                   </li>
+                                   <li>
+                                       <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+
                    </div>
                </div>
 
