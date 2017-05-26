@@ -133,6 +133,30 @@
     .bg{
         background-color: #c1edfa;
     }
+
+    /*
+           页码li样式
+    */
+    .uk-pagination > li {
+        display: inline-block;
+        font-size: 1rem;
+        vertical-align: middle;
+    }
+
+    /*
+           页码样式
+    */
+    .my {
+        background-color: #009dd8;
+        color: #fff;
+        background-image: linear-gradient(to bottom,black,#50FCF9);
+        border-color: rgba(0,0,0,.2);
+        border-bottom-color: rgba(0,0,0,.4);
+        text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+    }
+    .my:hover{
+        background-color: #50FCF9;;
+    }
 </style>
 
 <%--<script type="text/javascript">
@@ -357,11 +381,24 @@
                         <!--底部页码-->
                         <div style="margin-top: 7%;">
                             <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                                <li><a href="#">首页</a></li>
-                                <li><a href="#">上一页</a></li>
+                                <li><button class="uk-button uk-button-primary"><a href="" style="color: white;">首页</a></button></li>
+                                <li><button class="uk-button my"><a href="" style="color: white;">上一页</a></button></li>
+                                <li><button class="uk-button my"><a href="" style="color: white;">下一页</a></button></li>
+                                <li><button class="uk-button my"><a href="" style="color: white;">尾页</a></button></li>
+                                <%--<li><a href="#">上一页</a></li>
                                 <li><a href="#">下一页</a></li>
-                                <li><a href="#">末页</a></li>
+                                <li><a href="#">尾页</a></li>--%>
+                                <li>共88</li>&nbsp;
+                                <li>
+                                    到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
+                                </li>
+                                <li>
+                                    <button class="uk-button uk-button-primary">确定</button>
+                                </li>
                             </ul>
+
+
+
                         </div>
                     </div>
                 </div>
