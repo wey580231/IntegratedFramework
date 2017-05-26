@@ -14,6 +14,12 @@ import java.util.List;
  */
 public class OrdersDAOImpl implements OrdersDAO {
 
+    private Transaction transaction;
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
     private RG_OrderEntity getOrderEntity(Object object) {
         RG_OrderEntity rg_orderEntity = null;
         if (object instanceof RG_OrderEntity) {
@@ -31,7 +37,9 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
             session.save(rg_orderEntity);
+            this.transaction = transaction;
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +55,9 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
             session.delete(rg_orderEntity);
+            this.transaction = transaction;
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +73,9 @@ public class OrdersDAOImpl implements OrdersDAO {
                 return false;
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
             session.update(rg_orderEntity);
+            this.transaction = transaction;
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,7 +120,6 @@ public class OrdersDAOImpl implements OrdersDAO {
         String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.name = 'han'";
         Query query = session.createQuery(hql);
         List list = query.list();
-        transaction.commit();
         return list;
     }
 }
