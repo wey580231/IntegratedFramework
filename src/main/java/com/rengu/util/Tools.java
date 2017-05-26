@@ -13,36 +13,25 @@ import java.io.IOException;
  * Created by hanchangming on 2017/5/24.
  */
 public class Tools {
-    public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) {
+    public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-        try {
-            return objectMapper.readValue(jsonString, classType);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return objectMapper.readValue(jsonString, classType);
     }
 
-    public static String entityConvertToJsonString(Object object) {
-        String jsonString = null;
+    public static String entityConvertToJsonString(Object object) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-        try {
-            jsonString = objectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return jsonString;
+        return objectMapper.writeValueAsString(object);
     }
 
     public static String getHttpRequestBody(HttpServletRequest httpServletRequest) {
-        String httpRequestBodyString = null;
+        String httpRequestBodyString = "";
         try {
             BufferedReader bufferedReader = httpServletRequest.getReader();
-            String tempString = null;
+            String tempString;
             while ((tempString = bufferedReader.readLine()) != null) {
                 httpRequestBodyString = httpRequestBodyString + tempString;
             }

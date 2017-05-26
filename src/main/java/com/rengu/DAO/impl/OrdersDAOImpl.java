@@ -94,7 +94,6 @@ public class OrdersDAOImpl implements OrdersDAO {
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", rg_orderEntity.getClubByIdClub().getName());
             List list = query.list();
-            transaction.commit();
             return list;
         } catch (Exception exception) {
             exception.printStackTrace();
