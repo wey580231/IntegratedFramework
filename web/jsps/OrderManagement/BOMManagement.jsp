@@ -177,6 +177,11 @@
 
     .fixtable-head table,.table-body table{width:100%;text-align:left;}
     .fixtable-body{width:100%; height:250px;overflow-y:scroll;text-align:left;}
+
+    .uk-table td {
+        vertical-align: top;
+        width: 40px;
+    }
 </style>
 
 <%--<script type="text/javascript">
@@ -370,10 +375,10 @@
                    <div class="uk-overflow-container" style="height: 77%;">
                        <div class="fixtable-head">
                            <table class="uk-table uk-table-striped uk-table-hover ">
-                               <thead>
+                               <thead class="uk-text-center">
                                <tr style="background-color: #e1eaf1;">
                                    <td>
-                                       <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
+                                       <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
                                            <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                        </div>
 
@@ -410,7 +415,7 @@
                                     <td>首选时间</td>
                                 </tr>
                                 </thead>--%>
-                               <tbody>
+                               <tbody class="uk-text-center">
                                <tr>
                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
                                    <td>1</td>

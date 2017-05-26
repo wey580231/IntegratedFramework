@@ -165,6 +165,11 @@
     .fixtable-head table,.table-body table{width:100%;text-align:left;}
     .fixtable-body{width:100%; height:250px;overflow-y:scroll;text-align:left;}
 
+    .uk-table td {
+        vertical-align: top;
+        width: 30px;
+        margin-left: 11px;
+    }
 
 </style>
 
@@ -212,13 +217,13 @@
         <form class="uk-form">
             <div class="uk-form-icon">
                 <i class="uk-icon-calendar"></i>
-                <input type="text" id="datepicker"  data-uk-datepicker="{format:'DD.MM.YYYY'}"
+                <input type="text" id="datepicker"  data-uk-datepicker="{format:'YYYY/MM/DD'}"
                        placeholder="2017/5/17">
             </div>
         </form>
     </div>
     <!--按钮-->
-    <div class="uk-width-1-4" style="margin-left: 20%;float: right;">
+    <div class="uk-width-1-4" style="margin-left: 22%;float: right;">
         <div class="data-uk-button-radio" style="margin-top: 5px;">
             <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
             <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
@@ -260,10 +265,10 @@
                     <div class="uk-overflow-container" style="height: 93%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
-                                <thead>
+                                <thead class="uk-text-center">
                                 <tr style="background-color: #e1eaf1;">
                                     <td>
-                                        <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
                                             <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                         </div>
 
@@ -275,8 +280,8 @@
                                     <td>数量</td>
                                     <td>优先级</td>
                                     <td>下单时间</td>
-                                    <td>最早开工时间</td>
-                                    <td>最晚开工时间</td>
+                                    <td>最早开工</td>
+                                    <td>最晚开工</td>
                                 </tr>
                                 </thead>
                             </table>
@@ -284,8 +289,8 @@
 
                         <div class="fixtable-body" style="height: 83%;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                                <%--<thead>--%>
-                                <%--<tbody>
+                               <%-- <thead type="hidden">
+                                &lt;%&ndash;<tbody>&ndash;%&gt;
                                 <tr style="background-color: #e1eaf1;">
                                     <td>
                                         <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
@@ -304,7 +309,7 @@
                                     <td>最晚开工时间</td>
                                 </tr>
                                 </thead>--%>
-                                <tbody>
+                                <tbody class="uk-text-center">
                                 <tr>
                                     <td><input type="checkbox" onclick="changeColor(this)"></td>
                                     <td>1001</td>
