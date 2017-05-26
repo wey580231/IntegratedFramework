@@ -30,9 +30,9 @@
             ul.uk-nav-sub {
                 margin-left: 30px;
             }
+            ul.uk-nav-sub > li{
+                height: 35px;
 
-            ul.uk-nav-sub > li {
-                height: 30px;
             }
 
             .uk-nav-side ul a {
@@ -40,23 +40,31 @@
             }
 
             /*
-                里层li背景
+                里层li中超链接的背景
             */
             .uk-nav-side ul a:hover {
+                 background: url("../../images/left_img/click.png") no-repeat 30px;
+                 color: #ecc412;
+             }
+
+            /*
+                里层li的背景
+            */
+            /*.uk-nav-sub ul li:hover {
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
-            }
+            }*/
 
             /*
                 ！！！！
             */
-            .uk-nav-side ul a:checked {
+            .uk-nav-side ul a:focus {
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
             }
 
             /*
-                外层li悬浮
+                外层li中的超链接悬浮
             */
             .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover {
                 background: #1d5880;
@@ -102,12 +110,22 @@
                 padding-top: 5px;
                 border-top: 1px solid #335d78;
             }
+
+            /*
+                缺省值
+            */
+            html,body{
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+            }
         </style>
 </head>
 <body>
 <!--头部-->
-<div style="height: 70px;border-bottom: 1px solid gray;">
-    <div class="uk-width-1-6" style="background-color: #1c4f7a; height: 70px;float: left;">
+<%--<div style="height: 70px;border-bottom: 1px solid gray;">
+    <div  class="uk-width-1-6" style="background-color: #1c4f7a; height: 70px;float: left;">
         <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
     </div>
     <div style="float: left;width: 80%;height: 65px;margin-top: 5px;">
@@ -117,9 +135,15 @@
         <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
     </div>
 
-</div>
-<div class="uk-width-1-6" style="float: left;height: 830px;background-color: #164360;">
-    <div class="uk-width-1-1" style="margin-top: 10px;">
+</div>--%>
+<!--左侧-->
+<div class="uk-width-1-6" style="float: left;height: 900px;background-color: #164360;">
+    <!--图标-->
+    <div  class="uk-width-1-1" style="background-color: #1c4f7a; height: 60px;">
+        <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
+    </div>
+    <!--左侧列表-->
+    <div  class="uk-width-1-1" style="margin-top: 10px;">
         <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
             <li class="uk-parent">
                 <a href="#">
@@ -199,10 +223,21 @@
 </div>
 
 <!--右侧-->
-<div class="uk-width-5-6" style="float:right;background-color: #bdcbd8;height: 830px;">
-    <div  style="height: 750px;margin-top: 15px;border: 1px solid lightgray;margin-left: 2%;width: 96%;height: 805px;background-color: #dfe8ef;">
-        <ng-view></ng-view>
+<div class="uk-width-5-6" style="float: left;">
+    <!--欢迎登录-->
+    <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
+        <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
     </div>
+    <div style="height: 60px;">
+        <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
+    </div>
+    <div style="float:right;background-color: #bdcbd8;height: 830px;width: 100%;">
+
+        <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 800px;background-color: #dfe8ef;">
+            <ng-view></ng-view>
+        </div>
+    </div>
+
 </div>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit.min.js"></script>--%>
