@@ -19,6 +19,8 @@
     </package>
     <package name="Orders" namespace="/orders" extends="struts-default">
         <action name="getAllOrders" class="com.rengu.actions.OrdersAction" method="getAllOrders"/>
-        <action name="findAllByUsername" class="com.rengu.actions.OrdersAction" method="findAllByUsername"/>
+        <action name="save" class="com.rengu.actions.OrdersAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.OrdersAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.OrdersAction" method="update"/>
     </package>
 </struts>
