@@ -23,18 +23,22 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 
         <style>
-            .uk-nav-side > li > a{
+            .uk-nav-side > li > a {
                 color: white;
             }
-            ul.uk-nav-sub{
+
+            ul.uk-nav-sub {
                 margin-left: 30px;
             }
             ul.uk-nav-sub > li{
                 height: 35px;
+
             }
-            .uk-nav-side ul a{
+
+            .uk-nav-side ul a {
                 color: white;
             }
+
             /*
                 里层li中超链接的背景
             */
@@ -50,6 +54,7 @@
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
             }*/
+
             /*
                 ！！！！
             */
@@ -57,10 +62,11 @@
                 background: url("../../images/left_img/click.png") no-repeat 30px;
                 color: #ecc412;
             }
+
             /*
                 外层li中的超链接悬浮
             */
-            .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover{
+            .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover {
                 background: #1d5880;
                 color: white;
                 text-shadow: 0 0px 0 #fff;
@@ -69,18 +75,20 @@
             /*
                 外层li高度
             */
-            .uk-nav-side > li > a{
+            .uk-nav-side > li > a {
                 height: 30px;
             }
+
             /*
                 外层li中的div样式
             */
-            .uk-nav li > a > div{
+            .uk-nav li > a > div {
                 margin-top: 8px;
                 float: left;
                 font-size: 14px;
                 line-height: 10px;
             }
+
             /*
                 li右侧箭头
             */
@@ -93,6 +101,7 @@
                 text-align: center;
                 margin-top: 4px;
             }
+
             /*
                 li底线
             */
@@ -139,7 +148,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/order.png">  <span style="margin-left: 10px;">订单任务管理</span>
+                        <img src="../../images/left_img/order.png"> <span style="margin-left: 10px;">订单任务管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -151,7 +160,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/resource.png">    <span style="margin-left: 10px;">资源设备管理</span>
+                        <img src="../../images/left_img/resource.png"> <span style="margin-left: 10px;">资源设备管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -165,7 +174,7 @@
             <li class="uk-parent">
                 <a href="#" target="body">
                     <div>
-                        <img src="../../images/left_img/plan.png">    <span style="margin-left: 10px;">计划排程管理</span>
+                        <img src="../../images/left_img/plan.png"> <span style="margin-left: 10px;">计划排程管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -177,7 +186,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/online.png">    <span style="margin-left: 10px;">在线监控管理</span>
+                        <img src="../../images/left_img/online.png"> <span style="margin-left: 10px;">在线监控管理</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -188,7 +197,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/adjust.png">    <span style="margin-left: 10px;">高级调整分析</span>
+                        <img src="../../images/left_img/adjust.png"> <span style="margin-left: 10px;">高级调整分析</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">
@@ -201,7 +210,7 @@
             <li class="uk-parent">
                 <a href="#">
                     <div>
-                        <img src="../../images/left_img/3D.png">    <span style="margin-left: 10px;">三维可视化</span>
+                        <img src="../../images/left_img/3D.png"> <span style="margin-left: 10px;">三维可视化</span>
                     </div>
                 </a>
                 <ul class="uk-nav-sub">

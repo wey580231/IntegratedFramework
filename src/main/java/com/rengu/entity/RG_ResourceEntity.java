@@ -1,20 +1,14 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "resource", schema = "testdatabase", catalog = "")
-public class ResourceEntity {
+public class RG_ResourceEntity {
     private String id;
     private String name;
-    private String idTypeResource;
-    private String idGroupResource;
     private String idFeatureResource;
-    private String idSite;
     private String idSiteGroupResource;
     private String typeSite;
     private Short mobility;
@@ -35,16 +29,15 @@ public class ResourceEntity {
     private Byte sizeIcon;
     private String idIcon;
     private String idSite0;
-    private String idUser;
-    private String idClub;
     private String unit;
-    private Collection<PlanEntity> plansById;
-    private GroupresourceEntity groupresourceByIdGroupResource;
-    private UserEntity userByIdUser;
-    private ClubEntity clubByIdClub;
 
-    @Id
-    @Column(name = "id")
+    private RG_ClubEntity clubByIdClub;
+    private RG_UserEntity userByIdUser;
+    private RG_GroupresourceEntity groupresourceByIdGroupResource;
+    private Set<RG_SiteEntity> sitesById;
+    private Set<RG_ShiftEntity> shiftsById;
+    private Set<RG_TyperescourceEntity> typeresourcesById;
+
     public String getId() {
         return id;
     }
@@ -53,8 +46,6 @@ public class ResourceEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -63,28 +54,6 @@ public class ResourceEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "IdTypeResource")
-    public String getIdTypeResource() {
-        return idTypeResource;
-    }
-
-    public void setIdTypeResource(String idTypeResource) {
-        this.idTypeResource = idTypeResource;
-    }
-
-    @Basic
-    @Column(name = "idGroupResource")
-    public String getIdGroupResource() {
-        return idGroupResource;
-    }
-
-    public void setIdGroupResource(String idGroupResource) {
-        this.idGroupResource = idGroupResource;
-    }
-
-    @Basic
-    @Column(name = "idFeatureResource")
     public String getIdFeatureResource() {
         return idFeatureResource;
     }
@@ -93,18 +62,6 @@ public class ResourceEntity {
         this.idFeatureResource = idFeatureResource;
     }
 
-    @Basic
-    @Column(name = "IdSite")
-    public String getIdSite() {
-        return idSite;
-    }
-
-    public void setIdSite(String idSite) {
-        this.idSite = idSite;
-    }
-
-    @Basic
-    @Column(name = "IdSiteGroupResource")
     public String getIdSiteGroupResource() {
         return idSiteGroupResource;
     }
@@ -113,8 +70,6 @@ public class ResourceEntity {
         this.idSiteGroupResource = idSiteGroupResource;
     }
 
-    @Basic
-    @Column(name = "TypeSite")
     public String getTypeSite() {
         return typeSite;
     }
@@ -123,8 +78,6 @@ public class ResourceEntity {
         this.typeSite = typeSite;
     }
 
-    @Basic
-    @Column(name = "mobility")
     public Short getMobility() {
         return mobility;
     }
@@ -133,8 +86,6 @@ public class ResourceEntity {
         this.mobility = mobility;
     }
 
-    @Basic
-    @Column(name = "sameTypeSequence")
     public String getSameTypeSequence() {
         return sameTypeSequence;
     }
@@ -143,8 +94,6 @@ public class ResourceEntity {
         this.sameTypeSequence = sameTypeSequence;
     }
 
-    @Basic
-    @Column(name = "idSiteSequence")
     public String getIdSiteSequence() {
         return idSiteSequence;
     }
@@ -153,8 +102,6 @@ public class ResourceEntity {
         this.idSiteSequence = idSiteSequence;
     }
 
-    @Basic
-    @Column(name = "quantity0")
     public Short getQuantity0() {
         return quantity0;
     }
@@ -163,8 +110,6 @@ public class ResourceEntity {
         this.quantity0 = quantity0;
     }
 
-    @Basic
-    @Column(name = "critical")
     public String getCritical() {
         return critical;
     }
@@ -173,8 +118,6 @@ public class ResourceEntity {
         this.critical = critical;
     }
 
-    @Basic
-    @Column(name = "IdShift")
     public String getIdShift() {
         return idShift;
     }
@@ -183,8 +126,6 @@ public class ResourceEntity {
         this.idShift = idShift;
     }
 
-    @Basic
-    @Column(name = "NameShift")
     public String getNameShift() {
         return nameShift;
     }
@@ -193,8 +134,6 @@ public class ResourceEntity {
         this.nameShift = nameShift;
     }
 
-    @Basic
-    @Column(name = "Calendar")
     public String getCalendar() {
         return calendar;
     }
@@ -203,8 +142,6 @@ public class ResourceEntity {
         this.calendar = calendar;
     }
 
-    @Basic
-    @Column(name = "Slot")
     public String getSlot() {
         return slot;
     }
@@ -213,8 +150,6 @@ public class ResourceEntity {
         this.slot = slot;
     }
 
-    @Basic
-    @Column(name = "DateForbidden")
     public String getDateForbidden() {
         return dateForbidden;
     }
@@ -223,8 +158,6 @@ public class ResourceEntity {
         this.dateForbidden = dateForbidden;
     }
 
-    @Basic
-    @Column(name = "weekend")
     public String getWeekend() {
         return weekend;
     }
@@ -233,8 +166,6 @@ public class ResourceEntity {
         this.weekend = weekend;
     }
 
-    @Basic
-    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -243,8 +174,6 @@ public class ResourceEntity {
         this.color = color;
     }
 
-    @Basic
-    @Column(name = "makespan")
     public String getMakespan() {
         return makespan;
     }
@@ -253,8 +182,6 @@ public class ResourceEntity {
         this.makespan = makespan;
     }
 
-    @Basic
-    @Column(name = "rate")
     public Double getRate() {
         return rate;
     }
@@ -263,8 +190,6 @@ public class ResourceEntity {
         this.rate = rate;
     }
 
-    @Basic
-    @Column(name = "state")
     public Byte getState() {
         return state;
     }
@@ -273,8 +198,6 @@ public class ResourceEntity {
         this.state = state;
     }
 
-    @Basic
-    @Column(name = "sizeIcon")
     public Byte getSizeIcon() {
         return sizeIcon;
     }
@@ -283,8 +206,6 @@ public class ResourceEntity {
         this.sizeIcon = sizeIcon;
     }
 
-    @Basic
-    @Column(name = "idIcon")
     public String getIdIcon() {
         return idIcon;
     }
@@ -293,8 +214,6 @@ public class ResourceEntity {
         this.idIcon = idIcon;
     }
 
-    @Basic
-    @Column(name = "idSite0")
     public String getIdSite0() {
         return idSite0;
     }
@@ -303,28 +222,6 @@ public class ResourceEntity {
         this.idSite0 = idSite0;
     }
 
-    @Basic
-    @Column(name = "idUser")
-    public String getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
-    }
-
-    @Basic
-    @Column(name = "idClub")
-    public String getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
-    }
-
-    @Basic
-    @Column(name = "unit")
     public String getUnit() {
         return unit;
     }
@@ -338,17 +235,12 @@ public class ResourceEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ResourceEntity that = (ResourceEntity) o;
+        RG_ResourceEntity that = (RG_ResourceEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (idTypeResource != null ? !idTypeResource.equals(that.idTypeResource) : that.idTypeResource != null)
-            return false;
-        if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
-            return false;
         if (idFeatureResource != null ? !idFeatureResource.equals(that.idFeatureResource) : that.idFeatureResource != null)
             return false;
-        if (idSite != null ? !idSite.equals(that.idSite) : that.idSite != null) return false;
         if (idSiteGroupResource != null ? !idSiteGroupResource.equals(that.idSiteGroupResource) : that.idSiteGroupResource != null)
             return false;
         if (typeSite != null ? !typeSite.equals(that.typeSite) : that.typeSite != null) return false;
@@ -373,8 +265,6 @@ public class ResourceEntity {
         if (sizeIcon != null ? !sizeIcon.equals(that.sizeIcon) : that.sizeIcon != null) return false;
         if (idIcon != null ? !idIcon.equals(that.idIcon) : that.idIcon != null) return false;
         if (idSite0 != null ? !idSite0.equals(that.idSite0) : that.idSite0 != null) return false;
-        if (idUser != null ? !idUser.equals(that.idUser) : that.idUser != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (unit != null ? !unit.equals(that.unit) : that.unit != null) return false;
 
         return true;
@@ -384,10 +274,7 @@ public class ResourceEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (idTypeResource != null ? idTypeResource.hashCode() : 0);
-        result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
         result = 31 * result + (idFeatureResource != null ? idFeatureResource.hashCode() : 0);
-        result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
         result = 31 * result + (idSiteGroupResource != null ? idSiteGroupResource.hashCode() : 0);
         result = 31 * result + (typeSite != null ? typeSite.hashCode() : 0);
         result = 31 * result + (mobility != null ? mobility.hashCode() : 0);
@@ -408,48 +295,55 @@ public class ResourceEntity {
         result = 31 * result + (sizeIcon != null ? sizeIcon.hashCode() : 0);
         result = 31 * result + (idIcon != null ? idIcon.hashCode() : 0);
         result = 31 * result + (idSite0 != null ? idSite0.hashCode() : 0);
-        result = 31 * result + (idUser != null ? idUser.hashCode() : 0);
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (unit != null ? unit.hashCode() : 0);
         return result;
     }
 
-    @OneToMany(mappedBy = "resourceByIdResource")
-    public Collection<PlanEntity> getPlansById() {
-        return plansById;
-    }
-
-    public void setPlansById(Collection<PlanEntity> plansById) {
-        this.plansById = plansById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "idGroupResource", referencedColumnName = "id")
-    public GroupresourceEntity getGroupresourceByIdGroupResource() {
+    public RG_GroupresourceEntity getGroupresourceByIdGroupResource() {
         return groupresourceByIdGroupResource;
     }
 
-    public void setGroupresourceByIdGroupResource(GroupresourceEntity groupresourceByIdGroupResource) {
+    public void setGroupresourceByIdGroupResource(RG_GroupresourceEntity groupresourceByIdGroupResource) {
         this.groupresourceByIdGroupResource = groupresourceByIdGroupResource;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "id")
-    public UserEntity getUserByIdUser() {
+    public RG_UserEntity getUserByIdUser() {
         return userByIdUser;
     }
 
-    public void setUserByIdUser(UserEntity userByIdUser) {
+    public void setUserByIdUser(RG_UserEntity userByIdUser) {
         this.userByIdUser = userByIdUser;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idClub", referencedColumnName = "id")
-    public ClubEntity getClubByIdClub() {
+    public RG_ClubEntity getClubByIdClub() {
         return clubByIdClub;
     }
 
-    public void setClubByIdClub(ClubEntity clubByIdClub) {
+    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
         this.clubByIdClub = clubByIdClub;
+    }
+
+    public Set<RG_SiteEntity> getSitesById() {
+        return sitesById;
+    }
+
+    public void setSitesById(Set<RG_SiteEntity> sitesById) {
+        this.sitesById = sitesById;
+    }
+
+    public Set<RG_ShiftEntity> getShiftsById() {
+        return shiftsById;
+    }
+
+    public void setShiftsById(Set<RG_ShiftEntity> shiftsById) {
+        this.shiftsById = shiftsById;
+    }
+
+    public Set<RG_TyperescourceEntity> getTyperesourcesById() {
+        return typeresourcesById;
+    }
+
+    public void setTyperesourcesById(Set<RG_TyperescourceEntity> typeresourcesById) {
+        this.typeresourcesById = typeresourcesById;
     }
 }

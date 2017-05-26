@@ -1,14 +1,9 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-import java.util.Collection;
-
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "order", schema = "testdatabase", catalog = "")
-public class OrderEntity {
+public class RG_OrderEntity {
     private String id;
     private String name;
     private String origin;
@@ -16,7 +11,6 @@ public class OrderEntity {
     private String idClient;
     private String idProvider;
     private String idGroupResource;
-    private String idProduct;
     private Short quantity;
     private Short priority;
     private String t0;
@@ -36,14 +30,11 @@ public class OrderEntity {
     private String color;
     private Byte state;
     private Byte selected;
-    private String idClub;
     private Short nbTask;
-    private ProductEntity productByIdProduct;
-    private ClubEntity clubByIdClub;
-    private Collection<PlanEntity> plansById;
+    private RG_ProductEntity productByIdProduct;
+    private RG_ClubEntity clubByIdClub;
 
-    @Id
-    @Column(name = "id")
+
     public String getId() {
         return id;
     }
@@ -52,8 +43,6 @@ public class OrderEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -62,8 +51,6 @@ public class OrderEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "origin")
     public String getOrigin() {
         return origin;
     }
@@ -72,8 +59,6 @@ public class OrderEntity {
         this.origin = origin;
     }
 
-    @Basic
-    @Column(name = "type")
     public String getType() {
         return type;
     }
@@ -82,8 +67,6 @@ public class OrderEntity {
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "idClient")
     public String getIdClient() {
         return idClient;
     }
@@ -92,8 +75,6 @@ public class OrderEntity {
         this.idClient = idClient;
     }
 
-    @Basic
-    @Column(name = "IdProvider")
     public String getIdProvider() {
         return idProvider;
     }
@@ -102,8 +83,6 @@ public class OrderEntity {
         this.idProvider = idProvider;
     }
 
-    @Basic
-    @Column(name = "IdGroupResource")
     public String getIdGroupResource() {
         return idGroupResource;
     }
@@ -112,18 +91,6 @@ public class OrderEntity {
         this.idGroupResource = idGroupResource;
     }
 
-    @Basic
-    @Column(name = "idProduct")
-    public String getIdProduct() {
-        return idProduct;
-    }
-
-    public void setIdProduct(String idProduct) {
-        this.idProduct = idProduct;
-    }
-
-    @Basic
-    @Column(name = "quantity")
     public Short getQuantity() {
         return quantity;
     }
@@ -132,8 +99,6 @@ public class OrderEntity {
         this.quantity = quantity;
     }
 
-    @Basic
-    @Column(name = "priority")
     public Short getPriority() {
         return priority;
     }
@@ -142,8 +107,6 @@ public class OrderEntity {
         this.priority = priority;
     }
 
-    @Basic
-    @Column(name = "t0")
     public String getT0() {
         return t0;
     }
@@ -152,8 +115,6 @@ public class OrderEntity {
         this.t0 = t0;
     }
 
-    @Basic
-    @Column(name = "t1")
     public String getT1() {
         return t1;
     }
@@ -162,8 +123,6 @@ public class OrderEntity {
         this.t1 = t1;
     }
 
-    @Basic
-    @Column(name = "t2")
     public String getT2() {
         return t2;
     }
@@ -172,8 +131,6 @@ public class OrderEntity {
         this.t2 = t2;
     }
 
-    @Basic
-    @Column(name = "ord")
     public Short getOrd() {
         return ord;
     }
@@ -182,8 +139,6 @@ public class OrderEntity {
         this.ord = ord;
     }
 
-    @Basic
-    @Column(name = "IdPree")
     public String getIdPree() {
         return idPree;
     }
@@ -192,8 +147,6 @@ public class OrderEntity {
         this.idPree = idPree;
     }
 
-    @Basic
-    @Column(name = "IdSucc")
     public String getIdSucc() {
         return idSucc;
     }
@@ -202,8 +155,6 @@ public class OrderEntity {
         this.idSucc = idSucc;
     }
 
-    @Basic
-    @Column(name = "IdExclusive")
     public String getIdExclusive() {
         return idExclusive;
     }
@@ -212,8 +163,6 @@ public class OrderEntity {
         this.idExclusive = idExclusive;
     }
 
-    @Basic
-    @Column(name = "t1Interaction")
     public String getT1Interaction() {
         return t1Interaction;
     }
@@ -222,8 +171,6 @@ public class OrderEntity {
         this.t1Interaction = t1Interaction;
     }
 
-    @Basic
-    @Column(name = "t2Interaction")
     public String getT2Interaction() {
         return t2Interaction;
     }
@@ -232,8 +179,6 @@ public class OrderEntity {
         this.t2Interaction = t2Interaction;
     }
 
-    @Basic
-    @Column(name = "t1Plan")
     public String getT1Plan() {
         return t1Plan;
     }
@@ -242,8 +187,6 @@ public class OrderEntity {
         this.t1Plan = t1Plan;
     }
 
-    @Basic
-    @Column(name = "t2Plan")
     public String getT2Plan() {
         return t2Plan;
     }
@@ -252,8 +195,6 @@ public class OrderEntity {
         this.t2Plan = t2Plan;
     }
 
-    @Basic
-    @Column(name = "estimate")
     public Short getEstimate() {
         return estimate;
     }
@@ -262,8 +203,6 @@ public class OrderEntity {
         this.estimate = estimate;
     }
 
-    @Basic
-    @Column(name = "advance")
     public Short getAdvance() {
         return advance;
     }
@@ -272,8 +211,6 @@ public class OrderEntity {
         this.advance = advance;
     }
 
-    @Basic
-    @Column(name = "delay")
     public Short getDelay() {
         return delay;
     }
@@ -282,8 +219,6 @@ public class OrderEntity {
         this.delay = delay;
     }
 
-    @Basic
-    @Column(name = "color")
     public String getColor() {
         return color;
     }
@@ -292,8 +227,6 @@ public class OrderEntity {
         this.color = color;
     }
 
-    @Basic
-    @Column(name = "state")
     public Byte getState() {
         return state;
     }
@@ -302,8 +235,6 @@ public class OrderEntity {
         this.state = state;
     }
 
-    @Basic
-    @Column(name = "selected")
     public Byte getSelected() {
         return selected;
     }
@@ -312,18 +243,6 @@ public class OrderEntity {
         this.selected = selected;
     }
 
-    @Basic
-    @Column(name = "idClub")
-    public String getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
-    }
-
-    @Basic
-    @Column(name = "nbTask")
     public Short getNbTask() {
         return nbTask;
     }
@@ -337,7 +256,7 @@ public class OrderEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderEntity that = (OrderEntity) o;
+        RG_OrderEntity that = (RG_OrderEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -347,7 +266,6 @@ public class OrderEntity {
         if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
         if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
             return false;
-        if (idProduct != null ? !idProduct.equals(that.idProduct) : that.idProduct != null) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
         if (priority != null ? !priority.equals(that.priority) : that.priority != null) return false;
         if (t0 != null ? !t0.equals(that.t0) : that.t0 != null) return false;
@@ -369,7 +287,6 @@ public class OrderEntity {
         if (color != null ? !color.equals(that.color) : that.color != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (selected != null ? !selected.equals(that.selected) : that.selected != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
 
         return true;
@@ -384,7 +301,6 @@ public class OrderEntity {
         result = 31 * result + (idClient != null ? idClient.hashCode() : 0);
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
-        result = 31 * result + (idProduct != null ? idProduct.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
         result = 31 * result + (t0 != null ? t0.hashCode() : 0);
@@ -404,37 +320,24 @@ public class OrderEntity {
         result = 31 * result + (color != null ? color.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
         return result;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idProduct", referencedColumnName = "id")
-    public ProductEntity getProductByIdProduct() {
+    public RG_ProductEntity getProductByIdProduct() {
         return productByIdProduct;
     }
 
-    public void setProductByIdProduct(ProductEntity productByIdProduct) {
+    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
         this.productByIdProduct = productByIdProduct;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "idClub", referencedColumnName = "id")
-    public ClubEntity getClubByIdClub() {
+    public RG_ClubEntity getClubByIdClub() {
         return clubByIdClub;
     }
 
-    public void setClubByIdClub(ClubEntity clubByIdClub) {
+    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
         this.clubByIdClub = clubByIdClub;
     }
 
-    @OneToMany(mappedBy = "orderByIdOrder")
-    public Collection<PlanEntity> getPlansById() {
-        return plansById;
-    }
-
-    public void setPlansById(Collection<PlanEntity> plansById) {
-        this.plansById = plansById;
-    }
 }

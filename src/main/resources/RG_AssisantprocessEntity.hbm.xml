@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_AssisantprocessEntity" table="RG_Assisantprocess" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="int(20)"/>
+        </id>
+        <property name="grp">
+            <column name="grp" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="typeSite">
+            <column name="TypeSite" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="idSite">
+            <column name="IdSite" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="minResource">
+            <column name="minResource" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="maxResource">
+            <column name="maxResource" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="siteInGroupResource">
+            <column name="siteInGroupResource" sql-type="varchar(5)" length="5" not-null="false"/>
+        </property>
+        <property name="modResource">
+            <column name="modResource" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="rgPrimary">
+            <column name="rgPrimary" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="weightParallel">
+            <column name="weightParallel" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="weightSequence">
+            <column name="weightSequence" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <many-to-one name="processByIdProcess" class="com.rengu.entity.RG_ProcessEntity">
+            <column name="idProcess" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
