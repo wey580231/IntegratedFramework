@@ -161,7 +161,7 @@
     }
 </script>
 
-<div class="uk-grid" style="height: 40px;margin-top: 10px;background-color: white;margin-left: 0px;">
+<div class="uk-grid" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;">
     <img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">
     &nbsp;
     <span style="font-size: 18px;font-weight: 700;margin-top: 10px;margin-left: -24px;font-family: 微软雅黑">订单管理</span>
@@ -193,12 +193,13 @@
         </div>
     </div>
 </div>
-<hr class="uk-article-divider">
-<div class="uk-grid" style="margin-top: -25px;">
+<%--<hr class="uk-article-divider">--%>
+<br/>
+<%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
     <!--右侧表格-->
-    <div class="uk-width-4-5" style="width: 93%;border: 1px solid lightgray;margin-left: 5%;height: 695px;background-color: white;">
-        <div style="margin-top: 15px;margin-left: -10px;">
+    <div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
+        <div style="margin-top: 1%;margin-left: 1%;">
             <!--表格上部-->
             <form class="uk-form">
                 <fieldset data-uk-margin>
@@ -223,7 +224,7 @@
                 <div id="tabs-2" style="width: 100%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container">
+                    <div class="uk-overflow-container" style="height: 80%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <thead>
                             <tr style="background-color: #e1eaf1;">
@@ -297,13 +298,65 @@
                                 <td>待定</td>
 
                             </tr>
+                            <tr>
+                                <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
+
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
+
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
+
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                <td>1001</td>
+                                <td>待定</td>
+                                <td>...</td>
+                                <td>待定</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>待定</td>
+                                <td>待定</td>
+                                <td>待定</td>
+
+                            </tr>
                             </tbody>
 
                         </table>
 
                         <!--底部页码-->
-                        <div style="margin-top: -25px;">
-                            <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
+                        <div style="margin-top: 7%;">
+                            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
                                 <li><a href="#">首页</a></li>
                                 <li><a href="#">上一页</a></li>
                                 <li><a href="#">下一页</a></li>
@@ -332,7 +385,7 @@
             </div>
         </div>
     </div>
-</div>
+<%--</div>--%>
 
 <script>
     $(function () {

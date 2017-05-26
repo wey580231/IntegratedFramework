@@ -190,7 +190,7 @@
         </div>
     </div>
     <!--按钮-->
-    <div class="uk-width-1-4" style="margin-left: 34%;">
+    <div class="uk-width-1-4" style="margin-left: 36%;">
         <div class="data-uk-button-radio" style="margin-top: 5px;">
             <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
             <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
