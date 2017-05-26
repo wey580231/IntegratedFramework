@@ -1,14 +1,9 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-import java.util.Collection;
-
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "product", schema = "testdatabase", catalog = "")
-public class ProductEntity {
+public class RG_ProductEntity {
     private String id;
     private String name;
     private String type;
@@ -19,11 +14,7 @@ public class ProductEntity {
     private String model;
     private String state;
     private String supplyMethod;
-    private Collection<OrderEntity> ordersById;
-    private Collection<ProcessEntity> processesById;
 
-    @Id
-    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -32,8 +23,6 @@ public class ProductEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -42,8 +31,6 @@ public class ProductEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "type")
     public String getType() {
         return type;
     }
@@ -52,8 +39,6 @@ public class ProductEntity {
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "ref")
     public String getRef() {
         return ref;
     }
@@ -62,8 +47,6 @@ public class ProductEntity {
         this.ref = ref;
     }
 
-    @Basic
-    @Column(name = "depth")
     public String getDepth() {
         return depth;
     }
@@ -72,8 +55,6 @@ public class ProductEntity {
         this.depth = depth;
     }
 
-    @Basic
-    @Column(name = "stock")
     public Short getStock() {
         return stock;
     }
@@ -82,8 +63,6 @@ public class ProductEntity {
         this.stock = stock;
     }
 
-    @Basic
-    @Column(name = "unit")
     public String getUnit() {
         return unit;
     }
@@ -92,8 +71,6 @@ public class ProductEntity {
         this.unit = unit;
     }
 
-    @Basic
-    @Column(name = "model")
     public String getModel() {
         return model;
     }
@@ -102,8 +79,6 @@ public class ProductEntity {
         this.model = model;
     }
 
-    @Basic
-    @Column(name = "state")
     public String getState() {
         return state;
     }
@@ -112,8 +87,6 @@ public class ProductEntity {
         this.state = state;
     }
 
-    @Basic
-    @Column(name = "supplyMethod")
     public String getSupplyMethod() {
         return supplyMethod;
     }
@@ -127,7 +100,7 @@ public class ProductEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProductEntity that = (ProductEntity) o;
+        RG_ProductEntity that = (RG_ProductEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -158,21 +131,4 @@ public class ProductEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "productByIdProduct")
-    public Collection<OrderEntity> getOrdersById() {
-        return ordersById;
-    }
-
-    public void setOrdersById(Collection<OrderEntity> ordersById) {
-        this.ordersById = ordersById;
-    }
-
-    @OneToMany(mappedBy = "productByIdProduct")
-    public Collection<ProcessEntity> getProcessesById() {
-        return processesById;
-    }
-
-    public void setProcessesById(Collection<ProcessEntity> processesById) {
-        this.processesById = processesById;
-    }
 }

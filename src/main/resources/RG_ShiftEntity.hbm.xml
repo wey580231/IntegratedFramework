@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_ShiftEntity" table="RG_Shift" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(20)" length="20"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="type">
+            <column name="type" sql-type="tinyint(4)" not-null="false"/>
+        </property>
+        <property name="slot">
+            <column name="Slot" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="id0">
+            <column name="id0" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
+        <property name="extra">
+            <column name="extra" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <set name="resources" inverse="false" cascade="save-update" table="shift_resource">
+            <key column="shift_id"></key>
+            <many-to-many class="com.rengu.entity.RG_ResourceEntity"
+                          column="resource_id"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

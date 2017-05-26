@@ -1,4 +1,4 @@
-package com.rengu.DAO;
+package com.rengu.util;
 
 import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.DAO.impl.UsersDAOImpl;

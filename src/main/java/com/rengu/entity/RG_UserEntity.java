@@ -1,27 +1,17 @@
 package com.rengu.entity;
 
-import javax.persistence.*;
-import java.util.Collection;
-
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@Entity
-@Table(name = "user", schema = "testdatabase", catalog = "")
-public class UserEntity {
+public class RG_UserEntity {
     private String id;
     private String name;
-    private String idClub;
     private String idClient;
     private String idProvider;
     private Byte authority;
     private String password;
-    private Collection<ConfigEntity> configsById;
-    private Collection<ResourceEntity> resourcesById;
-    private ClubEntity clubByIdClub;
+    private RG_ClubEntity clubByIdClub;
 
-    @Id
-    @Column(name = "id")
     public String getId() {
         return id;
     }
@@ -30,8 +20,6 @@ public class UserEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -40,18 +28,6 @@ public class UserEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "idClub")
-    public String getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(String idClub) {
-        this.idClub = idClub;
-    }
-
-    @Basic
-    @Column(name = "idClient")
     public String getIdClient() {
         return idClient;
     }
@@ -60,8 +36,6 @@ public class UserEntity {
         this.idClient = idClient;
     }
 
-    @Basic
-    @Column(name = "idProvider")
     public String getIdProvider() {
         return idProvider;
     }
@@ -70,8 +44,6 @@ public class UserEntity {
         this.idProvider = idProvider;
     }
 
-    @Basic
-    @Column(name = "authority")
     public Byte getAuthority() {
         return authority;
     }
@@ -80,8 +52,6 @@ public class UserEntity {
         this.authority = authority;
     }
 
-    @Basic
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -95,11 +65,10 @@ public class UserEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserEntity that = (UserEntity) o;
+        RG_UserEntity that = (RG_UserEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
         if (idClient != null ? !idClient.equals(that.idClient) : that.idClient != null) return false;
         if (idProvider != null ? !idProvider.equals(that.idProvider) : that.idProvider != null) return false;
         if (authority != null ? !authority.equals(that.authority) : that.authority != null) return false;
@@ -112,7 +81,6 @@ public class UserEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (idClient != null ? idClient.hashCode() : 0);
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (authority != null ? authority.hashCode() : 0);
@@ -120,31 +88,11 @@ public class UserEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "userByIdUser")
-    public Collection<ConfigEntity> getConfigsById() {
-        return configsById;
-    }
-
-    public void setConfigsById(Collection<ConfigEntity> configsById) {
-        this.configsById = configsById;
-    }
-
-    @OneToMany(mappedBy = "userByIdUser")
-    public Collection<ResourceEntity> getResourcesById() {
-        return resourcesById;
-    }
-
-    public void setResourcesById(Collection<ResourceEntity> resourcesById) {
-        this.resourcesById = resourcesById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "idClub", referencedColumnName = "id")
-    public ClubEntity getClubByIdClub() {
+    public RG_ClubEntity getClubByIdClub() {
         return clubByIdClub;
     }
 
-    public void setClubByIdClub(ClubEntity clubByIdClub) {
+    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
         this.clubByIdClub = clubByIdClub;
     }
 }

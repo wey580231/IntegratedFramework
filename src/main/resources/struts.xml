@@ -6,13 +6,19 @@
 
 <struts>
     <constant name="struts.devMode" value="true"/>
+    <constant name="struts.locale" value="zh_CN"/>
+    <constant name="struts.i18n.encoding" value="GB2312"/>
+    <!--过滤websocket连接。-->
     <constant name="struts.action.excludePattern" value="/notification/.*"/>
-
 
     <package name="default" extends="struts-default" namespace="/">
         <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
             <result name="error">/jsps/Login/Login_Fail.jsp</result>
             <result name="success">/jsps/Login/Login_Success.jsp</result>
         </action>
+    </package>
+    <package name="Orders" namespace="/orders" extends="struts-default">
+        <action name="getAllOrders" class="com.rengu.actions.OrdersAction" method="getAllOrders"/>
+        <action name="findAllByUsername" class="com.rengu.actions.OrdersAction" method="findAllByUsername"/>
     </package>
 </struts>
