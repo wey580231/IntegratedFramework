@@ -13,7 +13,7 @@
         left: 0px;
         font-size: 12px;
         cursor: pointer;
-        width: 440px;
+        /*width: 440px;*/
     }
 
     .nav-ml li::before, .nav-ml li::after {
@@ -279,6 +279,7 @@
                                                     <li>
                                                         <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
                                                         <a>自产零件A1</a></li>
+
 
                                                     <li>
                                                         <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
@@ -552,5 +553,9 @@
         $(this).parent().find(".nav-three").slideToggle(500);
         $(this).children("i").toggleClass("unfold");
     });
+    /*$(".item-3").click(function () {
+        $(this).parent().find(".nav-four").slideToggle(500);
+        $(this).children("i").toggleClass("unfold");
+    });*/
 
 </script>
