@@ -225,9 +225,9 @@
     <!--按钮-->
     <div class="uk-width-1-4" style="margin-left: 22%;float: right;">
         <div class="data-uk-button-radio" style="margin-top: 5px;">
-            <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
+            <button class="uk-button uk-icon-plus uk-button-primary" ng-onlick="save()">新增</button>
             <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-            <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
+            <button class="uk-button uk-icon-trash uk-button-primary"  ng-onlick="delete()">删除</button>
         </div>
     </div>
 </div>
@@ -310,10 +310,10 @@
                                 </tr>
                                 </thead>--%>
                                 <tbody class="uk-text-center">
-                                <tr>
+                                <tr ng-repeat="x in names  | filter:{nick:searchNick} track by $index">
                                     <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
+                                    <td>{{x.id}}</td>
+                                    <td>{{x.name}}</td>
                                     <td>...</td>
                                     <td>待定</td>
                                     <td>4</td>
@@ -459,10 +459,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
+                            <tr ng-repeat="x in names  | filter:{nick:searchNick} track by $index">
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
+                                <td>{{x.id}}</td>
+                                <td>{{x.name}}</td>
                                 <td>...</td>
                                 <td>待定</td>
                                 <td>4</td>

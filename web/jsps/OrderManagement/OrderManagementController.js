@@ -9,5 +9,33 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             controller: 'OrderManagementController'
         })
     }])
-    .controller("OrderManagementController", function ($scope) {
-    });
+    .config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        $httpProvider.defaults.transformRequest = function (obj) {
+            var str = [];
+            for (var p in obj) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+            return str.join("&");
+        }
+    }])
+
+    .controller('OrderManagementController', function ($scope, $http) {
+        $http({
+            method: 'post',
+            dataType: 'json',
+            contentType: 'application/json;charset=UTF-8',
+            url: 'http://localhost:8080/orders/getAllOrders.action',
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            }
+        }, "json").then(function successCallback(response) {
+            $scope.names = response.data;
+        })
+    })
+
