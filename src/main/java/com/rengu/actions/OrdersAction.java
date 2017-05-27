@@ -7,6 +7,7 @@ import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.SuperAction;
 import com.rengu.util.Tools;
+import com.rengu.util.WebSocketNotification;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,19 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
     @Override
     public RG_OrderEntity getModel() {
         return this.rg_orderEntity;
+    }
+
+    private void httpPrint(String string) {
+        httpServletResponse.setContentType("text/html");
+        PrintWriter printWriter = null;
+        try {
+            printWriter = httpServletResponse.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printWriter.println(string);
+        printWriter.flush();
+        printWriter.close();
     }
 
     public void getAllOrders() throws Exception {
@@ -38,40 +52,37 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
         httpPrint(Tools.entityConvertToJsonString(list));
     }
 
-    private void httpPrint(String string) {
-        httpServletResponse.setContentType("text/html");
-        PrintWriter printWriter = null;
-        try {
-            printWriter = httpServletResponse.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        printWriter.println(string);
-        printWriter.flush();
-        printWriter.close();
-    }
-
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        ordersDAOInstance.save(rg_orderEntity);
-        ordersDAOInstance.getTransaction().commit();
+        if (ordersDAOInstance.save(rg_orderEntity)) {
+            ordersDAOInstance.getTransaction().commit();
+        } else {
+            WebSocketNotification.sendMessage("保存失败", rg_orderEntity.getClubByIdClub().getName());
+        }
     }
 
     public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        ordersDAOInstance.delete(rg_orderEntity);
-        ordersDAOInstance.getTransaction().commit();
+        if (ordersDAOInstance.delete(rg_orderEntity)) {
+            ordersDAOInstance.getTransaction().commit();
+        } else {
+            WebSocketNotification.sendMessage("删除失败", rg_orderEntity.getClubByIdClub().getName());
+        }
     }
 
     public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        ordersDAOInstance.update(rg_orderEntity);
-        ordersDAOInstance.getTransaction().commit();
+        if (ordersDAOInstance.update(rg_orderEntity)) {
+            ordersDAOInstance.getTransaction().commit();
+        } else {
+            WebSocketNotification.sendMessage("更新失败", rg_orderEntity.getClubByIdClub().getName());
+        }
+
     }
 }
