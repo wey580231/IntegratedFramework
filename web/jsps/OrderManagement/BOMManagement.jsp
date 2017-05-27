@@ -376,7 +376,7 @@
                    <div class="uk-overflow-container" style="height: 77%;">
                        <div class="fixtable-head">
                            <table class="uk-table uk-table-striped uk-table-hover ">
-                               <thead class="uk-text-center">
+                               <thead class="uk-text-left">
                                <tr style="background-color: #e1eaf1;">
                                    <td>
                                        <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
@@ -524,9 +524,8 @@
         <div class="uk-clearfix">
             <button class="uk-button uk-float-right " id="create-order"
                     data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
-                    data-uk-toggle="{target:'#button'}" style="border-radius:15px; "
-                    data-uk-tooltip="{pos:'top'}" title="快捷菜单">+
-            </button>
+                    data-uk-toggle="{target:'#button'}" style="border-radius:15px;background-color: rgba(0,0,0,0.1); "
+                    data-uk-tooltip="{pos:'top'}" title="快捷菜单">+</button>
             <div class=" uk-hidden uk-float-right" id="button">
                 <div class="uk-panel uk-panel-box">
                     <div class="data-uk-button-radio">

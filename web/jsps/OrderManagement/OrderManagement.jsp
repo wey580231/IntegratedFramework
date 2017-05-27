@@ -598,9 +598,11 @@
 
         <div class="uk-clearfix" style="margin-top: -3%;">
             <button class="uk-button uk-float-right " id="create-order"
-                    data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
-                    data-uk-toggle="{target:'#button'}" style="border-radius:15px; "
-                    data-uk-tooltip="{pos:'top'}" title="快捷菜单">+
+                    <%--data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
+                    data-uk-toggle="{target:'#button'}"
+                    data-uk-tooltip="{pos:'top'}"--%>
+                    style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"
+                    title="快捷菜单">+
             </button>
             <div class=" uk-hidden uk-float-right" id="button">
                 <div class="uk-panel uk-panel-box">
