@@ -1,4 +1,4 @@
-package com.rengu.util;
+package com.rengu.DAO;
 
 import java.util.List;
 
