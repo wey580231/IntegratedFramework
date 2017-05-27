@@ -189,6 +189,17 @@
         MARGIN-RIGHT: auto;
         MARGIN-LEFT: auto;
     }*/
+
+    /*
+        BOM树下部panel
+    */
+    .uk-panel-box {
+        padding: 15px;
+        background: #fafafa;
+        color: #444;
+        border: 1px solid #ddd;
+        border-radius: 0px;
+    }
 </style>
 
 <%--<script type="text/javascript">
@@ -218,28 +229,38 @@
 </script>
 
 <%--<div id="main">--%>
-    <div class="uk-grid" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+    <div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
-        <img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">
+        <%--<img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">--%>
+            <%--<div class="uk-width-1-4 ">--%>
+                <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+
+
+                &nbsp;
+                <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>
+            <%--</div>--%>
+            <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+
+
         &nbsp;
-        <span style="font-size: 18px;font-weight: 700;margin-top: 10px;margin-left: -24px;font-family: 微软雅黑">制造BOM管理</span>
+        <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>--%>
         <!--搜索-->
-        <div class="uk-width-1-4 " >
-            <div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">
-                <form class="uk-search" data-uk-search style="margin-top: 5px;background-color: #e8edf1;">
+        <%--<div class="uk-width-1-4 " >--%>
+            <%--<div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">--%>
+                <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
                     <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
                            style="width: 150px;border: 1px solid lightgray;">
                 </form>
-            </div>
-        </div>
+<%--            </div>--%>
+        <%--</div>--%>
         <!--按钮-->
-        <div class="uk-width-1-4" style="margin-left: 36%;">
-            <div class="data-uk-button-radio" style="margin-top: 5px;">
+        <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
+            <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
                 <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
                 <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
                 <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
             </div>
-        </div>
+        <%--</div>--%>
     </div>
     <%--<hr class="uk-article-divider">--%>
     <br/>
@@ -268,7 +289,7 @@
 
             <%--<p></p>--%>
             <!--BOM树下部-->
-            <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 80%;background-color: #e2ebf2;">
+            <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
                 <div class="uk-form-row">
                     <div class="wrapper">
                         <div class="nav-ml">
@@ -371,7 +392,7 @@
                 </form>
                 <!--tab-->
                 <div style="width: 99%;border: 0px;margin-top: -15px;">
-                    <img src="../../images/bom_img/shu.png" style="margin-left: -10px;width: 5px;float: left;height: 35px;">
+                    <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
                     <ul class="uk-tab uk-tab-grid uk-tab-bottom" data-uk-tab style="height: 10%;">
                         <li><a href="#tabs-1">工序</a></li>
                         <li><a href="#tabs-2">DAG图</a></li>
@@ -529,13 +550,14 @@
             </div>
 
 
-            <div class="uk-clearfix">
+            <div class="uk-clearfix" style="margin-top: -3%;">
                 <button class="uk-button uk-float-right " id="create-order"
-                        data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
-                        data-uk-toggle="{target:'#button'}"
-                <%--style="border-radius:15px;background-color: rgba(0,0,0,0.1);margin-top: -3%; "--%>
-                        style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -30px;"
-                        data-uk-tooltip="{pos:'top'}" title="快捷菜单">+</button>
+                <%--data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
+                data-uk-toggle="{target:'#button'}"
+                data-uk-tooltip="{pos:'top'}"--%>
+                        style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"
+                        title="快捷菜单">+
+                </button>
                 <div class=" uk-hidden uk-float-right" id="button">
                     <div class="uk-panel uk-panel-box">
                         <div class="data-uk-button-radio">
