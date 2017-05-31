@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.*;
 
@@ -29,6 +31,19 @@ public class Tools {
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         return objectMapper.writeValueAsString(object);
+    }
+
+    public static void jsonPrint(String string, HttpServletResponse httpServletResponse) {
+        httpServletResponse.setContentType("text/html");
+        PrintWriter printWriter = null;
+        try {
+            printWriter = httpServletResponse.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        printWriter.println(string);
+        printWriter.flush();
+        printWriter.close();
     }
 
     public static String getHttpRequestBody(HttpServletRequest httpServletRequest) {

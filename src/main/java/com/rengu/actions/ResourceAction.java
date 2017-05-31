@@ -3,7 +3,7 @@ package com.rengu.actions;
 import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.DAO.impl.OrdersDAOImpl;
-import com.rengu.entity.RG_OrderEntity;
+import com.rengu.entity.RG_ResourceEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
 import com.rengu.util.WebSocketNotification;
@@ -11,14 +11,14 @@ import com.rengu.util.WebSocketNotification;
 import java.util.List;
 
 /**
- * Created by hanchangming on 2017/5/24.
+ * Created by hanchangming on 2017/5/31.
  */
-public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEntity> {
-    RG_OrderEntity rg_orderEntity = new RG_OrderEntity();
+public class ResourceAction extends SuperAction implements ModelDriven<RG_ResourceEntity> {
+    RG_ResourceEntity rg_resourceEntity = new RG_ResourceEntity();
 
     @Override
-    public RG_OrderEntity getModel() {
-        return this.rg_orderEntity;
+    public RG_ResourceEntity getModel() {
+        return this.rg_resourceEntity;
     }
 
     public void getAllOrders() throws Exception {
@@ -30,42 +30,42 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
 
     public void findAllByUsername() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAllByUsername(rg_orderEntity);
+        List list = ordersDAO.findAllByUsername(rg_resourceEntity);
         Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
     }
 
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.save(rg_orderEntity)) {
+        if (ordersDAOInstance.save(rg_resourceEntity)) {
             ordersDAOInstance.getTransaction().commit();
         } else {
-            WebSocketNotification.sendMessage("保存失败", rg_orderEntity.getClubByIdClub().getName());
+            WebSocketNotification.sendMessage("保存失败", rg_resourceEntity.getClubByIdClub().getName());
         }
     }
 
     public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.delete(rg_orderEntity)) {
+        if (ordersDAOInstance.delete(rg_resourceEntity)) {
             ordersDAOInstance.getTransaction().commit();
         } else {
-            WebSocketNotification.sendMessage("删除失败", rg_orderEntity.getClubByIdClub().getName());
+            WebSocketNotification.sendMessage("删除失败", rg_resourceEntity.getClubByIdClub().getName());
         }
     }
 
     public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.update(rg_orderEntity)) {
+        if (ordersDAOInstance.update(rg_resourceEntity)) {
             ordersDAOInstance.getTransaction().commit();
         } else {
-            WebSocketNotification.sendMessage("更新失败", rg_orderEntity.getClubByIdClub().getName());
+            WebSocketNotification.sendMessage("更新失败", rg_resourceEntity.getClubByIdClub().getName());
         }
 
     }
