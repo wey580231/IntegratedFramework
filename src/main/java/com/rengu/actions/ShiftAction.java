@@ -1,8 +1,8 @@
 package com.rengu.actions;
 
 import com.opensymphony.xwork2.ModelDriven;
-import com.rengu.DAO.OrdersDAO;
-import com.rengu.DAO.impl.OrdersDAOImpl;
+import com.rengu.DAO.ShiftDAO;
+import com.rengu.DAO.impl.ShiftDAOImpl;
 import com.rengu.entity.RG_ShiftEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
@@ -21,9 +21,9 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         return this.rg_shiftEntity;
     }
 
-    public void getAllOrders() throws Exception {
-        OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAll();
+    public void getAllShift() throws Exception {
+        ShiftDAO shiftDAO = DAOFactory.getShiftInstance();
+        List list = shiftDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
@@ -31,17 +31,17 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
     public void findAllByUsername() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
-        OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAllByUsername(rg_shiftEntity);
+        ShiftDAO shiftDAO = DAOFactory.getShiftInstance();
+        List list = shiftDAO.findAllByUsername(rg_shiftEntity);
         Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
     }
 
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.save(rg_shiftEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
+        if (shiftDAOInstance.save(rg_shiftEntity)) {
+            shiftDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
         }
@@ -50,9 +50,9 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
     public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.delete(rg_shiftEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
+        if (shiftDAOInstance.delete(rg_shiftEntity)) {
+            shiftDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
         }
@@ -61,9 +61,9 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
     public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.update(rg_shiftEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
+        if (shiftDAOInstance.update(rg_shiftEntity)) {
+            shiftDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
         }

@@ -1,8 +1,8 @@
 package com.rengu.actions;
 
 import com.opensymphony.xwork2.ModelDriven;
-import com.rengu.DAO.OrdersDAO;
-import com.rengu.DAO.impl.OrdersDAOImpl;
+import com.rengu.DAO.GroupResourceDao;
+import com.rengu.DAO.impl.GroupResourceDAOImpl;
 import com.rengu.entity.RG_GroupresourceEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
@@ -21,9 +21,9 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         return this.rg_groupresourceEntity;
     }
 
-    public void getAllOrders() throws Exception {
-        OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAll();
+    public void getAllGroupResource() throws Exception {
+        GroupResourceDao groupResourceDao = DAOFactory.getGroupResourceInstance();
+        List list = groupResourceDao.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
@@ -31,17 +31,17 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
     public void findAllByUsername() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
-        OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAllByUsername(rg_groupresourceEntity);
+        GroupResourceDao groupResourceDao = DAOFactory.getGroupResourceInstance();
+        List list = groupResourceDao.findAllByUsername(rg_groupresourceEntity);
         Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
     }
 
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.save(rg_groupresourceEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
+        if (groupResourceDAOInstance.save(rg_groupresourceEntity)) {
+            groupResourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", rg_groupresourceEntity.getClubByIdClub().getName());
         }
@@ -50,9 +50,9 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
     public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.delete(rg_groupresourceEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
+        if (groupResourceDAOInstance.delete(rg_groupresourceEntity)) {
+            groupResourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", rg_groupresourceEntity.getClubByIdClub().getName());
         }
@@ -61,9 +61,9 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
     public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.update(rg_groupresourceEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
+        if (groupResourceDAOInstance.update(rg_groupresourceEntity)) {
+            groupResourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", rg_groupresourceEntity.getClubByIdClub().getName());
         }

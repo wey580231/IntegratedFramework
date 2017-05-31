@@ -1,8 +1,8 @@
 package com.rengu.actions;
 
 import com.opensymphony.xwork2.ModelDriven;
-import com.rengu.DAO.OrdersDAO;
-import com.rengu.DAO.impl.OrdersDAOImpl;
+import com.rengu.DAO.ResourceDAO;
+import com.rengu.DAO.impl.ResourceDAOImpl;
 import com.rengu.entity.RG_ResourceEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
@@ -21,9 +21,9 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         return this.rg_resourceEntity;
     }
 
-    public void getAllOrders() throws Exception {
-        OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAll();
+    public void getAllResource() throws Exception {
+        ResourceDAO resourceDAO = DAOFactory.getResourceInstance();
+        List list = resourceDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
@@ -31,17 +31,17 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
     public void findAllByUsername() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
-        OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAllByUsername(rg_resourceEntity);
+        ResourceDAO resourceDAO = DAOFactory.getResourceInstance();
+        List list = resourceDAO.findAllByUsername(rg_resourceEntity);
         Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
     }
 
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.save(rg_resourceEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
+        if (resourceDAOInstance.save(rg_resourceEntity)) {
+            resourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", rg_resourceEntity.getClubByIdClub().getName());
         }
@@ -50,9 +50,9 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
     public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.delete(rg_resourceEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
+        if (resourceDAOInstance.delete(rg_resourceEntity)) {
+            resourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", rg_resourceEntity.getClubByIdClub().getName());
         }
@@ -61,9 +61,9 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
     public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.update(rg_resourceEntity)) {
-            ordersDAOInstance.getTransaction().commit();
+        ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
+        if (resourceDAOInstance.update(rg_resourceEntity)) {
+            resourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", rg_resourceEntity.getClubByIdClub().getName());
         }
