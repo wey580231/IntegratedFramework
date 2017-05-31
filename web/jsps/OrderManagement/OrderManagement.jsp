@@ -1,159 +1,59 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <style type="text/css">
-
-    .nav-ml ul {
-        margin-bottom: 0px;
-    }
-
-    .nav-ml ul > li {
-        list-style-type: none;
-        margin: -5px;
-        padding: 10px 0px 5px 5px;
-        position: relative;
-        left: 0px;
-        font-size: 12px;
-        cursor: pointer;
-        width: 440px;
-    }
-
-    .nav-ml li::before, .nav-ml li::after {
-        content: '';
-        left: -40px;
-        position: absolute;
-        right: auto
-    }
-
-    /* .nav-ml li::before {
-         border-left: 1px solid #213299;
-         bottom: 50px;
-         height: 100%;
-         top: 0px;
-         width: 1px
-     }
-
-     .nav-ml li::after {
-         border-top: 1px solid #d34738;
-         height: 20px;
-         top: 25px;
-         width: 20px
-     }*/
-
-    .nav-ml li a {
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-        border: 1px solid lightgrey;
-        border-radius: 5px;
-        display: inline-block;
-        padding: 3px 8px;
-        text-decoration: none;
-        background-color: #f9fcfc;
-    }
-
-    .fold {
-        display: none;
-    }
-
-    .nav-ml li.nav-first_li > a {
-        cursor: pointer
-    }
-
-    .nav-ml > ul > li::before, .nav-ml > ul > li::after {
-        border: 1px;
-    }
-
-    .nav-ml li:last-child::before {
-        height: 30px;
-    }
-
-    .bomspan{
-        font-size: 16px;
-        /*background: url("../../images/bom_img/bomqie.png");*/
-
-    }
-    .bomdiv{
-        background: url("../../images/bom_img/bomqie.png") no-repeat;
-        background-size: 100% 100%;
-    }
-
     /*
         所有input的背景色
     */
-    .uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
+    /*.uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
         vertical-align: middle;
         background-color: #eef7fc;
         height: 23px;
-    }
+    }*/
     /*
         表格奇数行颜色
     */
-    .uk-table-striped tbody tr:nth-of-type(2n+1) {
+    /*.uk-table-striped tbody tr:nth-of-type(2n+1) {
         background: #f3f8fb;
-    }
+    }*/
 
-    /*
-        BOM树字体颜色
-    */
-    .uk-link, a {
-        color: black;
-        cursor: pointer;
-    }
-    tr{
+
+    /*tr{
         height: 45px;
-    }
+    }*/
 
-    .uk-tab-grid > li:first-child > a:hover {
+    /*.uk-tab-grid > li:first-child > a:hover {
         background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
         background-position: 15px;
     }
     .uk-tab > li:nth-child(n+2) > a:hover{
         background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
         background-position: 20px;
-    }
+    }*/
 
-    /*
-        BOM树左侧的线条（竖线）
-    */
-    .nav-ml li::before {
-        border-left: 2px solid white;
-        bottom: 50px;
-        height: 100%;
-        top: 0px;
-        width: 1px;
-        margin-top: -4px;
-    }
-    /*
-        BOM树左侧的线条（横线）
-    */
-    .nav-ml li::after {
-        border-top: 2px solid white;
-        height: 20px;
-        top: 25px;
-        width: 20px;
-    }
-    .bg{
+
+    /*.bg{
         background-color: #c1edfa;
-    }
+    }*/
 
     /*
            页码li样式
     */
-    .uk-pagination > li {
+    /*.uk-pagination > li {
         display: inline-block;
         font-size: 1rem;
         vertical-align: middle;
-    }
+    }*/
 
     /*
            页码样式
     */
-    .my {
+    /*.my {
         background-color: #009dd8;
         color: #fff;
         background-image:url("../../images/bom_img/ye3.png");
         border-color: rgba(0,0,0,.2);
         border-bottom-color: rgba(0,0,0,.4);
         text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-    }
+    }*/
     /*.my:hover{
         background-color: #50FCF9;;
     }*/
@@ -162,8 +62,9 @@
         表格固定
     */
 
-    .fixtable-head table,.table-body table{width:100%;text-align:left;}
+    /*.fixtable-head table,.table-body table{width:100%;text-align:left;}
     .fixtable-body{width:100%; height:250px;overflow-y:scroll;text-align:left;}
+    */
 
     .uk-table td {
         vertical-align: top;
@@ -171,20 +72,11 @@
         margin-left: 11px;
     }
 
+
+
 </style>
 
-<%--<script type="text/javascript">
-    //除了表头（第一行）以外所有的行添加click事件.
-    $("tr").first().nextAll().click(function () {
-        //如果没有某个样式则加上，否则去除
-        $(this).children().toggleClass("bg");
-        if ($(this).children().hasClass("bg")){//如果有某个样式则表明，这一行已经被选中
-            $(this).children().first().children().attr("checked", true);
-        } else {                                  //如果没有被选中
-            $(this).children().first().children().attr("checked", false);
-        }
-    });
-</script>--%>
+<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <script>
     function changeColor(obj) {
@@ -199,37 +91,51 @@
     }
 </script>
 
-<div class="uk-grid" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;">
-    <img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">
+<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+
+    <%--<img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">--%>
+    <%--<div class="uk-width-1-4 ">--%>
+    <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+
+
     &nbsp;
-    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;margin-left: -24px;font-family: 微软雅黑">订单管理</span>
+    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">订单管理</span>
+    <%--</div>--%>
+    <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+
+
+&nbsp;
+<span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>--%>
     <!--搜索-->
-    <div class="uk-width-1-4 " >
-        <div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">
-            <form class="uk-search" data-uk-search style="margin-top: 5px;background-color: #e8edf1;">
-                <input class="uk-search-field" type="search" placeholder="请输入搜索项"
-                       style="width: 150px;border: 1px solid lightgray;">
-            </form>
-        </div>
-    </div>
-    <!--日历-->
-    <div class="uk-width-1-4" style="float: left;margin-top: 10px;margin-left: -70px;">
-        <form class="uk-form">
+    <%--<div class="uk-width-1-4 " >--%>
+    <%--<div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">--%>
+    <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
+        <input class="uk-search-field" type="search" placeholder="请输入搜索项"
+               style="width: 150px;border: 1px solid lightgray;">
+    </form>
+    <%--            </div>--%>
+    <%--</div>--%>
+
+        <!--日历-->
+
+        <%--<div class="uk-width-1-4" style="float: left;margin-top: 10px;margin-left: -70px;">--%>
+        <form class="uk-form" style="margin-left: 2%;margin-top: 5px;">
             <div class="uk-form-icon">
                 <i class="uk-icon-calendar"></i>
                 <input type="text" id="datepicker"  data-uk-datepicker="{format:'YYYY/MM/DD'}"
                        placeholder="2017/5/17">
             </div>
         </form>
-    </div>
+        <%--</div>--%>
+
     <!--按钮-->
-    <div class="uk-width-1-4" style="margin-left: 22%;float: right;">
-        <div class="data-uk-button-radio" style="margin-top: 5px;">
-            <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-            <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-            <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
-        </div>
+    <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
+    <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
+        <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
+        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
+        <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
     </div>
+    <%--</div>--%>
 </div>
 <%--<hr class="uk-article-divider">--%>
 <br/>

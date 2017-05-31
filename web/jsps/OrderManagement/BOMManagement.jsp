@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+
 <style type="text/css">
 
     .nav-ml ul {
@@ -23,20 +26,6 @@
         right: auto
     }
 
-   /* .nav-ml li::before {
-        border-left: 1px solid #213299;
-        bottom: 50px;
-        height: 100%;
-        top: 0px;
-        width: 1px
-    }
-
-    .nav-ml li::after {
-        border-top: 1px solid #d34738;
-        height: 20px;
-        top: 25px;
-        width: 20px
-    }*/
 
     .nav-ml li a {
         -moz-border-radius: 5px;
@@ -78,33 +67,36 @@
     /*
         所有input的背景色
     */
-    .uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
+    /*.uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
         vertical-align: middle;
         background-color: #eef7fc;
         height: 23px;
-    }
+    }*/
     /*
         表格奇数行颜色
     */
-    .uk-table-striped tbody tr:nth-of-type(2n+1) {
+    /*.uk-table-striped tbody tr:nth-of-type(2n+1) {
         background: #f3f8fb;
-    }
+    }*/
 
     /*
         BOM树字体颜色
     */
-    .uk-link, a {
+    /*.uk-link, a {
         color: black;
         cursor: pointer;
-    }
-    tr{
+    }*/
+    /*
+        表格行高
+    */
+    /*tr{
         height: 45px;
-    }
+    }*/
 
     /*
         tab样式
     */
-    .uk-tab-grid > li:first-child >a:hover {
+    /*.uk-tab-grid > li:first-child >a:hover {
         background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
         background-position: 15px;
     }
@@ -122,7 +114,7 @@
         background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
         background-position: 15px;
 
-    }
+    }*/
 
     /*
         BOM树左侧的线条（竖线）
@@ -150,23 +142,23 @@
     /*
            页码li样式
     */
-    .uk-pagination > li {
+    /*.uk-pagination > li {
         display: inline-block;
         font-size: 1rem;
         vertical-align: middle;
-    }
+    }*/
 
     /*
            页码样式
     */
-    .my {
+    /*.my {
         background-color: #009dd8;
         color: #fff;
         background-image:url("../../images/bom_img/ye3.png");
         border-color: rgba(0,0,0,.2);
         border-bottom-color: rgba(0,0,0,.4);
         text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-    }
+    }*/
     /*.my:hover{
         background-color: #50FCF9;;
     }*/
@@ -175,13 +167,13 @@
         表格固定
     */
 
-    .fixtable-head table,.table-body table{width:100%;text-align:left;}
+    /*.fixtable-head table,.table-body table{width:100%;text-align:left;}
     .fixtable-body{width:100%; height:250px;overflow-y:scroll;text-align:left;}
 
     .uk-table td {
         vertical-align: top;
         width: 40px;
-    }
+    }*/
 
     /*#main{
         width:1230px;
@@ -200,7 +192,22 @@
         border: 1px solid #ddd;
         border-radius: 0px;
     }
+
+    .uk-table td {
+        vertical-align: top;
+        width: 25px;
+        margin-left: 11px;
+    }
+
+    /*
+        form表单的位置固定
+    */
+    .uk-form{
+        display: inherit;
+    }
 </style>
+
+
 
 <%--<script type="text/javascript">
     //除了表头（第一行）以外所有的行添加click事件.
