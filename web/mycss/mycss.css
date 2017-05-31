@@ -103,11 +103,11 @@ a {
 */
 #create-order{
     border-radius:50%;
-    background: rgba(0,0,0,0.3);
-    color: #fff;
+   /* background: rgba(0,0,0,0.3);
+    color: #fff;*/
     top:220px;
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
     margin-top: -8px;
 }
 

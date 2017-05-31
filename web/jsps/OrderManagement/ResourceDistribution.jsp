@@ -84,24 +84,7 @@
 <!--右侧表格-->
 <div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
     <div style="margin-top: 1%;">
-        <!--表格上部-->
-        <%--<form class="uk-form">
-            <fieldset data-uk-margin>
-                <div class="uk-form-row" style="margin: 3px">
-                    <label style="margin-right: 3px;">产品名称</label>
-                    <input type="text" placeholder="零件1">&nbsp;&nbsp;
-                    <label style="margin-right: 3px">产品编码</label>
-                    <input type="text" placeholder="CH1">&nbsp;&nbsp;
-                    <label style="margin-right: 3px">规格型号</label>
-                    <input type="text" placeholder="60*80">&nbsp;&nbsp;
-                    <label style="margin-right: 3px">计量单位</label>
-                    <input type="text" placeholder="套">
-                </div>
 
-                <br>
-            </fieldset>
-        </form>--%>
-        <!--tab-->
         <div style="width: 100%;border: 0px;margin-top: -10px;">
 
 
@@ -253,9 +236,6 @@
                                 <li><button class="uk-button my"><a href="">上一页</a></button></li>
                                 <li><button class="uk-button my"><a href="">下一页</a></button></li>
                                 <li><button class="uk-button my"><a href="">尾页</a></button></li>
-                                <%--<li><a href="#">上一页</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li><a href="#">尾页</a></li>--%>
                                 <li>共88页</li>&nbsp;
                                 <li>
                                     到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
@@ -266,157 +246,8 @@
                             </ul>
                         </div>
                     </div>
-                    <%--<table class="uk-table uk-table-striped uk-table-hover " id="order">
-                        <thead>
-                        <tr style="background-color: #e1eaf1;">
-                            <td>
-                                <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
-                                    <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                </div>
-
-                            </td>
-                            <td>编码</td>
-                            <td>名称</td>
-                            <td>来源</td>
-                            <td>产品名</td>
-                            <td>数量</td>
-                            <td>优先级</td>
-                            <td>下单时间</td>
-                            <td>最早开工时间</td>
-                            <td>最晚开工时间</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" onclick="changeColor(this)"></td>
-                            <td>1001</td>
-                            <td>待定</td>
-                            <td>...</td>
-                            <td>待定</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>待定</td>
-                            <td>待定</td>
-                            <td>待定</td>
-
-                        </tr>
-                        </tbody>
-
-                    </table>--%>
-
-                    <%--<!--底部页码-->
-                    <div style="margin-top: 7%;">
-                        <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                            <li><button class="uk-button uk-button-primary"><a href="" style="color: white;">首页</a></button></li>
-                            <li><button class="uk-button my"><a href="" style="color: white;">上一页</a></button></li>
-                            <li><button class="uk-button my"><a href="" style="color: white;">下一页</a></button></li>
-                            <li><button class="uk-button my"><a href="" style="color: white;">尾页</a></button></li>
-                            &lt;%&ndash;<li><a href="#">上一页</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#">尾页</a></li>&ndash;%&gt;
-                            <li>共88</li>&nbsp;
-                            <li>
-                                到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
-                            </li>
-                            <li>
-                                <button class="uk-button uk-button-primary">确定</button>
-                            </li>
-                        </ul>
 
 
-
-                    </div>--%>
                 </div>
             </div>
 
@@ -425,12 +256,8 @@
 
 
     <div class="uk-clearfix" style="margin-top: -3%;">
-        <button class="uk-button uk-float-right " id="create-order"
-        <%--data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
-        data-uk-toggle="{target:'#button'}"
-        data-uk-tooltip="{pos:'top'}"--%>
-        <%--style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"--%>
-                title="快捷菜单">+
+        <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
+                title="快捷菜单">
         </button>
         <div class=" uk-hidden uk-float-right" id="button">
             <div class="uk-panel uk-panel-box">

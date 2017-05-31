@@ -73,57 +73,6 @@
         background-size: 100% 100%;
     }
 
-    /*
-        所有input的背景色
-    */
-    /*.uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
-        vertical-align: middle;
-        background-color: #eef7fc;
-        height: 23px;
-    }*/
-    /*
-        表格奇数行颜色
-    */
-    /*.uk-table-striped tbody tr:nth-of-type(2n+1) {
-        background: #f3f8fb;
-    }*/
-
-    /*
-        BOM树字体颜色
-    */
-    /*.uk-link, a {
-        color: black;
-        cursor: pointer;
-    }*/
-    /*
-        表格行高
-    */
-    /*tr{
-        height: 45px;
-    }*/
-
-    /*
-        tab样式
-    */
-    /*.uk-tab-grid > li:first-child >a:hover {
-        background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
-        background-position: 15px;
-    }
-
-    .uk-tab > li:nth-child(n+2)> a:hover {
-          background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
-          background-position: 15px;
-      }
-    .uk-tab > li:nth-child(n+2) > a:focus{
-        background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
-        background-position: 15px;
-
-    }
-    .uk-tab-grid > li:first-child >a:focus {
-        background: url("../../images/bom_img/gongxu.png") no-repeat 30px;
-        background-position: 15px;
-
-    }*/
 
     /*
         BOM树左侧的线条（竖线）
@@ -148,48 +97,7 @@
     .bg{
         background-color: #c1edfa;
     }
-    /*
-           页码li样式
-    */
-    /*.uk-pagination > li {
-        display: inline-block;
-        font-size: 1rem;
-        vertical-align: middle;
-    }*/
 
-    /*
-           页码样式
-    */
-    /*.my {
-        background-color: #009dd8;
-        color: #fff;
-        background-image:url("../../images/bom_img/ye3.png");
-        border-color: rgba(0,0,0,.2);
-        border-bottom-color: rgba(0,0,0,.4);
-        text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-    }*/
-    /*.my:hover{
-        background-color: #50FCF9;;
-    }*/
-
-    /*
-        表格固定
-    */
-
-    /*.fixtable-head table,.table-body table{width:100%;text-align:left;}
-    .fixtable-body{width:100%; height:250px;overflow-y:scroll;text-align:left;}
-
-    .uk-table td {
-        vertical-align: top;
-        width: 40px;
-    }*/
-
-    /*#main{
-        width:1230px;
-        height:500px;
-        MARGIN-RIGHT: auto;
-        MARGIN-LEFT: auto;
-    }*/
 
     /*
         BOM树下部panel
@@ -567,12 +475,8 @@
 
 
             <div class="uk-clearfix" style="margin-top: -3%;">
-                <button class="uk-button uk-float-right " id="create-order"
-                <%--data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
-                data-uk-toggle="{target:'#button'}"
-                data-uk-tooltip="{pos:'top'}"--%>
-                        <%--style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"--%>
-                        title="快捷菜单">+
+                <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
+                        title="快捷菜单">
                 </button>
                 <div class=" uk-hidden uk-float-right" id="button">
                     <div class="uk-panel uk-panel-box">
