@@ -37,8 +37,6 @@
 
 <div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
-    <%--<img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">--%>
-    <%--<div class="uk-width-1-4 ">--%>
     <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
@@ -48,15 +46,6 @@
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">工序资源分配管理</span>
     </div>
 
-    <%--</div>--%>
-    <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
-
-
-&nbsp;
-<span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>--%>
-    <!--搜索-->
-    <%--<div class="uk-width-1-4 " >--%>
-    <%--<div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">--%>
     <div style="float:left;margin-left: 2%;">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
@@ -64,8 +53,6 @@
         </form>
     </div>
 
-    <%--            </div>--%>
-    <%--</div>--%>
 
 
     <!--按钮-->
@@ -276,14 +263,4 @@
     });
 </script>
 
-<script>
-    $(".item-1").click(function () {
-        $(this).parent().find(".nav-second").slideToggle(500);
-        $(this).children("i").toggleClass("unfold");
-    });
-    $(".item-2").click(function () {
-        $(this).parent().find(".nav-three").slideToggle(500);
-        $(this).children("i").toggleClass("unfold");
-    });
 
-</script>

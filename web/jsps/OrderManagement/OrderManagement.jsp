@@ -316,15 +316,5 @@
     });
 </script>
 
-<script>
-    $(".item-1").click(function () {
-        $(this).parent().find(".nav-second").slideToggle(500);
-        $(this).children("i").toggleClass("unfold");
-    });
-    $(".item-2").click(function () {
-        $(this).parent().find(".nav-three").slideToggle(500);
-        $(this).children("i").toggleClass("unfold");
-    });
 
-</script>
 
