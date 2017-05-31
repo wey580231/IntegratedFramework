@@ -95,11 +95,15 @@
 
     <%--<img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">--%>
     <%--<div class="uk-width-1-4 ">--%>
-    <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+    <div style="float:left;">
+        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+    </div>
 
+    <div style="float:left;margin-top: 5px;">
+        &nbsp;
+        <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
+    </div>
 
-    &nbsp;
-    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">订单管理</span>
     <%--</div>--%>
     <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
 
@@ -109,24 +113,44 @@
     <!--搜索-->
     <%--<div class="uk-width-1-4 " >--%>
     <%--<div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">--%>
-    <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
-        <input class="uk-search-field" type="search" placeholder="请输入搜索项"
-               style="width: 150px;border: 1px solid lightgray;">
-    </form>
+        <div style="float:left;margin-left: 2%;">
+            <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
+                <input class="uk-search-field" type="search" placeholder="请输入搜索项"
+                       style="width: 150px;border: 1px solid lightgray;">
+            </form>
+        </div>
+
     <%--            </div>--%>
     <%--</div>--%>
 
         <!--日历-->
 
         <%--<div class="uk-width-1-4" style="float: left;margin-top: 10px;margin-left: -70px;">--%>
-        <form class="uk-form" style="margin-left: 2%;margin-top: 5px;">
-            <div class="uk-form-icon">
-                <i class="uk-icon-calendar"></i>
-                <input type="text" id="datepicker"  data-uk-datepicker="{format:'YYYY/MM/DD'}"
-                       placeholder="2017/5/17">
-            </div>
-        </form>
+        <div style="float:left;margin-left: 2%;">
+            <form class="uk-form" style="margin-left: 2%;margin-top: 5px;width: 135px;">
+                <div class="uk-form-icon">
+                    <i class="uk-icon-calendar"></i>
+                    <input type="text" id="datepicker"  data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                           placeholder="2017/5/17" style="height: 30px;">
+                </div>
+            </form>
+        </div>
+
         <%--</div>--%>
+
+        <!--下拉框-->
+        <div style="float:left;margin-left: 2%;">
+            <form class="uk-form"  style="margin-left: 2%;">
+                <div class="" style="margin-top: 4px;">
+                    <select class="uk-grid" style="height: 30px;">
+                        <option value="1">候选状态1</option>
+                        <option value="2">候选状态2</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+
 
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
@@ -143,9 +167,9 @@
 
     <!--右侧表格-->
     <div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
-        <div style="margin-top: 1%;margin-left: 1%;">
+        <div style="margin-top: 1%;">
             <!--表格上部-->
-            <form class="uk-form">
+            <%--<form class="uk-form">
                 <fieldset data-uk-margin>
                     <div class="uk-form-row" style="margin: 3px">
                         <label style="margin-right: 3px;">产品名称</label>
@@ -160,15 +184,15 @@
 
                     <br>
                 </fieldset>
-            </form>
+            </form>--%>
             <!--tab-->
-            <div style="width: 98%;border: 0px;margin-top: -10px;">
+            <div style="width: 100%;border: 0px;margin-top: -10px;">
 
 
-                <div id="tabs-2" style="width: 100%;height: 86%;">
+                <div id="tabs-2" style="width: 100%;height: 100%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 93%;">
+                    <div class="uk-overflow-container" style="height: 96%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
                                 <thead class="uk-text-center">
@@ -334,7 +358,7 @@
                                     <%--<li><a href="#">上一页</a></li>
                                     <li><a href="#">下一页</a></li>
                                     <li><a href="#">尾页</a></li>--%>
-                                    <li>共88</li>&nbsp;
+                                    <li>共88页</li>&nbsp;
                                     <li>
                                         到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
                                     </li>
@@ -507,7 +531,7 @@
                     <%--data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
                     data-uk-toggle="{target:'#button'}"
                     data-uk-tooltip="{pos:'top'}"--%>
-                    style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"
+                    <%--style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"--%>
                     title="快捷菜单">+
             </button>
             <div class=" uk-hidden uk-float-right" id="button">

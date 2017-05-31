@@ -9,7 +9,7 @@
     所有input的背景色
 */
 .uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
-    vertical-align: middle;
+    vertical-align: inherit;
     background-color: #eef7fc;
     height: 23px;
 }
@@ -98,4 +98,16 @@ a {
     margin-left: 11px;
 }
 
+/*
+    快捷方式的样式
+*/
+#create-order{
+    border-radius:50%;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    top:220px;
+    width: 45px;
+    height: 45px;
+    margin-top: -8px;
+}
 

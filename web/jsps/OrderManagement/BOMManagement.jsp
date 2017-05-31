@@ -539,7 +539,7 @@
                                         <%--<li><a href="#">上一页</a></li>
                                         <li><a href="#">下一页</a></li>
                                         <li><a href="#">尾页</a></li>--%>
-                                        <li>共88</li>&nbsp;
+                                        <li>共88页</li>&nbsp;
                                         <li>
                                             到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
                                         </li>
@@ -562,7 +562,7 @@
                 <%--data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
                 data-uk-toggle="{target:'#button'}"
                 data-uk-tooltip="{pos:'top'}"--%>
-                        style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"
+                        <%--style="border-radius:50%;background: rgba(0,0,0,0.3);color: #fff;top:220px;width: 45px;height: 45px;margin-top: -8px;"--%>
                         title="快捷菜单">+
                 </button>
                 <div class=" uk-hidden uk-float-right" id="button">
