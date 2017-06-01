@@ -183,7 +183,7 @@
                         </div>
                     </a>
                     <ul class="uk-nav-sub">
-                        <li><a href="#!/ScheduleGuide">计划排程向导</a></li>
+                        <li><a href="#!/ScheduleGuide">计划排程管理</a></li>
                         <li><a href="#!/ScheduleSnap">计划排程快照管理</a></li>
                         <li><a href="#!/Interactive">交互式优化与结果可视化</a></li>
                     </ul>
