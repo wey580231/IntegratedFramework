@@ -161,7 +161,7 @@
                              </tr>
                              </thead>--%>
                             <tbody class="uk-text-center">
-                            <tr ng-repeat="x in names">
+                            <tr ng-repeat="x in names track by $index">
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
                                 <td>{{x.id}}</td>
                                 <td>{{x.name}}</td>

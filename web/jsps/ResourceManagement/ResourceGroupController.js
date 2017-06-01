@@ -9,5 +9,11 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             controller: 'ResourceGroupController'
         })
     }])
-    .controller("ResourceGroupController", function ($scope) {
-    });
+
+    .controller('ResourceGroupController', function ($scope, $http, myHttpService, serviceList) {
+        myHttpService.post(serviceList.ListGroupResource).then(function (response) {
+            console.log(response);
+            $scope.names = response.data;
+        });
+
+    })

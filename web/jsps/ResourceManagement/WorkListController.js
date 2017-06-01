@@ -9,5 +9,10 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             controller: 'WorkListController'
         })
     }])
-    .controller("WorkListController", function ($scope) {
-    });
+    .controller('WorkListController', function ($scope, $http, myHttpService, serviceList) {
+        myHttpService.post(serviceList.ListShift).then(function (response) {
+            console.log(response);
+            $scope.names = response.data;
+        });
+
+    })

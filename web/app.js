@@ -55,7 +55,7 @@ angular.module("IntegratedFramework", [
                 'dataType': 'json',
                 'contentType': 'application/json;charset=UTF-8',
                 'url': servletUrl,
-                'data': body
+                'data': body,
             });
         };
         var _delete = function (servletUrl,body) {
@@ -64,7 +64,7 @@ angular.module("IntegratedFramework", [
                 'dataType': 'json',
                 'contentType': 'application/json;charset=UTF-8',
                 'url': servletUrl,
-                'data': body
+                'data': body,
             });
         }
         service.get = _get;
@@ -122,7 +122,20 @@ angular.module("IntegratedFramework", [
     .factory("serviceList", function () {
         var service = {};
         var backUrl = "http://localhost:8080/";
+        <!--订单信息-->
         service.ListOrder = backUrl + "orders/getAllOrders.action";
+        <!--工序资源信息-->
+        service.ListAssisantProcess=backUrl + "assisantprocess/getAllOrders.action";
+        <!--资源信息-->
+        service.ListResource = backUrl + "resource/getAllOrders.action";
+        <!--资源类型信息-->
+        service.ListTypeRecource = backUrl + "typerescource/getAllOrders.action";
+        <!--资源工组信息-->
+        service.ListGroupResource = backUrl + "groupresource/getAllOrders.action";
+        <!--资源工位信息-->
+        service.ListSite = backUrl + "site/getAllOrders.action";
+        <!--资源班次信息-->
+        service.ListShift = backUrl + "shift/getAllOrders.action";
         return service;
     })
 

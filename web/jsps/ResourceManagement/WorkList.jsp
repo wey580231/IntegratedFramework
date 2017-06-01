@@ -102,9 +102,9 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
+                            <tr ng-repeat="x in names track by $index">
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
+                                <td>{{x.id}}</td>
                                 <td>08:30至17:00</td>
                                 <td>白班</td>
                                 <td>{08:30..11:29,13:00..16:59}</td>

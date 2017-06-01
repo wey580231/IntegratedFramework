@@ -101,9 +101,9 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
+                            <tr ng-repeat="x in names track by $index">
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
+                                <td>{{x.id}}</td>
                                 <td>AGV左侧交接点</td>
                                 <td>(1600,1200)</td>
                                 <td>100</td>

@@ -128,9 +128,9 @@
                                  </tr>
                                  </thead>--%>
                                 <tbody class="uk-text-center">
-                                <tr>
+                                <tr ng-repeat="x in names track by $index">
                                     <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
+                                    <td>{{x.id}}</td>
                                     <td>待定</td>
                                     <td>未知</td>
                                     <td>1</td>
