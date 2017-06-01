@@ -9,43 +9,46 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             controller: 'OrderManagementController'
         })
     }])
-    /* .config(['$httpProvider', function ($httpProvider) {
-     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-     $httpProvider.defaults.transformRequest = function (obj) {
-     var str = [];
-     for (var p in obj) {
-     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-     }
-     return str.join("&");
-     }
-     }])
-
-     .controller('OrderManagementController', function ($scope, $http) {
-     $http({
-     method: 'post',
-     dataType: 'json',
-     contentType: 'application/json;charset=UTF-8',
-     data: JSON.stringify(),
-     url: 'http://localhost:8080/orders/getAllOrders.action',
-     transformRequest: function (obj) {
-     var str = [];
-     for (var p in obj) {
-     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-     }
-     return str.join("&");
-     }
-     }, "json").then(function successCallback(response) {
-     console.log(response);
-     $scope.names = response.data;
-     })
-     })
-     */
 
     .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList) {
+
         myHttpService.post(serviceList.ListOrder).then(function (response) {
             console.log(response);
             $scope.names = response.data;
         });
+
+        /*var selectedCheckArray = [];    //选中的checkbox的id值集合
+
+         $scope.AddOrder = function () {
+         myHttpService.post(serviceList.ListOrder).then(function (response) {
+         console.log("aaaaaaa");
+         console.log(response);
+         $scope.names = response.data;
+         });
+         }
+
+         $scope.DeleteOrder = function () {
+         myHttpService.delete(serviceList.ListOrder, '')
+         .then(function (response) {
+         $route.reload();
+         });
+         };
+
+         var updateSelected = function (action, id) {
+         if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
+         selectedCheckArray.push(id);
+         }
+         if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
+         selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
+         }
+         };
+
+         //点击某个checkbox按钮，更新当前的状态
+         $scope.updateSelection = function ($event, id) {
+         var checkbox = $event.target;
+         var action = (checkbox.checked ? 'add' : 'remove');
+         updateSelected(action, id);
+         };
+         */
 
     })
