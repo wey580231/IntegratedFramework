@@ -5,12 +5,9 @@ import com.rengu.DAO.OrdersDAO;
 import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
-import com.rengu.util.SuperAction;
 import com.rengu.util.Tools;
 import com.rengu.util.WebSocketNotification;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -24,24 +21,11 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
         return this.rg_orderEntity;
     }
 
-    private void httpPrint(String string) {
-        httpServletResponse.setContentType("text/html");
-        PrintWriter printWriter = null;
-        try {
-            printWriter = httpServletResponse.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        printWriter.println(string);
-        printWriter.flush();
-        printWriter.close();
-    }
-
     public void getAllOrders() throws Exception {
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
-        httpPrint(jsonString);
+        Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
     public void findAllByUsername() throws Exception {
@@ -49,7 +33,7 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAllByUsername(rg_orderEntity);
-        httpPrint(Tools.entityConvertToJsonString(list));
+        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
     }
 
     public void save() throws Exception {

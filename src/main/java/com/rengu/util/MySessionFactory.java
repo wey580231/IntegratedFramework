@@ -10,6 +10,7 @@ public class MySessionFactory {
 
     private static SessionFactory sessionFactory = null;
 
+    //获取集成框架数据库访问会话
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             Configuration configuration = new Configuration().configure();

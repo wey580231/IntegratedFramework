@@ -118,6 +118,13 @@
                 margin: 0;
                 height: 100%;
             }
+
+            #main{
+                width:1366px;
+                height:673px;
+                MARGIN-RIGHT: auto;
+                MARGIN-LEFT: auto;
+            }
         </style>
 </head>
 <body>
@@ -134,112 +141,116 @@
     </div>
 
 </div>--%>
+<div id="main">
+    <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;">
+        <!--图标-->
+        <div  class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
+            <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
+        </div>
+        <!--左侧列表-->
+        <div  class="uk-width-1-1" style="height: 90%;">
+            <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
+                <li class="uk-parent">
+                    <a href="#">
+                        <div>
+                            <img src="../../images/left_img/order.png"> <span style="margin-left: 10px;">订单任务管理</span>
+                        </div>
+                    </a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#!/OrderManagement">订单管理</a></li>
+                        <li><a href="#!/BOMManagement">制造BOM管理</a></li>
+                        <li><a href="#!/ResourceDistribution">工序资源分配管理</a></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                    <a href="#">
+                        <div>
+                            <img src="../../images/left_img/resource.png"> <span style="margin-left: 10px;">资源设备管理</span>
+                        </div>
+                    </a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#!/ResourceList">资源列表管理</a></li>
+                        <li><a href="#!/ResourceClassify">资源分类管理</a></li>
+                        <li><a href="#!/ResourceGroup">资源工组管理</a></li>
+                        <li><a href="#!/ResourceStation">资源工位管理</a></li>
+                        <li><a href="#!/WorkList">资源工作班次管理</a></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                    <a href="#" target="body">
+                        <div>
+                            <img src="../../images/left_img/plan.png"> <span style="margin-left: 10px;">计划排程管理</span>
+                        </div>
+                    </a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#!/ScheduleGuide">计划排程管理</a></li>
+                        <li><a href="#!/ScheduleSnap">计划排程快照管理</a></li>
+                        <li><a href="#!/Interactive">交互式优化与结果可视化</a></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                    <a href="#">
+                        <div>
+                            <img src="../../images/left_img/online.png"> <span style="margin-left: 10px;">在线监控管理</span>
+                        </div>
+                    </a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#!/DeviceMonitor">设备监控</a></li>
+                        <li><a href="#!/OnlineManagement">订单执行监控</a></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                    <a href="#">
+                        <div>
+                            <img src="../../images/left_img/adjust.png"> <span style="margin-left: 10px;">高级调整分析</span>
+                        </div>
+                    </a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#!/AdjustProcedure">调整工序</a></li>
+                        <li><a href="#!/AdjustOrder">调整订单任务</a></li>
+                        <li><a href="#!/AdjustDevice">调整设备资源</a></li>
+                        <li><a href="#!/AdjustFactory">调整工厂布局</a></li>
+                    </ul>
+                </li>
+                <li class="uk-parent">
+                    <a href="#">
+                        <div>
+                            <img src="../../images/left_img/3D.png"> <span style="margin-left: 10px;">三维可视化</span>
+                        </div>
+                    </a>
+                    <ul class="uk-nav-sub">
+                        <li><a href="#!/Show">可视化显示</a></li>
+                        <li><a href="#!/ViewConfigure">可视化配置</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--右侧-->
+    <div class="uk-width-5-6 uk-height-viewport" style="float: right;height: 100%;">
+        <div style="height: 10%;">
+            <!--欢迎登录-->
+            <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
+                <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
+            </div>
+            <div style="height: 60px;">
+                <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
+            </div>
+        </div>
+
+        <div style="float:right;background-color: #bdcbd8;height: 90%;width: 100%;">
+
+            <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
+                <ng-view></ng-view>
+            </div>
+        </div>
+
+    </div>
+</div>
 <!--左侧-->
-<div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;">
-    <!--图标-->
-    <div  class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
-        <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
-    </div>
-    <!--左侧列表-->
-    <div  class="uk-width-1-1" style="height: 90%;">
-        <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
-            <li class="uk-parent">
-                <a href="#">
-                    <div>
-                        <img src="../../images/left_img/order.png"> <span style="margin-left: 10px;">订单任务管理</span>
-                    </div>
-                </a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#!/OrderManagement">订单管理</a></li>
-                    <li><a href="#!/BOMManagement">制造BOM管理</a></li>
-                    <li><a href="#!/ResourceDistribution">工序资源分配管理</a></li>
-                </ul>
-            </li>
-            <li class="uk-parent">
-                <a href="#">
-                    <div>
-                        <img src="../../images/left_img/resource.png"> <span style="margin-left: 10px;">资源设备管理</span>
-                    </div>
-                </a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#!/ResourceList">资源列表管理</a></li>
-                    <li><a href="#!/ResourceClassify">资源分类管理</a></li>
-                    <li><a href="#!/ResourceGroup">资源工组管理</a></li>
-                    <li><a href="#!/ResourceStation">资源工位管理</a></li>
-                    <li><a href="#!/WorkList">资源工作班次管理</a></li>
-                </ul>
-            </li>
-            <li class="uk-parent">
-                <a href="#" target="body">
-                    <div>
-                        <img src="../../images/left_img/plan.png"> <span style="margin-left: 10px;">计划排程管理</span>
-                    </div>
-                </a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#!/ScheduleGuide">计划排程向导</a></li>
-                    <li><a href="#!/ScheduleSnap">计划排程快照管理</a></li>
-                    <li><a href="#!/Interactive">交互式优化与结果可视化</a></li>
-                </ul>
-            </li>
-            <li class="uk-parent">
-                <a href="#">
-                    <div>
-                        <img src="../../images/left_img/online.png"> <span style="margin-left: 10px;">在线监控管理</span>
-                    </div>
-                </a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#!/DeviceMonitor">设备监控</a></li>
-                    <li><a href="#!/OnlineManagement">订单执行监控</a></li>
-                </ul>
-            </li>
-            <li class="uk-parent">
-                <a href="#">
-                    <div>
-                        <img src="../../images/left_img/adjust.png"> <span style="margin-left: 10px;">高级调整分析</span>
-                    </div>
-                </a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#!/AdjustProcedure">调整工序</a></li>
-                    <li><a href="#!/AdjustOrder">调整订单任务</a></li>
-                    <li><a href="#!/AdjustDevice">调整设备资源</a></li>
-                    <li><a href="#!/AdjustFactory">调整工厂布局</a></li>
-                </ul>
-            </li>
-            <li class="uk-parent">
-                <a href="#">
-                    <div>
-                        <img src="../../images/left_img/3D.png"> <span style="margin-left: 10px;">三维可视化</span>
-                    </div>
-                </a>
-                <ul class="uk-nav-sub">
-                    <li><a href="#!/Show">可视化显示</a></li>
-                    <li><a href="#!/ViewConfigure">可视化配置</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
 
-<!--右侧-->
-<div class="uk-width-5-6 uk-height-viewport" style="float: right;height: 100%;">
-    <div style="height: 10%;">
-        <!--欢迎登录-->
-        <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
-            <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
-        </div>
-        <div style="height: 60px;">
-            <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
-        </div>
-    </div>
 
-    <div style="float:right;background-color: #bdcbd8;height: 90%;width: 100%;">
-
-        <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
-            <ng-view></ng-view>
-        </div>
-    </div>
-
-</div>
 <script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
 <%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit.min.js"></script>--%>
 <%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit-icons.min.js"></script>--%>

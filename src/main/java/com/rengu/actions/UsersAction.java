@@ -4,7 +4,6 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.UsersDAO;
 import com.rengu.DAO.impl.UsersDAOImpl;
 import com.rengu.entity.RG_UserEntity;
-import com.rengu.util.SuperAction;
 
 /**
  * Created by hanchangming on 2017/5/11.
