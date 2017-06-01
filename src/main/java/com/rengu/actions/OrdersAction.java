@@ -2,13 +2,12 @@ package com.rengu.actions;
 
 import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.OrdersDAO;
+import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
-import com.rengu.util.SuperAction;
 import com.rengu.util.Tools;
+import com.rengu.util.WebSocketNotification;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -26,27 +25,48 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
-        httpPrint(jsonString);
+        Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
     public void findAllByUsername() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        Object object = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAllByUsername(object);
-        httpPrint(Tools.entityConvertToJsonString(list));
+        List list = ordersDAO.findAllByUsername(rg_orderEntity);
+        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
     }
 
-    private void httpPrint(String string) {
-        httpServletResponse.setContentType("text/html");
-        PrintWriter printWriter = null;
-        try {
-            printWriter = httpServletResponse.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void save() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
+        if (ordersDAOInstance.save(rg_orderEntity)) {
+            ordersDAOInstance.getTransaction().commit();
+        } else {
+            WebSocketNotification.sendMessage("保存失败", rg_orderEntity.getClubByIdClub().getName());
         }
-        printWriter.println(string);
-        printWriter.flush();
-        printWriter.close();
+    }
+
+    public void delete() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
+        if (ordersDAOInstance.delete(rg_orderEntity)) {
+            ordersDAOInstance.getTransaction().commit();
+        } else {
+            WebSocketNotification.sendMessage("删除失败", rg_orderEntity.getClubByIdClub().getName());
+        }
+    }
+
+    public void update() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
+        if (ordersDAOInstance.update(rg_orderEntity)) {
+            ordersDAOInstance.getTransaction().commit();
+        } else {
+            WebSocketNotification.sendMessage("更新失败", rg_orderEntity.getClubByIdClub().getName());
+        }
+
     }
 }

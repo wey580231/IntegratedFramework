@@ -17,8 +17,60 @@
             <result name="success">/jsps/Login/Login_Success.jsp</result>
         </action>
     </package>
+    <!--工序资源信息接口-->
+    <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">
+        <action name="getAllOrders" class="com.rengu.actions.OrdersAction" method="getAllOrders"/>
+        <action name="save" class="com.rengu.actions.OrdersAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.OrdersAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.OrdersAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.OrdersAction" method="findAll"/>
+    </package>
+    <!--订单信息接口-->
     <package name="Orders" namespace="/orders" extends="struts-default">
         <action name="getAllOrders" class="com.rengu.actions.OrdersAction" method="getAllOrders"/>
-        <action name="findAllByUsername" class="com.rengu.actions.OrdersAction" method="findAllByUsername"/>
+        <action name="save" class="com.rengu.actions.OrdersAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.OrdersAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.OrdersAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.OrdersAction" method="findAll"/>
+    </package>
+    <!--资源信息接口-->
+    <package name="Resource" namespace="/resource" extends="struts-default">
+        <action name="getAllOrders" class="com.rengu.actions.ResourceAction" method="getAllOrders"/>
+        <action name="save" class="com.rengu.actions.ResourceAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.ResourceAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.ResourceAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.ResourceAction" method="findAll"/>
+    </package>
+    <!--资源类型信息接口-->
+    <package name="Typerescource" namespace="/typerescource" extends="struts-default">
+        <action name="getAllOrders" class="com.rengu.actions.TyperescourceAction" method="getAllOrders"/>
+        <action name="save" class="com.rengu.actions.TyperescourceAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.TyperescourceAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.TyperescourceAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.TyperescourceAction" method="findAll"/>
+    </package>
+    <!--资源工组信息接口-->
+    <package name="GroupResource" namespace="/groupresource" extends="struts-default">
+        <action name="getAllOrders" class="com.rengu.actions.GroupResourceAction" method="getAllOrders"/>
+        <action name="save" class="com.rengu.actions.GroupResourceAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.GroupResourceAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.GroupResourceAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.GroupResourceAction" method="findAll"/>
+    </package>
+    <!--资源工位信息接口-->
+    <package name="Site" namespace="/site" extends="struts-default">
+        <action name="getAllOrders" class="com.rengu.actions.SiteAction" method="getAllOrders"/>
+        <action name="save" class="com.rengu.actions.SiteAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.SiteAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.SiteAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.SiteAction" method="findAll"/>
+    </package>
+    <!--资源班次信息接口-->
+    <package name="Shift" namespace="/shift" extends="struts-default">
+        <action name="getAllOrders" class="com.rengu.actions.ShiftAction" method="getAllOrders"/>
+        <action name="save" class="com.rengu.actions.ShiftAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.ShiftAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.ShiftAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.ShiftAction" method="findAll"/>
     </package>
 </struts>
