@@ -1,153 +1,458 @@
 <%--
   Created by IntelliJ IDEA.
-  User: zhaoqi
-  Date: 2017/5/18
-  Time: 20:42
+  User: XY
+  Date: 2017/6/1
+  Time: 10:19
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="uk-grid">
-    <div class="uk-width-1-4">
-        <form class="uk-search" data-uk-search>
-            <input class="uk-search-field" type="search" placeholder="请输入关键字">
-        </form>
-    </div>
-    <div class="uk-width-1-4">
-        <div class="uk-button uk-form-select uk-active" data-uk-form-select>
-            <span>请选择</span>
-            <select>
-                <option value="1">选项一</option>
-                <option value="2">选项二</option>
-                <option value="2">选项三</option>
-            </select>
-        </div>
-    </div>
-    <div class="uk-width-1-4">
-        <form class="uk-form">
-            <div class="uk-form-icon">
-                <i class="uk-icon-calendar"></i>
-                <input type="text" id="datepicker"  data-uk-datepicker="{format:'DD.MM.YYYY'}"
-                       placeholder="2017/5/17">
+
+
+<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+
+<style type="text/css">
+
+    .nav-ml ul {
+        margin-bottom: 0px;
+    }
+
+    .nav-ml ul > li {
+        list-style-type: none;
+        margin: -5px;
+        padding: 10px 0px 5px 5px;
+        position: relative;
+        left: 0px;
+        font-size: 12px;
+        cursor: pointer;
+        /*width: 440px;*/
+    }
+
+    .nav-ml li::before, .nav-ml li::after {
+        content: '';
+        left: -40px;
+        position: absolute;
+        right: auto
+    }
+
+
+    .nav-ml li a {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        display: inline-block;
+        padding: 3px 8px;
+        text-decoration: none;
+        background-color: #f9fcfc;
+    }
+
+    .fold {
+        display: none;
+    }
+
+    .nav-ml li.nav-first_li > a {
+        cursor: pointer
+    }
+
+    .nav-ml > ul > li::before, .nav-ml > ul > li::after {
+        border: 1px;
+    }
+
+    .nav-ml li:last-child::before {
+        height: 30px;
+    }
+
+    .bomspan{
+        font-size: 16px;
+        /*background: url("../../images/bom_img/bomqie.png");*/
+
+    }
+    .bomdiv{
+        background: url("../../images/bom_img/bomqie.png") no-repeat;
+        background-size: 100% 100%;
+    }
+
+
+    /*
+        BOM树左侧的线条（竖线）
+    */
+    .nav-ml li::before {
+        border-left: 2px solid white;
+        bottom: 50px;
+        height: 100%;
+        top: 0px;
+        width: 1px;
+        margin-top: -2px;
+    }
+    /*
+        BOM树左侧的线条（横线）
+    */
+    .nav-ml li::after {
+        border-top: 2px solid white;
+        height: 20px;
+        top: 25px;
+        width: 20px;
+    }
+    .bg{
+        background-color: #c1edfa;
+    }
+
+
+    /*
+        BOM树下部panel
+    */
+    .uk-panel-box {
+        padding: 15px;
+        background: #fafafa;
+        color: #444;
+        border: 1px solid #ddd;
+        border-radius: 0px;
+    }
+
+    .uk-table td {
+        vertical-align: top;
+        width: 28px;
+        margin-left: 11px;
+    }
+
+    /*
+        form表单的位置固定
+    */
+    .uk-form{
+        display: inherit;
+    }
+</style>
+
+
+
+<%--<script type="text/javascript">
+    //除了表头（第一行）以外所有的行添加click事件.
+    $("tr").first().nextAll().click(function () {
+        //如果没有某个样式则加上，否则去除
+        $(this).children().toggleClass("bg");
+        if ($(this).children().hasClass("bg")){//如果有某个样式则表明，这一行已经被选中
+            $(this).children().first().children().attr("checked", true);
+        } else {                                  //如果没有被选中
+            $(this).children().first().children().attr("checked", false);
+        }
+    });
+</script>--%>
+
+<script>
+    function changeColor(obj) {
+        var f = obj.checked;
+        var chkColor = "#c1edfa"; //选中后颜色
+        //var back = obj.parentElement.parentElement.style.backgroundColor;  //偶数行取消选中后的颜色
+        var jiColor = "#FFFFFF";
+        if(f)
+            obj.parentElement.parentElement.style.backgroundColor = chkColor;
+        else
+            obj.parentElement.parentElement.style.backgroundColor = jiColor;
+    }
+</script>
+
+<%--<div id="main">--%>
+<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+
+    <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+
+
+    &nbsp;
+    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">计划排程快照管理</span>
+
+    <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
+        <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
+               style="width: 150px;border: 1px solid lightgray;">
+    </form>
+
+</div>
+<%--<hr class="uk-article-divider">--%>
+<br/>
+
+<div class="uk-grid" style="height: 88%;">
+    <!--快照树-->
+    <div  class="uk-width-1-5" style="width: 23%;height: 100%;">
+
+        <!--快照树下部-->
+        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
+            <div class="uk-form-row">
+                <div class="wrapper">
+                    <div class="nav-ml">
+                        <%--<ul>
+                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
+                            <li>--%>
+                        <ul class="nav-first">
+                            <li>
+                                <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                <a class="item-1"><i></i>排程记录1</a>
+                                <ul class="nav-second fold ">
+                                    <li>
+                                        <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                        <a class="item-2"><i></i>排程结果</a>
+                                        <ul class="nav-three fold">
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>APS排程结果</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>优化结果1</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>优化结果2</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                        <a class="item-2"><i></i>故障1</a>
+                                        <ul class="nav-three fold">
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>APS应急结果1</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>APS应急优化结果1</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>APS应急优化结果1</a></li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                        <%-- </li>
+                         <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
+                         <li>--%>
+                        <ul class="nav-first">
+                            <li>
+                                <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                <a class="item-1"><i></i>排程记录2</a>
+                                <ul class="nav-second fold ">
+                                    <li>
+                                        <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                        <a class="item-2"><i></i>排程结果</a>
+                                        <ul class="nav-three fold">
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>APS排程结果</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>优化结果1</a></li>
+                                            <li>
+                                                <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
+                                                <a>优化结果2</a></li>
+                                        </ul>
+                            </li>
+                        </ul>
+                        </li>
+                        <%--</ul>--%>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
-    <div class="uk-width-1-4">
-        <div class="data-uk-button-radio">
-            <button class="uk-button uk-icon-edit" data-uk-modal="{target:'#edit'}">修改</button>
-            <button class="uk-button uk-icon-plus">新增</button>
-            <button class="uk-button uk-icon-trash">删除</button>
         </div>
     </div>
-</div>
-<hr class="uk-article-divider">
-<div class="uk-grid">
-    <div class="uk-width-1-5">
-    </div>
-    <div class="uk-width-4-5">
-        <div class="uk-overflow-container">
-            <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>订单编号</th>
-                    <th>订单名称</th>
-                    <th>产品名称</th>
-                    <th>优先级</th>
-                    <th>订单量</th>
-                    <th>完工延迟</th>
-                    <th>最早开工时间</th>
-                    <th>最晚开工时间</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>表格项目一</td>
-                    <td>表格项目一</td>
-                    <td>表格项目一</td>
-                    <td>表格项目一</td>
-                    <td>表格项目一</td>
-                    <td>表格项目一</td>
-                    <td>表格项目一</td>
-                    <td>表格项目一</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>表格项目二</td>
-                    <td>表格项目二</td>
-                    <td>表格项目二</td>
-                    <td>表格项目二</td>
-                    <td>表格项目二</td>
-                    <td>表格项目二</td>
-                    <td>表格项目二</td>
-                    <td>表格项目二</td>
-                </tr>
-                </tbody>
-            </table>
+    <!--右侧表格-->
+    <div class="uk-width-4-5" style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;height:  98%;background-color: white;">
+        <div style="margin-top: 15px;margin-left: -35px;height: 96%;">
 
-            <div>
-                <ul class="uk-pagination" style="margin-top:280px " data-uk-pagination="{currentPage:50}">
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">上一页</a></li>
-                    <li><a href="#">下一页</a></li>
-                    <li><a href="#">末页</a></li>
-                </ul>
+            <!--tab-->
+            <div style="width: 100%;border: 0px;margin-top: -15px;">
+
+                <div id="tabs-2" style="width: 100%;">
+
+                    <!--表格-->
+                    <div class="uk-overflow-container" style="height: 100%;">
+                        <div class="fixtable-head">
+                            <table class="uk-table uk-table-striped uk-table-hover ">
+                                <thead class="uk-text-left">
+                                <tr style="background-color: #e1eaf1;">
+                                    <td>
+                                        <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
+                                            <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                        </div>
+
+                                    </td>
+                                    <td>订单编码</td>
+                                    <td>订单名称</td>
+                                    <td>产品名称</td>
+                                    <td>优先级</td>
+                                    <td>订单量</td>
+                                    <td>完工延迟</td>
+                                    <td>最早开工</td>
+                                    <td>最晚终止</td>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="fixtable-body" style="height: 76%;">
+                            <table class="uk-table uk-table-striped uk-table-hover " id="order">
+
+                                <tbody class="uk-text-center">
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>未知</td>
+                                    <td>5</td>
+                                    <td>1000</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+                                    <td>待定</td>
+
+                                </tr>
+                                </tbody>
+
+                            </table>
+
+                            <!--底部页码-->
+                            <div style="margin-top: -25px;">
+                                <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
+                                    <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                                    <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                                    <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                                    <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                                    <%--<li><a href="#">上一页</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li><a href="#">尾页</a></li>--%>
+                                    <li>共88页</li>&nbsp;
+                                    <li>
+                                        到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
+                                    </li>
+                                    <li>
+                                        <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-
         </div>
-    </div>
-</div>
 
-<div class="uk-clearfix">
-    <button class="uk-button uk-float-right " id="create-order" data-uk-sticky="{top:500,boundary:'#add-a-delay'}"
-            data-uk-toggle="{target:'#button'}" style="border-radius:15px; "
-            data-uk-tooltip="{pos:'top'}" title="快捷菜单">+
-    </button>
-    <div class=" uk-hidden uk-float-right" id="button">
-        <div class="uk-panel uk-panel-box">
-            <div class="data-uk-button-radio">
-                <button class="uk-button" style="margin: 3px" data-uk-modal="{target:'#group'}">资源排班面板</button>
+
+        <div class="uk-clearfix" style="margin-top: -3%;">
+            <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
+                    title="快捷菜单">
+            </button>
+            <div class=" uk-hidden uk-float-right" id="button">
+                <div class="uk-panel uk-panel-box">
+                    <div class="data-uk-button-radio">
+                        <button class="uk-button" style="margin: 3px" data-uk-modal="{target:'#group'}">DAG面板</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<%--</div>--%>
 
-<div class="uk-modal" id="group">
-    <div class="uk-modal-dialog">
-        <table class="uk-table uk-table-striped uk-table-hover uk-overflow-container">
-            <thead>
-            <tr>
-                <th></th>
-                <th>项目一</th>
-                <th>项目二</th>
-                <th>项目三</th>
-                <th>项目四</th>
-                <th>项目五</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-                <td>表格项目一</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>表格项目二</td>
-                <td>表格项目二</td>
-                <td>表格项目二</td>
-                <td>表格项目二</td>
-                <td>表格项目二</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+
 <script>
     $(function () {
-        $("#datepicker").datepicker();
+        $("#tabs").tabs();
     });
 </script>
+
+<script>
+    $(".item-1").click(function () {
+        $(this).parent().find(".nav-second").slideToggle(500);
+        $(this).children("i").toggleClass("unfold");
+    });
+    $(".item-2").click(function () {
+        $(this).parent().find(".nav-three").slideToggle(500);
+        $(this).children("i").toggleClass("unfold");
+    });
+    /*$(".item-3").click(function () {
+     $(this).parent().find(".nav-four").slideToggle(500);
+     $(this).children("i").toggleClass("unfold");
+     });*/
+
+</script>
+
