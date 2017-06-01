@@ -9,8 +9,13 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             controller: 'ResourceListController'
         })
     }])
-    .controller("ResourceListController", function ($scope) {
-    });
 
+    .controller('ResourceListController', function ($scope, $http, myHttpService, serviceList) {
+        myHttpService.post(serviceList.ListResource).then(function (response) {
+            console.log(response);
+            $scope.names = response.data;
+        });
+
+    })
 
 

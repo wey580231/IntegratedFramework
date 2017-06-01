@@ -161,10 +161,10 @@
                              </tr>
                              </thead>--%>
                             <tbody class="uk-text-center">
-                            <tr>
+                            <tr ng-repeat="x in names track by $index">
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
+                                <td>{{x.id}}</td>
+                                <td>{{x.name}}</td>
                                 <td>...</td>
                                 <td>待定</td>
                                 <td>4</td>

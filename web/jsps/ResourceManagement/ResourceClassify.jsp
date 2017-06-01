@@ -102,9 +102,9 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
+                            <tr ng-repeat="x in names track by $index">
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
+                                <td>{{x.id}}</td>
                                 <td>AGV01</td>
                                 <td>AGV小车</td>
                                 <td>人员-机械-物料-工具工装</td>

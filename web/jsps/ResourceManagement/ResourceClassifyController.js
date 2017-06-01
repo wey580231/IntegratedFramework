@@ -9,5 +9,11 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
             controller: 'ResourceClassifyController'
         })
     }])
-    .controller("ResourceClassifyController", function ($scope) {
-    });
+
+    .controller('ResourceClassifyController', function ($scope, $http, myHttpService, serviceList) {
+        myHttpService.post(serviceList.ListTypeRecource).then(function (response) {
+            console.log(response);
+            $scope.names = response.data;
+        });
+
+    })

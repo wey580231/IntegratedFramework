@@ -9,5 +9,11 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             controller: 'ResourceStationController'
         })
     }])
-    .controller("ResourceStationController", function ($scope) {
-    });
+
+    .controller('ResourceStationController', function ($scope, $http, myHttpService, serviceList) {
+        myHttpService.post(serviceList.ListSite).then(function (response) {
+            console.log(response);
+            $scope.names = response.data;
+        });
+
+    })

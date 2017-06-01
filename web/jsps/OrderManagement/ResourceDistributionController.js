@@ -9,5 +9,10 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             controller: 'ResourceDistributionController'
         })
     }])
-    .controller("ResourceDistributionController", function ($scope) {
-    });
+    .controller('ResourceDistributionController', function ($scope, $http, myHttpService, serviceList) {
+        myHttpService.post(serviceList.ListAssisantProcess).then(function (response) {
+            console.log(response);
+            $scope.names = response.data;
+        });
+
+    })
