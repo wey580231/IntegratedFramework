@@ -16,5 +16,7 @@ public interface SuperDAO {
 
     List<?> findAllByUsername(Object object);
 
+    List<?> findAllById(Object object);
+
     List<?> search(String keyWord);
 }

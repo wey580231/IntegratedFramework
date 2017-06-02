@@ -114,6 +114,26 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
 
     @Override
+    public List<?> findAllById(Object object) {
+        try {
+            RG_OrderEntity rg_orderEntity = getEntityObject(object);
+            if (rg_orderEntity == null) {
+                return null;
+            }
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", rg_orderEntity.getId());
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<?> search(String keyWord) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();

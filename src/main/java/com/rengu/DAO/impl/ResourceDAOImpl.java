@@ -113,6 +113,26 @@ public class ResourceDAOImpl implements ResourceDAO {
     }
 
     @Override
+    public List<?> findAllById(Object object) {
+        try {
+            RG_ResourceEntity rg_resourceEntity = getEntityObject(object);
+            if (rg_resourceEntity == null) {
+                return null;
+            }
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", rg_resourceEntity.getId());
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<?> search(String keyWord) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();

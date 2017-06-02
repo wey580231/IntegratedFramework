@@ -8,6 +8,8 @@ public class Info {
     public static final String MySQL = "MySQL";
     //公司名称
     public static final String APS = "APS";
-    //数据库表名称
+    //APS数据库表名称
     public static final String APS_TYPERESOURCE = "aps_typeresource";
+    public static final String APS_ORDER = "aps_order";
+    public static final String APS_CONGIF = "aps_config";
 }

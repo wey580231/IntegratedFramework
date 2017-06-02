@@ -25,6 +25,7 @@ public class WebSocketNotification {
         return username;
     }
 
+    //客户端的用户名
     private String username;
 
     /**
@@ -38,7 +39,7 @@ public class WebSocketNotification {
         this.session = session;
         webSocketSet.add(this);     //加入set中
         addOnlineCount();           //在线数加1
-        System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
+        System.out.println(username + "加入通信！当前在线人数为" + getOnlineCount());
     }
 
     /**
@@ -48,7 +49,7 @@ public class WebSocketNotification {
     public void onClose(@PathParam("username") String username) {
         webSocketSet.remove(this);  //从set中删除
         subOnlineCount();           //在线数减1
-        System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
+        System.out.println(username + "退出通信！当前在线人数为" + getOnlineCount());
     }
 
     /**
@@ -59,7 +60,7 @@ public class WebSocketNotification {
      */
     @OnMessage
     public void onMessage(@PathParam("username") String username, String message, Session session) {
-        System.out.println("来自客户端的消息:" + message);
+        System.out.println("来自" + username + "的消息:" + message);
     }
 
     /**
@@ -70,7 +71,7 @@ public class WebSocketNotification {
      */
     @OnError
     public void onError(@PathParam("username") String username, Session session, Throwable error) {
-        System.out.println("发生错误");
+        System.out.println(username + "发生错误");
         error.printStackTrace();
     }
 
@@ -93,6 +94,17 @@ public class WebSocketNotification {
             }
         }
         return false;
+    }
+
+    //通知所有当前连接的客户端
+    public static void broadcast(String message) {
+        for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
+            try {
+                webSocketNotification.session.getBasicRemote().sendText(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static synchronized int getOnlineCount() {
