@@ -60,7 +60,7 @@ public class Tools {
         return httpRequestBodyString;
     }
 
-    public static Properties getProperties() {
+    public static Properties getDatabaseProperties() {
         Properties properties = new Properties();
         try {
             InputStream inputStream = Tools.class.getResourceAsStream("/Database.properties");
@@ -72,10 +72,10 @@ public class Tools {
     }
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        String databaseUrl = getProperties().getProperty(companyName + "DatabaseUrl");
-        String databaseUsername = getProperties().getProperty(companyName + "DatabaseUsername");
-        String databasePassword = getProperties().getProperty(companyName + "DatabasePassword");
-        String databaseDriver = getProperties().getProperty(databaseType + "Driver");
+        String databaseUrl = getDatabaseProperties().getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = getDatabaseProperties().getProperty(companyName + "DatabaseUsername");
+        String databasePassword = getDatabaseProperties().getProperty(companyName + "DatabasePassword");
+        String databaseDriver = getDatabaseProperties().getProperty(databaseType + "Driver");
 
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
@@ -87,10 +87,10 @@ public class Tools {
     }
 
     public static List executeSQLForResultSet(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        String databaseUrl = getProperties().getProperty(companyName + "DatabaseUrl");
-        String databaseUsername = getProperties().getProperty(companyName + "DatabaseUsername");
-        String databasePassword = getProperties().getProperty(companyName + "DatabasePassword");
-        String databaseDriver = getProperties().getProperty(databaseType + "Driver");
+        String databaseUrl = getDatabaseProperties().getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = getDatabaseProperties().getProperty(companyName + "DatabaseUsername");
+        String databasePassword = getDatabaseProperties().getProperty(companyName + "DatabasePassword");
+        String databaseDriver = getDatabaseProperties().getProperty(databaseType + "Driver");
 
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);

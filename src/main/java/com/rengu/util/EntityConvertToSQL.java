@@ -1,18 +1,13 @@
 package com.rengu.util;
 
-import com.rengu.entity.RG_TyperescourceEntity;
+import com.rengu.entity.RG_OrderEntity;
 
 /**
  * Created by hanchangming on 2017/5/27.
  */
 public class EntityConvertToSQL {
-    public static String insertSQL(RG_TyperescourceEntity rg_typerescourceEntity) {
-        String SQLString = "INSERT INTO '" + Info.APS_TYPERESOURCE + "' (id,name,ratio) VALUES (" + rg_typerescourceEntity.getId() + "," + rg_typerescourceEntity.getName() + "," + rg_typerescourceEntity.getRatio() + ")";
-        return SQLString;
-    }
-
-    public static String deleteSQL(RG_TyperescourceEntity rg_typerescourceEntity) {
-        String SQLString = "DELETE FROM " + Info.APS_TYPERESOURCE + " WHERE id = '" + rg_typerescourceEntity.getId() + "'";
+    public static String insertSQLForAPS(RG_OrderEntity rg_orderEntity) {
+        String SQLString = "INSERT INTO " + Info.APS_ORDER + " (id,name,idClub,priority,idProduct,quantity,t0,t1,t2,color,state) VALUES (" + rg_orderEntity.getId() + "," + rg_orderEntity.getName() + "," + rg_orderEntity.getClubByIdClub().getId() + "," + rg_orderEntity.getPriority() + "," + rg_orderEntity.getProductByIdProduct().getId() + "," + rg_orderEntity.getQuantity() + "," + rg_orderEntity.getT0() + "," + rg_orderEntity.getT1() + "," + rg_orderEntity.getT2() + "," + rg_orderEntity.getColor() + "," + rg_orderEntity.getState() + ");";
         return SQLString;
     }
 }

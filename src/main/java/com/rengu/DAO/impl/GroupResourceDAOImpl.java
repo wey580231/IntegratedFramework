@@ -114,6 +114,26 @@ public class GroupResourceDAOImpl implements GroupResourceDao {
     }
 
     @Override
+    public List<?> findAllById(Object object) {
+        try {
+            RG_GroupresourceEntity rg_groupresourceEntity = getEntityObject(object);
+            if (rg_groupresourceEntity == null) {
+                return null;
+            }
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", rg_groupresourceEntity.getId());
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<?> search(String keyWord) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();

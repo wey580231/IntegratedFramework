@@ -99,6 +99,26 @@ public class SiteDAOImpl implements SiteDAO {
     }
 
     @Override
+    public List<?> findAllById(Object object) {
+        try {
+            RG_SiteEntity rg_siteEntity = getEntityObject(object);
+            if (rg_siteEntity == null) {
+                return null;
+            }
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", rg_siteEntity.getId());
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<?> search(String keyWord) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();

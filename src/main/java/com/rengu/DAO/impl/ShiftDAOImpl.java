@@ -99,6 +99,26 @@ public class ShiftDAOImpl implements ShiftDAO {
     }
 
     @Override
+    public List<?> findAllById(Object object) {
+        try {
+            RG_ShiftEntity rg_shiftEntity = getEntityObject(object);
+            if (rg_shiftEntity == null) {
+                return null;
+            }
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from RG_ShiftEntity rg_shiftEntity where rg_shiftEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", rg_shiftEntity.getId());
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<?> search(String keyWord) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
