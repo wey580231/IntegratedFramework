@@ -58,13 +58,12 @@ angular.module("IntegratedFramework", [
                 'data': body,
             });
         };
-        var _delete = function (servletUrl,body) {
+        var _delete = function (servletUrl) {
             return $http({
                 'method': 'delete',
                 'dataType': 'json',
                 'contentType': 'application/json;charset=UTF-8',
                 'url': servletUrl,
-                'data': body,
             });
         }
         service.get = _get;
