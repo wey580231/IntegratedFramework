@@ -92,9 +92,9 @@
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary" ng-onclick="AddOrder()">新增</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" ng-click="AddOrder()">新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary" ng-onclick="DeleteOrder()">删除</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="DeleteOrder()">删除</button>
     </div>
     <%--</div>--%>
 </div>
@@ -161,8 +161,9 @@
                              </tr>
                              </thead>--%>
                             <tbody class="uk-text-center">
-                            <tr ng-repeat="x in names track by $index">
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
+                            <tr id="first" ng-repeat="x in names track by $index">
+                                <td><input type="checkbox"  ng-checked="isSelected(server.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td>{{x.id}}</td>
                                 <td>{{x.name}}</td>
                                 <td>...</td>
@@ -175,7 +176,7 @@
 
                             </tr>
                             <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                <td><input type="checkbox"  onclick="changeColor(this)"></td>
                                 <td>1001</td>
                                 <td>待定</td>
                                 <td>...</td>
