@@ -16,23 +16,36 @@
         <!--<property name="show_sql">true</property>-->
         <!--<property name="format_sql">true</property>-->
         <!-- create and update the database automaticlly -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
         <property name="connection.autocommit">true</property>
         <property name="hibernate.current_session_context_class">thread</property>
 
-        <mapping resource="RG_AssisantprocessEntity.hbm.xml"/>
-        <mapping resource="RG_ClubEntity.hbm.xml"/>
-        <mapping resource="RG_ConfigEntity.hbm.xml"/>
-        <mapping resource="RG_GroupresourceEntity.hbm.xml"/>
-        <mapping resource="RG_OrderEntity.hbm.xml"/>
-        <mapping resource="RG_PlanEntity.hbm.xml"/>
-        <mapping resource="RG_ProcessEntity.hbm.xml"/>
-        <mapping resource="RG_ProductEntity.hbm.xml"/>
-        <mapping resource="RG_ProviderEntity.hbm.xml"/>
-        <mapping resource="RG_ResourceEntity.hbm.xml"/>
+        <!-- APS车间接口 -->
         <mapping resource="RG_ShiftEntity.hbm.xml"/>
-        <mapping resource="RG_SiteEntity.hbm.xml"/>
-        <mapping resource="RG_TyperescourceEntity.hbm.xml"/>
+        <mapping resource="RG_ClubEntity.hbm.xml"/>
+        <mapping resource="RG_DistanceEntity.hbm.xml"/>
         <mapping resource="RG_UserEntity.hbm.xml"/>
+        <mapping resource="RG_ConfigEntity.hbm.xml"/>
+        <mapping resource="RG_ProviderEntity.hbm.xml"/>
+        <mapping resource="RG_GroupresourceEntity.hbm.xml"/>
+        <mapping resource="RG_ProductEntity.hbm.xml"/>
+        <mapping resource="RG_ProcessEntity.hbm.xml"/>
+        <mapping resource="RG_SiteEntity.hbm.xml"/>
+        <mapping resource="RG_OrderEntity.hbm.xml"/>
+        <mapping resource="RG_ResourceEntity.hbm.xml"/>
+        <mapping resource="RG_ResourceTyperesourceEntity.hbm.xml"/>
+        <mapping resource="RG_TyperescourceEntity.hbm.xml"/>
+        <mapping resource="RG_AssisantprocessEntity.hbm.xml"/>
+        <mapping resource="RG_PlanEntity.hbm.xml"/>
+
+        <!-- 3D车间接口 -->
+        <mapping resource="RG_LayoutEntity.hbm.xml"/>
+        <mapping resource="RG_LayoutDetailEntity.hbm.xml"/>
+        <mapping resource="RG_EmulateDataEntity.hbm.xml"/>
+        <mapping resource="RG_RealDataEntity.hbm.xml"/>
+        <mapping resource="RG_State3DEntity.hbm.xml"/>
+
+        <!-- 框架自己维护 -->
+        <mapping resource="RG_ScheduleEntity.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

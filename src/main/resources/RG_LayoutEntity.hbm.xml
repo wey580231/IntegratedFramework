@@ -4,9 +4,9 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.rengu.entity.RG_ClubEntity" table="RG_Club" schema="testdatabase">
+    <class name="com.rengu.entity.RG_LayoutEntity" table="RG_Layout" schema="testdatabase">
         <id name="id">
-            <column name="id" sql-type="varchar(255)"/>
+            <column name="id" sql-type="int"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(255)" not-null="false"/>
@@ -16,11 +16,11 @@
         <!-- 如果一方设置inverse=false时，如果在删除以及更新一方信息时，其会先在多方多执行一次更新操作。
         	 如果inverse为false，cascade为all，在删除一方时，会先更新多方与此关联数据，再执行删除操作，总数为N+1条。影响效率
          -->
-        <set name="usersById" inverse="true" lazy="true" cascade="all">
+        <set name="details" inverse="true" lazy="true" cascade="all">
             <key>
-                <column name="idClub" not-null="false"/>
+                <column name="idLayout" not-null="false"/>
             </key>
-            <one-to-many not-found="ignore" class="com.rengu.entity.RG_UserEntity"/>
+            <one-to-many not-found="ignore" class="com.rengu.entity.RG_LayoutDetailEntity"/>
         </set>
     </class>
 </hibernate-mapping>

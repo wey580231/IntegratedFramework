@@ -23,7 +23,7 @@
         <property name="extra">
             <column name="extra" sql-type="smallint(6)" not-null="false"/>
         </property>
-        <set name="resources" inverse="false" cascade="save-update" table="shift_resource">
+        <set name="resources" inverse="true" cascade="save-update" table="shift_resource">
             <key column="shift_id"></key>
             <many-to-many class="com.rengu.entity.RG_ResourceEntity"
                           column="resource_id"></many-to-many>

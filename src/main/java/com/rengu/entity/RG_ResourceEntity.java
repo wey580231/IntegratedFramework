@@ -37,6 +37,7 @@ public class RG_ResourceEntity {
     private Set<RG_SiteEntity> sitesById;
     private Set<RG_ShiftEntity> shiftsById;
     private Set<RG_TyperescourceEntity> typeresourcesById;
+    private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
         return id;
@@ -346,4 +347,13 @@ public class RG_ResourceEntity {
     public void setTyperesourcesById(Set<RG_TyperescourceEntity> typeresourcesById) {
         this.typeresourcesById = typeresourcesById;
     }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
+    
 }

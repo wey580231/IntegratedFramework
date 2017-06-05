@@ -17,6 +17,7 @@ public class RG_GroupresourceEntity {
     private RG_ClubEntity clubByIdClub;
     private Set<RG_SiteEntity> sitesById;
     private Set<RG_ResourceEntity> resourcesById;
+    private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
         return id;
@@ -135,4 +136,13 @@ public class RG_GroupresourceEntity {
     public void setSitesById(Set<RG_SiteEntity> sitesById) {
         this.sitesById = sitesById;
     }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
+    
 }
