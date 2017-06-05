@@ -14,5 +14,11 @@
         <property name="layoutId">
             <column name="layoutId" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
+        <property name="model">
+            <column name="model" sql-type="int"/>
+        </property>
+        <property name="controlState">
+            <column name="controlState" sql-type="int"/>
+        </property>
     </class>
 </hibernate-mapping>
