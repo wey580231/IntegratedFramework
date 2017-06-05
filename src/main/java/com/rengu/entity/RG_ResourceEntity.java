@@ -355,5 +355,5 @@ public class RG_ResourceEntity {
     public void setSchedules(Set<RG_ScheduleEntity> schedules) {
         this.schedules = schedules;
     }
-    
+
 }

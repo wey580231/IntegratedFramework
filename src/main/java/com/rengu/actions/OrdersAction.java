@@ -21,11 +21,12 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
         return this.rg_orderEntity;
     }
 
-    public void getAllOrders() throws Exception {
+    public String getAllOrders() throws Exception {
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
+        return "success";
     }
 
     public void findAllByUsername() throws Exception {

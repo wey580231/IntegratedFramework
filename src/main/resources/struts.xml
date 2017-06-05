@@ -11,11 +11,17 @@
     <!--过滤websocket连接。-->
     <constant name="struts.action.excludePattern" value="/notification/.*"/>
 
+    <!--用户登录-->
     <package name="default" extends="struts-default" namespace="/">
         <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
             <result name="error">/jsps/Login/Login_Fail.jsp</result>
             <result name="success">/jsps/Login/Login_Success.jsp</result>
         </action>
+    </package>
+
+    <!--计划排程接口-->
+    <package name="schedule" extends="struts-default" namespace="/schedule">
+        <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
     </package>
     <!--工序资源信息接口-->
     <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">

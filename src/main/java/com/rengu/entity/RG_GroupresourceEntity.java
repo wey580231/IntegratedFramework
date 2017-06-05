@@ -144,5 +144,5 @@ public class RG_GroupresourceEntity {
     public void setSchedules(Set<RG_ScheduleEntity> schedules) {
         this.schedules = schedules;
     }
-    
+
 }
