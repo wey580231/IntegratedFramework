@@ -117,54 +117,6 @@
                                 <td>100</td>
 
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
-                            </tr>
                             </tbody>
 
                         </table>

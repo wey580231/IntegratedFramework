@@ -120,60 +120,6 @@
                                 <td>未知</td>
 
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
-                            </tr>
                             </tbody>
 
                         </table>

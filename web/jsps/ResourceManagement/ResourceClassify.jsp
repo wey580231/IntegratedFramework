@@ -118,54 +118,6 @@
                                 <td>人员-机械-物料-工具工装</td>
 
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>AGV01</td>
-                                <td>AGV小车</td>
-                                <td>人员-机械-物料-工具工装</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>AGV01</td>
-                                <td>AGV小车</td>
-                                <td>人员-机械-物料-工具工装</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>AGV01</td>
-                                <td>AGV小车</td>
-                                <td>人员-机械-物料-工具工装</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>AGV01</td>
-                                <td>AGV小车</td>
-                                <td>人员-机械-物料-工具工装</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>AGV01</td>
-                                <td>AGV小车</td>
-                                <td>人员-机械-物料-工具工装</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>AGV01</td>
-                                <td>AGV小车</td>
-                                <td>人员-机械-物料-工具工装</td>
-
-                            </tr>
                             </tbody>
 
                         </table>

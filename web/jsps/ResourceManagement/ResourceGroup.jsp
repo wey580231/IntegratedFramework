@@ -117,54 +117,7 @@
                                 <td>{CK,CK01}</td>
 
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>G01</td>
-                                <td>工组01</td>
-                                <td>未知</td>
-                                <td>{CK,CK01}</td>
 
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>G01</td>
-                                <td>工组01</td>
-                                <td>未知</td>
-                                <td>{CK,CK01}</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>G01</td>
-                                <td>工组01</td>
-                                <td>未知</td>
-                                <td>{CK,CK01}</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>G01</td>
-                                <td>工组01</td>
-                                <td>未知</td>
-                                <td>{CK,CK01}</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>G01</td>
-                                <td>工组01</td>
-                                <td>未知</td>
-                                <td>{CK,CK01}</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>G01</td>
-                                <td>工组01</td>
-                                <td>未知</td>
-                                <td>{CK,CK01}</td>
-
-                            </tr>
                             </tbody>
 
                         </table>

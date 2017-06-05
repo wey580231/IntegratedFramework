@@ -233,7 +233,6 @@
                                                     <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
                                                     <a>自产零件A1</a></li>
 
-
                                                 <li>
                                                     <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
                                                     <a>自产零件A2</a></li>
@@ -370,66 +369,6 @@
                                      </tr>
                                      </thead>--%>
                                     <tbody class="uk-text-center">
-                                    <tr>
-                                        <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                        <td>1</td>
-                                        <td>12</td>
-                                        <td>4</td>
-                                        <td>4</td>
-                                        <td>待定</td>
-                                        <td>80</td>
-                                        <td>78</td>
-                                        <td>待定</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                        <td>1</td>
-                                        <td>12</td>
-                                        <td>4</td>
-                                        <td>4</td>
-                                        <td>待定</td>
-                                        <td>80</td>
-                                        <td>78</td>
-                                        <td>待定</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                        <td>1</td>
-                                        <td>12</td>
-                                        <td>4</td>
-                                        <td>4</td>
-                                        <td>待定</td>
-                                        <td>80</td>
-                                        <td>78</td>
-                                        <td>待定</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                        <td>1</td>
-                                        <td>12</td>
-                                        <td>4</td>
-                                        <td>4</td>
-                                        <td>待定</td>
-                                        <td>80</td>
-                                        <td>78</td>
-                                        <td>待定</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                        <td>1</td>
-                                        <td>12</td>
-                                        <td>4</td>
-                                        <td>4</td>
-                                        <td>待定</td>
-                                        <td>80</td>
-                                        <td>78</td>
-                                        <td>待定</td>
-
-                                    </tr>
                                     <tr>
                                         <td><input type="checkbox" onclick="changeColor(this)"></td>
                                         <td>1</td>

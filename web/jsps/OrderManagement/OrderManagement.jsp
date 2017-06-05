@@ -87,14 +87,12 @@
         </form>
     </div>
 
-
-
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary" ng-click="AddOrder()">新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="DeleteOrder()">删除</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}" >新增</button>
+        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}" ng-click="EditOrder()">修改</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="DeleteOrder();delete();">删除</button>
     </div>
     <%--</div>--%>
 </div>
@@ -115,7 +113,7 @@
                 <!--表格-->
                 <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
-                        <table class="uk-table uk-table-striped uk-table-hover ">
+                        <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
@@ -173,9 +171,8 @@
                                 <td>待定</td>
                                 <td>待定</td>
                                 <td>待定</td>
-
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td><input type="checkbox"  onclick="changeColor(this)"></td>
                                 <td>1001</td>
                                 <td>待定</td>
@@ -265,7 +262,7 @@
                                 <td>待定</td>
                                 <td>待定</td>
 
-                            </tr>
+                            </tr>-->
                             </tbody>
 
                         </table>
@@ -311,8 +308,79 @@
 </div>
 <%--</div>--%>
 
+<div class="uk-modal uk-overflow-container" id="add">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <p class="validateTips">订单字段都是必填的。</p>
+            <form>
+                <fieldset>
+                    <lable for="number">编码</lable> <br/>
+                    <input type="text" name="id" id="id" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="name">名称</label><br/>
+                    <input type="text" name="name" id="name" clsss="text ui-widget-content ui-corner-all"><br/>
+                    <label for="origin">来源</label><br/>
+                    <input type="text" name="origin" id="origin" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="type">产品名称</label><br/>
+                    <input type="text" name="type" id="type" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="number">数量</label><br/>
+                    <input type="text" name="number" id="number" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="priority">优先级</label><br/>
+                    <input type="text" name="priority" id="priority" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="time">下单时间</label><br/>
+                    <input type="text" name="time" id="time" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="earliest">最早开工</label><br/>
+                    <input type="text" name="earliest" id="earliest" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="latest">最晚开工</label><br/>
+                    <input type="text" name="latest" id="latest" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="Hide()">Cancel</button>
+            <button type="button" class="uk-button" ng-click="AddOrder();Hide()">edit</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="uk-modal uk-overflow-container" id="edit">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <p class="validateTips">订单字段都是必填的。</p>
+            <form>
+                <fieldset>
+                    <lable for="number">编码</lable> <br/>
+                    <input type="text" name="id" id="id" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="name">名称</label><br/>
+                    <input type="text" name="name" id="name" clsss="text ui-widget-content ui-corner-all"><br/>
+                    <label for="origin">来源</label><br/>
+                    <input type="text" name="origin" id="origin" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="type">产品名称</label><br/>
+                    <input type="text" name="type" id="type" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="number">数量</label><br/>
+                    <input type="text" name="number" id="number" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="priority">优先级</label><br/>
+                    <input type="text" name="priority" id="priority" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="time">下单时间</label><br/>
+                    <input type="text" name="time" id="time" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="earliest">最早开工</label><br/>
+                    <input type="text" name="earliest" id="earliest" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="latest">最晚开工</label><br/>
+                    <input type="text" name="latest" id="latest" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="Hide()">Cancel</button>
+            <button type="button" class="uk-button" ng-click="Hide();">Add</button>
+        </div>
+    </div>
+</div>
+
 <script>
     $(function () {
         $("#tabs").tabs();
     });
-</script>
+</script>==p[,l[

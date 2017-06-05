@@ -159,26 +159,6 @@
 
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                            <%-- <thead type="hidden">
-                             &lt;%&ndash;<tbody>&ndash;%&gt;
-                             <tr style="background-color: #e1eaf1;">
-                                 <td>
-                                     <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
-                                         <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                     </div>
-
-                                 </td>
-                                 <td>编码</td>
-                                 <td>名称</td>
-                                 <td>来源</td>
-                                 <td>产品名</td>
-                                 <td>数量</td>
-                                 <td>优先级</td>
-                                 <td>下单时间</td>
-                                 <td>最早开工时间</td>
-                                 <td>最晚开工时间</td>
-                             </tr>
-                             </thead>--%>
                             <tbody class="uk-text-center">
                             <tr>
                                 <td><input type="checkbox" onclick="changeColor(this)"></td>
@@ -194,120 +174,8 @@
                                 <td>待定</td>
                                 <td>APS应急</td>
                                 <td>MES</td>
-
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
 
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
-
-                            </tr>
                             </tbody>
 
                         </table>
