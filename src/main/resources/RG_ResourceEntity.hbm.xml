@@ -86,20 +86,31 @@
         <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
             <column name="idClub" not-null="false"/>
         </many-to-one>
-        <set name="sitesById" inverse="true" cascade="save-update" table="site_resource">
+
+        <!-- inverse只存在集合的属性中，如set、map、list、array等
+         	  多对多关系中，一方设置inverse为false，一方设置为true。两者的关系(中间表)由inverse为false方维护
+       	            如果均设置为true，那么插入时，只会往各自表中去插，不会去中间表去插入。
+                                如果均为false，那么在插入时，关系表会插入两次，导致数据重复而失败
+         -->
+        <set name="sitesById" inverse="false" cascade="save-update" table="site_resource">
             <key column="resource_id"></key>
             <many-to-many class="com.rengu.entity.RG_SiteEntity"
                           column="site_id"></many-to-many>
         </set>
-        <set name="shiftsById" inverse="true" cascade="save-update" table="shift_resource">
+        <set name="shiftsById" inverse="false" cascade="save-update" table="shift_resource">
             <key column="resource_id"></key>
             <many-to-many class="com.rengu.entity.RG_ShiftEntity"
                           column="shift_id"></many-to-many>
         </set>
-        <set name="typeresourcesById" inverse="true" cascade="save-update" table="typeresource_resource">
+        <set name="typeresourcesById" inverse="false" cascade="save-update" table="typeresource_resource">
             <key column="resource_id"></key>
             <many-to-many class="com.rengu.entity.RG_TyperescourceEntity"
                           column="typeresource_id"></many-to-many>
+        </set>
+
+        <set name="schedules" inverse="true" cascade="save-update" table="schedule_Resource">
+            <key column="r_id"></key>
+            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"></many-to-many>
         </set>
     </class>
 </hibernate-mapping>

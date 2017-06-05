@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_State3DEntity" table="RG_State3D" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+        </id>
+        <property name="layoutState">
+            <column name="layoutState" sql-type="int"/>
+        </property>
+        <property name="layoutId">
+            <column name="layoutId" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>
