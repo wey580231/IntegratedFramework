@@ -1,7 +1,7 @@
 /*
         form表单的位置固定
     */
-.uk-form{
+.uk-form {
     display: inline-block;
 }
 
@@ -13,6 +13,7 @@
     background-color: #eef7fc;
     height: 23px;
 }
+
 /*
     表格奇数行颜色
 */
@@ -23,36 +24,39 @@
 /*
         表格行高
 */
-tr{
+tr {
     height: 45px;
 }
 
 /*
         tab样式
     */
-.uk-tab-grid > li:first-child >a:hover {
+.uk-tab-grid > li:first-child > a:hover {
     background: url("../images/bom_img/gongxu.png") no-repeat 30px;
     background-position: 15px;
 }
 
-.uk-tab > li:nth-child(n+2)> a:hover {
+.uk-tab > li:nth-child(n+2) > a:hover {
     background: url("../images/bom_img/gongxu.png") no-repeat 30px;
     background-position: 15px;
 }
-.uk-tab > li:nth-child(n+2) > a:focus{
-    background: url("../images/bom_img/gongxu.png") no-repeat 30px;
-    background-position: 15px;
 
-}
-.uk-tab-grid > li:first-child >a:focus {
+.uk-tab > li:nth-child(n+2) > a:focus {
     background: url("../images/bom_img/gongxu.png") no-repeat 30px;
     background-position: 15px;
 
 }
 
-.bg{
+.uk-tab-grid > li:first-child > a:focus {
+    background: url("../images/bom_img/gongxu.png") no-repeat 30px;
+    background-position: 15px;
+
+}
+
+.bg {
     background-color: #c1edfa;
 }
+
 /*
        页码li样式
 */
@@ -68,10 +72,10 @@ tr{
 .my {
     background-color: #009dd8;
     color: #fff;
-    background-image:url("../images/bom_img/ye3.png");
-    border-color: rgba(0,0,0,.2);
-    border-bottom-color: rgba(0,0,0,.4);
-    text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+    background-image: url("../images/bom_img/ye3.png");
+    border-color: rgba(0, 0, 0, .2);
+    border-bottom-color: rgba(0, 0, 0, .4);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
 }
 
 a {
@@ -83,8 +87,17 @@ a {
     表格固定
 */
 
-.fixtable-head table,.table-body table{width:100%;text-align:left;}
-.fixtable-body{width:100%; height:250px;overflow-y:scroll;text-align:left;}
+.fixtable-head table, .table-body table {
+    width: 100%;
+    text-align: left;
+}
+
+.fixtable-body {
+    width: 100%;
+    height: 250px;
+    overflow-y: scroll;
+    text-align: left;
+}
 
 /*
 .uk-table td {
@@ -101,11 +114,11 @@ a {
 /*
     快捷方式的样式
 */
-#create-order{
-    border-radius:50%;
-   /* background: rgba(0,0,0,0.3);
-    color: #fff;*/
-    top:220px;
+#create-order {
+    border-radius: 50%;
+    /* background: rgba(0,0,0,0.3);
+     color: #fff;*/
+    top: 220px;
     width: 55px;
     height: 55px;
     margin-top: -8px;

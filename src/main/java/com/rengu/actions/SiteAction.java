@@ -21,7 +21,7 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         return this.rg_siteEntity;
     }
 
-    public void getAllOrders() throws Exception {
+    public void getAllSite() throws Exception {
         SiteDAO siteDAO = DAOFactory.getSiteInstance();
         List list = siteDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);

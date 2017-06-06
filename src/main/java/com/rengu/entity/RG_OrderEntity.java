@@ -1,5 +1,7 @@
 package com.rengu.entity;
 
+import java.util.Set;
+
 /**
  * Created by wey580231 on 2017/5/23.
  */
@@ -33,7 +35,7 @@ public class RG_OrderEntity {
     private Short nbTask;
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
-
+    private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
         return id;
@@ -340,4 +342,11 @@ public class RG_OrderEntity {
         this.clubByIdClub = clubByIdClub;
     }
 
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
 }

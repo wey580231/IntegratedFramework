@@ -16,6 +16,7 @@ public class RG_SiteEntity {
     private Short sizeIcon;
     private Short capacity;
     private Set<RG_ResourceEntity> resources;
+    private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
         return id;
@@ -130,4 +131,14 @@ public class RG_SiteEntity {
     public void setResources(Set<RG_ResourceEntity> resources) {
         this.resources = resources;
     }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
+
+
 }

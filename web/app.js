@@ -127,7 +127,7 @@ angular.module("IntegratedFramework", [
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
         <!--工序资源信息-->
-        service.ListAssisantProcess=backUrl + "assisantprocess/getAllOrders.action";
+        service.ListAssisantProcess = backUrl + "assisantprocess/getAllOrders.action";
         <!--资源信息-->
         service.ListResource = backUrl + "resource/getAllOrders.action";
         <!--资源类型信息-->
