@@ -139,6 +139,6 @@ public class RG_SiteEntity {
     public void setSchedules(Set<RG_ScheduleEntity> schedules) {
         this.schedules = schedules;
     }
-    
-    
+
+
 }

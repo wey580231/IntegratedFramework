@@ -26,7 +26,7 @@
         <form class="uk-form">
             <div class="uk-form-icon">
                 <i class="uk-icon-calendar"></i>
-                <input type="text" id="datepicker"  data-uk-datepicker="{format:'DD.MM.YYYY'}"
+                <input type="text" id="datepicker" data-uk-datepicker="{format:'DD.MM.YYYY'}"
                        placeholder="2017/5/17">
             </div>
         </form>
@@ -157,7 +157,7 @@
 </div>
 
 <div class="uk-modal" id="group">
-    <div class="uk-modal-dialog" >
+    <div class="uk-modal-dialog">
         <table class="uk-table uk-table-striped uk-table-hover uk-overflow-container">
             <thead>
             <tr>

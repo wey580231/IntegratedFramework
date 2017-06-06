@@ -123,8 +123,11 @@ angular.module("IntegratedFramework", [
         var backUrl = "http://localhost:8080/";
         <!--订单信息-->
         service.ListOrder = backUrl + "orders/getAllOrders.action";
+        service.DeleteOrder = backUrl + "orders/delete.action";
+        service.UpdateOrder = backUrl + "orders/update.action";
+        service.AddOrder = backUrl + "orders/save.action";
         <!--工序资源信息-->
-        service.ListAssisantProcess=backUrl + "assisantprocess/getAllOrders.action";
+        service.ListAssisantProcess = backUrl + "assisantprocess/getAllOrders.action";
         <!--资源信息-->
         service.ListResource = backUrl + "resource/getAllOrders.action";
         <!--资源类型信息-->

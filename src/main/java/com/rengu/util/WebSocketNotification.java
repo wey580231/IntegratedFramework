@@ -20,13 +20,56 @@ public class WebSocketNotification {
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
+    //客户端的用户名
+    private String username;
+
+    /**
+     * 这个方法与上面几个方法不一样。没有用注解，是根据自己需要添加的方法。
+     *
+     * @param message
+     * @throws IOException
+     */
+    public static boolean sendMessage(String message, String username) {
+        for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
+            if (webSocketNotification.getUsername().equals(username)) {
+                try {
+                    webSocketNotification.session.getBasicRemote().sendText(message);
+                    return true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    //通知所有当前连接的客户端
+    public static void broadcast(String message) {
+        for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
+            try {
+                webSocketNotification.session.getBasicRemote().sendText(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static synchronized int getOnlineCount() {
+        return onlineCount;
+    }
+
+    public static synchronized void addOnlineCount() {
+        WebSocketNotification.onlineCount++;
+    }
+
+    public static synchronized void subOnlineCount() {
+        WebSocketNotification.onlineCount--;
+    }
 
     public String getUsername() {
         return username;
     }
-
-    //客户端的用户名
-    private String username;
 
     /**
      * 连接建立成功调用的方法
@@ -73,49 +116,5 @@ public class WebSocketNotification {
     public void onError(@PathParam("username") String username, Session session, Throwable error) {
         System.out.println(username + "发生错误");
         error.printStackTrace();
-    }
-
-    /**
-     * 这个方法与上面几个方法不一样。没有用注解，是根据自己需要添加的方法。
-     *
-     * @param message
-     * @throws IOException
-     */
-    public static boolean sendMessage(String message, String username) {
-        for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
-            if (webSocketNotification.getUsername().equals(username)) {
-                try {
-                    webSocketNotification.session.getBasicRemote().sendText(message);
-                    return true;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-        }
-        return false;
-    }
-
-    //通知所有当前连接的客户端
-    public static void broadcast(String message) {
-        for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
-            try {
-                webSocketNotification.session.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static synchronized int getOnlineCount() {
-        return onlineCount;
-    }
-
-    public static synchronized void addOnlineCount() {
-        WebSocketNotification.onlineCount++;
-    }
-
-    public static synchronized void subOnlineCount() {
-        WebSocketNotification.onlineCount--;
     }
 }

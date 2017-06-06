@@ -19,7 +19,7 @@
 
     UI.component('search', {
         defaults: {
-            msgResultsHeader: 'Search Results',
+            msgResultsHeader: '_Search Results',
             msgMoreResults: 'More Results',
             msgNoResults: 'No results found',
             template: '<ul class="uk-nav uk-nav-search uk-autocomplete-results">\
