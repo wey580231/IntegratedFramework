@@ -7,6 +7,7 @@
     <class name="com.rengu.entity.RG_LayoutDetailEntity" table="RG_LayoutDetail" schema="testdatabase">
         <id name="id">
             <column name="id" sql-type="int"/>
+            <generator class="identity"/>
         </id>
         <property name="item">
             <column name="item" sql-type="varchar(255)"/>

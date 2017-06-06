@@ -291,6 +291,5 @@
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceGroupController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/Login/GuideController.js"></script>
 
-
 </body>
 </html>

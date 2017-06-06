@@ -79,4 +79,13 @@
         <action name="update" class="com.rengu.actions.ShiftAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.ShiftAction" method="findAll"/>
     </package>
+
+    <!---->
+    <package name="State3D" namespace="/3d" extends="struts-default">
+        <action name="query3DState" class="com.rengu.actions.d3.State3DAction"  method="queryState"/>
+        <action name="config3D" class="com.rengu.actions.d3.State3DAction"  method="get3DLayout"/>
+        <action name="set3DLayout" class="com.rengu.actions.d3.State3DAction"  method="insertOrUpdateLayout"/>
+        
+        <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>
+    </package>
 </struts>
