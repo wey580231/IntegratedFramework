@@ -29,8 +29,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         };
 
         $scope.AddOrder = function () {
-            var list={id:"666",name:"cc"};
-            myHttpService.post(serviceList.ListOrder,list).then(function (response) {
+            var list = {id: "666", name: "cc"};
+            myHttpService.post(serviceList.ListOrder, list).then(function (response) {
                 //console.log("aaaaaaa");
                 console.log(response);
                 $scope.names = response.data;
@@ -41,12 +41,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             operateId = id;
         };
 
-        $scope.DeleteOrder = function (name,id) {
+        $scope.DeleteOrder = function (name, id) {
             myHttpService.delete(serviceList.ListOrder + "/" + operateId).then(function (response) {
                 console.log(response.status);
                 $("#first").remove();
                 //window.location.reload();//强制刷新
-                })
+            })
         };
 
         //checkbox是否选中?

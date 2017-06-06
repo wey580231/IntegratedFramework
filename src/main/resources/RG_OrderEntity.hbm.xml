@@ -92,5 +92,10 @@
         <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
             <column name="idClub" not-null="false"/>
         </many-to-one>
+
+        <set name="schedules" inverse="true" cascade="save-update" table="schedule_order">
+            <key column="o_id"></key>
+            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"></many-to-many>
+        </set>
     </class>
 </hibernate-mapping>
