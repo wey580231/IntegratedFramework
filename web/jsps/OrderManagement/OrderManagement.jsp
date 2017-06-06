@@ -172,97 +172,6 @@
                                 <td>待定</td>
                                 <td>待定</td>
                             </tr>
-                            <!--<tr>
-                                <td><input type="checkbox"  onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>-->
                             </tbody>
 
                         </table>
@@ -337,8 +246,8 @@
             </form>
         </div>
         <div class="uk-modal-footer uk-text-right">
-            <button type="button" class="uk-button" ng-click="Hide()">Cancel</button>
-            <button type="button" class="uk-button" ng-click="AddOrder();Hide()">edit</button>
+            <button type="button" class="uk-button" ng-click="hideForm()">Cancel</button>
+            <button type="button" class="uk-button" ng-click="AddOrder();hideForm()">Add</button>
         </div>
     </div>
 </div>
@@ -373,8 +282,8 @@
             </form>
         </div>
         <div class="uk-modal-footer uk-text-right">
-            <button type="button" class="uk-button" ng-click="Hide()">Cancel</button>
-            <button type="button" class="uk-button" ng-click="Hide();">Add</button>
+            <button type="button" class="uk-button" ng-click="hideForm()">Cancel</button>
+            <button type="button" class="uk-button" ng-click="hideForm();">Edit</button>
         </div>
     </div>
 </div>
@@ -383,4 +292,4 @@
     $(function () {
         $("#tabs").tabs();
     });
-</script>==p[,l[
+</script>

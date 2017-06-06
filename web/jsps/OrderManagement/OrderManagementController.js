@@ -19,10 +19,16 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $scope.names = response.data;
         });
 
-        $scope.Hide = function () {
+        var reload = function () {
+            myHttpService.post(serviceList.ListOrder).then(function (response) {
+                console.log(response);
+                $scope.names = response.data;
+            });
+        }
+
+        $scope.hideForm = function () {
             $("#add").hide();
             $("#edit").hide();
-            $("#Cancel").hide();
         };
         /*$scope.GetOrder = function () {
          myHttpService.get(serviceList.ListOrder).then(function (response) {
@@ -86,14 +92,19 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         };
 
         $scope.DeleteOrder = function () {
-           myHttpService.delete(serviceList.DeleteOrder + "?id=" +operateId).then(function (response) {
+            myHttpService.delete(serviceList.ListOrder + "?id=" +selectedCheckArray).then(function (response) {
+                console.log(serviceList.ListOrder + "?id=" +selectedCheckArray);
+                console.log(response.status);
+                reload();
+            })
+           /*myHttpService.delete(serviceList.DeleteOrder + "?id=" +operateId).then(function (response) {
                 console.log(serviceList.DeleteOrder + "?id=" +operateId);
                 console.log(response.status);
                 $("#first").remove();
-                //window.location.reload();//强制刷新
-            })
-            //console.log(serviceList.DeleteOrder + "?id=" +operateId);
+
+            })*/
         };
+
 
         /*$scope.EditOrder = function () {
             var params;
