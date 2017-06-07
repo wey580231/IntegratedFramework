@@ -108,4 +108,12 @@ public class RG_LayoutDetailEntity {
         return true;
     }
 
+    public String toJson() {
+        return "{\"id\":" + id + "," +
+                "\"item\":" + "\"" + item + "\"" + "," +
+                "\"pos\":" + "\"" + pos + "\"" + "," +
+                "\"state\":" + "\"" + state + "\"" + "," +
+                "\"exist\":" + "\"" + exist + "\"" +
+                "}";
+    }
 }

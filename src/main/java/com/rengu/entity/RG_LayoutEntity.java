@@ -1,5 +1,9 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.rengu.util.Tools;
+
+import java.util.Iterator;
 import java.util.Set;
 
 public class RG_LayoutEntity {
@@ -33,16 +37,6 @@ public class RG_LayoutEntity {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((details == null) ? 0 : details.hashCode());
-        result = prime * result + id;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -66,4 +60,25 @@ public class RG_LayoutEntity {
         return true;
     }
 
+    public String toJson() {
+        String detailString = "{ \"result\":\"0\""+ "," +
+                                "\"id\":" + "\"" + name + "\",";
+        detailString += ("\"data\":" + "[");
+        Iterator<RG_LayoutDetailEntity> iter = details.iterator();
+
+        int index = 0;
+
+        while (iter.hasNext()) {
+            detailString += iter.next().toJson();
+            index++;
+
+            if (index < details.size()) {
+                detailString += ",";
+            }
+        }
+
+        detailString += ("]}");
+
+        return detailString;
+    }
 }

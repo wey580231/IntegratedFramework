@@ -115,4 +115,15 @@ public class Tools {
         }
         return list;
     }
+
+    public static String resultCode(String result,  String description) {
+        String tmp = "";
+
+        tmp += "{" +
+                "\"result\":" + "\"" + result + "\"" + "," +
+                "\"description\":" + "\"" + description + "\"" +
+                "}";
+
+        return tmp;
+    }
 }
