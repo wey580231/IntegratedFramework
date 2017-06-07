@@ -31,39 +31,40 @@ angular.module("IntegratedFramework", [
     .config(['$httpProvider', function ($httpProvider) {
         $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.transformRequest = function (obj) {
-            var str = [];
-            for (var p in obj) {
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            }
-            return str.join("&");
-        }
     }])
     .factory("myHttpService", ['$http', function ($http) {
         var service = {};
-        var _get = function (servletUrl) {
+        var _get = function (servletUrl,body) {
             return $http({
                 'method': 'get',
                 'dataType': 'json',
-                'contentType': 'application/json;charset=UTF-8',
                 'url': servletUrl,
+                'data': body,
+                'headers':{
+                    'Content-Type': 'application/json;charset=utf-8',
+                }
             });
         };
         var _post = function (servletUrl, body) {
             return $http({
                 'method': 'post',
                 'dataType': 'json',
-                'contentType': 'application/json;charset=UTF-8',
                 'url': servletUrl,
                 'data': body,
+                'headers':{
+                    'Content-Type': 'application/json;charset=utf-8',
+                }
             });
         };
-        var _delete = function (servletUrl) {
+        var _delete = function (servletUrl,body) {
             return $http({
                 'method': 'delete',
                 'dataType': 'json',
-                'contentType': 'application/json;charset=UTF-8',
                 'url': servletUrl,
+                'data': body,
+                'headers':{
+                    'Content-Type': 'application/json;charset=utf-8',
+                }
             });
         }
         service.get = _get;
