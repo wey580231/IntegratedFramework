@@ -56,9 +56,9 @@
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}">新增</button>
+        <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editAssisantProcess()" data-uk-modal="{target:'#edit'}">修改</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteAssisantProcess()">删除</button>
     </div>
     <%--</div>--%>
 </div>
@@ -103,37 +103,17 @@
 
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                            <%-- <thead type="hidden">
-                             &lt;%&ndash;<tbody>&ndash;%&gt;
-                             <tr style="background-color: #e1eaf1;">
-                                 <td>
-                                     <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
-                                         <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                     </div>
-
-                                 </td>
-                                 <td>编码</td>
-                                 <td>名称</td>
-                                 <td>来源</td>
-                                 <td>产品名</td>
-                                 <td>数量</td>
-                                 <td>优先级</td>
-                                 <td>下单时间</td>
-                                 <td>最早开工时间</td>
-                                 <td>最晚开工时间</td>
-                             </tr>
-                             </thead>--%>
                             <tbody class="uk-text-center">
-                            <tr ng-repeat="x in names track by $index">
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>{{x.id}}</td>
-                                <td>{AGV01}</td>
-                                <td>{AGV}</td>
-                                <td>{CK}</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-
+                            <tr ng-repeat="x in arr track by $index">
+                                <td><input id="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td id="id">{{x.id}}</td>
+                                <td id="grp">{{x.grp}}</td>
+                                <td id="TypeSite">{{x.TypeSite}}</td>
+                                <td id="IdSite">{{x.IdSite}}</td>
+                                <td id="minResource">{{x.minResource}}</td>
+                                <td id="maxResource">{{x.maxResource}}</td>
+                                <td id="weightParallel">{{x.weightParallel}}</td>
                             </tr>
                             </tbody>
 
@@ -192,7 +172,66 @@
         </div>
     </div>
 </div>
-<%--</div>--%>
+<!--填写新增工序资源信息-->
+<div class="uk-modal uk-overflow-container" id="add">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="工序资源信息">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <label for="add-id">工艺路径编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-grp">类型编号集合</label><br/>
+                    <input type="text" name="add-grp" id="add-grp" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-TypeSite">资源类型分组</label><br/>
+                    <input type="text" name="add-TypeSite" id="add-TypeSite" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-IdSite">地点编码</label><br/>
+                    <input type="text" name="add-IdSite" id="add-IdSite" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-minResource">最少资源数量</label><br/>
+                    <input type="text" name="add-minResource" id="add-minResource" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-maxResource">最多资源数量</label><br/>
+                    <input type="text" name="add-maxResource" id="add-maxResource" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-weightParallel">工序串行权重</label><br/>
+                    <input type="text" name="add-weightParallel" id="add-weightParallel" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="formValidate()">Add</button>
+        </div>
+    </div>
+</div>
+<!--修改工序资源信息-->
+<div class="uk-modal uk-overflow-container" id="edit">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form>
+                <fieldset ng-repeat="x in form track by $index">
+                    <label for="edit-id">工艺路径编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+                    <label for="edit-grp">类型编号集合</label><br/>
+                    <input type="text" name="edit-grp" id="edit-grp" clsss="text ui-widget-content ui-corner-all" value="{{x.grp}}"><br/>
+                    <label for="edit-TypeSite">资源类型分组</label><br/>
+                    <input type="text" name="edit-TypeSite" id="edit-TypeSite" class="text ui-widget-content ui-corner-all" value="{{x.TypeSite}}"><br/>
+                    <label for="edit-IdSite">地点编码</label><br/>
+                    <input type="text" name="edit-IdSite" id="edit-IdSite" class="text ui-widget-content ui-corner-all" value="{{x.IdSite}}"><br/>
+                    <label for="edit-minResource">最少资源数量</label><br/>
+                    <input type="text" name="edit-minResource" id="edit-minResource" class="text ui-widget-content ui-corner-all" value="{{x.minResource}}"><br/>
+                    <label for="edit-maxResource">最多资源数量</label><br/>
+                    <input type="text" name="edit-maxResource" id="edit-maxResource" class="text ui-widget-content ui-corner-all" value="{{x.maxResource}}"><br/>
+                    <label for="edit-weightParallel">工序串行权重</label><br/>
+                    <input type="text" name="edit-weightParallel" id="edit-weightParallel" class="text ui-widget-content ui-corner-all" value="{{x.weightParallel}}"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="update()">Edit</button>
+        </div>
+    </div>
+</div>
 
 <script>
     $(function () {

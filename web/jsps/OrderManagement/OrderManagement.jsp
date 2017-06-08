@@ -91,8 +91,8 @@
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
         <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}" >新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" ng-click="EditOrder()" data-uk-modal="{target:'#edit'}" >修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="DeleteOrder()">删除</button>
+        <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editOrder()" data-uk-modal="{target:'#edit'}" >修改</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteOrder()">删除</button>
     </div>
     <%--</div>--%>
 </div>
@@ -182,7 +182,7 @@
 
     <div class="uk-clearfix" style="margin-top: -3%;">
         <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
-               title="快捷菜单">
+                title="快捷菜单">
         </button>
         <div class=" uk-hidden uk-float-right" id="button">
             <div class="uk-panel uk-panel-box">
@@ -193,7 +193,7 @@
         </div>
     </div>
 </div>
-<%--</div>--%>
+
 <!--填写新增订单信息-->
 <div class="uk-modal uk-overflow-container" id="add">
     <div class="uk-modal-dialog">
@@ -201,23 +201,23 @@
         <div id="dialog-form" title="订单信息">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
-                    <lable for="number">编码</lable> <br/>
-                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
-                    <label for="name">名称</label><br/>
-                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
-                    <label for="origin">来源</label><br/>
+                    <label for="add-id">编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-name">名称</label><br/>
+                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-origin">来源</label><br/>
                     <input type="text" name="add-origin" id="add-origin" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="type">产品名称</label><br/>
+                    <label for="add-ord">产品名称</label><br/>
                     <input type="text" name="add-ord" id="add-ord" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="number">数量</label><br/>
                     <input type="text" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="priority">优先级</label><br/>
+                    <label for="add-priority">优先级</label><br/>
                     <input type="text" name="add-priority" id="add-priority" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="time">下单时间</label><br/>
                     <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="earliest">最早开工</label><br/>
                     <input type="text" name="add-advance" id="add-advance" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="latest">最晚开工</label><br/>
+                    <label for="add-delay">最晚开工</label><br/>
                     <input type="text" name="add-delay" id="add-delay" class="text ui-widget-content ui-corner-all"><br/>
                 </fieldset>
             </form>
@@ -229,30 +229,30 @@
     </div>
 </div>
 
-<!--修改新增订单信息-->
+<!--修改订单信息-->
 <div class="uk-modal uk-overflow-container" id="edit">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
         <div id="dialog-form" title="订单信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
-                    <lable for="number">编码</lable> <br/>
+                    <label for="edit-id">编码</label> <br/>
                     <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
-                    <label for="name">名称</label><br/>
+                    <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
-                    <label for="origin">来源</label><br/>
+                    <label for="edit-origin">来源</label><br/>
                     <input type="text" name="edit-origin" id="edit-origin" class="text ui-widget-content ui-corner-all" value="{{x.origin}}"><br/>
-                    <label for="type">产品名称</label><br/>
+                    <label for="edit-ord">产品名称</label><br/>
                     <input type="text" name="edit-ord" id="edit-ord" class="text ui-widget-content ui-corner-all" value="{{x.ord}}"><br/>
-                    <label for="number">数量</label><br/>
+                    <label for="edit-quantity">数量</label><br/>
                     <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>
-                    <label for="priority">优先级</label><br/>
+                    <label for="edit-priority">优先级</label><br/>
                     <input type="text" name="edit-priority" id="edit-priority" class="text ui-widget-content ui-corner-all" value="{{x.priority}}"><br/>
-                    <label for="time">下单时间</label><br/>
+                    <label for="edit-t0">下单时间</label><br/>
                     <input type="text" name="edit-t0" id="edit-t0" class="text ui-widget-content ui-corner-all" value="{{x.t0}}"><br/>
-                    <label for="earliest">最早开工</label><br/>
+                    <label for="edit-advance">最早开工</label><br/>
                     <input type="text" name="edit-advance" id="edit-advance" class="text ui-widget-content ui-corner-all" value="{{x.advance}}"><br/>
-                    <label for="latest">最晚开工</label><br/>
+                    <label for="edit-delay">最晚开工</label><br/>
                     <input type="text" name="edit-delay" id="edit-delay" class="text ui-widget-content ui-corner-all" value="{{x.delay}}"><br/>
                 </fieldset>
             </form>

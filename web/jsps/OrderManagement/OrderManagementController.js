@@ -24,13 +24,14 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var reload = function () {
             //取消checkbox选中状态
             document.getElementById('check').checked = false;
+            $("input").val('');
             myHttpService.get(serviceList.ListOrder).then(function (response) {
                 $scope.arr = response.data;
             });
         }
 
         //新增订单
-        var AddOrder = function () {
+        var addOrder = function () {
             var idVal = $("input[name='add-id']").val();
             var nameVal = $("input[name='add-name']").val();
             var originVal = $("input[name='add-origin']").val();
@@ -51,7 +52,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.t0 = t0Val;
             params.ord = ordVal;
             var data = JSON.stringify(params);
-            console.log(data);
+            alert(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
                 console.log(response.status);
@@ -83,7 +84,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         };
 
         //删除订单
-        $scope.DeleteOrder = function () {
+        $scope.deleteOrder = function () {
             /*console.log(selectedCheckArray);
             var Array = [];
             var deleteArray = [];
@@ -111,8 +112,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 alert("请求失败！");
             });*/
              var params = {};
-             var idVal = operateId;
-             params.id = idVal;
+             //var idVal = operateId;
+             params.id = operateId;
              params.name = "";
              params.origin = "";
              params.priority = "";
@@ -132,7 +133,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         }
 
         //修改订单
-        $scope.EditOrder = function () {
+        $scope.editOrder = function () {
             var params = {};
             var idVal = operateId;
             params.id = idVal;
@@ -189,7 +190,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             console.log(id + name);
             if (checkName(name) && checkId(id)) {
                 UIkit.modal.confirm('确定添加吗？', function () {
-                    AddOrder();
+                    addOrder();
                 });
                 return true;
             } else {
