@@ -38,7 +38,7 @@
         <property name="weightSequence">
             <column name="weightSequence" sql-type="smallint(6)" not-null="false"/>
         </property>
-        <many-to-one name="processByIdProcess" class="com.rengu.entity.RG_ProcessEntity">
+        <many-to-one name="processByIdProcess" class="com.rengu.entity.RG_ProcessEntity" lazy="false">
             <column name="idProcess" not-null="false"/>
         </many-to-one>
     </class>
