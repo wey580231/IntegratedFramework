@@ -1,5 +1,8 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  * Created by wey580231 on 2017/5/23.
  */
@@ -65,6 +68,7 @@ public class RG_ProcessEntity {
     private String idIcon;
     private Short nbTask;
     private RG_ProductEntity productByIdProduct;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private RG_ProcessEntity processByIdProcess;
 
     public String getId() {
