@@ -107,6 +107,7 @@ public class AssisantprocessDAOImpl implements AssisantprocessDAO {
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            this.transaction = transaction;
             String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity where rg_assisantprocessEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_assisantprocessEntity.getId());

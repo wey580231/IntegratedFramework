@@ -86,6 +86,9 @@
         <property name="nbTask">
             <column name="nbTask" sql-type="smallint(6)" not-null="false"/>
         </property>
+        <property name="finishQuantity">
+            <column name="finishQuantity" sql-type="smallint(6)" not-null="false"/>
+        </property>
         <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
             <column name="idProduct" not-null="false"/>
         </many-to-one>

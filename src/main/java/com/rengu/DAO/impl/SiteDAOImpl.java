@@ -107,6 +107,7 @@ public class SiteDAOImpl implements SiteDAO {
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            this.transaction = transaction;
             String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_siteEntity.getId());

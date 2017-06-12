@@ -37,4 +37,12 @@ public class DAOFactory {
     public static TyperescourceDAOImpl getTyperescourceInstance() {
         return new TyperescourceDAOImpl();
     }
+
+    public static ScheduleDAOImpl getScheduleDAOImplInstance() {
+        return new ScheduleDAOImpl();
+    }
+
+    public static LayoutDAOImpl getLayoutDAOImplInstance() {
+        return new LayoutDAOImpl();
+    }
 }
