@@ -86,34 +86,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //删除订单
         $scope.deleteOrder = function () {
             /*console.log(selectedCheckArray);
-            var Array = [];
-            var deleteArray = [];
-            for (var i = 0; i < selectedCheckArray.length; i++) {
-                var params = {};
-                var idVal = selectedCheckArray[i];
-                params.id = idVal;
-                params.name = "";
-                params.origin = "";
-                params.priority = "";
-                params.advance = "";
-                params.delay = "";
-                params.quantity = "";
-                params.t0 = "";
-                params.ord = "";
-                //var data = JSON.stringify(params);
-                Array.push(params);
-            }
-            var data = JSON.stringify(Array);
-            console.log(data);
-            myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
-                console.log(response.status);
-                reload();
-            }, function errorCallback(response) {
-                alert("请求失败！");
-            });*/
+             var Array = [];
+             var deleteArray = [];
+             for (var i = 0; i < selectedCheckArray.length; i++) {
              var params = {};
-             //var idVal = operateId;
-             params.id = operateId;
+             var idVal = selectedCheckArray[i];
+             params.id = idVal;
              params.name = "";
              params.origin = "";
              params.priority = "";
@@ -122,14 +100,36 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
              params.quantity = "";
              params.t0 = "";
              params.ord = "";
-             console.log(params);
-             var data = JSON.stringify(params);
+             //var data = JSON.stringify(params);
+             Array.push(params);
+             }
+             var data = JSON.stringify(Array);
+             console.log(data);
              myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
              console.log(response.status);
              reload();
              }, function errorCallback(response) {
              alert("请求失败！");
-             });
+             });*/
+            var params = {};
+            var idVal = operateId;
+            params.id = idVal;
+            params.name = "";
+            params.origin = "";
+            params.priority = "";
+            params.advance = "";
+            params.delay = "";
+            params.quantity = "";
+            params.t0 = "";
+            params.ord = "";
+            console.log(params);
+            var data = JSON.stringify(params);
+            myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
+                console.log(response.status);
+                reload();
+            }, function errorCallback(response) {
+                alert("请求失败！");
+            });
         }
 
         //修改订单

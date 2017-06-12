@@ -29,7 +29,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             });
         };
 
-        //新增订单
+        //新增工序资源信息
         var addAssisantProcess = function () {
             var idVal = $("input[name='add-id']").val();
             var grpVal = $("input[name='add-grp']").val();
@@ -41,8 +41,8 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             var params = {};
             params.id = idVal;
             params.grp = grpVal;
-            params.TypeSite = typeSiteVal;
-            params.IdSite = idSiteVal;
+            params.typeSite = typeSiteVal;
+            params.idSite = idSiteVal;
             params.minResource = minResourceVal;
             params.maxResource = maxResourceVal;
             params.weightParallel = weightParallelVal;
@@ -78,44 +78,12 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             return selectedCheckArray.indexOf(id) >= 0;
         };
 
-        //删除订单
+        //删除工序资源信息
         $scope.deleteAssisantProcess = function () {
-            /*console.log(selectedCheckArray);
-             var Array = [];
-             var deleteArray = [];
-             for (var i = 0; i < selectedCheckArray.length; i++) {
-             var params = {};
-             var idVal = selectedCheckArray[i];
-             params.id = idVal;
-             params.name = "";
-             params.origin = "";
-             params.priority = "";
-             params.advance = "";
-             params.delay = "";
-             params.quantity = "";
-             params.t0 = "";
-             params.ord = "";
-             //var data = JSON.stringify(params);
-             Array.push(params);
-             }
-             var data = JSON.stringify(Array);
-             console.log(data);
-             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
-             console.log(response.status);
-             reload();
-             }, function errorCallback(response) {
-             alert("请求失败！");
-             });*/
             var params = {};
-            //var idVal = operateId;
-
-            params.id = operateId;
+            var idVal = operateId + "";
+            params.id = idVal;
             params.grp = "";
-            params.TypeSite = "";
-            params.IdSite = "";
-            params.minResource = "";
-            params.maxResource = "";
-            params.weightParallel = "";
             var data = JSON.stringify(params);
             alert(data);
             myHttpService.delete(serviceList.DeleteAssisantProcess, data).then(function successCallback(response) {
@@ -126,20 +94,15 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             })
         };
 
-        //修改订单
+        //修改工序资源信息
         $scope.editAssisantProcess = function () {
             var params = {};
-            //var idVal = operateId;
-            params.id = operateId;
+            var idVal = operateId;
+            params.id = idVal;
             params.grp = "";
-            params.TypeSite = "";
-            params.IdSite = "";
-            params.minResource = "";
-            params.maxResource = "";
-            params.weightParallel = "";
             var data = JSON.stringify(params);
             alert(data);
-            myHttpService.get(serviceList.ListAssisantProcess, data).then(function successCallback(response) {
+            myHttpService.post(serviceList.ListAssisantProcess, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
             }, function errorCallback(response) {
@@ -157,8 +120,8 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             var params = {};
             params.id = idVal;
             params.grp = grpVal;
-            params.TypeSite = typeSiteVal;
-            params.IdSite = idSiteVal;
+            params.typeSite = typeSiteVal;
+            params.idSite = idSiteVal;
             params.minResource = minResourceVal;
             params.maxResource = maxResourceVal;
             params.weightParallel = weightParallelVal;
@@ -177,7 +140,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         $scope.formValidate = function () {
             var id = $("input#add-id").val(),
                 grp = $("input#add-grp").val();
-            console.log(id + name);
+            console.log(id + grp);
             if (checkGrp(grp) && checkId(id)) {
                 UIkit.modal.confirm('确定添加吗？', function () {
                     addAssisantProcess();

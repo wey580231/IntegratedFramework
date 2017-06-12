@@ -29,17 +29,16 @@ angular.module("IntegratedFramework", [
  // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OnlineManagement'});
  }])*/
     .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        /*$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';*/
     }])
     .factory("myHttpService", ['$http', function ($http) {
         var service = {};
-        var _get = function (servletUrl,body) {
+        var _get = function (servletUrl) {
             return $http({
                 'method': 'get',
                 'dataType': 'json',
                 'url': servletUrl,
-                'data': body,
                 'headers':{
                     'Content-Type': 'application/json;charset=utf-8',
                 }
@@ -111,6 +110,13 @@ angular.module("IntegratedFramework", [
         service.DeleteShift = backUrl + "shift/delete.action";
         service.UpdateShift = backUrl + "shift/update.action";
         service.AddShift = backUrl + "shift/save.action";
+        <!--3D信息-->
+        service.query3DState = backUrl + "3d/query3DState.action";
+        service.config3D = backUrl + "3d/config3D.action";
+        service.set3DLayout = backUrl + "3d/set3DLayout.action";
+        service.get3DReport = backUrl + "3d/get3DReport.action";
+        <!--3D信息-->
+        service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         return service;
     })
 

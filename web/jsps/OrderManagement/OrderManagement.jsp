@@ -210,13 +210,13 @@
                     <label for="add-ord">产品名称</label><br/>
                     <input type="text" name="add-ord" id="add-ord" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="number">数量</label><br/>
-                    <input type="text" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>
+                    <input type="add-quantity" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-priority">优先级</label><br/>
                     <input type="text" name="add-priority" id="add-priority" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="time">下单时间</label><br/>
-                    <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
+                    <input type="add-t0" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="earliest">最早开工</label><br/>
-                    <input type="text" name="add-advance" id="add-advance" class="text ui-widget-content ui-corner-all"><br/>
+                    <input type="add-advance" name="add-advance" id="add-advance" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-delay">最晚开工</label><br/>
                     <input type="text" name="add-delay" id="add-delay" class="text ui-widget-content ui-corner-all"><br/>
                 </fieldset>

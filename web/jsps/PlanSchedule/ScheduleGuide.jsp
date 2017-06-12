@@ -188,7 +188,35 @@
         </div>
     </div>
 </div>
-<%--</div>--%>
+<div class="uk-modal uk-overflow-container" id="schedule">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <label for="add-id">序号</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-nameTask">排产名称</label><br/>
+                    <input type="text" name="add-nameTask" id="add-nameTask" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-nameProces">完成进度</label><br/>
+                    <input type="text" name="add-nameProces" id="add-nameProces" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-CalendarTask">排产日期</label><br/>
+                    <input type="text" name="add-CalendarTask" id="add-CalendarTask" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-initTimeTask">开始计算时间</label><br/>
+                    <input type="text" name="add-initTimeTask" id="add-initTimeTask" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-unitTimeTask">计算完成时间</label><br/>
+                    <input type="text" name="add-unitTimeTask" id="add-unitTimeTask" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-state">排程状态</label><br/>
+                    <input type="text" name="add-state" id="add-state" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="formValidate()">Add</button>
+        </div>
+    </div>
+</div>
 
 <script>
     $(function () {
