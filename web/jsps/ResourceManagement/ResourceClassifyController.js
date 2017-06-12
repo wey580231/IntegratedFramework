@@ -23,7 +23,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
         //重新加载页面信息
         var reload = function () {
             //取消checkbox选中状态
-            document.getElementById('check').checked = false;
+            document.getElementById("check").checked = false;
             $("input").val('');
             myHttpService.get(serviceList.ListTypeRecource).then(function (response) {
                 $scope.arr = response.data;
@@ -127,7 +127,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
             params.attribute = "";
             console.log(params);
             var data = JSON.stringify(params);
-            myHttpService.get(serviceList.ListTypeRecource, data).then(function successCallback(response) {
+            myHttpService.post(serviceList.ListTypeRecource, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
             }, function errorCallback(response) {
