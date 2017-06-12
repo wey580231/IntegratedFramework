@@ -8,26 +8,26 @@ public class RG_ScheduleEntity {
 
     //基础信息
     private String name;
-    private String scheduleTime;		//排程日期
-    private String startCalcTime;		//计算开始日期
-    private String endCalcTime;			//计算结束日期
-    private int state;					//排程状态“下发APS”“APS计算中”“APS计算完成”“交互优化完成”“已下发MES”
-    private String progress;			//完成进度
+    private String scheduleTime;        //排程日期
+    private String startCalcTime;        //计算开始日期
+    private String endCalcTime;            //计算结束日期
+    private int state;                    //排程状态“下发APS”“APS计算中”“APS计算完成”“交互优化完成”“已下发MES”
+    private String progress;            //完成进度
 
-    private int scheduleWindow;			//排程时间窗
-    private int rollTime;				//滚动周期
+    private int scheduleWindow;            //排程时间窗
+    private int rollTime;                //滚动周期
 
     //APS排程参数
-    private String apsStartTime;		//优化项目开始时间
-    private String apsEndTime;			//优化项目结束时间
-    private String apsModel;			//排程模式，“正向”“反向”
-    private String apsObj;				//优化目标，可取值“超时总量”“目标资源数”“作业跨度”
+    private String apsStartTime;        //优化项目开始时间
+    private String apsEndTime;            //优化项目结束时间
+    private String apsModel;            //排程模式，“正向”“反向”
+    private String apsObj;                //优化目标，可取值“超时总量”“目标资源数”“作业跨度”
 
-    private RG_LayoutEntity layout;					//布局
-    private Set<RG_OrderEntity> orders;				//订单
-    private Set<RG_ResourceEntity> resources;		//资源
-    private Set<RG_GroupresourceEntity> groups;		//工组
-    private Set<RG_SiteEntity> sites;				//工位
+    private RG_LayoutEntity layout;                    //布局
+    private Set<RG_OrderEntity> orders;                //订单
+    private Set<RG_ResourceEntity> resources;        //资源
+    private Set<RG_GroupresourceEntity> groups;        //工组
+    private Set<RG_SiteEntity> sites;                //工位
 
     public int getId() {
         return id;

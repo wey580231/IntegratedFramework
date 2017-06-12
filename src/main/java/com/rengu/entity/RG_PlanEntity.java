@@ -839,4 +839,5 @@ public class RG_PlanEntity {
     public void setScheduleByIdSchedule(RG_ScheduleEntity scheduleByIdSchedule) {
         this.scheduleByIdSchedule = scheduleByIdSchedule;
     }
+    
 }
