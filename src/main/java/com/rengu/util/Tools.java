@@ -2,6 +2,7 @@ package com.rengu.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -31,6 +32,12 @@ public class Tools {
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         return objectMapper.writeValueAsString(object);
+    }
+
+    public static JsonNode jsonTreeModelParse(String jsonString) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(jsonString);
+        return jsonNode;
     }
 
     public static void jsonPrint(String string, HttpServletResponse httpServletResponse) {

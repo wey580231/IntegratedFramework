@@ -14,67 +14,56 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var operateId;
 
-        myHttpService.post(serviceList.ListOrder).then(function (response) {
+        //加载页面时数据显示
+        myHttpService.get(serviceList.ListOrder).then(function (response) {
             console.log(response);
-            $scope.names = response.data;
+            $scope.arr = response.data;
         });
 
+        //重新加载页面信息
         var reload = function () {
-            myHttpService.post(serviceList.ListOrder).then(function (response) {
-                console.log(response);
-                $scope.names = response.data;
+            //取消checkbox选中状态
+            document.getElementById('check').checked = false;
+            $("input").val('');
+            myHttpService.get(serviceList.ListOrder).then(function (response) {
+                $scope.arr = response.data;
             });
         }
 
-        $scope.hideForm = function () {
-            $("#add").hide();
-            $("#edit").hide();
-        };
-        /*$scope.GetOrder = function () {
-         myHttpService.get(serviceList.ListOrder).then(function (response) {
-         //console.log("aaaaaaa");
-         console.log(response);
-         $scope.names = response.data;
-
-         })
-         };*/
-
-        $scope.AddOrder = function () {
-            /*var idVal=$("#id").val();
-             var nameVal=$("#name").val();
-             var originVal=$("#origin").val();
-             var typeVal=$("#type").val();
-             var numberVal=$("#number").val();
-             var priorityVal=$("#priority").val();
-             var timeVal=$("#time").val();
-             var earliestVal=$("#earliest").val();
-             var latestVal=$("#latest").val();
-             var params={"id":idVal,"name":nameVal,"origin":originVal,
-             "type":typeVal,"number":numberVal,"priority":priorityVal,
-             "time":timeVal,"earliest":earliestVal,"latest":latestVal};*/
-            /*params["id"]=id;
-             params["name"]=name;
-             params["origin"]=origin;
-             params["type"]=type;
-             params["number"]=number;
-             params["priority"]=priority;
-             params["time"]=time;
-             params["earliest"]=earliest;
-             params["latest"]=latest;*/
-            var idVal = $("input[name='id']").val();
-            var nameVal = $("input[name='name']").val();
-            var params = {"id": idVal, "name": nameVal};
+        //新增订单
+        var addOrder = function () {
+            var idVal = $("input[name='add-id']").val();
+            var nameVal = $("input[name='add-name']").val();
+            var originVal = $("input[name='add-origin']").val();
+            var ordVal = $("input[name='add-ord']").val();
+            var quantityVal = $("input[name='add-quantity']").val();
+            var priorityVal = $("input[name='add-priority']").val();
+            var t0Val = $("input[name='add-t0']").val();
+            var advanceVal = $("input[name='add-advance']").val();
+            var delayVal = $("input[name='add-delay']").val();
+            var params = {};
+            params.id = idVal;
+            params.name = nameVal;
+            params.origin = originVal;
+            params.priority = priorityVal;
+            params.advance = advanceVal;
+            params.delay = delayVal;
+            params.quantity = quantityVal;
+            params.t0 = t0Val;
+            params.ord = ordVal;
             var data = JSON.stringify(params);
-            console.log(data);
-            myHttpService.post(serviceList.AddOrder, data).then(function (response) {
+            alert(data);
+            $("#add").hide();
+            myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
                 console.log(response.status);
-               // $scope.names = response.data;
-                window.location.reload();//强制刷新
+                reload();
+            }, function errorCallback(response) {
+                alert("请求错误！");
             })
         };
 
         var updateSelected = function (action, id) {
-            operateId=id;
+            operateId = id;
             if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
                 selectedCheckArray.push(id);
                 console.log(id + "被选中");
@@ -90,29 +79,145 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var action = (checkbox.checked ? 'add' : 'remove');
             updateSelected(action, id);
         };
+        $scope.isSelected = function (id) {
+            return selectedCheckArray.indexOf(id) >= 0;
+        };
 
-        $scope.DeleteOrder = function () {
-            myHttpService.delete(serviceList.ListOrder + "?id=" +selectedCheckArray).then(function (response) {
-                console.log(serviceList.ListOrder + "?id=" +selectedCheckArray);
+        //删除订单
+        $scope.deleteOrder = function () {
+            /*console.log(selectedCheckArray);
+            var Array = [];
+            var deleteArray = [];
+            for (var i = 0; i < selectedCheckArray.length; i++) {
+                var params = {};
+                var idVal = selectedCheckArray[i];
+                params.id = idVal;
+                params.name = "";
+                params.origin = "";
+                params.priority = "";
+                params.advance = "";
+                params.delay = "";
+                params.quantity = "";
+                params.t0 = "";
+                params.ord = "";
+                //var data = JSON.stringify(params);
+                Array.push(params);
+            }
+            var data = JSON.stringify(Array);
+            console.log(data);
+            myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
+                console.log(response.status);
+                reload();
+            }, function errorCallback(response) {
+                alert("请求失败！");
+            });*/
+             var params = {};
+             //var idVal = operateId;
+             params.id = operateId;
+             params.name = "";
+             params.origin = "";
+             params.priority = "";
+             params.advance = "";
+             params.delay = "";
+             params.quantity = "";
+             params.t0 = "";
+             params.ord = "";
+             console.log(params);
+             var data = JSON.stringify(params);
+             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
+             console.log(response.status);
+             reload();
+             }, function errorCallback(response) {
+             alert("请求失败！");
+             });
+        }
+
+        //修改订单
+        $scope.editOrder = function () {
+            var params = {};
+            var idVal = operateId;
+            params.id = idVal;
+            params.name = "";
+            params.origin = "";
+            params.priority = "";
+            params.advance = "";
+            params.delay = "";
+            params.quantity = "";
+            params.t0 = "";
+            params.ord = "";
+            console.log(params);
+            var data = JSON.stringify(params);
+            myHttpService.get(serviceList.ListOrder, data).then(function successCallback(response) {
+                console.log(response);
+                $scope.form = response.data;
+            }, function errorCallback(response) {
+                alert("请求失败！");
+            });
+        }
+        $scope.update = function () {
+            var idVal = $("input[name='edit-id']").val();
+            var nameVal = $("input[name='edit-name']").val();
+            var originVal = $("input[name='edit-origin']").val();
+            var ordVal = $("input[name='edit-ord']").val();
+            var quantityVal = $("input[name='edit-quantity']").val();
+            var priorityVal = $("input[name='edit-priority']").val();
+            var t0Val = $("input[name='edit-t0']").val();
+            var advanceVal = $("input[name='edit-advance']").val();
+            var delayVal = $("input[name='edit-delay']").val();
+            var params = {};
+            params.id = idVal;
+            params.name = nameVal;
+            params.origin = originVal;
+            params.priority = priorityVal;
+            params.advance = advanceVal;
+            params.delay = delayVal;
+            params.quantity = quantityVal;
+            params.t0 = t0Val;
+            params.ord = ordVal;
+            console.log(params);
+            var data = JSON.stringify(params);
+            $("#edit").hide();
+            myHttpService.post(serviceList.UpdateOrder, data).then(function (response) {
                 console.log(response.status);
                 reload();
             })
-           /*myHttpService.delete(serviceList.DeleteOrder + "?id=" +operateId).then(function (response) {
-                console.log(serviceList.DeleteOrder + "?id=" +operateId);
-                console.log(response.status);
-                $("#first").remove();
-
-            })*/
         };
 
+        //信息填写检验
+        $scope.orderValidate = function () {
+            var id = $("input#add-id").val(),
+                name = $("input#add-name").val();
+            console.log(id + name);
+            if (checkName(name) && checkId(id)) {
+                UIkit.modal.confirm('确定添加吗？', function () {
+                    addOrder();
+                });
+                return true;
+            } else {
+                UIkit.modal.alert('请填写完整！');
+                return false;
+            }
+        };
+        var checkName = function (name) {
+            if (name == "") {
+                $("input#add-name").addClass("uk-form-danger");
+                return false;
+            }
+            $("input#add-name").addClass("uk-form-success");
+            return true;
+        }
+        var checkId = function (id) {
+            if (id == "") {
+                $("input#add-id").addClass("uk-form-danger");
+                return false;
+            }
+            $("input#add-id").addClass("uk-form-success");
+            return true;
+        }
 
-        /*$scope.EditOrder = function () {
-            var params;
-            myHttpService.get(serviceList.ListOrder + "/" + operateId).then(function (response) {
-                console.log(response.status);
-                //$("#first").remove();
-                //window.location.reload();//强制刷新
-            })
-        };*/
+        //表格信息重置
+        $scope.reset = function () {
+            $("input").val('');
+        }
 
     })

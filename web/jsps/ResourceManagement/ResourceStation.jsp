@@ -56,9 +56,9 @@
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}">新增</button>
+        <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editSite()" data-uk-modal="{target:'#edit'}">修改</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteSite()">删除</button>
     </div>
     <%--</div>--%>
 </div>
@@ -101,24 +101,15 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr ng-repeat="x in names track by $index">
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
+                            <tr ng-repeat="x in arr track by $index">
+                                <td><input id="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td>{{x.id}}</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>JJD-L</td>
-                                <td>AGV左侧交接点</td>
-                                <td>(1600,1200)</td>
-                                <td>100</td>
-
+                                <td>{{x.name}}</td>
+                                <td>{{x.x}}</td>
+                                <td>{{x.capacity}}</td>
                             </tr>
                             </tbody>
-
                         </table>
 
                         <!--底部页码-->
@@ -174,7 +165,55 @@
         </div>
     </div>
 </div>
-<%--</div>--%>
+<!--填写新增订单信息-->
+<div class="uk-modal uk-overflow-container" id="add">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <label for="add-id">编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-name">名称</label><br/>
+                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-x">坐标</label><br/>
+                    <input type="text" name="add-x" id="add-x" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-capacity">可停放资源数</label><br/>
+                    <input type="text" name="add-capacity" id="add-capacity" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="formValidate()">Add</button>
+        </div>
+    </div>
+</div>
+
+<!--修改订单信息-->
+<div class="uk-modal uk-overflow-container" id="edit">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form>
+                <fieldset ng-repeat="x in form track by $index">
+                    <label for="edit-id">编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+                    <label for="edit-name">名称</label><br/>
+                    <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
+                    <label for="edit-x">坐标</label><br/>
+                    <input type="text" name="edit-x" id="edit-x" class="text ui-widget-content ui-corner-all" value="{{x.x}}"><br/>
+                    <label for="edit-capacity">可停放资源数</label><br/>
+                    <input type="text" name="edit-capacity" id="edit-capacity" class="text ui-widget-content ui-corner-all" value="{{x.capacity}}"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="update()">Edit</button>
+        </div>
+    </div>
+</div>
 
 <script>
     $(function () {
