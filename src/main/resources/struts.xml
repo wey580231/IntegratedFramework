@@ -80,11 +80,18 @@
         <action name="findAll" class="com.rengu.actions.ShiftAction" method="findAll"/>
     </package>
 
-    <!---->
+    <!--3D车间访问接口-->
     <package name="State3D" namespace="/3d" extends="struts-default">
+        <!--状态查询-->
         <action name="query3DState" class="com.rengu.actions.d3.State3DAction"  method="queryState"/>
         <action name="config3D" class="com.rengu.actions.d3.State3DAction"  method="get3DLayout"/>
         <action name="set3DLayout" class="com.rengu.actions.d3.State3DAction"  method="insertOrUpdateLayout"/>
+
+        <!--设备报表-->
         <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>
+
+        <!--仿真或实时数据驱动-->
+        <action name="drive3DEmulateFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getEmulateFlow"/>
+        <action name="drive3DRealFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getRealFlow"/>
     </package>
 </struts>
