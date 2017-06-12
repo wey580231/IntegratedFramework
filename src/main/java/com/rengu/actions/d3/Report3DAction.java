@@ -3,7 +3,9 @@ package com.rengu.actions.d3;
 import com.opensymphony.xwork2.ActionContext;
 import com.rengu.DAO.d3.Device3DAO;
 import com.rengu.actions.SuperAction;
+import com.rengu.util.Tools;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -22,6 +24,9 @@ public class Report3DAction extends SuperAction {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
 
+        boolean opresult = false;
+        StringBuilder jsonString = new StringBuilder();
+
         if (parameterMap.size() == 2) {
             String[] types = (String[]) parameterMap.get("requestType");
             String[] codes = (String[]) parameterMap.get("requestCode");
@@ -29,13 +34,18 @@ public class Report3DAction extends SuperAction {
             if (types.length == 1 && codes.length == 1) {
                 String requestType = types[0];
                 String requestCode = codes[0];
-                if (requestType.toLowerCase().equals(requestDevice)) {
-                    deviceDao.getDeviceReport(codes[0]);
-                } else if (requestType.toLowerCase().equals(requestOrder)) {
-                    deviceDao.getOrderReport(codes[0]);
+                if (requestType.toLowerCase().equals(requestDevice) && codes[0].length() > 0) {
+                    opresult = deviceDao.getDeviceReport(requestDevice, codes[0],jsonString);
+                } else if (requestType.toLowerCase().equals(requestOrder) && codes[0].length() > 0) {
+                    opresult = deviceDao.getOrderReport(requestOrder, codes[0], jsonString);
                 }
             }
         }
 
+        if (opresult) {
+            Tools.jsonPrint(jsonString.toString(), this.httpServletResponse);
+        } else {
+            Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+        }
     }
 }

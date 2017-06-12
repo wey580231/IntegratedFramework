@@ -29,9 +29,6 @@
         <many-to-one name="providerByIdProvider" class="com.rengu.entity.RG_ProviderEntity">
             <column name="idProvider" not-null="false"/>
         </many-to-one>
-        <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
-            <column name="idClub" not-null="false"/>
-        </many-to-one>
         <set name="resourcesById" cascade="all" outer-join="true">
             <key column="idGroupResource" foreign-key="id"></key>
             <one-to-many class="com.rengu.entity.RG_ResourceEntity"/>

@@ -78,5 +78,4 @@ public class State3DAction extends SuperAction {
     public void setState3DEntity(RG_State3DEntity state3DEntity) {
         this.state3DEntity = state3DEntity;
     }
-
 }

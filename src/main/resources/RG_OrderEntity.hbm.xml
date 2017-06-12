@@ -29,6 +29,9 @@
         <property name="quantity">
             <column name="quantity" sql-type="smallint(6)" not-null="false"/>
         </property>
+        <property name="finishQuantity">
+            <column name="finishQuantity" sql-type="smallint(6)" not-null="false"/>
+        </property>
         <property name="priority">
             <column name="priority" sql-type="smallint(6)" not-null="false"/>
         </property>

@@ -221,8 +221,11 @@
         <many-to-one name="providerByIdProvider" class="com.rengu.entity.RG_ProviderEntity">
             <column name="idProvider" not-null="false"/>
         </many-to-one>
-        <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProviderEntity">
+        <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
             <column name="idProduct" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="scheduleByIdSchedule" class="com.rengu.entity.RG_ScheduleEntity">
+            <column name="idSchedule" not-null="false"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

@@ -104,7 +104,7 @@ public class GroupResourceDAOImpl implements GroupResourceDao {
             Transaction transaction = session.beginTransaction();
             String hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
-            query.setParameter("nameClub", rg_groupresourceEntity.getClubByIdClub().getName());
+            query.setParameter("nameClub", "");
             List list = query.list();
             return list;
         } catch (Exception exception) {

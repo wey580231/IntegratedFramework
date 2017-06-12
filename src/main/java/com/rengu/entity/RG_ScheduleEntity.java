@@ -6,173 +6,137 @@ public class RG_ScheduleEntity {
 
     private int id;
 
-    //������Ϣ
+    //基础信息
     private String name;
-    private String scheduleTime;        //�ų�����
-    private String startCalcTime;        //���㿪ʼ����
-    private String endCalcTime;            //�����������
-    private int state;                    //�ų�״̬���·�APS����APS�����С���APS������ɡ��������Ż���ɡ������·�MES��
-    private String progress;            //��ɽ���
+    private String scheduleTime;		//排程日期
+    private String startCalcTime;		//计算开始日期
+    private String endCalcTime;			//计算结束日期
+    private int state;					//排程状态“下发APS”“APS计算中”“APS计算完成”“交互优化完成”“已下发MES”
+    private String progress;			//完成进度
 
-    private int scheduleWindow;            //�ų�ʱ�䴰
-    private int rollTime;                //��������
+    private int scheduleWindow;			//排程时间窗
+    private int rollTime;				//滚动周期
 
-    //APS�ų̲���
-    private String apsStartTime;        //�Ż���Ŀ��ʼʱ��
-    private String apsEndTime;            //�Ż���Ŀ����ʱ��
-    private String apsModel;            //�ų�ģʽ�������򡱡�����
-    private String apsObj;                //�Ż�Ŀ�꣬��ȡֵ����ʱ��������Ŀ����Դ��������ҵ��ȡ�
+    //APS排程参数
+    private String apsStartTime;		//优化项目开始时间
+    private String apsEndTime;			//优化项目结束时间
+    private String apsModel;			//排程模式，“正向”“反向”
+    private String apsObj;				//优化目标，可取值“超时总量”“目标资源数”“作业跨度”
 
-    private RG_LayoutEntity layout;                    //����
-    private Set<RG_OrderEntity> orders;                //����
-    private Set<RG_ResourceEntity> resources;        //��Դ
-    private Set<RG_GroupresourceEntity> groups;        //����
-    private Set<RG_SiteEntity> sites;                //��λ
+    private RG_LayoutEntity layout;					//布局
+    private Set<RG_OrderEntity> orders;				//订单
+    private Set<RG_ResourceEntity> resources;		//资源
+    private Set<RG_GroupresourceEntity> groups;		//工组
+    private Set<RG_SiteEntity> sites;				//工位
 
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getScheduleTime() {
         return scheduleTime;
     }
-
     public void setScheduleTime(String scheduleTime) {
         this.scheduleTime = scheduleTime;
     }
-
     public String getStartCalcTime() {
         return startCalcTime;
     }
-
     public void setStartCalcTime(String startCalcTime) {
         this.startCalcTime = startCalcTime;
     }
-
     public String getEndCalcTime() {
         return endCalcTime;
     }
-
     public void setEndCalcTime(String endCalcTime) {
         this.endCalcTime = endCalcTime;
     }
-
     public int getState() {
         return state;
     }
-
     public void setState(int state) {
         this.state = state;
     }
-
     public String getProgress() {
         return progress;
     }
-
     public void setProgress(String progress) {
         this.progress = progress;
     }
-
     public int getScheduleWindow() {
         return scheduleWindow;
     }
-
     public void setScheduleWindow(int scheduleWindow) {
         this.scheduleWindow = scheduleWindow;
     }
-
     public int getRollTime() {
         return rollTime;
     }
-
     public void setRollTime(int rollTime) {
         this.rollTime = rollTime;
     }
-
     public String getApsStartTime() {
         return apsStartTime;
     }
-
     public void setApsStartTime(String apsStartTime) {
         this.apsStartTime = apsStartTime;
     }
-
     public String getApsEndTime() {
         return apsEndTime;
     }
-
     public void setApsEndTime(String apsEndTime) {
         this.apsEndTime = apsEndTime;
     }
-
     public String getApsModel() {
         return apsModel;
     }
-
     public void setApsModel(String apsModel) {
         this.apsModel = apsModel;
     }
-
     public String getApsObj() {
         return apsObj;
     }
-
     public void setApsObj(String apsObj) {
         this.apsObj = apsObj;
     }
-
     public RG_LayoutEntity getLayout() {
         return layout;
     }
-
     public void setLayout(RG_LayoutEntity layout) {
         this.layout = layout;
     }
-
     public Set<RG_OrderEntity> getOrders() {
         return orders;
     }
-
     public void setOrders(Set<RG_OrderEntity> orders) {
         this.orders = orders;
     }
-
     public Set<RG_ResourceEntity> getResources() {
         return resources;
     }
-
     public void setResources(Set<RG_ResourceEntity> resources) {
         this.resources = resources;
     }
-
     public Set<RG_GroupresourceEntity> getGroups() {
         return groups;
     }
-
     public void setGroups(Set<RG_GroupresourceEntity> groups) {
         this.groups = groups;
     }
-
     public Set<RG_SiteEntity> getSites() {
         return sites;
     }
-
     public void setSites(Set<RG_SiteEntity> sites) {
         this.sites = sites;
     }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -205,7 +169,6 @@ public class RG_ScheduleEntity {
         result = prime * result + state;
         return result;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
