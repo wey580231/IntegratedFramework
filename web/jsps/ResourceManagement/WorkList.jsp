@@ -56,9 +56,9 @@
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}">新增</button>
+        <button class="uk-button uk-icon-edit uk-button-primary"  ng-click="editShift()" data-uk-modal="{target:'#edit'}">修改</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteShift()">删除</button>
     </div>
     <%--</div>--%>
 </div>
@@ -102,23 +102,14 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr ng-repeat="x in names track by $index">
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>{{x.id}}</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>01</td>
-                                <td>08:30至17:00</td>
-                                <td>白班</td>
-                                <td>{08:30..11:29,13:00..16:59}</td>
-                                <td>未知</td>
-
+                            <tr ng-repeat="x in arr track by $index">
+                                <td><input id="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td id="id">{{x.id}}</td>
+                                <td id="name">{{x.name}}</td>
+                                <td id="type">{{x.type}}</td>
+                                <td id="Slot">{{x.Slot}}</td>
+                                <td id="extra">{{x.extra}}</td>
                             </tr>
                             </tbody>
 
@@ -177,7 +168,60 @@
         </div>
     </div>
 </div>
-<%--</div>--%>
+<!--填写新增订单信息-->
+<div class="uk-modal uk-overflow-container" id="add">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <label for="add-id">班次编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-name">班次名称</label><br/>
+                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-type">班次类型</label><br/>
+                    <input type="text" name="add-type" id="add-type" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-Slot">时间段</label><br/>
+                    <input type="text" name="add-Slot" id="add-Slot" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-extra">加班</label><br/>
+                    <input type="text" name="add-extra" id="add-extra" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="formValidate()">Add</button>
+        </div>
+    </div>
+</div>
+
+<!--修改订单信息-->
+<div class="uk-modal uk-overflow-container" id="edit">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form>
+                <fieldset ng-repeat="x in form track by $index">
+                    <label for="edit-id">班次编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+                    <label for="edit-name">班次名称</label><br/>
+                    <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
+                    <label for="edit-type">班次类型</label><br/>
+                    <input type="text" name="edit-type" id="edit-type" class="text ui-widget-content ui-corner-all" value="{{x.type}}"><br/>
+                    <label for="edit-Slot">时间段</label><br/>
+                    <input type="text" name="edit-Slot" id="edit-Slot" class="text ui-widget-content ui-corner-all" value="{{x.Slot}}"><br/>
+                    <label for="edit-extra">加班</label><br/>
+                    <input type="text" name="edit-extra" id="edit-extra" class="text ui-widget-content ui-corner-all" value="{{x.extra}}"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="update()">Edit</button>
+        </div>
+    </div>
+</div>
+
 
 <script>
     $(function () {

@@ -25,7 +25,7 @@
     </package>
     <!--工序资源信息接口-->
     <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">
-        <action name="getAllOrders" class="com.rengu.actions.AssisantprocessAction" method="getAllAssisantProcess"/>
+        <action name="getAllAssisantProcess" class="com.rengu.actions.AssisantprocessAction" method="getAllAssisantProcess"/>
         <action name="save" class="com.rengu.actions.AssisantprocessAction" method="save"/>
         <action name="delete" class="com.rengu.actions.AssisantprocessAction" method="delete"/>
         <action name="update" class="com.rengu.actions.AssisantprocessAction" method="update"/>
@@ -41,7 +41,7 @@
     </package>
     <!--资源信息接口-->
     <package name="Resource" namespace="/resource" extends="struts-default">
-        <action name="getAllOrders" class="com.rengu.actions.ResourceAction" method="getAllResource"/>
+        <action name="getAllResource" class="com.rengu.actions.ResourceAction" method="getAllResource"/>
         <action name="save" class="com.rengu.actions.ResourceAction" method="save"/>
         <action name="delete" class="com.rengu.actions.ResourceAction" method="delete"/>
         <action name="update" class="com.rengu.actions.ResourceAction" method="update"/>
@@ -49,7 +49,7 @@
     </package>
     <!--资源类型信息接口-->
     <package name="Typerescource" namespace="/typerescource" extends="struts-default">
-        <action name="getAllOrders" class="com.rengu.actions.TyperescourceAction" method="getAllTypeRescource"/>
+        <action name="getAllTypeRescource" class="com.rengu.actions.TyperescourceAction" method="getAllTypeRescource"/>
         <action name="save" class="com.rengu.actions.TyperescourceAction" method="save"/>
         <action name="delete" class="com.rengu.actions.TyperescourceAction" method="delete"/>
         <action name="update" class="com.rengu.actions.TyperescourceAction" method="update"/>
@@ -57,7 +57,7 @@
     </package>
     <!--资源工组信息接口-->
     <package name="GroupResource" namespace="/groupresource" extends="struts-default">
-        <action name="getAllOrders" class="com.rengu.actions.GroupResourceAction" method="getAllGroupResource"/>
+        <action name="getAllGroupResource" class="com.rengu.actions.GroupResourceAction" method="getAllGroupResource"/>
         <action name="save" class="com.rengu.actions.GroupResourceAction" method="save"/>
         <action name="delete" class="com.rengu.actions.GroupResourceAction" method="delete"/>
         <action name="update" class="com.rengu.actions.GroupResourceAction" method="update"/>
@@ -65,7 +65,7 @@
     </package>
     <!--资源工位信息接口-->
     <package name="Site" namespace="/site" extends="struts-default">
-        <action name="getAllOrders" class="com.rengu.actions.SiteAction" method="getAllSite"/>
+        <action name="getAllSite" class="com.rengu.actions.SiteAction" method="getAllSite"/>
         <action name="save" class="com.rengu.actions.SiteAction" method="save"/>
         <action name="delete" class="com.rengu.actions.SiteAction" method="delete"/>
         <action name="update" class="com.rengu.actions.SiteAction" method="update"/>
@@ -73,7 +73,7 @@
     </package>
     <!--资源班次信息接口-->
     <package name="Shift" namespace="/shift" extends="struts-default">
-        <action name="getAllOrders" class="com.rengu.actions.ShiftAction" method="getAllShift"/>
+        <action name="getAllShift" class="com.rengu.actions.ShiftAction" method="getAllShift"/>
         <action name="save" class="com.rengu.actions.ShiftAction" method="save"/>
         <action name="delete" class="com.rengu.actions.ShiftAction" method="delete"/>
         <action name="update" class="com.rengu.actions.ShiftAction" method="update"/>
@@ -85,7 +85,6 @@
         <action name="query3DState" class="com.rengu.actions.d3.State3DAction"  method="queryState"/>
         <action name="config3D" class="com.rengu.actions.d3.State3DAction"  method="get3DLayout"/>
         <action name="set3DLayout" class="com.rengu.actions.d3.State3DAction"  method="insertOrUpdateLayout"/>
-        
         <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>
     </package>
 </struts>

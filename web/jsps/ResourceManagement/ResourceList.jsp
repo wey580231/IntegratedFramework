@@ -108,28 +108,13 @@
                         <div class="fixtable-body" style="height: 83%;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                                 <tbody class="uk-text-center">
-                                <tr ng-repeat="x in names track by $index">
+                                <tr ng-repeat="x in arr track by $index">
                                     <td><input type="checkbox" onclick="changeColor(this)"></td>
                                     <td>{{x.id}}</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
+                                    <td>{{x.name}}</td>
+                                    <td>{{x.TypeSite}}</td>
                                     <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
+                                    <td>{{x.mobility}}</td>
                                     <td>1000</td>
                                     <td>1000</td>
                                     <td>1000</td>
