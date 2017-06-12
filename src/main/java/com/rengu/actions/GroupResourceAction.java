@@ -65,7 +65,7 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         if (groupResourceDAOInstance.update(rg_groupresourceEntity)) {
             groupResourceDAOInstance.getTransaction().commit();
         } else {
-            WebSocketNotification.sendMessage("更新失败","");
+            WebSocketNotification.sendMessage("更新失败", "");
         }
 
     }
