@@ -95,22 +95,7 @@ public class GroupResourceDAOImpl implements GroupResourceDao {
 
     @Override
     public List<?> findAllByUsername(Object object) {
-        try {
-            RG_GroupresourceEntity rg_groupresourceEntity = getEntityObject(object);
-            if (rg_groupresourceEntity == null) {
-                return null;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            String hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.clubByIdClub.name =:nameClub";
-            Query query = session.createQuery(hql);
-            query.setParameter("nameClub", rg_groupresourceEntity.getClubByIdClub().getName());
-            List list = query.list();
-            return list;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        }
+        return findAll();
     }
 
     @Override
@@ -122,6 +107,7 @@ public class GroupResourceDAOImpl implements GroupResourceDao {
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            this.transaction = transaction;
             String hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_groupresourceEntity.getId());

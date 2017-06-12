@@ -13,8 +13,9 @@ public class RG_OrderEntity {
     private String idClient;
     private String idProvider;
     private String idGroupResource;
-    private Short quantity;
-    private Short priority;
+    private Short quantity;                 //订单数量
+    private short finishQuantity;           //完工数量
+    private Short priority;                 //优先级
     private String t0;
     private String t1;
     private String t2;
@@ -99,6 +100,14 @@ public class RG_OrderEntity {
 
     public void setQuantity(Short quantity) {
         this.quantity = quantity;
+    }
+
+    public short getFinishQuantity() {
+        return finishQuantity;
+    }
+
+    public void setFinishQuantity(short finishQuantity) {
+        this.finishQuantity = finishQuantity;
     }
 
     public Short getPriority() {
@@ -260,6 +269,7 @@ public class RG_OrderEntity {
 
         RG_OrderEntity that = (RG_OrderEntity) o;
 
+        if (finishQuantity != that.finishQuantity) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
@@ -290,8 +300,10 @@ public class RG_OrderEntity {
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (selected != null ? !selected.equals(that.selected) : that.selected != null) return false;
         if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
-
-        return true;
+        if (productByIdProduct != null ? !productByIdProduct.equals(that.productByIdProduct) : that.productByIdProduct != null)
+            return false;
+        if (clubByIdClub != null ? !clubByIdClub.equals(that.clubByIdClub) : that.clubByIdClub != null) return false;
+        return schedules != null ? schedules.equals(that.schedules) : that.schedules == null;
     }
 
     @Override
@@ -304,6 +316,7 @@ public class RG_OrderEntity {
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+        result = 31 * result + (int) finishQuantity;
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
         result = 31 * result + (t0 != null ? t0.hashCode() : 0);
         result = 31 * result + (t1 != null ? t1.hashCode() : 0);
@@ -323,6 +336,9 @@ public class RG_OrderEntity {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
+        result = 31 * result + (productByIdProduct != null ? productByIdProduct.hashCode() : 0);
+        result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
+        result = 31 * result + (schedules != null ? schedules.hashCode() : 0);
         return result;
     }
 

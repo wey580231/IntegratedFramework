@@ -78,6 +78,7 @@ public class RG_PlanEntity {
     private RG_TyperescourceEntity typerescourceByIdTypeResource;
     private RG_ProviderEntity providerByIdProvider;
     private RG_ProductEntity productByIdProduct;
+    private RG_ScheduleEntity scheduleByIdSchedule;
 
     public int getId() {
         return id;
@@ -830,4 +831,13 @@ public class RG_PlanEntity {
     public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
         this.productByIdProduct = productByIdProduct;
     }
+
+    public RG_ScheduleEntity getScheduleByIdSchedule() {
+        return scheduleByIdSchedule;
+    }
+
+    public void setScheduleByIdSchedule(RG_ScheduleEntity scheduleByIdSchedule) {
+        this.scheduleByIdSchedule = scheduleByIdSchedule;
+    }
+    
 }

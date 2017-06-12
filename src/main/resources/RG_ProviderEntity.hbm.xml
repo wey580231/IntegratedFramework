@@ -17,8 +17,5 @@
         <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
             <column name="idClub" not-null="false"/>
         </many-to-one>
-        <many-to-one name="siteByIdSite" class="com.rengu.entity.RG_SiteEntity">
-            <column name="idSite" not-null="false"/>
-        </many-to-one>
     </class>
 </hibernate-mapping>

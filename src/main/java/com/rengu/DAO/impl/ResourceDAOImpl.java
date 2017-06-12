@@ -121,6 +121,7 @@ public class ResourceDAOImpl implements ResourceDAO {
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            this.transaction = transaction;
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_resourceEntity.getId());

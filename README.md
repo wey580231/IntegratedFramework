@@ -5,5 +5,8 @@ IntegratedFramework Project
 * 实现大部分数据库接口，实现数据库实体和JSON的转换。
 * 20170606:添加3D车间的基本信息访问接口，车间插入更新接口。
 * 修复工艺实体中循环引用导致转换json失败的问题。
+* 实现生成排程数据表的记录。
 ## 已知问题
 * ~~数据存储依然有问题~~
+* DAOImpl里面的findallbyid应返回一个对象，而不是一个list。
+* transaction应该不用那么频繁的commit。

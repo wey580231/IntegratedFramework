@@ -122,6 +122,7 @@ public class OrdersDAOImpl implements OrdersDAO {
             }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            this.transaction = transaction;
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_orderEntity.getId());

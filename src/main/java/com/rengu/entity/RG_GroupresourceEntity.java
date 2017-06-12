@@ -14,7 +14,6 @@ public class RG_GroupresourceEntity {
     private String color;
     private String idSite;
     private RG_ProviderEntity providerByIdProvider;
-    private RG_ClubEntity clubByIdClub;
     private Set<RG_SiteEntity> sitesById;
     private Set<RG_ResourceEntity> resourcesById;
     private Set<RG_ScheduleEntity> schedules;
@@ -111,14 +110,6 @@ public class RG_GroupresourceEntity {
 
     public void setProviderByIdProvider(RG_ProviderEntity providerByIdProvider) {
         this.providerByIdProvider = providerByIdProvider;
-    }
-
-    public RG_ClubEntity getClubByIdClub() {
-        return clubByIdClub;
-    }
-
-    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
-        this.clubByIdClub = clubByIdClub;
     }
 
     public Set<RG_ResourceEntity> getResourcesById() {
