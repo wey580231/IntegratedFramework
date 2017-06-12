@@ -59,9 +59,9 @@
 
         <!--按钮-->
         <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-            <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-            <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-            <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
+            <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}">新增</button>
+            <button class="uk-button uk-icon-edit uk-button-primary"  ng-click="editResource()" data-uk-modal="{target:'#edit'}">修改</button>
+            <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteResource()">删除</button>
         </div>
     </div>
     <%--<hr class="uk-article-divider">--%>
@@ -109,21 +109,20 @@
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                                 <tbody class="uk-text-center">
                                 <tr ng-repeat="x in arr track by $index">
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>{{x.id}}</td>
-                                    <td>{{x.name}}</td>
-                                    <td>{{x.TypeSite}}</td>
-                                    <td>1</td>
-                                    <td>{{x.mobility}}</td>
+                                    <td><input id="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                    <td id="id">{{x.id}}</td>
+                                    <td id="name">{{x.name}}</td>
+                                    <td id="idTypeResource">{{x.idTypeResource}}</td>
+                                    <td id="idSiteGroupResource">{{x.idSiteGroupResource}}</td>
+                                    <td id="mobility">{{x.mobility}}</td>
                                     <td>1000</td>
                                     <td>1000</td>
                                     <td>1000</td>
                                     <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
+                                    <td id="idShift">4</td>
+                                    <td id="state">{{x.state}}</td>
                                 </tr>
-
                                 </tbody>
 
                             </table>
@@ -146,13 +145,10 @@
                             </div>
                         </div>
 
-
                     </div>
                 </div>
-
             </div>
         </div>
-
 
         <div class="uk-clearfix" style="margin-top: -3%;">
             <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
@@ -167,9 +163,70 @@
             </div>
         </div>
     </div>
-    <%--</div>--%>
+<!--填写新增订单信息-->
+<div class="uk-modal uk-overflow-container" id="add">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <label for="add-id">编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-name">名称</label><br/>
+                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-TypeSite">资源类型</label><br/>
+                    <input type="text" name="add-TypeSite" id="add-TypeSite" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-idSiteGroupResource">工组</label><br/>
+                    <input type="text" name="add-idSiteGroupResource" id="add-idSiteGroupResource" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="mobility">移动速度</label><br/>
+                    <input type="text" name="add-mobility" id="add-mobility" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="idShift">正常班次</label><br/>
+                    <input type="text" name="add-idShift" id="add-idShift" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-state">状态信息</label><br/>
+                    <input type="text" name="add-state" id="add-state" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="formValidate()">Add</button>
+        </div>
+    </div>
+</div>
 
-    <script>
+<!--修改订单信息-->
+<div class="uk-modal uk-overflow-container" id="edit">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form>
+                <fieldset ng-repeat="x in form track by $index">
+                    <label for="edit-id">编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+                    <label for="edit-name">名称</label><br/>
+                    <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
+                    <label for="edit-TypeSite">资源类型</label><br/>
+                    <input type="text" name="edit-TypeSite" id="edit-TypeSite" class="text ui-widget-content ui-corner-all" value="{{x.TypeSite}}"><br/>
+                    <label for="edit-idSiteGroupResource">工组</label><br/>
+                    <input type="text" name="edit-idSiteGroupResource" id="edit-idSiteGroupResource" class="text ui-widget-content ui-corner-all" value="{{x.idSiteGroupResource}}"><br/>
+                    <label for="edit-mobility">移动速度</label><br/>
+                    <input type="text" name="edit-mobility" id="edit-mobility" class="text ui-widget-content ui-corner-all" value="{{x.mobility}}"><br/>
+                    <label for="edit-idShift">正常班次</label><br/>
+                    <input type="text" name="edit-idShift" id="edit-idShift" class="text ui-widget-content ui-corner-all" value="{{x.idShift}}"><br/>
+                    <label for="edit-state">状态信息</label><br/>
+                    <input type="text" name="edit-state" id="edit-state" class="text ui-widget-content ui-corner-all" value="{{x.state}}"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="update()">Edit</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
         $(function () {
             $("#tabs").tabs();
         });

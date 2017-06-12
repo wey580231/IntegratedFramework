@@ -22,26 +22,26 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         //重新加载页面信息
         var reload = function () {
             //取消checkbox选中状态
-            document.getElementById('check').checked = false;
+            document.getElementById("check").checked = false;
             $("input").val('');
             myHttpService.get(serviceList.ListShift).then(function (response) {
                 $scope.arr = response.data;
             });
         }
 
-        //新增订单
+        //新增班次信息
         var addShift = function () {
             var idVal = $("input[name='add-id']").val();
             var nameVal = $("input[name='add-name']").val();
             var typeVal = $("input[name='add-type']").val();
-            var slotVal = $("input[name='add-Slot']").val();
             var extraVal = $("input[name='add-extra']").val();
+            var slotVal = $("input[name='add-Slot']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
             params.type = typeVal;
-            params.Slot = slotVal;
             params.extra = extraVal;
+            params.slot = slotVal;
             var data = JSON.stringify(params);
             alert(data);
             $("#add").hide();
@@ -74,41 +74,12 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             return selectedCheckArray.indexOf(id) >= 0;
         };
 
-        //删除订单
+        //删除班次信息
         $scope.deleteShift = function () {
-            /*console.log(selectedCheckArray);
-             var Array = [];
-             var deleteArray = [];
-             for (var i = 0; i < selectedCheckArray.length; i++) {
-             var params = {};
-             var idVal = selectedCheckArray[i];
-             params.id = idVal;
-             params.name = "";
-             params.origin = "";
-             params.priority = "";
-             params.advance = "";
-             params.delay = "";
-             params.quantity = "";
-             params.t0 = "";
-             params.ord = "";
-             //var data = JSON.stringify(params);
-             Array.push(params);
-             }
-             var data = JSON.stringify(Array);
-             console.log(data);
-             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
-             console.log(response.status);
-             reload();
-             }, function errorCallback(response) {
-             alert("请求失败！");
-             });*/
             var params = {};
             //var idVal = operateId;
             params.id = operateId;
             params.name = "";
-            params.type = "";
-            params.Slot = "";
-            params.extra = "";
             var data = JSON.stringify(params);
             alert(data);
             myHttpService.delete(serviceList.DeleteShift, data).then(function successCallback(response) {
@@ -119,18 +90,15 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             });
         }
 
-        //修改订单
+        //修改班次信息
         $scope.editShift = function () {
             var params = {};
             var idVal = operateId;
             params.id = idVal;
             params.name = "";
-            params.type = "";
-            params.Slot = "";
-            params.extra = "";
             var data = JSON.stringify(params);
             alert(data);
-            myHttpService.get(serviceList.ListShift, data).then(function successCallback(response) {
+            myHttpService.post(serviceList.ListShift, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
             }, function errorCallback(response) {
@@ -141,14 +109,14 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
             var typeVal = $("input[name='edit-type']").val();
-            var slotVal = $("input[name='edit-Slot']").val();
             var extraVal = $("input[name='edit-extra']").val();
+            var slotVal = $("input[name='edit-Slot']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
             params.type = typeVal;
-            params.Slot = slotVal;
             params.extra = extraVal;
+            params.slot = slotVal;
             var data = JSON.stringify(params);
             alert(data);
             $("#edit").hide();

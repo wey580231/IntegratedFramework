@@ -108,7 +108,7 @@
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="type">{{x.type}}</td>
-                                <td id="Slot">{{x.Slot}}</td>
+                                <td id="Slot">{{x.slot}}</td>
                                 <td id="extra">{{x.extra}}</td>
                             </tr>
                             </tbody>

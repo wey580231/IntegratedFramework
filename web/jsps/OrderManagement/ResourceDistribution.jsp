@@ -109,8 +109,8 @@
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="id">{{x.id}}</td>
                                 <td id="grp">{{x.grp}}</td>
-                                <td id="TypeSite">{{x.TypeSite}}</td>
-                                <td id="IdSite">{{x.IdSite}}</td>
+                                <td id="TypeSite">{{ x.typeSite}}</td>
+                                <td id="IdSite">{{x.idSite}}</td>
                                 <td id="minResource">{{x.minResource}}</td>
                                 <td id="maxResource">{{x.maxResource}}</td>
                                 <td id="weightParallel">{{x.weightParallel}}</td>
