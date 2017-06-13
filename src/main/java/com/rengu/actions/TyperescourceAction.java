@@ -29,11 +29,7 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
     }
 
     public void findAllByUsername() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
-        TyperescourceDAO typerescourceDAO = DAOFactory.getTyperescourceInstance();
-        List list = typerescourceDAO.findAllByUsername(rg_typerescourceEntity);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
+
     }
 
     public void save() throws Exception {

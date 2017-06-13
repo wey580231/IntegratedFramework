@@ -6,9 +6,6 @@ import com.rengu.actions.SuperAction;
 import com.rengu.entity.RG_State3DEntity;
 import com.rengu.util.Tools;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 import java.util.Map;
 
 /**
@@ -78,5 +75,4 @@ public class State3DAction extends SuperAction {
     public void setState3DEntity(RG_State3DEntity state3DEntity) {
         this.state3DEntity = state3DEntity;
     }
-
 }

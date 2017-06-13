@@ -35,9 +35,6 @@
         <property name="critical">
             <column name="critical" sql-type="varchar(1)" length="1" not-null="false"/>
         </property>
-        <property name="idShift">
-            <column name="IdShift" sql-type="varchar(1000)" length="1000" not-null="false"/>
-        </property>
         <property name="nameShift">
             <column name="NameShift" sql-type="varchar(4000)" length="4000" not-null="false"/>
         </property>

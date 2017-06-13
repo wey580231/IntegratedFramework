@@ -29,11 +29,7 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
     }
 
     public void findAllByUsername() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
-        ResourceDAO resourceDAO = DAOFactory.getResourceInstance();
-        List list = resourceDAO.findAllByUsername(rg_resourceEntity);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
+
     }
 
     public void save() throws Exception {

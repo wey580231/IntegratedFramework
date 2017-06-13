@@ -6,7 +6,7 @@
 
     <class name="com.rengu.entity.RG_ResourceTyperesourceEntity" table="RG_ResourceTyperesource" schema="testdatabase">
         <id name="id">
-            <column name="id" sql-type="int"/>
+            <column name="id" sql-type="varchar(60)" length="60" not-null="true"/>
         </id>
         <property name="maxCapacityParallel">
             <column name="maxCapacityParallel" sql-type="int" not-null="false"/>

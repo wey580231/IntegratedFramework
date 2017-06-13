@@ -6,7 +6,7 @@
 
     <class name="com.rengu.entity.RG_PlanEntity" table="RG_Plan" schema="testdatabase">
         <id name="id">
-            <column name="id" sql-type="int(11)"/>
+            <column name="id" sql-type="varchar(60)" length="60" not-null="true"/>
         </id>
         <property name="idTask">
             <column name="idTask" sql-type="varchar(60)" length="60" not-null="false"/>
@@ -16,9 +16,6 @@
         </property>
         <property name="nameTask">
             <column name="nameTask" sql-type="varchar(100)" length="100" not-null="false"/>
-        </property>
-        <property name="nameProcess">
-            <column name="nameProcess" sql-type="varchar(100)" length="100" not-null="false"/>
         </property>
         <property name="nameOrder">
             <column name="nameOrder" sql-type="varchar(100)" length="100" not-null="false"/>
@@ -59,9 +56,6 @@
         <property name="continuousTask">
             <column name="continuousTask" sql-type="varchar(10)" length="10" not-null="false"/>
         </property>
-        <property name="idTaskGroupTypeResourceSucc">
-            <column name="idTaskGroupTypeResourceSucc" sql-type="varchar(100)" length="100" not-null="false"/>
-        </property>
         <property name="quantityTask">
             <column name="quantityTask" sql-type="smallint(6)" not-null="false"/>
         </property>
@@ -85,12 +79,6 @@
         </property>
         <property name="advice">
             <column name="advice" sql-type="varchar(2000)" length="2000" not-null="false"/>
-        </property>
-        <property name="calendarTask">
-            <column name="CalendarTask" sql-type="text" not-null="false"/>
-        </property>
-        <property name="slotTask">
-            <column name="SlotTask" sql-type="varchar(255)" not-null="false"/>
         </property>
         <property name="estimateTask">
             <column name="estimateTask" sql-type="varchar(12)" length="12" not-null="false"/>
@@ -131,12 +119,6 @@
         <property name="t20ExtendedTask">
             <column name="t20ExtendedTask" sql-type="varchar(20)" length="20" not-null="false"/>
         </property>
-        <property name="t1RealTask">
-            <column name="t1RealTask" sql-type="varchar(20)" length="20" not-null="false"/>
-        </property>
-        <property name="t2RealTask">
-            <column name="t2RealTask" sql-type="varchar(20)" length="20" not-null="false"/>
-        </property>
         <property name="t1Job">
             <column name="t1Job" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
@@ -145,9 +127,6 @@
         </property>
         <property name="quantityJob">
             <column name="quantityJob" sql-type="smallint(6)" not-null="false"/>
-        </property>
-        <property name="quantityProviderTask">
-            <column name="quantityProviderTask" sql-type="smallint(6)" not-null="false"/>
         </property>
         <property name="nbTaskJob">
             <column name="nbTaskJob" sql-type="smallint(6)" not-null="false"/>
@@ -160,12 +139,6 @@
         </property>
         <property name="ordToRootChildJob">
             <column name="OrdToRootChildJob" sql-type="varchar(1000)" length="1000" not-null="false"/>
-        </property>
-        <property name="minQtyBatchTask">
-            <column name="minQtyBatchTask" sql-type="smallint(6)" not-null="false"/>
-        </property>
-        <property name="minTimeBatchTask">
-            <column name="minTimeBatchTask" sql-type="smallint(6)" not-null="false"/>
         </property>
         <property name="t1Order">
             <column name="t1Order" sql-type="varchar(20)" length="20" not-null="false"/>
@@ -184,18 +157,6 @@
         </property>
         <property name="state">
             <column name="state" sql-type="tinyint(4)" not-null="false"/>
-        </property>
-        <property name="selected">
-            <column name="selected" sql-type="tinyint(4)" not-null="false"/>
-        </property>
-        <property name="timeTypeResourceProvider">
-            <column name="timeTypeResourceProvider" sql-type="smallint(6)" not-null="false"/>
-        </property>
-        <property name="timeSlotTypeResourceProvider">
-            <column name="timeSlotTypeResourceProvider" sql-type="smallint(6)" not-null="false"/>
-        </property>
-        <property name="capacitySlotGroupTypeResource">
-            <column name="capacitySlotGroupTypeResource" sql-type="smallint(6)" not-null="false"/>
         </property>
         <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
             <column name="idClub" not-null="false"/>

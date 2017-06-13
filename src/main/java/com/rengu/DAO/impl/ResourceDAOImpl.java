@@ -12,80 +12,13 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/31.
  */
-public class ResourceDAOImpl implements ResourceDAO {
-    private Transaction transaction;
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    private RG_ResourceEntity getEntityObject(Object object) {
-        RG_ResourceEntity rg_resourceEntity = null;
-        if (object instanceof RG_ResourceEntity) {
-            return (RG_ResourceEntity) object;
-        } else {
-            return rg_resourceEntity;
-        }
-    }
-
+public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_ResourceEntity> {
     @Override
-    public boolean save(Object object) {
-        try {
-            RG_ResourceEntity rg_resourceEntity = getEntityObject(object);
-            if (rg_resourceEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(rg_resourceEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean delete(Object object) {
-        try {
-            RG_ResourceEntity rg_resourceEntity = getEntityObject(object);
-            if (rg_resourceEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.delete(rg_resourceEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Object object) {
-        try {
-            RG_ResourceEntity rg_resourceEntity = getEntityObject(object);
-            if (rg_resourceEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.update(rg_resourceEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public List<?> findAll() {
+    public List<RG_ResourceEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
+        super.transaction = transaction;
+        super.session = session;
         String hql = "from RG_ResourceEntity rg_resourceEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -93,17 +26,15 @@ public class ResourceDAOImpl implements ResourceDAO {
     }
 
     @Override
-    public List<?> findAllByUsername(Object object) {
+    public List<RG_ResourceEntity> findAllByUsername(String username) {
         try {
-            RG_ResourceEntity rg_resourceEntity = getEntityObject(object);
-            if (rg_resourceEntity == null) {
-                return null;
-            }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            super.transaction = transaction;
+            super.session = session;
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
-            query.setParameter("nameClub", rg_resourceEntity.getClubByIdClub().getName());
+            query.setParameter("nameClub", username);
             List list = query.list();
             return list;
         } catch (Exception exception) {
@@ -113,20 +44,16 @@ public class ResourceDAOImpl implements ResourceDAO {
     }
 
     @Override
-    public List<?> findAllById(Object object) {
+    public RG_ResourceEntity findAllById(String id) {
         try {
-            RG_ResourceEntity rg_resourceEntity = getEntityObject(object);
-            if (rg_resourceEntity == null) {
-                return null;
-            }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
+            super.transaction = transaction;
+            super.session = session;
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_resourceEntity.getId());
-            List list = query.list();
-            return list;
+            query.setParameter("id", id);
+            return (RG_ResourceEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
@@ -134,12 +61,7 @@ public class ResourceDAOImpl implements ResourceDAO {
     }
 
     @Override
-    public List<?> search(String keyWord) {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.name = 'han'";
-        Query query = session.createQuery(hql);
-        List list = query.list();
-        return list;
+    public List<RG_ResourceEntity> search(String keyWord) {
+        return null;
     }
 }

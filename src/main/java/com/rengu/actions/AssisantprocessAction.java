@@ -29,11 +29,7 @@ public class AssisantprocessAction extends SuperAction implements ModelDriven<RG
     }
 
     public void findAllByUsername() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
-        AssisantprocessDAO assisantprocessDAO = DAOFactory.getAssisantprocessDAOInstance();
-        List list = assisantprocessDAO.findAllByUsername(rg_assisantprocessEntity);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
+
     }
 
     public void save() throws Exception {

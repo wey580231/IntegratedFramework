@@ -1,18 +1,19 @@
 package com.rengu.entity;
 
 public class RG_LayoutDetailEntity {
-    private int id;
+    private String id;
     private String item;
     private String pos;
     private String state;
     private String exist;
     private RG_LayoutEntity layout;
 
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -57,55 +58,29 @@ public class RG_LayoutDetailEntity {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((exist == null) ? 0 : exist.hashCode());
-        result = prime * result + id;
-        result = prime * result + ((item == null) ? 0 : item.hashCode());
-        result = prime * result + ((layout == null) ? 0 : layout.hashCode());
-        result = prime * result + ((pos == null) ? 0 : pos.hashCode());
-        result = prime * result + ((state == null) ? 0 : state.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RG_LayoutDetailEntity that = (RG_LayoutDetailEntity) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (item != null ? !item.equals(that.item) : that.item != null) return false;
+        if (pos != null ? !pos.equals(that.pos) : that.pos != null) return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (exist != null ? !exist.equals(that.exist) : that.exist != null) return false;
+        return layout != null ? layout.equals(that.layout) : that.layout == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RG_LayoutDetailEntity other = (RG_LayoutDetailEntity) obj;
-        if (exist == null) {
-            if (other.exist != null)
-                return false;
-        } else if (!exist.equals(other.exist))
-            return false;
-        if (id != other.id)
-            return false;
-        if (item == null) {
-            if (other.item != null)
-                return false;
-        } else if (!item.equals(other.item))
-            return false;
-        if (layout == null) {
-            if (other.layout != null)
-                return false;
-        } else if (!layout.equals(other.layout))
-            return false;
-        if (pos == null) {
-            if (other.pos != null)
-                return false;
-        } else if (!pos.equals(other.pos))
-            return false;
-        if (state == null) {
-            if (other.state != null)
-                return false;
-        } else if (!state.equals(other.state))
-            return false;
-        return true;
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (item != null ? item.hashCode() : 0);
+        result = 31 * result + (pos != null ? pos.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (exist != null ? exist.hashCode() : 0);
+        result = 31 * result + (layout != null ? layout.hashCode() : 0);
+        return result;
     }
 
     public String toJson() {

@@ -6,7 +6,7 @@
 
     <class name="com.rengu.entity.RG_ScheduleEntity" table="RG_ScheduleEntity" schema="testdatabase">
         <id name="id">
-            <column name="id" sql-type="int(11)"/>
+            <column name="id" sql-type="varchar(60)" length="60" not-null="true"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(60)" length="60" not-null="false"/>

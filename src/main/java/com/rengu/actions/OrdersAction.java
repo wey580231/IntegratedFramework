@@ -29,11 +29,7 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
     }
 
     public void findAllByUsername() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
-        OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
-        List list = ordersDAO.findAllByUsername(rg_orderEntity);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
+
     }
 
     public void save() throws Exception {
