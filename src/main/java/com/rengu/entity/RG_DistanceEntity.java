@@ -4,33 +4,18 @@ package com.rengu.entity;
  * Created by wey580231 on 2017/5/24.
  */
 public class RG_DistanceEntity {
-    private int id;
+    private String id;
     private RG_SiteEntity startSite;
     private RG_SiteEntity endSite;
     private int distance;
     private int time;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_DistanceEntity that = (RG_DistanceEntity) o;
-
-        if (id != that.id) return false;
-        if (distance != that.distance) return false;
-        if (time != that.time) return false;
-        if (startSite != null ? !startSite.equals(that.startSite) : that.startSite != null) return false;
-        return endSite != null ? endSite.equals(that.endSite) : that.endSite == null;
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        int result = startSite.hashCode();
-        result = 31 * result + endSite.hashCode();
-        result = 31 * result + distance;
-        result = 31 * result + time;
-        return result;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public RG_SiteEntity getStartSite() {
@@ -65,11 +50,27 @@ public class RG_DistanceEntity {
         this.time = time;
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RG_DistanceEntity that = (RG_DistanceEntity) o;
+
+        if (distance != that.distance) return false;
+        if (time != that.time) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (startSite != null ? !startSite.equals(that.startSite) : that.startSite != null) return false;
+        return endSite != null ? endSite.equals(that.endSite) : that.endSite == null;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (startSite != null ? startSite.hashCode() : 0);
+        result = 31 * result + (endSite != null ? endSite.hashCode() : 0);
+        result = 31 * result + distance;
+        result = 31 * result + time;
+        return result;
     }
 }
