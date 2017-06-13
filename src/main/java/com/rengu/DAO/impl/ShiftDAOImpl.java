@@ -26,12 +26,12 @@ public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntit
     }
 
     @Override
-    public List<RG_ShiftEntity> findAllByUsername(RG_ShiftEntity rg_shiftEntity) {
+    public List<RG_ShiftEntity> findAllByUsername(String username) {
         return null;
     }
 
     @Override
-    public RG_ShiftEntity findAllById(RG_ShiftEntity rg_shiftEntity) {
+    public RG_ShiftEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -39,7 +39,7 @@ public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntit
             super.session = session;
             String hql = "from RG_ShiftEntity rg_shiftEntity where rg_shiftEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_shiftEntity.getId());
+            query.setParameter("id", id);
             return (RG_ShiftEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();

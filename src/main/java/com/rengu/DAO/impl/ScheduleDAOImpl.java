@@ -15,12 +15,12 @@ public class ScheduleDAOImpl extends SuperDAOImpl implements ScheduleDAO<RG_Sche
     }
 
     @Override
-    public List<RG_ScheduleEntity> findAllByUsername(RG_ScheduleEntity rg_scheduleEntity) {
+    public List<RG_ScheduleEntity> findAllByUsername(String username) {
         return null;
     }
 
     @Override
-    public RG_ScheduleEntity findAllById(RG_ScheduleEntity rg_scheduleEntity) {
+    public RG_ScheduleEntity findAllById(String id) {
         return null;
     }
 

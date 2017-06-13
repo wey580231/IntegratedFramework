@@ -8,7 +8,6 @@ public class RG_PlanEntity {
     private String idTask;
     private String idJob;
     private String nameTask;
-    private String nameProcess;
     private String nameOrder;
     private String nameJob;
     private String nameResource;
@@ -22,7 +21,6 @@ public class RG_PlanEntity {
     private String preemptiveTask;
     private String divisibleTask;
     private String continuousTask;
-    private String idTaskGroupTypeResourceSucc;
     private Short quantityTask;
     private Short quantityResourceTask;
     private Short quantityBatchTask;
@@ -31,8 +29,6 @@ public class RG_PlanEntity {
     private String t2Task;
     private String t2ExtendedTask;
     private String advice;
-    private String calendarTask;
-    private String slotTask;
     private String estimateTask;
     private String timeTask;
     private String initTimeTask;
@@ -46,28 +42,19 @@ public class RG_PlanEntity {
     private String t10Task;
     private String t20Task;
     private String t20ExtendedTask;
-    private String t1RealTask;
-    private String t2RealTask;
     private String t1Job;
     private String t2Job;
     private Short quantityJob;
-    private Short quantityProviderTask;
     private Short nbTaskJob;
     private String refProductJob;
     private Short ordToRootJob;
     private String ordToRootChildJob;
-    private Short minQtyBatchTask;
-    private Short minTimeBatchTask;
     private String t1Order;
     private String t2Order;
     private Short quantityOrder;
     private Short priorityOrder;
     private String colorOrder;
     private Byte state;
-    private Byte selected;
-    private Short timeTypeResourceProvider;
-    private Short timeSlotTypeResourceProvider;
-    private Short capacitySlotGroupTypeResource;
 
     private RG_ClubEntity clubByIdClub;
     private RG_ProcessEntity processByIdProcess;
@@ -110,14 +97,6 @@ public class RG_PlanEntity {
 
     public void setNameTask(String nameTask) {
         this.nameTask = nameTask;
-    }
-
-    public String getNameProcess() {
-        return nameProcess;
-    }
-
-    public void setNameProcess(String nameProcess) {
-        this.nameProcess = nameProcess;
     }
 
     public String getNameOrder() {
@@ -224,14 +203,6 @@ public class RG_PlanEntity {
         this.continuousTask = continuousTask;
     }
 
-    public String getIdTaskGroupTypeResourceSucc() {
-        return idTaskGroupTypeResourceSucc;
-    }
-
-    public void setIdTaskGroupTypeResourceSucc(String idTaskGroupTypeResourceSucc) {
-        this.idTaskGroupTypeResourceSucc = idTaskGroupTypeResourceSucc;
-    }
-
     public Short getQuantityTask() {
         return quantityTask;
     }
@@ -294,22 +265,6 @@ public class RG_PlanEntity {
 
     public void setAdvice(String advice) {
         this.advice = advice;
-    }
-
-    public String getCalendarTask() {
-        return calendarTask;
-    }
-
-    public void setCalendarTask(String calendarTask) {
-        this.calendarTask = calendarTask;
-    }
-
-    public String getSlotTask() {
-        return slotTask;
-    }
-
-    public void setSlotTask(String slotTask) {
-        this.slotTask = slotTask;
     }
 
     public String getEstimateTask() {
@@ -416,22 +371,6 @@ public class RG_PlanEntity {
         this.t20ExtendedTask = t20ExtendedTask;
     }
 
-    public String getT1RealTask() {
-        return t1RealTask;
-    }
-
-    public void setT1RealTask(String t1RealTask) {
-        this.t1RealTask = t1RealTask;
-    }
-
-    public String getT2RealTask() {
-        return t2RealTask;
-    }
-
-    public void setT2RealTask(String t2RealTask) {
-        this.t2RealTask = t2RealTask;
-    }
-
     public String getT1Job() {
         return t1Job;
     }
@@ -454,14 +393,6 @@ public class RG_PlanEntity {
 
     public void setQuantityJob(Short quantityJob) {
         this.quantityJob = quantityJob;
-    }
-
-    public Short getQuantityProviderTask() {
-        return quantityProviderTask;
-    }
-
-    public void setQuantityProviderTask(Short quantityProviderTask) {
-        this.quantityProviderTask = quantityProviderTask;
     }
 
     public Short getNbTaskJob() {
@@ -494,22 +425,6 @@ public class RG_PlanEntity {
 
     public void setOrdToRootChildJob(String ordToRootChildJob) {
         this.ordToRootChildJob = ordToRootChildJob;
-    }
-
-    public Short getMinQtyBatchTask() {
-        return minQtyBatchTask;
-    }
-
-    public void setMinQtyBatchTask(Short minQtyBatchTask) {
-        this.minQtyBatchTask = minQtyBatchTask;
-    }
-
-    public Short getMinTimeBatchTask() {
-        return minTimeBatchTask;
-    }
-
-    public void setMinTimeBatchTask(Short minTimeBatchTask) {
-        this.minTimeBatchTask = minTimeBatchTask;
     }
 
     public String getT1Order() {
@@ -560,38 +475,6 @@ public class RG_PlanEntity {
         this.state = state;
     }
 
-    public Byte getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Byte selected) {
-        this.selected = selected;
-    }
-
-    public Short getTimeTypeResourceProvider() {
-        return timeTypeResourceProvider;
-    }
-
-    public void setTimeTypeResourceProvider(Short timeTypeResourceProvider) {
-        this.timeTypeResourceProvider = timeTypeResourceProvider;
-    }
-
-    public Short getTimeSlotTypeResourceProvider() {
-        return timeSlotTypeResourceProvider;
-    }
-
-    public void setTimeSlotTypeResourceProvider(Short timeSlotTypeResourceProvider) {
-        this.timeSlotTypeResourceProvider = timeSlotTypeResourceProvider;
-    }
-
-    public Short getCapacitySlotGroupTypeResource() {
-        return capacitySlotGroupTypeResource;
-    }
-
-    public void setCapacitySlotGroupTypeResource(Short capacitySlotGroupTypeResource) {
-        this.capacitySlotGroupTypeResource = capacitySlotGroupTypeResource;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -601,7 +484,6 @@ public class RG_PlanEntity {
 
         if (id != that.id) return false;
         if (nameTask != null ? !nameTask.equals(that.nameTask) : that.nameTask != null) return false;
-        if (nameProcess != null ? !nameProcess.equals(that.nameProcess) : that.nameProcess != null) return false;
         if (nameOrder != null ? !nameOrder.equals(that.nameOrder) : that.nameOrder != null) return false;
         if (nameJob != null ? !nameJob.equals(that.nameJob) : that.nameJob != null) return false;
         if (nameResource != null ? !nameResource.equals(that.nameResource) : that.nameResource != null) return false;
@@ -623,8 +505,6 @@ public class RG_PlanEntity {
             return false;
         if (continuousTask != null ? !continuousTask.equals(that.continuousTask) : that.continuousTask != null)
             return false;
-        if (idTaskGroupTypeResourceSucc != null ? !idTaskGroupTypeResourceSucc.equals(that.idTaskGroupTypeResourceSucc) : that.idTaskGroupTypeResourceSucc != null)
-            return false;
         if (quantityTask != null ? !quantityTask.equals(that.quantityTask) : that.quantityTask != null) return false;
         if (quantityResourceTask != null ? !quantityResourceTask.equals(that.quantityResourceTask) : that.quantityResourceTask != null)
             return false;
@@ -636,8 +516,6 @@ public class RG_PlanEntity {
         if (t2ExtendedTask != null ? !t2ExtendedTask.equals(that.t2ExtendedTask) : that.t2ExtendedTask != null)
             return false;
         if (advice != null ? !advice.equals(that.advice) : that.advice != null) return false;
-        if (calendarTask != null ? !calendarTask.equals(that.calendarTask) : that.calendarTask != null) return false;
-        if (slotTask != null ? !slotTask.equals(that.slotTask) : that.slotTask != null) return false;
         if (estimateTask != null ? !estimateTask.equals(that.estimateTask) : that.estimateTask != null) return false;
         if (timeTask != null ? !timeTask.equals(that.timeTask) : that.timeTask != null) return false;
         if (initTimeTask != null ? !initTimeTask.equals(that.initTimeTask) : that.initTimeTask != null) return false;
@@ -656,22 +534,14 @@ public class RG_PlanEntity {
         if (t20Task != null ? !t20Task.equals(that.t20Task) : that.t20Task != null) return false;
         if (t20ExtendedTask != null ? !t20ExtendedTask.equals(that.t20ExtendedTask) : that.t20ExtendedTask != null)
             return false;
-        if (t1RealTask != null ? !t1RealTask.equals(that.t1RealTask) : that.t1RealTask != null) return false;
-        if (t2RealTask != null ? !t2RealTask.equals(that.t2RealTask) : that.t2RealTask != null) return false;
         if (t1Job != null ? !t1Job.equals(that.t1Job) : that.t1Job != null) return false;
         if (t2Job != null ? !t2Job.equals(that.t2Job) : that.t2Job != null) return false;
         if (quantityJob != null ? !quantityJob.equals(that.quantityJob) : that.quantityJob != null) return false;
-        if (quantityProviderTask != null ? !quantityProviderTask.equals(that.quantityProviderTask) : that.quantityProviderTask != null)
-            return false;
         if (nbTaskJob != null ? !nbTaskJob.equals(that.nbTaskJob) : that.nbTaskJob != null) return false;
         if (refProductJob != null ? !refProductJob.equals(that.refProductJob) : that.refProductJob != null)
             return false;
         if (ordToRootJob != null ? !ordToRootJob.equals(that.ordToRootJob) : that.ordToRootJob != null) return false;
         if (ordToRootChildJob != null ? !ordToRootChildJob.equals(that.ordToRootChildJob) : that.ordToRootChildJob != null)
-            return false;
-        if (minQtyBatchTask != null ? !minQtyBatchTask.equals(that.minQtyBatchTask) : that.minQtyBatchTask != null)
-            return false;
-        if (minTimeBatchTask != null ? !minTimeBatchTask.equals(that.minTimeBatchTask) : that.minTimeBatchTask != null)
             return false;
         if (t1Order != null ? !t1Order.equals(that.t1Order) : that.t1Order != null) return false;
         if (t2Order != null ? !t2Order.equals(that.t2Order) : that.t2Order != null) return false;
@@ -681,14 +551,6 @@ public class RG_PlanEntity {
             return false;
         if (colorOrder != null ? !colorOrder.equals(that.colorOrder) : that.colorOrder != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
-        if (selected != null ? !selected.equals(that.selected) : that.selected != null) return false;
-        if (timeTypeResourceProvider != null ? !timeTypeResourceProvider.equals(that.timeTypeResourceProvider) : that.timeTypeResourceProvider != null)
-            return false;
-        if (timeSlotTypeResourceProvider != null ? !timeSlotTypeResourceProvider.equals(that.timeSlotTypeResourceProvider) : that.timeSlotTypeResourceProvider != null)
-            return false;
-        if (capacitySlotGroupTypeResource != null ? !capacitySlotGroupTypeResource.equals(that.capacitySlotGroupTypeResource) : that.capacitySlotGroupTypeResource != null)
-            return false;
-
         return true;
     }
 
@@ -697,7 +559,6 @@ public class RG_PlanEntity {
         int result = id;
         result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
         result = 31 * result + (nameTask != null ? nameTask.hashCode() : 0);
-        result = 31 * result + (nameProcess != null ? nameProcess.hashCode() : 0);
         result = 31 * result + (nameOrder != null ? nameOrder.hashCode() : 0);
         result = 31 * result + (nameJob != null ? nameJob.hashCode() : 0);
         result = 31 * result + (nameResource != null ? nameResource.hashCode() : 0);
@@ -711,7 +572,6 @@ public class RG_PlanEntity {
         result = 31 * result + (preemptiveTask != null ? preemptiveTask.hashCode() : 0);
         result = 31 * result + (divisibleTask != null ? divisibleTask.hashCode() : 0);
         result = 31 * result + (continuousTask != null ? continuousTask.hashCode() : 0);
-        result = 31 * result + (idTaskGroupTypeResourceSucc != null ? idTaskGroupTypeResourceSucc.hashCode() : 0);
         result = 31 * result + (quantityTask != null ? quantityTask.hashCode() : 0);
         result = 31 * result + (quantityResourceTask != null ? quantityResourceTask.hashCode() : 0);
         result = 31 * result + (quantityBatchTask != null ? quantityBatchTask.hashCode() : 0);
@@ -720,8 +580,6 @@ public class RG_PlanEntity {
         result = 31 * result + (t2Task != null ? t2Task.hashCode() : 0);
         result = 31 * result + (t2ExtendedTask != null ? t2ExtendedTask.hashCode() : 0);
         result = 31 * result + (advice != null ? advice.hashCode() : 0);
-        result = 31 * result + (calendarTask != null ? calendarTask.hashCode() : 0);
-        result = 31 * result + (slotTask != null ? slotTask.hashCode() : 0);
         result = 31 * result + (estimateTask != null ? estimateTask.hashCode() : 0);
         result = 31 * result + (timeTask != null ? timeTask.hashCode() : 0);
         result = 31 * result + (initTimeTask != null ? initTimeTask.hashCode() : 0);
@@ -735,28 +593,19 @@ public class RG_PlanEntity {
         result = 31 * result + (t10Task != null ? t10Task.hashCode() : 0);
         result = 31 * result + (t20Task != null ? t20Task.hashCode() : 0);
         result = 31 * result + (t20ExtendedTask != null ? t20ExtendedTask.hashCode() : 0);
-        result = 31 * result + (t1RealTask != null ? t1RealTask.hashCode() : 0);
-        result = 31 * result + (t2RealTask != null ? t2RealTask.hashCode() : 0);
         result = 31 * result + (t1Job != null ? t1Job.hashCode() : 0);
         result = 31 * result + (t2Job != null ? t2Job.hashCode() : 0);
         result = 31 * result + (quantityJob != null ? quantityJob.hashCode() : 0);
-        result = 31 * result + (quantityProviderTask != null ? quantityProviderTask.hashCode() : 0);
         result = 31 * result + (nbTaskJob != null ? nbTaskJob.hashCode() : 0);
         result = 31 * result + (refProductJob != null ? refProductJob.hashCode() : 0);
         result = 31 * result + (ordToRootJob != null ? ordToRootJob.hashCode() : 0);
         result = 31 * result + (ordToRootChildJob != null ? ordToRootChildJob.hashCode() : 0);
-        result = 31 * result + (minQtyBatchTask != null ? minQtyBatchTask.hashCode() : 0);
-        result = 31 * result + (minTimeBatchTask != null ? minTimeBatchTask.hashCode() : 0);
         result = 31 * result + (t1Order != null ? t1Order.hashCode() : 0);
         result = 31 * result + (t2Order != null ? t2Order.hashCode() : 0);
         result = 31 * result + (quantityOrder != null ? quantityOrder.hashCode() : 0);
         result = 31 * result + (priorityOrder != null ? priorityOrder.hashCode() : 0);
         result = 31 * result + (colorOrder != null ? colorOrder.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + (selected != null ? selected.hashCode() : 0);
-        result = 31 * result + (timeTypeResourceProvider != null ? timeTypeResourceProvider.hashCode() : 0);
-        result = 31 * result + (timeSlotTypeResourceProvider != null ? timeSlotTypeResourceProvider.hashCode() : 0);
-        result = 31 * result + (capacitySlotGroupTypeResource != null ? capacitySlotGroupTypeResource.hashCode() : 0);
         return result;
     }
 
@@ -839,5 +688,5 @@ public class RG_PlanEntity {
     public void setScheduleByIdSchedule(RG_ScheduleEntity scheduleByIdSchedule) {
         this.scheduleByIdSchedule = scheduleByIdSchedule;
     }
-    
+
 }

@@ -26,7 +26,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     }
 
     @Override
-    public List<RG_OrderEntity> findAllByUsername(RG_OrderEntity rg_orderEntity) {
+    public List<RG_OrderEntity> findAllByUsername(String username) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -34,7 +34,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             super.session = session;
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
-            query.setParameter("nameClub", rg_orderEntity.getClubByIdClub().getName());
+            query.setParameter("nameClub", username);
             List list = query.list();
             return list;
         } catch (Exception exception) {
@@ -44,14 +44,14 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     }
 
     @Override
-    public RG_OrderEntity findAllById(RG_OrderEntity rg_orderEntity) {
+    public RG_OrderEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
             this.transaction = transaction;
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_orderEntity.getId());
+            query.setParameter("id", id);
             return (RG_OrderEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();

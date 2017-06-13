@@ -45,4 +45,8 @@ public class DAOFactory {
     public static LayoutDAOImpl getLayoutDAOImplInstance() {
         return new LayoutDAOImpl();
     }
+
+    public static ClubDAOImpl getClubDAOImplInstance() {
+        return new ClubDAOImpl();
+    }
 }

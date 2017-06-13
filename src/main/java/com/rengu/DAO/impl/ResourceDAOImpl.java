@@ -26,7 +26,7 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
     }
 
     @Override
-    public List<RG_ResourceEntity> findAllByUsername(RG_ResourceEntity rg_resourceEntity) {
+    public List<RG_ResourceEntity> findAllByUsername(String username) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -34,7 +34,7 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
             super.session = session;
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
-            query.setParameter("nameClub", rg_resourceEntity.getClubByIdClub().getName());
+            query.setParameter("nameClub", username);
             List list = query.list();
             return list;
         } catch (Exception exception) {
@@ -44,7 +44,7 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
     }
 
     @Override
-    public RG_ResourceEntity findAllById(RG_ResourceEntity rg_resourceEntity) {
+    public RG_ResourceEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -52,7 +52,7 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
             super.session = session;
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_resourceEntity.getId());
+            query.setParameter("id", id);
             return (RG_ResourceEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();

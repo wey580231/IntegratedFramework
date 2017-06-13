@@ -26,12 +26,12 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
     }
 
     @Override
-    public List<RG_SiteEntity> findAllByUsername(RG_SiteEntity rg_siteEntity) {
+    public List<RG_SiteEntity> findAllByUsername(String username) {
         return null;
     }
 
     @Override
-    public RG_SiteEntity findAllById(RG_SiteEntity rg_siteEntity) {
+    public RG_SiteEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -39,7 +39,7 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
             super.session = session;
             String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_siteEntity.getId());
+            query.setParameter("id", id);
             return (RG_SiteEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();

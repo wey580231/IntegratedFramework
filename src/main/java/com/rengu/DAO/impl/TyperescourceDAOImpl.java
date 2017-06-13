@@ -26,12 +26,12 @@ public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceD
     }
 
     @Override
-    public List<RG_TyperescourceEntity> findAllByUsername(RG_TyperescourceEntity rg_typerescourceEntity) {
+    public List<RG_TyperescourceEntity> findAllByUsername(String username) {
         return null;
     }
 
     @Override
-    public RG_TyperescourceEntity findAllById(RG_TyperescourceEntity rg_typerescourceEntity) {
+    public RG_TyperescourceEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -39,7 +39,7 @@ public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceD
             super.session = session;
             String hql = "from RG_TyperescourceEntity rg_typerescourceEntity where rg_typerescourceEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_typerescourceEntity.getId());
+            query.setParameter("id", id);
             return (RG_TyperescourceEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();

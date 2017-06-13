@@ -26,12 +26,12 @@ public class GroupResourceDAOImpl extends SuperDAOImpl implements GroupResourceD
     }
 
     @Override
-    public List<RG_GroupresourceEntity> findAllByUsername(RG_GroupresourceEntity rg_groupresourceEntity) {
+    public List<RG_GroupresourceEntity> findAllByUsername(String username) {
         return null;
     }
 
     @Override
-    public RG_GroupresourceEntity findAllById(RG_GroupresourceEntity rg_groupresourceEntity) {
+    public RG_GroupresourceEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -39,7 +39,7 @@ public class GroupResourceDAOImpl extends SuperDAOImpl implements GroupResourceD
             super.session = session;
             String hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_groupresourceEntity.getId());
+            query.setParameter("id", id);
             return (RG_GroupresourceEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();

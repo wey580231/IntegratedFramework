@@ -8,9 +8,9 @@ import java.util.List;
 public interface GroupResourceDAO<T> extends SuperDAO {
     List<T> findAll();
 
-    List<T> findAllByUsername(T t);
+    List<T> findAllByUsername(String username);
 
-    T findAllById(T t);
+    T findAllById(String id);
 
     List<T> search(String keyWord);
 }
