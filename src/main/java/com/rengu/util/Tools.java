@@ -123,7 +123,7 @@ public class Tools {
         return list;
     }
 
-    public static String resultCode(String result,  String description) {
+    public static String resultCode(String result, String description) {
         String tmp = "";
 
         tmp += "{" +
