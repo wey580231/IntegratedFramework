@@ -94,4 +94,12 @@
         <action name="drive3DEmulateFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getEmulateFlow"/>
         <action name="drive3DRealFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getRealFlow"/>
     </package>
+
+
+    <!--APS接口-->
+    <package name="APS" namespace="/aps" extends="struts-default">
+        <!--状态查询-->
+        <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="update"/>
+    </package>
+
 </struts>
