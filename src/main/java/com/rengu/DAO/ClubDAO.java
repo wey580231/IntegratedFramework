@@ -3,9 +3,9 @@ package com.rengu.DAO;
 import java.util.List;
 
 /**
- * Created by hanchangming on 2017/5/22.
+ * Created by hanchangming on 2017/6/13.
  */
-public interface OrdersDAO<T> extends SuperDAO {
+public interface ClubDAO<T> extends SuperDAO {
     List<T> findAll();
 
     List<T> findAllByUsername(String username);

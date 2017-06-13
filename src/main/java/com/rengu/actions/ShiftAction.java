@@ -29,11 +29,7 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
     }
 
     public void findAllByUsername() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
-        ShiftDAO shiftDAO = DAOFactory.getShiftInstance();
-        List list = shiftDAO.findAllByUsername(rg_shiftEntity);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
+
     }
 
     public void save() throws Exception {

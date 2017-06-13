@@ -29,11 +29,7 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
     }
 
     public void findAllByUsername() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
-        GroupResourceDAO groupResourceInstance = DAOFactory.getGroupResourceInstance();
-        List list = groupResourceInstance.findAllByUsername(rg_groupresourceEntity);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
+
     }
 
     public void save() throws Exception {

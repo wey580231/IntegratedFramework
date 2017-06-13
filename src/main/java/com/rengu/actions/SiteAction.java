@@ -29,11 +29,7 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
     }
 
     public void findAllByUsername() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
-        SiteDAO siteDAO = DAOFactory.getSiteInstance();
-        List list = siteDAO.findAllByUsername(rg_siteEntity);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
+
     }
 
     public void save() throws Exception {

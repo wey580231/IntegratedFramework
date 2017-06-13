@@ -62,7 +62,7 @@ public class ScheduleAction extends SuperAction {
         JsonNode layoutNode = rootNode.get("layout");
         RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
         LayoutDAOImpl layoutDAO = DAOFactory.getLayoutDAOImplInstance();
-        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId);
+        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId.getId());
         rg_scheduleEntity.setLayout(rg_layoutEntity);
         layoutDAO.getTransaction().commit();
         //解析订单数据
@@ -72,7 +72,7 @@ public class ScheduleAction extends SuperAction {
         for (JsonNode tempNode : orderNodes) {
             String orderNodeJsonString = tempNode.toString();
             RG_OrderEntity rg_orderEntityWhitId = Tools.jsonConvertToEntity(orderNodeJsonString, RG_OrderEntity.class);
-            RG_OrderEntity rg_orderEntity = ordersDAOInstance.findAllById(rg_orderEntityWhitId);
+            RG_OrderEntity rg_orderEntity = ordersDAOInstance.findAllById(rg_orderEntityWhitId.getId());
             rg_orderEntitySet.add(rg_orderEntity);
             Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
         }
@@ -85,7 +85,7 @@ public class ScheduleAction extends SuperAction {
         for (JsonNode tempNode : resourcesNodes) {
             String resourcesNodesJsonString = tempNode.toString();
             RG_ResourceEntity rg_resourceEntityWhitId = Tools.jsonConvertToEntity(resourcesNodesJsonString, RG_ResourceEntity.class);
-            RG_ResourceEntity rg_resourceEntity = resourceInstance.findAllById(rg_resourceEntityWhitId);
+            RG_ResourceEntity rg_resourceEntity = resourceInstance.findAllById(rg_resourceEntityWhitId.getId());
             rg_resourceEntitySet.add(rg_resourceEntity);
             Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_resourceEntity));
         }
@@ -98,7 +98,7 @@ public class ScheduleAction extends SuperAction {
         for (JsonNode tempNode : groupResourceNodes) {
             String groupResourceNodesJsonString = tempNode.toString();
             RG_GroupresourceEntity rg_groupresourceEntityWhitId = Tools.jsonConvertToEntity(groupResourceNodesJsonString, RG_GroupresourceEntity.class);
-            RG_GroupresourceEntity rg_groupresourceEntity = groupResourceInstance.findAllById(rg_groupresourceEntityWhitId);
+            RG_GroupresourceEntity rg_groupresourceEntity = groupResourceInstance.findAllById(rg_groupresourceEntityWhitId.getId());
             rg_groupresourceEntitySet.add(rg_groupresourceEntity);
             Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_groupresourceEntity));
         }
@@ -111,7 +111,7 @@ public class ScheduleAction extends SuperAction {
         for (JsonNode tempNode : siteNodes) {
             String siteNodesJsonString = tempNode.toString();
             RG_SiteEntity rg_siteEntityWhitId = Tools.jsonConvertToEntity(siteNodesJsonString, RG_SiteEntity.class);
-            RG_SiteEntity rg_siteEntity = siteInstance.findAllById(rg_siteEntityWhitId);
+            RG_SiteEntity rg_siteEntity = siteInstance.findAllById(rg_siteEntityWhitId.getId());
             rg_siteEntitySet.add(rg_siteEntity);
             Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_siteEntity));
         }

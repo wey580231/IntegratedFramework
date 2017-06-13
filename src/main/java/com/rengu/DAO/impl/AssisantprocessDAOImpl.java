@@ -26,12 +26,12 @@ public class AssisantprocessDAOImpl extends SuperDAOImpl implements Assisantproc
     }
 
     @Override
-    public List<RG_AssisantprocessEntity> findAllByUsername(RG_AssisantprocessEntity rg_assisantprocessEntity) {
+    public List<RG_AssisantprocessEntity> findAllByUsername(String username) {
         return findAll();
     }
 
     @Override
-    public RG_AssisantprocessEntity findAllById(RG_AssisantprocessEntity rg_assisantprocessEntity) {
+    public RG_AssisantprocessEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
@@ -39,7 +39,7 @@ public class AssisantprocessDAOImpl extends SuperDAOImpl implements Assisantproc
             super.session = session;
             String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity where rg_assisantprocessEntity.id =:id";
             Query query = session.createQuery(hql);
-            query.setParameter("id", rg_assisantprocessEntity.getId());
+            query.setParameter("id", id);
             return (RG_AssisantprocessEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();
