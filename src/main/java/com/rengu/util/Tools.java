@@ -20,6 +20,8 @@ import java.util.*;
  */
 public class Tools {
 
+    private static Properties properties = null;
+
     public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -68,12 +70,15 @@ public class Tools {
     }
 
     public static Properties getDatabaseProperties() {
-        Properties properties = new Properties();
-        try {
-            InputStream inputStream = Tools.class.getResourceAsStream("/Database.properties");
-            properties.load(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (properties == null) {
+            properties = new Properties();
+
+            try {
+                InputStream inputStream = Tools.class.getResourceAsStream("/Database.properties");
+                properties.load(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return properties;
     }
@@ -128,6 +133,19 @@ public class Tools {
 
         tmp += "{" +
                 "\"result\":" + "\"" + result + "\"" + "," +
+                "\"description\":" + "\"" + description + "\"" +
+                "}";
+
+        return tmp;
+    }
+
+    //aps状态返回
+    public static String apsCode(String result,String code, String description) {
+        String tmp = "";
+
+        tmp += "{" +
+                "\"result\":" + "\"" + result + "\"" + "," +
+                "\"code\":" + "\"" + code + "\"" + "," +
                 "\"description\":" + "\"" + description + "\"" +
                 "}";
 
