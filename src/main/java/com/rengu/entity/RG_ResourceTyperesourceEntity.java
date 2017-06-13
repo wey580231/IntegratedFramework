@@ -5,7 +5,7 @@ package com.rengu.entity;
  */
 public class RG_ResourceTyperesourceEntity {
 
-    private int id;
+    private String id;
     private int maxCapacityParallel;
     private int minCapacityParallel;
     private int capacitySequence;
@@ -13,20 +13,12 @@ public class RG_ResourceTyperesourceEntity {
     private RG_ResourceEntity resourceByResourceId;
     private RG_TyperescourceEntity typeresourceById;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public int getMinCapacityParallel() {
-        return minCapacityParallel;
-    }
-
-    public void setMinCapacityParallel(int minCapacityParallel) {
-        this.minCapacityParallel = minCapacityParallel;
     }
 
     public int getMaxCapacityParallel() {
@@ -35,6 +27,14 @@ public class RG_ResourceTyperesourceEntity {
 
     public void setMaxCapacityParallel(int maxCapacityParallel) {
         this.maxCapacityParallel = maxCapacityParallel;
+    }
+
+    public int getMinCapacityParallel() {
+        return minCapacityParallel;
+    }
+
+    public void setMinCapacityParallel(int minCapacityParallel) {
+        this.minCapacityParallel = minCapacityParallel;
     }
 
     public int getCapacitySequence() {
@@ -70,54 +70,31 @@ public class RG_ResourceTyperesourceEntity {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + capacitySequence;
-        result = prime * result + id;
-        result = prime * result + maxCapacityParallel;
-        result = prime * result + minCapacityParallel;
-        result = prime * result + Float.floatToIntBits(ratio);
-        result = prime
-                * result
-                + ((resourceByResourceId == null) ? 0 : resourceByResourceId
-                .hashCode());
-        result = prime
-                * result
-                + ((typeresourceById == null) ? 0 : typeresourceById.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RG_ResourceTyperesourceEntity that = (RG_ResourceTyperesourceEntity) o;
+
+        if (maxCapacityParallel != that.maxCapacityParallel) return false;
+        if (minCapacityParallel != that.minCapacityParallel) return false;
+        if (capacitySequence != that.capacitySequence) return false;
+        if (Float.compare(that.ratio, ratio) != 0) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (resourceByResourceId != null ? !resourceByResourceId.equals(that.resourceByResourceId) : that.resourceByResourceId != null)
+            return false;
+        return typeresourceById != null ? typeresourceById.equals(that.typeresourceById) : that.typeresourceById == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RG_ResourceTyperesourceEntity other = (RG_ResourceTyperesourceEntity) obj;
-        if (capacitySequence != other.capacitySequence)
-            return false;
-        if (id != other.id)
-            return false;
-        if (maxCapacityParallel != other.maxCapacityParallel)
-            return false;
-        if (minCapacityParallel != other.minCapacityParallel)
-            return false;
-        if (Float.floatToIntBits(ratio) != Float.floatToIntBits(other.ratio))
-            return false;
-        if (resourceByResourceId == null) {
-            if (other.resourceByResourceId != null)
-                return false;
-        } else if (!resourceByResourceId.equals(other.resourceByResourceId))
-            return false;
-        if (typeresourceById == null) {
-            if (other.typeresourceById != null)
-                return false;
-        } else if (!typeresourceById.equals(other.typeresourceById))
-            return false;
-        return true;
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + maxCapacityParallel;
+        result = 31 * result + minCapacityParallel;
+        result = 31 * result + capacitySequence;
+        result = 31 * result + (ratio != +0.0f ? Float.floatToIntBits(ratio) : 0);
+        result = 31 * result + (resourceByResourceId != null ? resourceByResourceId.hashCode() : 0);
+        result = 31 * result + (typeresourceById != null ? typeresourceById.hashCode() : 0);
+        return result;
     }
-
 }
