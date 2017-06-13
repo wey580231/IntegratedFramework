@@ -12,81 +12,13 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/31.
  */
-public class AssisantprocessDAOImpl implements AssisantprocessDAO {
-
-    private Transaction transaction;
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    private RG_AssisantprocessEntity getEntityObject(Object object) {
-        RG_AssisantprocessEntity rg_assisantprocessEntity = null;
-        if (object instanceof RG_AssisantprocessEntity) {
-            return (RG_AssisantprocessEntity) object;
-        } else {
-            return rg_assisantprocessEntity;
-        }
-    }
-
+public class AssisantprocessDAOImpl extends SuperDAOImpl implements AssisantprocessDAO<RG_AssisantprocessEntity> {
     @Override
-    public boolean save(Object object) {
-        try {
-            RG_AssisantprocessEntity rg_assisantprocessEntity = getEntityObject(object);
-            if (rg_assisantprocessEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(rg_assisantprocessEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean delete(Object object) {
-        try {
-            RG_AssisantprocessEntity rg_assisantprocessEntity = getEntityObject(object);
-            if (rg_assisantprocessEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.delete(rg_assisantprocessEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Object object) {
-        try {
-            RG_AssisantprocessEntity rg_assisantprocessEntity = getEntityObject(object);
-            if (rg_assisantprocessEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.update(rg_assisantprocessEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public List<?> findAll() {
+    public List<RG_AssisantprocessEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
+        super.transaction = transaction;
+        super.session = session;
         String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -94,25 +26,21 @@ public class AssisantprocessDAOImpl implements AssisantprocessDAO {
     }
 
     @Override
-    public List<?> findAllByUsername(Object object) {
+    public List<RG_AssisantprocessEntity> findAllByUsername(RG_AssisantprocessEntity rg_assisantprocessEntity) {
         return findAll();
     }
 
     @Override
-    public List<?> findAllById(Object object) {
+    public RG_AssisantprocessEntity findAllById(RG_AssisantprocessEntity rg_assisantprocessEntity) {
         try {
-            RG_AssisantprocessEntity rg_assisantprocessEntity = getEntityObject(object);
-            if (rg_assisantprocessEntity == null) {
-                return null;
-            }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
+            super.transaction = transaction;
+            super.session = session;
             String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity where rg_assisantprocessEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_assisantprocessEntity.getId());
-            List list = query.list();
-            return list;
+            return (RG_AssisantprocessEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
@@ -120,12 +48,7 @@ public class AssisantprocessDAOImpl implements AssisantprocessDAO {
     }
 
     @Override
-    public List<?> search(String keyWord) {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity";
-        Query query = session.createQuery(hql);
-        List list = query.list();
-        return list;
+    public List<RG_AssisantprocessEntity> search(String keyWord) {
+        return null;
     }
 }

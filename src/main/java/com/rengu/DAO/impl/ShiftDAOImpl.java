@@ -12,81 +12,13 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/31.
  */
-public class ShiftDAOImpl implements ShiftDAO {
-
-    private Transaction transaction;
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    private RG_ShiftEntity getEntityObject(Object object) {
-        RG_ShiftEntity rg_shiftEntity = null;
-        if (object instanceof RG_ShiftEntity) {
-            return (RG_ShiftEntity) object;
-        } else {
-            return rg_shiftEntity;
-        }
-    }
-
+public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntity> {
     @Override
-    public boolean save(Object object) {
-        try {
-            RG_ShiftEntity rg_shiftEntity = getEntityObject(object);
-            if (rg_shiftEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(rg_shiftEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean delete(Object object) {
-        try {
-            RG_ShiftEntity rg_shiftEntity = getEntityObject(object);
-            if (rg_shiftEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.delete(rg_shiftEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Object object) {
-        try {
-            RG_ShiftEntity rg_shiftEntity = getEntityObject(object);
-            if (rg_shiftEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.update(rg_shiftEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public List<?> findAll() {
+    public List<RG_ShiftEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
+        super.transaction = transaction;
+        super.session = session;
         String hql = "from RG_ShiftEntity rg_shiftEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -94,24 +26,21 @@ public class ShiftDAOImpl implements ShiftDAO {
     }
 
     @Override
-    public List<?> findAllByUsername(Object object) {
-        return findAll();
+    public List<RG_ShiftEntity> findAllByUsername(RG_ShiftEntity rg_shiftEntity) {
+        return null;
     }
 
     @Override
-    public List<?> findAllById(Object object) {
+    public RG_ShiftEntity findAllById(RG_ShiftEntity rg_shiftEntity) {
         try {
-            RG_ShiftEntity rg_shiftEntity = getEntityObject(object);
-            if (rg_shiftEntity == null) {
-                return null;
-            }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            super.transaction = transaction;
+            super.session = session;
             String hql = "from RG_ShiftEntity rg_shiftEntity where rg_shiftEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_shiftEntity.getId());
-            List list = query.list();
-            return list;
+            return (RG_ShiftEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
@@ -119,12 +48,7 @@ public class ShiftDAOImpl implements ShiftDAO {
     }
 
     @Override
-    public List<?> search(String keyWord) {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "from RG_ShiftEntity rg_shiftEntity where rg_shiftEntity.name = 'han'";
-        Query query = session.createQuery(hql);
-        List list = query.list();
-        return list;
+    public List<RG_ShiftEntity> search(String keyWord) {
+        return null;
     }
 }

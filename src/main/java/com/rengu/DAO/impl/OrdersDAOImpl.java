@@ -12,81 +12,13 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/22.
  */
-public class OrdersDAOImpl implements OrdersDAO {
-
-    private Transaction transaction;
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    private RG_OrderEntity getEntityObject(Object object) {
-        RG_OrderEntity rg_orderEntity = null;
-        if (object instanceof RG_OrderEntity) {
-            return (RG_OrderEntity) object;
-        } else {
-            return rg_orderEntity;
-        }
-    }
-
+public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEntity> {
     @Override
-    public boolean save(Object object) {
-        try {
-            RG_OrderEntity rg_orderEntity = getEntityObject(object);
-            if (rg_orderEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(rg_orderEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean delete(Object object) {
-        try {
-            RG_OrderEntity rg_orderEntity = getEntityObject(object);
-            if (rg_orderEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.delete(rg_orderEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Object object) {
-        try {
-            RG_OrderEntity rg_orderEntity = getEntityObject(object);
-            if (rg_orderEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.update(rg_orderEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public List<?> findAll() {
+    public List<RG_OrderEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
+        super.transaction = transaction;
+        super.session = session;
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -94,14 +26,12 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
 
     @Override
-    public List<?> findAllByUsername(Object object) {
+    public List<RG_OrderEntity> findAllByUsername(RG_OrderEntity rg_orderEntity) {
         try {
-            RG_OrderEntity rg_orderEntity = getEntityObject(object);
-            if (rg_orderEntity == null) {
-                return null;
-            }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
+            super.transaction = transaction;
+            super.session = session;
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", rg_orderEntity.getClubByIdClub().getName());
@@ -114,20 +44,15 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
 
     @Override
-    public List<?> findAllById(Object object) {
+    public RG_OrderEntity findAllById(RG_OrderEntity rg_orderEntity) {
         try {
-            RG_OrderEntity rg_orderEntity = getEntityObject(object);
-            if (rg_orderEntity == null) {
-                return null;
-            }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
             this.transaction = transaction;
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_orderEntity.getId());
-            List list = query.list();
-            return list;
+            return (RG_OrderEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
@@ -135,12 +60,7 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
 
     @Override
-    public List<?> search(String keyWord) {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.name = 'han'";
-        Query query = session.createQuery(hql);
-        List list = query.list();
-        return list;
+    public List<RG_OrderEntity> search(String keyWord) {
+        return null;
     }
 }

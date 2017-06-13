@@ -12,63 +12,28 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/6/5.
  */
-public class LayoutDAOImpl implements LayoutDAO {
-
-    private Transaction transaction;
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    private RG_LayoutEntity getEntityObject(Object object) {
-        RG_LayoutEntity rg_layoutEntity = null;
-        if (object instanceof RG_LayoutEntity) {
-            return (RG_LayoutEntity) object;
-        } else {
-            return rg_layoutEntity;
-        }
-    }
-
+public class LayoutDAOImpl extends SuperDAOImpl implements LayoutDAO<RG_LayoutEntity> {
     @Override
-    public boolean save(Object object) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Object object) {
-        return false;
-    }
-
-    @Override
-    public boolean update(Object object) {
-        return false;
-    }
-
-    @Override
-    public List<?> findAll() {
+    public List<RG_LayoutEntity> findAll() {
         return null;
     }
 
     @Override
-    public List<?> findAllByUsername(Object object) {
+    public List<RG_LayoutEntity> findAllByUsername(RG_LayoutEntity rg_layoutEntity) {
         return null;
     }
 
     @Override
-    public List<?> findAllById(Object object) {
+    public RG_LayoutEntity findAllById(RG_LayoutEntity rg_layoutEntity) {
         try {
-            RG_LayoutEntity rg_layoutEntity = getEntityObject(object);
-            if (rg_layoutEntity == null) {
-                return null;
-            }
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
+            super.transaction = transaction;
+            super.session = session;
             String hql = "from RG_LayoutEntity rg_layoutEntity where rg_layoutEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", rg_layoutEntity.getId());
-            List list = query.list();
-            return list;
+            return (RG_LayoutEntity) query.list().get(0);
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
@@ -76,7 +41,7 @@ public class LayoutDAOImpl implements LayoutDAO {
     }
 
     @Override
-    public List<?> search(String keyWord) {
+    public List<RG_LayoutEntity> search(String keyWord) {
         return null;
     }
 }

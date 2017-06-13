@@ -8,8 +8,9 @@ IntegratedFramework Project
 * 修复工艺实体中循环引用导致转换json失败的问题。
 * 20170612:添加3D车间对设备、订单报表信息访问接口
 * 实现排程时的数据库同步语句。
+* 优化了数据库操作层的代码结构，精简代码。
 ## 已知问题
 * ~~数据存储依然有问题~~
 * 3D车间访问订单和设备报表信息，还未加入activeMQ请求访问MES
-* DAOImpl里面的findallbyid应返回一个对象，而不是一个list。
-* transaction应该不用那么频繁的commit。
+* ~~DAOImpl里面的findallbyid应返回一个对象，而不是一个list.~~
+* ~~transaction应该不用那么频繁的commit。~~
