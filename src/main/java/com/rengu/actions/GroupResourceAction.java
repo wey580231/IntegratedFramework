@@ -1,7 +1,7 @@
 package com.rengu.actions;
 
 import com.opensymphony.xwork2.ModelDriven;
-import com.rengu.DAO.GroupResourceDao;
+import com.rengu.DAO.GroupResourceDAO;
 import com.rengu.DAO.impl.GroupResourceDAOImpl;
 import com.rengu.entity.RG_GroupresourceEntity;
 import com.rengu.util.DAOFactory;
@@ -22,8 +22,8 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
     }
 
     public void getAllGroupResource() throws Exception {
-        GroupResourceDao groupResourceDao = DAOFactory.getGroupResourceInstance();
-        List list = groupResourceDao.findAll();
+        GroupResourceDAO groupResourceInstance = DAOFactory.getGroupResourceInstance();
+        List list = groupResourceInstance.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
@@ -31,8 +31,8 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
     public void findAllByUsername() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
-        GroupResourceDao groupResourceDao = DAOFactory.getGroupResourceInstance();
-        List list = groupResourceDao.findAllByUsername(rg_groupresourceEntity);
+        GroupResourceDAO groupResourceInstance = DAOFactory.getGroupResourceInstance();
+        List list = groupResourceInstance.findAllByUsername(rg_groupresourceEntity);
         Tools.jsonPrint(Tools.entityConvertToJsonString(list), this.httpServletResponse);
     }
 

@@ -16,7 +16,6 @@ public class RG_ResourceEntity {
     private String idSiteSequence;
     private Short quantity0;
     private String critical;
-    private String idShift;
     private String nameShift;
     private String calendar;
     private String slot;
@@ -117,14 +116,6 @@ public class RG_ResourceEntity {
 
     public void setCritical(String critical) {
         this.critical = critical;
-    }
-
-    public String getIdShift() {
-        return idShift;
-    }
-
-    public void setIdShift(String idShift) {
-        this.idShift = idShift;
     }
 
     public String getNameShift() {
@@ -252,7 +243,6 @@ public class RG_ResourceEntity {
             return false;
         if (quantity0 != null ? !quantity0.equals(that.quantity0) : that.quantity0 != null) return false;
         if (critical != null ? !critical.equals(that.critical) : that.critical != null) return false;
-        if (idShift != null ? !idShift.equals(that.idShift) : that.idShift != null) return false;
         if (nameShift != null ? !nameShift.equals(that.nameShift) : that.nameShift != null) return false;
         if (calendar != null ? !calendar.equals(that.calendar) : that.calendar != null) return false;
         if (slot != null ? !slot.equals(that.slot) : that.slot != null) return false;
@@ -283,7 +273,6 @@ public class RG_ResourceEntity {
         result = 31 * result + (idSiteSequence != null ? idSiteSequence.hashCode() : 0);
         result = 31 * result + (quantity0 != null ? quantity0.hashCode() : 0);
         result = 31 * result + (critical != null ? critical.hashCode() : 0);
-        result = 31 * result + (idShift != null ? idShift.hashCode() : 0);
         result = 31 * result + (nameShift != null ? nameShift.hashCode() : 0);
         result = 31 * result + (calendar != null ? calendar.hashCode() : 0);
         result = 31 * result + (slot != null ? slot.hashCode() : 0);
