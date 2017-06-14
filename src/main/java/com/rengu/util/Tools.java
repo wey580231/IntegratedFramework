@@ -140,11 +140,10 @@ public class Tools {
         boolean resultFlag = false;
         for (String tableName : tableList) {
             String SQLCommed = "truncate table " + tableName;
-            System.out.println(SQLCommed);
-//            resultFlag = statement.execute(SQLCommed);
-//            if (resultFlag == false) {
-//                return resultFlag;
-//            }
+            resultFlag = statement.execute(SQLCommed);
+            if (resultFlag == false) {
+                return resultFlag;
+            }
         }
         statement.close();
         connection.close();
