@@ -1,11 +1,11 @@
 package com.rengu.entity;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.rengu.util.Tools;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Iterator;
 import java.util.Set;
 
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_LayoutEntity {
 
     private int id;
@@ -61,8 +61,8 @@ public class RG_LayoutEntity {
     }
 
     public String toJson() {
-        String detailString = "{ \"result\":\"0\""+ "," +
-                                "\"id\":" + "\"" + name + "\",";
+        String detailString = "{ \"result\":\"0\"" + "," +
+                "\"id\":" + "\"" + name + "\",";
         detailString += ("\"data\":" + "[");
         Iterator<RG_LayoutDetailEntity> iter = details.iterator();
 

@@ -49,4 +49,12 @@ public class DAOFactory {
     public static ClubDAOImpl getClubDAOImplInstance() {
         return new ClubDAOImpl();
     }
+
+    public static ProcessDAOImpl getProcessDAOImplInstance() {
+        return new ProcessDAOImpl();
+    }
+
+    public static ProviderDAOImpl getProviderDAOImplInstance() {
+        return new ProviderDAOImpl();
+    }
 }

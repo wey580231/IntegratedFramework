@@ -1,8 +1,11 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by wey580231 on 2017/5/24.
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_DistanceEntity {
     private int id;
     private RG_SiteEntity startSite;
