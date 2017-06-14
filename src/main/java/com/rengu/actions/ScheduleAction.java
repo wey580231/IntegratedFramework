@@ -62,7 +62,7 @@ public class ScheduleAction extends SuperAction {
         JsonNode layoutNode = rootNode.get("layout");
         RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
         LayoutDAOImpl layoutDAO = DAOFactory.getLayoutDAOImplInstance();
-        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId.getId());
+        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(String.valueOf(rg_layoutEntityWithId.getId()));
         rg_scheduleEntity.setLayout(rg_layoutEntity);
         layoutDAO.getTransaction().commit();
         //解析订单数据

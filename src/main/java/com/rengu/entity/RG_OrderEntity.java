@@ -1,10 +1,14 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/5/23.
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_OrderEntity {
     private String id;
     private String name;
@@ -36,6 +40,7 @@ public class RG_OrderEntity {
     private Short nbTask;
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
+    @JsonIgnore
     private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
