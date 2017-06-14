@@ -115,7 +115,7 @@ angular.module("IntegratedFramework", [
         service.config3D = backUrl + "3d/config3D.action";
         service.set3DLayout = backUrl + "3d/set3DLayout.action";
         service.get3DReport = backUrl + "3d/get3DReport.action";
-        <!--3D信息-->
+        <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         return service;
     })

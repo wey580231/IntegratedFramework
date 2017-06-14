@@ -23,6 +23,7 @@
     <package name="schedule" extends="struts-default" namespace="/schedule">
         <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
     </package>
+
     <!--工序资源信息接口-->
     <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">
         <action name="getAllAssisantProcess" class="com.rengu.actions.AssisantprocessAction" method="getAllAssisantProcess"/>
@@ -31,6 +32,7 @@
         <action name="update" class="com.rengu.actions.AssisantprocessAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.AssisantprocessAction" method="findAll"/>
     </package>
+
     <!--订单信息接口-->
     <package name="Orders" namespace="/orders" extends="struts-default">
         <action name="getAllOrders" class="com.rengu.actions.OrdersAction" method="getAllOrders"/>
@@ -39,6 +41,7 @@
         <action name="update" class="com.rengu.actions.OrdersAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.OrdersAction" method="findAll"/>
     </package>
+
     <!--资源信息接口-->
     <package name="Resource" namespace="/resource" extends="struts-default">
         <action name="getAllResource" class="com.rengu.actions.ResourceAction" method="getAllResource"/>
@@ -47,6 +50,7 @@
         <action name="update" class="com.rengu.actions.ResourceAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.ResourceAction" method="findAll"/>
     </package>
+
     <!--资源类型信息接口-->
     <package name="Typerescource" namespace="/typerescource" extends="struts-default">
         <action name="getAllTypeRescource" class="com.rengu.actions.TyperescourceAction" method="getAllTypeRescource"/>
@@ -55,6 +59,7 @@
         <action name="update" class="com.rengu.actions.TyperescourceAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.TyperescourceAction" method="findAll"/>
     </package>
+
     <!--资源工组信息接口-->
     <package name="GroupResource" namespace="/groupresource" extends="struts-default">
         <action name="getAllGroupResource" class="com.rengu.actions.GroupResourceAction" method="getAllGroupResource"/>
@@ -94,7 +99,6 @@
         <action name="drive3DEmulateFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getEmulateFlow"/>
         <action name="drive3DRealFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getRealFlow"/>
     </package>
-
 
     <!--APS接口-->
     <package name="APS" namespace="/aps" extends="struts-default">
