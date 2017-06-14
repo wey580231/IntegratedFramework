@@ -25,6 +25,7 @@ public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEnt
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
+
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
