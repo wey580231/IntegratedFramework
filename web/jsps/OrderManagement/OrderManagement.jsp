@@ -10,8 +10,6 @@
 <link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
-
-
 </style>
 
 
@@ -43,8 +41,6 @@
 
     <%--</div>--%>
     <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
-
-
 &nbsp;
 <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>--%>
     <!--搜索-->
@@ -120,7 +116,6 @@
                                     <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
                                         <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
-
                                 </td>
                                 <td>编码</td>
                                 <td>名称</td>
@@ -264,8 +259,3 @@
     </div>
 </div>
 
-<script>
-    $(function () {
-        $("#tabs").tabs();
-    });
-</script>

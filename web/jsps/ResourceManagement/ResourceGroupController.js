@@ -30,6 +30,14 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             });
         }
 
+        /*$scope.start = function () {
+            document.getElementById("addButton").disabled = true;
+            alert("设置按钮状态！！");
+            if (formValidate()) {
+                setTimeout("document.getElementById('addButton').disabled=false;", 500);
+            }
+            alert("恢复按钮状态！！");
+        }*/
         //新增订单
         var addGroupResource = function () {
             var idVal = $("input[name='add-id']").val();

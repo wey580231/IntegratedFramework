@@ -100,7 +100,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
              params.quantity = "";
              params.t0 = "";
              params.ord = "";
-             //var data = JSON.stringify(params);
+             var data = JSON.stringify(params);
              Array.push(params);
              }
              var data = JSON.stringify(Array);
