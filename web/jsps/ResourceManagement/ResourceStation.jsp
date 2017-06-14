@@ -72,10 +72,7 @@
     <div style="margin-top: 1%;">
 
         <div style="width: 100%;border: 0px;margin-top: -10px;">
-
-
             <div id="tabs-2" style="width: 100%;height: 100%;">
-
                 <!--表格-->
                 <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
