@@ -44,6 +44,9 @@
         <property name="apsObj">
             <column name="apsObj" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
+        <property name="apsFlag">
+            <column name="apsFlag" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
 
         <many-to-one name="layout" class="com.rengu.entity.RG_LayoutEntity" unique="true"
                      column="layoutId"></many-to-one>
