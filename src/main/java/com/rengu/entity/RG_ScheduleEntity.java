@@ -7,18 +7,24 @@ import java.util.Set;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_ScheduleEntity {
 
-    private int id;
+    public static final int APS_DISPATCH = 0;
+    public static final int APS_COMPUTE = 1;
+    public static final int APS_SUCCESS = 2;
+    public static final int APS_FAIL = 3;
+    public static final int MES_DISPATCH = 4;
+
+    private String id;
 
     //基础信息
     private String name;
     private String scheduleTime;          //排程日期
     private String startCalcTime;         //计算开始日期
     private String endCalcTime;           //计算结束日期
-    private int state;                    //排程状态“下发APS”“APS计算中”“APS计算完成”“交互优化完成”“已下发MES”
+    private Integer state;                //排程状态0:“下发APS”,1:“APS计算中”,2:“APS计算成功”,3:"APS计算失败",4:“已下发MES”
     private String progress;              //完成进度
 
-    private int scheduleWindow;            //排程时间窗
-    private int rollTime;                  //滚动周期
+    private Integer scheduleWindow;       //排程时间窗
+    private Integer rollTime;             //滚动周期
 
     //APS排程参数
     private String apsStartTime;          //优化项目开始时间
@@ -34,11 +40,11 @@ public class RG_ScheduleEntity {
     private Set<RG_GroupresourceEntity> groups;        //工组
     private Set<RG_SiteEntity> sites;                  //工位
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -74,11 +80,11 @@ public class RG_ScheduleEntity {
         this.endCalcTime = endCalcTime;
     }
 
-    public int getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 
@@ -90,19 +96,19 @@ public class RG_ScheduleEntity {
         this.progress = progress;
     }
 
-    public int getScheduleWindow() {
+    public Integer getScheduleWindow() {
         return scheduleWindow;
     }
 
-    public void setScheduleWindow(int scheduleWindow) {
+    public void setScheduleWindow(Integer scheduleWindow) {
         this.scheduleWindow = scheduleWindow;
     }
 
-    public int getRollTime() {
+    public Integer getRollTime() {
         return rollTime;
     }
 
-    public void setRollTime(int rollTime) {
+    public void setRollTime(Integer rollTime) {
         this.rollTime = rollTime;
     }
 
@@ -136,6 +142,14 @@ public class RG_ScheduleEntity {
 
     public void setApsObj(String apsObj) {
         this.apsObj = apsObj;
+    }
+
+    public String getApsFlag() {
+        return apsFlag;
+    }
+
+    public void setApsFlag(String apsFlag) {
+        this.apsFlag = apsFlag;
     }
 
     public RG_LayoutEntity getLayout() {
@@ -178,14 +192,6 @@ public class RG_ScheduleEntity {
         this.sites = sites;
     }
 
-    public String getApsFlag() {
-        return apsFlag;
-    }
-
-    public void setApsFlag(String apsFlag) {
-        this.apsFlag = apsFlag;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -193,16 +199,17 @@ public class RG_ScheduleEntity {
 
         RG_ScheduleEntity that = (RG_ScheduleEntity) o;
 
-        if (id != that.id) return false;
-        if (state != that.state) return false;
-        if (scheduleWindow != that.scheduleWindow) return false;
-        if (rollTime != that.rollTime) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (scheduleTime != null ? !scheduleTime.equals(that.scheduleTime) : that.scheduleTime != null) return false;
         if (startCalcTime != null ? !startCalcTime.equals(that.startCalcTime) : that.startCalcTime != null)
             return false;
         if (endCalcTime != null ? !endCalcTime.equals(that.endCalcTime) : that.endCalcTime != null) return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (progress != null ? !progress.equals(that.progress) : that.progress != null) return false;
+        if (scheduleWindow != null ? !scheduleWindow.equals(that.scheduleWindow) : that.scheduleWindow != null)
+            return false;
+        if (rollTime != null ? !rollTime.equals(that.rollTime) : that.rollTime != null) return false;
         if (apsStartTime != null ? !apsStartTime.equals(that.apsStartTime) : that.apsStartTime != null) return false;
         if (apsEndTime != null ? !apsEndTime.equals(that.apsEndTime) : that.apsEndTime != null) return false;
         if (apsModel != null ? !apsModel.equals(that.apsModel) : that.apsModel != null) return false;
@@ -217,15 +224,15 @@ public class RG_ScheduleEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (scheduleTime != null ? scheduleTime.hashCode() : 0);
         result = 31 * result + (startCalcTime != null ? startCalcTime.hashCode() : 0);
         result = 31 * result + (endCalcTime != null ? endCalcTime.hashCode() : 0);
-        result = 31 * result + state;
+        result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (progress != null ? progress.hashCode() : 0);
-        result = 31 * result + scheduleWindow;
-        result = 31 * result + rollTime;
+        result = 31 * result + (scheduleWindow != null ? scheduleWindow.hashCode() : 0);
+        result = 31 * result + (rollTime != null ? rollTime.hashCode() : 0);
         result = 31 * result + (apsStartTime != null ? apsStartTime.hashCode() : 0);
         result = 31 * result + (apsEndTime != null ? apsEndTime.hashCode() : 0);
         result = 31 * result + (apsModel != null ? apsModel.hashCode() : 0);
