@@ -84,11 +84,11 @@ public class Tools {
     }
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        String databaseUrl = getDatabaseProperties().getProperty(companyName + "DatabaseUrl");
-        String databaseUsername = getDatabaseProperties().getProperty(companyName + "DatabaseUsername");
-        String databasePassword = getDatabaseProperties().getProperty(companyName + "DatabasePassword");
-        String databaseDriver = getDatabaseProperties().getProperty(databaseType + "Driver");
-
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -99,11 +99,11 @@ public class Tools {
     }
 
     public static List executeSQLForResultSet(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        String databaseUrl = getDatabaseProperties().getProperty(companyName + "DatabaseUrl");
-        String databaseUsername = getDatabaseProperties().getProperty(companyName + "DatabaseUsername");
-        String databasePassword = getDatabaseProperties().getProperty(companyName + "DatabasePassword");
-        String databaseDriver = getDatabaseProperties().getProperty(databaseType + "Driver");
-
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -128,6 +128,29 @@ public class Tools {
         return list;
     }
 
+    public static boolean executeSQLForInitTable(String databaseType, String companyName, String[] tableList) throws ClassNotFoundException, SQLException {
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
+        Class.forName(databaseDriver);
+        Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
+        Statement statement = connection.createStatement();
+        boolean resultFlag = false;
+        for (String tableName : tableList) {
+            String SQLCommed = "truncate table " + tableName;
+            System.out.println(SQLCommed);
+//            resultFlag = statement.execute(SQLCommed);
+//            if (resultFlag == false) {
+//                return resultFlag;
+//            }
+        }
+        statement.close();
+        connection.close();
+        return resultFlag;
+    }
+
     public static String resultCode(String result, String description) {
         String tmp = "";
 
@@ -140,7 +163,7 @@ public class Tools {
     }
 
     //aps状态返回
-    public static String apsCode(String result,String code, String description) {
+    public static String apsCode(String result, String code, String description) {
         String tmp = "";
 
         tmp += "{" +

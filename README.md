@@ -17,3 +17,4 @@ IntegratedFramework Project
 * 3D车间访问订单和设备报表信息，还未加入activeMQ请求访问MES
 * ~~DAOImpl里面的findallbyid应返回一个对象，而不是一个list.~~
 * ~~transaction应该不用那么频繁的commit。~~
+* 数据库中的表结构多对多的关系再确认一次，多对多的关系会导致序列化出错。
