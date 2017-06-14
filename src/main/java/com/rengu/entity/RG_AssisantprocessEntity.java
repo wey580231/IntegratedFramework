@@ -9,7 +9,7 @@ import java.util.Set;
  */
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_AssisantprocessEntity {
-    private int id;
+    private String id;
     private Short grp;
     private String typeSite;
     private String idSite;
@@ -23,11 +23,11 @@ public class RG_AssisantprocessEntity {
     private RG_ProcessEntity processByIdProcess;
     private Set<RG_TyperescourceEntity> typeresourceById;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -87,7 +87,6 @@ public class RG_AssisantprocessEntity {
         this.modResource = modResource;
     }
 
-
     public String getRgPrimary() {
         return rgPrimary;
     }
@@ -112,6 +111,22 @@ public class RG_AssisantprocessEntity {
         this.weightSequence = weightSequence;
     }
 
+    public RG_ProcessEntity getProcessByIdProcess() {
+        return processByIdProcess;
+    }
+
+    public void setProcessByIdProcess(RG_ProcessEntity processByIdProcess) {
+        this.processByIdProcess = processByIdProcess;
+    }
+
+    public Set<RG_TyperescourceEntity> getTyperesourceById() {
+        return typeresourceById;
+    }
+
+    public void setTyperesourceById(Set<RG_TyperescourceEntity> typeresourceById) {
+        this.typeresourceById = typeresourceById;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -119,7 +134,7 @@ public class RG_AssisantprocessEntity {
 
         RG_AssisantprocessEntity that = (RG_AssisantprocessEntity) o;
 
-        if (id != that.id) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (grp != null ? !grp.equals(that.grp) : that.grp != null) return false;
         if (typeSite != null ? !typeSite.equals(that.typeSite) : that.typeSite != null) return false;
         if (idSite != null ? !idSite.equals(that.idSite) : that.idSite != null) return false;
@@ -133,13 +148,14 @@ public class RG_AssisantprocessEntity {
             return false;
         if (weightSequence != null ? !weightSequence.equals(that.weightSequence) : that.weightSequence != null)
             return false;
-
-        return true;
+        if (processByIdProcess != null ? !processByIdProcess.equals(that.processByIdProcess) : that.processByIdProcess != null)
+            return false;
+        return typeresourceById != null ? typeresourceById.equals(that.typeresourceById) : that.typeresourceById == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (grp != null ? grp.hashCode() : 0);
         result = 31 * result + (typeSite != null ? typeSite.hashCode() : 0);
         result = 31 * result + (idSite != null ? idSite.hashCode() : 0);
@@ -150,14 +166,8 @@ public class RG_AssisantprocessEntity {
         result = 31 * result + (rgPrimary != null ? rgPrimary.hashCode() : 0);
         result = 31 * result + (weightParallel != null ? weightParallel.hashCode() : 0);
         result = 31 * result + (weightSequence != null ? weightSequence.hashCode() : 0);
+        result = 31 * result + (processByIdProcess != null ? processByIdProcess.hashCode() : 0);
+        result = 31 * result + (typeresourceById != null ? typeresourceById.hashCode() : 0);
         return result;
-    }
-
-    public RG_ProcessEntity getProcessByIdProcess() {
-        return processByIdProcess;
-    }
-
-    public void setProcessByIdProcess(RG_ProcessEntity processByIdProcess) {
-        this.processByIdProcess = processByIdProcess;
     }
 }
