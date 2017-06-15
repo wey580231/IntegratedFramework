@@ -66,7 +66,11 @@
             <many-to-many class="com.rengu.entity.RG_GroupresourceEntity" column="g_id"></many-to-many>
         </set>
 
-        <set name="sites" inverse="false" cascade="all" table="schedule_site">
+        <!--schedule和site是多对多关系，site和resource是多对多关系。
+        查找resource会加载site，另外也会查找site，造成session缓存中出现同一个id的site对象两次。
+        因此把schedule的级联关系改成merge
+        -->
+        <set name="sites" inverse="false" cascade="merge" table="schedule_site">
             <key column="s_id"></key>
             <many-to-many class="com.rengu.entity.RG_SiteEntity" column="site_id"></many-to-many>
         </set>

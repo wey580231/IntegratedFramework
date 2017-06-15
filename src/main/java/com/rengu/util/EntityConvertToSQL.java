@@ -15,7 +15,17 @@ public class EntityConvertToSQL {
     }
 
     public static String insertSQLForAPS(RG_OrderEntity rg_orderEntity) {
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,idClub,priority,idProduct,quantity,t0,t1,t2,color,state) VALUES ('" + rg_orderEntity.getId() + "','" + rg_orderEntity.getName() + "','" + rg_orderEntity.getClubByIdClub().getId() + "'," + rg_orderEntity.getPriority() + ",'" + rg_orderEntity.getProductByIdProduct().getId() + "'," + rg_orderEntity.getQuantity() + ",'" + rg_orderEntity.getT0() + "','" + rg_orderEntity.getT1() + "','" + rg_orderEntity.getT2() + "','" + rg_orderEntity.getColor() + "'," + rg_orderEntity.getState() + ");";
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,idClub,priority,idProduct,quantity,t0,t1,t2,color,state) VALUES ('" + rg_orderEntity.getId()
+                + "','" + rg_orderEntity.getName()
+                + "','" + rg_orderEntity.getClubByIdClub().getId()
+                + "'," + rg_orderEntity.getPriority()
+                + ",'" + rg_orderEntity.getProductByIdProduct().getId()
+                + "'," + rg_orderEntity.getQuantity()
+                + ",'" + rg_orderEntity.getT0()
+                + "','" + rg_orderEntity.getT1()
+                + "','" + rg_orderEntity.getT2()
+                + "','" + rg_orderEntity.getColor()
+                + "'," + rg_orderEntity.getState() + ");";
         return SQLString;
     }
 
@@ -64,17 +74,40 @@ public class EntityConvertToSQL {
             }
         }
         IdShift = IdShift + "}";
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_RESOURCE + " (id,name,IdTypeResource,idGroupResource,IdSite,mobility,critical,IdShift,NameShift,DateForbidden,weekend) VALUES ('" + rg_resourceEntity.getId() + "','" + rg_resourceEntity.getName() + "','" + IdTypeResource + "','" + rg_resourceEntity.getGroupresourceByIdGroupResource().getId() + "','" + IdSite + "'," + rg_resourceEntity.getMobility() + ",'" + rg_resourceEntity.getCritical() + "','" + IdShift + "','" + rg_resourceEntity.getNameShift() + "','" + rg_resourceEntity.getDateForbidden() + "','" + rg_resourceEntity.getWeekend() + "');";
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_RESOURCE + " (id,name,IdTypeResource,idGroupResource,IdSite,mobility,critical,IdShift,NameShift,DateForbidden,weekend) VALUES ('"
+                + rg_resourceEntity.getId() + "','"
+                + rg_resourceEntity.getName() + "','"
+                + IdTypeResource + "','"
+                + rg_resourceEntity.getGroupresourceByIdGroupResource().getId() + "','"
+                + IdSite + "'," + rg_resourceEntity.getMobility() + ",'"
+                + rg_resourceEntity.getCritical() + "','"
+                + IdShift + "','"
+                + rg_resourceEntity.getNameShift() + "','"
+                + rg_resourceEntity.getDateForbidden() + "','"
+                + rg_resourceEntity.getWeekend() + "');";
         return SQLString;
     }
 
     public static String insertSQLForAPS(RG_GroupresourceEntity rg_groupresourceEntity) {
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_GROUPRESOURCE + " (id,name,IdSite,idSite0,idProvider,idClub,color) VALUES ('" + rg_groupresourceEntity.getId() + "','" + rg_groupresourceEntity.getName() + "','" + rg_groupresourceEntity.getIdSite() + "','" + rg_groupresourceEntity.getIdSite0() + "','" + rg_groupresourceEntity.getProviderByIdProvider().getId() + "','" + rg_groupresourceEntity.getProviderByIdProvider().getClubByIdClub().getId() + "','" + rg_groupresourceEntity.getColor() + "');";
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_GROUPRESOURCE +
+                " (id,name,IdSite,idSite0,idProvider,idClub,color) VALUES ('" + rg_groupresourceEntity.getId()
+                + "','" + rg_groupresourceEntity.getName()
+                + "','" + rg_groupresourceEntity.getIdSite()
+                + "','" + rg_groupresourceEntity.getIdSite0()
+                + "','" + rg_groupresourceEntity.getProviderByIdProvider().getId()
+                + "','" + rg_groupresourceEntity.getProviderByIdProvider().getClubByIdClub().getId()
+                + "','" + rg_groupresourceEntity.getColor() + "');";
         return SQLString;
     }
 
     public static String insertSQLForAPS(RG_SiteEntity rg_siteEntity) {
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_SITE + " (id,name,color,idIcon,sizeIcon,capacity) VALUES ('" + rg_siteEntity.getId() + "','" + rg_siteEntity.getName() + "','" + rg_siteEntity.getColor() + "','" + rg_siteEntity.getIdIcon() + "'," + rg_siteEntity.getSizeIcon() + "," + rg_siteEntity.getCapacity() + ");";
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_SITE + " (id,name,color,idIcon,sizeIcon,capacity) VALUES ('"
+                + rg_siteEntity.getId() + "','"
+                + rg_siteEntity.getName() + "','"
+                + rg_siteEntity.getColor() + "','"
+                + rg_siteEntity.getIdIcon() + "',"
+                + rg_siteEntity.getSizeIcon() + ","
+                + rg_siteEntity.getCapacity() + ");";
         return SQLString;
     }
 
