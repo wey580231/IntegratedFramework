@@ -104,6 +104,9 @@
     <package name="APS" namespace="/aps" extends="struts-default">
         <!--状态查询-->
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="update"/>
+        <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
+        <!--异常处理-->
+        <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processError"/>
     </package>
 
 </struts>

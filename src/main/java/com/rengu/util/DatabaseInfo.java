@@ -17,4 +17,5 @@ public class DatabaseInfo {
     public static final String APS_GROUPRESOURCE = "aps_groupresource";
     public static final String APS_SITE = "aps_site";
     public static final String APS_LOG = "aps_log";
+    public static final String APS_SHIFT = "aps_shift";
 }

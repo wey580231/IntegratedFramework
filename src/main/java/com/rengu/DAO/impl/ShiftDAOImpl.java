@@ -40,7 +40,11 @@ public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntit
             String hql = "from RG_ShiftEntity rg_shiftEntity where rg_shiftEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_ShiftEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_ShiftEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

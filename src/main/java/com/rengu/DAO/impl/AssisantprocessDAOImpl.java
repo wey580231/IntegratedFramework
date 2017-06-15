@@ -40,7 +40,12 @@ public class AssisantprocessDAOImpl extends SuperDAOImpl implements Assisantproc
             String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity where rg_assisantprocessEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_AssisantprocessEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_AssisantprocessEntity) query.list().get(0);
+            } else {
+                return null;
+            }
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

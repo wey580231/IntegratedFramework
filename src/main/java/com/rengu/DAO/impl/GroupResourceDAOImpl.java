@@ -40,7 +40,11 @@ public class GroupResourceDAOImpl extends SuperDAOImpl implements GroupResourceD
             String hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_GroupresourceEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_GroupresourceEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

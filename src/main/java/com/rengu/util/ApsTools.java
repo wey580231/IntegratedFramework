@@ -27,9 +27,18 @@ public class ApsTools {
     public static final int STARTED = 1;
     public static final int ALREADY = 2;
     public static final int FINISHED = 3;
+
+    //aps部署的地址和端口号
     private static ApsTools apsTool = null;
     private String apsHost;
     private int apsPort;
+
+    //集成框架部署的地址和端口号
+    private String localAddress;
+    private String localPort;
+
+    private final String replyApsAction = "/aps/updateProgress";
+
     private Socket socket;
     private BufferedReader breader = null;
     private OutputStream os = null;
@@ -38,6 +47,9 @@ public class ApsTools {
         try {
             apsHost = Tools.getDatabaseProperties().getProperty("APSHost");
             apsPort = Integer.parseInt(Tools.getDatabaseProperties().getProperty("APSPort"));
+
+            localAddress = Tools.getDatabaseProperties().getProperty("LocalAddress");
+            localPort = Tools.getDatabaseProperties().getProperty("LocalPort");
 
             socket = new Socket(apsHost, apsPort);
 
@@ -62,7 +74,7 @@ public class ApsTools {
     }
 
     //获取排程结果
-    public static void getScheduleResult() throws SQLException, ClassNotFoundException {
+    public void getScheduleResult() throws SQLException, ClassNotFoundException {
         String SQLString = "select * from aps_plan";
         List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
         for (Object object : list) {
@@ -118,41 +130,49 @@ public class ApsTools {
                 rg_planEntity.setPriorityOrder(Short.parseShort(tempMap.get("priorityOrder").toString()));
                 rg_planEntity.setColorOrder(tempMap.get("colorOrder").toString());
                 rg_planEntity.setState(Byte.parseByte(tempMap.get("state").toString()));
+
                 //获取Club实体
                 ClubDAOImpl clubDAO = DAOFactory.getClubDAOImplInstance();
                 rg_planEntity.setClubByIdClub(clubDAO.findAllById(tempMap.get("idClub").toString()));
                 clubDAO.getTransaction().commit();
+
                 //获取Process实体
                 ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
                 rg_planEntity.setProcessByIdProcess(processDAO.findAllById(tempMap.get("idProcess").toString()));
                 processDAO.getTransaction().commit();
+
                 //获取Order实体
                 OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
                 rg_planEntity.setOrderByIdOrder(ordersDAO.findAllById(tempMap.get("idOrder").toString()));
                 ordersDAO.getTransaction().commit();
+
                 //获取Resource实体
                 ResourceDAOImpl resourceDAO = DAOFactory.getResourceInstance();
                 rg_planEntity.setResourceByIdResource(resourceDAO.findAllById(tempMap.get("idResource").toString()));
                 resourceDAO.getTransaction().commit();
+
                 //获取Site实体
                 SiteDAOImpl siteDAO = DAOFactory.getSiteInstance();
                 rg_planEntity.setSiteByIdSite(siteDAO.findAllById(tempMap.get("idSite").toString()));
                 siteDAO.getTransaction().commit();
+
                 //获取GroupResource实体
                 GroupResourceDAOImpl groupResourceDAO = DAOFactory.getGroupResourceInstance();
                 rg_planEntity.setGroupresourceByIdGroupResource(groupResourceDAO.findAllById(tempMap.get("idGroupResource").toString()));
                 groupResourceDAO.getTransaction().commit();
+
                 //获取TypeResource实体
                 TyperescourceDAOImpl typerescourceDAO = DAOFactory.getTyperescourceInstance();
                 rg_planEntity.setGroupresourceByIdGroupResource(groupResourceDAO.findAllById(tempMap.get("idTypeResource").toString()));
                 typerescourceDAO.getTransaction().commit();
+
                 //获取Provider实体
                 ProviderDAOImpl providerDAO = DAOFactory.getProviderDAOImplInstance();
                 rg_planEntity.setProviderByIdProvider(providerDAO.findAllById(tempMap.get("idProvider").toString()));
                 providerDAO.getTransaction().commit();
+
             }
         }
-
     }
 
     //拼接请求命令
@@ -174,12 +194,11 @@ public class ApsTools {
 
     //执行请求
     private String execute(String command) {
-        StringBuffer result = null;
+        StringBuffer result = new StringBuffer();
         try {
             os.write(combineCommand(command).getBytes());
             os.flush();
             String oneline = null;
-            result = new StringBuffer();
 
             while ((oneline = breader.readLine()) != null) {
                 result.append(oneline).append("\n");
@@ -227,5 +246,10 @@ public class ApsTools {
             return ApsTools.IDLE;
         }
         return ApsTools.UNKNOWN;
+    }
+
+    //获取aps计算完后返回结果地址
+    public String getReplyAddress() {
+        return localAddress + ":" + localPort + replyApsAction;
     }
 }

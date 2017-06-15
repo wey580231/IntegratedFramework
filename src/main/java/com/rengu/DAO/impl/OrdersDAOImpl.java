@@ -52,7 +52,12 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_OrderEntity) query.list().get(0);
+            List list = query.list();
+            if (!query.list().isEmpty()) {
+                return (RG_OrderEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

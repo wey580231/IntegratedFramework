@@ -33,7 +33,11 @@ public class ProcessDAOImpl extends SuperDAOImpl implements ProcessDAO<RG_Proces
             String hql = "from RG_ProcessEntity rg_processEntity where rg_processEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_ProcessEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_ProcessEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
