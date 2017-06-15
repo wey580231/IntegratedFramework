@@ -128,7 +128,7 @@ public class Tools {
         return list;
     }
 
-    public static boolean executeSQLForInitTable(String databaseType, String companyName, String[] tableList) throws ClassNotFoundException, SQLException {
+    public static void executeSQLForInitTable(String databaseType, String companyName, String[] tableList) throws ClassNotFoundException, SQLException {
         Properties databaseProperties = getDatabaseProperties();
         String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
@@ -137,17 +137,12 @@ public class Tools {
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
-        boolean resultFlag = false;
         for (String tableName : tableList) {
-            String SQLCommed = "truncate table " + tableName;
-            resultFlag = statement.execute(SQLCommed);
-            if (resultFlag == false) {
-                return resultFlag;
-            }
+            String SQLCommed = "TRUNCATE table " + tableName + ";";
+            statement.execute(SQLCommed);
         }
         statement.close();
         connection.close();
-        return resultFlag;
     }
 
     public static String resultCode(String result, String description) {

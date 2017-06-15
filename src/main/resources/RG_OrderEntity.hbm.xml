@@ -97,8 +97,8 @@
         </many-to-one>
 
         <set name="schedules" inverse="true" cascade="save-update" table="schedule_order">
-            <key column="o_id"></key>
-            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"></many-to-many>
+            <key column="o_id"/>
+            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
     </class>
 </hibernate-mapping>
