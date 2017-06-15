@@ -42,5 +42,6 @@
             <key column="site_id"></key>
             <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"></many-to-many>
         </set>
+
     </class>
 </hibernate-mapping>

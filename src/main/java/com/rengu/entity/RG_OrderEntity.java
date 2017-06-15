@@ -18,7 +18,7 @@ public class RG_OrderEntity {
     private String idProvider;
     private String idGroupResource;
     private Short quantity;                 //订单数量
-    private short finishQuantity;           //完工数量
+    private Short finishQuantity;           //完工数量
     private Short priority;                 //优先级
     private String t0;
     private String t1;
@@ -42,6 +42,7 @@ public class RG_OrderEntity {
     private RG_ClubEntity clubByIdClub;
     @JsonIgnore
     private Set<RG_ScheduleEntity> schedules;
+
 
     public String getId() {
         return id;
@@ -107,11 +108,11 @@ public class RG_OrderEntity {
         this.quantity = quantity;
     }
 
-    public short getFinishQuantity() {
+    public Short getFinishQuantity() {
         return finishQuantity;
     }
 
-    public void setFinishQuantity(short finishQuantity) {
+    public void setFinishQuantity(Short finishQuantity) {
         this.finishQuantity = finishQuantity;
     }
 
@@ -267,6 +268,30 @@ public class RG_OrderEntity {
         this.nbTask = nbTask;
     }
 
+    public RG_ProductEntity getProductByIdProduct() {
+        return productByIdProduct;
+    }
+
+    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
+        this.productByIdProduct = productByIdProduct;
+    }
+
+    public RG_ClubEntity getClubByIdClub() {
+        return clubByIdClub;
+    }
+
+    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
+        this.clubByIdClub = clubByIdClub;
+    }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -274,7 +299,6 @@ public class RG_OrderEntity {
 
         RG_OrderEntity that = (RG_OrderEntity) o;
 
-        if (finishQuantity != that.finishQuantity) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
@@ -284,6 +308,8 @@ public class RG_OrderEntity {
         if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
             return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
+        if (finishQuantity != null ? !finishQuantity.equals(that.finishQuantity) : that.finishQuantity != null)
+            return false;
         if (priority != null ? !priority.equals(that.priority) : that.priority != null) return false;
         if (t0 != null ? !t0.equals(that.t0) : that.t0 != null) return false;
         if (t1 != null ? !t1.equals(that.t1) : that.t1 != null) return false;
@@ -321,7 +347,7 @@ public class RG_OrderEntity {
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
-        result = 31 * result + (int) finishQuantity;
+        result = 31 * result + (finishQuantity != null ? finishQuantity.hashCode() : 0);
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
         result = 31 * result + (t0 != null ? t0.hashCode() : 0);
         result = 31 * result + (t1 != null ? t1.hashCode() : 0);
@@ -345,29 +371,5 @@ public class RG_OrderEntity {
         result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
         result = 31 * result + (schedules != null ? schedules.hashCode() : 0);
         return result;
-    }
-
-    public RG_ProductEntity getProductByIdProduct() {
-        return productByIdProduct;
-    }
-
-    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
-        this.productByIdProduct = productByIdProduct;
-    }
-
-    public RG_ClubEntity getClubByIdClub() {
-        return clubByIdClub;
-    }
-
-    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
-        this.clubByIdClub = clubByIdClub;
-    }
-
-    public Set<RG_ScheduleEntity> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
-        this.schedules = schedules;
     }
 }

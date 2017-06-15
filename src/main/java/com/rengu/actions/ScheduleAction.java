@@ -3,10 +3,7 @@ package com.rengu.actions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.impl.*;
 import com.rengu.entity.*;
-import com.rengu.util.DAOFactory;
-import com.rengu.util.DatabaseInfo;
-import com.rengu.util.EntityConvertToSQL;
-import com.rengu.util.Tools;
+import com.rengu.util.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -70,6 +67,7 @@ public class ScheduleAction extends SuperAction {
         RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId.getId());
         rg_scheduleEntity.setLayout(rg_layoutEntity);
         layoutDAO.getTransaction().commit();
+
         //解析订单数据
         JsonNode orderNodes = rootNode.get("orders");
         Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<>();
@@ -83,6 +81,7 @@ public class ScheduleAction extends SuperAction {
         }
         rg_scheduleEntity.setOrders(rg_orderEntitySet);
         ordersDAOInstance.getTransaction().commit();
+
         //解析resources数据
         JsonNode resourcesNodes = rootNode.get("resources");
         Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<>();
@@ -96,6 +95,7 @@ public class ScheduleAction extends SuperAction {
         }
         rg_scheduleEntity.setResources(rg_resourceEntitySet);
         resourceInstance.getTransaction().commit();
+
         //解析groupResource数据
         JsonNode groupResourceNodes = rootNode.get("groupResource");
         Set<RG_GroupresourceEntity> rg_groupresourceEntitySet = new HashSet<>();
@@ -109,20 +109,20 @@ public class ScheduleAction extends SuperAction {
         }
         rg_scheduleEntity.setGroups(rg_groupresourceEntitySet);
         groupResourceInstance.getTransaction().commit();
+
         //解析Site数据
-        // TODO 解决 A different object with the same identifier value was already associated with the session问题
-//        JsonNode siteNodes = rootNode.get("site");
-//        Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<>();
-//        SiteDAOImpl siteInstance = DAOFactory.getSiteInstance();
-//        for (JsonNode tempNode : siteNodes) {
-//            String siteNodesJsonString = tempNode.toString();
-//            RG_SiteEntity rg_siteEntityWhitId = Tools.jsonConvertToEntity(siteNodesJsonString, RG_SiteEntity.class);
-//            RG_SiteEntity rg_siteEntity = siteInstance.findAllById(rg_siteEntityWhitId.getId());
-//            rg_siteEntitySet.add(rg_siteEntity);
-//            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_siteEntity));
-//        }
-//        rg_scheduleEntity.setSites(rg_siteEntitySet);
-//        siteInstance.getTransaction().commit();
+        JsonNode siteNodes = rootNode.get("site");
+        Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<>();
+        SiteDAOImpl siteInstance = DAOFactory.getSiteInstance();
+        for (JsonNode tempNode : siteNodes) {
+            String siteNodesJsonString = tempNode.toString();
+            RG_SiteEntity rg_siteEntityWhitId = Tools.jsonConvertToEntity(siteNodesJsonString, RG_SiteEntity.class);
+            RG_SiteEntity rg_siteEntity = siteInstance.findAllById(rg_siteEntityWhitId.getId());
+            rg_siteEntitySet.add(rg_siteEntity);
+            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_siteEntity));
+        }
+        rg_scheduleEntity.setSites(rg_siteEntitySet);
+        siteInstance.getTransaction().commit();
 
         //APS ID计算标识
         String apsId = String.valueOf(date.getTime());
@@ -133,8 +133,8 @@ public class ScheduleAction extends SuperAction {
         scheduleDAOImplInstance.save(rg_scheduleEntity);
         scheduleDAOImplInstance.getTransaction().commit();
 
-//        //调用排程接口
-//        String executeCmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n&REPLY=127.0.0.1:8080/aps/updateProgress&ID=" + apsId + "&DELAY=1000000&buffer=001";
-//        int result = ApsTools.instance().executeCommand(executeCmd);
+        //调用排程接口
+        String executeCmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n&REPLY=127.0.0.1:8080/aps/updateProgress&ID=" + apsId + "&DELAY=1000000&buffer=001";
+        int result = ApsTools.instance().executeCommand(executeCmd);
     }
 }

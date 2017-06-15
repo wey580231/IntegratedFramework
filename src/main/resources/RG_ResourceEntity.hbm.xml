@@ -109,5 +109,6 @@
             <key column="r_id"/>
             <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
+
     </class>
 </hibernate-mapping>

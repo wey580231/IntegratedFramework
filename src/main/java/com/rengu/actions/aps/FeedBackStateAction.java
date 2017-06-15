@@ -7,6 +7,7 @@ import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.entity.RG_State3DEntity;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
+import com.rengu.util.WebSocketNotification;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -40,6 +41,7 @@ public class FeedBackStateAction extends SuperAction {
                 Query query = session.createQuery("from RG_ScheduleEntity entity where entity.apsFlag =:flag");
                 query.setParameter("flag", id[0]);
                 List<RG_ScheduleEntity> list = query.list();
+
                 //TODO 通过消息告诉前端
                 if (list.size() == 1 && list.get(0) instanceof RG_ScheduleEntity) {
                     RG_ScheduleEntity entity = (RG_ScheduleEntity) list.get(0);
@@ -52,6 +54,9 @@ public class FeedBackStateAction extends SuperAction {
                         entity.setState(RG_ScheduleEntity.APS_FAIL);
                     }
                     session.update(entity);
+                    WebSocketNotification.broadcast("APS计算完成!");
+                } else {
+                    WebSocketNotification.broadcast("计算出错!");
                 }
 
                 session.getTransaction().commit();

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_AdjustDeviceEntity" table="RG_AdjustDevice" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(255)"/>
+        </id>
+        <property name="orderId">
+            <column name="orderId" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="reportTime">
+            <column name="reportTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="resoureId">
+            <column name="resoureId" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="origin">
+            <column name="origin" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="state" sql-type="int" not-null="false"/>
+        </property>
+
+        <property name="cancelTime">
+            <column name="cancelTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="latestCancelTime">
+            <column name="latestCancelTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+
+        <property name="unavailableStartTime">
+            <column name="unavailableStartTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="unavailableEndTime">
+            <column name="unavailableEndTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="unavailableStartDate">
+            <column name="unavailableStartDate" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="unavailableEndDate">
+            <column name="unavailableEndDate" sql-type="varchar(255)" not-null="false"/>
+        </property>
+
+        <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity" column="order_id"
+                     unique="true"></many-to-one>
+
+        <many-to-one name="resourceEntity" class="com.rengu.entity.RG_ResourceEntity" column="resource_id"
+                     unique="true"></many-to-one>
+
+
+    </class>
+</hibernate-mapping>
