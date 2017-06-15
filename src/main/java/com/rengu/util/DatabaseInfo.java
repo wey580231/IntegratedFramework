@@ -6,6 +6,7 @@ package com.rengu.util;
 public class DatabaseInfo {
     //数据库类型名称
     public static final String MySQL = "MySQL";
+    public static final String ACCESS = "Access";
     //公司名称
     public static final String APS = "APS";
     //APS数据库表名称
@@ -15,4 +16,5 @@ public class DatabaseInfo {
     public static final String APS_RESOURCE = "aps_resource";
     public static final String APS_GROUPRESOURCE = "aps_groupresource";
     public static final String APS_SITE = "aps_site";
+    public static final String APS_LOG = "aps_log";
 }

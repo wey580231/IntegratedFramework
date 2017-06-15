@@ -3,17 +3,11 @@ package com.rengu.actions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.impl.*;
 import com.rengu.entity.*;
-import com.rengu.util.DAOFactory;
-import com.rengu.util.DatabaseInfo;
-import com.rengu.util.EntityConvertToSQL;
-import com.rengu.util.Tools;
+import com.rengu.util.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by hanchangming on 2017/6/5.
@@ -21,12 +15,20 @@ import java.util.Set;
 public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() throws Exception {
+
+        //初始化数据库表
+        String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE};
+        Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
+        //更新数据库表内容
         String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
         JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
         RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
+        rg_scheduleEntity.setId(UUID.randomUUID().toString());
         //解析排程名称
         JsonNode nameNodes = rootNode.get("name");
         rg_scheduleEntity.setName(nameNodes.asText());
+        rg_scheduleEntity.setState(RG_ScheduleEntity.APS_COMPUTE);
+
         //获取当前时间
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -62,7 +64,7 @@ public class ScheduleAction extends SuperAction {
         JsonNode layoutNode = rootNode.get("layout");
         RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
         LayoutDAOImpl layoutDAO = DAOFactory.getLayoutDAOImplInstance();
-        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(String.valueOf(rg_layoutEntityWithId.getId()));
+        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId.getId());
         rg_scheduleEntity.setLayout(rg_layoutEntity);
         layoutDAO.getTransaction().commit();
         //解析订单数据
@@ -105,6 +107,7 @@ public class ScheduleAction extends SuperAction {
         rg_scheduleEntity.setGroups(rg_groupresourceEntitySet);
         groupResourceInstance.getTransaction().commit();
         //解析Site数据
+        // TODO 解决 A different object with the same identifier value was already associated with the session问题
         JsonNode siteNodes = rootNode.get("site");
         Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<>();
         SiteDAOImpl siteInstance = DAOFactory.getSiteInstance();
@@ -117,9 +120,18 @@ public class ScheduleAction extends SuperAction {
         }
         rg_scheduleEntity.setSites(rg_siteEntitySet);
         siteInstance.getTransaction().commit();
+
+        //APS ID计算标识
+        String apsId = String.valueOf(date.getTime());
+        rg_scheduleEntity.setApsFlag(apsId);
+
         //提交保存
         ScheduleDAOImpl scheduleDAOImplInstance = DAOFactory.getScheduleDAOImplInstance();
         scheduleDAOImplInstance.save(rg_scheduleEntity);
         scheduleDAOImplInstance.getTransaction().commit();
+
+        //调用排程接口
+        String executeCmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n&REPLY=127.0.0.1:8080/aps/updateProgress&ID=" + apsId + "&DELAY=1000000&buffer=001";
+        int result = ApsTools.instance().executeCommand(executeCmd);
     }
 }
