@@ -3,7 +3,10 @@ package com.rengu.actions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.impl.*;
 import com.rengu.entity.*;
-import com.rengu.util.*;
+import com.rengu.util.DAOFactory;
+import com.rengu.util.DatabaseInfo;
+import com.rengu.util.EntityConvertToSQL;
+import com.rengu.util.Tools;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,7 +20,7 @@ public class ScheduleAction extends SuperAction {
     public void beginSchedule() throws Exception {
 
         //初始化数据库表
-        String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE};
+        String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
         Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
         //更新数据库表内容
         String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
@@ -119,7 +122,7 @@ public class ScheduleAction extends SuperAction {
             RG_SiteEntity rg_siteEntityWhitId = Tools.jsonConvertToEntity(siteNodesJsonString, RG_SiteEntity.class);
             RG_SiteEntity rg_siteEntity = siteInstance.findAllById(rg_siteEntityWhitId.getId());
             rg_siteEntitySet.add(rg_siteEntity);
-            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_siteEntity));
+//            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_siteEntity));
         }
         rg_scheduleEntity.setSites(rg_siteEntitySet);
         siteInstance.getTransaction().commit();
@@ -132,9 +135,9 @@ public class ScheduleAction extends SuperAction {
         ScheduleDAOImpl scheduleDAOImplInstance = DAOFactory.getScheduleDAOImplInstance();
         scheduleDAOImplInstance.save(rg_scheduleEntity);
         scheduleDAOImplInstance.getTransaction().commit();
-
-        //调用排程接口
-        String executeCmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n&REPLY=127.0.0.1:8080/aps/updateProgress&ID=" + apsId + "&DELAY=1000000&buffer=001";
-        int result = ApsTools.instance().executeCommand(executeCmd);
+//
+//        //调用排程接口
+//        String executeCmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n&REPLY=127.0.0.1:8080/aps/updateProgress&ID=" + apsId + "&DELAY=1000000&buffer=001";
+//        int result = ApsTools.instance().executeCommand(executeCmd);
     }
 }

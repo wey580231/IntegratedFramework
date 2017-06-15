@@ -33,7 +33,11 @@ public class ProviderDAOImpl extends SuperDAOImpl implements ProviderDAO<RG_Prov
             String hql = "from RG_ProviderEntity rg_providerEntity where rg_providerEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_ProviderEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_ProviderEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

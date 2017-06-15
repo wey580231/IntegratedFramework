@@ -53,7 +53,11 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_ResourceEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_ResourceEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

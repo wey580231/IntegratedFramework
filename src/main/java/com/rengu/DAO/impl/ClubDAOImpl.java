@@ -33,7 +33,11 @@ public class ClubDAOImpl extends SuperDAOImpl implements ClubDAO<RG_ClubEntity> 
             String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_ClubEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_ClubEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
