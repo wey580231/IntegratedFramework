@@ -57,7 +57,7 @@ public class ApsTools {
     }
 
     //拼接请求命令
-    public String combineCommand(String requestURL) {
+    private String combineCommand(String requestURL) {
         StringBuffer requestHeader = new StringBuffer();
         requestHeader
                 .append("GET " + requestURL + " HTTP/1.1\n")
@@ -74,7 +74,7 @@ public class ApsTools {
     }
 
     //执行请求
-    public String execute(String command) {
+    private String execute(String command) {
         StringBuffer result = null;
         try {
             os.write(combineCommand(command).getBytes());
