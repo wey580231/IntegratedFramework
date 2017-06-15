@@ -33,7 +33,11 @@ public class LayoutDAOImpl extends SuperDAOImpl implements LayoutDAO<RG_LayoutEn
             String hql = "from RG_LayoutEntity rg_layoutEntity where rg_layoutEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_LayoutEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_LayoutEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

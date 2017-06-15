@@ -40,7 +40,11 @@ public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceD
             String hql = "from RG_TyperescourceEntity rg_typerescourceEntity where rg_typerescourceEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            return (RG_TyperescourceEntity) query.list().get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_TyperescourceEntity) query.list().get(0);
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

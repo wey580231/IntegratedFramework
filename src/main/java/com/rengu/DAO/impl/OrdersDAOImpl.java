@@ -53,10 +53,11 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             List list = query.list();
-            if (list.size() > 0 && list.get(0) instanceof RG_OrderEntity) {
-                return (RG_OrderEntity) list.get(0);
+            if (!query.list().isEmpty()) {
+                return (RG_OrderEntity) query.list().get(0);
+            } else {
+                return null;
             }
-            return null;
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
