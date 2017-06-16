@@ -35,21 +35,22 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             var idVal = $("input[name='add-id']").val();
             var nameVal = $("input[name='add-name']").val();
             var xVal = $("input[name='add-x']").val();
+            var yVal = $("input[name='add-y']").val();
             var capacityVal = $("input[name='add-capacity']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
             params.x = xVal;
+            params.y = yVal;
             params.capacity = capacityVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddSite, data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求错误！");
             })
+            window.location.reload();
         };
 
         var updateSelected = function (action, id) {
@@ -102,19 +103,15 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
              alert("请求失败！");
              });*/
             var params = {};
-            //var idVal = operateId;
-            params.id = operateId;
-            params.name = "";
-            params.x = "";
-            params.capacity = "";
-            console.log(params);
+            var idVal = operateId;
+            params.id = idVal;
             var data = JSON.stringify(params);
+            console.log(data);
             myHttpService.delete(serviceList.DeleteSite,data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("delete请求失败！");
             });
+            window.location.reload();
         }
 
         //修改订单
@@ -123,37 +120,33 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             var idVal = operateId;
             console.log(idVal);
             params.id = idVal;
-            params.name = "";
-            params.x = "";
-            params.capacity = "";
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             myHttpService.post(serviceList.ListSite, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
-            }, function errorCallback(response) {
-                alert("get请求失败！");
             });
         }
         $scope.update = function () {
             var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
             var xVal = $("input[name='edit-x']").val();
+            var yVal = $("input[name='edit-y']").val();
             var capacityVal = $("input[name='edit-capacity']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
             params.x = xVal;
+            params.y = yVal;
             params.capacity = capacityVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateSite, data).then(function (response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("post请求失败！");
             });
+            window.location.reload();
         };
 
         //信息填写检验

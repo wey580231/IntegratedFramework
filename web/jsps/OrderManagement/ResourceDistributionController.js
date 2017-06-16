@@ -22,7 +22,6 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         //重新加载页面信息
         var reload = function () {
             //取消checkbox选中状态
-            document.getElementById('check').checked = false;
             $("input").val('');
             myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {
                 $scope.arr = response.data;
@@ -47,14 +46,12 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             params.maxResource = maxResourceVal;
             params.weightParallel = weightParallelVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddAssisantProcess, data).then(function successCallback(response) {
                 console.log(response.status);
-                reload();
-            }, function errorCallback(response) {
-                alert("请求错误！");
             })
+            window.location.reload();
         };
 
         var updateSelected = function (action, id) {
@@ -85,13 +82,11 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             params.id = idVal;
             params.grp = "";
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             myHttpService.delete(serviceList.DeleteAssisantProcess, data).then(function successCallback(response) {
                 console.log(response.status);
-                reload();
-            }, function errorCallback(response) {
-                alert("请求失败！");
             })
+            window.location.reload();
         };
 
         //修改工序资源信息
@@ -101,12 +96,10 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             params.id = idVal;
             params.grp = "";
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             myHttpService.post(serviceList.ListAssisantProcess, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
-            }, function errorCallback(response) {
-                alert("请求失败！");
             })
         };
         $scope.update = function () {
@@ -126,14 +119,13 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             params.maxResource = maxResourceVal;
             params.weightParallel = weightParallelVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateAssisantProcess, data).then(function (response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求失败！");
             })
+            window.location.reload();
         };
 
         //信息填写检验

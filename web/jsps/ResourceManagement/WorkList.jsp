@@ -209,7 +209,7 @@
                     <label for="edit-type">班次类型</label><br/>
                     <input type="text" name="edit-type" id="edit-type" class="text ui-widget-content ui-corner-all" value="{{x.type}}"><br/>
                     <label for="edit-Slot">时间段</label><br/>
-                    <input type="text" name="edit-Slot" id="edit-Slot" class="text ui-widget-content ui-corner-all" value="{{x.Slot}}"><br/>
+                    <input type="text" name="edit-Slot" id="edit-Slot" class="text ui-widget-content ui-corner-all" value="{{x.slot}}"><br/>
                     <label for="edit-extra">加班</label><br/>
                     <input type="text" name="edit-extra" id="edit-extra" class="text ui-widget-content ui-corner-all" value="{{x.extra}}"><br/>
                 </fieldset>

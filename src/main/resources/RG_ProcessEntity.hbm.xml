@@ -189,7 +189,11 @@
             <column name="idProduct" not-null="false"/>
         </many-to-one>
         <many-to-one name="processByIdProcess" class="com.rengu.entity.RG_ProcessEntity">
-            <column name="idParent" not-null="false"/>
+            <column name="pId" not-null="false"/>
         </many-to-one>
+        <set name="childProcess" cascade="all" inverse="true">
+            <key column="pId"></key>
+            <one-to-many class="com.rengu.entity.RG_ProcessEntity"/>
+        </set>
     </class>
 </hibernate-mapping>

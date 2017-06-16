@@ -22,5 +22,13 @@
             </key>
             <one-to-many not-found="ignore" class="com.rengu.entity.RG_LayoutDetailEntity"/>
         </set>
+
+        <set name="schedules" inverse="true" lazy="true" cascade="all">
+            <key>
+                <column name="layoutId" not-null="false"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.rengu.entity.RG_ScheduleEntity"/>
+        </set>
+
     </class>
 </hibernate-mapping>

@@ -120,8 +120,8 @@
                                 <td>编码</td>
                                 <td>名称</td>
                                 <td>来源</td>
-                                <td>产品名</td>
-                                <td>数量</td>
+
+                                <!--<td>数量</td>-->
                                 <td>优先级</td>
                                 <td>下单时间</td>
                                 <td>最早开工</td>
@@ -140,12 +140,12 @@
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="origin">{{x.origin}}</td>
-                                <td id="ord">{{x.ord}}</td>
-                                <td id="quantity">{{x.quantity}}</td>
+                               <!-- <td id="idProduct">{{x.idProduct}}</td>
+                                <td id="quantity">{{x.quantity}}</td>-->
                                 <td id="priority">{{x.priority}}</td>
                                 <td id="t0">{{x.t0}}</td>
-                                <td id="advance">{{x.advance}}</td>
-                                <td id="delay">{{x.delay}}</td>
+                                <td id="t1">{{x.t1}}</td>
+                                <td id="t2">{{x.t2}}</td>
                             </tr>
                             </tbody>
 
@@ -202,18 +202,18 @@
                     <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-origin">来源</label><br/>
                     <input type="text" name="add-origin" id="add-origin" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-ord">产品名称</label><br/>
-                    <input type="text" name="add-ord" id="add-ord" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="number">数量</label><br/>
-                    <input type="add-quantity" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>
+                   <!-- <label for="add-idProduct">产品名称</label><br/>
+                    <input type="text" name="add-idProduct" id="add-idProduct" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-quantity">数量</label><br/>
+                    <input type="text" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>-->
                     <label for="add-priority">优先级</label><br/>
                     <input type="text" name="add-priority" id="add-priority" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="time">下单时间</label><br/>
-                    <input type="add-t0" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="earliest">最早开工</label><br/>
-                    <input type="add-advance" name="add-advance" id="add-advance" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-delay">最晚开工</label><br/>
-                    <input type="text" name="add-delay" id="add-delay" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-t0">下单时间</label><br/>
+                    <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-t1">最早开工</label><br/>
+                    <input type="text" name="add-t1" id="add-t1" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-t2">最晚开工</label><br/>
+                    <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
                 </fieldset>
             </form>
         </div>
@@ -237,18 +237,18 @@
                     <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-origin">来源</label><br/>
                     <input type="text" name="edit-origin" id="edit-origin" class="text ui-widget-content ui-corner-all" value="{{x.origin}}"><br/>
-                    <label for="edit-ord">产品名称</label><br/>
-                    <input type="text" name="edit-ord" id="edit-ord" class="text ui-widget-content ui-corner-all" value="{{x.ord}}"><br/>
+                    <!--<label for="edit-idProduct">产品名称</label><br/>
+                    <input type="text" name="edit-idProduct" id="edit-idProduct" class="text ui-widget-content ui-corner-all" value="{{x.idProduct}}"><br/>
                     <label for="edit-quantity">数量</label><br/>
-                    <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>
+                    <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>-->
                     <label for="edit-priority">优先级</label><br/>
                     <input type="text" name="edit-priority" id="edit-priority" class="text ui-widget-content ui-corner-all" value="{{x.priority}}"><br/>
                     <label for="edit-t0">下单时间</label><br/>
                     <input type="text" name="edit-t0" id="edit-t0" class="text ui-widget-content ui-corner-all" value="{{x.t0}}"><br/>
-                    <label for="edit-advance">最早开工</label><br/>
-                    <input type="text" name="edit-advance" id="edit-advance" class="text ui-widget-content ui-corner-all" value="{{x.advance}}"><br/>
-                    <label for="edit-delay">最晚开工</label><br/>
-                    <input type="text" name="edit-delay" id="edit-delay" class="text ui-widget-content ui-corner-all" value="{{x.delay}}"><br/>
+                    <label for="edit-t1">最早开工</label><br/>
+                    <input type="text" name="edit-t1" id="edit-t1" class="text ui-widget-content ui-corner-all" value="{{x.t1}}"><br/>
+                    <label for="edit-t2">最晚开工</label><br/>
+                    <input type="text" name="edit-t2" id="edit-t2" class="text ui-widget-content ui-corner-all" value="{{x.t2}}"><br/>
                 </fieldset>
             </form>
         </div>

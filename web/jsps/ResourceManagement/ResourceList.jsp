@@ -93,11 +93,11 @@
                                     <td>名称</td>
                                     <td>资源类型</td>
                                     <td>工组</td>
-                                    <td>移动速度</td>
+                                    <!--<td>移动速度</td>
                                     <td>串行能力</td>
                                     <td>并行下限</td>
                                     <td>并行上限</td>
-                                    <td>能力恢复</td>
+                                    <td>能力恢复</td>-->
                                     <td>正常班次</td>
                                     <td>状态信息</td>
                                 </tr>
@@ -113,14 +113,9 @@
                                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                     <td id="id">{{x.id}}</td>
                                     <td id="name">{{x.name}}</td>
-                                    <td id="idTypeResource">{{x.idTypeResource}}</td>
-                                    <td id="idSiteGroupResource">{{x.idSiteGroupResource}}</td>
-                                    <td id="mobility">{{x.mobility}}</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td id="idShift">4</td>
+                                    <td id="typeSite">{{x.typeSite}}</td>
+                                    <td id="IdSiteGroupResource">{{x.idSiteGroupResource}}</td>
+                                    <td id="NameShift">{{x.nameShift}}</td>
                                     <td id="state">{{x.state}}</td>
                                 </tr>
                                 </tbody>
@@ -175,13 +170,13 @@
                     <label for="add-name">名称</label><br/>
                     <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-TypeSite">资源类型</label><br/>
-                    <input type="text" name="add-TypeSite" id="add-TypeSite" class="text ui-widget-content ui-corner-all"><br/>
+                    <input type="text" name="add-typeSite" id="add-typeSite" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-idSiteGroupResource">工组</label><br/>
                     <input type="text" name="add-idSiteGroupResource" id="add-idSiteGroupResource" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="mobility">移动速度</label><br/>
-                    <input type="text" name="add-mobility" id="add-mobility" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="idShift">正常班次</label><br/>
-                    <input type="text" name="add-idShift" id="add-idShift" class="text ui-widget-content ui-corner-all"><br/>
+                    <!--<label for="add-mobility">移动速度</label><br/>
+                    <input type="text" name="add-mobility" id="add-mobility" class="text ui-widget-content ui-corner-all"><br/>-->
+                    <label for="add-nameShift">正常班次</label><br/>
+                    <input type="text" name="add-nameShift" id="add-nameShift" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-state">状态信息</label><br/>
                     <input type="text" name="add-state" id="add-state" class="text ui-widget-content ui-corner-all"><br/>
                 </fieldset>
@@ -206,13 +201,13 @@
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-TypeSite">资源类型</label><br/>
-                    <input type="text" name="edit-TypeSite" id="edit-TypeSite" class="text ui-widget-content ui-corner-all" value="{{x.TypeSite}}"><br/>
+                    <input type="text" name="edit-typeSite" id="edit-typeSite" class="text ui-widget-content ui-corner-all" value="{{x.typeSite}}"><br/>
                     <label for="edit-idSiteGroupResource">工组</label><br/>
                     <input type="text" name="edit-idSiteGroupResource" id="edit-idSiteGroupResource" class="text ui-widget-content ui-corner-all" value="{{x.idSiteGroupResource}}"><br/>
-                    <label for="edit-mobility">移动速度</label><br/>
-                    <input type="text" name="edit-mobility" id="edit-mobility" class="text ui-widget-content ui-corner-all" value="{{x.mobility}}"><br/>
-                    <label for="edit-idShift">正常班次</label><br/>
-                    <input type="text" name="edit-idShift" id="edit-idShift" class="text ui-widget-content ui-corner-all" value="{{x.idShift}}"><br/>
+                    <!--<label for="edit-mobility">移动速度</label><br/>
+                    <input type="text" name="edit-mobility" id="edit-mobility" class="text ui-widget-content ui-corner-all" value="{{x.mobility}}"><br/>-->
+                    <label for="edit-nameShift">正常班次</label><br/>
+                    <input type="text" name="edit-nameShift" id="edit-nameShift" class="text ui-widget-content ui-corner-all" value="{{x.nameShift}}"><br/>
                     <label for="edit-state">状态信息</label><br/>
                     <input type="text" name="edit-state" id="edit-state" class="text ui-widget-content ui-corner-all" value="{{x.state}}"><br/>
                 </fieldset>
@@ -226,9 +221,4 @@
 </div>
 
 
-<script>
-        $(function () {
-            $("#tabs").tabs();
-        });
-    </script>
 

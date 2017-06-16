@@ -171,9 +171,9 @@
                 <fieldset>
                     <label for="add-id">序号</label> <br/>
                     <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
-                    <label for="add-name">资源类型编码</label><br/>
+                    <label for="add-name">资源类型名称</label><br/>
                     <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
-                    <label for="add-ratio">资源类型名称</label><br/>
+                    <label for="add-ratio">资源类系数</label><br/>
                     <input type="text" name="add-ratio" id="add-ratio" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-attribute">资源属性</label><br/>
                     <input type="text" name="add-attribute" id="add-attribute" class="text ui-widget-content ui-corner-all"><br/>
