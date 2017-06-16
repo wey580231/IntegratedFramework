@@ -333,8 +333,7 @@ public class RG_OrderEntity {
         if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
         if (productByIdProduct != null ? !productByIdProduct.equals(that.productByIdProduct) : that.productByIdProduct != null)
             return false;
-        if (clubByIdClub != null ? !clubByIdClub.equals(that.clubByIdClub) : that.clubByIdClub != null) return false;
-        return schedules != null ? schedules.equals(that.schedules) : that.schedules == null;
+        return clubByIdClub != null ? clubByIdClub.equals(that.clubByIdClub) : that.clubByIdClub == null;
     }
 
     @Override
@@ -369,7 +368,6 @@ public class RG_OrderEntity {
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
         result = 31 * result + (productByIdProduct != null ? productByIdProduct.hashCode() : 0);
         result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
-        result = 31 * result + (schedules != null ? schedules.hashCode() : 0);
         return result;
     }
 }
