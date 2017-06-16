@@ -95,7 +95,6 @@
                                         <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
-
                                 </td>
                                 <td style="width: 55px;">序号</td>
                                 <td>排产名称</td>
@@ -121,9 +120,7 @@
                                 <td>2017-05-17 08:01</td>
                                 <td>计算完成</td>
                             </tr>
-
                             </tbody>
-
                         </table>
 
                         <!--底部页码-->
@@ -189,28 +186,28 @@
                 <div class="uk-form-row">
                     <label for="add-id">订单</label>&nbsp;&nbsp;
                     <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseOrder'}"
-                            ng-click="showOrder();reload()">点击选择需要排程的订单
+                            ng-click="showOrder()">点击选择需要排程的订单
                     </button>
                     <br/>
                 </div>
                 <div class="uk-form-row">
                     <label for="add-name">资源</label>&nbsp;&nbsp;
                     <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseResource'}"
-                            ng-click="showResource();reload()">点击选择需要排程的资源
+                            ng-click="showResource()">点击选择需要排程的资源
                     </button>
                     <br/>
                 </div>
                 <div class="uk-form-row">
                     <label for="add-origin">资源工组</label>&nbsp;
                     <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseGroupResource'}"
-                            ng-click="showGroupResource();reload()">点击选择需要排程的资源工组
+                            ng-click="showGroupResource();">点击选择需要排程的资源工组
                     </button>
                     <br/>
                 </div>
                 <div class="uk-form-row">
                     <label for="add-ord">资源工位</label>&nbsp;
                     <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseSite'}"
-                            ng-click="showSite();reload()">点击选择需要排程的资源工位
+                            ng-click="showSite()">点击选择需要排程的资源工位
                     </button>
                     <br/>
                 </div>
@@ -255,20 +252,20 @@
                     </div>
 
                     <div class="fixtable-body" style="height: 83%;">
-                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order" style="width:100%">
                             <tbody class="uk-text-center">
                             <tr id="first" ng-repeat="x in ord track by $index">
-                                <td><input id="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                <td><input id="check1" name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="origin">{{x.origin}}</td>
-                                <td id="ord">{{x.ord}}</td>
+                                <td id="idProduct">{{x.idProduct}}</td>
                                 <td id="quantity">{{x.quantity}}</td>
                                 <td id="priority">{{x.priority}}</td>
                                 <td id="t0">{{x.t0}}</td>
-                                <td id="advance">{{x.advance}}</td>
-                                <td id="delay">{{x.delay}}</td>
+                                <td id="t1">{{x.t1}}</td>
+                                <td id="t2">{{x.t2}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -278,6 +275,9 @@
             <div class="uk-modal-footer uk-text-right">
                 <button type="button" ng-click="checkOrId();orderHide()" data-uk-modal="{target:'#choose'}">
                     确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
                 </button>
             </div>
         </div>
@@ -306,10 +306,10 @@
                                 <td>资源类型</td>
                                 <td>工组</td>
                                 <td>移动速度</td>
-                                <td>串行能力</td>
+                                <!--<td>串行能力</td>
                                 <td>并行下限</td>
                                 <td>并行上限</td>
-                                <td>能力恢复</td>
+                                <td>能力恢复</td>-->
                                 <td>正常班次</td>
                                 <td>状态信息</td>
                             </tr>
@@ -318,21 +318,17 @@
                     </div>
 
                     <div class="fixtable-body" style="height: 83%;">
-                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order" style="width:100%">
                             <tbody class="uk-text-center">
                             <tr ng-repeat="x in res track by $index">
-                                <td><input id="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                <td><input id="check2" name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="idTypeResource">{{x.idTypeResource}}</td>
                                 <td id="idSiteGroupResource">{{x.idSiteGroupResource}}</td>
                                 <td id="mobility">{{x.mobility}}</td>
-                                <td>1000</td>
-                                <td>1000</td>
-                                <td>1000</td>
-                                <td>1000</td>
-                                <td id="idShift">4</td>
+                                <td id="idShift">{{x.idShift}}</td>
                                 <td id="state">{{x.state}}</td>
                             </tr>
                             </tbody>
@@ -344,6 +340,9 @@
             <div class="uk-modal-footer uk-text-right">
                 <button type="button" ng-click="checkReId()" data-uk-modal="{target:'#choose'}">
                     确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
                 </button>
             </div>
         </div>
@@ -360,7 +359,7 @@
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
                     <div class="fixtable-head">
-                        <table class="uk-table uk-table-striped uk-table-hover ">
+                        <table class="uk-table uk-table-striped uk-table-hover " width="100%">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
@@ -382,7 +381,7 @@
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
                             <tr ng-repeat="x in resGro track by $index">
-                                <td><input id="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                <td><input id="check3" name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
@@ -398,6 +397,9 @@
                 <button type="button" ng-click="checkGrReId()" data-uk-modal="{target:'#choose'}">
                     确定
                 </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
+                </button>
             </div>
         </div>
     </div>
@@ -411,7 +413,7 @@
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
                     <div class="fixtable-head">
-                        <table class="uk-table uk-table-striped uk-table-hover ">
+                        <table class="uk-table uk-table-striped uk-table-hover " style="width:100%">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
@@ -419,7 +421,6 @@
                                         <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
-
                                 </td>
                                 <td>编码</td>
                                 <td>名称</td>
@@ -434,7 +435,7 @@
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
                             <tr ng-repeat="x in site track by $index">
-                                <td><input id="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                <td><input id="check4" name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td>{{x.id}}</td>
                                 <td>{{x.name}}</td>
@@ -447,17 +448,69 @@
             </form>
             <!--底部页码-->
             <div class="uk-modal-footer uk-text-right">
-                <button type="button" ng-click="checkSiId()" ng-click="reset()">
-                    重置
-                </button>
                 <button type="button" ng-click="checkSiId()" data-uk-modal="{target:'#choose'}">
                     确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
                 </button>
             </div>
         </div>
     </div>
 </div>
 </div>
+
+
+<!--<div class="uk-modal uk-overflow-container" id="chooseLayout">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="uk-overflow-container" style="height: 96%;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <div class="fixtable-head">
+                        <table class="uk-table uk-table-striped uk-table-hover " style="width:100%">
+                            <thead class="uk-text-center">
+                            <tr style="background-color: #e1eaf1;">
+                                <td>
+                                    <div style="border: 1px solid lightgray;margin-left: 42%;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <img src="../../images/bom_img/select.png"
+                                             style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                    </div>
+
+                                </td>
+                                <td>编码</td>
+                                <td>名称</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="fixtable-body" style="height: 83%;">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                            <tbody class="uk-text-center">
+                            <tr ng-repeat="x in layout track by $index">
+                                <td><input id="check5" name="check5" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td>{{x.id}}</td>
+                                <td>{{x.name}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </fieldset>
+            </form>
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" ng-click="checkLayId()" data-uk-modal="{target:'#choose'}">
+                    确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+-->
 
 <div class="uk-modal uk-overflow-container" id="schedule">
     <div class="uk-modal-dialog">
@@ -470,7 +523,8 @@
                 <label for="add-name">名称</label><br/>
                 <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all"><br/>
                 <label for="add-schedule">排程窗口</label><br/>
-                <input type="text" name="add-schedule" id="add-schedule" class="text ui-widget-content ui-corner-all"><br/>
+                <input type="text" name="add-schedule" id="add-schedule"
+                       class="text ui-widget-content ui-corner-all"><br/>
                 <label for="add-rollTime">滚动时间</label><br/>
                 <input type="text" name="add-rollTime" id="add-rollTime"
                        class="text ui-widget-content ui-corner-all"><br/>

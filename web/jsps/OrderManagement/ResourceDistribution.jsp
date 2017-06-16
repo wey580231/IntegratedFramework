@@ -214,9 +214,9 @@
                     <label for="edit-grp">类型编号集合</label><br/>
                     <input type="text" name="edit-grp" id="edit-grp" clsss="text ui-widget-content ui-corner-all" value="{{x.grp}}"><br/>
                     <label for="edit-TypeSite">资源类型分组</label><br/>
-                    <input type="text" name="edit-TypeSite" id="edit-TypeSite" class="text ui-widget-content ui-corner-all" value="{{x.TypeSite}}"><br/>
+                    <input type="text" name="edit-TypeSite" id="edit-TypeSite" class="text ui-widget-content ui-corner-all" value="{{x.typeSite}}"><br/>
                     <label for="edit-IdSite">地点编码</label><br/>
-                    <input type="text" name="edit-IdSite" id="edit-IdSite" class="text ui-widget-content ui-corner-all" value="{{x.IdSite}}"><br/>
+                    <input type="text" name="edit-IdSite" id="edit-IdSite" class="text ui-widget-content ui-corner-all" value="{{x.idSite}}"><br/>
                     <label for="edit-minResource">最少资源数量</label><br/>
                     <input type="text" name="edit-minResource" id="edit-minResource" class="text ui-widget-content ui-corner-all" value="{{x.minResource}}"><br/>
                     <label for="edit-maxResource">最多资源数量</label><br/>

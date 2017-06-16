@@ -34,28 +34,27 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         var addResource = function () {
             var idVal = $("input[name='add-id']").val();
             var nameVal = $("input[name='add-name']").val();
-            var idTypeResourceVal = $("input[name='add-idTypeResource']").val();
+            var typeSiteVal = $("input[name='add-TypeSite']").val();
             var idSiteGroupResourceVal = $("input[name='add-idSiteGroupResource']").val();
-            var mobilityVal = $("input[name='add-mobility']").val();
-            var idShiftVal = $("input[name='add-idShift']").val();
+            //var mobilityVal = $("input[name='add-mobility']").val();
+            var nameShiftVal = $("input[name='add-nameShift']").val();
             var stateVal = $("input[name='add-state']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
-            params.idTypeResource = idTypeResourceVal;
+            params.typeSite = typeSiteVal;
             params.idSiteGroupResource = idSiteGroupResourceVal;
-            params.mobility = mobilityVal;
-            params.idShift = idShiftVal;
+            //params.mobility = parseInt(mobilityVal);
+            params.nameShift = nameShiftVal;
             params.state = stateVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddResource, data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求错误！");
             })
+            window.location.reload();
         };
 
         var updateSelected = function (action, id) {
@@ -86,13 +85,12 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             params.id = idVal;
             params.name = "";
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             myHttpService.delete(serviceList.DeleteResource, data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
+           window.location.reload();
         }
 
         //修改订单
@@ -102,37 +100,36 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             params.id = idVal;
             params.name = "";
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             myHttpService.post(serviceList.ListResource, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
         }
         $scope.update = function () {
             var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
-            var idTypeResourceVal = $("input[name='edit-idTypeResource']").val();
+            var typeSiteVal = $("input[name='edit-TypeSite']").val();
             var idSiteGroupResourceVal = $("input[name='edit-idSiteGroupResource']").val();
-            var mobilityVal = $("input[name='edit-mobility']").val();
-            var idShiftVal = $("input[name='edit-idShift']").val();
+            //var mobilityVal = $("input[name='edit-mobility']").val();
+            var nameShiftVal = $("input[name='edit-nameShift']").val();
             var stateVal = $("input[name='edit-state']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
-            params.idTypeResource = idTypeResourceVal;
+            params.typeSite = typeSiteVal;
             params.idSiteGroupResource = idSiteGroupResourceVal;
-            params.mobility = mobilityVal;
-            params.idShift = idShiftVal;
+            //params.mobility = mobilityVal;
+            params.nameShift = nameShiftVal;
             params.state = stateVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateResource, data).then(function (response) {
                 console.log(response.status);
                 reload();
             })
+            window.location.reload();
         };
 
         //信息填写检验

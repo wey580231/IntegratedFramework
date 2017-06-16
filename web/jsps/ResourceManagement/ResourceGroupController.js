@@ -30,34 +30,25 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             });
         }
 
-        /*$scope.start = function () {
-            document.getElementById("addButton").disabled = true;
-            alert("设置按钮状态！！");
-            if (formValidate()) {
-                setTimeout("document.getElementById('addButton').disabled=false;", 500);
-            }
-            alert("恢复按钮状态！！");
-        }*/
         //新增订单
         var addGroupResource = function () {
             var idVal = $("input[name='add-id']").val();
             var nameVal = $("input[name='add-name']").val();
-            var externalVal = $("input[name='add-external']").val();
+            var idSite0Val = $("input[name='add-idSite0']").val();
             var stateVal = $("input[name='add-state']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
-            params.external = externalVal;
+            params.idSite0 = idSite0Val;
             params.state = stateVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddGroupResource, data).then(function successCallback(response) {
-                console.log(response.status);
+                alert(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求错误！");
             })
+            window.location.reload();
         };
 
         var updateSelected = function (action, id) {
@@ -65,6 +56,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
                 selectedCheckArray.push(id);
                 console.log(id + "被选中");
+
             }
             if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
                 selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
@@ -83,41 +75,16 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
 
         //删除订单
         $scope.deleteGroupResource = function () {
-            /*console.log(selectedCheckArray);
-             var Array = [];
-             var deleteArray = [];
-             for (var i = 0; i < selectedCheckArray.length; i++) {
-             var params = {};
-             var idVal = selectedCheckArray[i];
-             params.id = idVal;
-             params.name = "";
-             params.external = "";
-             params.state = "";
-             //var data = JSON.stringify(params);
-             Array.push(params);
-             }
-             var data = JSON.stringify(Array);
-             console.log(data);
-             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
-             console.log(response.status);
-             reload();
-             }, function errorCallback(response) {
-             alert("请求失败！");
-             });*/
             var params = {};
             var idVal = operateId;
             params.id = idVal;
-            params.name = "";
-            params.external = "";
-            params.state = "";
             console.log(params);
             var data = JSON.stringify(params);
             myHttpService.delete(serviceList.DeleteGroupResource, data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
+            window.location.reload();
         }
 
         //修改订单
@@ -125,27 +92,23 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             var params = {};
             var idVal = operateId;
             params.id = idVal;
-            params.name = "";
-            params.external = "";
-            params.state = "";
             console.log(params);
             var data = JSON.stringify(params);
             myHttpService.post(serviceList.ListGroupResource, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
         }
+
         $scope.update = function () {
             var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
-            var externalVal = $("input[name='edit-external']").val();
+            var idSite0Val = $("input[name='edit-idSite0']").val();
             var stateVal = $("input[name='edit-state']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
-            params.external = externalVal;
+            params.idSite0 = idSite0Val;
             params.state = stateVal;
             console.log(params);
             var data = JSON.stringify(params);
@@ -153,7 +116,8 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             myHttpService.post(serviceList.UpdateGroupResource, data).then(function (response) {
                 console.log(response.status);
                 reload();
-            })
+            });
+            window.location.reload();
         };
 
         //信息填写检验

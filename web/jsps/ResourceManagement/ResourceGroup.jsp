@@ -56,7 +56,7 @@
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary" id="addButton" data-uk-modal="{target:'#add'}" onClick="javascript:alert('你成功了')">新增</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" id="addButton" data-uk-modal="{target:'#add'}">新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editGroupResource()"
                 data-uk-modal="{target:'#edit'}">修改
         </button>
@@ -105,7 +105,7 @@
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
-                                <td id="external">{{x.external}}</td>
+                                <td id="idSite0">{{x.idSite0}}</td>
                                 <td id="state">{{x.state}}</td>
 
                             </tr>
@@ -175,8 +175,8 @@
                     <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-name">工组名称</label><br/>
                     <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-external">初始位置编码</label><br/>
-                    <input type="text" name="add-external" id="add-external"
+                    <label for="add-idSite0">初始位置编码</label><br/>
+                    <input type="text" name="add-idSite0" id="add-idSite0"
                            class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-state">可工作位置</label><br/>
                     <input type="text" name="add-state" id="add-state"
@@ -204,9 +204,9 @@
                     <label for="edit-name">工组名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all"
                            value="{{x.name}}"><br/>
-                    <label for="edit-external">初始位置编码</label><br/>
-                    <input type="text" name="edit-external" id="edit-external"
-                           class="text ui-widget-content ui-corner-all" value="{{x.external}}"><br/>
+                    <label for="edit-idSite0">初始位置编码</label><br/>
+                    <input type="text" name="edit-idSite0" id="edit-idSite0"
+                           class="text ui-widget-content ui-corner-all" value="{{x.idSite0}}"><br/>
                     <label for="edit-state">可工作位置</label><br/>
                     <input type="text" name="edit-state" id="edit-state" class="text ui-widget-content ui-corner-all"
                            value="{{x.state}}"><br/>

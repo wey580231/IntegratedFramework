@@ -88,7 +88,8 @@
                                 </td>
                                 <td>编码</td>
                                 <td>名称</td>
-                                <td>坐标</td>
+                                <td>坐标x</td>
+                                <td>坐标y</td>
                                 <td>可停放资源数</td>
                             </tr>
                             </thead>
@@ -104,6 +105,7 @@
                                 <td>{{x.id}}</td>
                                 <td>{{x.name}}</td>
                                 <td>{{x.x}}</td>
+                                <td>{{x.y}}</td>
                                 <td>{{x.capacity}}</td>
                             </tr>
                             </tbody>
@@ -173,8 +175,10 @@
                     <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-name">名称</label><br/>
                     <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
-                    <label for="add-x">坐标</label><br/>
+                    <label for="add-x">坐标x</label><br/>
                     <input type="text" name="add-x" id="add-x" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-y">坐标y</label><br/>
+                    <input type="text" name="add-y" id="add-y" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-capacity">可停放资源数</label><br/>
                     <input type="text" name="add-capacity" id="add-capacity" class="text ui-widget-content ui-corner-all"><br/>
                 </fieldset>
@@ -198,8 +202,10 @@
                     <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
-                    <label for="edit-x">坐标</label><br/>
+                    <label for="edit-x">坐标x</label><br/>
                     <input type="text" name="edit-x" id="edit-x" class="text ui-widget-content ui-corner-all" value="{{x.x}}"><br/>
+                    <label for="edit-y">坐标y</label><br/>
+                    <input type="text" name="edit-y" id="edit-y" class="text ui-widget-content ui-corner-all" value="{{x.y}}"><br/>
                     <label for="edit-capacity">可停放资源数</label><br/>
                     <input type="text" name="edit-capacity" id="edit-capacity" class="text ui-widget-content ui-corner-all" value="{{x.capacity}}"><br/>
                 </fieldset>

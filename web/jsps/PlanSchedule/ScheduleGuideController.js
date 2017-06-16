@@ -16,13 +16,22 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var resId;
         var resGroId;
         var siteId;
+        var layId;
 
         //重新加载页面
-        $scope.reload = function () {
+        var reload = function () {
             //取消checkbox选中状态
-            document.getElementById("check").checked = false;
+            $(".check").prop('checked', false);
             $("input").val('');
         }
+
+        /*$scope.reloadGrRe = function () {
+         alert("开始reload");
+         $(".check3").prop('checked', false);
+         var ch=document.getElementByTagName("check3").checked;
+         console.log(ch);
+         alert("reload完成");
+         }*/
 
         //各表单选择时信息显示
         $scope.showOrder = function () {
@@ -50,9 +59,9 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             myHttpService.get(serviceList.ListSite).then(function (response) {
                 console.log(response);
                 $scope.site = response.data;
-
             });
         };
+
 
         var updateSelected = function (action, id) {
             operateId = id;
@@ -65,6 +74,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 console.log(id + "取消选中");
             }
         };
+
         //用于监控点击事件，checkbox选择了就更新
         $scope.updateSelection = function ($event, id) {
             var checkbox = $event.target;
@@ -75,13 +85,9 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             return selectedCheckArray.indexOf(id) >= 0;
         };
 
-
-        //勾选订单后，记录所选id
+        //勾选订单后，点击确定，记录所选id
         $scope.checkOrId = function () {
-
             ordId = operateId;
-            alert(ordId);
-
         }
         $scope.orderHide = function () {
             $("#chooseOrder").hide()
@@ -89,36 +95,28 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
         //勾选资源后，记录所选id
         $scope.checkReId = function () {
-
             resId = operateId;
-            alert(resId);
-
         }
-        $scope.orderHide = function () {
+        $scope.reHide = function () {
             $("#chooseResource").hide()
         }
 
         //勾选资源工组后，记录所选id
         $scope.checkGrReId = function () {
-
             resGroId = operateId;
-            alert(resGroId);
-
         }
-        $scope.orderHide = function () {
+        $scope.grReHide = function () {
             $("#chooseGroupResource").hide()
         }
 
         //勾选资源工位后，记录所选id
         $scope.checkSiId = function () {
-
             siteId = operateId;
-            alert(siteId);
-
         }
-        $scope.orderHide = function () {
+        $scope.siteHide = function () {
             $("#chooseSite").hide()
         }
+
 
         //排程
         $scope.configAPS = function () {
@@ -137,8 +135,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             /*var orders = {};
              orders.id = ordId;
 
-             var layouts = {};
-             layout.id = layoutId;*/
+            var layouts = {};
+            layouts.id = layId;*/
 
             var resourceArr = [];
             var resources = {};
@@ -169,36 +167,13 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             params.groupResource = groupResourcesArr;
             params.site = sitesArr;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#schedule").hide();
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
-                console.log(response.status);
-
+                alert("请求成功，开始排程");
             }, function errorCallback(response) {
                 alert("请求错误！");
             })
-        };
-
-        var chooseOrder = function () {
-            var params = {};
-            var idVal = operateId;
-            params.id = idVal;
-            params.name = "";
-            params.origin = "";
-            params.priority = "";
-            params.advance = "";
-            params.delay = "";
-            params.quantity = "";
-            params.t0 = "";
-            params.ord = "";
-            console.log(params);
-            var data = JSON.stringify(params);
-            myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
-                console.log(response);
-                $scope.form = response.data;
-            }, function errorCallback(response) {
-                alert("请求失败！");
-            });
         };
 
         //表格信息重置

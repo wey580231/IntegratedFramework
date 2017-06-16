@@ -23,7 +23,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //重新加载页面信息
         var reload = function () {
             //取消checkbox选中状态
-            document.getElementById('check').checked = false;
+            document.getElementById("check").checked = false;
             $("input").val('');
             myHttpService.get(serviceList.ListOrder).then(function (response) {
                 $scope.arr = response.data;
@@ -35,31 +35,31 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var idVal = $("input[name='add-id']").val();
             var nameVal = $("input[name='add-name']").val();
             var originVal = $("input[name='add-origin']").val();
-            var ordVal = $("input[name='add-ord']").val();
-            var quantityVal = $("input[name='add-quantity']").val();
-            var priorityVal = $("input[name='add-priority']").val();
-            var t0Val = $("input[name='add-t0']").val();
-            var advanceVal = $("input[name='add-advance']").val();
-            var delayVal = $("input[name='add-delay']").val();
+            //var idProductVal = $("input[name='add-idProduct']").val();
+            //var quantityVal = $("input[name='add-quantity']").val();
+             var priorityVal = $("input[name='add-priority']").val();
+             var t0Val = $("input[name='add-t0']").val();
+             var t1Val = $("input[name='add-t1']").val();
+             var t2Val = $("input[name='add-t2']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
             params.origin = originVal;
-            params.priority = priorityVal;
-            params.advance = advanceVal;
-            params.delay = delayVal;
-            params.quantity = quantityVal;
-            params.t0 = t0Val;
-            params.ord = ordVal;
+           // params.idProduct = parseInt(idProductVal);
+            //params.quantity = quantityVal;
+             params.priority = priorityVal;
+             params.t1 = t1Val;
+             params.t2 = t2Val;
+             params.t0 = t0Val;
+
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求错误！");
             })
+             window.location.reload();
         };
 
         var updateSelected = function (action, id) {
@@ -114,22 +114,13 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var params = {};
             var idVal = operateId;
             params.id = idVal;
-            params.name = "";
-            params.origin = "";
-            params.priority = "";
-            params.advance = "";
-            params.delay = "";
-            params.quantity = "";
-            params.t0 = "";
-            params.ord = "";
-            console.log(params);
             var data = JSON.stringify(params);
+            console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
+            window.location.reload();
         }
 
         //修改订单
@@ -137,50 +128,41 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var params = {};
             var idVal = operateId;
             params.id = idVal;
-            params.name = "";
-            params.origin = "";
-            params.priority = "";
-            params.advance = "";
-            params.delay = "";
-            params.quantity = "";
-            params.t0 = "";
-            params.ord = "";
-            console.log(params);
             var data = JSON.stringify(params);
+            console.log(data);
             myHttpService.get(serviceList.ListOrder, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
         }
         $scope.update = function () {
             var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
             var originVal = $("input[name='edit-origin']").val();
-            var ordVal = $("input[name='edit-ord']").val();
-            var quantityVal = $("input[name='edit-quantity']").val();
+            //var idProductVal = $("input[name='edit-idProduct']").val();
+            //var quantityVal = $("input[name='edit-quantity']").val();
             var priorityVal = $("input[name='edit-priority']").val();
             var t0Val = $("input[name='edit-t0']").val();
-            var advanceVal = $("input[name='edit-advance']").val();
-            var delayVal = $("input[name='edit-delay']").val();
+            var t1Val = $("input[name='edit-t1']").val();
+            var t2Val = $("input[name='edit-t2']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
             params.origin = originVal;
             params.priority = priorityVal;
-            params.advance = advanceVal;
-            params.delay = delayVal;
-            params.quantity = quantityVal;
+            params.t1 = t1Val;
+            params.t2 = t2Val;
+            //params.quantity = quantityVal;
             params.t0 = t0Val;
-            params.ord = ordVal;
-            console.log(params);
+            //params.idProduct = idProductVal;
             var data = JSON.stringify(params);
+            console.log(data);
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateOrder, data).then(function (response) {
                 console.log(response.status);
                 reload();
-            })
+            });
+            window.location.reload();
         };
 
         //信息填写检验
