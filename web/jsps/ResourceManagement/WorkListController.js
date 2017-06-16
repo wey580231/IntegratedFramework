@@ -43,14 +43,13 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             params.extra = extraVal;
             params.slot = slotVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddShift, data).then(function successCallback(response) {
-                alert(response.status);
+                console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求错误！");
             })
+            window.location.reload();
         };
 
         var updateSelected = function (action, id) {
@@ -77,17 +76,16 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         //删除班次信息
         $scope.deleteShift = function () {
             var params = {};
-            //var idVal = operateId;
-            params.id = operateId;
+            var idVal = operateId;
+            params.id = idVal;
             params.name = "";
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             myHttpService.delete(serviceList.DeleteShift, data).then(function successCallback(response) {
                 console.log(response.status);
                 reload();
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
+            window.location.reload();
         }
 
         //修改班次信息
@@ -97,12 +95,10 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             params.id = idVal;
             params.name = "";
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             myHttpService.post(serviceList.ListShift, data).then(function successCallback(response) {
                 console.log(response);
                 $scope.form = response.data;
-            }, function errorCallback(response) {
-                alert("请求失败！");
             });
         }
         $scope.update = function () {
@@ -118,12 +114,13 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             params.extra = extraVal;
             params.slot = slotVal;
             var data = JSON.stringify(params);
-            alert(data);
+            console.log(data);
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateShift, data).then(function (response) {
                 console.log(response.status);
                 reload();
             })
+            window.location.reload();
         };
 
         //信息填写检验
