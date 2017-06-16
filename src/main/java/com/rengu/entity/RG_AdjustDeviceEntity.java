@@ -1,8 +1,11 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**设备资源调整
  * Created by wey580231 on 2017/6/15.
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_AdjustDeviceEntity {
 
     private String id;                  //UUID
