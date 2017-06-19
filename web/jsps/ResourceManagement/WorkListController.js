@@ -46,10 +46,10 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddShift, data).then(function successCallback(response) {
-                console.log(response.status);
+                alert(response.status);
+                window.location.reload();
                 reload();
             })
-            window.location.reload();
         };
 
         var updateSelected = function (action, id) {
@@ -82,10 +82,11 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteShift, data).then(function successCallback(response) {
-                console.log(response.status);
+                alert(response.status);
+                window.location.reload();
                 reload();
             });
-            window.location.reload();
+
         }
 
         //修改班次信息
@@ -118,9 +119,10 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateShift, data).then(function (response) {
                 console.log(response.status);
-                reload();
+                window.location.reload();
+                setTimeout("window.location.reload(force=true)",3000);
             })
-            window.location.reload();
+
         };
 
         //信息填写检验

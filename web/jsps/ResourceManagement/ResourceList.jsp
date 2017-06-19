@@ -78,7 +78,7 @@
                 <div id="tabs-2" style="width: 100%;height: 100%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 96%;">
+                    <div class="uk-overflow-container" style="height: 92%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
                                 <thead class="uk-text-center">
@@ -123,7 +123,7 @@
                             </table>
 
                             <!--底部页码-->
-                            <div style="margin-top: -25px;">
+                            <%--<div style="margin-top: -25px;">
                                 <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
                                     <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                                     <li><button class="uk-button my"><a href="">上一页</a></button></li>
@@ -137,10 +137,30 @@
                                         <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>--%>
                         </div>
 
                     </div>
+
+                    <br/>
+
+                    <!--底部页码-->
+                    <div style="margin-top: -25px;">
+                        <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                            <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                            <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                            <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                            <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                            <li>共10页</li>&nbsp;
+                            <li>
+                                到第<input type="text" value="1" style="width: 28px;background-color: #EEF7FC;">页
+                            </li>
+                            <li>
+                                <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -170,7 +190,7 @@
                     <label for="add-name">名称</label><br/>
                     <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-TypeSite">资源类型</label><br/>
-                    <input type="text" name="add-typeSite" id="add-typeSite" class="text ui-widget-content ui-corner-all"><br/>
+                    <input type="text" name="add-TypeSite" id="add-TypeSite" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-idSiteGroupResource">工组</label><br/>
                     <input type="text" name="add-idSiteGroupResource" id="add-idSiteGroupResource" class="text ui-widget-content ui-corner-all"><br/>
                     <!--<label for="add-mobility">移动速度</label><br/>
@@ -201,7 +221,7 @@
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-TypeSite">资源类型</label><br/>
-                    <input type="text" name="edit-typeSite" id="edit-typeSite" class="text ui-widget-content ui-corner-all" value="{{x.typeSite}}"><br/>
+                    <input type="text" name="edit-TypeSite" id="edit-TypeSite" class="text ui-widget-content ui-corner-all" value="{{x.typeSite}}"><br/>
                     <label for="edit-idSiteGroupResource">工组</label><br/>
                     <input type="text" name="edit-idSiteGroupResource" id="edit-idSiteGroupResource" class="text ui-widget-content ui-corner-all" value="{{x.idSiteGroupResource}}"><br/>
                     <!--<label for="edit-mobility">移动速度</label><br/>
