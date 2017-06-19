@@ -25,7 +25,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             //取消checkbox选中状态
             document.getElementById("check").checked = false;
             $("input").val('');
-            myHttpService.get(serviceList.ListResource).then(function (response) {
+            myHttpService.get(serviceList.ListShift).then(function (response) {
                 $scope.arr = response.data;
             });
         }
@@ -44,17 +44,18 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             params.name = nameVal;
             params.typeSite = typeSiteVal;
             params.idSiteGroupResource = idSiteGroupResourceVal;
-            //params.mobility = parseInt(mobilityVal);
+           //params.mobility = parseInt(mobilityVal);
             params.nameShift = nameShiftVal;
             params.state = stateVal;
             var data = JSON.stringify(params);
             console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddResource, data).then(function successCallback(response) {
-                console.log(response.status);
+                alert(response.status);
+                window.location.reload();
                 reload();
             })
-            window.location.reload();
+
         };
 
         var updateSelected = function (action, id) {
@@ -87,10 +88,10 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteResource, data).then(function successCallback(response) {
-                console.log(response.status);
+                alert(response.status);
+                window.location.reload();
                 reload();
             });
-           window.location.reload();
         }
 
         //修改订单
@@ -126,10 +127,10 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             console.log(data);
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateResource, data).then(function (response) {
-                console.log(response.status);
+               alert(response.status);
+                window.location.reload();
                 reload();
             })
-            window.location.reload();
         };
 
         //信息填写检验

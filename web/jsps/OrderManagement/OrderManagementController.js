@@ -51,15 +51,16 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
              params.t1 = t1Val;
              params.t2 = t2Val;
              params.t0 = t0Val;
-
             var data = JSON.stringify(params);
             console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
                 console.log(response.status);
+                //用强制刷新解决按钮不能连续响应
+                window.location.reload();
                 reload();
             })
-             window.location.reload();
+
         };
 
         var updateSelected = function (action, id) {
@@ -118,9 +119,9 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
                 console.log(response.status);
+                window.location.reload();
                 reload();
             });
-            window.location.reload();
         }
 
         //修改订单
@@ -160,9 +161,9 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateOrder, data).then(function (response) {
                 console.log(response.status);
+                window.location.reload();
                 reload();
             });
-            window.location.reload();
         };
 
         //信息填写检验
