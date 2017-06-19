@@ -16,7 +16,7 @@ public class ErrorProcessAction extends SuperAction {
 
     ErrorProcessDao dao = new ErrorProcessDao();
 
-    public void processError() {
+    public void processDeviceError() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
 

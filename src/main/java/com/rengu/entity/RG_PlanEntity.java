@@ -69,6 +69,8 @@ public class RG_PlanEntity {
     private RG_ProviderEntity providerByIdProvider;
     private RG_ProductEntity productByIdProduct;
 
+    private RG_SnapshotNodeEntity snapShort;
+
     public String getId() {
         return id;
     }
@@ -547,6 +549,14 @@ public class RG_PlanEntity {
 
     public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
         this.productByIdProduct = productByIdProduct;
+    }
+
+    public RG_SnapshotNodeEntity getSnapShort() {
+        return snapShort;
+    }
+
+    public void setSnapShort(RG_SnapshotNodeEntity snapShort) {
+        this.snapShort = snapShort;
     }
 
     @Override

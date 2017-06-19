@@ -62,68 +62,68 @@ public class ScheduleAction extends SuperAction {
                 }
                 Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
-        //解析Layout数据
-        JsonNode layoutNode = rootNode.get("layout");
-        RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
-        LayoutDAOImpl layoutDAO = DAOFactory.getLayoutDAOImplInstance();
-        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId.getId());
-        rg_scheduleEntity.setLayout(rg_layoutEntity);
-        layoutDAO.getTransaction().commit();
-
-        //解析订单数据
-        JsonNode orderNodes = rootNode.get("orders");
-        Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<>();
-        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        for (JsonNode tempNode : orderNodes) {
-            String orderNodeJsonString = tempNode.toString();
-            RG_OrderEntity rg_orderEntityWhitId = Tools.jsonConvertToEntity(orderNodeJsonString, RG_OrderEntity.class);
-            RG_OrderEntity rg_orderEntity = ordersDAOInstance.findAllById(rg_orderEntityWhitId.getId());
-            rg_orderEntitySet.add(rg_orderEntity);
-            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
-        }
-        rg_scheduleEntity.setOrders(rg_orderEntitySet);
-        ordersDAOInstance.getTransaction().commit();
-
-        //解析resources数据
-        JsonNode resourcesNodes = rootNode.get("resources");
-        Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<>();
-        ResourceDAOImpl resourceInstance = DAOFactory.getResourceInstance();
-        for (JsonNode tempNode : resourcesNodes) {
-            String resourcesNodesJsonString = tempNode.toString();
-            RG_ResourceEntity rg_resourceEntityWhitId = Tools.jsonConvertToEntity(resourcesNodesJsonString, RG_ResourceEntity.class);
-            RG_ResourceEntity rg_resourceEntity = resourceInstance.findAllById(rg_resourceEntityWhitId.getId());
-            rg_resourceEntitySet.add(rg_resourceEntity);
-            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_resourceEntity));
-        }
-        rg_scheduleEntity.setResources(rg_resourceEntitySet);
-        resourceInstance.getTransaction().commit();
-
-        //解析groupResource数据
-        JsonNode groupResourceNodes = rootNode.get("groupResource");
-        Set<RG_GroupresourceEntity> rg_groupresourceEntitySet = new HashSet<>();
-        GroupResourceDAOImpl groupResourceInstance = DAOFactory.getGroupResourceInstance();
-        for (JsonNode tempNode : groupResourceNodes) {
-            String groupResourceNodesJsonString = tempNode.toString();
-            RG_GroupresourceEntity rg_groupresourceEntityWhitId = Tools.jsonConvertToEntity(groupResourceNodesJsonString, RG_GroupresourceEntity.class);
-            RG_GroupresourceEntity rg_groupresourceEntity = groupResourceInstance.findAllById(rg_groupresourceEntityWhitId.getId());
-            rg_groupresourceEntitySet.add(rg_groupresourceEntity);
-            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_groupresourceEntity));
-        }
-        rg_scheduleEntity.setGroups(rg_groupresourceEntitySet);
-        groupResourceInstance.getTransaction().commit();
-
-        //解析Site数据
-        JsonNode siteNodes = rootNode.get("site");
-        Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<>();
-        SiteDAOImpl siteInstance = DAOFactory.getSiteInstance();
-        for (JsonNode tempNode : siteNodes) {
-            String siteNodesJsonString = tempNode.toString();
-            RG_SiteEntity rg_siteEntityWhitId = Tools.jsonConvertToEntity(siteNodesJsonString, RG_SiteEntity.class);
-            RG_SiteEntity rg_siteEntity = siteInstance.findAllById(rg_siteEntityWhitId.getId());
-            rg_siteEntitySet.add(rg_siteEntity);
-        }
-        rg_scheduleEntity.setSites(rg_siteEntitySet);
-        siteInstance.getTransaction().commit();
+//        //解析Layout数据
+//        JsonNode layoutNode = rootNode.get("layout");
+//        RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
+//        LayoutDAOImpl layoutDAO = DAOFactory.getLayoutDAOImplInstance();
+//        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId.getId());
+//        rg_scheduleEntity.setLayout(rg_layoutEntity);
+//        layoutDAO.getTransaction().commit();
+//
+//        //解析订单数据
+//        JsonNode orderNodes = rootNode.get("orders");
+//        Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<>();
+//        OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
+//        for (JsonNode tempNode : orderNodes) {
+//            String orderNodeJsonString = tempNode.toString();
+//            RG_OrderEntity rg_orderEntityWhitId = Tools.jsonConvertToEntity(orderNodeJsonString, RG_OrderEntity.class);
+//            RG_OrderEntity rg_orderEntity = ordersDAOInstance.findAllById(rg_orderEntityWhitId.getId());
+//            rg_orderEntitySet.add(rg_orderEntity);
+//            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
+//        }
+//        rg_scheduleEntity.setOrders(rg_orderEntitySet);
+//        ordersDAOInstance.getTransaction().commit();
+//
+//        //解析resources数据
+//        JsonNode resourcesNodes = rootNode.get("resources");
+//        Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<>();
+//        ResourceDAOImpl resourceInstance = DAOFactory.getResourceInstance();
+//        for (JsonNode tempNode : resourcesNodes) {
+//            String resourcesNodesJsonString = tempNode.toString();
+//            RG_ResourceEntity rg_resourceEntityWhitId = Tools.jsonConvertToEntity(resourcesNodesJsonString, RG_ResourceEntity.class);
+//            RG_ResourceEntity rg_resourceEntity = resourceInstance.findAllById(rg_resourceEntityWhitId.getId());
+//            rg_resourceEntitySet.add(rg_resourceEntity);
+//            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_resourceEntity));
+//        }
+//        rg_scheduleEntity.setResources(rg_resourceEntitySet);
+//        resourceInstance.getTransaction().commit();
+//
+//        //解析groupResource数据
+//        JsonNode groupResourceNodes = rootNode.get("groupResource");
+//        Set<RG_GroupresourceEntity> rg_groupresourceEntitySet = new HashSet<>();
+//        GroupResourceDAOImpl groupResourceInstance = DAOFactory.getGroupResourceInstance();
+//        for (JsonNode tempNode : groupResourceNodes) {
+//            String groupResourceNodesJsonString = tempNode.toString();
+//            RG_GroupresourceEntity rg_groupresourceEntityWhitId = Tools.jsonConvertToEntity(groupResourceNodesJsonString, RG_GroupresourceEntity.class);
+//            RG_GroupresourceEntity rg_groupresourceEntity = groupResourceInstance.findAllById(rg_groupresourceEntityWhitId.getId());
+//            rg_groupresourceEntitySet.add(rg_groupresourceEntity);
+//            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_groupresourceEntity));
+//        }
+//        rg_scheduleEntity.setGroups(rg_groupresourceEntitySet);
+//        groupResourceInstance.getTransaction().commit();
+//
+//        //解析Site数据
+//        JsonNode siteNodes = rootNode.get("site");
+//        Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<>();
+//        SiteDAOImpl siteInstance = DAOFactory.getSiteInstance();
+//        for (JsonNode tempNode : siteNodes) {
+//            String siteNodesJsonString = tempNode.toString();
+//            RG_SiteEntity rg_siteEntityWhitId = Tools.jsonConvertToEntity(siteNodesJsonString, RG_SiteEntity.class);
+//            RG_SiteEntity rg_siteEntity = siteInstance.findAllById(rg_siteEntityWhitId.getId());
+//            rg_siteEntitySet.add(rg_siteEntity);
+//        }
+//        rg_scheduleEntity.setSites(rg_siteEntitySet);
+//        siteInstance.getTransaction().commit();
 
             //APS ID计算标识
             String apsId = String.valueOf(date.getTime());

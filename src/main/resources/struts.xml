@@ -110,7 +110,7 @@
 
     <!--异常处理-->
     <package name="ExceptionHandling" namespace="/ExceptionHandling" extends="struts-default">
-        <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processError"/>
+        <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
     </package>
 
     <!--异常处理-->
