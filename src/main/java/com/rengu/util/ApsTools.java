@@ -72,35 +72,36 @@ public class ApsTools {
         return apsTool;
     }
 
-    //获取紧急插单处理地址
-    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity rg_adjustOrderEntity) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
-                "&" +
-                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
-                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
-                "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
-                "&" +
-                "ID=001" +
-                "&" +
-                "DELAY=1000\n";
-        return result;
-    }
-
-    //获取工序调整处理地址
-    public static String getAdjustOrderHandlingURL(RG_AdjustProcessEntity rg_adjustProcessEntity) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
-                "&" +
-                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
-                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
-                "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
-                "&" +
-                "ID=001" +
-                "&" +
-                "DELAY=1000\n";
-        return result;
-    }
+    //TODO 待将连接修改成APS提供的访问连接
+//    //获取紧急插单处理地址
+//    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity rg_adjustOrderEntity) {
+//        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
+//                "&" +
+//                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
+//                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
+//                "&" +
+//                "REPLY=" + ApsTools.instance().getReplyAddress() +
+//                "&" +
+//                "ID=001" +
+//                "&" +
+//                "DELAY=1000\n";
+//        return result;
+//    }
+//
+//    //获取工序调整处理地址
+//    public static String getAdjustProcessHandlingURL(RG_AdjustProcessEntity rg_adjustProcessEntity) {
+//        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
+//                "&" +
+//                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
+//                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
+//                "&" +
+//                "REPLY=" + ApsTools.instance().getReplyAddress() +
+//                "&" +
+//                "ID=001" +
+//                "&" +
+//                "DELAY=1000\n";
+//        return result;
+//    }
 
     //获取排程结果
     public void getScheduleResult() throws SQLException, ClassNotFoundException {
