@@ -248,7 +248,7 @@
             <div id="tabs-1" style="width: 100%;height: 86%;margin-left: -2%;">
 
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 96%;">
+                <div class="uk-overflow-container" style="height: 92%;">
                     <div class="fixtable-head" style="height: 15%;">
                         <table class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
@@ -305,7 +305,7 @@
                         </table>
 
                         <!--底部页码-->
-                        <div style="margin-top: -25px;">
+                        <%--<div style="margin-top: -25px;">
                             <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
                                 <li>
                                     <button class="uk-button"
@@ -332,17 +332,36 @@
                                     </button>
                                 </li>
                             </ul>
-                        </div>
+                        </div>--%>
 
                     </div>
 
+                </div>
+
+                <br/>
+
+                <!--底部页码-->
+                <div style="margin-top: -25px;">
+                    <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                        <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                        <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                        <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                        <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                        <li>共10页</li>&nbsp;
+                        <li>
+                            到第<input type="text" value="1" style="width: 28px;background-color: #EEF7FC;">页
+                        </li>
+                        <li>
+                            <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                        </li>
+                    </ul>
                 </div>
 
             </div>
             <div id="tabs-2" style="width: 100%;height: 86%;margin-left: -2%;">
 
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 96%;">
+                <div class="uk-overflow-container" style="height: 92%;">
                     <div class="fixtable-head" style="height: 15%;">
                         <table class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
@@ -491,7 +510,7 @@
                         </table>
 
                         <!--底部页码-->
-                        <div style="margin-top: -25px;">
+                        <%--<div style="margin-top: -25px;">
                             <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
                                 <li>
                                     <button class="uk-button"
@@ -518,10 +537,29 @@
                                     </button>
                                 </li>
                             </ul>
-                        </div>
+                        </div>--%>
                     </div>
 
 
+                </div>
+
+                <br/>
+
+                <!--底部页码-->
+                <div style="margin-top: -25px;">
+                    <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                        <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                        <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                        <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                        <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                        <li>共10页</li>&nbsp;
+                        <li>
+                            到第<input type="text" value="1" style="width: 28px;background-color: #EEF7FC;">页
+                        </li>
+                        <li>
+                            <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                        </li>
+                    </ul>
                 </div>
 
             </div>

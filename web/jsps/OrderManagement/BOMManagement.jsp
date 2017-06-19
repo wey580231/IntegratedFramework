@@ -189,9 +189,9 @@
     <%--<hr class="uk-article-divider">--%>
     <br/>
 
-    <div class="uk-grid" style="height: 88%;">
+    <div class="uk-grid" style="height: 87%;">
         <!--BOM树-->
-        <div  class="uk-width-1-5" style="width: 23%;height: 100%;">
+        <div  class="uk-width-1-5" style="width: 23%;height: 98%;">
             <!--BOM树上部-->
             <!--<div style="border-bottom: 1px solid lightgray;background-color: white;height: 10%;">
                 <form class="uk-form uk-form-horizontal">
@@ -324,7 +324,7 @@
                     <div id="tabs-2" style="width: 100%;">
 
                         <!--表格-->
-                        <div class="uk-overflow-container" style="height: 72%;">
+                        <div class="uk-overflow-container" style="height: 66%;">
                             <div class="fixtable-head">
                                 <table class="uk-table uk-table-striped uk-table-hover ">
                                     <thead class="uk-text-left">
@@ -385,15 +385,15 @@
                                 </table>
 
                                 <!--底部页码-->
-                                <div style="margin-top: -25px;">
+                                <%--<div style="margin-top: -25px;">
                                     <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
                                         <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                                         <li><button class="uk-button my"><a href="">上一页</a></button></li>
                                         <li><button class="uk-button my"><a href="">下一页</a></button></li>
                                         <li><button class="uk-button my"><a href="">尾页</a></button></li>
-                                        <%--<li><a href="#">上一页</a></li>
+                                        &lt;%&ndash;<li><a href="#">上一页</a></li>
                                         <li><a href="#">下一页</a></li>
-                                        <li><a href="#">尾页</a></li>--%>
+                                        <li><a href="#">尾页</a></li>&ndash;%&gt;
                                         <li>共88页</li>&nbsp;
                                         <li>
                                             到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
@@ -402,10 +402,28 @@
                                             <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                                         </li>
                                     </ul>
-                                </div>
+                                </div>--%>
                             </div>
 
                         </div>
+
+                        <!--底部页码-->
+                        <div style="margin-top: -25px;">
+                            <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                                <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                                <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                                <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                                <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                                <li>共10页</li>&nbsp;
+                                <li>
+                                    到第<input type="text" value="1" style="width: 28px;background-color: #EEF7FC;">页
+                                </li>
+                                <li>
+                                    <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
 
                 </div>
