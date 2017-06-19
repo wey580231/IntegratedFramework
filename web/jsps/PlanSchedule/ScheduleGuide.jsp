@@ -528,9 +528,9 @@
                 <label for="add-rollTime">滚动时间</label><br/>
                 <input type="text" name="add-rollTime" id="add-rollTime"
                        class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-t0">下单时间</label><br/>
+                <label for="add-t0">开始时间</label><br/>
                 <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-t2">最晚交付时间</label><br/>
+                <label for="add-t2">结束时间</label><br/>
                 <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
             </fieldset>
         </form>

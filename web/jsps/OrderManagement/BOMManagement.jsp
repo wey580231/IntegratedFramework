@@ -193,7 +193,7 @@
         <!--BOM树-->
         <div  class="uk-width-1-5" style="width: 23%;height: 100%;">
             <!--BOM树上部-->
-            <div style="border-bottom: 1px solid lightgray;background-color: white;height: 10%;">
+            <!--<div style="border-bottom: 1px solid lightgray;background-color: white;height: 10%;">
                 <form class="uk-form uk-form-horizontal">
                     <fieldset data-uk-margin>
                         <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
@@ -209,11 +209,9 @@
 
                     </fieldset>
                 </form>
-            </div>
-
-            <%--<p></p>--%>
+            </div>-->
             <!--BOM树下部-->
-            <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
+            <!--<div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
                 <div class="uk-form-row">
                     <div class="wrapper">
                         <div class="nav-ml">
@@ -287,7 +285,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
+
         </div>
         <!--右侧表格-->
         <div class="uk-width-4-5" style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;height:  98%;background-color: white;">

@@ -170,7 +170,7 @@
                     <label for="add-name">名称</label><br/>
                     <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-TypeSite">资源类型</label><br/>
-                    <input type="text" name="add-typeSite" id="add-typeSite" class="text ui-widget-content ui-corner-all"><br/>
+                    <input type="text" name="add-TypeSite" id="add-TypeSite" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-idSiteGroupResource">工组</label><br/>
                     <input type="text" name="add-idSiteGroupResource" id="add-idSiteGroupResource" class="text ui-widget-content ui-corner-all"><br/>
                     <!--<label for="add-mobility">移动速度</label><br/>
@@ -201,7 +201,7 @@
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-TypeSite">资源类型</label><br/>
-                    <input type="text" name="edit-typeSite" id="edit-typeSite" class="text ui-widget-content ui-corner-all" value="{{x.typeSite}}"><br/>
+                    <input type="text" name="edit-TypeSite" id="edit-TypeSite" class="text ui-widget-content ui-corner-all" value="{{x.typeSite}}"><br/>
                     <label for="edit-idSiteGroupResource">工组</label><br/>
                     <input type="text" name="edit-idSiteGroupResource" id="edit-idSiteGroupResource" class="text ui-widget-content ui-corner-all" value="{{x.idSiteGroupResource}}"><br/>
                     <!--<label for="edit-mobility">移动速度</label><br/>

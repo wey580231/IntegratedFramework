@@ -158,7 +158,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             params.id = idVal;
             params.name = nameVal;
             params.scheduleWindow = parseInt(scheduleVal);
-            alert(params.scheduleWindow);
             params.rollTime = parseInt(rollTimeVal);
             //params.order=orders;
             //params.layout = layouts;
