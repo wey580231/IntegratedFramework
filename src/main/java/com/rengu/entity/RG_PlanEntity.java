@@ -68,7 +68,6 @@ public class RG_PlanEntity {
     private RG_TyperescourceEntity typerescourceByIdTypeResource;
     private RG_ProviderEntity providerByIdProvider;
     private RG_ProductEntity productByIdProduct;
-    private RG_ScheduleEntity scheduleByIdSchedule;
 
     public String getId() {
         return id;
@@ -550,14 +549,6 @@ public class RG_PlanEntity {
         this.productByIdProduct = productByIdProduct;
     }
 
-    public RG_ScheduleEntity getScheduleByIdSchedule() {
-        return scheduleByIdSchedule;
-    }
-
-    public void setScheduleByIdSchedule(RG_ScheduleEntity scheduleByIdSchedule) {
-        this.scheduleByIdSchedule = scheduleByIdSchedule;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -635,24 +626,7 @@ public class RG_PlanEntity {
         if (priorityOrder != null ? !priorityOrder.equals(that.priorityOrder) : that.priorityOrder != null)
             return false;
         if (colorOrder != null ? !colorOrder.equals(that.colorOrder) : that.colorOrder != null) return false;
-        if (state != null ? !state.equals(that.state) : that.state != null) return false;
-        if (clubByIdClub != null ? !clubByIdClub.equals(that.clubByIdClub) : that.clubByIdClub != null) return false;
-        if (processByIdProcess != null ? !processByIdProcess.equals(that.processByIdProcess) : that.processByIdProcess != null)
-            return false;
-        if (orderByIdOrder != null ? !orderByIdOrder.equals(that.orderByIdOrder) : that.orderByIdOrder != null)
-            return false;
-        if (resourceByIdResource != null ? !resourceByIdResource.equals(that.resourceByIdResource) : that.resourceByIdResource != null)
-            return false;
-        if (siteByIdSite != null ? !siteByIdSite.equals(that.siteByIdSite) : that.siteByIdSite != null) return false;
-        if (groupresourceByIdGroupResource != null ? !groupresourceByIdGroupResource.equals(that.groupresourceByIdGroupResource) : that.groupresourceByIdGroupResource != null)
-            return false;
-        if (typerescourceByIdTypeResource != null ? !typerescourceByIdTypeResource.equals(that.typerescourceByIdTypeResource) : that.typerescourceByIdTypeResource != null)
-            return false;
-        if (providerByIdProvider != null ? !providerByIdProvider.equals(that.providerByIdProvider) : that.providerByIdProvider != null)
-            return false;
-        if (productByIdProduct != null ? !productByIdProduct.equals(that.productByIdProduct) : that.productByIdProduct != null)
-            return false;
-        return scheduleByIdSchedule != null ? scheduleByIdSchedule.equals(that.scheduleByIdSchedule) : that.scheduleByIdSchedule == null;
+        return state != null ? state.equals(that.state) : that.state == null;
     }
 
     @Override
@@ -708,16 +682,6 @@ public class RG_PlanEntity {
         result = 31 * result + (priorityOrder != null ? priorityOrder.hashCode() : 0);
         result = 31 * result + (colorOrder != null ? colorOrder.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
-        result = 31 * result + (processByIdProcess != null ? processByIdProcess.hashCode() : 0);
-        result = 31 * result + (orderByIdOrder != null ? orderByIdOrder.hashCode() : 0);
-        result = 31 * result + (resourceByIdResource != null ? resourceByIdResource.hashCode() : 0);
-        result = 31 * result + (siteByIdSite != null ? siteByIdSite.hashCode() : 0);
-        result = 31 * result + (groupresourceByIdGroupResource != null ? groupresourceByIdGroupResource.hashCode() : 0);
-        result = 31 * result + (typerescourceByIdTypeResource != null ? typerescourceByIdTypeResource.hashCode() : 0);
-        result = 31 * result + (providerByIdProvider != null ? providerByIdProvider.hashCode() : 0);
-        result = 31 * result + (productByIdProduct != null ? productByIdProduct.hashCode() : 0);
-        result = 31 * result + (scheduleByIdSchedule != null ? scheduleByIdSchedule.hashCode() : 0);
         return result;
     }
 }

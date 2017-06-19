@@ -40,7 +40,6 @@ public class State3DAO {
             jsonString = entity.toJson();
 
             session.getTransaction().commit();
-            session.close();
         } else {
             jsonString = Tools.resultCode("1", "Can't execute operation");
         }
@@ -70,7 +69,6 @@ public class State3DAO {
         }
 
         session.getTransaction().commit();
-        session.close();
 
         return jsonString;
     }
@@ -110,7 +108,6 @@ public class State3DAO {
             }
             session.update(entity);
             session.getTransaction().commit();
-            session.close();
             return true;
         }
         return false;
@@ -142,7 +139,6 @@ public class State3DAO {
         }
 
         session.getTransaction().commit();
-        session.close();
         return true;
     }
 }
