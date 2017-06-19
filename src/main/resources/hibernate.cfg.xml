@@ -5,12 +5,11 @@
 <hibernate-configuration>
     <session-factory>
 
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/TestDatabase?useUnicode=true&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
         <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
-
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
         <property name="show_sql">true</property>
         <property name="format_sql">false</property>
@@ -40,6 +39,8 @@
 
         <!--异常接口-->
         <mapping resource="RG_AdjustDeviceEntity.hbm.xml"/>
+        <mapping resource="RG_AdjustOrderEntity.hbm.xml"/>
+        <mapping resource="RG_AdjustProcessEntity.hbm.xml"/>
 
         <!-- 3D车间接口 -->
         <mapping resource="RG_LayoutEntity.hbm.xml"/>

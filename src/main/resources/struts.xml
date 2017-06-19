@@ -26,7 +26,8 @@
 
     <!--工序资源信息接口-->
     <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">
-        <action name="getAllAssisantProcess" class="com.rengu.actions.AssisantprocessAction" method="getAllAssisantProcess"/>
+        <action name="getAllAssisantProcess" class="com.rengu.actions.AssisantprocessAction"
+                method="getAllAssisantProcess"/>
         <action name="save" class="com.rengu.actions.AssisantprocessAction" method="save"/>
         <action name="delete" class="com.rengu.actions.AssisantprocessAction" method="delete"/>
         <action name="update" class="com.rengu.actions.AssisantprocessAction" method="update"/>
@@ -88,9 +89,9 @@
     <!--3D车间访问接口-->
     <package name="State3D" namespace="/3d" extends="struts-default">
         <!--状态查询-->
-        <action name="query3DState" class="com.rengu.actions.d3.State3DAction"  method="queryState"/>
-        <action name="config3D" class="com.rengu.actions.d3.State3DAction"  method="get3DLayout"/>
-        <action name="set3DLayout" class="com.rengu.actions.d3.State3DAction"  method="insertOrUpdateLayout"/>
+        <action name="query3DState" class="com.rengu.actions.d3.State3DAction" method="queryState"/>
+        <action name="config3D" class="com.rengu.actions.d3.State3DAction" method="get3DLayout"/>
+        <action name="set3DLayout" class="com.rengu.actions.d3.State3DAction" method="insertOrUpdateLayout"/>
 
         <!--设备报表-->
         <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>
@@ -105,8 +106,19 @@
         <!--状态查询-->
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="update"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
-        <!--异常处理-->
+    </package>
+
+    <!--异常处理-->
+    <package name="ExceptionHandling" namespace="/ExceptionHandling" extends="struts-default">
         <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processError"/>
+    </package>
+
+    <!--异常处理-->
+    <package name="ExceptionList" namespace="/ExceptionList" extends="struts-default">
+        <action name="getAllAdjustOrderException" class="com.rengu.actions.AdjustOrderAction"
+                method="getAllAdjustOrderException"/>
+        <action name="getAllAdjustProcessException" class="com.rengu.actions.AdjustProcessAction"
+                method="getAllAdjustProcessException"/>
     </package>
 
 </struts>

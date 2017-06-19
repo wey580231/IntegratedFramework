@@ -1,6 +1,8 @@
 package com.rengu.util;
 
 import com.rengu.DAO.impl.*;
+import com.rengu.entity.RG_AdjustOrderEntity;
+import com.rengu.entity.RG_AdjustProcessEntity;
 import com.rengu.entity.RG_PlanEntity;
 
 import java.io.BufferedReader;
@@ -30,15 +32,12 @@ public class ApsTools {
 
     //aps部署的地址和端口号
     private static ApsTools apsTool = null;
+    private final String replyApsAction = "/aps/updateProgress";
     private String apsHost;
     private int apsPort;
-
     //集成框架部署的地址和端口号
     private String localAddress;
     private String localPort;
-
-    private final String replyApsAction = "/aps/updateProgress";
-
     private Socket socket;
     private BufferedReader breader = null;
     private OutputStream os = null;
@@ -71,6 +70,36 @@ public class ApsTools {
             }
         }
         return apsTool;
+    }
+
+    //获取紧急插单处理地址
+    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity rg_adjustOrderEntity) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
+                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000\n";
+        return result;
+    }
+
+    //获取工序调整处理地址
+    public static String getAdjustOrderHandlingURL(RG_AdjustProcessEntity rg_adjustProcessEntity) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
+                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000\n";
+        return result;
     }
 
     //获取排程结果
