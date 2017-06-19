@@ -262,7 +262,7 @@
                 <div id="tabs-2" style="width: 100%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 100%;">
+                    <div class="uk-overflow-container" style="height: 96%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
                                 <thead class="uk-text-left">
@@ -286,7 +286,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="fixtable-body" style="height: 76%;">
+                        <div class="fixtable-body" style="height: 78%;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
 
                                 <tbody class="uk-text-center">
@@ -391,7 +391,7 @@
                             </table>
 
                             <!--底部页码-->
-                            <div style="margin-top: -25px;">
+                            <%--<div style="margin-top: -25px;">
                                 <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
                                     <li>
                                         <button class="uk-button"
@@ -407,9 +407,9 @@
                                     <li>
                                         <button class="uk-button my"><a href="">尾页</a></button>
                                     </li>
-                                    <%--<li><a href="#">上一页</a></li>
+                                    &lt;%&ndash;<li><a href="#">上一页</a></li>
                                     <li><a href="#">下一页</a></li>
-                                    <li><a href="#">尾页</a></li>--%>
+                                    <li><a href="#">尾页</a></li>&ndash;%&gt;
                                     <li>共88页</li>&nbsp;
                                     <li>
                                         到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
@@ -421,10 +421,30 @@
                                         </button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>--%>
                         </div>
 
                     </div>
+
+                    <br/>
+
+                    <!--底部页码-->
+                    <div style="margin-top: -25px;">
+                        <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                            <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                            <li><button class="uk-button my"><a href="">上一页</a></button></li>
+                            <li><button class="uk-button my"><a href="">下一页</a></button></li>
+                            <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                            <li>共10页</li>&nbsp;
+                            <li>
+                                到第<input type="text" value="1" style="width: 28px;background-color: #EEF7FC;">页
+                            </li>
+                            <li>
+                                <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
 
             </div>

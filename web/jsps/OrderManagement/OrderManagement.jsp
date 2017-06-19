@@ -107,7 +107,7 @@
             <div id="tabs-2" style="width: 100%;height: 100%;">
 
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 96%;">
+                <div class="uk-overflow-container" style="height: 92%;">
                     <div class="fixtable-head">
                         <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
@@ -172,6 +172,8 @@
                     </div>
 
                 </div>
+
+                <br/>
 
                 <!--底部页码-->
                 <div style="margin-top: -25px;">
