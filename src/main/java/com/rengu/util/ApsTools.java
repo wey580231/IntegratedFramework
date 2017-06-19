@@ -277,6 +277,19 @@ public class ApsTools {
         return ApsTools.UNKNOWN;
     }
 
+    public int startAPSSchedule() {
+        String cmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n" +
+                "&" +
+                "REPLY=" + getReplyAddress() +
+                "&" +
+                "ID=" + GlobalVariable.MiddleSnapshotId + "" +
+                "&" +
+                "DELAY=1000000" +
+                "&" +
+                "buffer=001";
+        return executeCommand(cmd);
+    }
+
     //获取aps计算完后返回结果地址
     public String getReplyAddress() {
         return localAddress + ":" + localPort + replyApsAction;
