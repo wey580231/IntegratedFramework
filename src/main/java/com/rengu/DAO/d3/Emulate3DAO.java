@@ -26,7 +26,6 @@ public class Emulate3DAO {
         }
 
         session.getTransaction().commit();
-        session.close();
 
         return flag;
     }

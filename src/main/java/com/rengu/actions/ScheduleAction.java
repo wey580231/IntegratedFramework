@@ -3,11 +3,9 @@ package com.rengu.actions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.impl.*;
 import com.rengu.entity.*;
-import com.rengu.util.DAOFactory;
-import com.rengu.util.DatabaseInfo;
-import com.rengu.util.EntityConvertToSQL;
-import com.rengu.util.Tools;
+import com.rengu.util.*;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -17,52 +15,53 @@ import java.util.*;
  */
 public class ScheduleAction extends SuperAction {
 
-    public void beginSchedule() throws Exception {
-
+    public void beginSchedule() {
         //初始化数据库表
-        String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
-        Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
-        //更新数据库表内容
-        String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
-        JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
-        RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
-        rg_scheduleEntity.setId(UUID.randomUUID().toString());
-        //解析排程名称
-        JsonNode nameNodes = rootNode.get("name");
-        rg_scheduleEntity.setName(nameNodes.asText());
-        rg_scheduleEntity.setState(RG_ScheduleEntity.APS_COMPUTE);
+        try {
+            String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
+            Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
 
-        //获取当前时间
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String scheduleTime = dateFormat.format(date);
-        rg_scheduleEntity.setScheduleTime(scheduleTime);
-        rg_scheduleEntity.setStartCalcTime(scheduleTime);
-        //解析scheduleWindow
-        JsonNode scheduleWindowNodes = rootNode.get("scheduleWindow");
-        rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
-        //解析rollTime
-        JsonNode rollTimeNodes = rootNode.get("rollTime");
-        rg_scheduleEntity.setScheduleWindow(rollTimeNodes.asInt());
-        //解析APS_Config数据
-        JsonNode APS_ConfigNode = rootNode.get("APSConfig");
-        for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
-            String APS_ConfigNodeKey = it.next();
-            String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
-            if (APS_ConfigNodeKey.equals("t0")) {
-                rg_scheduleEntity.setApsStartTime(APS_ConfigNodeValue);
+            //更新数据库表内容
+            String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
+            JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
+            RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
+            rg_scheduleEntity.setId(UUID.randomUUID().toString());
+            //解析排程名称
+            JsonNode nameNodes = rootNode.get("name");
+            rg_scheduleEntity.setName(nameNodes.asText());
+            rg_scheduleEntity.setState(RG_ScheduleEntity.APS_COMPUTE);
+
+            //获取当前时间
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String scheduleTime = dateFormat.format(date);
+            rg_scheduleEntity.setScheduleTime(scheduleTime);
+            rg_scheduleEntity.setStartCalcTime(scheduleTime);
+            //解析scheduleWindow
+            JsonNode scheduleWindowNodes = rootNode.get("scheduleWindow");
+            rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
+            //解析rollTime
+            JsonNode rollTimeNodes = rootNode.get("rollTime");
+            rg_scheduleEntity.setScheduleWindow(rollTimeNodes.asInt());
+            //解析APS_Config数据
+            JsonNode APS_ConfigNode = rootNode.get("APSConfig");
+            for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
+                String APS_ConfigNodeKey = it.next();
+                String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
+                if (APS_ConfigNodeKey.equals("t0")) {
+                    rg_scheduleEntity.setApsStartTime(APS_ConfigNodeValue);
+                }
+                if (APS_ConfigNodeKey.equals("t2")) {
+                    rg_scheduleEntity.setApsEndTime(APS_ConfigNodeValue);
+                }
+                if (APS_ConfigNodeKey.equals("objective")) {
+                    rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);
+                }
+                if (APS_ConfigNodeKey.equals("modeScheduling")) {
+                    rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
+                }
+                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
-            if (APS_ConfigNodeKey.equals("t2")) {
-                rg_scheduleEntity.setApsEndTime(APS_ConfigNodeValue);
-            }
-            if (APS_ConfigNodeKey.equals("objective")) {
-                rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);
-            }
-            if (APS_ConfigNodeKey.equals("modeScheduling")) {
-                rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
-            }
-            Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
-        }
         //解析Layout数据
         JsonNode layoutNode = rootNode.get("layout");
         RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
@@ -126,23 +125,56 @@ public class ScheduleAction extends SuperAction {
         rg_scheduleEntity.setSites(rg_siteEntitySet);
         siteInstance.getTransaction().commit();
 
-        //APS ID计算标识
-        String apsId = String.valueOf(date.getTime());
-        rg_scheduleEntity.setApsFlag(apsId);
+            //APS ID计算标识
+            String apsId = String.valueOf(date.getTime());
+            rg_scheduleEntity.setApsFlag(apsId);
 
-        //提交保存
-        ScheduleDAOImpl scheduleDAOImplInstance = DAOFactory.getScheduleDAOImplInstance();
-        scheduleDAOImplInstance.save(rg_scheduleEntity);
-        scheduleDAOImplInstance.getTransaction().commit();
+            //产生一条快照根记录，并自动生成该记录中
+            RG_SnapshotNodeEntity rootSnapshot = new RG_SnapshotNodeEntity();
+            rootSnapshot.setId(UUID.randomUUID().toString());
 
-//        //调用排程接口
-//        String executeCmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n&REPLY=127.0.0.1:8080/aps/updateProgress&ID=" + apsId + "&DELAY=1000000&buffer=001";
-//        int result = ApsTools.instance().executeCommand(executeCmd);
-//
-//        if (result == ApsTools.STARTED) {
-//            Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
-//        } else {
-//            Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
-//        }
+            RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
+            middleShot.setId(UUID.randomUUID().toString());
+            middleShot.setParent(rootSnapshot);
+            middleShot.setRootParent(rootSnapshot);
+
+            rootSnapshot.getChilds().add(middleShot);
+            rootSnapshot.setSchedule(rg_scheduleEntity);
+            rg_scheduleEntity.setSnapshot(rootSnapshot);
+
+            GlobalVariable.RootSnapshotId = rootSnapshot.getId();
+            GlobalVariable.MiddleSnapshotId = middleShot.getId();
+            GlobalVariable.IsErrorSchedule = false;
+
+            //提交保存
+            ScheduleDAOImpl scheduleDAOImplInstance = DAOFactory.getScheduleDAOImplInstance();
+
+            //调用排程接口
+            int result = ApsTools.instance().startAPSSchedule();
+
+            if (result == ApsTools.STARTED) {
+
+                scheduleDAOImplInstance.save(rg_scheduleEntity);
+                scheduleDAOImplInstance.getTransaction().commit();
+
+                Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
+            } else {
+
+                scheduleDAOImplInstance.getTransaction().rollback();
+
+                Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            GlobalVariable.RootSnapshotId = "";
+            GlobalVariable.MiddleSnapshotId = "";
+            GlobalVariable.IsErrorSchedule = false;
+            GlobalVariable.ApsReplyCount = 0;
+
+            Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+        } finally {
+
+        }
     }
 }
