@@ -2,6 +2,9 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by wey580231 on 2017/5/23.
  */
@@ -13,7 +16,9 @@ public class RG_UserEntity {
     private String idProvider;
     private Byte authority;
     private String password;
+
     private RG_ClubEntity clubByIdClub;
+    private Set<RG_WarnEntity> warns = new HashSet<RG_WarnEntity>();
 
     public String getId() {
         return id;
@@ -61,6 +66,14 @@ public class RG_UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<RG_WarnEntity> getWarns() {
+        return warns;
+    }
+
+    public void setWarns(Set<RG_WarnEntity> warns) {
+        this.warns = warns;
     }
 
     @Override

@@ -5,7 +5,7 @@ package com.rengu.util;
  */
 public class GlobalVariable {
     //TODO 待添加实现对多用户隔离
-    public static String CurrScheduleId;         //当前对应的排程记录
+    public static String CurrScheduleId;         //当前对应的排程记录,防止APS调用reply接口多次，在第一次调用后置为
     public static String RootSnapshotId;         //当前快照的根节点ID，创建新schedule排程时更新
     public static String MiddleSnapshotId;       //快照树第二层节点ID，创建schedule或紧急排程时更新，用于在接收aps reply后根据ID创建bottom节点
     public static String BottomSnapshotId;       //快照树第三层节点ID
