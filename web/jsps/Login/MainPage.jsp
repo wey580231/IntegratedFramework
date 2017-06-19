@@ -30,7 +30,8 @@
             ul.uk-nav-sub {
                 margin-left: 30px;
             }
-            ul.uk-nav-sub > li{
+
+            ul.uk-nav-sub > li {
                 height: 35px;
 
             }
@@ -43,9 +44,9 @@
                 里层li中超链接的背景
             */
             .uk-nav-side ul a:hover {
-                 background: url("../../images/left_img/click.png") no-repeat 30px;
-                 color: #ecc412;
-             }
+                background: url("../../images/left_img/click.png") no-repeat 30px;
+                color: #ecc412;
+            }
 
             /*
                 里层li的背景
@@ -114,14 +115,14 @@
             /*
                 缺省值
             */
-            html,body{
+            html, body {
                 margin: 0;
                 height: 100%;
             }
 
-            #main{
-                width:1366px;
-                height:673px;
+            #main {
+                width: 100%;
+                height: 100%;
                 MARGIN-RIGHT: auto;
                 MARGIN-LEFT: auto;
             }
@@ -144,11 +145,11 @@
 <div id="main">
     <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;">
         <!--图标-->
-        <div  class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
+        <div class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
             <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
         </div>
         <!--左侧列表-->
-        <div  class="uk-width-1-1" style="height: 90%;">
+        <div class="uk-width-1-1" style="height: 90%;">
             <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
                 <li class="uk-parent">
                     <a href="#">
@@ -165,7 +166,8 @@
                 <li class="uk-parent">
                     <a href="#">
                         <div>
-                            <img src="../../images/left_img/resource.png"> <span style="margin-left: 10px;">资源设备管理</span>
+                            <img src="../../images/left_img/resource.png"> <span
+                                style="margin-left: 10px;">资源设备管理</span>
                         </div>
                     </a>
                     <ul class="uk-nav-sub">
@@ -241,7 +243,7 @@
 
         <div style="float:right;background-color: #bdcbd8;height: 90%;width: 100%;">
 
-            <div  style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
+            <div style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
                 <ng-view></ng-view>
             </div>
         </div>
@@ -288,7 +290,6 @@
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/WorkListController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceGroupController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/Login/GuideController.js"></script>
-
 
 </body>
 </html>

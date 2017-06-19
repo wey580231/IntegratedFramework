@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_ScheduleEntity" table="RG_ScheduleEntity" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(60)" length="60" not-null="true"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(60)" length="60" not-null="false"/>
+        </property>
+        <property name="scheduleTime">
+            <column name="scheduleTime" sql-type="varchar(60)" length="60" not-null="false"/>
+        </property>
+        <property name="startCalcTime">
+            <column name="startCalcTime" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="endCalcTime">
+            <column name="endCalcTime" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="state" type="integer">
+            <column name="state" sql-type="int" not-null="false"/>
+        </property>
+        <property name="progress">
+            <column name="progress" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="scheduleWindow" type="integer">
+            <column name="scheduleWindow" sql-type="int" not-null="false"/>
+        </property>
+        <property name="rollTime" type="integer">
+            <column name="rollTime" sql-type="int" not-null="false"/>
+        </property>
+        <property name="apsStartTime">
+            <column name="apsStartTime" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="apsEndTime">
+            <column name="apsEndTime" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="apsModel">
+            <column name="apsModel" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="apsObj">
+            <column name="apsObj" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="apsFlag">
+            <column name="apsFlag" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+
+        <many-to-one name="layout" class="com.rengu.entity.RG_LayoutEntity">
+            <column name="layoutId" not-null="false"/>
+        </many-to-one>
+
+        <set name="orders" inverse="false" cascade="all" table="schedule_order">
+            <key column="s_id"></key>
+            <many-to-many class="com.rengu.entity.RG_OrderEntity" column="o_id"></many-to-many>
+        </set>
+
+        <set name="resources" inverse="false" cascade="all" table="schedule_Resource">
+            <key column="s_id"></key>
+            <many-to-many class="com.rengu.entity.RG_ResourceEntity" column="r_id"></many-to-many>
+        </set>
+
+        <set name="groups" inverse="false" cascade="all" table="schedule_groupresource">
+            <key column="s_id"></key>
+            <many-to-many class="com.rengu.entity.RG_GroupresourceEntity" column="g_id"></many-to-many>
+        </set>
+
+        <!--schedule和site是多对多关系，site和resource是多对多关系。
+        查找resource会加载site，另外也会查找site，造成session缓存中出现同一个id的site对象两次。
+        因此把schedule的级联关系改成merge
+        -->
+        <set name="sites" inverse="false" cascade="merge" table="schedule_site">
+            <key column="s_id"></key>
+            <many-to-many class="com.rengu.entity.RG_SiteEntity" column="site_id"></many-to-many>
+        </set>
+
+    </class>
+</hibernate-mapping>

@@ -12,81 +12,13 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/31.
  */
-public class SiteDAOImpl implements SiteDAO {
-
-    private Transaction transaction;
-
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    private RG_SiteEntity getEntityObject(Object object) {
-        RG_SiteEntity rg_siteEntity = null;
-        if (object instanceof RG_SiteEntity) {
-            return (RG_SiteEntity) object;
-        } else {
-            return rg_siteEntity;
-        }
-    }
-
+public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> {
     @Override
-    public boolean save(Object object) {
-        try {
-            RG_SiteEntity rg_siteEntity = getEntityObject(object);
-            if (rg_siteEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(rg_siteEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean delete(Object object) {
-        try {
-            RG_SiteEntity rg_siteEntity = getEntityObject(object);
-            if (rg_siteEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.delete(rg_siteEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(Object object) {
-        try {
-            RG_SiteEntity rg_siteEntity = getEntityObject(object);
-            if (rg_siteEntity == null) {
-                return false;
-            }
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            session.update(rg_siteEntity);
-            this.transaction = transaction;
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public List<?> findAll() {
+    public List<RG_SiteEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
+        super.transaction = transaction;
+        super.session = session;
         String hql = "from RG_SiteEntity rg_siteEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -94,17 +26,33 @@ public class SiteDAOImpl implements SiteDAO {
     }
 
     @Override
-    public List<?> findAllByUsername(Object object) {
-        return findAll();
+    public List<RG_SiteEntity> findAllByUsername(String username) {
+        return null;
     }
 
     @Override
-    public List<?> search(String keyWord) {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.name = 'han'";
-        Query query = session.createQuery(hql);
-        List list = query.list();
-        return list;
+    public RG_SiteEntity findAllById(String id) {
+        try {
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            super.transaction = transaction;
+            super.session = session;
+            String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            if (!query.list().isEmpty()) {
+                return (RG_SiteEntity) query.list().get(0);
+            } else {
+                return null;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<RG_SiteEntity> search(String keyWord) {
+        return null;
     }
 }

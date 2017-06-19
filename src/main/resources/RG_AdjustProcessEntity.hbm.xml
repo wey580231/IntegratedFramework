@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_AdjustProcessEntity" table="RG_AdjustProcess" schema="TestDatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(100)" length="100"/>
+        </id>
+        <property name="reportTime">
+            <column name="reportTime" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="idTask">
+            <column name="idTask" sql-type="varchar(60)" length="60"/>
+        </property>
+        <property name="t1Task">
+            <column name="t1Task" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="appointIdResource">
+            <column name="appointIdResource" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="appointTaskTime">
+            <column name="appointTaskTime" sql-type="varchar(50)" length="50"/>
+        </property>
+
+        <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity" column="idOrder" unique="true"/>
+
+        <many-to-one name="resourceEntity" class="com.rengu.entity.RG_ResourceEntity" column="idResource"
+                     unique="true"/>
+    </class>
+</hibernate-mapping>

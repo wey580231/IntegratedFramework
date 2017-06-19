@@ -9,5 +9,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             controller: 'ScheduleSnapController'
         })
     }])
-    .controller("ScheduleSnapController", function ($scope) {
-    });
+    .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList) {
+
+    })

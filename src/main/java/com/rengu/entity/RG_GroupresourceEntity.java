@@ -1,10 +1,13 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/5/23.
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_GroupresourceEntity {
     private String id;
     private String name;
@@ -14,9 +17,9 @@ public class RG_GroupresourceEntity {
     private String color;
     private String idSite;
     private RG_ProviderEntity providerByIdProvider;
-    private RG_ClubEntity clubByIdClub;
     private Set<RG_SiteEntity> sitesById;
     private Set<RG_ResourceEntity> resourcesById;
+    private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
         return id;
@@ -112,14 +115,6 @@ public class RG_GroupresourceEntity {
         this.providerByIdProvider = providerByIdProvider;
     }
 
-    public RG_ClubEntity getClubByIdClub() {
-        return clubByIdClub;
-    }
-
-    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
-        this.clubByIdClub = clubByIdClub;
-    }
-
     public Set<RG_ResourceEntity> getResourcesById() {
         return resourcesById;
     }
@@ -135,4 +130,13 @@ public class RG_GroupresourceEntity {
     public void setSitesById(Set<RG_SiteEntity> sitesById) {
         this.sitesById = sitesById;
     }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
+
 }

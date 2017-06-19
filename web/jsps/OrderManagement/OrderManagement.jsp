@@ -10,8 +10,6 @@
 <link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
-
-
 </style>
 
 
@@ -43,8 +41,6 @@
 
     <%--</div>--%>
     <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
-
-
 &nbsp;
 <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>--%>
     <!--搜索-->
@@ -87,14 +83,12 @@
         </form>
     </div>
 
-
-
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}" >新增</button>
+        <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editOrder()" data-uk-modal="{target:'#edit'}" >修改</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteOrder()">删除</button>
     </div>
     <%--</div>--%>
 </div>
@@ -115,20 +109,19 @@
                 <!--表格-->
                 <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
-                        <table class="uk-table uk-table-striped uk-table-hover ">
+                        <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
                                     <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
                                         <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
-
                                 </td>
                                 <td>编码</td>
                                 <td>名称</td>
                                 <td>来源</td>
-                                <td>产品名</td>
-                                <td>数量</td>
+
+                                <!--<td>数量</td>-->
                                 <td>优先级</td>
                                 <td>下单时间</td>
                                 <td>最早开工</td>
@@ -140,130 +133,19 @@
 
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                            <%-- <thead type="hidden">
-                             &lt;%&ndash;<tbody>&ndash;%&gt;
-                             <tr style="background-color: #e1eaf1;">
-                                 <td>
-                                     <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
-                                         <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                     </div>
-
-                                 </td>
-                                 <td>编码</td>
-                                 <td>名称</td>
-                                 <td>来源</td>
-                                 <td>产品名</td>
-                                 <td>数量</td>
-                                 <td>优先级</td>
-                                 <td>下单时间</td>
-                                 <td>最早开工时间</td>
-                                 <td>最晚开工时间</td>
-                             </tr>
-                             </thead>--%>
                             <tbody class="uk-text-center">
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>...</td>
-                                <td>待定</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-
+                            <tr id="first" ng-repeat="x in arr track by $index">
+                                <td><input id="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td id="id">{{x.id}}</td>
+                                <td id="name">{{x.name}}</td>
+                                <td id="origin">{{x.origin}}</td>
+                               <!-- <td id="idProduct">{{x.idProduct}}</td>
+                                <td id="quantity">{{x.quantity}}</td>-->
+                                <td id="priority">{{x.priority}}</td>
+                                <td id="t0">{{x.t0}}</td>
+                                <td id="t1">{{x.t1}}</td>
+                                <td id="t2">{{x.t2}}</td>
                             </tr>
                             </tbody>
 
@@ -286,8 +168,6 @@
                             </ul>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -308,10 +188,74 @@
         </div>
     </div>
 </div>
-<%--</div>--%>
 
-<script>
-    $(function () {
-        $("#tabs").tabs();
-    });
-</script>
+<!--填写新增订单信息-->
+<div class="uk-modal uk-overflow-container" id="add">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <label for="add-id">编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-name">名称</label><br/>
+                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-origin">来源</label><br/>
+                    <input type="text" name="add-origin" id="add-origin" class="text ui-widget-content ui-corner-all"><br/>
+                   <!-- <label for="add-idProduct">产品名称</label><br/>
+                    <input type="text" name="add-idProduct" id="add-idProduct" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-quantity">数量</label><br/>
+                    <input type="text" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>-->
+                    <label for="add-priority">优先级</label><br/>
+                    <input type="text" name="add-priority" id="add-priority" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-t0">下单时间</label><br/>
+                    <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-t1">最早开工</label><br/>
+                    <input type="text" name="add-t1" id="add-t1" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-t2">最晚开工</label><br/>
+                    <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="orderValidate()">Add</button>
+        </div>
+    </div>
+</div>
+
+<!--修改订单信息-->
+<div class="uk-modal uk-overflow-container" id="edit">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form>
+                <fieldset ng-repeat="x in form track by $index">
+                    <label for="edit-id">编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+                    <label for="edit-name">名称</label><br/>
+                    <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
+                    <label for="edit-origin">来源</label><br/>
+                    <input type="text" name="edit-origin" id="edit-origin" class="text ui-widget-content ui-corner-all" value="{{x.origin}}"><br/>
+                    <!--<label for="edit-idProduct">产品名称</label><br/>
+                    <input type="text" name="edit-idProduct" id="edit-idProduct" class="text ui-widget-content ui-corner-all" value="{{x.idProduct}}"><br/>
+                    <label for="edit-quantity">数量</label><br/>
+                    <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>-->
+                    <label for="edit-priority">优先级</label><br/>
+                    <input type="text" name="edit-priority" id="edit-priority" class="text ui-widget-content ui-corner-all" value="{{x.priority}}"><br/>
+                    <label for="edit-t0">下单时间</label><br/>
+                    <input type="text" name="edit-t0" id="edit-t0" class="text ui-widget-content ui-corner-all" value="{{x.t0}}"><br/>
+                    <label for="edit-t1">最早开工</label><br/>
+                    <input type="text" name="edit-t1" id="edit-t1" class="text ui-widget-content ui-corner-all" value="{{x.t1}}"><br/>
+                    <label for="edit-t2">最晚开工</label><br/>
+                    <input type="text" name="edit-t2" id="edit-t2" class="text ui-widget-content ui-corner-all" value="{{x.t2}}"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="update()">Edit</button>
+        </div>
+    </div>
+</div>
+

@@ -59,9 +59,9 @@
 
         <!--按钮-->
         <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-            <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-            <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-            <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
+            <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}">新增</button>
+            <button class="uk-button uk-icon-edit uk-button-primary"  ng-click="editResource()" data-uk-modal="{target:'#edit'}">修改</button>
+            <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteResource()">删除</button>
         </div>
     </div>
     <%--<hr class="uk-article-divider">--%>
@@ -93,11 +93,11 @@
                                     <td>名称</td>
                                     <td>资源类型</td>
                                     <td>工组</td>
-                                    <td>移动速度</td>
+                                    <!--<td>移动速度</td>
                                     <td>串行能力</td>
                                     <td>并行下限</td>
                                     <td>并行上限</td>
-                                    <td>能力恢复</td>
+                                    <td>能力恢复</td>-->
                                     <td>正常班次</td>
                                     <td>状态信息</td>
                                 </tr>
@@ -107,146 +107,16 @@
 
                         <div class="fixtable-body" style="height: 83%;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
-                                <%-- <thead type="hidden">
-                                 &lt;%&ndash;<tbody>&ndash;%&gt;
-                                 <tr style="background-color: #e1eaf1;">
-                                     <td>
-                                         <div style="border: 1px solid lightgray;width: 30px;height: 15px;background-color: #cddae3;">
-                                             <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                         </div>
-
-                                     </td>
-                                     <td>编码</td>
-                                     <td>名称</td>
-                                     <td>来源</td>
-                                     <td>产品名</td>
-                                     <td>数量</td>
-                                     <td>优先级</td>
-                                     <td>下单时间</td>
-                                     <td>最早开工时间</td>
-                                     <td>最晚开工时间</td>
-                                 </tr>
-                                 </thead>--%>
                                 <tbody class="uk-text-center">
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1001</td>
-                                    <td>待定</td>
-                                    <td>未知</td>
-                                    <td>1</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>1000</td>
-                                    <td>2</td>
-                                    <td>待定</td>
-
+                                <tr ng-repeat="x in arr track by $index">
+                                    <td><input id="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                    <td id="id">{{x.id}}</td>
+                                    <td id="name">{{x.name}}</td>
+                                    <td id="typeSite">{{x.typeSite}}</td>
+                                    <td id="IdSiteGroupResource">{{x.idSiteGroupResource}}</td>
+                                    <td id="NameShift">{{x.nameShift}}</td>
+                                    <td id="state">{{x.state}}</td>
                                 </tr>
                                 </tbody>
 
@@ -270,13 +140,10 @@
                             </div>
                         </div>
 
-
                     </div>
                 </div>
-
             </div>
         </div>
-
 
         <div class="uk-clearfix" style="margin-top: -3%;">
             <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
@@ -291,11 +158,67 @@
             </div>
         </div>
     </div>
-    <%--</div>--%>
+<!--填写新增订单信息-->
+<div class="uk-modal uk-overflow-container" id="add">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <label for="add-id">编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-name">名称</label><br/>
+                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <label for="add-TypeSite">资源类型</label><br/>
+                    <input type="text" name="add-typeSite" id="add-typeSite" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-idSiteGroupResource">工组</label><br/>
+                    <input type="text" name="add-idSiteGroupResource" id="add-idSiteGroupResource" class="text ui-widget-content ui-corner-all"><br/>
+                    <!--<label for="add-mobility">移动速度</label><br/>
+                    <input type="text" name="add-mobility" id="add-mobility" class="text ui-widget-content ui-corner-all"><br/>-->
+                    <label for="add-nameShift">正常班次</label><br/>
+                    <input type="text" name="add-nameShift" id="add-nameShift" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="add-state">状态信息</label><br/>
+                    <input type="text" name="add-state" id="add-state" class="text ui-widget-content ui-corner-all"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="formValidate()">Add</button>
+        </div>
+    </div>
+</div>
 
-    <script>
-        $(function () {
-            $("#tabs").tabs();
-        });
-    </script>
+<!--修改订单信息-->
+<div class="uk-modal uk-overflow-container" id="edit">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div id="dialog-form" title="订单信息">
+            <form>
+                <fieldset ng-repeat="x in form track by $index">
+                    <label for="edit-id">编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+                    <label for="edit-name">名称</label><br/>
+                    <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
+                    <label for="edit-TypeSite">资源类型</label><br/>
+                    <input type="text" name="edit-typeSite" id="edit-typeSite" class="text ui-widget-content ui-corner-all" value="{{x.typeSite}}"><br/>
+                    <label for="edit-idSiteGroupResource">工组</label><br/>
+                    <input type="text" name="edit-idSiteGroupResource" id="edit-idSiteGroupResource" class="text ui-widget-content ui-corner-all" value="{{x.idSiteGroupResource}}"><br/>
+                    <!--<label for="edit-mobility">移动速度</label><br/>
+                    <input type="text" name="edit-mobility" id="edit-mobility" class="text ui-widget-content ui-corner-all" value="{{x.mobility}}"><br/>-->
+                    <label for="edit-nameShift">正常班次</label><br/>
+                    <input type="text" name="edit-nameShift" id="edit-nameShift" class="text ui-widget-content ui-corner-all" value="{{x.nameShift}}"><br/>
+                    <label for="edit-state">状态信息</label><br/>
+                    <input type="text" name="edit-state" id="edit-state" class="text ui-widget-content ui-corner-all" value="{{x.state}}"><br/>
+                </fieldset>
+            </form>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="uk-button" ng-click="reset()">Reset</button>
+            <button type="button" class="uk-button" ng-click="update()">Edit</button>
+        </div>
+    </div>
+</div>
+
+
 

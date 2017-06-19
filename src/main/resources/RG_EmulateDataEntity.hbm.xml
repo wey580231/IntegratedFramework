@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_EmulateDataEntity" table="RG_EmulateData" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+        </id>
+        <property name="idResource">
+            <column name="idResource" sql-type="varchar(255)"/>
+        </property>
+        <property name="state">
+            <column name="state" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="good">
+            <column name="good" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="startLocation">
+            <column name="startLocation" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="endLocation">
+            <column name="endLocation" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="startTime">
+            <column name="startTime" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="endTime">
+            <column name="endTime" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

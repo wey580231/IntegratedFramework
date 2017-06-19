@@ -1,14 +1,16 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by wey580231 on 2017/5/23.
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_ProviderEntity {
     private String id;
     private String name;
     private String color;
     private RG_ClubEntity clubByIdClub;
-    private RG_SiteEntity siteByIdSite;
 
     public String getId() {
         return id;
@@ -64,11 +66,4 @@ public class RG_ProviderEntity {
         this.clubByIdClub = clubByIdClub;
     }
 
-    public RG_SiteEntity getSiteByIdSite() {
-        return siteByIdSite;
-    }
-
-    public void setSiteByIdSite(RG_SiteEntity siteByIdSite) {
-        this.siteByIdSite = siteByIdSite;
-    }
 }

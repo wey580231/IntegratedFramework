@@ -1,10 +1,13 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/5/23.
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_SiteEntity {
     private String id;
     private String name;
@@ -16,6 +19,7 @@ public class RG_SiteEntity {
     private Short sizeIcon;
     private Short capacity;
     private Set<RG_ResourceEntity> resources;
+    private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
         return id;
@@ -130,4 +134,14 @@ public class RG_SiteEntity {
     public void setResources(Set<RG_ResourceEntity> resources) {
         this.resources = resources;
     }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
+
+
 }

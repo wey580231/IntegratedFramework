@@ -118,7 +118,7 @@
 
                 if (origin) {
                     animation += " uk-animation-" + origin;
-            }
+                }
 
                 if (out) {
                     animation += ' uk-animation-reverse';
@@ -694,16 +694,16 @@
         movesTo: function movesTo(target) {
 
             if (this.positions.length < 2) {
-            return false;
-        }
+                return false;
+            }
 
             var p = getDimensions(target),
                 position = this.positions[this.positions.length - 1],
                 prevPos = this.positions[0];
 
             if (p.left <= position.x && position.x <= p.right && p.top <= position.y && position.y <= p.bottom) {
-            return false;
-        }
+                return false;
+            }
 
             var points = [
                 [{x: p.left, y: p.top}, {x: p.right, y: p.bottom}],
@@ -719,7 +719,7 @@
                 points[0].reverse();
             } else if (p.top >= position.y) {
                 points[1].reverse();
-        }
+            }
 
             return !!points.reduce(function (result, point) {
                 return result + (slope(prevPos, point[0]) < slope(position, point[0]) && slope(prevPos, point[1]) > slope(position, point[1]));
@@ -796,7 +796,7 @@
         if (child.mixins) {
             for (var i = 0, l = child.mixins.length; i < l; i++) {
                 parent = mergeOptions(parent, child.mixins[i]);
-        }
+            }
         }
 
         for (key in parent) {
@@ -858,8 +858,8 @@
 
 
                 if (!(flip === true || ~flip.indexOf(dir))) {
-                return;
-            }
+                    return;
+                }
 
                 var elemOffset = attach[dir] === align
                         ? -dim[prop]
@@ -889,7 +889,7 @@
                     }
                 }
 
-        });
+            });
         }
 
         $__default(element).offset({left: position.left, top: position.top});
@@ -1422,15 +1422,15 @@
 
                 } while (element)
 
-        } else {
+            } else {
 
                 apply(element, function (element) {
                     return update(element[DATA], e);
                 });
 
-        }
+            }
 
-    };
+        };
 
         var container;
         Object.defineProperty(UIkit, 'container', {
@@ -1601,7 +1601,7 @@
                     this$1._frames.reads[i] = fastdom.measure(function () {
                         update.read.call(this$1, e);
                         delete this$1._frames.reads[i];
-                });
+                    });
                 }
 
                 if (update.write && !~fastdom.writes.indexOf(this$1._frames.writes[i])) {
@@ -1849,7 +1849,7 @@
                 }
 
                 return component._computeds[key];
-        },
+            },
 
             set: function set(value) {
                 component._computeds[key] = value;
@@ -1931,7 +1931,7 @@
 
             if (!el[DATA]) {
                 el[DATA] = {};
-        }
+            }
 
             if (el[DATA][name]) {
                 console.warn(("Component \"" + name + "\" is already mounted on element: "), el);
@@ -2144,7 +2144,7 @@
                 paddingBottom: '',
                 marginTop: '',
                 marginBottom: ''
-        },
+            },
 
             hideProps: {
                 overflow: 'hidden',
@@ -2268,9 +2268,9 @@
 
                 if (this.cls) {
                     el.toggleClass(this.cls, ~this.cls.indexOf(' ') ? undefined : toggled);
-            } else {
+                } else {
                     el.attr('hidden', !toggled);
-            }
+                }
 
                 el.find('[autofocus]:visible').focus();
 
@@ -2406,7 +2406,7 @@
                     this.hide();
                 }
 
-        },
+            },
 
             {
 
@@ -2459,7 +2459,7 @@
 
                 }
 
-        },
+            },
 
             {
 
@@ -2633,11 +2633,11 @@
 
                 element.toggleClass(((this.clsPos) + "-" + (this.dir) + "-" + (this.align)), this.offset === false);
 
-        },
+            },
 
             getAxis: function getAxis() {
                 return this.dir === 'top' || this.dir === 'bottom' ? 'y' : 'x';
-        }
+            }
 
         }
 
@@ -2666,19 +2666,19 @@
                 toggle: String,
                 content: String,
                 transition: String
-        },
+            },
 
-        defaults: {
-            targets: '> *',
-            active: false,
-            animation: [true],
-            collapsible: true,
-            multiple: false,
-            clsOpen: 'uk-open',
-            toggle: '> .uk-accordion-title',
-            content: '> .uk-accordion-content',
-            transition: 'ease'
-        },
+            defaults: {
+                targets: '> *',
+                active: false,
+                animation: [true],
+                collapsible: true,
+                multiple: false,
+                clsOpen: 'uk-open',
+                toggle: '> .uk-accordion-title',
+                content: '> .uk-accordion-content',
+                transition: 'ease'
+            },
 
             computed: {
 
@@ -2728,14 +2728,14 @@
                 this.items.each(function (i, el) {
                     el = $__default(el);
                     this$1.toggleNow(el.find(this$1.content), el.hasClass(this$1.clsOpen));
-            });
+                });
 
                 var active = this.active !== false && toJQuery(this.items.eq(Number(this.active))) || !this.collapsible && toJQuery(this.items.eq(0));
                 if (active && !active.hasClass(this.clsOpen)) {
                     this.toggle(active, false);
                 }
 
-        },
+            },
 
             methods: {
 
@@ -2780,7 +2780,7 @@
                         });
 
                     })
-            }
+                }
 
             }
 
@@ -3032,7 +3032,7 @@
 
                         if (this.isToggled()) {
                             this.hide(false);
-                    } else {
+                        } else {
                             this.show(toggle, false);
                         }
                     }
@@ -3061,7 +3061,7 @@
                             && !isWithin(e.target, active.toggle.$el)
                         ) {
                             active.hide(false);
-                    }
+                        }
 
                         e.preventDefault();
                         this.show(this.toggle);
@@ -3350,7 +3350,7 @@
 
             defaults: {
                 target: false
-        },
+            },
 
             computed: {
 
@@ -3364,7 +3364,7 @@
 
                 target: function target() {
                     return this.$props.target && query(this.$props.target === true ? '> :input:first + :first' : this.$props.target, this.$el)
-            }
+                }
 
             },
 
@@ -3445,7 +3445,7 @@
             defaults: {
                 margin: 'uk-grid-margin',
                 clsStack: 'uk-grid-stack'
-        },
+            },
 
             update: {
 
@@ -3968,7 +3968,7 @@
 
                             if (top >= rowTop + row[0].offsetHeight) {
                                 this$1.rows.push([el]);
-                            break;
+                                break;
                             }
 
                             if (bottom > rowTop) {
@@ -3981,13 +3981,13 @@
                                 }
 
                                 row.push(el);
-                            break;
+                                break;
                             }
 
                             if (index === 0) {
                                 this$1.rows.splice(index, 0, [el]);
                                 break;
-                        }
+                            }
 
                         }
 
@@ -4017,9 +4017,9 @@
 
                 events: ['load', 'resize']
 
-        }
+            }
 
-    });
+        });
 
     }
 
@@ -4033,12 +4033,12 @@
                 center: Boolean
             },
 
-        defaults: {
-            center: false,
-            clsPage: 'uk-modal-page',
-            clsPanel: 'uk-modal-dialog',
-            selClose: '.uk-modal-close, .uk-modal-close-default, .uk-modal-close-outside, .uk-modal-close-full'
-        },
+            defaults: {
+                center: false,
+                clsPage: 'uk-modal-page',
+                clsPanel: 'uk-modal-dialog',
+                selClose: '.uk-modal-close, .uk-modal-close-default, .uk-modal-close-outside, .uk-modal-close-full'
+            },
 
             update: {
 
@@ -4314,8 +4314,8 @@
                 clsDrop: '',
                 mode: 'slide',
                 navbar: null,
-            duration: 200
-        },
+                duration: 200
+            },
 
             init: function init() {
 
@@ -4323,7 +4323,7 @@
                     this.$el.addClass('uk-navbar-dropbar-slide');
                 }
 
-        },
+            },
 
             events: [
 
@@ -4353,7 +4353,7 @@
 
                         if (active && !this.$el.is(':hover')) {
                             active.hide();
-                    }
+                        }
                     }
                 },
 
@@ -4394,8 +4394,8 @@
 
                         if (!active || active && active.$el.is($el)) {
                             this.transitionTo(0);
+                        }
                     }
-                }
                 }
 
             ],
@@ -4434,22 +4434,22 @@
                 overlay: Boolean
             },
 
-        defaults: {
-            content: '.uk-offcanvas-content:first',
-            mode: 'slide',
-            flip: false,
-            overlay: false,
-            clsPage: 'uk-offcanvas-page',
-            clsContainer: 'uk-offcanvas-container',
-            clsPanel: 'uk-offcanvas-bar',
-            clsFlip: 'uk-offcanvas-flip',
-            clsContent: 'uk-offcanvas-content',
-            clsContentAnimation: 'uk-offcanvas-content-animation',
-            clsSidebarAnimation: 'uk-offcanvas-bar-animation',
-            clsMode: 'uk-offcanvas',
-            clsOverlay: 'uk-offcanvas-overlay',
-            selClose: '.uk-offcanvas-close'
-        },
+            defaults: {
+                content: '.uk-offcanvas-content:first',
+                mode: 'slide',
+                flip: false,
+                overlay: false,
+                clsPage: 'uk-offcanvas-page',
+                clsContainer: 'uk-offcanvas-container',
+                clsPanel: 'uk-offcanvas-bar',
+                clsFlip: 'uk-offcanvas-flip',
+                clsContent: 'uk-offcanvas-content',
+                clsContentAnimation: 'uk-offcanvas-content-animation',
+                clsSidebarAnimation: 'uk-offcanvas-bar-animation',
+                clsMode: 'uk-offcanvas',
+                clsOverlay: 'uk-offcanvas-overlay',
+                selClose: '.uk-offcanvas-close'
+            },
 
             computed: {
 
@@ -4710,14 +4710,14 @@
 
             defaults: {
                 cls: ['uk-scrollspy-inview'],
-            target: false,
+                target: false,
                 hidden: true,
                 offsetTop: 0,
                 offsetLeft: 0,
                 repeat: false,
                 delay: 0,
                 inViewClass: 'uk-scrollspy-inview'
-        },
+            },
 
             init: function init() {
                 this.$emitSync();
@@ -4729,7 +4729,7 @@
                     return this.target && $__default(this.target, this.$el) || this.$el;
                 }
 
-        },
+            },
 
             update: [
 
@@ -4821,7 +4821,7 @@
 
             ]
 
-    });
+        });
 
     }
 
@@ -4837,13 +4837,13 @@
                 offset: Number
             },
 
-        defaults: {
-            cls: 'uk-active',
-            closest: false,
-            scroll: false,
-            overflow: true,
-            offset: 0
-        },
+            defaults: {
+                cls: 'uk-active',
+                closest: false,
+                scroll: false,
+                overflow: true,
+                offset: 0
+            },
 
             computed: {
 
@@ -4960,7 +4960,7 @@
                 showOnUp: Boolean,
                 media: 'media',
                 target: Number
-        },
+            },
 
             defaults: {
                 top: 0,
@@ -4974,7 +4974,7 @@
                 showOnUp: false,
                 media: false,
                 target: false
-        },
+            },
 
             connected: function connected() {
 
@@ -4992,7 +4992,7 @@
                     this.isActive = false;
                     this.hide();
                     this.$el.removeClass(this.clsInactive);
-            }
+                }
 
                 this.placeholder.remove();
                 this.placeholder = null;
@@ -5005,7 +5005,7 @@
 
                 if (!(this.target && location.hash && window.pageYOffset > 0)) {
                     return;
-            }
+                }
 
                 var target = query(location.hash);
 
@@ -5183,7 +5183,7 @@
 
                     if (this.bottom && scroll > this.bottom - this.offset) {
                         top = this.bottom - scroll;
-                }
+                    }
 
                     this.$el
                         .css({
@@ -5245,7 +5245,7 @@
                     if (parts.length > 1) {
                         this.src = parts[0];
                         this.icon = parts[1];
-                }
+                    }
                 }
 
                 this.width = this.$props.width;
@@ -5264,7 +5264,7 @@
 
                             if (!this$1.icon) {
                                 el = doc.documentElement.cloneNode(true);
-                } else {
+                            } else {
                                 svg = doc.getElementById(this$1.icon);
 
                                 if (!svg) {
@@ -5283,7 +5283,7 @@
                                         var div = document.createElement('div');
                                         div.appendChild(svg.cloneNode(true));
                                         html = div.innerHTML;
-                        }
+                                    }
 
                                     html = html
                                         .replace(/<symbol/g, ("<svg" + (!~html.indexOf('xmlns') ? ' xmlns="http://www.w3.org/2000/svg"' : '')))
@@ -5335,10 +5335,10 @@
                                     root.parentNode.insertBefore(el, root.nextSibling);
                                 } else {
                                     root.parentNode.appendChild(el);
-                    }
-                } else {
+                                }
+                            } else {
                                 root.appendChild(el);
-                }
+                            }
 
                             resolve(el);
 
@@ -5426,16 +5426,16 @@
                 swiping: Boolean
             },
 
-        defaults: {
-            connect: false,
-            toggle: ' > *',
-            active: 0,
-            swiping: true,
-            cls: 'uk-active',
-            clsContainer: 'uk-switcher',
-            attrItem: 'uk-switcher-item',
-            queued: true
-        },
+            defaults: {
+                connect: false,
+                toggle: ' > *',
+                active: 0,
+                swiping: true,
+                cls: 'uk-active',
+                clsContainer: 'uk-switcher',
+                attrItem: 'uk-switcher-item',
+                queued: true
+            },
 
             connected: function connected() {
                 this.$emitSync();
@@ -5451,7 +5451,7 @@
                     return $__default(this.toggle, this.$el);
                 }
 
-        },
+            },
 
             events: [
 
@@ -5535,9 +5535,9 @@
                     for (var i = 0; i < length; i++, index = (index + dir + length) % length) {
                         if (!this$1.toggles.eq(index).is('.uk-disabled, [disabled]')) {
                             toggle = this$1.toggles.eq(index);
-                        break;
+                            break;
                         }
-                }
+                    }
 
                     if (!toggle || prev >= 0 && toggle.hasClass(this.cls) || prev === index) {
                         return;
@@ -5662,7 +5662,7 @@
                             )
                         ) {
                             e.preventDefault();
-                    }
+                        }
 
                         this.toggle();
                     }
@@ -6382,15 +6382,15 @@
 
             args: ['message', 'status'],
 
-        defaults: {
-            message: '',
-            status: '',
-            timeout: 5000,
-            group: null,
-            pos: 'top-center',
-            onClose: null,
-            clsClose: 'uk-notification-close'
-        },
+            defaults: {
+                message: '',
+                status: '',
+                timeout: 5000,
+                group: null,
+                pos: 'top-center',
+                onClose: null,
+                clsClose: 'uk-notification-close'
+            },
 
             created: function created() {
 
@@ -6402,7 +6402,7 @@
                     ("<div class=\"uk-notification-message" + (this.status ? (" uk-notification-message-" + (this.status)) : '') + "\">\n                    <a href=\"#\" class=\"" + (this.clsClose) + "\" data-uk-close></a>\n                    <div>" + (this.message) + "</div>\n                </div>")
                 ).appendTo(containers[this.pos].show())[0]);
 
-        },
+            },
 
             ready: function ready() {
                 var this$1 = this;
@@ -6555,8 +6555,8 @@
                         this$1.pos = {x: pageX, y: pageY};
 
                         fn(e);
-                }
-            });
+                    }
+                });
             },
 
             events: ( obj = {}, obj[pointerDown] = 'init', obj ),
@@ -6610,8 +6610,8 @@
                         return;
                     }
 
-                e.preventDefault();
-                e.stopPropagation();
+                    e.preventDefault();
+                    e.stopPropagation();
 
                     this.touched = [this];
                     this.placeholder = placeholder;
@@ -6684,7 +6684,7 @@
                         previous.remove(this.placeholder);
                     } else if (!target.length) {
                         return;
-                }
+                    }
 
                     sortable.insert(this.placeholder, target);
 
@@ -6890,16 +6890,16 @@
                 title: String
             },
 
-        defaults: {
-            pos: 'top',
-            title: '',
-            delay: 0,
-            animation: ['uk-animation-scale-up'],
-            duration: 100,
-            cls: 'uk-active',
-            clsPos: 'uk-tooltip',
-            container: true,
-        },
+            defaults: {
+                pos: 'top',
+                title: '',
+                delay: 0,
+                animation: ['uk-animation-scale-up'],
+                duration: 100,
+                cls: 'uk-active',
+                clsPos: 'uk-tooltip',
+                container: true,
+            },
 
             computed: {
 
@@ -6940,8 +6940,8 @@
                     doc.on(("click." + (this.$options.name)), function (e) {
                         if (!isWithin(e.target, this$1.$el)) {
                             this$1.hide();
-                    }
-                });
+                        }
+                    });
 
                     clearTimeout(this.showTimer);
 
@@ -7029,7 +7029,7 @@
                 params: Object,
                 type: String,
                 url: String
-        },
+            },
 
             defaults: {
                 allow: false,
@@ -7195,7 +7195,7 @@
 
                 }
 
-        }
+            }
 
         });
 

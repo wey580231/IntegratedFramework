@@ -9,33 +9,197 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             controller: 'OrderManagementController'
         })
     }])
-    .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.transformRequest = function (obj) {
-            var str = [];
-            for (var p in obj) {
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            }
-            return str.join("&");
+
+    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList) {
+        var selectedCheckArray = [];    //选中的checkbox的id值集合
+        var operateId;
+
+        //加载页面时数据显示
+        myHttpService.get(serviceList.ListOrder).then(function (response) {
+            console.log(response);
+            $scope.arr = response.data;
+        });
+
+        //重新加载页面信息
+        var reload = function () {
+            //取消checkbox选中状态
+            document.getElementById("check").checked = false;
+            $("input").val('');
+            myHttpService.get(serviceList.ListOrder).then(function (response) {
+                $scope.arr = response.data;
+            });
         }
-    }])
 
-    .controller('OrderManagementController', function ($scope, $http) {
-        $http({
-            method: 'post',
-            dataType: 'json',
-            contentType: 'application/json;charset=UTF-8',
-            url: 'http://localhost:8080/orders/getAllOrders.action',
-            transformRequest: function (obj) {
-                var str = [];
-                for (var p in obj) {
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                }
-                return str.join("&");
+        //新增订单
+        var addOrder = function () {
+            var idVal = $("input[name='add-id']").val();
+            var nameVal = $("input[name='add-name']").val();
+            var originVal = $("input[name='add-origin']").val();
+            //var idProductVal = $("input[name='add-idProduct']").val();
+            //var quantityVal = $("input[name='add-quantity']").val();
+             var priorityVal = $("input[name='add-priority']").val();
+             var t0Val = $("input[name='add-t0']").val();
+             var t1Val = $("input[name='add-t1']").val();
+             var t2Val = $("input[name='add-t2']").val();
+            var params = {};
+            params.id = idVal;
+            params.name = nameVal;
+            params.origin = originVal;
+           // params.idProduct = parseInt(idProductVal);
+            //params.quantity = quantityVal;
+             params.priority = priorityVal;
+             params.t1 = t1Val;
+             params.t2 = t2Val;
+             params.t0 = t0Val;
+
+            var data = JSON.stringify(params);
+            console.log(data);
+            $("#add").hide();
+            myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
+                console.log(response.status);
+                reload();
+            })
+             window.location.reload();
+        };
+
+        var updateSelected = function (action, id) {
+            operateId = id;
+            if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
+                selectedCheckArray.push(id);
+                console.log(id + "被选中");
             }
-        }, "json").then(function successCallback(response) {
-            $scope.names = response.data;
-        })
-    })
+            if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
+                selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
+                console.log(id + "取消选中");
+            }
+        };
+        //用于监控点击事件，checkbox选择了就更新
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id);
+        };
+        $scope.isSelected = function (id) {
+            return selectedCheckArray.indexOf(id) >= 0;
+        };
 
+        //删除订单
+        $scope.deleteOrder = function () {
+            /*console.log(selectedCheckArray);
+             var Array = [];
+             var deleteArray = [];
+             for (var i = 0; i < selectedCheckArray.length; i++) {
+             var params = {};
+             var idVal = selectedCheckArray[i];
+             params.id = idVal;
+             params.name = "";
+             params.origin = "";
+             params.priority = "";
+             params.advance = "";
+             params.delay = "";
+             params.quantity = "";
+             params.t0 = "";
+             params.ord = "";
+             var data = JSON.stringify(params);
+             Array.push(params);
+             }
+             var data = JSON.stringify(Array);
+             console.log(data);
+             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
+             console.log(response.status);
+             reload();
+             }, function errorCallback(response) {
+             alert("请求失败！");
+             });*/
+            var params = {};
+            var idVal = operateId;
+            params.id = idVal;
+            var data = JSON.stringify(params);
+            console.log(data);
+            myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
+                console.log(response.status);
+                reload();
+            });
+            window.location.reload();
+        }
+
+        //修改订单
+        $scope.editOrder = function () {
+            var params = {};
+            var idVal = operateId;
+            params.id = idVal;
+            var data = JSON.stringify(params);
+            console.log(data);
+            myHttpService.get(serviceList.ListOrder, data).then(function successCallback(response) {
+                console.log(response);
+                $scope.form = response.data;
+            });
+        }
+        $scope.update = function () {
+            var idVal = $("input[name='edit-id']").val();
+            var nameVal = $("input[name='edit-name']").val();
+            var originVal = $("input[name='edit-origin']").val();
+            //var idProductVal = $("input[name='edit-idProduct']").val();
+            //var quantityVal = $("input[name='edit-quantity']").val();
+            var priorityVal = $("input[name='edit-priority']").val();
+            var t0Val = $("input[name='edit-t0']").val();
+            var t1Val = $("input[name='edit-t1']").val();
+            var t2Val = $("input[name='edit-t2']").val();
+            var params = {};
+            params.id = idVal;
+            params.name = nameVal;
+            params.origin = originVal;
+            params.priority = priorityVal;
+            params.t1 = t1Val;
+            params.t2 = t2Val;
+            //params.quantity = quantityVal;
+            params.t0 = t0Val;
+            //params.idProduct = idProductVal;
+            var data = JSON.stringify(params);
+            console.log(data);
+            $("#edit").hide();
+            myHttpService.post(serviceList.UpdateOrder, data).then(function (response) {
+                console.log(response.status);
+                reload();
+            });
+            window.location.reload();
+        };
+
+        //信息填写检验
+        $scope.orderValidate = function () {
+            var id = $("input#add-id").val(),
+                name = $("input#add-name").val();
+            console.log(id + name);
+            if (checkName(name) && checkId(id)) {
+                UIkit.modal.confirm('确定添加吗？', function () {
+                    addOrder();
+                });
+                return true;
+            } else {
+                UIkit.modal.alert('请填写完整！');
+                return false;
+            }
+        };
+        var checkName = function (name) {
+            if (name == "") {
+                $("input#add-name").addClass("uk-form-danger");
+                return false;
+            }
+            $("input#add-name").addClass("uk-form-success");
+            return true;
+        }
+        var checkId = function (id) {
+            if (id == "") {
+                $("input#add-id").addClass("uk-form-danger");
+                return false;
+            }
+            $("input#add-id").addClass("uk-form-success");
+            return true;
+        }
+
+        //表格信息重置
+        $scope.reset = function () {
+            $("input").val('');
+        }
+
+    })

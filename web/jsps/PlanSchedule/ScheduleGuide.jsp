@@ -21,14 +21,13 @@
 </style>
 
 
-
 <script>
     function changeColor(obj) {
         var f = obj.checked;
         var chkColor = "#c1edfa"; //选中后颜色
         var ouColor = "#f3f8fb";  //偶数行取消选中后的颜色
         var jiColor = "#FFFFFF";
-        if(f)
+        if (f)
             obj.parentElement.parentElement.style.backgroundColor = chkColor;
         else
             obj.parentElement.parentElement.style.backgroundColor = jiColor;
@@ -49,10 +48,10 @@
 
     <!--新计划排程-->
     <div class="uk-width-1-4" style="float: right;margin-top: 5px;">
-        <div class="uk-clearfix">
+        <!--<div class="uk-clearfix">
             <button class="uk-button uk-float-right " <%--id="create-order"--%>
                     data-uk-toggle="{target:'#button'}" style="border-radius:15px; "
-                    data-uk-tooltip="{pos:'top'}" title="快捷菜单">新计划排程
+                    data-uk-tooltip="{pos:'top'}" title="快捷菜单" >新计划排程
             </button>
             <div class=" uk-hidden uk-float-right" id="button">
                 <div class="uk-panel uk-panel-box">
@@ -65,26 +64,19 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
+        <button class="uk-button uk-float-right "
+                data-uk-modal="{target:'#choose'}" style="border-radius:15px; ">新计划排程
+        </button>
     </div>
-
-
-
-    <!--按钮-->
-    <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
-    <%--<div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
-    </div>--%>
-    <%--</div>--%>
 </div>
 <%--<hr class="uk-article-divider">--%>
 <br/>
 <%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
 <!--右侧表格-->
-<div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
+<div class="uk-width-4-5"
+     style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
     <div style="margin-top: 1%;">
 
         <div style="width: 100%;border: 0px;margin-top: -10px;">
@@ -100,9 +92,9 @@
                             <tr style="background-color: #e1eaf1;">
                                 <td>
                                     <div style="border: 1px solid lightgray;margin-left: 35%;width: 30px;height: 15px;background-color: #cddae3;">
-                                        <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                        <img src="../../images/bom_img/select.png"
+                                             style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
-
                                 </td>
                                 <td style="width: 55px;">序号</td>
                                 <td>排产名称</td>
@@ -115,7 +107,6 @@
                             </thead>
                         </table>
                     </div>
-
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
@@ -128,108 +119,40 @@
                                 <td>2017-05-17 08:00</td>
                                 <td>2017-05-17 08:01</td>
                                 <td>计算完成</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-
                             </tr>
                             </tbody>
-
                         </table>
 
                         <!--底部页码-->
                         <div style="margin-top: -25px;">
                             <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                                <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
-                                <li><button class="uk-button my"><a href="">上一页</a></button></li>
-                                <li><button class="uk-button my"><a href="">下一页</a></button></li>
-                                <li><button class="uk-button my"><a href="">尾页</a></button></li>
+                                <li>
+                                    <button class="uk-button"
+                                            style="background-image: url('../../images/bom_img/ye1.png');color: white;">
+                                        <a href="" style="color: white;">首页</a></button>
+                                </li>
+                                <li>
+                                    <button class="uk-button my"><a href="">上一页</a></button>
+                                </li>
+                                <li>
+                                    <button class="uk-button my"><a href="">下一页</a></button>
+                                </li>
+                                <li>
+                                    <button class="uk-button my"><a href="">尾页</a></button>
+                                </li>
                                 <li>共88页</li>&nbsp;
                                 <li>
                                     到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
                                 </li>
                                 <li>
-                                    <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
+                                    <button class="uk-button"
+                                            style="background-image: url('../../images/bom_img/ye2.png');color: white;">
+                                        确定
+                                    </button>
                                 </li>
                             </ul>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -238,7 +161,8 @@
 
 
     <div class="uk-clearfix" style="margin-top: -3%;">
-        <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
+        <button class="uk-button uk-float-right " id="create-order"
+                style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
         </button>
         <div class=" uk-hidden uk-float-right"<%-- id="button"--%>>
@@ -250,13 +174,380 @@
         </div>
     </div>
 </div>
-<%--</div>--%>
 
-<script>
-    $(function () {
-        $("#tabs").tabs();
-    });
-</script>
+
+<!--排程步骤-->
+
+<div class="uk-modal uk-overflow-container" id="choose">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <form class="uk-form uk-form-horizontal">
+            <fieldset>
+                <div class="uk-form-row">
+                    <label for="add-id">订单</label>&nbsp;&nbsp;
+                    <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseOrder'}"
+                            ng-click="showOrder()">点击选择需要排程的订单
+                    </button>
+                    <br/>
+                </div>
+                <div class="uk-form-row">
+                    <label for="add-name">资源</label>&nbsp;&nbsp;
+                    <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseResource'}"
+                            ng-click="showResource()">点击选择需要排程的资源
+                    </button>
+                    <br/>
+                </div>
+                <div class="uk-form-row">
+                    <label for="add-origin">资源工组</label>&nbsp;
+                    <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseGroupResource'}"
+                            ng-click="showGroupResource();">点击选择需要排程的资源工组
+                    </button>
+                    <br/>
+                </div>
+                <div class="uk-form-row">
+                    <label for="add-ord">资源工位</label>&nbsp;
+                    <button class="uk-button uk-float-right " data-uk-modal="{target:'#chooseSite'}"
+                            ng-click="showSite()">点击选择需要排程的资源工位
+                    </button>
+                    <br/>
+                </div>
+            </fieldset>
+        </form>
+        <div class="uk-modal-footer uk-text-right">
+            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
+                <button class="uk-button my" data-uk-modal="{target:'#schedule'}"><a href="">下一页</a></button>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="uk-modal uk-overflow-container" id="chooseOrder">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="uk-overflow-container" style="height: 96%;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <div class="fixtable-head">
+                        <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
+                            <thead class="uk-text-center">
+                            <tr style="background-color: #e1eaf1;">
+                                <td>
+                                    <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <img src="../../images/bom_img/select.png"
+                                             style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                    </div>
+                                </td>
+                                <td>编码</td>
+                                <td>名称</td>
+                                <td>来源</td>
+                                <td>产品名</td>
+                                <td>数量</td>
+                                <td>优先级</td>
+                                <td>下单时间</td>
+                                <td>最早开工</td>
+                                <td>最晚开工</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="fixtable-body" style="height: 83%;">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order" style="width:100%">
+                            <tbody class="uk-text-center">
+                            <tr id="first" ng-repeat="x in ord track by $index">
+                                <td><input id="check1" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td id="id">{{x.id}}</td>
+                                <td id="name">{{x.name}}</td>
+                                <td id="origin">{{x.origin}}</td>
+                                <td id="idProduct">{{x.idProduct}}</td>
+                                <td id="quantity">{{x.quantity}}</td>
+                                <td id="priority">{{x.priority}}</td>
+                                <td id="t0">{{x.t0}}</td>
+                                <td id="t1">{{x.t1}}</td>
+                                <td id="t2">{{x.t2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </fieldset>
+            </form>
+            <!--底部页码-->
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" ng-click="checkOrId();orderHide()" data-uk-modal="{target:'#choose'}">
+                    确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="uk-modal uk-overflow-container" id="chooseResource">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="uk-overflow-container" style="height: 96%;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <div class="fixtable-head">
+                        <table class="uk-table uk-table-striped uk-table-hover ">
+                            <thead class="uk-text-center">
+                            <tr style="background-color: #e1eaf1;">
+                                <td>
+                                    <div style="border: 1px solid lightgray;margin-left: 35%;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <img src="../../images/bom_img/select.png"
+                                             style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                    </div>
+                                </td>
+                                <td>编码</td>
+                                <td>名称</td>
+                                <td>资源类型</td>
+                                <td>工组</td>
+                                <td>移动速度</td>
+                                <!--<td>串行能力</td>
+                                <td>并行下限</td>
+                                <td>并行上限</td>
+                                <td>能力恢复</td>-->
+                                <td>正常班次</td>
+                                <td>状态信息</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="fixtable-body" style="height: 83%;">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order" style="width:100%">
+                            <tbody class="uk-text-center">
+                            <tr ng-repeat="x in res track by $index">
+                                <td><input id="check2" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td id="id">{{x.id}}</td>
+                                <td id="name">{{x.name}}</td>
+                                <td id="idTypeResource">{{x.idTypeResource}}</td>
+                                <td id="idSiteGroupResource">{{x.idSiteGroupResource}}</td>
+                                <td id="mobility">{{x.mobility}}</td>
+                                <td id="idShift">{{x.idShift}}</td>
+                                <td id="state">{{x.state}}</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                </fieldset>
+            </form>
+            <!--底部页码-->
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" ng-click="checkReId()" data-uk-modal="{target:'#choose'}">
+                    确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<div class="uk-modal uk-overflow-container" id="chooseGroupResource">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+
+        <div class="uk-overflow-container" style="height: 96%;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <div class="fixtable-head">
+                        <table class="uk-table uk-table-striped uk-table-hover " width="100%">
+                            <thead class="uk-text-center">
+                            <tr style="background-color: #e1eaf1;">
+                                <td>
+                                    <div style="border: 1px solid lightgray;margin-left: 42%;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <img src="../../images/bom_img/select.png"
+                                             style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                    </div>
+                                </td>
+                                <td>工组编码</td>
+                                <td>工组名称</td>
+                                <td>初始位置编码</td>
+                                <td>可工作位置</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="fixtable-body" style="height: 83%;">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                            <tbody class="uk-text-center">
+                            <tr ng-repeat="x in resGro track by $index">
+                                <td><input id="check3" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td id="id">{{x.id}}</td>
+                                <td id="name">{{x.name}}</td>
+                                <td id="external">{{x.external}}</td>
+                                <td id="state">{{x.state}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </fieldset>
+            </form>
+            <!--底部页码-->
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" ng-click="checkGrReId()" data-uk-modal="{target:'#choose'}">
+                    确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="uk-modal uk-overflow-container" id="chooseSite">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="uk-overflow-container" style="height: 96%;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <div class="fixtable-head">
+                        <table class="uk-table uk-table-striped uk-table-hover " style="width:100%">
+                            <thead class="uk-text-center">
+                            <tr style="background-color: #e1eaf1;">
+                                <td>
+                                    <div style="border: 1px solid lightgray;margin-left: 42%;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <img src="../../images/bom_img/select.png"
+                                             style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                    </div>
+                                </td>
+                                <td>编码</td>
+                                <td>名称</td>
+                                <td>坐标</td>
+                                <td>可停放资源数</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="fixtable-body" style="height: 83%;">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                            <tbody class="uk-text-center">
+                            <tr ng-repeat="x in site track by $index">
+                                <td><input id="check4" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td>{{x.id}}</td>
+                                <td>{{x.name}}</td>
+                                <td>{{x.x}}</td>
+                                <td>{{x.capacity}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </fieldset>
+            </form>
+            <!--底部页码-->
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" ng-click="checkSiId()" data-uk-modal="{target:'#choose'}">
+                    确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!--<div class="uk-modal uk-overflow-container" id="chooseLayout">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="uk-overflow-container" style="height: 96%;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset>
+                    <div class="fixtable-head">
+                        <table class="uk-table uk-table-striped uk-table-hover " style="width:100%">
+                            <thead class="uk-text-center">
+                            <tr style="background-color: #e1eaf1;">
+                                <td>
+                                    <div style="border: 1px solid lightgray;margin-left: 42%;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <img src="../../images/bom_img/select.png"
+                                             style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
+                                    </div>
+
+                                </td>
+                                <td>编码</td>
+                                <td>名称</td>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                    <div class="fixtable-body" style="height: 83%;">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                            <tbody class="uk-text-center">
+                            <tr ng-repeat="x in layout track by $index">
+                                <td><input id="check5" name="check5" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td>{{x.id}}</td>
+                                <td>{{x.name}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                </fieldset>
+            </form>
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" ng-click="checkLayId()" data-uk-modal="{target:'#choose'}">
+                    确定
+                </button>
+                <button type="button" data-uk-modal="{target:'#choose'}">
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+-->
+
+<div class="uk-modal uk-overflow-container" id="schedule">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <p class="validateTips">请填写参数</p>
+        <form class="uk-form uk-form-horizontal">
+            <fieldset>
+                <label for="add-id">编码</label> <br/>
+                <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-name">名称</label><br/>
+                <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-schedule">排程窗口</label><br/>
+                <input type="text" name="add-schedule" id="add-schedule"
+                       class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-rollTime">滚动时间</label><br/>
+                <input type="text" name="add-rollTime" id="add-rollTime"
+                       class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-t0">下单时间</label><br/>
+                <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-t2">最晚交付时间</label><br/>
+                <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
+            </fieldset>
+        </form>
+        <div class="uk-modal-footer uk-text-right">
+            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
+                <li>
+                    <button class="uk-button my" data-uk-modal="{target:'#choose'}"><a href="">上一页</a></button>
+                </li>
+                <li>
+                    <button class="uk-button my" ng-click="configAPS()"><a href="">开始排程</a></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
 
 
 

@@ -6,7 +6,7 @@
 
     <class name="com.rengu.entity.RG_AssisantprocessEntity" table="RG_Assisantprocess" schema="testdatabase">
         <id name="id">
-            <column name="id" sql-type="int(20)"/>
+            <column name="id" sql-type="varchar(60)" length="60" not-null="true"/>
         </id>
         <property name="grp">
             <column name="grp" sql-type="smallint(6)" not-null="false"/>
@@ -38,7 +38,7 @@
         <property name="weightSequence">
             <column name="weightSequence" sql-type="smallint(6)" not-null="false"/>
         </property>
-        <many-to-one name="processByIdProcess" class="com.rengu.entity.RG_ProcessEntity">
+        <many-to-one name="processByIdProcess" class="com.rengu.entity.RG_ProcessEntity" lazy="false">
             <column name="idProcess" not-null="false"/>
         </many-to-one>
     </class>

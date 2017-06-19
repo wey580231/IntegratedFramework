@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_ResourceTyperesourceEntity" table="RG_ResourceTyperesource" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(60)" length="60" not-null="true"/>
+        </id>
+        <property name="maxCapacityParallel">
+            <column name="maxCapacityParallel" sql-type="int" not-null="false"/>
+        </property>
+        <property name="minCapacityParallel">
+            <column name="minCapacityParallel" sql-type="int" not-null="false"/>
+        </property>
+        <property name="capacitySequence">
+            <column name="capacitySequence" sql-type="int" not-null="false"/>
+        </property>
+        <property name="ratio">
+            <column name="ratio" sql-type="float" not-null="false"/>
+        </property>
+        <many-to-one name="resourceByResourceId" class="com.rengu.entity.RG_ResourceEntity">
+            <column name="idResource" not-null="false"/>
+        </many-to-one>
+        <many-to-one name="typeresourceById" class="com.rengu.entity.RG_TyperescourceEntity">
+            <column name="idTypeResource" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

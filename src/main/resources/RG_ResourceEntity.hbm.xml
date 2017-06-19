@@ -35,9 +35,6 @@
         <property name="critical">
             <column name="critical" sql-type="varchar(1)" length="1" not-null="false"/>
         </property>
-        <property name="idShift">
-            <column name="IdShift" sql-type="varchar(1000)" length="1000" not-null="false"/>
-        </property>
         <property name="nameShift">
             <column name="NameShift" sql-type="varchar(4000)" length="4000" not-null="false"/>
         </property>
@@ -77,7 +74,7 @@
         <property name="unit">
             <column name="unit" sql-type="varchar(20)" length="20" not-null="false"/>
         </property>
-        <many-to-one name="groupresourceByIdGroupResource" class="com.rengu.entity.RG_GroupresourceEntity">
+        <many-to-one name="groupresourceByIdGroupResource" class="com.rengu.entity.RG_GroupresourceEntity" lazy="false">
             <column name="idGroupResource" not-null="false"/>
         </many-to-one>
         <many-to-one name="userByIdUser" class="com.rengu.entity.RG_UserEntity">
@@ -86,20 +83,32 @@
         <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
             <column name="idClub" not-null="false"/>
         </many-to-one>
-        <set name="sitesById" inverse="true" cascade="save-update" table="site_resource">
-            <key column="resource_id"></key>
+
+        <!-- inverse只存在集合的属性中，如set、map、list、array等
+         	  多对多关系中，一方设置inverse为false，一方设置为true。两者的关系(中间表)由inverse为false方维护
+       	            如果均设置为true，那么插入时，只会往各自表中去插，不会去中间表去插入。
+                                如果均为false，那么在插入时，关系表会插入两次，导致数据重复而失败
+         -->
+        <set name="sitesById" inverse="false" cascade="save-update" table="site_resource">
+            <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_SiteEntity"
-                          column="site_id"></many-to-many>
+                          column="site_id" lazy="false"/>
         </set>
-        <set name="shiftsById" inverse="true" cascade="save-update" table="shift_resource">
-            <key column="resource_id"></key>
+        <set name="shiftsById" inverse="false" cascade="save-update" table="shift_resource">
+            <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_ShiftEntity"
-                          column="shift_id"></many-to-many>
+                          column="shift_id"/>
         </set>
-        <set name="typeresourcesById" inverse="true" cascade="save-update" table="typeresource_resource">
-            <key column="resource_id"></key>
+        <set name="typeresourcesById" inverse="false" cascade="save-update" table="typeresource_resource">
+            <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_TyperescourceEntity"
-                          column="typeresource_id"></many-to-many>
+                          column="typeresource_id"/>
         </set>
+
+        <set name="schedules" inverse="true" cascade="save-update" table="schedule_Resource">
+            <key column="r_id"/>
+            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
+        </set>
+
     </class>
 </hibernate-mapping>

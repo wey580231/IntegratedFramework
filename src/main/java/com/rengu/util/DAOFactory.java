@@ -37,4 +37,32 @@ public class DAOFactory {
     public static TyperescourceDAOImpl getTyperescourceInstance() {
         return new TyperescourceDAOImpl();
     }
+
+    public static ScheduleDAOImpl getScheduleDAOImplInstance() {
+        return new ScheduleDAOImpl();
+    }
+
+    public static LayoutDAOImpl getLayoutDAOImplInstance() {
+        return new LayoutDAOImpl();
+    }
+
+    public static ClubDAOImpl getClubDAOImplInstance() {
+        return new ClubDAOImpl();
+    }
+
+    public static ProcessDAOImpl getProcessDAOImplInstance() {
+        return new ProcessDAOImpl();
+    }
+
+    public static ProviderDAOImpl getProviderDAOImplInstance() {
+        return new ProviderDAOImpl();
+    }
+
+    public static AdjustOrderDAOImpl getAdjustOrderDAOImplInstance() {
+        return new AdjustOrderDAOImpl();
+    }
+
+    public static AdjustProcessDAOImpl getAdjustProcessDAOImplInstance() {
+        return new AdjustProcessDAOImpl();
+    }
 }

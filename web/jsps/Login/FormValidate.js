@@ -7,6 +7,8 @@ function formValidate() {
     var EMailAddress = $("input#EMailAddress").val();
     var password = $("input#password").val();
 
+    return true;
+
     if (checkEMailAddress(EMailAddress) && checkPassword(password)) {
         return true;
     } else {

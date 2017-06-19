@@ -1,8 +1,14 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.Set;
+
 /**
  * Created by wey580231 on 2017/5/23.
  */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_OrderEntity {
     private String id;
     private String name;
@@ -11,8 +17,9 @@ public class RG_OrderEntity {
     private String idClient;
     private String idProvider;
     private String idGroupResource;
-    private Short quantity;
-    private Short priority;
+    private Short quantity;                 //订单数量
+    private Short finishQuantity;           //完工数量
+    private Short priority;                 //优先级
     private String t0;
     private String t1;
     private String t2;
@@ -33,6 +40,8 @@ public class RG_OrderEntity {
     private Short nbTask;
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
+    @JsonIgnore
+    private Set<RG_ScheduleEntity> schedules;
 
 
     public String getId() {
@@ -97,6 +106,14 @@ public class RG_OrderEntity {
 
     public void setQuantity(Short quantity) {
         this.quantity = quantity;
+    }
+
+    public Short getFinishQuantity() {
+        return finishQuantity;
+    }
+
+    public void setFinishQuantity(Short finishQuantity) {
+        this.finishQuantity = finishQuantity;
     }
 
     public Short getPriority() {
@@ -251,6 +268,30 @@ public class RG_OrderEntity {
         this.nbTask = nbTask;
     }
 
+    public RG_ProductEntity getProductByIdProduct() {
+        return productByIdProduct;
+    }
+
+    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
+        this.productByIdProduct = productByIdProduct;
+    }
+
+    public RG_ClubEntity getClubByIdClub() {
+        return clubByIdClub;
+    }
+
+    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
+        this.clubByIdClub = clubByIdClub;
+    }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -267,6 +308,8 @@ public class RG_OrderEntity {
         if (idGroupResource != null ? !idGroupResource.equals(that.idGroupResource) : that.idGroupResource != null)
             return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
+        if (finishQuantity != null ? !finishQuantity.equals(that.finishQuantity) : that.finishQuantity != null)
+            return false;
         if (priority != null ? !priority.equals(that.priority) : that.priority != null) return false;
         if (t0 != null ? !t0.equals(that.t0) : that.t0 != null) return false;
         if (t1 != null ? !t1.equals(that.t1) : that.t1 != null) return false;
@@ -288,8 +331,9 @@ public class RG_OrderEntity {
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (selected != null ? !selected.equals(that.selected) : that.selected != null) return false;
         if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
-
-        return true;
+        if (productByIdProduct != null ? !productByIdProduct.equals(that.productByIdProduct) : that.productByIdProduct != null)
+            return false;
+        return clubByIdClub != null ? clubByIdClub.equals(that.clubByIdClub) : that.clubByIdClub == null;
     }
 
     @Override
@@ -302,6 +346,7 @@ public class RG_OrderEntity {
         result = 31 * result + (idProvider != null ? idProvider.hashCode() : 0);
         result = 31 * result + (idGroupResource != null ? idGroupResource.hashCode() : 0);
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+        result = 31 * result + (finishQuantity != null ? finishQuantity.hashCode() : 0);
         result = 31 * result + (priority != null ? priority.hashCode() : 0);
         result = 31 * result + (t0 != null ? t0.hashCode() : 0);
         result = 31 * result + (t1 != null ? t1.hashCode() : 0);
@@ -321,23 +366,8 @@ public class RG_OrderEntity {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
+        result = 31 * result + (productByIdProduct != null ? productByIdProduct.hashCode() : 0);
+        result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
         return result;
     }
-
-    public RG_ProductEntity getProductByIdProduct() {
-        return productByIdProduct;
-    }
-
-    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
-        this.productByIdProduct = productByIdProduct;
-    }
-
-    public RG_ClubEntity getClubByIdClub() {
-        return clubByIdClub;
-    }
-
-    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
-        this.clubByIdClub = clubByIdClub;
-    }
-
 }

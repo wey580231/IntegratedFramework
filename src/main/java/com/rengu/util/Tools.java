@@ -2,6 +2,7 @@ package com.rengu.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -19,6 +20,8 @@ import java.util.*;
  */
 public class Tools {
 
+    private static Properties properties = null;
+
     public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -31,6 +34,12 @@ public class Tools {
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         return objectMapper.writeValueAsString(object);
+    }
+
+    public static JsonNode jsonTreeModelParse(String jsonString) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(jsonString);
+        return jsonNode;
     }
 
     public static void jsonPrint(String string, HttpServletResponse httpServletResponse) {
@@ -60,23 +69,26 @@ public class Tools {
         return httpRequestBodyString;
     }
 
-    public static Properties getProperties() {
-        Properties properties = new Properties();
-        try {
-            InputStream inputStream = Tools.class.getResourceAsStream("/Database.properties");
-            properties.load(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static Properties getDatabaseProperties() {
+        if (properties == null) {
+            properties = new Properties();
+
+            try {
+                InputStream inputStream = Tools.class.getResourceAsStream("/Database.properties");
+                properties.load(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return properties;
     }
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        String databaseUrl = getProperties().getProperty(companyName + "DatabaseUrl");
-        String databaseUsername = getProperties().getProperty(companyName + "DatabaseUsername");
-        String databasePassword = getProperties().getProperty(companyName + "DatabasePassword");
-        String databaseDriver = getProperties().getProperty(databaseType + "Driver");
-
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -87,11 +99,11 @@ public class Tools {
     }
 
     public static List executeSQLForResultSet(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        String databaseUrl = getProperties().getProperty(companyName + "DatabaseUrl");
-        String databaseUsername = getProperties().getProperty(companyName + "DatabaseUsername");
-        String databasePassword = getProperties().getProperty(companyName + "DatabasePassword");
-        String databaseDriver = getProperties().getProperty(databaseType + "Driver");
-
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -114,5 +126,46 @@ public class Tools {
             list.add(rowData);
         }
         return list;
+    }
+
+    public static void executeSQLForInitTable(String databaseType, String companyName, String[] tableList) throws ClassNotFoundException, SQLException {
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
+        Class.forName(databaseDriver);
+        Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
+        Statement statement = connection.createStatement();
+        for (String tableName : tableList) {
+            String SQLCommed = "TRUNCATE table " + tableName + ";";
+            statement.execute(SQLCommed);
+        }
+        statement.close();
+        connection.close();
+    }
+
+    public static String resultCode(String result, String description) {
+        String tmp = "";
+
+        tmp += "{" +
+                "\"result\":" + "\"" + result + "\"" + "," +
+                "\"description\":" + "\"" + description + "\"" +
+                "}";
+
+        return tmp;
+    }
+
+    //aps状态返回
+    public static String apsCode(String result, String code, String description) {
+        String tmp = "";
+
+        tmp += "{" +
+                "\"result\":" + "\"" + result + "\"" + "," +
+                "\"code\":" + "\"" + code + "\"" + "," +
+                "\"description\":" + "\"" + description + "\"" +
+                "}";
+
+        return tmp;
     }
 }
