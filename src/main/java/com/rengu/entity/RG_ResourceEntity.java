@@ -1,6 +1,8 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Set;
 
@@ -35,6 +37,7 @@ public class RG_ResourceEntity {
 
     private RG_ClubEntity clubByIdClub;
     private RG_UserEntity userByIdUser;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private RG_GroupresourceEntity groupresourceByIdGroupResource;
     private Set<RG_SiteEntity> sitesById;
     private Set<RG_ShiftEntity> shiftsById;

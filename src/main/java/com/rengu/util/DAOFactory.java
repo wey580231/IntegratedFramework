@@ -57,4 +57,12 @@ public class DAOFactory {
     public static ProviderDAOImpl getProviderDAOImplInstance() {
         return new ProviderDAOImpl();
     }
+
+    public static AdjustOrderDAOImpl getAdjustOrderDAOImplInstance() {
+        return new AdjustOrderDAOImpl();
+    }
+
+    public static AdjustProcessDAOImpl getAdjustProcessDAOImplInstance() {
+        return new AdjustProcessDAOImpl();
+    }
 }

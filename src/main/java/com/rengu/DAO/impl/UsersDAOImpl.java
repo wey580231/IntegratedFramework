@@ -49,7 +49,6 @@ public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
             transaction = session.beginTransaction();
             session.save(userEntity);
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

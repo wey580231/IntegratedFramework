@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.util.Set;
+
 /**
  * Created by wey580231 on 2017/5/23.
  */
@@ -70,8 +72,9 @@ public class RG_ProcessEntity {
     private String idIcon;
     private Short nbTask;
     private RG_ProductEntity productByIdProduct;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private RG_ProcessEntity processByIdProcess;
+    private Set<RG_ProcessEntity> childProcess;
 
     public String getId() {
         return id;
@@ -553,6 +556,30 @@ public class RG_ProcessEntity {
         this.nbTask = nbTask;
     }
 
+    public RG_ProductEntity getProductByIdProduct() {
+        return productByIdProduct;
+    }
+
+    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
+        this.productByIdProduct = productByIdProduct;
+    }
+
+    public RG_ProcessEntity getProcessByIdProcess() {
+        return processByIdProcess;
+    }
+
+    public void setProcessByIdProcess(RG_ProcessEntity processByIdProcess) {
+        this.processByIdProcess = processByIdProcess;
+    }
+
+    public Set<RG_ProcessEntity> getChildProcess() {
+        return childProcess;
+    }
+
+    public void setChildProcess(Set<RG_ProcessEntity> childProcess) {
+        this.childProcess = childProcess;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -638,9 +665,7 @@ public class RG_ProcessEntity {
         if (modTimeBatch != null ? !modTimeBatch.equals(that.modTimeBatch) : that.modTimeBatch != null) return false;
         if (batch != null ? !batch.equals(that.batch) : that.batch != null) return false;
         if (idIcon != null ? !idIcon.equals(that.idIcon) : that.idIcon != null) return false;
-        if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
-
-        return true;
+        return nbTask != null ? nbTask.equals(that.nbTask) : that.nbTask == null;
     }
 
     @Override
@@ -706,21 +731,5 @@ public class RG_ProcessEntity {
         result = 31 * result + (idIcon != null ? idIcon.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
         return result;
-    }
-
-    public RG_ProductEntity getProductByIdProduct() {
-        return productByIdProduct;
-    }
-
-    public void setProductByIdProduct(RG_ProductEntity productByIdProduct) {
-        this.productByIdProduct = productByIdProduct;
-    }
-
-    public RG_ProcessEntity getProcessByIdProcess() {
-        return processByIdProcess;
-    }
-
-    public void setProcessByIdProcess(RG_ProcessEntity processByIdProcess) {
-        this.processByIdProcess = processByIdProcess;
     }
 }

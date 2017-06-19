@@ -48,8 +48,9 @@
             <column name="apsFlag" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
 
-        <many-to-one name="layout" class="com.rengu.entity.RG_LayoutEntity" unique="true"
-                     column="layoutId"></many-to-one>
+        <many-to-one name="layout" class="com.rengu.entity.RG_LayoutEntity">
+            <column name="layoutId" not-null="false"/>
+        </many-to-one>
 
         <set name="orders" inverse="false" cascade="all" table="schedule_order">
             <key column="s_id"></key>
@@ -74,6 +75,10 @@
             <key column="s_id"></key>
             <many-to-many class="com.rengu.entity.RG_SiteEntity" column="site_id"></many-to-many>
         </set>
+
+        <!--<many-to-one name="snapshot" class="com.rengu.entity.RG_SnapshotNodeEntity" column="snapId" unique="true"/>-->
+
+        <one-to-one name="snapshot" property-ref="schedule" cascade="all"/>
 
     </class>
 </hibernate-mapping>

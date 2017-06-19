@@ -11,6 +11,7 @@ public class RG_LayoutEntity {
     private String id;
     private String name;
     private Set<RG_LayoutDetailEntity> details;
+    private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
         return id;
@@ -34,6 +35,15 @@ public class RG_LayoutEntity {
 
     public void setDetails(Set<RG_LayoutDetailEntity> details) {
         this.details = details;
+    }
+
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
     }
 
     @Override
