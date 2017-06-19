@@ -16,7 +16,6 @@ public class AdjustOrderAction extends SuperAction {
         List<RG_AdjustOrderEntity> adjustOrderEntityList = adjustOrderDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(adjustOrderEntityList);
         Tools.jsonPrint(jsonString, httpServletResponse);
-        adjustOrderDAO.getTransaction().commit();
-        adjustOrderDAO.getSession().close();
+        System.out.println(jsonString);
     }
 }

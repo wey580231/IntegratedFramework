@@ -26,6 +26,7 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         List list = resourceDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
+        System.out.println(jsonString);
     }
 
     public void findAllByUsername() throws Exception {

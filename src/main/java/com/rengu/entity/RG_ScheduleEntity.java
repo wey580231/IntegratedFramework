@@ -7,11 +7,17 @@ import java.util.Set;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_ScheduleEntity {
 
-    public static final int APS_DISPATCH = 0;
-    public static final int APS_COMPUTE = 1;
-    public static final int APS_SUCCESS = 2;
-    public static final int APS_FAIL = 3;
-    public static final int MES_DISPATCH = 4;
+    public static final int APS_DISPATCH = 0;           //“下发APS”
+    public static final int APS_COMPUTE = 1;            //APS计算中
+    public static final int APS_SUCCESS = 2;            //APS计算成功
+    public static final int APS_FAIL = 3;               //APS计算失败
+    public static final int APS_ADJUST = 4;             //APS优化完成
+    public static final int MES_DISPATCH = 5;           //已下发MES
+
+    public static final int ERROR_SUCCESS = 10;         //故障计算完成
+    public static final int ERROR_ADJUST = 11;          //APS优化完成
+    public static final int ERROR_FAIL = 12  ;          //故障处理失败
+    public static final int ERROR_MES_DISPTATCH = 12;   //故障应急后下发MES
 
     private String id;
 
@@ -20,7 +26,7 @@ public class RG_ScheduleEntity {
     private String scheduleTime;          //排程日期
     private String startCalcTime;         //计算开始日期
     private String endCalcTime;           //计算结束日期
-    private Integer state;                //排程状态0:“下发APS”,1:“APS计算中”,2:“APS计算成功”,3:"APS计算失败",4:“已下发MES”
+    private Integer state;                //排程状态,参考本类的静态变量
     private String progress;              //完成进度
 
     private Integer scheduleWindow;       //排程时间窗
@@ -39,6 +45,7 @@ public class RG_ScheduleEntity {
     private Set<RG_ResourceEntity> resources;          //资源
     private Set<RG_GroupresourceEntity> groups;        //工组
     private Set<RG_SiteEntity> sites;                  //工位
+    private RG_SnapshotNodeEntity snapshot;            //排程快照
 
     public String getId() {
         return id;
@@ -190,6 +197,14 @@ public class RG_ScheduleEntity {
 
     public void setSites(Set<RG_SiteEntity> sites) {
         this.sites = sites;
+    }
+
+    public RG_SnapshotNodeEntity getSnapshot() {
+        return snapshot;
+    }
+
+    public void setSnapshot(RG_SnapshotNodeEntity snapshot) {
+        this.snapshot = snapshot;
     }
 
     @Override

@@ -16,7 +16,6 @@ public class AdjustProcessAction extends SuperAction {
         List<RG_AdjustProcessEntity> adjustProcessEntityList = adjustProcessDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(adjustProcessEntityList);
         Tools.jsonPrint(jsonString, httpServletResponse);
-        adjustProcessDAO.getTransaction().commit();
-        adjustProcessDAO.getSession().close();
+        System.out.println(jsonString);
     }
 }

@@ -185,8 +185,8 @@
         <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
             <column name="idProduct" not-null="false"/>
         </many-to-one>
-        <many-to-one name="scheduleByIdSchedule" class="com.rengu.entity.RG_ScheduleEntity">
-            <column name="idSchedule" not-null="false"/>
+        <many-to-one name="snapShort" class="com.rengu.entity.RG_SnapshotNodeEntity">
+            <column name="idSnapshort" not-null="false"/>
         </many-to-one>
     </class>
 </hibernate-mapping>
