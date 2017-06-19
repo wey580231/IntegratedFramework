@@ -17,12 +17,12 @@ public class RG_SnapshotNodeEntity {
 
     private String level;                   //节点层级(top、middle、bottom)
 
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
+    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private Set<RG_SnapshotNodeEntity> childs = new HashSet<RG_SnapshotNodeEntity>();      //子节点
     private RG_SnapshotNodeEntity parent;           //父节点
     private RG_SnapshotNodeEntity rootParent;       //根节点
     private RG_ScheduleEntity schedule;             //排程记录
-    private Set<RG_PlanEntity> plans;               //计划表
+    private Set<RG_PlanEntity> plans = new HashSet<RG_PlanEntity>();               //计划表
 
     public String getId() {
         return id;
