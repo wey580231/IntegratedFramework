@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_SnapshotNodeEntity" table="RG_Snapshot" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(100)" length="100"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="level">
+            <column name="level" sql-type="varchar(255)" not-null="false"/>
+        </property>
+
+        <many-to-one name="parent" column="s_id" class="com.rengu.entity.RG_SnapshotNodeEntity"/>
+
+        <set name="childs" cascade="all" inverse="true">
+            <key column="s_id"></key>
+            <one-to-many class="com.rengu.entity.RG_SnapshotNodeEntity"/>
+        </set>
+
+        <many-to-one name="rootParent" class="com.rengu.entity.RG_SnapshotNodeEntity">
+            <column name="rootParent" not-null="false"/>
+        </many-to-one>
+
+        <!--<one-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" property-ref="snapshot"/>-->
+
+        <many-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" unique="true"/>
+        
+        <set name="plans" cascade="all" inverse="true">
+            <key column="plan_id"></key>
+            <one-to-many class="com.rengu.entity.RG_PlanEntity" />
+        </set>
+
+    </class>
+</hibernate-mapping>

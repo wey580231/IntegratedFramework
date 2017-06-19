@@ -1,12 +1,16 @@
 package com.rengu.DAO.aps;
 
 import com.rengu.entity.RG_AdjustDeviceEntity;
+import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.util.ApsTools;
 import com.rengu.util.ErrorState;
+import com.rengu.util.GlobalVariable;
 import com.rengu.util.MySessionFactory;
+import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,9 +42,25 @@ public class ErrorProcessDao {
                 result = ApsTools.instance().executeCommand(getUnavailableDeviceURL(entity));
             }
 
-            //更新故障的状态
+            //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
+
+                query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
+                query.setParameter("id", GlobalVariable.RootSnapshotId);
+                list = query.list();
+                if (list.size() > 0 && list.get(0) instanceof RG_SnapshotNodeEntity) {
+                    RG_SnapshotNodeEntity rootSnapshot = (RG_SnapshotNodeEntity) list.get(0);
+
+                    RG_SnapshotNodeEntity middleSnapshot = new RG_SnapshotNodeEntity();
+                    middleSnapshot.setId(UUID.randomUUID().toString());
+//                    middleSnapshot.setName();
+                    middleSnapshot.setParent(rootSnapshot);
+                    middleSnapshot.setRootParent(rootSnapshot);
+
+                    rootSnapshot.getChilds().add(middleSnapshot);
+                }
+
                 session.update(entity);
             }
         }
