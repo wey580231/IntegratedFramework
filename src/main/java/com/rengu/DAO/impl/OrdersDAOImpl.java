@@ -2,9 +2,7 @@ package com.rengu.DAO.impl;
 
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.entity.RG_OrderEntity;
-import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -15,10 +13,7 @@ import java.util.List;
 public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEntity> {
     @Override
     public List<RG_OrderEntity> findAll() {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        super.transaction = transaction;
-        super.session = session;
+        Session session = SuperDAOImpl.getSession();
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -28,10 +23,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     @Override
     public List<RG_OrderEntity> findAllByUsername(String username) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
+            Session session = SuperDAOImpl.getSession();
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", username);
@@ -46,13 +38,10 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     @Override
     public RG_OrderEntity findAllById(String id) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
+            Session session = SuperDAOImpl.getSession();
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            List list = query.list();
             if (!query.list().isEmpty()) {
                 return (RG_OrderEntity) query.list().get(0);
             } else {
