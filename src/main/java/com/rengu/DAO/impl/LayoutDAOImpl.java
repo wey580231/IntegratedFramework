@@ -2,7 +2,9 @@ package com.rengu.DAO.impl;
 
 import com.rengu.DAO.LayoutDAO;
 import com.rengu.entity.RG_LayoutEntity;
+import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -24,12 +26,16 @@ public class LayoutDAOImpl extends SuperDAOImpl implements LayoutDAO<RG_LayoutEn
     @Override
     public RG_LayoutEntity findAllById(String id) {
         try {
-            Session session = SuperDAOImpl.getSession();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
             String hql = "from RG_LayoutEntity rg_layoutEntity where rg_layoutEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
-                return (RG_LayoutEntity) query.list().get(0);
+                RG_LayoutEntity rg_layoutEntity = (RG_LayoutEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_layoutEntity;
             } else {
                 return null;
             }

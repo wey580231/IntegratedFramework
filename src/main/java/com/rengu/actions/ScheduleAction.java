@@ -1,14 +1,16 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.rengu.DAO.impl.*;
-import com.rengu.entity.*;
+import com.rengu.DAO.impl.ScheduleDAOImpl;
+import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.util.*;
 
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.UUID;
 
 /**
  * Created by hanchangming on 2017/6/5.
@@ -160,12 +162,10 @@ public class ScheduleAction extends SuperAction {
             if (result == ApsTools.STARTED) {
 
                 scheduleDAOImplInstance.save(rg_scheduleEntity);
-                scheduleDAOImplInstance.getTransaction().commit();
 
                 Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
             } else {
 
-                scheduleDAOImplInstance.getTransaction().rollback();
 
                 Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
             }

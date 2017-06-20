@@ -38,7 +38,6 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.save(rg_typerescourceEntity)) {
-            typerescourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
         }
@@ -49,7 +48,6 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.delete(rg_typerescourceEntity)) {
-            typerescourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
         }
@@ -60,7 +58,6 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.update(rg_typerescourceEntity)) {
-            typerescourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
         }
