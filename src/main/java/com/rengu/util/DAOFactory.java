@@ -6,64 +6,81 @@ import com.rengu.DAO.impl.*;
  * Created by hanchangming on 2017/5/22.
  */
 public class DAOFactory {
+
+    private static final UsersDAOImpl usersDAOImpl = new UsersDAOImpl();
+    private static final OrdersDAOImpl ordersDAOImpl = new OrdersDAOImpl();
+    private static final AssisantprocessDAOImpl assisantprocessDAOimpl = new AssisantprocessDAOImpl();
+    private static final GroupResourceDAOImpl groupResourceDAOImpl = new GroupResourceDAOImpl();
+    private static final ResourceDAOImpl resourceDAOImpl = new ResourceDAOImpl();
+    private static final ShiftDAOImpl shiftDAOImpl = new ShiftDAOImpl();
+    private static final SiteDAOImpl siteDAOImpl = new SiteDAOImpl();
+    private static final TyperescourceDAOImpl typerescourceDAOImpl = new TyperescourceDAOImpl();
+    private static final ScheduleDAOImpl scheduleDAOImpl = new ScheduleDAOImpl();
+    private static final LayoutDAOImpl layoutDAOImpl = new LayoutDAOImpl();
+    private static final ClubDAOImpl clubDAOImpl = new ClubDAOImpl();
+    private static final ProcessDAOImpl processDAOImpl = new ProcessDAOImpl();
+    private static final ProviderDAOImpl providerDAOImpl = new ProviderDAOImpl();
+    private static final AdjustOrderDAOImpl adjustOrderDAOImpl = new AdjustOrderDAOImpl();
+    private static final AdjustProcessDAOImpl adjustProcessDAOImpl = new AdjustProcessDAOImpl();
+
     public static UsersDAOImpl getUserDAOInstance() {
-        return new UsersDAOImpl();
+        return usersDAOImpl;
     }
 
     public static OrdersDAOImpl getOrdersDAOInstance() {
-        return new OrdersDAOImpl();
+        return ordersDAOImpl;
     }
 
     public static AssisantprocessDAOImpl getAssisantprocessDAOInstance() {
-        return new AssisantprocessDAOImpl();
+        return assisantprocessDAOimpl;
     }
 
     public static GroupResourceDAOImpl getGroupResourceInstance() {
-        return new GroupResourceDAOImpl();
+        return groupResourceDAOImpl;
     }
 
     public static ResourceDAOImpl getResourceInstance() {
-        return new ResourceDAOImpl();
+        return resourceDAOImpl;
     }
 
     public static ShiftDAOImpl getShiftInstance() {
-        return new ShiftDAOImpl();
+        return shiftDAOImpl;
     }
 
     public static SiteDAOImpl getSiteInstance() {
-        return new SiteDAOImpl();
+        return siteDAOImpl;
     }
 
     public static TyperescourceDAOImpl getTyperescourceInstance() {
-        return new TyperescourceDAOImpl();
+        return typerescourceDAOImpl;
     }
 
     public static ScheduleDAOImpl getScheduleDAOImplInstance() {
-        return new ScheduleDAOImpl();
+        return scheduleDAOImpl;
     }
 
     public static LayoutDAOImpl getLayoutDAOImplInstance() {
-        return new LayoutDAOImpl();
+        return layoutDAOImpl;
     }
 
     public static ClubDAOImpl getClubDAOImplInstance() {
-        return new ClubDAOImpl();
+        return clubDAOImpl;
     }
 
     public static ProcessDAOImpl getProcessDAOImplInstance() {
-        return new ProcessDAOImpl();
+        return processDAOImpl;
     }
 
     public static ProviderDAOImpl getProviderDAOImplInstance() {
-        return new ProviderDAOImpl();
+        return providerDAOImpl;
     }
 
     public static AdjustOrderDAOImpl getAdjustOrderDAOImplInstance() {
-        return new AdjustOrderDAOImpl();
+        return adjustOrderDAOImpl;
     }
 
     public static AdjustProcessDAOImpl getAdjustProcessDAOImplInstance() {
-        return new AdjustProcessDAOImpl();
+        return adjustProcessDAOImpl;
     }
 
     public static AdjustDeviceDAOImpl getAdjustDeviceDAOImplInstance() {

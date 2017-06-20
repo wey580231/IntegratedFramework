@@ -2,9 +2,7 @@ package com.rengu.DAO.impl;
 
 import com.rengu.DAO.AssisantprocessDAO;
 import com.rengu.entity.RG_AssisantprocessEntity;
-import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -15,10 +13,7 @@ import java.util.List;
 public class AssisantprocessDAOImpl extends SuperDAOImpl implements AssisantprocessDAO<RG_AssisantprocessEntity> {
     @Override
     public List<RG_AssisantprocessEntity> findAll() {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        super.transaction = transaction;
-        super.session = session;
+        Session session = SuperDAOImpl.getSession();
         String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -33,10 +28,7 @@ public class AssisantprocessDAOImpl extends SuperDAOImpl implements Assisantproc
     @Override
     public RG_AssisantprocessEntity findAllById(String id) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
+            Session session = SuperDAOImpl.getSession();
             String hql = "from RG_AssisantprocessEntity rg_assisantprocessEntity where rg_assisantprocessEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);

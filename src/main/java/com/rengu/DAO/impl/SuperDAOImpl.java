@@ -9,24 +9,35 @@ import org.hibernate.Transaction;
  * Created by hanchangming on 2017/6/13.
  */
 public class SuperDAOImpl implements SuperDAO {
-    protected static Session session;
-    protected static Transaction transaction;
+    protected static Session session = MySessionFactory.getSessionFactory().openSession();
+    protected static Transaction transaction = getSession().beginTransaction();
 
     public static Session getSession() {
-        return session;
+        //初始化Session
+        if (!session.isOpen()) {
+            session.close();
+            session = MySessionFactory.getSessionFactory().openSession();
+            System.out.println("以初始化session");
+            return session;
+        } else {
+            return session;
+        }
     }
 
-    public Transaction getTransaction() {
-        return transaction;
+    public static Transaction getTransaction() {
+        //初始化Transaction
+        if (!transaction.isActive()) {
+            transaction = getSession().beginTransaction();
+            System.out.println("以初始化transaction");
+            return transaction;
+        } else {
+            return transaction;
+        }
     }
 
     @Override
     public boolean save(Object object) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
-            this.session = session;
             session.save(object);
             return true;
         } catch (Exception e) {
@@ -38,10 +49,6 @@ public class SuperDAOImpl implements SuperDAO {
     @Override
     public boolean delete(Object object) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
-            this.session = session;
             session.delete(object);
             return true;
         } catch (Exception e) {
@@ -53,10 +60,6 @@ public class SuperDAOImpl implements SuperDAO {
     @Override
     public boolean update(Object object) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
-            this.session = session;
             session.update(object);
             return true;
         } catch (Exception e) {

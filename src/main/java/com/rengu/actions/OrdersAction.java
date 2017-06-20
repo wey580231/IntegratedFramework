@@ -1,6 +1,5 @@
 package com.rengu.actions;
 
-import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
@@ -13,14 +12,7 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/24.
  */
-public class OrdersAction extends SuperAction implements ModelDriven<RG_OrderEntity> {
-    RG_OrderEntity rg_orderEntity = new RG_OrderEntity();
-
-    @Override
-    public RG_OrderEntity getModel() {
-        return this.rg_orderEntity;
-    }
-
+public class OrdersAction extends SuperAction {
     public void getAllOrders() throws Exception {
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAll();
