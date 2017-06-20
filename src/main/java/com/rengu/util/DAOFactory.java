@@ -82,4 +82,8 @@ public class DAOFactory {
     public static AdjustProcessDAOImpl getAdjustProcessDAOImplInstance() {
         return adjustProcessDAOImpl;
     }
+
+    public static AdjustDeviceDAOImpl getAdjustDeviceDAOImplInstance() {
+        return new AdjustDeviceDAOImpl();
+    }
 }

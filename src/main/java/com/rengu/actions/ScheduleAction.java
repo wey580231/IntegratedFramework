@@ -132,9 +132,14 @@ public class ScheduleAction extends SuperAction {
             //产生一条快照根记录，并自动生成该记录中
             RG_SnapshotNodeEntity rootSnapshot = new RG_SnapshotNodeEntity();
             rootSnapshot.setId(UUID.randomUUID().toString());
+            rootSnapshot.setName(rg_scheduleEntity.getName());
+            rootSnapshot.setLevel(SnapshotLevel.TOP);
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
             middleShot.setId(UUID.randomUUID().toString());
+            middleShot.setName("APS排程结果");
+            middleShot.setLevel(SnapshotLevel.MIDDLE);
+
             middleShot.setParent(rootSnapshot);
             middleShot.setRootParent(rootSnapshot);
 

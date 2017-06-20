@@ -14,6 +14,9 @@ public class RG_AdjustProcessEntity {
     private String appointIdResource;
     private String appointTaskTime;
 
+    private String origin;              //异常来源，MES、手工模拟
+    private Integer state;              //异常状态，参照ErrorState类
+
     private RG_OrderEntity orderEntity;
     private RG_ResourceEntity resourceEntity;
 
@@ -65,6 +68,22 @@ public class RG_AdjustProcessEntity {
         this.appointTaskTime = appointTaskTime;
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     public RG_OrderEntity getOrderEntity() {
         return orderEntity;
     }
@@ -96,8 +115,8 @@ public class RG_AdjustProcessEntity {
             return false;
         if (appointTaskTime != null ? !appointTaskTime.equals(that.appointTaskTime) : that.appointTaskTime != null)
             return false;
-        if (orderEntity != null ? !orderEntity.equals(that.orderEntity) : that.orderEntity != null) return false;
-        return resourceEntity != null ? resourceEntity.equals(that.resourceEntity) : that.resourceEntity == null;
+        if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
+        return state != null ? state.equals(that.state) : that.state == null;
     }
 
     @Override
@@ -108,8 +127,8 @@ public class RG_AdjustProcessEntity {
         result = 31 * result + (t1Task != null ? t1Task.hashCode() : 0);
         result = 31 * result + (appointIdResource != null ? appointIdResource.hashCode() : 0);
         result = 31 * result + (appointTaskTime != null ? appointTaskTime.hashCode() : 0);
-        result = 31 * result + (orderEntity != null ? orderEntity.hashCode() : 0);
-        result = 31 * result + (resourceEntity != null ? resourceEntity.hashCode() : 0);
+        result = 31 * result + (origin != null ? origin.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
     }
 }
