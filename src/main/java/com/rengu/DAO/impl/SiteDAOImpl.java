@@ -2,9 +2,7 @@ package com.rengu.DAO.impl;
 
 import com.rengu.DAO.SiteDAO;
 import com.rengu.entity.RG_SiteEntity;
-import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -15,10 +13,7 @@ import java.util.List;
 public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> {
     @Override
     public List<RG_SiteEntity> findAll() {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        super.transaction = transaction;
-        super.session = session;
+        Session session = SuperDAOImpl.getSession();
         String hql = "from RG_SiteEntity rg_siteEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -33,10 +28,7 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
     @Override
     public RG_SiteEntity findAllById(String id) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
+            Session session = SuperDAOImpl.getSession();
             String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);

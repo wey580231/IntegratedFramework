@@ -2,9 +2,7 @@ package com.rengu.DAO.impl;
 
 import com.rengu.DAO.AdjustOrderDAO;
 import com.rengu.entity.RG_AdjustOrderEntity;
-import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -15,10 +13,7 @@ import java.util.List;
 public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<RG_AdjustOrderEntity> {
     @Override
     public List<RG_AdjustOrderEntity> findAll() {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
-        super.transaction = transaction;
-        super.session = session;
+        Session session = SuperDAOImpl.getSession();
         String hql = "from RG_AdjustOrderEntity rg_adjustOrderEntity ";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -33,10 +28,7 @@ public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<R
     @Override
     public RG_AdjustOrderEntity findAllById(String id) {
         try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
+            Session session = SuperDAOImpl.getSession();
             String hql = "from RG_AdjustOrderEntity rg_adjustOrderEntity where rg_adjustOrderEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
