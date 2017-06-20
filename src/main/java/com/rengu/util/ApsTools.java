@@ -2,8 +2,6 @@ package com.rengu.util;
 
 import com.rengu.DAO.impl.*;
 import com.rengu.entity.RG_AdjustDeviceEntity;
-import com.rengu.entity.RG_AdjustOrderEntity;
-import com.rengu.entity.RG_AdjustProcessEntity;
 import com.rengu.entity.RG_PlanEntity;
 
 import java.io.BufferedReader;
@@ -205,42 +203,34 @@ public class ApsTools {
                 //获取Club实体
                 ClubDAOImpl clubDAO = DAOFactory.getClubDAOImplInstance();
                 rg_planEntity.setClubByIdClub(clubDAO.findAllById(tempMap.get("idClub").toString()));
-                clubDAO.getTransaction().commit();
 
                 //获取Process实体
                 ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
                 rg_planEntity.setProcessByIdProcess(processDAO.findAllById(tempMap.get("idProcess").toString()));
-                processDAO.getTransaction().commit();
 
                 //获取Order实体
                 OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
                 rg_planEntity.setOrderByIdOrder(ordersDAO.findAllById(tempMap.get("idOrder").toString()));
-                ordersDAO.getTransaction().commit();
 
                 //获取Resource实体
                 ResourceDAOImpl resourceDAO = DAOFactory.getResourceInstance();
                 rg_planEntity.setResourceByIdResource(resourceDAO.findAllById(tempMap.get("idResource").toString()));
-                resourceDAO.getTransaction().commit();
 
                 //获取Site实体
                 SiteDAOImpl siteDAO = DAOFactory.getSiteInstance();
                 rg_planEntity.setSiteByIdSite(siteDAO.findAllById(tempMap.get("idSite").toString()));
-                siteDAO.getTransaction().commit();
 
                 //获取GroupResource实体
                 GroupResourceDAOImpl groupResourceDAO = DAOFactory.getGroupResourceInstance();
                 rg_planEntity.setGroupresourceByIdGroupResource(groupResourceDAO.findAllById(tempMap.get("idGroupResource").toString()));
-                groupResourceDAO.getTransaction().commit();
 
                 //获取TypeResource实体
                 TyperescourceDAOImpl typerescourceDAO = DAOFactory.getTyperescourceInstance();
                 rg_planEntity.setGroupresourceByIdGroupResource(groupResourceDAO.findAllById(tempMap.get("idTypeResource").toString()));
-                typerescourceDAO.getTransaction().commit();
 
                 //获取Provider实体
                 ProviderDAOImpl providerDAO = DAOFactory.getProviderDAOImplInstance();
                 rg_planEntity.setProviderByIdProvider(providerDAO.findAllById(tempMap.get("idProvider").toString()));
-                providerDAO.getTransaction().commit();
 
             }
         }

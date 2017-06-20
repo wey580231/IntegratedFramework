@@ -38,7 +38,6 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.save(rg_siteEntity)) {
-            siteDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
         }
@@ -49,7 +48,6 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.delete(rg_siteEntity)) {
-            siteDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
         }
@@ -60,7 +58,6 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.update(rg_siteEntity)) {
-            siteDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
         }
