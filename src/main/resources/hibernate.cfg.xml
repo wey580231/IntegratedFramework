@@ -37,6 +37,9 @@
         <mapping resource="RG_PlanEntity.hbm.xml"/>
         <mapping resource="RG_SnapshotNodeEntity.hbm.xml"/>
 
+        <!--告警中心-->
+        <mapping resource="RG_WarnEntity.hbm.xml"/>
+
         <!--异常接口-->
         <mapping resource="RG_AdjustDeviceEntity.hbm.xml"/>
         <mapping resource="RG_AdjustOrderEntity.hbm.xml"/>

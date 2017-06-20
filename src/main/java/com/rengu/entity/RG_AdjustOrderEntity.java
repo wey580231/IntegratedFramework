@@ -14,6 +14,10 @@ public class RG_AdjustOrderEntity {
     private String t0;
     private String t1;
     private String t2;
+
+    private String origin;              //异常来源，MES、手工模拟
+    private Integer state;              //异常状态，参照ErrorState类
+
     private RG_ProductEntity productEntity;
 
     public String getId() {
@@ -72,6 +76,22 @@ public class RG_AdjustOrderEntity {
         this.t2 = t2;
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     public RG_ProductEntity getProductEntity() {
         return productEntity;
     }
@@ -94,7 +114,8 @@ public class RG_AdjustOrderEntity {
         if (t0 != null ? !t0.equals(that.t0) : that.t0 != null) return false;
         if (t1 != null ? !t1.equals(that.t1) : that.t1 != null) return false;
         if (t2 != null ? !t2.equals(that.t2) : that.t2 != null) return false;
-        return productEntity != null ? productEntity.equals(that.productEntity) : that.productEntity == null;
+        if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
+        return state != null ? state.equals(that.state) : that.state == null;
     }
 
     @Override
@@ -106,7 +127,8 @@ public class RG_AdjustOrderEntity {
         result = 31 * result + (t0 != null ? t0.hashCode() : 0);
         result = 31 * result + (t1 != null ? t1.hashCode() : 0);
         result = 31 * result + (t2 != null ? t2.hashCode() : 0);
-        result = 31 * result + (productEntity != null ? productEntity.hashCode() : 0);
+        result = 31 * result + (origin != null ? origin.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
     }
 }

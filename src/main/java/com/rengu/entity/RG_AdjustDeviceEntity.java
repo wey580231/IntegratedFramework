@@ -11,7 +11,7 @@ public class RG_AdjustDeviceEntity {
     private String id;                  //UUID
     private String orderId;             //订单编码
     private String reportTime;          //上报时间
-    private String resoureId;          //资源编码
+    private String resoureId;           //资源编码
     private String origin;              //异常来源，MES、手工模拟
     private Integer state;              //异常状态，参照ErrorState类
 

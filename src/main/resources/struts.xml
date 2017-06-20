@@ -115,10 +115,9 @@
 
     <!--异常处理-->
     <package name="ExceptionList" namespace="/ExceptionList" extends="struts-default">
-        <action name="getAllAdjustOrderException" class="com.rengu.actions.AdjustOrderAction"
-                method="getAllAdjustOrderException"/>
-        <action name="getAllAdjustProcessException" class="com.rengu.actions.AdjustProcessAction"
-                method="getAllAdjustProcessException"/>
+        <action name="getAllAdjustOrderException" class="com.rengu.actions.AdjustOrderAction" method="getAllAdjustOrderException"/>
+        <action name="getAllAdjustProcessException" class="com.rengu.actions.AdjustProcessAction" method="getAllAdjustProcessException"/>
+        <action name="getAllAdjustDeviceException" class="com.rengu.actions.AdjustDeviceAction" method="getAllAdjustDeviceException"/>
     </package>
 
 </struts>

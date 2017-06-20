@@ -1,6 +1,7 @@
 package com.rengu.util;
 
 import com.rengu.DAO.impl.*;
+import com.rengu.entity.RG_AdjustDeviceEntity;
 import com.rengu.entity.RG_AdjustOrderEntity;
 import com.rengu.entity.RG_AdjustProcessEntity;
 import com.rengu.entity.RG_PlanEntity;
@@ -14,6 +15,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 通过SOCKET访问aps pomserver，获取APS的状态信息
@@ -102,6 +105,44 @@ public class ApsTools {
 //                "DELAY=1000\n";
 //        return result;
 //    }
+
+    public String getCancelDeviceURL(RG_AdjustDeviceEntity entity) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/RejectResource.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n"
+                + convertSpaceWithTab(entity.getCancelTime()) + "\\n" + convertSpaceWithTab(entity.getLatestCancelTime()) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000";
+        return result;
+    }
+
+    public String getUnavailableDeviceURL(RG_AdjustDeviceEntity entity) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
+                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000\n";
+        return result;
+    }
+
+    //将字符转中包含的\s替换成\t
+    private String convertSpaceWithTab(String source) {
+        source = source.trim();
+
+        Pattern pattern = Pattern.compile("(\\s)+|\t|\r|\n");
+        Matcher match = pattern.matcher(source);
+
+        return match.replaceAll("\\\\t");
+    }
 
     //获取排程结果
     public void getScheduleResult() throws SQLException, ClassNotFoundException {
