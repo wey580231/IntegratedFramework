@@ -146,7 +146,8 @@
     <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;">
         <!--图标-->
         <div class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
-            <img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;">
+            <a href="MainPage.jsp"><img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;"></a>
+
         </div>
         <!--左侧列表-->
         <div class="uk-width-1-1" style="height: 90%;">
