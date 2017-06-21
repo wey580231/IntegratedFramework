@@ -58,7 +58,7 @@
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
         <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}">新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editSite()" data-uk-modal="{target:'#edit'}">修改</button>
-        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteSite()">删除</button>
+        <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteSite()" >删除</button>
     </div>
     <%--</div>--%>
 </div>

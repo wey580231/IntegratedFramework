@@ -26,6 +26,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             //取消checkbox选中状态
             document.getElementById("check").checked = false;
             $("input").val('');
+            $("input#add-id").removeClass("uk-form-success");
+            $("input#add-name").removeClass("uk-form-success");
             myHttpService.get(serviceList.ListOrder).then(function (response) {
                 $scope.arr = response.data;
             });
@@ -56,10 +58,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
-                console.log(response.status);
+                console.log(response.data);
                 //用强制刷新解决按钮不能连续响应
-                window.location.reload();
-                reload();
+                setTimeout('window.location.reload();',1);
+                //setTimeout(reload(),3000);
             })
         };
 
@@ -111,9 +113,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
-                console.log(response.status);
-                window.location.reload();
-                reload();
+                console.log(response.data);
+               //强制刷新解决按钮不能连续响应
+                setTimeout('window.location.reload();',1);
+                //setTimeout(reload(),3000);
             });
         }
 
@@ -141,7 +144,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     $scope.form = arr;
                 }
             }
-
         };
 
         $scope.update = function () {
@@ -169,8 +171,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateOrder, data).then(function (response) {
                 console.log(response.status);
-                window.location.reload();
-                reload();
+                setTimeout('window.location.reload();',1);
+                //setTimeout(reload(),3000);
             });
         };
 
@@ -204,9 +206,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var checkId = function (id) {
             var mytable = document.getElementById("order_table");
             var rows = document.getElementById("order_table").rows;
-            console.log(mytable.rows.length);
             for (var i = 0, row = mytable.rows.length; i < row; i++) {
-                console.log(rows[i].cells[1].innerHTML + id);
                 if (rows[i].cells[1].innerHTML == id) {
                     UIkit.modal.confirm('id已经存在，请重新填写！', function () {
                         $("input").val('');
@@ -222,6 +222,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
+            $("input#add-id").removeClass("uk-form-success");
+            $("input#add-name").removeClass("uk-form-success");
         }
 
     })
