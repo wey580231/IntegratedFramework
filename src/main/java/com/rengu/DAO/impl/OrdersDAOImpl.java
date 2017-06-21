@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,5 +71,20 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     @Override
     public List<RG_OrderEntity> search(String keyWord) {
         return null;
+    }
+
+    @Override
+    public List<RG_OrderEntity> findAllByisFinishedAndDate(Date startDate, Date endDate, boolean isFinished) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t0 between ? and ? and rg_orderEntity.finished =:isFinisfed";
+        Query query = session.createQuery(hql);
+        query.setParameter(0, startDate);
+        query.setParameter(1, endDate);
+        query.setParameter("isFinisfed", isFinished);
+        List list = query.list();
+        transaction.commit();
+        session.close();
+        return list;
     }
 }

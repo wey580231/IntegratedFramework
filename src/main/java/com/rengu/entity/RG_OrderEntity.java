@@ -39,6 +39,7 @@ public class RG_OrderEntity {
     private Byte state;
     private Byte selected;
     private Short nbTask;
+    private boolean finished;
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
     @JsonIgnore
@@ -268,6 +269,14 @@ public class RG_OrderEntity {
         this.nbTask = nbTask;
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
     public RG_ProductEntity getProductByIdProduct() {
         return productByIdProduct;
     }
@@ -299,6 +308,7 @@ public class RG_OrderEntity {
 
         RG_OrderEntity that = (RG_OrderEntity) o;
 
+        if (finished != that.finished) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
@@ -363,6 +373,7 @@ public class RG_OrderEntity {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
+        result = 31 * result + (finished ? 1 : 0);
         return result;
     }
 }

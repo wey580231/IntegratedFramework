@@ -152,9 +152,8 @@ public class Tools {
  * 将时间转换为时间戳
  */
     public static Date stringConvertToDate(String dateString) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = simpleDateFormat.parse(dateString);
-        System.out.println(dateString + "转换为：" + date.getTime());
         return date;
     }
 
@@ -182,16 +181,16 @@ public class Tools {
         return tmp;
     }
 
-    public static String getUUID(){
+    public static String getUUID() {
         return UUID.randomUUID().toString();
     }
 
-    public static String formatDate(Date date){
-        if(date == null){
+    public static String formatDate(Date date) {
+        if (date == null) {
             return "";
         }
 
-        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         return df.format(date);
     }
 }

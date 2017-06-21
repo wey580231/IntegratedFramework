@@ -16,12 +16,16 @@
 <script src='${pageContext.request.contextPath}/lib/Moment/moment-with-locales.js'></script>
 <script src='${pageContext.request.contextPath}/lib/FullCalendar-3.4.0/fullcalendar.min.js'></script>
 <script>
-    //当前排程时间长度
+    //当前排程时间长度（b）
     var scheduleDays = 30;
-    //上次排程时间长度
+    //上次排程时间长度（c）
     var lastScheduleDays = 30;
-    //距上次开始排程的日期差
+    //距上次开始排程的日期差(c)
     var tempDays = 7;
+    //排程开始时间
+    var startTime = moment().format("YYYY-MM-DD");
+    //排程结束时间
+    var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
     $(document).ready(function () {
         // page is now ready, initialize the calendar...
         $('#calendar').fullCalendar({
@@ -38,7 +42,17 @@
             dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
             dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
             eventSources: [
-                'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action'
+                {
+                    url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
+                    type: 'POST',
+                    data: {
+                        startTime: startTime,
+                        endTime: endTime
+                    },
+                    error: function () {
+                        alert('there was an error while fetching events!');
+                    }
+                }
             ],
             viewRender: function (view, element) {
                 //已执行时间窗口染色
