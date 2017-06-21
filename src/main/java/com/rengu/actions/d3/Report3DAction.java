@@ -21,6 +21,7 @@ public class Report3DAction extends SuperAction {
 
     //根据3D车间的请求类型，返回对应的报表信息
     public void resport3d() {
+
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
 
@@ -30,7 +31,6 @@ public class Report3DAction extends SuperAction {
         if (parameterMap.size() == 2) {
             String[] types = (String[]) parameterMap.get("requestType");
             String[] codes = (String[]) parameterMap.get("requestCode");
-
             if (types.length == 1 && codes.length == 1) {
                 String requestType = types[0];
                 String requestCode = codes[0];

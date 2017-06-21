@@ -7,9 +7,10 @@
     <class name="com.rengu.entity.RG_EmulateDataEntity" table="RG_EmulateData" schema="testdatabase">
         <id name="id">
             <column name="id" sql-type="int"/>
+            <generator class="identity"></generator>
         </id>
-        <property name="idResource">
-            <column name="idResource" sql-type="varchar(255)"/>
+        <property name="item">
+            <column name="item" sql-type="varchar(255)"/>
         </property>
         <property name="state">
             <column name="state" sql-type="varchar(50)" length="50" not-null="false"/>

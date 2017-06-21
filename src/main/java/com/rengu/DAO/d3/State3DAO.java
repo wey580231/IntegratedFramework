@@ -2,6 +2,8 @@ package com.rengu.DAO.d3;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.RG_LayoutDetailEntity;
 import com.rengu.entity.RG_LayoutEntity;
 import com.rengu.entity.RG_State3DEntity;
@@ -12,10 +14,7 @@ import org.hibernate.query.Query;
 
 import javax.tools.Tool;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 3D车间状态设置操作
@@ -37,7 +36,22 @@ public class State3DAO {
         String jsonString = "";
         if (list.size() == 1 && list.get(0) instanceof RG_State3DEntity) {
             RG_State3DEntity entity = (RG_State3DEntity) list.get(0);
-            jsonString = entity.toJson();
+
+            ObjectMapper mapper = new ObjectMapper();                //定义转换类
+            ObjectNode root = mapper.createObjectNode();             //创建根节点
+            root.put("result", "0");
+            root.put("layoutState", entity.getLayoutState());
+            root.put("layoutId", entity.getLayoutId());
+            root.put("model", entity.getModel());
+            root.put("snapshotId", entity.getSnapshotId());
+            root.put("controlState", entity.getControlState());
+
+            try {
+                jsonString = mapper.writeValueAsString(root);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                jsonString = Tools.resultCode("1", "Can't execute operation");
+            }
 
             session.getTransaction().commit();
         } else {
@@ -129,16 +143,65 @@ public class State3DAO {
         session.beginTransaction();
 
         RG_LayoutEntity layout = new RG_LayoutEntity();
+        layout.setId(Tools.getUUID());
         layout.setName(layoutName);
+
+        Set<RG_LayoutDetailEntity> sets = new HashSet<RG_LayoutDetailEntity>();
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i].setId(Tools.getUUID());
+            arr[i].setLayout(layout);
+
+            layout.getDetails().add(arr[i]);
+        }
 
         session.save(layout);
 
-        for (int i = 0; i < arr.length; i++) {
-            arr[i].setLayout(layout);
-            session.save(arr[i]);
-        }
-
         session.getTransaction().commit();
         return true;
+    }
+
+    //查询所有布局信息
+    public String queryAllLayout() {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("from RG_LayoutEntity entity ");
+        List<RG_LayoutEntity> list = query.list();
+
+        String jsonString = "";
+        if (list.size() > 0) {
+
+            ObjectMapper mapper = new ObjectMapper();                //定义转换类
+            ObjectNode root = mapper.createObjectNode();             //创建根节点
+            root.put("result", "0");
+
+            Iterator<RG_LayoutEntity> iter = list.iterator();
+
+            ArrayNode arrayNode = mapper.createArrayNode();
+
+            while (iter.hasNext()) {
+                RG_LayoutEntity entity = iter.next();
+
+                ObjectNode dataNode = mapper.createObjectNode();
+                dataNode.put("layoutId", entity.getName());
+
+                arrayNode.add(dataNode);
+            }
+
+            root.put("data", arrayNode);
+
+            try {
+                jsonString = mapper.writeValueAsString(root);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                jsonString = Tools.resultCode("1", "Can't execute operation");
+            }
+
+            session.getTransaction().commit();
+        } else {
+            jsonString = Tools.resultCode("1", "Can't execute operation");
+        }
+        return jsonString;
     }
 }
