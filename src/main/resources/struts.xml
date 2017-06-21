@@ -132,8 +132,10 @@
 
     <!--FullCalendar事件源-->
     <package name="FullCalendar" namespace="/FullCalendar" extends="struts-default">
-        <action name="getAllFullCalendarEvents" class="com.rengu.actions.FullCalendarAction"
-                method="getAllFullCalendarEvents"/>
+        <action name="getAllByisFinishedAndDate" class="com.rengu.actions.FullCalendarAction"
+                method="getAllByisFinishedAndDate"/>
+        <action name="getLastScheduleInfo" class="com.rengu.actions.FullCalendarAction"
+                method="getLastScheduleInfo"/>
     </package>
 
 </struts>
