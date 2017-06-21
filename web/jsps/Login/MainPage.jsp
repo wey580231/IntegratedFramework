@@ -24,111 +24,123 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 
-    <style>
-        .uk-nav-side > li > a {
-            color: white;
-        }
 
-        ul.uk-nav-sub {
-            margin-left: 30px;
-        }
+        <style type="text/css">
+            .uk-nav-side > li > a {
+                color: white;
+            }
 
-        ul.uk-nav-sub > li {
-            height: 35px;
+            ul.uk-nav-sub {
+                margin-left: 30px;
+            }
 
-        }
+            ul.uk-nav-sub > li {
+                height: 35px;
 
-        .uk-nav-side ul a {
-            color: white;
-        }
+            }
 
-        /*
-            里层li中超链接的背景
-        */
-        .uk-nav-side ul a:hover {
-            background: url("../../images/left_img/click.png") no-repeat 30px;
-            color: #ecc412;
-        }
+            .uk-nav-side ul a {
+                color: white;
+            }
 
-        /*
-            里层li的背景
-        */
-        /*.uk-nav-sub ul li:hover {
-            background: url("../../images/left_img/click.png") no-repeat 30px;
-            color: #ecc412;
-        }*/
+            /*
+                里层li中超链接的背景
+            */
+            .uk-nav-side ul a:hover {
+                background: url("../../images/left_img/click.png") no-repeat 30px;
+                color: #ecc412;
+            }
 
-        /*
-            ！！！！
-        */
-        .uk-nav-side ul a:focus {
-            background: url("../../images/left_img/click.png") no-repeat 30px;
-            color: #ecc412;
-        }
+            /*
+                里层li的背景
+            */
+            /*.uk-nav-sub ul li:hover {
+                background: url("../../images/left_img/click.png") no-repeat 30px;
+                color: #ecc412;
+            }*/
 
-        /*
-            外层li中的超链接悬浮
-        */
-        .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover {
-            background: #1d5880;
-            color: white;
-            text-shadow: 0 0px 0 #fff;
-        }
+            /*
+                ！！！！
+            */
+            .uk-nav-side ul a:focus {
+                background: url("../../images/left_img/click.png") no-repeat 30px;
+                color: #ecc412;
+            }
 
-        /*
-            外层li高度
-        */
-        .uk-nav-side > li > a {
-            height: 30px;
-        }
+            /*
+                外层li中的超链接悬浮
+            */
+            .uk-nav-side > li > a:focus, .uk-nav-side > li > a:hover {
+                background: #1d5880;
+                color: white;
+                text-shadow: 0 0px 0 #fff;
+            }
 
-        /*
-            外层li中的div样式
-        */
-        .uk-nav li > a > div {
-            margin-top: 8px;
-            float: left;
-            font-size: 14px;
-            line-height: 10px;
-        }
+            /*
+                外层li高度
+            */
+            .uk-nav-side > li > a {
+                height: 30px;
+            }
 
-        /*
-            li右侧箭头
-        */
-        .uk-nav-parent-icon > .uk-parent > a::after {
-            content: "\f104";
-            width: 20px;
-            margin-right: -10px;
-            float: right;
-            font-family: FontAwesome;
-            text-align: center;
-            margin-top: 4px;
-        }
+            /*
+                外层li中的div样式
+            */
+            .uk-nav li > a > div {
+                margin-top: 8px;
+                float: left;
+                font-size: 14px;
+                line-height: 10px;
+            }
 
-        /*
-            li底线
-        */
-        .uk-list-line > li:nth-child(n+2) {
-            margin-top: 5px;
-            padding-top: 5px;
-            border-top: 1px solid #335d78;
-        }
+            /*
+                li右侧箭头
+            */
+            .uk-nav-parent-icon > .uk-parent > a::after {
+                content: "\f104";
+                width: 20px;
+                margin-right: -10px;
+                float: right;
+                font-family: FontAwesome;
+                text-align: center;
+                margin-top: 4px;
+            }
 
-        /*
-            缺省值
-        */
-        html, body {
-            margin: 0;
-            height: 100%;
-        }
+            /*
+                li底线
+            */
+            .uk-list-line > li:nth-child(n+2) {
+                margin-top: 5px;
+                padding-top: 5px;
+                border-top: 1px solid #335d78;
+            }
 
-        #main {
-            width: 100%;
-            height: 100%;
-            MARGIN-RIGHT: auto;
-            MARGIN-LEFT: auto;
-        }
-    </style>
+            /*
+                缺省值
+            */
+            html, body {
+                margin: 0;
+                height: 100%;
+            }
+
+            #main {
+                width: 100%;
+                height: 100%;
+                MARGIN-RIGHT: auto;
+                MARGIN-LEFT: auto;
+                min-width: 1000px;
+                _width: expression((document.documentElement.clientWidth||document.body.clientWidth)<1000?"1000px":"auto");
+                /*_width:expression(this.scrollWidth > 620 ? "620px":(this.scrollWidth < 1? "1px":"auto"));*/
+            }
+
+          /*  .clearfloat{
+                clear:both;
+                height:0;
+                font-size: 1px;
+                line-height: 0px;
+            }*/
+        </style>
+
 </head>
 <body>
 <!--头部-->
@@ -145,14 +157,14 @@
 
 </div>--%>
 <div id="main">
-    <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;">
+    <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;position: absolute;">
         <!--图标-->
-        <div class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
+        <div class="uk-width-1-1" style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;position: absolute;">
             <a href="MainPage.jsp"><img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;"></a>
 
         </div>
         <!--左侧列表-->
-        <div class="uk-width-1-1" style="height: 90%;">
+        <div class="uk-width-1-1" style="/*height: 90%;*/height: auto!important;/*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;">
             <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
                 <li class="uk-parent">
                     <a href="#">
@@ -229,12 +241,14 @@
                     </ul>
                 </li>
             </ul>
+            <!--父容器结束前-->
+            <%--<div class="clearfloat"></div>--%>
         </div>
     </div>
 
     <!--右侧-->
     <div class="uk-width-5-6 uk-height-viewport" style="float: right;height: 100%;">
-        <div style="height: 10%;">
+        <div class="uk-width-5-6" style="/*height: 10%;*/height: 60px;/*width: 100%;*/position: absolute;">
             <!--欢迎登录-->
             <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
                 <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
@@ -244,7 +258,8 @@
             </div>
         </div>
 
-        <div style="float:right;background-color: #bdcbd8;height: 90%;width: 100%;">
+        <div class="uk-width-5-6" style="float:right;background-color: #bdcbd8;/*height: 90%;*//*width: 100%;*/height: auto !important;
+        overflow: auto;position: absolute;top: 60px;bottom: 0px;">
 
             <div style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
                 <ng-view></ng-view>

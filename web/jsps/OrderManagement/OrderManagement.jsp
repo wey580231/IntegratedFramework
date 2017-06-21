@@ -24,6 +24,18 @@
         else
             obj.parentElement.parentElement.style.backgroundColor = jiColor;
     }
+
+
+    function checkAll()
+    {
+        var code_Values = document.getElementById("check");
+        for(i = 0;i < code_Values.length;i++){
+            if(code_Values[i].type == "checkbox")
+            {
+                code_Values[i].checked = true;
+            }
+        }
+    }
 </script>
 
 <div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
@@ -113,9 +125,11 @@
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
+
                                     <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
                                         <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
+
                                 </td>
                                 <td>编码</td>
                                 <td>名称</td>
@@ -133,8 +147,10 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order_table">
                             <tbody class="uk-text-center">
+
                             <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
+
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="orderId" value="{{x.id}}">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
