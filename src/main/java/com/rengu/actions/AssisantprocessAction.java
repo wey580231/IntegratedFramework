@@ -38,7 +38,6 @@ public class AssisantprocessAction extends SuperAction implements ModelDriven<RG
         RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.save(rg_assisantprocessEntity)) {
-            assisantprocessDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
         }
@@ -49,7 +48,6 @@ public class AssisantprocessAction extends SuperAction implements ModelDriven<RG
         RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.delete(rg_assisantprocessEntity)) {
-            assisantprocessDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
         }
@@ -60,10 +58,8 @@ public class AssisantprocessAction extends SuperAction implements ModelDriven<RG
         RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.update(rg_assisantprocessEntity)) {
-            assisantprocessDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
         }
-
     }
 }

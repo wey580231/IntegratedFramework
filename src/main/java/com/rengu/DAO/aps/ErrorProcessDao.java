@@ -1,11 +1,10 @@
 package com.rengu.DAO.aps;
 
 import com.rengu.entity.RG_AdjustDeviceEntity;
+import com.rengu.entity.RG_AdjustOrderEntity;
+import com.rengu.entity.RG_AdjustProcessEntity;
 import com.rengu.entity.RG_SnapshotNodeEntity;
-import com.rengu.util.ApsTools;
-import com.rengu.util.ErrorState;
-import com.rengu.util.GlobalVariable;
-import com.rengu.util.MySessionFactory;
+import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -22,7 +21,7 @@ public class ErrorProcessDao {
 
     public Integer processDeviceError(String id) {
 
-        org.hibernate.Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         session.beginTransaction();
 
         Integer result = ApsTools.UNKNOWN;
@@ -35,31 +34,18 @@ public class ErrorProcessDao {
 
             //撤销资源
             if (entity.getCancelTime() != null && entity.getLatestCancelTime() != null) {
-                result = ApsTools.instance().executeCommand(getCancelDeviceURL(entity));
+                result = ApsTools.instance().executeCommand(ApsTools.instance().getCancelDeviceURL(entity));
             }
             //设置时段不可用
             else if (entity.getUnavailableStartDate() != null && entity.getUnavailableEndDate() != null) {
-                result = ApsTools.instance().executeCommand(getUnavailableDeviceURL(entity));
+                result = ApsTools.instance().executeCommand(ApsTools.instance().getUnavailableDeviceURL(entity));
             }
 
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
 
-                query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
-                query.setParameter("id", GlobalVariable.RootSnapshotId);
-                list = query.list();
-                if (list.size() > 0 && list.get(0) instanceof RG_SnapshotNodeEntity) {
-                    RG_SnapshotNodeEntity rootSnapshot = (RG_SnapshotNodeEntity) list.get(0);
-
-                    RG_SnapshotNodeEntity middleSnapshot = new RG_SnapshotNodeEntity();
-                    middleSnapshot.setId(UUID.randomUUID().toString());
-//                    middleSnapshot.setName();
-                    middleSnapshot.setParent(rootSnapshot);
-                    middleSnapshot.setRootParent(rootSnapshot);
-
-                    rootSnapshot.getChilds().add(middleSnapshot);
-                }
+                createSnapNode(session);
 
                 session.update(entity);
             }
@@ -70,41 +56,73 @@ public class ErrorProcessDao {
         return result;
     }
 
-    private String getCancelDeviceURL(RG_AdjustDeviceEntity entity) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/RejectResource.n" +
-                "&" +
-                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n"
-                + convertSpaceWithTab(entity.getCancelTime()) + "\\n" + convertSpaceWithTab(entity.getLatestCancelTime()) +
-                "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
-                "&" +
-                "ID=001" +
-                "&" +
-                "DELAY=1000";
+    public Integer processOrderError(String id) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Integer result = ApsTools.UNKNOWN;
+
+        Query query = session.createQuery("from RG_AdjustOrderEntity entity where entity.id=:id");
+        query.setParameter("id", id);
+        List list = query.list();
+        if (list.size() == 1 && list.get(0) instanceof RG_AdjustOrderEntity) {
+            RG_AdjustOrderEntity entity = (RG_AdjustOrderEntity) list.get(0);
+
+            //更新故障的状态、创建
+            if (result == ApsTools.STARTED) {
+//                entity.setState(ErrorState.ERROR_APS_PROCESS);
+                createSnapNode(session);
+                session.update(entity);
+            }
+        }
+
+        session.getTransaction().commit();
+
         return result;
     }
 
-    private String getUnavailableDeviceURL(RG_AdjustDeviceEntity entity) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
-                "&" +
-                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
-                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
-                "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
-                "&" +
-                "ID=001" +
-                "&" +
-                "DELAY=1000\n";
+    public Integer processProcessError(String id) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Integer result = ApsTools.UNKNOWN;
+
+        Query query = session.createQuery("from RG_AdjustProcessEntity entity where entity.id=:id");
+        query.setParameter("id", id);
+        List list = query.list();
+        if (list.size() == 1 && list.get(0) instanceof RG_AdjustProcessEntity) {
+            RG_AdjustProcessEntity entity = (RG_AdjustProcessEntity) list.get(0);
+
+            //更新故障的状态、创建
+            if (result == ApsTools.STARTED) {
+//                entity.setState(ErrorState.ERROR_APS_PROCESS);
+                createSnapNode(session);
+
+                session.update(entity);
+            }
+        }
+
+        session.getTransaction().commit();
+
         return result;
     }
 
-    //将字符转中包含的\s替换成\t
-    private String convertSpaceWithTab(String source) {
-        source = source.trim();
+    private void createSnapNode(Session session) {
+        Query query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
+        query.setParameter("id", GlobalVariable.RootSnapshotId);
+        List list = query.list();
+        if (list.size() > 0 && list.get(0) instanceof RG_SnapshotNodeEntity) {
+            RG_SnapshotNodeEntity rootSnapshot = (RG_SnapshotNodeEntity) list.get(0);
 
-        Pattern pattern = Pattern.compile("(\\s)+|\t|\r|\n");
-        Matcher match = pattern.matcher(source);
+            RG_SnapshotNodeEntity middleSnapshot = new RG_SnapshotNodeEntity();
+            middleSnapshot.setId(UUID.randomUUID().toString());
+            middleSnapshot.setName("工序异常应急");
+            middleSnapshot.setLevel(SnapshotLevel.MIDDLE);
+            middleSnapshot.setParent(rootSnapshot);
+            middleSnapshot.setRootParent(rootSnapshot);
 
-        return match.replaceAll("\\\\t");
+            rootSnapshot.getChilds().add(middleSnapshot);
+            session.save(rootSnapshot);
+        }
     }
 }

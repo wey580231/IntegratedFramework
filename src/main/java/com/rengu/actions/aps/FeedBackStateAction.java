@@ -5,10 +5,7 @@ import com.rengu.DAO.aps.ApsDao;
 import com.rengu.actions.SuperAction;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.entity.RG_SnapshotNodeEntity;
-import com.rengu.util.GlobalVariable;
-import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
-import com.rengu.util.WebSocketNotification;
+import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -40,7 +37,6 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
             if (id.length > 0 && state.length > 0 && message.length > 0 && GlobalVariable.RootSnapshotId.length() > 0) {
-                //TODO 通过消息告诉前端
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
                 session.beginTransaction();
 
@@ -50,17 +46,32 @@ public class FeedBackStateAction extends SuperAction {
                 if (list.size() > 0 && list.get(0) instanceof RG_SnapshotNodeEntity) {
                     RG_SnapshotNodeEntity rootSnapshot = (RG_SnapshotNodeEntity) list.get(0);
 
+                    //创建快照节点
+                    query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
+                    query.setParameter("id", GlobalVariable.MiddleSnapshotId);
+                    list = query.list();
+                    RG_SnapshotNodeEntity middleSnapshot = null;
+                    if (list.size() > 0) {
+                        middleSnapshot = (RG_SnapshotNodeEntity) list.get(0);
+                    }
+
                     //TODO 查询schedule时会级联查询出其对应的set集合
                     RG_ScheduleEntity schedule = rootSnapshot.getSchedule();
+
+                    String nodeName = null;
 
                     //不是应急排程
                     if (!GlobalVariable.IsErrorSchedule) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
                             if (GlobalVariable.ApsReplyCount == 0) {
                                 schedule.setState(RG_ScheduleEntity.APS_SUCCESS);
+                                nodeName = "排程结果";
                                 WebSocketNotification.broadcast("APS计算完成!");
                             } else {
                                 schedule.setState(RG_ScheduleEntity.APS_ADJUST);
+                                if (middleSnapshot != null) {
+                                    nodeName = "优化调整" + middleSnapshot.getChilds().size();
+                                }
                                 WebSocketNotification.broadcast("APS优化计算完成!");
                             }
                         }
@@ -75,9 +86,13 @@ public class FeedBackStateAction extends SuperAction {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
                             if (GlobalVariable.ApsReplyCount == 0) {
                                 schedule.setState(RG_ScheduleEntity.ERROR_SUCCESS);
+                                nodeName = "应急结果";
                                 WebSocketNotification.broadcast("APS应急计算完成!");
                             } else {
                                 schedule.setState(RG_ScheduleEntity.ERROR_ADJUST);
+                                if (middleSnapshot != null) {
+                                    nodeName = "应急优化调整" + middleSnapshot.getChilds().size();
+                                }
                                 WebSocketNotification.broadcast("APS应急优化计算完成!");
                             }
                         }
@@ -89,15 +104,12 @@ public class FeedBackStateAction extends SuperAction {
                     }
                     GlobalVariable.ApsReplyCount++;
 
-                    //创建快照节点
-                    query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
-                    query.setParameter("id", GlobalVariable.MiddleSnapshotId);
-                    list = query.list();
-                    if (list.size() > 0) {
-                        RG_SnapshotNodeEntity middleSnapshot = (RG_SnapshotNodeEntity) list.get(0);
-
+                    if (middleSnapshot != null) {
                         RG_SnapshotNodeEntity bottomSnapshot = new RG_SnapshotNodeEntity();
                         bottomSnapshot.setId(UUID.randomUUID().toString());
+                        bottomSnapshot.setName(nodeName);
+                        bottomSnapshot.setLevel(SnapshotLevel.BOTTOM);
+
                         bottomSnapshot.setParent(middleSnapshot);
                         bottomSnapshot.setRootParent(rootSnapshot);
 

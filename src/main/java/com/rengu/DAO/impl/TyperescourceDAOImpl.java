@@ -17,11 +17,11 @@ public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceD
     public List<RG_TyperescourceEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        super.transaction = transaction;
-        super.session = session;
         String hql = "from RG_TyperescourceEntity rg_typerescourceEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
+        transaction.commit();
+        session.close();
         return list;
     }
 
@@ -35,14 +35,17 @@ public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceD
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
             String hql = "from RG_TyperescourceEntity rg_typerescourceEntity where rg_typerescourceEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
-                return (RG_TyperescourceEntity) query.list().get(0);
+                RG_TyperescourceEntity rg_typerescourceEntity = (RG_TyperescourceEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_typerescourceEntity;
             } else {
+                transaction.commit();
+                session.close();
                 return null;
             }
         } catch (Exception exception) {

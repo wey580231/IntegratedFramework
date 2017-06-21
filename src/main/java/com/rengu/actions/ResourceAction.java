@@ -38,7 +38,6 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.save(rg_resourceEntity)) {
-            resourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", rg_resourceEntity.getClubByIdClub().getName());
         }
@@ -49,7 +48,6 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.delete(rg_resourceEntity)) {
-            resourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", rg_resourceEntity.getClubByIdClub().getName());
         }
@@ -60,7 +58,6 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.update(rg_resourceEntity)) {
-            resourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", rg_resourceEntity.getClubByIdClub().getName());
         }

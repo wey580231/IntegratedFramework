@@ -17,11 +17,11 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     public List<RG_OrderEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        super.transaction = transaction;
-        super.session = session;
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
+        transaction.commit();
+        session.close();
         return list;
     }
 
@@ -30,12 +30,12 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", username);
             List list = query.list();
+            transaction.commit();
+            session.close();
             return list;
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -48,14 +48,17 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            this.transaction = transaction;
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
-            List list = query.list();
             if (!query.list().isEmpty()) {
-                return (RG_OrderEntity) query.list().get(0);
+                RG_OrderEntity rg_orderEntity = (RG_OrderEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_orderEntity;
             } else {
+                transaction.commit();
+                session.close();
                 return null;
             }
         } catch (Exception exception) {

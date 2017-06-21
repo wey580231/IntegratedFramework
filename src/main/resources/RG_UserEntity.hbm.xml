@@ -23,8 +23,17 @@
         <property name="password">
             <column name="password" sql-type="varchar(50)" length="50"/>
         </property>
+
         <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
             <column name="idClub" not-null="false"/>
         </many-to-one>
+
+        <set name="warns" inverse="true" lazy="true" cascade="all">
+            <key>
+                <column name="idWarn" not-null="false"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.rengu.entity.RG_WarnEntity"/>
+        </set>
+
     </class>
 </hibernate-mapping>

@@ -17,11 +17,11 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
     public List<RG_SiteEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        super.transaction = transaction;
-        super.session = session;
         String hql = "from RG_SiteEntity rg_siteEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
+        transaction.commit();
+        session.close();
         return list;
     }
 
@@ -35,14 +35,17 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
             String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
-                return (RG_SiteEntity) query.list().get(0);
+                RG_SiteEntity rg_siteEntity = (RG_SiteEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_siteEntity;
             } else {
+                transaction.commit();
+                session.close();
                 return null;
             }
         } catch (Exception exception) {

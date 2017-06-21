@@ -1,14 +1,16 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.rengu.DAO.impl.*;
-import com.rengu.entity.*;
+import com.rengu.DAO.impl.ScheduleDAOImpl;
+import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.util.*;
 
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.UUID;
 
 /**
  * Created by hanchangming on 2017/6/5.
@@ -132,9 +134,14 @@ public class ScheduleAction extends SuperAction {
             //产生一条快照根记录，并自动生成该记录中
             RG_SnapshotNodeEntity rootSnapshot = new RG_SnapshotNodeEntity();
             rootSnapshot.setId(UUID.randomUUID().toString());
+            rootSnapshot.setName(rg_scheduleEntity.getName());
+            rootSnapshot.setLevel(SnapshotLevel.TOP);
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
             middleShot.setId(UUID.randomUUID().toString());
+            middleShot.setName("APS排程结果");
+            middleShot.setLevel(SnapshotLevel.MIDDLE);
+
             middleShot.setParent(rootSnapshot);
             middleShot.setRootParent(rootSnapshot);
 
@@ -155,12 +162,10 @@ public class ScheduleAction extends SuperAction {
             if (result == ApsTools.STARTED) {
 
                 scheduleDAOImplInstance.save(rg_scheduleEntity);
-                scheduleDAOImplInstance.getTransaction().commit();
 
                 Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
             } else {
 
-                scheduleDAOImplInstance.getTransaction().rollback();
 
                 Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
             }

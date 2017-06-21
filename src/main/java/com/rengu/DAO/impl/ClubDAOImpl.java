@@ -28,14 +28,17 @@ public class ClubDAOImpl extends SuperDAOImpl implements ClubDAO<RG_ClubEntity> 
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
             String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
-                return (RG_ClubEntity) query.list().get(0);
+                RG_ClubEntity rg_clubEntity = (RG_ClubEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_clubEntity;
             } else {
+                transaction.commit();
+                session.close();
                 return null;
             }
         } catch (Exception exception) {

@@ -28,13 +28,14 @@ public class LayoutDAOImpl extends SuperDAOImpl implements LayoutDAO<RG_LayoutEn
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
             String hql = "from RG_LayoutEntity rg_layoutEntity where rg_layoutEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
-                return (RG_LayoutEntity) query.list().get(0);
+                RG_LayoutEntity rg_layoutEntity = (RG_LayoutEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_layoutEntity;
             } else {
                 return null;
             }

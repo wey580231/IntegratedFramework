@@ -28,14 +28,17 @@ public class ProcessDAOImpl extends SuperDAOImpl implements ProcessDAO<RG_Proces
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
             String hql = "from RG_ProcessEntity rg_processEntity where rg_processEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
-                return (RG_ProcessEntity) query.list().get(0);
+                RG_ProcessEntity rg_processEntity = (RG_ProcessEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_processEntity;
             } else {
+                transaction.commit();
+                session.close();
                 return null;
             }
         } catch (Exception exception) {

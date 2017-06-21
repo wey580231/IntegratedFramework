@@ -38,7 +38,6 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.save(rg_groupresourceEntity)) {
-            groupResourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", "");
         }
@@ -49,7 +48,6 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.delete(rg_groupresourceEntity)) {
-            groupResourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", "");
         }
@@ -60,7 +58,6 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.update(rg_groupresourceEntity)) {
-            groupResourceDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", "");
         }

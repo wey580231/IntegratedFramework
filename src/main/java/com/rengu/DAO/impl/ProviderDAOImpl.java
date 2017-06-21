@@ -28,14 +28,17 @@ public class ProviderDAOImpl extends SuperDAOImpl implements ProviderDAO<RG_Prov
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            super.transaction = transaction;
-            super.session = session;
             String hql = "from RG_ProviderEntity rg_providerEntity where rg_providerEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
-                return (RG_ProviderEntity) query.list().get(0);
+                RG_ProviderEntity rg_providerEntity = (RG_ProviderEntity) query.list().get(0);
+                transaction.commit();
+                session.close();
+                return rg_providerEntity;
             } else {
+                transaction.commit();
+                session.close();
                 return null;
             }
         } catch (Exception exception) {
