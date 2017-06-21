@@ -18,12 +18,12 @@ public class State3DAction extends SuperAction {
 
     State3DAO stateDao = new State3DAO();
 
-    //查询3D总体状态
+    //【已调】查询3D总体状态
     public void queryState() {
         Tools.jsonPrint(stateDao.getCurrentState(), this.httpServletResponse);
     }
 
-    //根据id查询布局信息
+    //【已调】根据id查询布局信息
     public void config3DLayout() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
@@ -42,7 +42,7 @@ public class State3DAction extends SuperAction {
         Tools.jsonPrint(Tools.resultCode("error", "Can't find layout info"), this.httpServletResponse);
     }
 
-    //插入或更新布局信息
+    //【已调】插入或更新布局信息
     public void insertOrUpdateLayout() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
@@ -68,7 +68,7 @@ public class State3DAction extends SuperAction {
         }
     }
 
-    //查询所有布局信息
+    //【已调】查询所有布局信息
     public void query3DLayout(){
         Tools.jsonPrint(stateDao.queryAllLayout(), this.httpServletResponse);
     }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.MySessionFactory;
+import com.rengu.util.Tools;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -86,9 +87,9 @@ public class Device3DAO {
                 //TODO 需要向MES发送activeMQ发送订单表请求
 //                mainData.put("completeNum",entity.get);
 //                mainData.put("completeCent",entity.getId());
-                mainData.put("t0", entity.getT0());
+                mainData.put("t0", Tools.formatDate(entity.getT0()));
                 mainData.put("currTime", "");
-                mainData.put("t2Plan", entity.getT2Plan());
+                mainData.put("t2Plan", Tools.formatDate(entity.getT2Plan()));
                 mainData.put("state", entity.getState());
 
                 //【2】订单子表

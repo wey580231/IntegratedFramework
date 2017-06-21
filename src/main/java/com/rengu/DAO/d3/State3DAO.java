@@ -53,10 +53,10 @@ public class State3DAO {
                 jsonString = Tools.resultCode("1", "Can't execute operation");
             }
 
-            session.getTransaction().commit();
         } else {
             jsonString = Tools.resultCode("1", "Can't execute operation");
         }
+        session.getTransaction().commit();
         return jsonString;
     }
 
@@ -121,9 +121,9 @@ public class State3DAO {
                 }
             }
             session.update(entity);
-            session.getTransaction().commit();
             return true;
         }
+        session.getTransaction().commit();
         return false;
     }
 
@@ -198,10 +198,10 @@ public class State3DAO {
                 jsonString = Tools.resultCode("1", "Can't execute operation");
             }
 
-            session.getTransaction().commit();
         } else {
             jsonString = Tools.resultCode("1", "Can't execute operation");
         }
+        session.getTransaction().commit();
         return jsonString;
     }
 }

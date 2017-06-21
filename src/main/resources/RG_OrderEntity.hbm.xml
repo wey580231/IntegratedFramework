@@ -35,14 +35,14 @@
         <property name="priority">
             <column name="priority" sql-type="smallint(6)" not-null="false"/>
         </property>
-        <property name="t0">
-            <column name="t0" sql-type="varchar(20)" length="20" not-null="false"/>
+        <property name="t0" type="java.util.Date">
+            <column name="t0" sql-type="datetime" length="20" not-null="false"/>
         </property>
-        <property name="t1">
-            <column name="t1" sql-type="varchar(20)" length="20" not-null="false"/>
+        <property name="t1" type="java.util.Date">
+            <column name="t1" sql-type="datetime" length="20" not-null="false"/>
         </property>
-        <property name="t2">
-            <column name="t2" sql-type="varchar(20)" length="20" not-null="false"/>
+        <property name="t2" type="java.util.Date">
+            <column name="t2" sql-type="datetime" length="20" not-null="false"/>
         </property>
         <property name="ord">
             <column name="ord" sql-type="smallint(6)" not-null="false"/>
@@ -62,11 +62,11 @@
         <property name="t2Interaction">
             <column name="t2Interaction" sql-type="varchar(255)" not-null="false"/>
         </property>
-        <property name="t1Plan">
-            <column name="t1Plan" sql-type="varchar(50)" length="50" not-null="false"/>
+        <property name="t1Plan" type="java.util.Date">
+            <column name="t1Plan" sql-type="datetime" length="50" not-null="false"/>
         </property>
-        <property name="t2Plan">
-            <column name="t2Plan" sql-type="varchar(50)" length="50" not-null="false"/>
+        <property name="t2Plan" type="java.util.Date">
+            <column name="t2Plan" sql-type="datetime" length="50" not-null="false"/>
         </property>
         <property name="estimate">
             <column name="estimate" sql-type="smallint(6)" not-null="false"/>
