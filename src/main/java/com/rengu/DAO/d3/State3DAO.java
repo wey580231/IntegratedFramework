@@ -44,7 +44,6 @@ public class State3DAO {
             root.put("layoutId", entity.getLayoutId());
             root.put("model", entity.getModel());
             root.put("snapshotId", entity.getSnapshotId());
-            root.put("controlState", entity.getControlState());
 
             try {
                 jsonString = mapper.writeValueAsString(root);

@@ -98,7 +98,7 @@ public class ErrorProcessDao {
         if (list.size() == 1 && list.get(0) instanceof RG_AdjustProcessEntity) {
             RG_AdjustProcessEntity entity = (RG_AdjustProcessEntity) list.get(0);
 
-//            result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustProcessHandlingURL(entity));
+            result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustProcessHandlingURL(entity));
 
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {

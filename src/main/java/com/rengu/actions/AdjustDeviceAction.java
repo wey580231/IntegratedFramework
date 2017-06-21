@@ -22,5 +22,4 @@ public class AdjustDeviceAction extends SuperAction{
         Tools.jsonPrint(jsonString, httpServletResponse);
 
     }
-
 }
