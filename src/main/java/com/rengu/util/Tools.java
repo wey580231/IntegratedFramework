@@ -185,4 +185,13 @@ public class Tools {
     public static String getUUID(){
         return UUID.randomUUID().toString();
     }
+
+    public static String formatDate(Date date){
+        if(date == null){
+            return "";
+        }
+
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        return df.format(date);
+    }
 }

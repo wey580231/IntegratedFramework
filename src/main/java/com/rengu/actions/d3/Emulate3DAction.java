@@ -15,7 +15,7 @@ public class Emulate3DAction extends SuperAction {
 
     Emulate3DAO emulateDao = new Emulate3DAO();
 
-    //获取模拟的数据流，暂定将最近一次的排程结果进行转换后，发回给3D车间
+    //【已调】获取模拟的数据流，暂定将最近一次的排程结果进行转换后，发回给3D车间
     public void getEmulateFlow() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();

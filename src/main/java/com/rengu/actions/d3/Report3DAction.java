@@ -19,7 +19,7 @@ public class Report3DAction extends SuperAction {
 
     Device3DAO deviceDao = new Device3DAO();
 
-    //根据3D车间的请求类型，返回对应的报表信息
+    //【已调】根据3D车间的请求类型，返回对应的报表信息
     public void resport3d() {
 
         ActionContext context = ActionContext.getContext();
