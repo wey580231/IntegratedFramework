@@ -125,12 +125,15 @@
 
             #main {
                 width: 100%;
-                height: 100%;
+                /*height: 100%;*/
                 MARGIN-RIGHT: auto;
                 MARGIN-LEFT: auto;
                 min-width: 1000px;
+                align: center;
                 _width: expression((document.documentElement.clientWidth||document.body.clientWidth)<1000?"1000px":"auto");
                 /*_width:expression(this.scrollWidth > 620 ? "620px":(this.scrollWidth < 1? "1px":"auto"));*/
+                height: auto!important;
+                position: absolute;
             }
 
           /*  .clearfloat{
@@ -157,9 +160,10 @@
 
 </div>--%>
 <div id="main">
+    <!--左侧-->
     <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;position: absolute;">
         <!--图标-->
-        <div class="uk-width-1-1" style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;position: absolute;">
+        <div class="uk-width-1-1" style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;/*position: absolute;*/">
             <a href="MainPage.jsp"><img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;"></a>
 
         </div>
@@ -247,7 +251,7 @@
     </div>
 
     <!--右侧-->
-    <div class="uk-width-5-6 uk-height-viewport" style="float: right;height: 100%;">
+    <div class="uk-width-5-6 uk-height-viewport" style="float: right;height: 100%;position: unset;">
         <div class="uk-width-5-6" style="/*height: 10%;*/height: 60px;/*width: 100%;*/position: absolute;">
             <!--欢迎登录-->
             <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
@@ -258,8 +262,8 @@
             </div>
         </div>
 
-        <div class="uk-width-5-6" style="float:right;background-color: #bdcbd8;/*height: 90%;*//*width: 100%;*/height: auto !important;
-        overflow: auto;position: absolute;top: 60px;bottom: 0px;">
+        <div class="uk-width-5-6" style="/*float:right;*/background-color: #bdcbd8;/*height: 90%;*//*width: 100%;*/height: auto !important;
+        /*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;">
 
             <div style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
                 <ng-view></ng-view>
