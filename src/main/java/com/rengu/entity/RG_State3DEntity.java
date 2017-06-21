@@ -9,7 +9,6 @@ public class RG_State3DEntity {
     private String layoutId;                    //布局改变时，对应的layout索引值
     private Integer model;                      //仿真模式，0为无，1为仿真模式，2为实时模式
     private String snapshotId;                  //为仿真模式时，请求获取该snapshot对应的结果西信息
-    private Integer controlState;               //控制状态
 
     public Integer getId() {
         return id;
@@ -51,14 +50,6 @@ public class RG_State3DEntity {
         this.snapshotId = snapshotId;
     }
 
-    public Integer getControlState() {
-        return controlState;
-    }
-
-    public void setControlState(Integer controlState) {
-        this.controlState = controlState;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,8 +61,7 @@ public class RG_State3DEntity {
         if (layoutState != null ? !layoutState.equals(that.layoutState) : that.layoutState != null) return false;
         if (layoutId != null ? !layoutId.equals(that.layoutId) : that.layoutId != null) return false;
         if (model != null ? !model.equals(that.model) : that.model != null) return false;
-        if (snapshotId != null ? !snapshotId.equals(that.snapshotId) : that.snapshotId != null) return false;
-        return controlState != null ? controlState.equals(that.controlState) : that.controlState == null;
+        return snapshotId != null ? snapshotId.equals(that.snapshotId) : that.snapshotId == null;
     }
 
     @Override
@@ -81,7 +71,6 @@ public class RG_State3DEntity {
         result = 31 * result + (layoutId != null ? layoutId.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (snapshotId != null ? snapshotId.hashCode() : 0);
-        result = 31 * result + (controlState != null ? controlState.hashCode() : 0);
         return result;
     }
 }

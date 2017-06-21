@@ -8,32 +8,14 @@
         <id name="id">
             <column name="id" sql-type="varchar(100)" length="100"/>
         </id>
-        <property name="name">
-            <column name="name" sql-type="varchar(255)"/>
-        </property>
-        <property name="quantity">
-            <column name="quantity" sql-type="smallint(8)"/>
-        </property>
-        <property name="priority">
-            <column name="priority" sql-type="smallint(2)"/>
-        </property>
-        <property name="t0">
-            <column name="t0" sql-type="varchar(20)" length="20"/>
-        </property>
-        <property name="t1">
-            <column name="t1" sql-type="varchar(20)" length="20"/>
-        </property>
-        <property name="t2">
-            <column name="t2" sql-type="varchar(20)" length="20"/>
-        </property>
-
         <property name="origin">
-            <column name="origin" sql-type="varchar(255)" not-null="false"/>
+            <column name="origin" sql-type="varchar(100)"/>
         </property>
         <property name="state" type="java.lang.Integer">
             <column name="state" sql-type="int" not-null="false"/>
         </property>
 
-        <many-to-one name="productEntity" class="com.rengu.entity.RG_ProductEntity" column="idProduct" unique="true"/>
+        <many-to-one name="ord" class="com.rengu.entity.RG_OrderEntity" unique="true" column="idOrder"/>
+
     </class>
 </hibernate-mapping>

@@ -35,10 +35,8 @@ public class ScheduleAction extends SuperAction {
 
             //获取当前时间
             Date date = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String scheduleTime = dateFormat.format(date);
-            rg_scheduleEntity.setScheduleTime(scheduleTime);
-            rg_scheduleEntity.setStartCalcTime(scheduleTime);
+            rg_scheduleEntity.setScheduleTime(date);
+            rg_scheduleEntity.setStartCalcTime(date);
             //解析scheduleWindow
             JsonNode scheduleWindowNodes = rootNode.get("scheduleWindow");
             rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
@@ -50,11 +48,16 @@ public class ScheduleAction extends SuperAction {
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
+
                 if (APS_ConfigNodeKey.equals("t0")) {
-                    rg_scheduleEntity.setApsStartTime(APS_ConfigNodeValue);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date statTime = sdf.parse(APS_ConfigNodeValue);
+                    rg_scheduleEntity.setApsStartTime(statTime);
                 }
                 if (APS_ConfigNodeKey.equals("t2")) {
-                    rg_scheduleEntity.setApsEndTime(APS_ConfigNodeValue);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date endTime = sdf.parse(APS_ConfigNodeValue);
+                    rg_scheduleEntity.setApsEndTime(endTime);
                 }
                 if (APS_ConfigNodeKey.equals("objective")) {
                     rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);

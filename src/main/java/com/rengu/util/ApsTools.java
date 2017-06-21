@@ -75,8 +75,8 @@ public class ApsTools {
         return apsTool;
     }
 
-//    //TODO 待将连接修改成APS提供的访问连接
-//    //获取紧急插单
+        //TODO 待将连接修改成APS提供的访问连接
+    //获取紧急插单
 //    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
 //
 //        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
@@ -98,21 +98,24 @@ public class ApsTools {
 //                "DELAY=1000\n";
 //        return result;
 //    }
-//
-//    //获取工序调整
-//    public static String getAdjustProcessHandlingURL(RG_AdjustProcessEntity rg_adjustProcessEntity) {
-//        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
-//                "&" +
-//                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
-//                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
-//                "&" +
-//                "REPLY=" + ApsTools.instance().getReplyAddress() +
-//                "&" +
-//                "ID=001" +
-//                "&" +
-//                "DELAY=1000\n";
-//        return result;
-//    }
+
+    //获取工序调整
+    public static String getAdjustProcessHandlingURL(RG_AdjustProcessEntity entity) {
+
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Task/MoveTask.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getIdTask() + "\\n001\\n2000-01-01\\t06:00\\n120\\n1\\n6\\n" +
+                entity.getIdJob() + "\\n" + entity.getIdOrder() + "\\n" + entity.getOriginalResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOriginalStartTime()))
+                + "\\n" + entity.getAppointResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getAppointStartTime())) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000";
+
+        return result;
+    }
 
     //设备资源取消
     public String getCancelDeviceURL(RG_AdjustDeviceEntity entity) {
@@ -162,9 +165,9 @@ public class ApsTools {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
 //        for (Object object : list) {
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
 //            if (object instanceof HashMap) {
-            if(true){
+            if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
 
                 rg_planEntity.setId(Tools.getUUID());
@@ -293,9 +296,9 @@ public class ApsTools {
 
                 session.save(rg_planEntity);
             }
-    }
+        }
 
-}
+    }
 
     //拼接请求命令
     private String combineCommand(String requestURL) {

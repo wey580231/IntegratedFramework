@@ -2,6 +2,7 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
 import java.util.Set;
 
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
@@ -23,9 +24,9 @@ public class RG_ScheduleEntity {
 
     //基础信息
     private String name;
-    private String scheduleTime;          //排程日期
-    private String startCalcTime;         //计算开始日期
-    private String endCalcTime;           //计算结束日期
+    private Date scheduleTime;            //排程日期
+    private Date startCalcTime;           //计算开始日期
+    private Date endCalcTime;             //计算结束日期
     private Integer state;                //排程状态,参考本类的静态变量
     private String progress;              //完成进度
 
@@ -33,8 +34,8 @@ public class RG_ScheduleEntity {
     private Integer rollTime;             //滚动周期
 
     //APS排程参数
-    private String apsStartTime;          //优化项目开始时间
-    private String apsEndTime;            //优化项目结束时间
+    private Date apsStartTime;            //优化项目开始时间
+    private Date apsEndTime;              //优化项目结束时间
     private String apsModel;              //排程模式，“正向”“反向”
     private String apsObj;                //优化目标，可取值“超时总量”“目标资源数”“作业跨度”
 
@@ -46,6 +47,46 @@ public class RG_ScheduleEntity {
     private Set<RG_GroupresourceEntity> groups;        //工组
     private Set<RG_SiteEntity> sites;                  //工位
     private RG_SnapshotNodeEntity snapshot;            //排程快照
+
+    public static int getApsDispatch() {
+        return APS_DISPATCH;
+    }
+
+    public static int getApsCompute() {
+        return APS_COMPUTE;
+    }
+
+    public static int getApsSuccess() {
+        return APS_SUCCESS;
+    }
+
+    public static int getApsFail() {
+        return APS_FAIL;
+    }
+
+    public static int getApsAdjust() {
+        return APS_ADJUST;
+    }
+
+    public static int getMesDispatch() {
+        return MES_DISPATCH;
+    }
+
+    public static int getErrorSuccess() {
+        return ERROR_SUCCESS;
+    }
+
+    public static int getErrorAdjust() {
+        return ERROR_ADJUST;
+    }
+
+    public static int getErrorFail() {
+        return ERROR_FAIL;
+    }
+
+    public static int getErrorMesDisptatch() {
+        return ERROR_MES_DISPTATCH;
+    }
 
     public String getId() {
         return id;
@@ -63,27 +104,27 @@ public class RG_ScheduleEntity {
         this.name = name;
     }
 
-    public String getScheduleTime() {
+    public Date getScheduleTime() {
         return scheduleTime;
     }
 
-    public void setScheduleTime(String scheduleTime) {
+    public void setScheduleTime(Date scheduleTime) {
         this.scheduleTime = scheduleTime;
     }
 
-    public String getStartCalcTime() {
+    public Date getStartCalcTime() {
         return startCalcTime;
     }
 
-    public void setStartCalcTime(String startCalcTime) {
+    public void setStartCalcTime(Date startCalcTime) {
         this.startCalcTime = startCalcTime;
     }
 
-    public String getEndCalcTime() {
+    public Date getEndCalcTime() {
         return endCalcTime;
     }
 
-    public void setEndCalcTime(String endCalcTime) {
+    public void setEndCalcTime(Date endCalcTime) {
         this.endCalcTime = endCalcTime;
     }
 
@@ -119,19 +160,19 @@ public class RG_ScheduleEntity {
         this.rollTime = rollTime;
     }
 
-    public String getApsStartTime() {
+    public Date getApsStartTime() {
         return apsStartTime;
     }
 
-    public void setApsStartTime(String apsStartTime) {
+    public void setApsStartTime(Date apsStartTime) {
         this.apsStartTime = apsStartTime;
     }
 
-    public String getApsEndTime() {
+    public Date getApsEndTime() {
         return apsEndTime;
     }
 
-    public void setApsEndTime(String apsEndTime) {
+    public void setApsEndTime(Date apsEndTime) {
         this.apsEndTime = apsEndTime;
     }
 
@@ -229,12 +270,7 @@ public class RG_ScheduleEntity {
         if (apsEndTime != null ? !apsEndTime.equals(that.apsEndTime) : that.apsEndTime != null) return false;
         if (apsModel != null ? !apsModel.equals(that.apsModel) : that.apsModel != null) return false;
         if (apsObj != null ? !apsObj.equals(that.apsObj) : that.apsObj != null) return false;
-        if (apsFlag != null ? !apsFlag.equals(that.apsFlag) : that.apsFlag != null) return false;
-        if (layout != null ? !layout.equals(that.layout) : that.layout != null) return false;
-        if (orders != null ? !orders.equals(that.orders) : that.orders != null) return false;
-        if (resources != null ? !resources.equals(that.resources) : that.resources != null) return false;
-        if (groups != null ? !groups.equals(that.groups) : that.groups != null) return false;
-        return sites != null ? sites.equals(that.sites) : that.sites == null;
+        return apsFlag != null ? apsFlag.equals(that.apsFlag) : that.apsFlag == null;
     }
 
     @Override
@@ -253,11 +289,6 @@ public class RG_ScheduleEntity {
         result = 31 * result + (apsModel != null ? apsModel.hashCode() : 0);
         result = 31 * result + (apsObj != null ? apsObj.hashCode() : 0);
         result = 31 * result + (apsFlag != null ? apsFlag.hashCode() : 0);
-        result = 31 * result + (layout != null ? layout.hashCode() : 0);
-        result = 31 * result + (orders != null ? orders.hashCode() : 0);
-        result = 31 * result + (resources != null ? resources.hashCode() : 0);
-        result = 31 * result + (groups != null ? groups.hashCode() : 0);
-        result = 31 * result + (sites != null ? sites.hashCode() : 0);
         return result;
     }
 }
