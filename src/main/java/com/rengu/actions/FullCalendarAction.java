@@ -6,8 +6,7 @@ import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by hanchangming on 2017/6/20.
@@ -20,18 +19,24 @@ public class FullCalendarAction extends SuperAction {
         List<FullCalendarEvent> fullCalendarEventList = new ArrayList<>();
         for (RG_OrderEntity tempRG_OrderEntity : rg_orderEntityList) {
             FullCalendarEvent fullCalendarEvent = new FullCalendarEvent();
+            fullCalendarEvent.setId(UUID.randomUUID().toString());
+            fullCalendarEvent.setAllDay(true);
             if (!tempRG_OrderEntity.getName().isEmpty()) {
                 fullCalendarEvent.setTitle(tempRG_OrderEntity.getName());
             } else {
                 continue;
             }
             if (!tempRG_OrderEntity.getT0().isEmpty()) {
-                fullCalendarEvent.setStart(tempRG_OrderEntity.getT0());
+                fullCalendarEvent.setStart(Tools.stringConvertToDate(tempRG_OrderEntity.getT0()));
             } else {
                 continue;
             }
             if (!tempRG_OrderEntity.getT2().isEmpty()) {
-                fullCalendarEvent.setEnd(tempRG_OrderEntity.getT2());
+                Date realDate = Tools.stringConvertToDate(tempRG_OrderEntity.getT2());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(realDate);
+                calendar.add(Calendar.DATE, 1);
+                fullCalendarEvent.setEnd(calendar.getTime());
             } else {
                 continue;
             }
