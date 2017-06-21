@@ -22,7 +22,7 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
 
-        <style>
+        <style type="text/css">
             .uk-nav-side > li > a {
                 color: white;
             }
@@ -125,7 +125,17 @@
                 height: 100%;
                 MARGIN-RIGHT: auto;
                 MARGIN-LEFT: auto;
+                min-width: 1000px;
+                _width: expression((document.documentElement.clientWidth||document.body.clientWidth)<1000?"1000px":"auto");
+                /*_width:expression(this.scrollWidth > 620 ? "620px":(this.scrollWidth < 1? "1px":"auto"));*/
             }
+
+          /*  .clearfloat{
+                clear:both;
+                height:0;
+                font-size: 1px;
+                line-height: 0px;
+            }*/
         </style>
 </head>
 <body>
@@ -143,14 +153,14 @@
 
 </div>--%>
 <div id="main">
-    <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;">
+    <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;position: absolute;">
         <!--图标-->
-        <div class="uk-width-1-1" style="background-color: #1c4f7a; height: 10%;">
+        <div class="uk-width-1-1" style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;position: absolute;">
             <a href="MainPage.jsp"><img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;"></a>
 
         </div>
         <!--左侧列表-->
-        <div class="uk-width-1-1" style="height: 90%;">
+        <div class="uk-width-1-1" style="/*height: 90%;*/height: auto!important;/*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;">
             <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
                 <li class="uk-parent">
                     <a href="#">
@@ -227,12 +237,14 @@
                     </ul>
                 </li>
             </ul>
+            <!--父容器结束前-->
+            <%--<div class="clearfloat"></div>--%>
         </div>
     </div>
 
     <!--右侧-->
     <div class="uk-width-5-6 uk-height-viewport" style="float: right;height: 100%;">
-        <div style="height: 10%;">
+        <div class="uk-width-5-6" style="/*height: 10%;*/height: 60px;/*width: 100%;*/position: absolute;">
             <!--欢迎登录-->
             <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
                 <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
@@ -242,7 +254,8 @@
             </div>
         </div>
 
-        <div style="float:right;background-color: #bdcbd8;height: 90%;width: 100%;">
+        <div class="uk-width-5-6" style="float:right;background-color: #bdcbd8;/*height: 90%;*//*width: 100%;*/height: auto !important;
+        overflow: auto;position: absolute;top: 60px;bottom: 0px;">
 
             <div style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
                 <ng-view></ng-view>
