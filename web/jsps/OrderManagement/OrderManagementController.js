@@ -14,9 +14,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var operateId;
 
+
         //加载页面时数据显示
         myHttpService.get(serviceList.ListOrder).then(function (response) {
-            console.log(response);
+            console.log(response.data);
             $scope.arr = response.data;
         });
 
@@ -37,20 +38,20 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var originVal = $("input[name='add-origin']").val();
             //var idProductVal = $("input[name='add-idProduct']").val();
             //var quantityVal = $("input[name='add-quantity']").val();
-             var priorityVal = $("input[name='add-priority']").val();
-             var t0Val = $("input[name='add-t0']").val();
-             var t1Val = $("input[name='add-t1']").val();
-             var t2Val = $("input[name='add-t2']").val();
+            var priorityVal = $("input[name='add-priority']").val();
+            var t0Val = $("input[name='add-t0']").val();
+            var t1Val = $("input[name='add-t1']").val();
+            var t2Val = $("input[name='add-t2']").val();
             var params = {};
             params.id = idVal;
             params.name = nameVal;
             params.origin = originVal;
-           // params.idProduct = parseInt(idProductVal);
+            // params.idProduct = parseInt(idProductVal);
             //params.quantity = quantityVal;
-             params.priority = priorityVal;
-             params.t1 = t1Val;
-             params.t2 = t2Val;
-             params.t0 = t0Val;
+            params.priority = priorityVal;
+            params.t1 = t1Val;
+            params.t2 = t2Val;
+            params.t0 = t0Val;
             var data = JSON.stringify(params);
             console.log(data);
             $("#add").hide();
@@ -60,7 +61,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 window.location.reload();
                 reload();
             })
-
         };
 
         var updateSelected = function (action, id) {
@@ -93,14 +93,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
              var params = {};
              var idVal = selectedCheckArray[i];
              params.id = idVal;
-             params.name = "";
-             params.origin = "";
-             params.priority = "";
-             params.advance = "";
-             params.delay = "";
-             params.quantity = "";
-             params.t0 = "";
-             params.ord = "";
              var data = JSON.stringify(params);
              Array.push(params);
              }
@@ -108,6 +100,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
              console.log(data);
              myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
              console.log(response.status);
+             window.location.reload();
              reload();
              }, function errorCallback(response) {
              alert("请求失败！");
@@ -126,16 +119,31 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         //修改订单
         $scope.editOrder = function () {
-            var params = {};
-            var idVal = operateId;
-            params.id = idVal;
-            var data = JSON.stringify(params);
-            console.log(data);
-            myHttpService.get(serviceList.ListOrder, data).then(function successCallback(response) {
-                console.log(response);
-                $scope.form = response.data;
-            });
-        }
+            var rows = document.getElementById("order_table").rows;
+            var a = document.getElementsByName("check");
+            var table = document.getElementById("order_table");
+
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].checked) {
+                    var row = a[i].parentElement.parentElement.rowIndex;
+                    console.log(row);
+                    var params = {};
+                    var arr = new Array();
+                    params.id = rows[row].cells[1].innerHTML;
+                    params.name = rows[row].cells[2].innerHTML;
+                    params.origin = rows[row].cells[3].innerHTML;
+                    params.priority = rows[row].cells[4].innerHTML;
+                    params.t0 = rows[row].cells[5].innerHTML;
+                    params.t1 = rows[row].cells[6].innerHTML;
+                    params.t2 = rows[row].cells[7].innerHTML;
+                    console.log(params);
+                    arr.push(params);
+                    $scope.form = arr;
+                }
+            }
+
+        };
+
         $scope.update = function () {
             var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
@@ -151,10 +159,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.name = nameVal;
             params.origin = originVal;
             params.priority = priorityVal;
+            params.t0 = t0Val;
             params.t1 = t1Val;
             params.t2 = t2Val;
             //params.quantity = quantityVal;
-            params.t0 = t0Val;
             //params.idProduct = idProductVal;
             var data = JSON.stringify(params);
             console.log(data);
@@ -171,32 +179,45 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var id = $("input#add-id").val(),
                 name = $("input#add-name").val();
             console.log(id + name);
-            if (checkName(name) && checkId(id)) {
+            if (check(id, name) && checkId(id)) {
                 UIkit.modal.confirm('确定添加吗？', function () {
                     addOrder();
                 });
                 return true;
             } else {
-                UIkit.modal.alert('请填写完整！');
+
                 return false;
             }
         };
-        var checkName = function (name) {
-            if (name == "") {
-                $("input#add-name").addClass("uk-form-danger");
-                return false;
-            }
-            $("input#add-name").addClass("uk-form-success");
-            return true;
-        }
-        var checkId = function (id) {
-            if (id == "") {
+        var check = function (id, name) {
+            if (name == "" && id == "") {
                 $("input#add-id").addClass("uk-form-danger");
+                $("input#add-name").addClass("uk-form-danger");
+                UIkit.modal.alert('请填写完整！');
                 return false;
             }
             $("input#add-id").addClass("uk-form-success");
+            $("input#add-name").addClass("uk-form-success");
             return true;
-        }
+        };
+
+        var checkId = function (id) {
+            var mytable = document.getElementById("order_table");
+            var rows = document.getElementById("order_table").rows;
+            console.log(mytable.rows.length);
+            for (var i = 0, row = mytable.rows.length; i < row; i++) {
+                console.log(rows[i].cells[1].innerHTML + id);
+                if (rows[i].cells[1].innerHTML == id) {
+                    UIkit.modal.confirm('id已经存在，请重新填写！', function () {
+                        $("input").val('');
+                        $("input#add-id").removeClass("uk-form-success");
+                        $("input#add-name").removeClass("uk-form-success");
+                    });
+                    return false;
+                }
+            }
+            return true;
+        };
 
         //表格信息重置
         $scope.reset = function () {
