@@ -38,7 +38,6 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.save(rg_shiftEntity)) {
-            shiftDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
         }
@@ -49,7 +48,6 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.delete(rg_shiftEntity)) {
-            shiftDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
         }
@@ -60,7 +58,6 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.update(rg_shiftEntity)) {
-            shiftDAOInstance.getTransaction().commit();
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
         }

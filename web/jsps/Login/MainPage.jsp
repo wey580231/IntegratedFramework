@@ -20,7 +20,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/accordion.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/autocomplete.css"/>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/ztree/css/zTreeStyle/zTreeStyle.css"/>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
+
 
         <style type="text/css">
             .uk-nav-side > li > a {
@@ -137,6 +140,7 @@
                 line-height: 0px;
             }*/
         </style>
+
 </head>
 <body>
 <!--头部-->
@@ -282,6 +286,11 @@
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.core.js"></script>
+<script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.exedit.js "></script>
+<script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.exhide.js"></script>
+
 
 <script src="/app.js"></script>
 
