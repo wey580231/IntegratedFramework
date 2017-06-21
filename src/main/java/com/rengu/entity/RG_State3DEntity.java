@@ -4,25 +4,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_State3DEntity {
-    private int id;
-    private int layoutState;
-    private String layoutId;
-    private int model;
-    private int controlState;
+    private Integer id;
+    private Integer layoutState;                //布局是否改变，0未改变，1为改变
+    private String layoutId;                    //布局改变时，对应的layout索引值
+    private Integer model;                      //仿真模式，0为无，1为仿真模式，2为实时模式
+    private String snapshotId;                  //为仿真模式时，请求获取该snapshot对应的结果西信息
+    private Integer controlState;               //控制状态
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getLayoutState() {
+    public Integer getLayoutState() {
         return layoutState;
     }
 
-    public void setLayoutState(int layoutState) {
+    public void setLayoutState(Integer layoutState) {
         this.layoutState = layoutState;
     }
 
@@ -34,66 +35,53 @@ public class RG_State3DEntity {
         this.layoutId = layoutId;
     }
 
-    public int getModel() {
+    public Integer getModel() {
         return model;
     }
 
-    public void setModel(int model) {
+    public void setModel(Integer model) {
         this.model = model;
     }
 
-    public int getControlState() {
+    public String getSnapshotId() {
+        return snapshotId;
+    }
+
+    public void setSnapshotId(String snapshotId) {
+        this.snapshotId = snapshotId;
+    }
+
+    public Integer getControlState() {
         return controlState;
     }
 
-    public void setControlState(int controlState) {
+    public void setControlState(Integer controlState) {
         this.controlState = controlState;
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + controlState;
-        result = prime * result + id;
-        result = prime * result
-                + ((layoutId == null) ? 0 : layoutId.hashCode());
-        result = prime * result + layoutState;
-        result = prime * result + model;
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RG_State3DEntity that = (RG_State3DEntity) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (layoutState != null ? !layoutState.equals(that.layoutState) : that.layoutState != null) return false;
+        if (layoutId != null ? !layoutId.equals(that.layoutId) : that.layoutId != null) return false;
+        if (model != null ? !model.equals(that.model) : that.model != null) return false;
+        if (snapshotId != null ? !snapshotId.equals(that.snapshotId) : that.snapshotId != null) return false;
+        return controlState != null ? controlState.equals(that.controlState) : that.controlState == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RG_State3DEntity other = (RG_State3DEntity) obj;
-        if (controlState != other.controlState)
-            return false;
-        if (id != other.id)
-            return false;
-        if (layoutId == null) {
-            if (other.layoutId != null)
-                return false;
-        } else if (!layoutId.equals(other.layoutId))
-            return false;
-        if (layoutState != other.layoutState)
-            return false;
-        if (model != other.model)
-            return false;
-        return true;
-    }
-
-    public String toJson() {
-        return "{\"result\":\"0\"" + "," +
-                "\"item\":" + layoutState + "," +
-                "\"pos\":" + "\"" + layoutId + "\"" + "," +
-                "\"state\":" + model + "," +
-                "\"exist\":" + controlState +
-                "}";
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (layoutState != null ? layoutState.hashCode() : 0);
+        result = 31 * result + (layoutId != null ? layoutId.hashCode() : 0);
+        result = 31 * result + (model != null ? model.hashCode() : 0);
+        result = 31 * result + (snapshotId != null ? snapshotId.hashCode() : 0);
+        result = 31 * result + (controlState != null ? controlState.hashCode() : 0);
+        return result;
     }
 }

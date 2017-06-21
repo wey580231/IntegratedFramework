@@ -24,7 +24,7 @@ public class Emulate3DAction extends SuperAction {
         StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 1) {
-            String[] types = (String[]) parameterMap.get("scheduleId");
+            String[] types = (String[]) parameterMap.get("snapshotId");
             if (types.length > 0) {
                 result = emulateDao.getEmulateData(types[0], jsonString);
             }
@@ -33,11 +33,11 @@ public class Emulate3DAction extends SuperAction {
         if (result) {
             Tools.jsonPrint(jsonString.toString(), this.httpServletResponse);
         } else {
-            Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+            Tools.jsonPrint(Tools.resultCode("1", "Can't execute operation"), this.httpServletResponse);
         }
     }
 
-    //获取实时数据流
+    //TODO 获取实时数据流，等MES具备后再调整，预计到6月底
     public void getRealFlow() {
 
 

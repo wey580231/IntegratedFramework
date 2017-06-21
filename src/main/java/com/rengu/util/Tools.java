@@ -168,4 +168,8 @@ public class Tools {
 
         return tmp;
     }
+
+    public static String getUUID(){
+        return UUID.randomUUID().toString();
+    }
 }

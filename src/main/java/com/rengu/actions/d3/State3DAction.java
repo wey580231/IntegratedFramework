@@ -24,7 +24,7 @@ public class State3DAction extends SuperAction {
     }
 
     //根据id查询布局信息
-    public void get3DLayout() {
+    public void config3DLayout() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
 
@@ -66,6 +66,11 @@ public class State3DAction extends SuperAction {
         } else {
             Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
         }
+    }
+
+    //查询所有布局信息
+    public void query3DLayout(){
+        Tools.jsonPrint(stateDao.queryAllLayout(), this.httpServletResponse);
     }
 
     public RG_State3DEntity getState3DEntity() {

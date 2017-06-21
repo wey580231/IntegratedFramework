@@ -13,9 +13,15 @@
 
     <!--用户登录-->
     <package name="default" extends="struts-default" namespace="/">
+        <!--设置默认的action，当前包中的action均不满足时，使用此action作为默认跳转的压面-->
+        <default-action-ref name="index"></default-action-ref>
+
         <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
             <result name="error">/jsps/Login/Login_Fail.jsp</result>
             <result name="success">/jsps/Login/Login_Success.jsp</result>
+        </action>
+        <action name="index" class="com.rengu.actions.DefaultAction">
+            <result>jsps/Login/MainPage.jsp</result>
         </action>
     </package>
 
@@ -90,8 +96,9 @@
     <package name="State3D" namespace="/3d" extends="struts-default">
         <!--状态查询-->
         <action name="query3DState" class="com.rengu.actions.d3.State3DAction" method="queryState"/>
-        <action name="config3D" class="com.rengu.actions.d3.State3DAction" method="get3DLayout"/>
+        <action name="config3D" class="com.rengu.actions.d3.State3DAction" method="config3DLayout"/>
         <action name="set3DLayout" class="com.rengu.actions.d3.State3DAction" method="insertOrUpdateLayout"/>
+        <action name="get3DLayout" class="com.rengu.actions.d3.State3DAction" method="query3DLayout"/>
 
         <!--设备报表-->
         <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>

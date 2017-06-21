@@ -27,7 +27,7 @@ public class ScheduleAction extends SuperAction {
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
             JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
             RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
-            rg_scheduleEntity.setId(UUID.randomUUID().toString());
+            rg_scheduleEntity.setId(Tools.getUUID());
             //解析排程名称
             JsonNode nameNodes = rootNode.get("name");
             rg_scheduleEntity.setName(nameNodes.asText());
@@ -133,12 +133,12 @@ public class ScheduleAction extends SuperAction {
 
             //产生一条快照根记录，并自动生成该记录中
             RG_SnapshotNodeEntity rootSnapshot = new RG_SnapshotNodeEntity();
-            rootSnapshot.setId(UUID.randomUUID().toString());
+            rootSnapshot.setId(Tools.getUUID());
             rootSnapshot.setName(rg_scheduleEntity.getName());
             rootSnapshot.setLevel(SnapshotLevel.TOP);
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
-            middleShot.setId(UUID.randomUUID().toString());
+            middleShot.setId(Tools.getUUID());
             middleShot.setName("APS排程结果");
             middleShot.setLevel(SnapshotLevel.MIDDLE);
 

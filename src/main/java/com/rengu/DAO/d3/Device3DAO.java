@@ -66,12 +66,13 @@ public class Device3DAO {
         Query query = session.createQuery("from RG_OrderEntity entity where entity.id = :id");
         query.setParameter("id", code);
         List list = query.list();
+
         if (list.size() == 1) {
             if (list.get(0) instanceof RG_OrderEntity) {
                 RG_OrderEntity entity = (RG_OrderEntity) list.get(0);
 
-                ObjectMapper mapper = new ObjectMapper();  //定义转换类
-                ObjectNode root = mapper.createObjectNode();//创建根节点
+                ObjectMapper mapper = new ObjectMapper();                //定义转换类
+                ObjectNode root = mapper.createObjectNode();             //创建根节点
                 root.put("result", "0");
                 root.put("type", requestOrder);
 
