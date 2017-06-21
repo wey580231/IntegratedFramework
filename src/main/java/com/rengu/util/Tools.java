@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by hanchangming on 2017/5/24.
@@ -143,6 +146,16 @@ public class Tools {
         }
         statement.close();
         connection.close();
+    }
+
+    /*
+ * 将时间转换为时间戳
+ */
+    public static Date stringConvertToDate(String dateString) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = simpleDateFormat.parse(dateString);
+        System.out.println(dateString + "转换为：" + date.getTime());
+        return date;
     }
 
     public static String resultCode(String result, String description) {
