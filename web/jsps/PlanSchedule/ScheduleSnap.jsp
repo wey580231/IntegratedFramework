@@ -121,21 +121,106 @@
     .uk-form {
         display: inherit;
     }
+
+    #rMenu {
+        position: absolute;
+        visibility: hidden;
+        top: 0;
+        background-color: #FFFFFF;
+        padding: 2px;
+    }
+
+    #rMenu ul li {
+        margin: 1px 0;
+        padding: 0 2px;
+        cursor: pointer;
+        list-style: none outside none;
+        background-color: #FFFFFF;
+    }
+
+    <%--.ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
+    .ztree li span.button.diy02_ico_open,.ztree li span.button.diy02_ico_close{background:url("../../images/bom_img/2.png") no-repeat;}
+    .ztree li span.button.diy02_ico_docu{background:url("../../images/bom_img/2.png") no-repeat;}
+    .ztree li span.button.diy03_ico_docu{background:url("../../images/bom_img/3.png") no-repeat;}--%>
+    /*第一个图标*/
+    .ztree li span.button.switch.level0 {
+        background: url("../../images/bom_img/1.png") no-repeat;
+        position:relative;
+        margin-top:14px;
+        margin-left:5px;
+    }
+    /*第二个图标*/
+    .ztree li span.button.switch.level1 {
+        background: url("../../images/bom_img/2.png") no-repeat;
+        position:relative;
+        margin-top:15px;
+        margin-left:10px;
+    }
+    /*第三个图标*/
+    .ztree li span.button.switch.level2 {
+        background: url("../../images/bom_img/3.png") no-repeat;
+        position:relative;
+        margin-top:15px;
+        margin-left:12px;
+    }
+    /*
+           BOM树左侧的线条（竖线）
+       */
+    .ztree li::before {
+        border-left: 2px solid white;
+        bottom: 50px;
+        height: 100%;
+        top: 0px;
+        width: 1px;
+        margin-top: -2px;
+    }
+    /*
+       BOM树左侧的线条（横线）
+   */
+    .ztree li::after {
+        border-top: 2px solid white;
+        height: 20px;
+        top: 25px;
+        width: 22px;
+    }
+
+    .ztree ul > li {
+        list-style-type: none;
+        margin-left: 3px;
+        padding: 10px 0px 5px 5px;
+        position: relative;
+        left: 0px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .ztree li::before, .ztree li::after {
+        content: '';
+        left: -10px;
+        position: absolute;
+        right: auto
+    }
+
+    .ztree li a {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        display: inline-block;
+        padding: 3px 10px;
+        text-decoration: none;
+        background-color: #f9fcfc;
+        margin-top:8px;
+    }
+
+    .ztree li:last-child::before {
+        height: 30px;
+    }
+
 </style>
 
 
-<%--<script type="text/javascript">
-    //除了表头（第一行）以外所有的行添加click事件.
-    $("tr").first().nextAll().click(function () {
-        //如果没有某个样式则加上，否则去除
-        $(this).children().toggleClass("bg");
-        if ($(this).children().hasClass("bg")){//如果有某个样式则表明，这一行已经被选中
-            $(this).children().first().children().attr("checked", true);
-        } else {                                  //如果没有被选中
-            $(this).children().first().children().attr("checked", false);
-        }
-    });
-</script>--%>
+
 
 <script>
     function changeColor(obj) {
@@ -170,10 +255,9 @@
 
 <div class="uk-grid" style="height: 88%;">
     <!--快照树-->
-    <div class="uk-width-1-5" style="width: 23%;height: 100%;">
-
+    <div id="container" class="uk-width-1-5" style="width: 23%;height: 100%;">
         <!--快照树下部-->
-        <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
+       <!-- <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
             <div class="uk-form-row">
                 <div class="wrapper">
                     <div class="nav-ml">
@@ -249,6 +333,17 @@
                     </div>
                 </div>
             </div>
+        </div>-->
+        <div class="uk-panel uk-panel-box uk-overflow-container"
+             style="height: 82%;background-color: #e2ebf2;">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+        <div id="rMenu">
+            <ul>
+                <li id="m_add" ng-click="addTreeNode()">增加</li>
+                <li id="m_del" ng-click="removeTreeNode()">删除</li>
+                <li id="m_re" ng-click="renameTreeNode()">重命名</li>
+            </ul>
         </div>
     </div>
     <!--右侧表格-->
@@ -290,90 +385,6 @@
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
 
                                 <tbody class="uk-text-center">
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1</td>
-                                    <td>未知</td>
-                                    <td>未知</td>
-                                    <td>5</td>
-                                    <td>1000</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1</td>
-                                    <td>未知</td>
-                                    <td>未知</td>
-                                    <td>5</td>
-                                    <td>1000</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1</td>
-                                    <td>未知</td>
-                                    <td>未知</td>
-                                    <td>5</td>
-                                    <td>1000</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1</td>
-                                    <td>未知</td>
-                                    <td>未知</td>
-                                    <td>5</td>
-                                    <td>1000</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1</td>
-                                    <td>未知</td>
-                                    <td>未知</td>
-                                    <td>5</td>
-                                    <td>1000</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1</td>
-                                    <td>未知</td>
-                                    <td>未知</td>
-                                    <td>5</td>
-                                    <td>1000</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                    <td>1</td>
-                                    <td>未知</td>
-                                    <td>未知</td>
-                                    <td>5</td>
-                                    <td>1000</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-                                    <td>待定</td>
-
-                                </tr>
                                 <tr>
                                     <td><input type="checkbox" onclick="changeColor(this)"></td>
                                     <td>1</td>

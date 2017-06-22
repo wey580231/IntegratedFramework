@@ -119,4 +119,3 @@ angular.module("IntegratedFramework", [
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         return service;
     })
-

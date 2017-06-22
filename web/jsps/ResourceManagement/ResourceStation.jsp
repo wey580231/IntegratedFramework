@@ -97,10 +97,10 @@
                     </div>
 
                     <div class="fixtable-body" style="height: 83%;">
-                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
-                            <tr ng-repeat="x in arr track by $index">
-                                <td><input id="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                            <tr ng-repeat="x in arr | orderBy: 'id':desc">
+                                <td><input name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td>{{x.id}}</td>
                                 <td>{{x.name}}</td>
@@ -111,35 +111,6 @@
                             </tbody>
                         </table>
 
-                        <!--底部页码-->
-                        <%--<div style="margin-top: -25px;">
-                            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye1.png');color: white;">
-                                        <a href="" style="color: white;">首页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">上一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">下一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">尾页</a></button>
-                                </li>
-                                <li>共88页</li>&nbsp;
-                                <li>
-                                    到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
-                                </li>
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye2.png');color: white;">
-                                        确定
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>--%>
                     </div>
 
 
@@ -188,13 +159,13 @@
 <div class="uk-modal uk-overflow-container" id="add">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="订单信息">
+        <div id="dialog-form" title="资源工位信息">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
                     <label for="add-id">编码</label> <br/>
                     <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-name">名称</label><br/>
-                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-x">坐标x</label><br/>
                     <input type="text" name="add-x" id="add-x" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-y">坐标y</label><br/>
@@ -215,13 +186,13 @@
 <div class="uk-modal uk-overflow-container" id="edit">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="订单信息">
+        <div id="dialog-form" title="资源工位信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
                     <label for="edit-id">编码</label> <br/>
                     <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
                     <label for="edit-name">名称</label><br/>
-                    <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
+                    <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-x">坐标x</label><br/>
                     <input type="text" name="edit-x" id="edit-x" class="text ui-widget-content ui-corner-all" value="{{x.x}}"><br/>
                     <label for="edit-y">坐标y</label><br/>
@@ -238,11 +209,6 @@
     </div>
 </div>
 
-<script>
-    $(function () {
-        $("#tabs").tabs();
-    });
-</script>
 
 
 

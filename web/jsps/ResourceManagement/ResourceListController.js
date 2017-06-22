@@ -20,16 +20,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             $scope.arr = response.data;
         });
 
-        //重新加载页面信息
-        var reload = function () {
-            //取消checkbox选中状态
-            document.getElementById("check").checked = false;
-            $("input").val('');
-            myHttpService.get(serviceList.ListShift).then(function (response) {
-                $scope.arr = response.data;
-            });
-        }
-
         //新增订单
         var addResource = function () {
             var idVal = $("input[name='add-id']").val();
@@ -51,9 +41,8 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             console.log(data);
             $("#add").hide();
             myHttpService.post(serviceList.AddResource, data).then(function successCallback(response) {
-                alert(response.status);
-                window.location.reload();
-                reload();
+                console.log(response.status);
+                setTimeout('window.location.reload();',1);
             })
 
         };
@@ -85,28 +74,43 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             var idVal = operateId;
             params.id = idVal;
             params.name = "";
+            params.typeSite = "";
+            params.idSiteGroupResource = "";
+            //params.mobility = "";
+            params.nameShift = "";
+            params.state = "";
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteResource, data).then(function successCallback(response) {
-                alert(response.status);
-                window.location.reload();
-                reload();
+                console.log(response.status);
+                setTimeout('window.location.reload();',1);
             });
         }
 
         //修改订单
         $scope.editResource = function () {
-            var params = {};
-            var idVal = operateId;
-            params.id = idVal;
-            params.name = "";
-            var data = JSON.stringify(params);
-            console.log(data);
-            myHttpService.post(serviceList.ListResource, data).then(function successCallback(response) {
-                console.log(response);
-                $scope.form = response.data;
-            });
-        }
+            var rows = document.getElementById("table_value").rows;
+            var a = document.getElementsByName("check");
+            var table = document.getElementById("table_value");
+
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].checked) {
+                    var row = a[i].parentElement.parentElement.rowIndex;
+                    console.log(row);
+                    var params = {};
+                    var arr = new Array();
+                    params.id = rows[row].cells[1].innerHTML;
+                    params.name = rows[row].cells[2].innerHTML;
+                    params.typeSite = rows[row].cells[3].innerHTML;
+                    params.idSiteGroupResource = rows[row].cells[4].innerHTML;
+                    params.nameShift = rows[row].cells[5].innerHTML;
+                    params.state = rows[row].cells[6].innerHTML;
+                    console.log(params);
+                    arr.push(params);
+                    $scope.form = arr;
+                }
+            }
+        };
         $scope.update = function () {
             var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
@@ -127,9 +131,8 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             console.log(data);
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateResource, data).then(function (response) {
-               alert(response.status);
-                window.location.reload();
-                reload();
+                console.log(response.status);
+                setTimeout('window.location.reload();',1);
             })
         };
 
@@ -138,37 +141,51 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             var id = $("input#add-id").val(),
                 name = $("input#add-name").val();
             console.log(id + name);
-            if (checkName(name) && checkId(id)) {
+            if (check(id, name) && checkId(id)) {
                 UIkit.modal.confirm('确定添加吗？', function () {
                     addResource();
                 });
                 return true;
             } else {
-                UIkit.modal.alert('请填写完整！');
+
                 return false;
             }
         };
-        var checkName = function (name) {
-            if (name == "") {
-                $("input#add-name").addClass("uk-form-danger");
-                return false;
-            }
-            $("input#add-name").addClass("uk-form-success");
-            return true;
-        }
-        var checkId = function (id) {
-            if (id == "") {
+        var check = function (id, name) {
+            if (name == "" && id == "") {
                 $("input#add-id").addClass("uk-form-danger");
+                $("input#add-name").addClass("uk-form-danger");
+                UIkit.modal.alert('请填写完整！');
                 return false;
             }
             $("input#add-id").addClass("uk-form-success");
+            $("input#add-name").addClass("uk-form-success");
             return true;
-        }
+        };
+
+        var checkId = function (id) {
+            var mytable = document.getElementById("table_value");
+            var rows = document.getElementById("table_value").rows;
+            for (var i = 0, row = mytable.rows.length; i < row; i++) {
+                if (rows[i].cells[1].innerHTML == id) {
+                    UIkit.modal.confirm('id已经存在，请重新填写！', function () {
+                        $("input").val('');
+                        $("input#add-id").removeClass("uk-form-success");
+                        $("input#add-name").removeClass("uk-form-success");
+                    });
+                    return false;
+                }
+            }
+            return true;
+        };
 
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
+            $("input#add-id").removeClass("uk-form-success");
+            $("input#add-name").removeClass("uk-form-success");
         }
+
 
     })
 
