@@ -30,5 +30,8 @@
         <property name="endTime">
             <column name="endTime" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
+        <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity">
+            <column name="idOrder" not-null="false"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

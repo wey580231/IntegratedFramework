@@ -181,6 +181,11 @@ public class Tools {
         return tmp;
     }
 
+    //获取时间戳
+    public static String getTimestamp() {
+        return String.valueOf(new Date().getTime());
+    }
+
     public static String getUUID() {
         return UUID.randomUUID().toString();
     }
