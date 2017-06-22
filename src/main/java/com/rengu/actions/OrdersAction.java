@@ -27,6 +27,7 @@ public class OrdersAction extends SuperAction {
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
+        rg_orderEntity.setId(Tools.getUUID());
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.save(rg_orderEntity)) {
         } else {
