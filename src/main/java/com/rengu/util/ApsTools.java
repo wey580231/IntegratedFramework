@@ -170,7 +170,7 @@ public class ApsTools {
             if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
 
-                rg_planEntity.setId(Tools.getUUID());
+                rg_planEntity.setId(Tools.getTimestamp());
 
 //                Map tempMap = (HashMap) object;
 //                rg_planEntity.setIdTask(tempMap.get("idTask").toString());

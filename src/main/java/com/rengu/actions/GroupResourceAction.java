@@ -21,45 +21,52 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         return this.rg_groupresourceEntity;
     }
 
-    public void getAllGroupResource() throws Exception {
+    public String getAllGroupResource() throws Exception {
         GroupResourceDAO groupResourceInstance = DAOFactory.getGroupResourceInstance();
         List list = groupResourceInstance.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
         System.out.println(jsonString);
+        return "success";
     }
 
     public void findAllByUsername() throws Exception {
 
     }
 
-    public void save() throws Exception {
+    public String save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.save(rg_groupresourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("保存失败", "");
+            return "success";
         }
     }
 
-    public void delete() throws Exception {
+    public String delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.delete(rg_groupresourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("删除失败", "");
+            return "success";
         }
     }
 
-    public void update() throws Exception {
+    public String update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.update(rg_groupresourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("更新失败", "");
+            return "success";
         }
 
     }

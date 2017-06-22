@@ -26,8 +26,6 @@
             <column name="rootParent" not-null="false"/>
         </many-to-one>
 
-        <!--<one-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" property-ref="snapshot"/>-->
-
         <many-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" unique="true"/>
         
         <set name="plans" cascade="all" inverse="true">

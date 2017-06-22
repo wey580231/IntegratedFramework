@@ -33,6 +33,11 @@ public class ScheduleDAOImpl extends SuperDAOImpl implements ScheduleDAO<RG_Sche
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
                 RG_ScheduleEntity rg_scheduleEntity = (RG_ScheduleEntity) query.list().get(0);
+                rg_scheduleEntity.getLayout();
+                rg_scheduleEntity.getOrders();
+                rg_scheduleEntity.getSites();
+                rg_scheduleEntity.getGroups();
+                rg_scheduleEntity.getResources();
                 transaction.commit();
                 session.close();
                 return rg_scheduleEntity;

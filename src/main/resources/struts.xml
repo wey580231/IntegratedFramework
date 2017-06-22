@@ -11,10 +11,18 @@
     <!--过滤websocket连接。-->
     <constant name="struts.action.excludePattern" value="/notification/.*"/>
 
+    <package name="customiz-struts-default" extends="struts-default" namespace="/">
+        <!-- 全局结果集 -->
+        <global-results>
+            <!-- 结果集类型为显示源代码的类型 -->
+            <result name="success"/>
+        </global-results>
+    </package>
+
     <!--用户登录-->
-    <package name="default" extends="struts-default" namespace="/">
+    <package name="default" extends="customiz-struts-default" namespace="/">
         <!--设置默认的action，当前包中的action均不满足时，使用此action作为默认跳转的压面-->
-        <default-action-ref name="index"></default-action-ref>
+        <default-action-ref name="index"/>
 
         <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
             <result name="error">/jsps/Login/Login_Fail.jsp</result>
@@ -26,12 +34,12 @@
     </package>
 
     <!--计划排程接口-->
-    <package name="schedule" extends="struts-default" namespace="/schedule">
+    <package name="schedule" extends="customiz-struts-default" namespace="/schedule">
         <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
     </package>
 
     <!--工序资源信息接口-->
-    <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">
+    <package name="Assisantprocess" namespace="/assisantprocess" extends="customiz-struts-default">
         <action name="getAllAssisantProcess" class="com.rengu.actions.AssisantprocessAction"
                 method="getAllAssisantProcess"/>
         <action name="save" class="com.rengu.actions.AssisantprocessAction" method="save"/>
@@ -41,7 +49,7 @@
     </package>
 
     <!--订单信息接口-->
-    <package name="Orders" namespace="/orders" extends="struts-default">
+    <package name="Orders" namespace="/orders" extends="customiz-struts-default">
         <action name="getAllOrders" class="com.rengu.actions.OrdersAction" method="getAllOrders"/>
         <action name="save" class="com.rengu.actions.OrdersAction" method="save"/>
         <action name="delete" class="com.rengu.actions.OrdersAction" method="delete"/>
@@ -50,7 +58,7 @@
     </package>
 
     <!--资源信息接口-->
-    <package name="Resource" namespace="/resource" extends="struts-default">
+    <package name="Resource" namespace="/resource" extends="customiz-struts-default">
         <action name="getAllResource" class="com.rengu.actions.ResourceAction" method="getAllResource"/>
         <action name="save" class="com.rengu.actions.ResourceAction" method="save"/>
         <action name="delete" class="com.rengu.actions.ResourceAction" method="delete"/>
@@ -59,7 +67,7 @@
     </package>
 
     <!--资源类型信息接口-->
-    <package name="Typerescource" namespace="/typerescource" extends="struts-default">
+    <package name="Typerescource" namespace="/typerescource" extends="customiz-struts-default">
         <action name="getAllTypeRescource" class="com.rengu.actions.TyperescourceAction" method="getAllTypeRescource"/>
         <action name="save" class="com.rengu.actions.TyperescourceAction" method="save"/>
         <action name="delete" class="com.rengu.actions.TyperescourceAction" method="delete"/>
@@ -68,7 +76,7 @@
     </package>
 
     <!--资源工组信息接口-->
-    <package name="GroupResource" namespace="/groupresource" extends="struts-default">
+    <package name="GroupResource" namespace="/groupresource" extends="customiz-struts-default">
         <action name="getAllGroupResource" class="com.rengu.actions.GroupResourceAction" method="getAllGroupResource"/>
         <action name="save" class="com.rengu.actions.GroupResourceAction" method="save"/>
         <action name="delete" class="com.rengu.actions.GroupResourceAction" method="delete"/>
@@ -76,7 +84,7 @@
         <action name="findAll" class="com.rengu.actions.GroupResourceAction" method="findAll"/>
     </package>
     <!--资源工位信息接口-->
-    <package name="Site" namespace="/site" extends="struts-default">
+    <package name="Site" namespace="/site" extends="customiz-struts-default">
         <action name="getAllSite" class="com.rengu.actions.SiteAction" method="getAllSite"/>
         <action name="save" class="com.rengu.actions.SiteAction" method="save"/>
         <action name="delete" class="com.rengu.actions.SiteAction" method="delete"/>
@@ -84,7 +92,7 @@
         <action name="findAll" class="com.rengu.actions.SiteAction" method="findAll"/>
     </package>
     <!--资源班次信息接口-->
-    <package name="Shift" namespace="/shift" extends="struts-default">
+    <package name="Shift" namespace="/shift" extends="customiz-struts-default">
         <action name="getAllShift" class="com.rengu.actions.ShiftAction" method="getAllShift"/>
         <action name="save" class="com.rengu.actions.ShiftAction" method="save"/>
         <action name="delete" class="com.rengu.actions.ShiftAction" method="delete"/>
@@ -93,7 +101,7 @@
     </package>
 
     <!--3D车间访问接口-->
-    <package name="State3D" namespace="/3d" extends="struts-default">
+    <package name="State3D" namespace="/3d" extends="customiz-struts-default">
         <!--状态查询-->
         <action name="query3DState" class="com.rengu.actions.d3.State3DAction" method="queryState"/>
         <action name="config3D" class="com.rengu.actions.d3.State3DAction" method="config3DLayout"/>
@@ -109,19 +117,19 @@
     </package>
 
     <!--APS接口-->
-    <package name="APS" namespace="/aps" extends="struts-default">
+    <package name="APS" namespace="/aps" extends="customiz-struts-default">
         <!--状态查询-->
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="update"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
     </package>
 
     <!--异常处理-->
-    <package name="ExceptionHandling" namespace="/ExceptionHandling" extends="struts-default">
+    <package name="ExceptionHandling" namespace="/ExceptionHandling" extends="customiz-struts-default">
         <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
     </package>
 
     <!--异常处理-->
-    <package name="ExceptionList" namespace="/ExceptionList" extends="struts-default">
+    <package name="ExceptionList" namespace="/ExceptionList" extends="customiz-struts-default">
         <action name="getAllAdjustOrderException" class="com.rengu.actions.AdjustOrderAction"
                 method="getAllAdjustOrderException"/>
         <action name="getAllAdjustProcessException" class="com.rengu.actions.AdjustProcessAction"
@@ -131,7 +139,7 @@
     </package>
 
     <!--FullCalendar事件源-->
-    <package name="FullCalendar" namespace="/FullCalendar" extends="struts-default">
+    <package name="FullCalendar" namespace="/FullCalendar" extends="customiz-struts-default">
         <action name="getAllByisFinishedAndDate" class="com.rengu.actions.FullCalendarAction"
                 method="getAllByisFinishedAndDate"/>
         <action name="getLastScheduleInfo" class="com.rengu.actions.FullCalendarAction"

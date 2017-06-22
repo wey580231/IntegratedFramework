@@ -145,6 +145,7 @@
             }*/
         </style>
 
+
 </head>
 <body>
 <!--头部-->
@@ -162,14 +163,17 @@
 </div>--%>
 <div id="main">
     <!--左侧-->
-    <div class="uk-width-1-6 uk-height-viewport" style="float: left;height: 100%;background-color: #164360;position: absolute;">
+    <div class="uk-width-1-6 uk-height-viewport"
+         style="float: left;height: 100%;background-color: #164360;position: absolute;">
         <!--图标-->
-        <div class="uk-width-1-1" style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;/*position: absolute;*/">
+        <div class="uk-width-1-1"
+             style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;/*position: absolute;*/">
             <a href="MainPage.jsp"><img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;"></a>
 
         </div>
         <!--左侧列表-->
-        <div class="uk-width-1-1" style="/*height: 90%;*/height: auto!important;/*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;">
+        <div class="uk-width-1-1"
+             style="/*height: 90%;*/height: auto!important;/*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;">
             <ul class="uk-nav uk-nav-parent-icon uk-nav-side  uk-list-line" data-uk-nav="{multiple:false}">
                 <li class="uk-parent">
                     <a href="#">
@@ -309,6 +313,9 @@
 <script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.exedit.js "></script>
 <script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.exhide.js"></script>
 
+<script src='${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js'></script>
+<script src='${pageContext.request.contextPath}/lib/Moment/moment-with-locales.js'></script>
+<script src='${pageContext.request.contextPath}/lib/FullCalendar-3.4.0/fullcalendar.min.js'></script>
 
 <script src="/app.js"></script>
 

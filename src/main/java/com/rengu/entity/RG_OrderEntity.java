@@ -3,8 +3,7 @@ package com.rengu.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by wey580231 on 2017/5/23.
@@ -43,7 +42,9 @@ public class RG_OrderEntity {
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
     @JsonIgnore
-    private Set<RG_ScheduleEntity> schedules;
+    private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
+    @JsonIgnore
+    private List<RG_EmulateDataEntity> emulateDatas = new ArrayList<RG_EmulateDataEntity>();
 
     public String getId() {
         return id;
@@ -299,6 +300,14 @@ public class RG_OrderEntity {
 
     public void setSchedules(Set<RG_ScheduleEntity> schedules) {
         this.schedules = schedules;
+    }
+
+    public List<RG_EmulateDataEntity> getEmulateDatas() {
+        return emulateDatas;
+    }
+
+    public void setEmulateDatas(List<RG_EmulateDataEntity> emulateDatas) {
+        this.emulateDatas = emulateDatas;
     }
 
     @Override

@@ -21,45 +21,52 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         return this.rg_resourceEntity;
     }
 
-    public void getAllResource() throws Exception {
+    public String getAllResource() throws Exception {
         ResourceDAO resourceDAO = DAOFactory.getResourceInstance();
         List list = resourceDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
         System.out.println(jsonString);
+        return "success";
     }
 
     public void findAllByUsername() throws Exception {
 
     }
 
-    public void save() throws Exception {
+    public String save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.save(rg_resourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("保存失败", rg_resourceEntity.getClubByIdClub().getName());
+            return "success";
         }
     }
 
-    public void delete() throws Exception {
+    public String delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.delete(rg_resourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("删除失败", rg_resourceEntity.getClubByIdClub().getName());
+            return "success";
         }
     }
 
-    public void update() throws Exception {
+    public String update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.update(rg_resourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("更新失败", rg_resourceEntity.getClubByIdClub().getName());
+            return "success";
         }
 
     }
