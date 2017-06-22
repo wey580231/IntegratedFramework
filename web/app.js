@@ -117,5 +117,7 @@ angular.module("IntegratedFramework", [
         service.get3DReport = backUrl + "3d/get3DReport.action";
         <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
+
+        service.getLastScheduleInfo=backUrl + "FullCalendar/getLastScheduleInfo.action";
         return service;
     })
