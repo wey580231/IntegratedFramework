@@ -128,7 +128,7 @@
                 height: 100%;
                 /*MARGIN-RIGHT: auto;
                 MARGIN-LEFT: auto;*/
-                min-width: 1100px;
+                min-width: 1250px;
                 /*align: center;*/
                 /*_width: expression((document.documentElement.clientWidth||document.body.clientWidth)<1000?"1000px":"auto");*/
                 /*_width:expression(this.scrollWidth > 620 ? "620px":(this.scrollWidth < 1? "1px":"auto"));*/
@@ -263,10 +263,23 @@
             </div>
         </div>
 
-        <div class="uk-width-1-1" style="/*float:right;*/background-color: #bdcbd8;/*height: 90%;*//*width: 100%;*/height: auto !important;
-        /*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;">
+        <div class="uk-width-1-1" style="/*float:right;*/background-color: #bdcbd8;/*height: 90%;*/width: 100%;height: auto !important;
+        /*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;
 
-            <div style="margin-top: 15px;border: 1px solid lightgray;margin-left: 1%;width: 98%;height: 95%;background-color: #dfe8ef;">
+        padding-left: 5px;
+        padding-right: 15px;
+">
+
+            <div style="margin-top: 15px;/*border: 1px solid lightgray;*/border-top: 1px solid lightgray;/*margin-left: 1%;width: 98%;*/width: 100%;height: 96%;/*height: 97%;*/background-color: #dfe8ef;
+
+            padding-left: 5px;
+            padding-right: 5px;
+
+            /*top: 15px;
+            bottom: 10px;
+            position: absolute;
+            overflow: hidden;*/
+">
                 <ng-view></ng-view>
             </div>
         </div>
