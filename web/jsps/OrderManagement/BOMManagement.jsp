@@ -127,21 +127,115 @@
         position: absolute;
         visibility: hidden;
         top: 0;
-        background-color: #FFFFFF;
-        text-align: left;
-        padding: 2px;
+        background-color: #F0FFFF;
+        padding: -6px;
+        margin:1px,3px;
     }
 
     #rMenu ul li {
         cursor: pointer;
-        list-style: none outside none;
+        list-style: none;
         background-color: #FFFFFF;
     }
 
-    .ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
+    <%--.ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
     .ztree li span.button.diy02_ico_open,.ztree li span.button.diy02_ico_close{background:url("../../images/bom_img/2.png") no-repeat;}
-    .ztree li span.button.diy03_ico_docu{background:url("../../images/bom_img/3.png") no-repeat;}
+    .ztree li span.button.diy02_ico_docu{background:url("../../images/bom_img/2.png") no-repeat;}
+    .ztree li span.button.diy03_ico_docu{background:url("../../images/bom_img/3.png") no-repeat;}--%>
+    /*第一个图标*/
+    .ztree li span.button.switch.level0 {
+        background: url("../../images/bom_img/1.png") no-repeat;
+        position: relative;
+        margin-top: 14px;
+        margin-left: 5px;
+    }
 
+    /*
+    第二个图标
+    */
+    .ztree li span.button.switch.level1 {
+        background: url("../../images/bom_img/2.png") no-repeat;
+        position: relative;
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+
+    /*
+    第三个图标
+    */
+    .ztree li span.button.switch.level2 {
+        background: url("../../images/bom_img/3.png") no-repeat;
+        position: relative;
+        margin-top: 15px;
+        margin-left: 12px;
+    }
+
+    /*
+    BOM树左侧的线条（竖线）
+     */
+    .ztree li::before {
+        border-left: 2px solid white;
+        bottom: 50px;
+        height: 100%;
+        top: 0px;
+        width: 1px;
+        margin-top: -2px;
+    }
+
+    /*
+       BOM树左侧的线条（横线）
+       */
+    .ztree li::after {
+        border-top: 2px solid white;
+        height: 20px;
+        top: 25px;
+        width: 22px;
+    }
+
+    .ztree ul > li {
+        list-style-type: none;
+        margin-left: 3px;
+        padding: 10px 0px 5px 5px;
+        position: relative;
+        left: 0px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+    .ztree li::before, .ztree li::after {
+        content: '';
+        left: -10px;
+        position: absolute;
+        right: auto
+    }
+
+    .ztree li a {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        display: inline-block;
+        padding: 3px 10px;
+        text-decoration: none;
+        background-color: #f9fcfc;
+        margin-top: 8px;
+    }
+
+    .ztree li:first::after {
+        display:none;
+    }
+    .ztree ul li:first::after {
+        display:none;
+    }
+    .ztree ul>li:first::after {
+        display:none;
+    }
+    .ztree ul:first::after {
+        display:none;
+    }
+    .ztree li:last-child::before {
+        height: 30px;
+    }
 
 
 </style>
@@ -184,7 +278,7 @@
         <div style="border-bottom: 1px solid lightgray;background-color: white;height: 10%;">
             <form class="uk-form uk-form-horizontal">
                 <fieldset data-uk-margin>
-                    <div  class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
+                    <div class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
                         <span class="bomspan" style="margin-top: 8px;">BOM  </span>&nbsp;&nbsp;
                     </div>
 
@@ -199,16 +293,15 @@
             </form>
         </div>
         <!--BOM树下部-->
-        <div id="container" class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
+        <div class="uk-panel uk-panel-box uk-overflow-container"
+             style="height: 82%;background-color: #e2ebf2;">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
         <!--<div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
                 <div class="uk-form-row">
                     <div class="wrapper">
                         <div class="nav-ml">
-                            <%--<ul>
-                                <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
-                                <li>--%>
+
                             <ul class="nav-first">
                                 <li>
                                     <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
@@ -277,7 +370,7 @@
                     </div>
                 </div>
             </div>-->
-        <div id="rMenu" >
+        <div id="rMenu">
             <ul>
                 <li id="m_add" ng-click="addTreeNode()">增加</li>
                 <li id="m_del" ng-click="removeTreeNode()">删除</li>

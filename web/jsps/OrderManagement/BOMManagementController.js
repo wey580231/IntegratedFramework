@@ -12,75 +12,94 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
     .controller("BOMManagementController", function ($scope) {
         var setting = {
             view: {
-                selectedMulti: true,
-                autoCancelSelected: true,
                 dblClickExpand: false,
-
+                showIcon:false,
+                showLine:false
+            },
+            check: {
+                enable: false
+            },
+            callback: {
+                onRightClick: OnRightClick
             },
             data: {
                 keep: {
                     parent: true
-                },
-                simpleData: {
-                    enable: true,
-                    idKey: "id",
-                    pIdKey: "pId",
-                    rootPId: 0
                 }
             },
             edit: {
                 enable: true,
-                drag: {
-                    isCopy: false,
-                    isMove: true
-                },
                 showRenameBtn: false,
-                showRemoveBtn: false,
+                showRemoveBtn: false
             },
-            callback: {
-                onRightClick: OnRightClick
-            }
         };
+
+        /*var zNodes = [
+         {
+         id: 1, name: "右键菜单 1", iconSkin: "diy01", open: true,
+         children: [
+         {
+         id: 11, name: "节点 1-1", iconSkin: "diy02",
+         children: [
+         {id: 21, name: "节点 1-11", iconSkin: "diy03"},
+         {id: 22, name: "节点 1-12", iconSkin: "diy03"},
+         {id: 23, name: "节点 1-13", iconSkin: "diy03"},
+         {id: 24, name: "节点 1-14", iconSkin: "diy03"}
+         ]
+         },
+         {id: 12, name: "节点 1-2", iconSkin: "diy02"}
+         ]
+         },
+         {
+         id: 2, name: "右键操作 2", iconSkin: "diy01", open: true,
+         children: [
+         {id: 21, name: "节点 2-1", iconSkin: "diy02"},
+         {id: 22, name: "节点 2-2", iconSkin: "diy02"},
+         {id: 23, name: "节点 2-3", iconSkin: "diy02"},
+         {id: 24, name: "节点 2-4", iconSkin: "diy02"}
+         ]
+         },
+         {
+         id: 3, name: "右键操作 3", iconSkin: "diy01", open: true,
+         children: [
+         {id: 31, name: "节点 3-1", iconSkin: "diy02"},
+         {id: 32, name: "节点 3-2", iconSkin: "diy02"},
+         {id: 33, name: "节点 3-3", iconSkin: "diy02"},
+         {id: 34, name: "节点 3-4", iconSkin: "diy02"}
+         ]
+         }
+         ]; */
+
 
         var zNodes = [
             {
-                id: 1, name: "右键菜单 1", iconSkin: "diy01", open: true,
+                id: 1, name: "右键菜单 1", open: true,
                 children: [
                     {
-                        id: 11, name: "节点 1-1", iconSkin: "diy02",
+                        id: 11, name: "节点 1-1",
                         children: [
-                            {id: 21, name: "节点 1-11", iconSkin: "diy03"},
-                            {id: 22, name: "节点 1-12", iconSkin: "diy03"},
-                            {id: 23, name: "节点 1-13", iconSkin: "diy03"},
-                            {id: 24, name: "节点 1-14", iconSkin: "diy03"}
+                            {id: 21, name: "节点 1-11"},
+                            {id: 22, name: "节点 1-12"},
+                            {id: 23, name: "节点 1-13"},
+                            {id: 24, name: "节点 1-14"}
                         ]
                     },
-                    {id: 12, name: "节点 1-2", iconSkin: "diy03"}
+                    {id: 12, name: "节点 1-2"}
                 ]
             },
             {
-                id: 2, name: "右键操作 2", iconSkin: "diy01", open: true,
+                id: 2, name: "右键操作 2", open: true,
                 children: [
-                    {id: 21, name: "节点 2-1",iconSkin: "diy03"},
-                    {id: 22, name: "节点 2-2",iconSkin: "diy03"},
-                    {id: 23, name: "节点 2-3",iconSkin: "diy03"},
-                    {id: 24, name: "节点 2-4",iconSkin: "diy03"}
-                ]
-            },
-            {
-                id: 3, name: "右键操作 3", iconSkin: "diy01", open: true,
-                children: [
-                    {id: 31, name: "节点 3-1",iconSkin: "diy03"},
-                    {id: 32, name: "节点 3-2",iconSkin: "diy03"},
-                    {id: 33, name: "节点 3-3",iconSkin: "diy03"},
-                    {id: 34, name: "节点 3-4",iconSkin: "diy03"}
+                    {id: 21, name: "节点 2-1"},
+                    {id: 22, name: "节点 2-2"},
+                    {id: 23, name: "节点 2-3"},
+                    {id: 24, name: "节点 2-4"}
                 ]
             }
         ];
 
         //右键操作
         function OnRightClick(event, treeId, treeNode) {
-            //判断是否是根节点
             if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
                 zTree.cancelSelectedNode();
                 showRMenu("root", event.clientX, event.clientY);
@@ -93,7 +112,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         //显示右键操作
         function showRMenu(type, x, y) {
             $("#rMenu").show();
-            rMenu.css({"top": y + "px", "left": x + "px", "visibility": "visible"});
+            rMenu.css({"top": (y-70) + "px", "left": (x-220) + "px", "visibility": "visible"});
             $("#container").bind("mousedown", onBodyMouseDown);
         }
 

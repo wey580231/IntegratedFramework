@@ -19,15 +19,6 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             $scope.arr = response.data;
         });
 
-        //重新加载页面信息
-        var reload = function () {
-            //取消checkbox选中状态
-            document.getElementById("check").checked = false;
-            $("input").val('');
-            myHttpService.get(serviceList.ListShift).then(function (response) {
-                $scope.arr = response.data;
-            });
-        }
 
         //新增工序资源信息
         var addAssisantProcess = function () {
@@ -52,8 +43,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             myHttpService.post(serviceList.AddAssisantProcess, data).then(function successCallback(response) {
                 console.log(response.status);
                 //用强制刷新解决按钮不能连续响应
-                window.location.reload();
-                reload();
+                setTimeout('window.location.reload();', 1);
             })
 
         };
@@ -85,27 +75,43 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             var idVal = operateId + "";
             params.id = idVal;
             params.grp = "";
+            params.typeSite = "";
+            params.idSite = "";
+            params.minResource = "";
+            params.maxResource = "";
+            params.weightParallel = "";
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteAssisantProcess, data).then(function successCallback(response) {
                 console.log(response.status);
-                window.location.reload();
-                reload();
+                setTimeout('window.location.reload();', 1);
             })
         };
 
         //修改工序资源信息
         $scope.editAssisantProcess = function () {
-            var params = {};
-            var idVal = operateId;
-            params.id = idVal;
-            params.grp = "";
-            var data = JSON.stringify(params);
-            console.log(data);
-            myHttpService.post(serviceList.ListAssisantProcess, data).then(function successCallback(response) {
-                console.log(response);
-                $scope.form = response.data;
-            })
+            var rows = document.getElementById("table_value").rows;
+            var a = document.getElementsByName("check");
+            var table = document.getElementById("table_value");
+
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].checked) {
+                    var row = a[i].parentElement.parentElement.rowIndex;
+                    console.log(row);
+                    var params = {};
+                    var arr = new Array();
+                    params.id = rows[row].cells[1].innerHTML;
+                    params.grp = rows[row].cells[2].innerHTML;
+                    params.typeSite = rows[row].cells[3].innerHTML;
+                    params.idSite = rows[row].cells[4].innerHTML;
+                    params.minResource = rows[row].cells[5].innerHTML;
+                    params.maxResource = rows[row].cells[6].innerHTML;
+                    params.weightParallel = rows[row].cells[7].innerHTML;
+                    console.log(params);
+                    arr.push(params);
+                    $scope.form = arr;
+                }
+            }
         };
         $scope.update = function () {
             var idVal = $("input[name='edit-id']").val();
@@ -128,8 +134,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateAssisantProcess, data).then(function (response) {
                 console.log(response.status);
-                window.location.reload();
-                reload();
+                setTimeout('window.location.reload();', 1);
             })
 
         };
@@ -139,36 +144,49 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             var id = $("input#add-id").val(),
                 grp = $("input#add-grp").val();
             console.log(id + grp);
-            if (checkGrp(grp) && checkId(id)) {
+            if (check(id, grp) && checkId(id)) {
                 UIkit.modal.confirm('确定添加吗？', function () {
                     addAssisantProcess();
                 });
                 return true;
             } else {
-                UIkit.modal.alert('请填写完整！');
+
                 return false;
             }
         };
-        var checkGrp = function (grp) {
-            if (grp == "") {
-                $("input#add-grp").addClass("uk-form-danger");
-                return false;
-            }
-            $("input#add-grp").addClass("uk-form-success");
-            return true;
-        }
-        var checkId = function (id) {
-            if (id == "") {
+        var check = function (id, grp) {
+            if (id == "" && grp == "") {
                 $("input#add-id").addClass("uk-form-danger");
+                $("input#add-grp").addClass("uk-form-danger");
+                UIkit.modal.alert('请填写完整！');
                 return false;
             }
             $("input#add-id").addClass("uk-form-success");
+            $("input#add-name").addClass("uk-form-success");
+            return true;
+        };
+        var checkId = function (id) {
+            var mytable = document.getElementById("table_value");
+            var rows = document.getElementById("table_value").rows;
+            for (var i = 0, row = mytable.rows.length; i < row; i++) {
+                if (rows[i].cells[1].innerHTML == id) {
+                    UIkit.modal.confirm('id已经存在，请重新填写！', function () {
+                        $("input").val('');
+                        $("input#add-id").removeClass("uk-form-success");
+                        $("input#add-name").removeClass("uk-form-success");
+                    });
+                    return false;
+                }
+            }
             return true;
         };
 
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
+            $("input#add-id").removeClass("uk-form-success");
+            $("input#add-name").removeClass("uk-form-success");
         }
+
 
     })
