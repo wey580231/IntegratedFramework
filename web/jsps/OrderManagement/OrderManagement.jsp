@@ -37,7 +37,7 @@
     }
 </script>
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="<%--uk-grid--%>" style="/*height: 8%;*/height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
 
     <div style="float:left;">
@@ -94,7 +94,13 @@
 
 
 <!--右侧表格-->
-<div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
+<div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
+
+top: 80px;
+bottom: 20px;
+position: absolute;
+
+">
     <div style="margin-top: 1%;">
 
         <!--tab-->
@@ -178,7 +184,7 @@
     </div>
 
 
-    <div class="uk-clearfix" style="margin-top: -4%;">
+    <div class="uk-clearfix" style="/*margin-top: -4%;*/margin-top: -45px;">
         <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
         </button>
