@@ -52,7 +52,7 @@
             <column name="layoutId" not-null="false"/>
         </many-to-one>
 
-        <set name="orders" inverse="false" cascade="all" table="schedule_order">
+        <set name="orders" inverse="false" cascade="all" table="schedule_order" lazy="false">
             <key column="s_id"></key>
             <many-to-many class="com.rengu.entity.RG_OrderEntity" column="o_id"></many-to-many>
         </set>
@@ -73,7 +73,7 @@
         -->
         <set name="sites" inverse="false" cascade="merge" table="schedule_site">
             <key column="s_id"></key>
-            <many-to-many class="com.rengu.entity.RG_SiteEntity" column="site_id"></many-to-many>
+            <many-to-many class="com.rengu.entity.RG_SiteEntity" column="site_id"/>
         </set>
 
         <!--<many-to-one name="snapshot" class="com.rengu.entity.RG_SnapshotNodeEntity" column="snapId" unique="true"/>-->
