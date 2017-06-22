@@ -21,45 +21,52 @@ public class AssisantprocessAction extends SuperAction implements ModelDriven<RG
         return this.rg_assisantprocessEntity;
     }
 
-    public void getAllAssisantProcess() throws Exception {
+    public String getAllAssisantProcess() throws Exception {
         AssisantprocessDAO assisantprocessDAO = DAOFactory.getAssisantprocessDAOInstance();
         List list = assisantprocessDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
         System.out.println(jsonString);
+        return "success";
     }
 
     public void findAllByUsername() throws Exception {
 
     }
 
-    public void save() throws Exception {
+    public String save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.save(rg_assisantprocessEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
+            return "success";
         }
     }
 
-    public void delete() throws Exception {
+    public String delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.delete(rg_assisantprocessEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
         }
+        return "success";
     }
 
-    public void update() throws Exception {
+    public String update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.update(rg_assisantprocessEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
+            return "success";
         }
     }
 }

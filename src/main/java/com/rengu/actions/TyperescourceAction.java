@@ -21,45 +21,52 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         return this.rg_typerescourceEntity;
     }
 
-    public void getAllTypeRescource() throws Exception {
+    public String getAllTypeRescource() throws Exception {
         TyperescourceDAO typerescourceDAO = DAOFactory.getTyperescourceInstance();
         List list = typerescourceDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
         System.out.println(jsonString);
+        return "success";
     }
 
     public void findAllByUsername() throws Exception {
 
     }
 
-    public void save() throws Exception {
+    public String save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.save(rg_typerescourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
+            return "success";
         }
     }
 
-    public void delete() throws Exception {
+    public String delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.delete(rg_typerescourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
+            return "success";
         }
     }
 
-    public void update() throws Exception {
+    public String update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.update(rg_typerescourceEntity)) {
+            return "success";
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
+            return "success";
         }
 
     }
