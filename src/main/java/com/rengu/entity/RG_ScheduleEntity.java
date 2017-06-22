@@ -3,6 +3,7 @@ package com.rengu.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
@@ -42,10 +43,12 @@ public class RG_ScheduleEntity {
     private String apsFlag;               //用于排程记录和aps结果之间的纽带，aps计算完成后，根据此标识找到记录，并更新状态。
 
     private RG_LayoutEntity layout;                    //布局
-    private Set<RG_OrderEntity> orders;                //订单
-    private Set<RG_ResourceEntity> resources;          //资源
-    private Set<RG_GroupresourceEntity> groups;        //工组
-    private Set<RG_SiteEntity> sites;                  //工位
+    private Set<RG_OrderEntity> orders = new HashSet<RG_OrderEntity>();                      //订单
+    private Set<RG_ResourceEntity> resources = new HashSet<RG_ResourceEntity>();             //资源
+    private Set<RG_GroupresourceEntity> groups = new HashSet<RG_GroupresourceEntity>();      //工组
+    private Set<RG_SiteEntity> sites = new HashSet<RG_SiteEntity>();                         //工位
+
+
     private RG_SnapshotNodeEntity snapshot;            //排程快照
 
     public static int getApsDispatch() {

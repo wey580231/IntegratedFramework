@@ -2,6 +2,7 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,7 +22,7 @@ public class RG_AssisantprocessEntity {
     private Short weightParallel;
     private Short weightSequence;
     private RG_ProcessEntity processByIdProcess;
-    private Set<RG_TyperescourceEntity> typeresourceById;
+    private Set<RG_TyperescourceEntity> typeresourceById = new HashSet<RG_TyperescourceEntity>();
 
     public String getId() {
         return id;

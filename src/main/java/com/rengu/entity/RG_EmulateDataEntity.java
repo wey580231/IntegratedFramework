@@ -14,6 +14,8 @@ public class RG_EmulateDataEntity {
     private String startTime;
     private String endTime;
 
+    private RG_OrderEntity orderEntity;
+
     public int getId() {
         return id;
     }
@@ -76,6 +78,14 @@ public class RG_EmulateDataEntity {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public RG_OrderEntity getOrderEntity() {
+        return orderEntity;
+    }
+
+    public void setOrderEntity(RG_OrderEntity orderEntity) {
+        this.orderEntity = orderEntity;
     }
 
     @Override
