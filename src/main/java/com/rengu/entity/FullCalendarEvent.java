@@ -1,34 +1,54 @@
 package com.rengu.entity;
 
+import java.util.Date;
+
 /**
  * Created by hanchangming on 2017/6/20.
  */
 public class FullCalendarEvent {
-    private String title;
-    private String start;
-    private String end;
+    private String Id;
+    private String Title;
+    private boolean AllDay;
+    private Date Start;
+    private Date End;
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        Title = title;
     }
 
-    public String getStart() {
-        return start;
+    public boolean isAllDay() {
+        return AllDay;
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    public void setAllDay(boolean allDay) {
+        AllDay = allDay;
     }
 
-    public String getEnd() {
-        return end;
+    public Date getStart() {
+        return Start;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setStart(Date start) {
+        Start = start;
+    }
+
+    public Date getEnd() {
+        return End;
+    }
+
+    public void setEnd(Date end) {
+        End = end;
     }
 }

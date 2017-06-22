@@ -11,7 +11,6 @@ public class RG_LayoutDetailEntity {
     private String exist;
     private RG_LayoutEntity layout;
 
-
     public String getId() {
         return id;
     }
@@ -60,6 +59,7 @@ public class RG_LayoutDetailEntity {
         this.layout = layout;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,8 +71,7 @@ public class RG_LayoutDetailEntity {
         if (item != null ? !item.equals(that.item) : that.item != null) return false;
         if (pos != null ? !pos.equals(that.pos) : that.pos != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
-        if (exist != null ? !exist.equals(that.exist) : that.exist != null) return false;
-        return layout != null ? layout.equals(that.layout) : that.layout == null;
+        return exist != null ? exist.equals(that.exist) : that.exist == null;
     }
 
     @Override
@@ -82,7 +81,6 @@ public class RG_LayoutDetailEntity {
         result = 31 * result + (pos != null ? pos.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (exist != null ? exist.hashCode() : 0);
-        result = 31 * result + (layout != null ? layout.hashCode() : 0);
         return result;
     }
 

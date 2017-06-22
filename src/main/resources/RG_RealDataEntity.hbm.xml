@@ -24,7 +24,7 @@
             <column name="endLocation" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
         <property name="valueType">
-            <column name="valueRG_State3DEntityType" sql-type="varchar(50)" length="50" not-null="false"/>
+            <column name="valueType" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
         <property name="value">
             <column name="value" sql-type="varchar(50)" length="50" not-null="false"/>

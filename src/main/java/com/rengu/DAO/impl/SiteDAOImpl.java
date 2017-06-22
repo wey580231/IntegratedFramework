@@ -35,7 +35,7 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            String hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
+            String hql = "";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {

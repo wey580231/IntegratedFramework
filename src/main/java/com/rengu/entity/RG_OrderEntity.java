@@ -3,6 +3,7 @@ package com.rengu.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -20,17 +21,17 @@ public class RG_OrderEntity {
     private Short quantity;                 //订单数量
     private Short finishQuantity;           //完工数量
     private Short priority;                 //优先级
-    private String t0;
-    private String t1;
-    private String t2;
+    private Date t0;
+    private Date t1;
+    private Date t2;
     private Short ord;
     private String idPree;
     private String idSucc;
     private String idExclusive;
     private String t1Interaction;
     private String t2Interaction;
-    private String t1Plan;
-    private String t2Plan;
+    private Date t1Plan;
+    private Date t2Plan;
     private Short estimate;
     private Short advance;
     private Short delay;
@@ -38,11 +39,11 @@ public class RG_OrderEntity {
     private Byte state;
     private Byte selected;
     private Short nbTask;
+    private boolean finished;
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
     @JsonIgnore
     private Set<RG_ScheduleEntity> schedules;
-
 
     public String getId() {
         return id;
@@ -124,27 +125,27 @@ public class RG_OrderEntity {
         this.priority = priority;
     }
 
-    public String getT0() {
+    public Date getT0() {
         return t0;
     }
 
-    public void setT0(String t0) {
+    public void setT0(Date t0) {
         this.t0 = t0;
     }
 
-    public String getT1() {
+    public Date getT1() {
         return t1;
     }
 
-    public void setT1(String t1) {
+    public void setT1(Date t1) {
         this.t1 = t1;
     }
 
-    public String getT2() {
+    public Date getT2() {
         return t2;
     }
 
-    public void setT2(String t2) {
+    public void setT2(Date t2) {
         this.t2 = t2;
     }
 
@@ -196,19 +197,19 @@ public class RG_OrderEntity {
         this.t2Interaction = t2Interaction;
     }
 
-    public String getT1Plan() {
+    public Date getT1Plan() {
         return t1Plan;
     }
 
-    public void setT1Plan(String t1Plan) {
+    public void setT1Plan(Date t1Plan) {
         this.t1Plan = t1Plan;
     }
 
-    public String getT2Plan() {
+    public Date getT2Plan() {
         return t2Plan;
     }
 
-    public void setT2Plan(String t2Plan) {
+    public void setT2Plan(Date t2Plan) {
         this.t2Plan = t2Plan;
     }
 
@@ -268,6 +269,14 @@ public class RG_OrderEntity {
         this.nbTask = nbTask;
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
     public RG_ProductEntity getProductByIdProduct() {
         return productByIdProduct;
     }
@@ -299,6 +308,7 @@ public class RG_OrderEntity {
 
         RG_OrderEntity that = (RG_OrderEntity) o;
 
+        if (finished != that.finished) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
@@ -330,10 +340,7 @@ public class RG_OrderEntity {
         if (color != null ? !color.equals(that.color) : that.color != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (selected != null ? !selected.equals(that.selected) : that.selected != null) return false;
-        if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
-        if (productByIdProduct != null ? !productByIdProduct.equals(that.productByIdProduct) : that.productByIdProduct != null)
-            return false;
-        return clubByIdClub != null ? clubByIdClub.equals(that.clubByIdClub) : that.clubByIdClub == null;
+        return nbTask != null ? nbTask.equals(that.nbTask) : that.nbTask == null;
     }
 
     @Override
@@ -366,8 +373,7 @@ public class RG_OrderEntity {
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
-        result = 31 * result + (productByIdProduct != null ? productByIdProduct.hashCode() : 0);
-        result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
+        result = 31 * result + (finished ? 1 : 0);
         return result;
     }
 }

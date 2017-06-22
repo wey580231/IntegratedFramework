@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class RG_EmulateDataEntity {
 
     private int id;
-    private String idResource;
+    private String item;
     private String state;
     private String good;
     private String startLocation;
@@ -22,12 +22,12 @@ public class RG_EmulateDataEntity {
         this.id = id;
     }
 
-    public String getIdResource() {
-        return idResource;
+    public String getItem() {
+        return item;
     }
 
-    public void setIdResource(String idResource) {
-        this.idResource = idResource;
+    public void setItem(String item) {
+        this.item = item;
     }
 
     public String getState() {
@@ -79,71 +79,33 @@ public class RG_EmulateDataEntity {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((endLocation == null) ? 0 : endLocation.hashCode());
-        result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
-        result = prime * result + ((good == null) ? 0 : good.hashCode());
-        result = prime * result + id;
-        result = prime * result
-                + ((idResource == null) ? 0 : idResource.hashCode());
-        result = prime * result
-                + ((startLocation == null) ? 0 : startLocation.hashCode());
-        result = prime * result
-                + ((startTime == null) ? 0 : startTime.hashCode());
-        result = prime * result + ((state == null) ? 0 : state.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RG_EmulateDataEntity that = (RG_EmulateDataEntity) o;
+
+        if (id != that.id) return false;
+        if (item != null ? !item.equals(that.item) : that.item != null) return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (good != null ? !good.equals(that.good) : that.good != null) return false;
+        if (startLocation != null ? !startLocation.equals(that.startLocation) : that.startLocation != null)
+            return false;
+        if (endLocation != null ? !endLocation.equals(that.endLocation) : that.endLocation != null) return false;
+        if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
+        return endTime != null ? endTime.equals(that.endTime) : that.endTime == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        RG_EmulateDataEntity other = (RG_EmulateDataEntity) obj;
-        if (endLocation == null) {
-            if (other.endLocation != null)
-                return false;
-        } else if (!endLocation.equals(other.endLocation))
-            return false;
-        if (endTime == null) {
-            if (other.endTime != null)
-                return false;
-        } else if (!endTime.equals(other.endTime))
-            return false;
-        if (good == null) {
-            if (other.good != null)
-                return false;
-        } else if (!good.equals(other.good))
-            return false;
-        if (id != other.id)
-            return false;
-        if (idResource == null) {
-            if (other.idResource != null)
-                return false;
-        } else if (!idResource.equals(other.idResource))
-            return false;
-        if (startLocation == null) {
-            if (other.startLocation != null)
-                return false;
-        } else if (!startLocation.equals(other.startLocation))
-            return false;
-        if (startTime == null) {
-            if (other.startTime != null)
-                return false;
-        } else if (!startTime.equals(other.startTime))
-            return false;
-        if (state == null) {
-            if (other.state != null)
-                return false;
-        } else if (!state.equals(other.state))
-            return false;
-        return true;
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (item != null ? item.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (good != null ? good.hashCode() : 0);
+        result = 31 * result + (startLocation != null ? startLocation.hashCode() : 0);
+        result = 31 * result + (endLocation != null ? endLocation.hashCode() : 0);
+        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
+        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
+        return result;
     }
-
 }

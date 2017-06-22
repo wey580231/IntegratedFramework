@@ -2,6 +2,7 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -10,7 +11,7 @@ public class RG_LayoutEntity {
 
     private String id;
     private String name;
-    private Set<RG_LayoutDetailEntity> details;
+    private Set<RG_LayoutDetailEntity> details = new HashSet<RG_LayoutDetailEntity>();
     private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
@@ -46,6 +47,7 @@ public class RG_LayoutEntity {
         this.schedules = schedules;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,15 +56,13 @@ public class RG_LayoutEntity {
         RG_LayoutEntity that = (RG_LayoutEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return details != null ? details.equals(that.details) : that.details == null;
+        return name != null ? name.equals(that.name) : that.name == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (details != null ? details.hashCode() : 0);
         return result;
     }
 

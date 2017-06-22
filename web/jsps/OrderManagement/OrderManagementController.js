@@ -122,9 +122,9 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         //修改订单
         $scope.editOrder = function () {
-            var rows = document.getElementById("order_table").rows;
+            var rows = document.getElementById("table_value").rows;
             var a = document.getElementsByName("check");
-            var table = document.getElementById("order_table");
+            var table = document.getElementById("table_value");
 
             for (var i = 0; i < a.length; i++) {
                 if (a[i].checked) {
@@ -204,8 +204,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         };
 
         var checkId = function (id) {
-            var mytable = document.getElementById("order_table");
-            var rows = document.getElementById("order_table").rows;
+            var mytable = document.getElementById("table_value");
+            var rows = document.getElementById("table_value").rows;
             for (var i = 0, row = mytable.rows.length; i < row; i++) {
                 if (rows[i].cells[1].innerHTML == id) {
                     UIkit.modal.confirm('id已经存在，请重新填写！', function () {

@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by hanchangming on 2017/5/24.
@@ -145,6 +148,15 @@ public class Tools {
         connection.close();
     }
 
+    /*
+ * 将时间转换为时间戳
+ */
+    public static Date stringConvertToDate(String dateString) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse(dateString);
+        return date;
+    }
+
     public static String resultCode(String result, String description) {
         String tmp = "";
 
@@ -167,5 +179,18 @@ public class Tools {
                 "}";
 
         return tmp;
+    }
+
+    public static String getUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    public static String formatDate(Date date) {
+        if (date == null) {
+            return "";
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        return df.format(date);
     }
 }
