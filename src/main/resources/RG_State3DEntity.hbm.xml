@@ -17,8 +17,8 @@
         <property name="model">
             <column name="model" sql-type="int"/>
         </property>
-        <property name="controlState">
-            <column name="controlState" sql-type="int"/>
+        <property name="snapshotId">
+            <column name="snapshotId" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
     </class>
 </hibernate-mapping>

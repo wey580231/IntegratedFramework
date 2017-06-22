@@ -2,23 +2,25 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
+
 /**
  * Created by hanchangming on 2017/6/16.
  */
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_AdjustProcessEntity {
     private String id;
-    private String reportTime;
-    private String idTask;
-    private String t1Task;
-    private String appointIdResource;
-    private String appointTaskTime;
+    private Date reportTime;                    //故障上报时间
+    private String idTask;                      //选中工序编码
+    private String idJob;                       //工序作业编码
+    private String idOrder;                     //工序订单编码
+    private String originalResource;            //工序原始选用资源编码
+    private Date originalStartTime;             //工序原始开始时间
+    private String appointResource;             //工序指定资源编码
+    private Date appointStartTime;              //工序指定开始时间
 
-    private String origin;              //异常来源，MES、手工模拟
-    private Integer state;              //异常状态，参照ErrorState类
-
-    private RG_OrderEntity orderEntity;
-    private RG_ResourceEntity resourceEntity;
+    private String origin;                      //异常来源，MES、手工模拟
+    private Integer state;                      //异常状态，参照ErrorState类
 
     public String getId() {
         return id;
@@ -28,11 +30,11 @@ public class RG_AdjustProcessEntity {
         this.id = id;
     }
 
-    public String getReportTime() {
+    public Date getReportTime() {
         return reportTime;
     }
 
-    public void setReportTime(String reportTime) {
+    public void setReportTime(Date reportTime) {
         this.reportTime = reportTime;
     }
 
@@ -44,28 +46,52 @@ public class RG_AdjustProcessEntity {
         this.idTask = idTask;
     }
 
-    public String getT1Task() {
-        return t1Task;
+    public String getIdJob() {
+        return idJob;
     }
 
-    public void setT1Task(String t1Task) {
-        this.t1Task = t1Task;
+    public void setIdJob(String idJob) {
+        this.idJob = idJob;
     }
 
-    public String getAppointIdResource() {
-        return appointIdResource;
+    public String getIdOrder() {
+        return idOrder;
     }
 
-    public void setAppointIdResource(String appointIdResource) {
-        this.appointIdResource = appointIdResource;
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
     }
 
-    public String getAppointTaskTime() {
-        return appointTaskTime;
+    public String getOriginalResource() {
+        return originalResource;
     }
 
-    public void setAppointTaskTime(String appointTaskTime) {
-        this.appointTaskTime = appointTaskTime;
+    public void setOriginalResource(String originalResource) {
+        this.originalResource = originalResource;
+    }
+
+    public Date getOriginalStartTime() {
+        return originalStartTime;
+    }
+
+    public void setOriginalStartTime(Date originalStartTime) {
+        this.originalStartTime = originalStartTime;
+    }
+
+    public String getAppointResource() {
+        return appointResource;
+    }
+
+    public void setAppointResource(String appointResource) {
+        this.appointResource = appointResource;
+    }
+
+    public Date getAppointStartTime() {
+        return appointStartTime;
+    }
+
+    public void setAppointStartTime(Date appointStartTime) {
+        this.appointStartTime = appointStartTime;
     }
 
     public String getOrigin() {
@@ -84,22 +110,6 @@ public class RG_AdjustProcessEntity {
         this.state = state;
     }
 
-    public RG_OrderEntity getOrderEntity() {
-        return orderEntity;
-    }
-
-    public void setOrderEntity(RG_OrderEntity orderEntity) {
-        this.orderEntity = orderEntity;
-    }
-
-    public RG_ResourceEntity getResourceEntity() {
-        return resourceEntity;
-    }
-
-    public void setResourceEntity(RG_ResourceEntity resourceEntity) {
-        this.resourceEntity = resourceEntity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,10 +120,15 @@ public class RG_AdjustProcessEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (reportTime != null ? !reportTime.equals(that.reportTime) : that.reportTime != null) return false;
         if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
-        if (t1Task != null ? !t1Task.equals(that.t1Task) : that.t1Task != null) return false;
-        if (appointIdResource != null ? !appointIdResource.equals(that.appointIdResource) : that.appointIdResource != null)
+        if (idJob != null ? !idJob.equals(that.idJob) : that.idJob != null) return false;
+        if (idOrder != null ? !idOrder.equals(that.idOrder) : that.idOrder != null) return false;
+        if (originalResource != null ? !originalResource.equals(that.originalResource) : that.originalResource != null)
             return false;
-        if (appointTaskTime != null ? !appointTaskTime.equals(that.appointTaskTime) : that.appointTaskTime != null)
+        if (originalStartTime != null ? !originalStartTime.equals(that.originalStartTime) : that.originalStartTime != null)
+            return false;
+        if (appointResource != null ? !appointResource.equals(that.appointResource) : that.appointResource != null)
+            return false;
+        if (appointStartTime != null ? !appointStartTime.equals(that.appointStartTime) : that.appointStartTime != null)
             return false;
         if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
         return state != null ? state.equals(that.state) : that.state == null;
@@ -124,9 +139,12 @@ public class RG_AdjustProcessEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (reportTime != null ? reportTime.hashCode() : 0);
         result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
-        result = 31 * result + (t1Task != null ? t1Task.hashCode() : 0);
-        result = 31 * result + (appointIdResource != null ? appointIdResource.hashCode() : 0);
-        result = 31 * result + (appointTaskTime != null ? appointTaskTime.hashCode() : 0);
+        result = 31 * result + (idJob != null ? idJob.hashCode() : 0);
+        result = 31 * result + (idOrder != null ? idOrder.hashCode() : 0);
+        result = 31 * result + (originalResource != null ? originalResource.hashCode() : 0);
+        result = 31 * result + (originalStartTime != null ? originalStartTime.hashCode() : 0);
+        result = 31 * result + (appointResource != null ? appointResource.hashCode() : 0);
+        result = 31 * result + (appointStartTime != null ? appointStartTime.hashCode() : 0);
         result = 31 * result + (origin != null ? origin.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;

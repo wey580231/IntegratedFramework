@@ -9,6 +9,7 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -37,6 +38,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
             if (id.length > 0 && state.length > 0 && message.length > 0 && GlobalVariable.RootSnapshotId.length() > 0) {
+
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
                 session.beginTransaction();
 
@@ -104,9 +106,11 @@ public class FeedBackStateAction extends SuperAction {
                     }
                     GlobalVariable.ApsReplyCount++;
 
+                    RG_SnapshotNodeEntity bottomSnapshot = null;
+
                     if (middleSnapshot != null) {
-                        RG_SnapshotNodeEntity bottomSnapshot = new RG_SnapshotNodeEntity();
-                        bottomSnapshot.setId(UUID.randomUUID().toString());
+                        bottomSnapshot = new RG_SnapshotNodeEntity();
+                        bottomSnapshot.setId(Tools.getUUID());
                         bottomSnapshot.setName(nodeName);
                         bottomSnapshot.setLevel(SnapshotLevel.BOTTOM);
 
@@ -120,12 +124,21 @@ public class FeedBackStateAction extends SuperAction {
                         session.save(middleSnapshot);
                     }
 
-                    //TODO APS_PLAN-->RG_PlanEntity共用一个session,确保在一个事物之中
+                    //APS_PLAN-->RG_PlanEntity共用一个session,确保在一个实务之中
                     if (state[0].equals(APS_RESULT_SUCCESS)) {
+                        try {
 
+                            ApsTools.instance().getScheduleResult(bottomSnapshot);
+
+                            session.getTransaction().commit();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            session.getTransaction().rollback();
+                            WebSocketNotification.broadcast("APS计算结果转换出错!");
+                        }
                     }
                 }
-                session.getTransaction().commit();
             }
         } else {
             WebSocketNotification.broadcast("APS计算出错!");
@@ -141,7 +154,7 @@ public class FeedBackStateAction extends SuperAction {
             RG_SnapshotNodeEntity parent = (RG_SnapshotNodeEntity) mlist.get(0);
 
             RG_SnapshotNodeEntity child = new RG_SnapshotNodeEntity();
-            child.setId(UUID.randomUUID().toString());
+            child.setId(Tools.getUUID());
 
             child.setParent(parent);
             parent.getChilds().add(child);

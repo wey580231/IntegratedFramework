@@ -8,31 +8,36 @@
         <id name="id">
             <column name="id" sql-type="varchar(100)" length="100"/>
         </id>
-        <property name="reportTime">
-            <column name="reportTime" sql-type="varchar(50)" length="50"/>
+        <property name="reportTime" type="java.util.Date">
+            <column name="reportTime" sql-type="date" not-null="false"/>
         </property>
         <property name="idTask">
-            <column name="idTask" sql-type="varchar(60)" length="60"/>
+            <column name="idTask" sql-type="varchar(60)" length="60" not-null="false"/>
         </property>
-        <property name="t1Task">
-            <column name="t1Task" sql-type="varchar(50)" length="50"/>
+        <property name="idJob">
+            <column name="idJob" sql-type="varchar(60)" length="60" not-null="false"/>
         </property>
-        <property name="appointIdResource">
-            <column name="appointIdResource" sql-type="varchar(100)" length="100"/>
+        <property name="idOrder">
+            <column name="idOrder" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
-        <property name="appointTaskTime">
-            <column name="appointTaskTime" sql-type="varchar(50)" length="50"/>
+        <property name="originalResource">
+            <column name="originalResource" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="originalStartTime" type="java.util.Date">
+            <column name="originalStartTime" sql-type="date" not-null="false"/>
+        </property>
+        <property name="appointResource">
+            <column name="appointResource" sql-type="varchar(100)" not-null="false"/>
+        </property>
+        <property name="appointStartTime" type="java.util.Date">
+            <column name="appointStartTime" sql-type="date" not-null="false"/>
         </property>
         <property name="origin">
-            <column name="origin" sql-type="varchar(255)" not-null="false"/>
+            <column name="origin" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
-        <property name="state" type="java.lang.Integer">
+        <property name="state" type="integer">
             <column name="state" sql-type="int" not-null="false"/>
         </property>
 
-        <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity" column="idOrder" unique="true"/>
-
-        <many-to-one name="resourceEntity" class="com.rengu.entity.RG_ResourceEntity" column="idResource"
-                     unique="true"/>
     </class>
 </hibernate-mapping>

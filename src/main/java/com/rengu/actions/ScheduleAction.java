@@ -27,7 +27,7 @@ public class ScheduleAction extends SuperAction {
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
             JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
             RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
-            rg_scheduleEntity.setId(UUID.randomUUID().toString());
+            rg_scheduleEntity.setId(Tools.getUUID());
             //解析排程名称
             JsonNode nameNodes = rootNode.get("name");
             rg_scheduleEntity.setName(nameNodes.asText());
@@ -35,10 +35,8 @@ public class ScheduleAction extends SuperAction {
 
             //获取当前时间
             Date date = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String scheduleTime = dateFormat.format(date);
-            rg_scheduleEntity.setScheduleTime(scheduleTime);
-            rg_scheduleEntity.setStartCalcTime(scheduleTime);
+            rg_scheduleEntity.setScheduleTime(date);
+            rg_scheduleEntity.setStartCalcTime(date);
             //解析scheduleWindow
             JsonNode scheduleWindowNodes = rootNode.get("scheduleWindow");
             rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
@@ -50,11 +48,16 @@ public class ScheduleAction extends SuperAction {
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
+
                 if (APS_ConfigNodeKey.equals("t0")) {
-                    rg_scheduleEntity.setApsStartTime(APS_ConfigNodeValue);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date statTime = sdf.parse(APS_ConfigNodeValue);
+                    rg_scheduleEntity.setApsStartTime(statTime);
                 }
                 if (APS_ConfigNodeKey.equals("t2")) {
-                    rg_scheduleEntity.setApsEndTime(APS_ConfigNodeValue);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date endTime = sdf.parse(APS_ConfigNodeValue);
+                    rg_scheduleEntity.setApsEndTime(endTime);
                 }
                 if (APS_ConfigNodeKey.equals("objective")) {
                     rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);
@@ -133,12 +136,12 @@ public class ScheduleAction extends SuperAction {
 
             //产生一条快照根记录，并自动生成该记录中
             RG_SnapshotNodeEntity rootSnapshot = new RG_SnapshotNodeEntity();
-            rootSnapshot.setId(UUID.randomUUID().toString());
+            rootSnapshot.setId(Tools.getUUID());
             rootSnapshot.setName(rg_scheduleEntity.getName());
             rootSnapshot.setLevel(SnapshotLevel.TOP);
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
-            middleShot.setId(UUID.randomUUID().toString());
+            middleShot.setId(Tools.getUUID());
             middleShot.setName("APS排程结果");
             middleShot.setLevel(SnapshotLevel.MIDDLE);
 
