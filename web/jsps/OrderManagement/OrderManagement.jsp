@@ -12,7 +12,6 @@
 <style type="text/css">
 </style>
 
-
 <script>
     function changeColor(obj) {
         var f = obj.checked;
@@ -40,8 +39,7 @@
 
 <div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
-    <%--<img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">--%>
-    <%--<div class="uk-width-1-4 ">--%>
+
     <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
@@ -51,13 +49,6 @@
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
     </div>
 
-    <%--</div>--%>
-    <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
-&nbsp;
-<span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>--%>
-    <!--搜索-->
-    <%--<div class="uk-width-1-4 " >--%>
-    <%--<div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">--%>
     <div style="float:left;margin-left: 2%;">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
@@ -65,12 +56,6 @@
         </form>
     </div>
 
-    <%--            </div>--%>
-    <%--</div>--%>
-
-    <!--日历-->
-
-    <%--<div class="uk-width-1-4" style="float: left;margin-top: 10px;margin-left: -70px;">--%>
     <div style="float:left;margin-left: 2%;">
         <form class="uk-form" style="margin-left: 2%;margin-top: 5px;width: 135px;">
             <div class="uk-form-icon">
@@ -96,17 +81,17 @@
     </div>
 
     <!--按钮-->
-    <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
+
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
         <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}" >新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editOrder()" data-uk-modal="{target:'#edit'}" >修改</button>
         <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteOrder()">删除</button>
     </div>
-    <%--</div>--%>
+
 </div>
-<%--<hr class="uk-article-divider">--%>
+
 <br/>
-<%--<div class="uk-grid" style="margin-top: -25px;">--%>
+
 
 <!--右侧表格-->
 <div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
@@ -145,7 +130,7 @@
                     </div>
 
                     <div class="fixtable-body" style="height: 83%;">
-                        <table class="uk-table uk-table-striped uk-table-hover " id="order_table">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
 
                             <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
@@ -217,7 +202,7 @@
                     <label for="add-id">编码</label> <br/>
                     <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-name">名称</label><br/>
-                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all" ><br/>
+                    <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-origin">来源</label><br/>
                     <input type="text" name="add-origin" id="add-origin" class="text ui-widget-content ui-corner-all"><br/>
                    <!-- <label for="add-idProduct">产品名称</label><br/>
@@ -252,7 +237,7 @@
                     <label for="edit-id">编码</label> <br/>
                     <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
                     <label for="edit-name">名称</label><br/>
-                    <input type="text" name="edit-name" id="edit-name" clsss="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
+                    <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-origin">来源</label><br/>
                     <input type="text" name="edit-origin" id="edit-origin" class="text ui-widget-content ui-corner-all" value="{{x.origin}}"><br/>
                     <!--<label for="edit-idProduct">产品名称</label><br/>
