@@ -6,8 +6,8 @@ import com.rengu.entity.FullCalendarEvent;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.DAOFactory;
-import com.rengu.util.GlobalVariable;
 import com.rengu.util.Tools;
+import com.rengu.util.UserConfigTools;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,7 +59,7 @@ public class FullCalendarAction extends SuperAction {
 
     public void getLastScheduleInfo() throws Exception {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
-        RG_ScheduleEntity rg_scheduleEntity = scheduleDAO.findAllById(GlobalVariable.latestScheduleId);
+        RG_ScheduleEntity rg_scheduleEntity = scheduleDAO.findAllById(UserConfigTools.getLatestSchedule("1"));
         String jsonString = Tools.entityConvertToJsonString(rg_scheduleEntity);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }

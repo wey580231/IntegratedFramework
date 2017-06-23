@@ -5,6 +5,7 @@ import com.rengu.DAO.aps.ApsDao;
 import com.rengu.actions.SuperAction;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.entity.RG_SnapshotNodeEntity;
+import com.rengu.entity.RG_UserConfigEntity;
 import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -37,20 +38,23 @@ public class FeedBackStateAction extends SuperAction {
             String[] id = (String[]) parameterMap.get("id");
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
-            if (id.length > 0 && state.length > 0 && message.length > 0 && GlobalVariable.RootSnapshotId.length() > 0) {
+
+            RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
+
+            if (id.length > 0 && state.length > 0 && message.length > 0 && userconfig != null && userconfig.getRootSnapshotId().length() > 0) {
 
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
                 session.beginTransaction();
 
                 Query query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
-                query.setParameter("id", GlobalVariable.RootSnapshotId);
+                query.setParameter("id", userconfig.getRootSnapshotId());
                 List list = query.list();
                 if (list.size() > 0 && list.get(0) instanceof RG_SnapshotNodeEntity) {
                     RG_SnapshotNodeEntity rootSnapshot = (RG_SnapshotNodeEntity) list.get(0);
 
                     //创建快照节点
                     query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
-                    query.setParameter("id", GlobalVariable.MiddleSnapshotId);
+                    query.setParameter("id", userconfig.getMiddleSnapshotId());
                     list = query.list();
                     RG_SnapshotNodeEntity middleSnapshot = null;
                     if (list.size() > 0) {
@@ -60,12 +64,12 @@ public class FeedBackStateAction extends SuperAction {
                     //TODO 查询schedule时会级联查询出其对应的set集合
                     RG_ScheduleEntity schedule = rootSnapshot.getSchedule();
 
-                    String nodeName = null;
+                    String nodeName = "";
 
                     //不是应急排程
-                    if (!GlobalVariable.IsErrorSchedule) {
+                    if (!userconfig.isErrorSchedule()) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
-                            if (GlobalVariable.ApsReplyCount == 0) {
+                            if (userconfig.getApsReplyCount() == 0) {
                                 schedule.setState(RG_ScheduleEntity.APS_SUCCESS);
                                 nodeName = "排程结果";
                                 WebSocketNotification.broadcast("APS计算完成!");
@@ -86,7 +90,7 @@ public class FeedBackStateAction extends SuperAction {
                     //故障应急排程
                     else {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
-                            if (GlobalVariable.ApsReplyCount == 0) {
+                            if (userconfig.getApsReplyCount() == 0) {
                                 schedule.setState(RG_ScheduleEntity.ERROR_SUCCESS);
                                 nodeName = "应急结果";
                                 WebSocketNotification.broadcast("APS应急计算完成!");
@@ -104,7 +108,8 @@ public class FeedBackStateAction extends SuperAction {
                             WebSocketNotification.broadcast("APS应急失败!");
                         }
                     }
-                    GlobalVariable.ApsReplyCount++;
+
+                    UserConfigTools.updateApsReplyCount("1", userconfig.getApsReplyCount() + 1);
 
                     RG_SnapshotNodeEntity bottomSnapshot = null;
 
@@ -117,7 +122,7 @@ public class FeedBackStateAction extends SuperAction {
                         bottomSnapshot.setParent(middleSnapshot);
                         bottomSnapshot.setRootParent(rootSnapshot);
 
-                        GlobalVariable.BottomSnapshotId = bottomSnapshot.getId();
+                        UserConfigTools.updateBottomSnapshotId("1", bottomSnapshot.getId());
 
                         middleSnapshot.getChilds().add(bottomSnapshot);
 
@@ -146,26 +151,7 @@ public class FeedBackStateAction extends SuperAction {
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
-    //每次排程结果成功后，在对应的middle节点下，创建bottom节点
-    private void createSnapshotNode(Session session) {
-        Query mquery = session.createQuery("from RG_SnapshotNodeEntity mshot where mshot.id=:id");
-        List mlist = mquery.list();
-        if (mlist.size() > 0 && mlist.get(0) instanceof RG_SnapshotNodeEntity) {
-            RG_SnapshotNodeEntity parent = (RG_SnapshotNodeEntity) mlist.get(0);
-
-            RG_SnapshotNodeEntity child = new RG_SnapshotNodeEntity();
-            child.setId(Tools.getUUID());
-
-            child.setParent(parent);
-            parent.getChilds().add(child);
-
-            GlobalVariable.BottomSnapshotId = child.getId();
-
-            session.save(parent);
-        }
-    }
-
-    //查询APS状态,在对APS数据库操作之前，都要先执行状态查询操作
+    //TODO 查询APS状态,在对APS数据库操作之前，都要先执行状态查询操作
     public void queryApsState() {
         StringBuilder result = new StringBuilder();
 

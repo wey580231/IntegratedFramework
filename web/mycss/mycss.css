@@ -108,7 +108,35 @@ a {
 .uk-table td {
     vertical-align: top;
     width: 30px;
+    /*width: 40px;*/
     margin-left: 11px;
+    padding: 8px 20px;
+}
+
+/*.uk-table td, .uk-table th {
+    padding: 8px 18px;
+    border-bottom: 1px solid #ddd;
+}*/
+
+table{
+    width:100%;
+}
+td{
+    height:24px;
+    width:50px;/** 固定单元格宽度，防止分离表头后，表头与数据行错位（缺点） */
+    /*line-height:24px;*/
+    line-height:28px;
+    padding:3px 5px;
+    /*background-color:#ddd;*/
+    word-break:break-all;/** 设置当文本过长时换行 */
+
+}
+
+th{
+    height:24px;
+    width:50px;/** 不管是固定像素或是百分比，应与对应数据列的宽度一致 */
+    line-height:24px;
+    background-color:#cfc;
 }
 
 /*
