@@ -12,11 +12,10 @@ import java.util.List;
  */
 public class AdjustDeviceAction extends SuperAction {
 
-    public String getAllAdjustDeviceException() throws Exception {
+    public void getAllAdjustDeviceException() throws Exception {
         AdjustDeviceDAOImpl adjustProcessDAO = DAOFactory.getAdjustDeviceDAOImplInstance();
         List<RG_AdjustDeviceEntity> adjustDeviceEntityList = adjustProcessDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(adjustDeviceEntityList);
         Tools.jsonPrint(jsonString, httpServletResponse);
-        return "success";
     }
 }

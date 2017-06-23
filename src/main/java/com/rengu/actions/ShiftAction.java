@@ -21,52 +21,45 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         return this.rg_shiftEntity;
     }
 
-    public String getAllShift() throws Exception {
+    public void getAllShift() throws Exception {
         ShiftDAO shiftDAO = DAOFactory.getShiftInstance();
         List list = shiftDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
         System.out.println(jsonString);
-        return "success";
     }
 
     public void findAllByUsername() throws Exception {
 
     }
 
-    public String save() throws Exception {
+    public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.save(rg_shiftEntity)) {
-            return "success";
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
-            return "success";
         }
     }
 
-    public String delete() throws Exception {
+    public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.delete(rg_shiftEntity)) {
-            return "success";
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
-            return "success";
         }
     }
 
-    public String update() throws Exception {
+    public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.update(rg_shiftEntity)) {
-            return "success";
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
-            return "success";
         }
 
     }
