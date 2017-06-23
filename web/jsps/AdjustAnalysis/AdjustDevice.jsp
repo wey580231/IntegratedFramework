@@ -161,21 +161,6 @@
                     <div class="fixtable-body" style="height: 75%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>1001</td>
-                                <td>2017-06-01</td>
-                                <td>2017-06-02</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>待定</td>
-                                <td>APS应急</td>
-                                <td>MES</td>
-                            </tr>
 
                             </tbody>
 

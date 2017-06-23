@@ -283,23 +283,7 @@
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
 
                             <tbody class="uk-text-center">
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>1001</td>
-                                <td>待定</td>
-                                <td>未知</td>
-                                <td>待定</td>
-                                <td>500</td>
-                                <td>5</td>
-                                <td>2017-6-2</td>
-                                <td>2017-6-2</td>
-                                <td>2017-6-2</td>
-                                <td>未知</td>
-                                <td>交期承诺</td>
-                                <td>MES</td>
 
-                            </tr>
                             </tbody>
 
                         </table>
