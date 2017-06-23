@@ -116,7 +116,7 @@ public class ErrorProcessDao {
     private void createSnapNode() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Query query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
-        query.setParameter("id", GlobalVariable.RootSnapshotId);
+        query.setParameter("id", UserConfigTools.getRootSnapId("1"));
         List list = query.list();
         if (list.size() > 0 && list.get(0) instanceof RG_SnapshotNodeEntity) {
             RG_SnapshotNodeEntity rootSnapshot = (RG_SnapshotNodeEntity) list.get(0);
@@ -127,6 +127,8 @@ public class ErrorProcessDao {
             middleSnapshot.setLevel(SnapshotLevel.MIDDLE);
             middleSnapshot.setParent(rootSnapshot);
             middleSnapshot.setRootParent(rootSnapshot);
+
+            UserConfigTools.updateMiddleSnapshotId("1",middleSnapshot.getId(),true);
 
             rootSnapshot.getChilds().add(middleSnapshot);
             session.save(rootSnapshot);

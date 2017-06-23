@@ -28,23 +28,23 @@ public class Device3DAO {
 
         //【1】订单主表
         ObjectNode deviceData = mapper.createObjectNode();
-        deviceData.put("idResource", "");
-        deviceData.put("resourceName", "");
-        deviceData.put("manufacturer", "");
-        deviceData.put("idTask", "");
-        deviceData.put("ordToParentTask", "");
-        deviceData.put("idClub", "");
-        deviceData.put("idProduct", "");
-        deviceData.put("productName", "");
-        deviceData.put("t1Task", "");
-        deviceData.put("t2Task", "");
-        deviceData.put("currTime", "");
-        deviceData.put("t1RealTask", "");
-        deviceData.put("t2RealTask", "");
-        deviceData.put("state", "");
-        deviceData.put("bootstrapTime", "");
-        deviceData.put("awaitTime", "");
-        deviceData.put("processTime", "");
+        deviceData.put("idResource", "UR5");
+        deviceData.put("resourceName", "UR5");
+        deviceData.put("manufacturer", "UR5");
+        deviceData.put("idTask", "abc");
+        deviceData.put("ordToParentTask", 12);
+        deviceData.put("idClub", "sfs");
+        deviceData.put("idProduct", "sd");
+        deviceData.put("productName", "232a");
+        deviceData.put("t1Task", "asdf");
+        deviceData.put("t2Task", "asdf");
+        deviceData.put("currTime", "asdf");
+        deviceData.put("t1RealTask", "23ad");
+        deviceData.put("t2RealTask", "asdfbaf");
+        deviceData.put("state", 1);
+        deviceData.put("bootstrapTime", 0.2);
+        deviceData.put("awaitTime", 0.4);
+        deviceData.put("processTime", 0.3);
 
         root.put("data", deviceData);
 

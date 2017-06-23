@@ -14,6 +14,8 @@ import org.hibernate.query.Query;
 
 import javax.tools.Tool;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -66,6 +68,8 @@ public class State3DAO {
 
         String jsonString = "";
 
+        System.out.println("getLayoutById：：：" + session.hashCode());
+
         Query query = session.createQuery("from RG_LayoutEntity layout where layout.name = :name");
         query.setParameter("name", s);
         List list = query.list();
@@ -92,11 +96,14 @@ public class State3DAO {
 
         RG_LayoutDetailEntity[] arr = new RG_LayoutDetailEntity[0];
         try {
-            arr = objectMapper.readValue(data, RG_LayoutDetailEntity[].class);
+            String newData = URLDecoder.decode(data);
+            arr = objectMapper.readValue(newData, RG_LayoutDetailEntity[].class);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
+
+        boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -111,19 +118,21 @@ public class State3DAO {
             while (iter.hasNext()) {
                 RG_LayoutDetailEntity detail = iter.next();
                 for (int i = 0; i < arr.length; i++) {
-                    if (detail.getId() == arr[i].getId()) {
+                    if (detail.getId().equals(arr[i].getId())) {
+                        System.out.println(detail.getId()+"__"+arr[i].getId()+"__"+arr[i].getExist());
                         detail.setPos(arr[i].getPos());
                         detail.setState(arr[i].getState());
                         detail.setItem(arr[i].getItem());
+                        detail.setExist(arr[i].getExist());
+                        session.update(detail);
                         break;
                     }
                 }
             }
-            session.update(entity);
-            return true;
+            flag = true;
         }
         session.getTransaction().commit();
-        return false;
+        return flag;
     }
 
     //插入新布局
@@ -132,7 +141,8 @@ public class State3DAO {
 
         RG_LayoutDetailEntity[] arr = new RG_LayoutDetailEntity[0];
         try {
-            arr = objectMapper.readValue(data, RG_LayoutDetailEntity[].class);
+            String newData = URLDecoder.decode(data);
+            arr = objectMapper.readValue(newData, RG_LayoutDetailEntity[].class);
         } catch (IOException e) {
             e.printStackTrace();
             return false;

@@ -29,7 +29,7 @@
         <many-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" unique="true"/>
         
         <set name="plans" cascade="all" inverse="true">
-            <key column="plan_id"></key>
+            <key column="idSnapshort"></key>
             <one-to-many class="com.rengu.entity.RG_PlanEntity" />
         </set>
 

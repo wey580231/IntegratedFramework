@@ -1,10 +1,10 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.rengu.DAO.impl.ScheduleDAOImpl;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.util.*;
+import org.hibernate.Session;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -152,37 +152,35 @@ public class ScheduleAction extends SuperAction {
             rootSnapshot.setSchedule(rg_scheduleEntity);
             rg_scheduleEntity.setSnapshot(rootSnapshot);
 
-            GlobalVariable.RootSnapshotId = rootSnapshot.getId();
-            GlobalVariable.MiddleSnapshotId = middleShot.getId();
-            GlobalVariable.IsErrorSchedule = false;
-
-            //提交保存
-            ScheduleDAOImpl scheduleDAOImplInstance = DAOFactory.getScheduleDAOImplInstance();
-
             //调用排程接口
-            int result = ApsTools.instance().startAPSSchedule();
+            int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
 
             if (result == ApsTools.STARTED) {
 
-                scheduleDAOImplInstance.save(rg_scheduleEntity);
+                Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+                session.beginTransaction();
 
-                Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
+                //TODO 需要前端传入当前创建排程用户的ID信息
+                int updateResult = UserConfigTools.newScheduleRecord("1",rg_scheduleEntity.getId(), rootSnapshot.getId(), middleShot.getId(), false);
+                if (updateResult > 0) {
+                    session.save(rg_scheduleEntity);
+                    session.getTransaction().commit();
+                    Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
+                } else {
+                    printError();
+                }
+
             } else {
-
-
-                Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+                printError();
             }
         } catch (Exception e) {
             e.printStackTrace();
 
-            GlobalVariable.RootSnapshotId = "";
-            GlobalVariable.MiddleSnapshotId = "";
-            GlobalVariable.IsErrorSchedule = false;
-            GlobalVariable.ApsReplyCount = 0;
-
-            Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
-        } finally {
-
+            printError();
         }
+    }
+
+    private void printError() {
+        Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
     }
 }

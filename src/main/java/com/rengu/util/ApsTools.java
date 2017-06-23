@@ -75,7 +75,7 @@ public class ApsTools {
         return apsTool;
     }
 
-        //TODO 待将连接修改成APS提供的访问连接
+    //TODO 待将连接修改成APS提供的访问连接
     //获取紧急插单
 //    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
 //
@@ -170,7 +170,7 @@ public class ApsTools {
             if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
 
-                rg_planEntity.setId(Tools.getTimestamp());
+                rg_planEntity.setId(Tools.getUUID());
 
 //                Map tempMap = (HashMap) object;
 //                rg_planEntity.setIdTask(tempMap.get("idTask").toString());
@@ -348,6 +348,7 @@ public class ApsTools {
         } else if (result.contains("busy")) {
             return ApsTools.BUSY_EXECUTE;
         }
+
         return ApsTools.UNKNOWN;
     }
 
@@ -373,16 +374,17 @@ public class ApsTools {
         return ApsTools.UNKNOWN;
     }
 
-    public int startAPSSchedule() {
+    public int startAPSSchedule(String middleId) {
         String cmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n" +
                 "&" +
                 "REPLY=" + getReplyAddress() +
                 "&" +
-                "ID=" + GlobalVariable.MiddleSnapshotId + "" +
+                "ID=" + middleId + "" +
                 "&" +
                 "DELAY=1000000" +
                 "&" +
                 "buffer=001";
+
         return executeCommand(cmd);
     }
 
