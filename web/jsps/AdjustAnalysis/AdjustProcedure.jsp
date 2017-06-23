@@ -159,20 +159,6 @@
                     <div class="fixtable-body" style="height: 78%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>未处理</td>
-                                <td>Kqd</td>
-                                <td>2017-05-17</td>
-                                <td>01</td>
-                                <td>2017-05-11</td>
-                                <td>02</td>
-                                <td>2017-05</td>
-                                <td>12</td>
-                                <td>APS处理</td>
-                                <td>MES</td>
-
-                            </tr>
                             </tbody>
 
                         </table>

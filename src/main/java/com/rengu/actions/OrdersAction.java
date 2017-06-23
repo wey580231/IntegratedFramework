@@ -12,53 +12,46 @@ import java.util.List;
  * Created by hanchangming on 2017/5/24.
  */
 public class OrdersAction extends SuperAction {
-    public String getAllOrders() throws Exception {
+    public void getAllOrders() throws Exception {
         OrdersDAO ordersDAO = DAOFactory.getOrdersDAOInstance();
         List list = ordersDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
         System.out.println(jsonString);
-        return "success";
     }
 
     public void findAllByUsername() throws Exception {
 
     }
 
-    public String save() throws Exception {
+    public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         rg_orderEntity.setId(Tools.getUUID());
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.save(rg_orderEntity)) {
-            return "success";
         } else {
             System.out.println("保存失败");
-            return "success";
         }
     }
 
-    public String delete() throws Exception {
+    public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.delete(rg_orderEntity)) {
-            return "success";
         } else {
             System.out.println("删除失败");
-            return "success";
         }
     }
 
-    public String update() throws Exception {
+    public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.update(rg_orderEntity)) {
-            return "success";
         } else {
             System.out.println("更新失败");
-            return "success";
         }
 
     }

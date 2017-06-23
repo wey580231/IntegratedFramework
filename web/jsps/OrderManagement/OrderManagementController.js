@@ -39,7 +39,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var nameVal = $("input[name='add-name']").val();
             var originVal = $("input[name='add-origin']").val();
             //var idProductVal = $("input[name='add-idProduct']").val();
-            //var quantityVal = $("input[name='add-quantity']").val();
+            var quantityVal = $("input[name='add-quantity']").val();
             var priorityVal = $("input[name='add-priority']").val();
             var t0Val = $("input[name='add-t0']").val();
             var t1Val = $("input[name='add-t1']").val();
@@ -49,11 +49,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.name = nameVal;
             params.origin = originVal;
             // params.idProduct = parseInt(idProductVal);
-            //params.quantity = quantityVal;
+            params.quantity = quantityVal;
             params.priority = priorityVal;
-            params.t1 = t1Val;
-            params.t2 = t2Val;
-            params.t0 = t0Val;
+            params.t1 = Date.parse(t1Val);
+            params.t2 = Date.parse(t2Val);
+            params.t0 = Date.parse(t0Val);
+            document.write(params.t0);
             var data = JSON.stringify(params);
             console.log(data);
             $("#add").hide();
@@ -113,7 +114,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
-                console.log(response.data);
+                console.log(response.status);
                //强制刷新解决按钮不能连续响应
                 setTimeout('window.location.reload();',1);
                 //setTimeout(reload(),3000);
@@ -135,10 +136,11 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     params.id = rows[row].cells[1].innerHTML;
                     params.name = rows[row].cells[2].innerHTML;
                     params.origin = rows[row].cells[3].innerHTML;
-                    params.priority = rows[row].cells[4].innerHTML;
-                    params.t0 = rows[row].cells[5].innerHTML;
-                    params.t1 = rows[row].cells[6].innerHTML;
-                    params.t2 = rows[row].cells[7].innerHTML;
+                    params.quantity = rows[row].cells[4].innerHTML;
+                    params.priority = rows[row].cells[5].innerHTML;
+                    params.t0 = rows[row].cells[6].innerHTML;
+                    params.t1 = rows[row].cells[7].innerHTML;
+                    params.t2 = rows[row].cells[8].innerHTML;
                     console.log(params);
                     arr.push(params);
                     $scope.form = arr;
@@ -151,7 +153,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var nameVal = $("input[name='edit-name']").val();
             var originVal = $("input[name='edit-origin']").val();
             //var idProductVal = $("input[name='edit-idProduct']").val();
-            //var quantityVal = $("input[name='edit-quantity']").val();
+            var quantityVal = $("input[name='edit-quantity']").val();
             var priorityVal = $("input[name='edit-priority']").val();
             var t0Val = $("input[name='edit-t0']").val();
             var t1Val = $("input[name='edit-t1']").val();
@@ -164,7 +166,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.t0 = t0Val;
             params.t1 = t1Val;
             params.t2 = t2Val;
-            //params.quantity = quantityVal;
+            params.quantity = quantityVal;
             //params.idProduct = idProductVal;
             var data = JSON.stringify(params);
             console.log(data);

@@ -145,18 +145,7 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>未知</td>
-                                <td>未知</td>
-                                <td>待定</td>
-                                <td>2017-06-01</td>
-                                <td>未知</td>
-                                <td>待定</td>
-                                <td>待定</td>
 
-                            </tr>
                             </tbody>
 
                         </table>

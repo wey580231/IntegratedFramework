@@ -56,26 +56,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-            <td>表格项目一</td>
-        </tr>
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-            <td>表格项目二</td>
-        </tr>
+
         </tbody>
 
     </table>

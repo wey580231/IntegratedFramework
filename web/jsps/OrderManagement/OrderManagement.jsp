@@ -125,7 +125,8 @@ position: absolute;
                                 <td>编码</td>
                                 <td>名称</td>
                                 <td>来源</td>
-                                <!--<td>数量</td>-->
+                                <!--<td>产品名称</td>-->
+                                <td>数量</td>
                                 <td>优先级</td>
                                 <td>下单时间</td>
                                 <td>最早开工</td>
@@ -141,13 +142,12 @@ position: absolute;
 
                             <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
-
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="orderId" value="{{x.id}}">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="origin">{{x.origin}}</td>
-                               <!-- <td id="idProduct">{{x.idProduct}}</td>
-                                <td id="quantity">{{x.quantity}}</td>-->
+                               <!-- <td id="idProduct">{{x.idProduct}}</td>-->
+                                <td id="quantity">{{x.quantity}}</td>
                                 <td id="priority">{{x.priority}}</td>
                                 <td id="t0">{{x.t0}}</td>
                                 <td id="t1">{{x.t1}}</td>
@@ -212,17 +212,32 @@ position: absolute;
                     <label for="add-origin">来源</label><br/>
                     <input type="text" name="add-origin" id="add-origin" class="text ui-widget-content ui-corner-all"><br/>
                    <!-- <label for="add-idProduct">产品名称</label><br/>
-                    <input type="text" name="add-idProduct" id="add-idProduct" class="text ui-widget-content ui-corner-all"><br/>
+                    <input type="text" name="add-idProduct" id="add-idProduct" class="text ui-widget-content ui-corner-all"><br/>-->
                     <label for="add-quantity">数量</label><br/>
-                    <input type="text" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>-->
+                    <input type="text" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-priority">优先级</label><br/>
                     <input type="text" name="add-priority" id="add-priority" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-t0">下单时间</label><br/>
-                    <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-t1">最早开工</label><br/>
-                    <input type="text" name="add-t1" id="add-t1" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-t2">最晚开工</label><br/>
-                    <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="datepicker add-t0">下单时间</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker add-t0"   name="add-t0" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>--%>
+                    <label for="datepicker add-t1">最早开工</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker add-t1"   name="add-t1" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="add-t1" id="add-t1" class="text ui-widget-content ui-corner-all"><br/>--%>
+                    <label for="datepicker add-t2">最晚开工</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker add-t2"   name="add-t2" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>--%>
                 </fieldset>
             </form>
         </div>
@@ -247,9 +262,9 @@ position: absolute;
                     <label for="edit-origin">来源</label><br/>
                     <input type="text" name="edit-origin" id="edit-origin" class="text ui-widget-content ui-corner-all" value="{{x.origin}}"><br/>
                     <!--<label for="edit-idProduct">产品名称</label><br/>
-                    <input type="text" name="edit-idProduct" id="edit-idProduct" class="text ui-widget-content ui-corner-all" value="{{x.idProduct}}"><br/>
+                    <input type="text" name="edit-idProduct" id="edit-idProduct" class="text ui-widget-content ui-corner-all" value="{{x.idProduct}}"><br/>-->
                     <label for="edit-quantity">数量</label><br/>
-                    <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>-->
+                    <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>
                     <label for="edit-priority">优先级</label><br/>
                     <input type="text" name="edit-priority" id="edit-priority" class="text ui-widget-content ui-corner-all" value="{{x.priority}}"><br/>
                     <label for="edit-t0">下单时间</label><br/>
