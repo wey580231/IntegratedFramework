@@ -217,12 +217,27 @@ position: absolute;
                     <input type="text" name="add-quantity" id="add-quantity" class="text ui-widget-content ui-corner-all"><br/>-->
                     <label for="add-priority">优先级</label><br/>
                     <input type="text" name="add-priority" id="add-priority" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-t0">下单时间</label><br/>
-                    <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-t1">最早开工</label><br/>
-                    <input type="text" name="add-t1" id="add-t1" class="text ui-widget-content ui-corner-all"><br/>
-                    <label for="add-t2">最晚开工</label><br/>
-                    <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
+                    <label for="datepicker add-t0">下单时间</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker add-t0"   name="add-t0" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>--%>
+                    <label for="datepicker add-t1">最早开工</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker add-t1"   name="add-t1" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="add-t1" id="add-t1" class="text ui-widget-content ui-corner-all"><br/>--%>
+                    <label for="datepicker add-t2">最晚开工</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker add-t2"   name="add-t2" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>--%>
                 </fieldset>
             </form>
         </div>

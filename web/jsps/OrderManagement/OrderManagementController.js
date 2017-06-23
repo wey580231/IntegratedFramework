@@ -51,9 +51,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             // params.idProduct = parseInt(idProductVal);
             //params.quantity = quantityVal;
             params.priority = priorityVal;
-            params.t1 = t1Val;
-            params.t2 = t2Val;
-            params.t0 = t0Val;
+            params.t1 = Date.parse(t1Val);
+            params.t2 = Date.parse(t2Val);
+            params.t0 = Date.parse(t0Val);
+            /*document.write(params.t0);*/
             var data = JSON.stringify(params);
             console.log(data);
             $("#add").hide();
