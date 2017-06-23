@@ -12,11 +12,13 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
     .controller('ScheduleGuideController', function ($scope, $http, myHttpService, serviceList) {
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var operateId;
-        var ordId;
+        var lastScheduleDays0;
+        var date0;
+        /*var ordId;
         var resId;
         var resGroId;
         var siteId;
-        var layId;
+        var layId;*/
 
         //重新加载页面，取消选中状态
         var reload = function () {
@@ -192,30 +194,32 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         }
 
         $scope.showSchedule = function () {
-            var obj;
-
+            //获取上次排程信息
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log(response.status);
                 console.log(response.data);
                 var obj = response.data;
+                lastScheduleDays0 = parseInt(obj[0].startCalcTime);
+                date0 = new Date(obj[0].lastScheduleDays);
             }, function errorCallback(response) {
                 console.log("请求失败");
             });
 
             //当前排程时间长度（b）
             var scheduleDays = $("input[name='add-scheduleDays']").val();
-            console.log(scheduleDays);
+            console.log("当前排程时间长度"+scheduleDays);
 
             //上次排程时间长度（c）
             //var data = eval('(' + obj + ')');
-            var lastScheduleDays = parseInt(obj[0].startCalcTime);
+            var lastScheduleDays = lastScheduleDays0;
+            console.log("上次排程时间长度"+lastScheduleDays);
             //var lastScheduleDays = 7;
 
             //距上次开始排程的日期差(c)
             var myDate = new Date();
-            var date = new Date(obj[0].lastScheduleDays);
+            var date =date0 ;
             var temDays = (myDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
-            console.log(temDays);
+            console.log("距上次开始排程的日期差"+temDays);
             //var tempDays = 30;
 
             //排程开始时间
