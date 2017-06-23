@@ -217,6 +217,7 @@ ng-click="showSite()">点击选择需要排程的资源工位
 <div class="uk-modal uk-overflow-container" id="chooseOrder">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
+        <h3 class="validateTips">请选择需要排程的订单</h3>
         <div class="uk-overflow-container" style="height: 96%;">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
@@ -233,8 +234,6 @@ ng-click="showSite()">点击选择需要排程的资源工位
                                 <td>编码</td>
                                 <td>名称</td>
                                 <td>来源</td>
-                                <td>产品名</td>
-                                <td>数量</td>
                                 <td>优先级</td>
                                 <td>下单时间</td>
                                 <td>最早开工</td>
@@ -245,16 +244,14 @@ ng-click="showSite()">点击选择需要排程的资源工位
                     </div>
 
                     <div class="fixtable-body" style="height: 83%;">
-                        <table class="uk-table uk-table-striped uk-table-hover " id="order" style="width:100%">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="orders" style="width:100%">
                             <tbody class="uk-text-center">
                             <tr id="first" ng-repeat="x in ord | orderBy: 'id':desc">
-                                <td><input id="check1" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                <td><input id="check1" name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="origin">{{x.origin}}</td>
-                                <td id="idProduct">{{x.idProduct}}</td>
-                                <td id="quantity">{{x.quantity}}</td>
                                 <td id="priority">{{x.priority}}</td>
                                 <td id="t0">{{x.t0}}</td>
                                 <td id="t1">{{x.t1}}</td>
@@ -272,7 +269,7 @@ ng-click="showSite()">点击选择需要排程的资源工位
                             <button class="uk-button my" data-uk-modal="{target:'#schedule'}"><a href="">上一页</a></button>
                         </li>
                         <li>
-                            <button class="uk-button my" ng-click="checkOrId();choosedOrder();orderHide()" data-uk-modal="{target:'#color_table'}"><a href="">下一页</a></button>
+                            <button class="uk-button my" ng-click="choosedOrder();orderHide()" data-uk-modal="{target:'#color_table'}"><a href="">下一页</a></button>
                         </li>
                     </ul>
                 </div>
@@ -543,7 +540,7 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                 </li>
             </ul>
         </div>
-        <div class="uk-overflow-container">
+        <div class="uk-overflow-container" >
             <div id='calendar'></div>
         </div>
     </div>
@@ -554,6 +551,7 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
 <div class="uk-modal uk-overflow-container" id="color_table">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
+        <h3 class="validateTips">进行排程的订单</h3>
         <div class="uk-overflow-container" style="height: 96%;">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
@@ -570,8 +568,8 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td>编码</td>
                                 <td>名称</td>
                                 <td>来源</td>
-                                <td>产品名</td>
-                                <td>数量</td>
+                                <!--<td>产品名</td>
+                                <td>数量</td>-->
                                 <td>优先级</td>
                                 <td>下单时间</td>
                                 <td>最早开工</td>
@@ -582,16 +580,14 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                     </div>
 
                     <div class="fixtable-body" style="height: 83%;">
-                        <table class="uk-table uk-table-striped uk-table-hover " id="order" style="width:100%">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="ordered" style="width:100%">
                             <tbody class="uk-text-center">
-                            <tr id="first" ng-repeat="x in form | orderBy: 'id':desc ">
-                                <td><input id="check1" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                            <tr id="first" ng-repeat="x in form">
+                                <td><input id="check" name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <td id="id">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="origin">{{x.origin}}</td>
-                                <td id="idProduct">{{x.idProduct}}</td>
-                                <td id="quantity">{{x.quantity}}</td>
                                 <td id="priority">{{x.priority}}</td>
                                 <td id="t0">{{x.t0}}</td>
                                 <td id="t1">{{x.t1}}</td>
@@ -609,7 +605,7 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                             <button class="uk-button my" data-uk-modal="{target:'#chooseOrder'}"><a href="">上一页</a></button>
                         </li>
                         <li>
-                            <button class="uk-button my" ng-click="configAPS();"><a href="">开始排程</a></button>
+                            <button class="uk-button my" ng-click="configAPS();hide()"><a href="">开始排程</a></button>
                         </li>
                     </ul>
                 </div>
@@ -618,6 +614,8 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
         </div>
     </div>
 </div>
+
+
 </div>
 
 

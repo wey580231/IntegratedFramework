@@ -77,9 +77,17 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         //勾选订单后，点击确定，记录所选id
         $scope.checkOrId = function () {
             ordId = operateId;
+            conlose.log(ordId);
         }
+
+        //隐藏选择订单窗口
         $scope.orderHide = function () {
-            $("#chooseOrder").hide()
+            $("#chooseOrder").hide();
+        }
+
+       //隐藏已订单窗口
+        $scope.hide=function(){
+            $("#color_table").hide();
         }
 
         //勾选资源后，记录所选id
@@ -106,7 +114,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
          $("#chooseSite").hide()
          }*/
 
-
         //排程
         $scope.configAPS = function () {
             alert("开始");
@@ -122,7 +129,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             APSconfigs.t2 = parseInt(t2Val);
 
             var orders = {};
-            orders.id = ordId;
+            orders.id = operateId;
 
             var layouts = {};
             layouts.id = 1;
@@ -187,11 +194,11 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         $scope.showSchedule = function () {
             var obj;
 
-            myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response)  {
+            myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log(response.status);
                 console.log(response.data);
                 var obj = response.data;
-            },function errorCallback(response) {
+            }, function errorCallback(response) {
                 console.log("请求失败");
             });
 
@@ -200,16 +207,16 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             console.log(scheduleDays);
 
             //上次排程时间长度（c）
-            var data = eval('(' + obj + ')');
-            //var lastScheduleDays = obj.startCalcTime;
-            var lastScheduleDays = 7;
-            //JSONArray getJsonArray=JSONArray.fromObject(arrayStr);//将结果转换成JSONArray对象的形式
-            //JSONObject getJsonObj = getJsonArray.getJSONObject(0);
-            //String result =getJsonObj.getJSONObject("name").
+            //var data = eval('(' + obj + ')');
+            var lastScheduleDays = parseInt(obj[0].startCalcTime);
+            //var lastScheduleDays = 7;
 
             //距上次开始排程的日期差(c)
-            var myDate=new Date();
-            var tempDays = myDate.toLocaleDateString()-lastScheduleDays;
+            var myDate = new Date();
+            var date = new Date(obj[0].lastScheduleDays);
+            var temDays = (myDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
+            console.log(temDays);
+            //var tempDays = 30;
 
             //排程开始时间
             var startTime = moment().format("YYYY-MM-DD");
@@ -262,12 +269,14 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         }
 
         $scope.choosedOrder = function () {
-            var rows = document.getElementById("chooseOrder").rows;
-            var a = document.getElementsByName("check");
-            var table = document.getElementById("chooseOrder");
+            var rows = document.getElementById("orders").rows;
+            var a = document.getElementsByName("check1");
+            console.log(a.length);
+            var table = document.getElementById("orders");
             var arr = new Array();
 
             for (var i = 0; i < a.length; i++) {
+                console.log(a[i].checked);
                 if (a[i].checked) {
                     var row = a[i].parentElement.parentElement.rowIndex;
                     console.log(row);

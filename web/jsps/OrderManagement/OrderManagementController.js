@@ -14,11 +14,19 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var operateId;
 
-
         //加载页面时数据显示
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             console.log(response.data);
             $scope.arr = response.data;
+            /*var obj = response.data;
+            //var data = eval('(' + obj + ')');
+            var name=obj[0].id;
+            console.log(name);
+            console.log(parseInt(name));
+            var date1 = new Date();
+            var date2 = new Date(obj[0].t2);
+            var date=(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24);
+            console.log(date);*/
         });
 
         //重新加载页面信息
