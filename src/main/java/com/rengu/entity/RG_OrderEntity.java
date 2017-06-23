@@ -1,5 +1,6 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -126,6 +127,7 @@ public class RG_OrderEntity {
         this.priority = priority;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getT0() {
         return t0;
     }
@@ -134,6 +136,7 @@ public class RG_OrderEntity {
         this.t0 = t0;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getT1() {
         return t1;
     }
@@ -142,6 +145,7 @@ public class RG_OrderEntity {
         this.t1 = t1;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getT2() {
         return t2;
     }
