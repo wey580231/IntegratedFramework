@@ -110,16 +110,7 @@
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>1</td>
-                                <td>KQD生产</td>
-                                <td>40%</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:00</td>
-                                <td>2017-05-17 08:01</td>
-                                <td>计算完成</td>
-                            </tr>
+
                             </tbody>
                         </table>
                     </div>

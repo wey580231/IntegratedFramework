@@ -201,8 +201,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
             //上次排程时间长度（c）
             var data = eval('(' + obj + ')');
-            var lastScheduleDays = data.startCalcTime;
-
+            //var lastScheduleDays = obj.startCalcTime;
+            var lastScheduleDays = 7;
             //JSONArray getJsonArray=JSONArray.fromObject(arrayStr);//将结果转换成JSONArray对象的形式
             //JSONObject getJsonObj = getJsonArray.getJSONObject(0);
             //String result =getJsonObj.getJSONObject("name").
