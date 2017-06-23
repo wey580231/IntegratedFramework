@@ -54,7 +54,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.t1 = Date.parse(t1Val);
             params.t2 = Date.parse(t2Val);
             params.t0 = Date.parse(t0Val);
-            /*document.write(params.t0);*/
+            document.write(params.t0);
             var data = JSON.stringify(params);
             console.log(data);
             $("#add").hide();
@@ -114,7 +114,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
-                console.log(response.data);
+                console.log(response.status);
                //强制刷新解决按钮不能连续响应
                 setTimeout('window.location.reload();',1);
                 //setTimeout(reload(),3000);

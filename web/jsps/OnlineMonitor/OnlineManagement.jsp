@@ -98,19 +98,7 @@
                     <div class="fixtable-body" style="height: 78%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
-                            <tr>
-                                <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                <td>kqd</td>
-                                <td>空气舵产品装配</td>
-                                <td>云排产</td>
-                                <td>20</td>
-                                <td>10</td>
-                                <td>否</td>
-                                <td>否</td>
-                                <td>2017-05-19</td>
-                                <td>2017-05-19</td>
 
-                            </tr>
 
                             </tbody>
 

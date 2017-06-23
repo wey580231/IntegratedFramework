@@ -207,6 +207,9 @@ position: absolute;
                                 <%--<td>编码</td>--%>
                                 <td>名称</td>
                                 <td>来源</td>
+
+                                <!--<td>产品名称</td>-->
+
                                 <td>数量</td>
                                 <td>优先级</td>
                                 <td>下单时间</td>
@@ -223,7 +226,6 @@ position: absolute;
 
                             <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
-
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                 <%--<td id="orderId" value="{{x.id}}">{{x.id}}</td>--%>
                                 <td id="name">{{x.name}}</td>
