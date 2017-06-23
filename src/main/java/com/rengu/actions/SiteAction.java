@@ -21,52 +21,45 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         return this.rg_siteEntity;
     }
 
-    public String getAllSite() throws Exception {
+    public void getAllSite() throws Exception {
         SiteDAO siteDAO = DAOFactory.getSiteInstance();
         List list = siteDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
         System.out.println(jsonString);
-        return "success";
     }
 
     public void findAllByUsername() throws Exception {
 
     }
 
-    public String save() throws Exception {
+    public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.save(rg_siteEntity)) {
-            return "success";
         } else {
             WebSocketNotification.sendMessage("保存失败", "username");
-            return "success";
         }
     }
 
-    public String delete() throws Exception {
+    public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.delete(rg_siteEntity)) {
-            return "success";
         } else {
             WebSocketNotification.sendMessage("删除失败", "username");
-            return "success";
         }
     }
 
-    public String update() throws Exception {
+    public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.update(rg_siteEntity)) {
-            return "success";
         } else {
             WebSocketNotification.sendMessage("更新失败", "username");
-            return "success";
         }
 
     }
