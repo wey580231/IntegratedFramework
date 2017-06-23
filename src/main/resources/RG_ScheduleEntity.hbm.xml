@@ -76,8 +76,6 @@
             <many-to-many class="com.rengu.entity.RG_SiteEntity" column="site_id"/>
         </set>
 
-        <!--<many-to-one name="snapshot" class="com.rengu.entity.RG_SnapshotNodeEntity" column="snapId" unique="true"/>-->
-
         <one-to-one name="snapshot" property-ref="schedule" cascade="all"/>
 
     </class>
