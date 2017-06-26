@@ -14,6 +14,9 @@
         <property name="level">
             <column name="level" sql-type="varchar(255)" not-null="false"/>
         </property>
+        <property name="apply">
+            <column name="apply" sql-type="tinyint(1)" not-null="false"></column>
+        </property>
 
         <many-to-one name="parent" column="s_id" class="com.rengu.entity.RG_SnapshotNodeEntity"/>
 

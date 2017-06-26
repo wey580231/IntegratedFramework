@@ -99,6 +99,7 @@
         <action name="config3D" class="com.rengu.actions.d3.State3DAction" method="config3DLayout"/>
         <action name="set3DLayout" class="com.rengu.actions.d3.State3DAction" method="insertOrUpdateLayout"/>
         <action name="get3DLayout" class="com.rengu.actions.d3.State3DAction" method="query3DLayout"/>
+        <action name="updateDevice" class="com.rengu.actions.d3.State3DAction" method="updateDeviceState"/>
 
         <!--设备报表-->
         <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>
