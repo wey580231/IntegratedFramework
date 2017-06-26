@@ -272,13 +272,13 @@
         /*overflow: auto;*/position: absolute;top: 60px;bottom: 0px;
 
         padding-left: 5px;
-        padding-right: 15px;
+        padding-right: 5px;
 ">
 
             <div style="margin-top: 15px;/*border: 1px solid lightgray;*/border-top: 1px solid lightgray;/*margin-left: 1%;width: 98%;*/width: 100%;height: 96%;/*height: 97%;*/background-color: #dfe8ef;
 
-            padding-left: 5px;
-            padding-right: 5px;
+            /*padding-left: 5px;
+            padding-right: 5px;*/
 
             /*top: 15px;
             bottom: 10px;
