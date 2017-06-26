@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class RG_OrderEntity {
     private String id;
     private String name;

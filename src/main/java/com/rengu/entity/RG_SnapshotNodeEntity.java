@@ -15,13 +15,14 @@ public class RG_SnapshotNodeEntity {
     private String id;                      //UUID
     private String name;                    //节点名称
 
+    private Boolean apply;                  //是否下发mes,当bottm下发之后，将其父节点(middle节点)状态更新为true，防止重复下发
     private String level;                   //节点层级(top、middle、bottom)
 
     //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private Set<RG_SnapshotNodeEntity> childs = new HashSet<RG_SnapshotNodeEntity>();      //子节点
-    private RG_SnapshotNodeEntity parent;           //父节点
-    private RG_SnapshotNodeEntity rootParent;       //根节点
-    private RG_ScheduleEntity schedule;             //排程记录
+    private RG_SnapshotNodeEntity parent;                              //父节点
+    private RG_SnapshotNodeEntity rootParent;                          //根节点
+    private RG_ScheduleEntity schedule;                                //排程记录
     private Set<RG_PlanEntity> plans = new HashSet<RG_PlanEntity>();               //计划表
 
     public String getId() {
@@ -40,6 +41,14 @@ public class RG_SnapshotNodeEntity {
         this.name = name;
     }
 
+    public Boolean getApply() {
+        return apply;
+    }
+
+    public void setApply(Boolean apply) {
+        this.apply = apply;
+    }
+
     public String getLevel() {
         return level;
     }
@@ -48,20 +57,20 @@ public class RG_SnapshotNodeEntity {
         this.level = level;
     }
 
-    public RG_SnapshotNodeEntity getParent() {
-        return parent;
-    }
-
-    public void setParent(RG_SnapshotNodeEntity parent) {
-        this.parent = parent;
-    }
-
     public Set<RG_SnapshotNodeEntity> getChilds() {
         return childs;
     }
 
     public void setChilds(Set<RG_SnapshotNodeEntity> childs) {
         this.childs = childs;
+    }
+
+    public RG_SnapshotNodeEntity getParent() {
+        return parent;
+    }
+
+    public void setParent(RG_SnapshotNodeEntity parent) {
+        this.parent = parent;
     }
 
     public RG_SnapshotNodeEntity getRootParent() {
@@ -97,6 +106,7 @@ public class RG_SnapshotNodeEntity {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (apply != null ? !apply.equals(that.apply) : that.apply != null) return false;
         return level != null ? level.equals(that.level) : that.level == null;
     }
 
@@ -104,6 +114,7 @@ public class RG_SnapshotNodeEntity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (apply != null ? apply.hashCode() : 0);
         result = 31 * result + (level != null ? level.hashCode() : 0);
         return result;
     }

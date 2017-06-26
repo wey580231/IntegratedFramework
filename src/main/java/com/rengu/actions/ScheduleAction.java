@@ -1,10 +1,13 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.rengu.DAO.impl.LayoutDAOImpl;
+import com.rengu.entity.RG_LayoutEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.util.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,6 +21,10 @@ import java.util.UUID;
 public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() {
+
+        Session session = null;
+        Transaction tx = null;
+
         //初始化数据库表
         try {
             String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
@@ -67,14 +74,16 @@ public class ScheduleAction extends SuperAction {
                 }
                 Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
-//        //解析Layout数据
-//        JsonNode layoutNode = rootNode.get("layout");
-//        RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
-//        LayoutDAOImpl layoutDAO = DAOFactory.getLayoutDAOImplInstance();
-//        RG_LayoutEntity rg_layoutEntity = layoutDAO.findAllById(rg_layoutEntityWithId.getId());
-//        rg_scheduleEntity.setLayout(rg_layoutEntity);
-//        layoutDAO.getTransaction().commit();
-//
+
+            session = MySessionFactory.getSessionFactory().getCurrentSession();
+            tx = session.beginTransaction();
+
+            //解析Layout数据
+            JsonNode layoutNode = rootNode.get("layout");
+            RG_LayoutEntity rg_layoutEntityWithId = Tools.jsonConvertToEntity(layoutNode.toString(), RG_LayoutEntity.class);
+            RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, rg_layoutEntityWithId.getId());
+            rg_scheduleEntity.setLayout(layout);
+
 //        //解析订单数据
 //        JsonNode orderNodes = rootNode.get("orders");
 //        Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<>();
@@ -152,30 +161,31 @@ public class ScheduleAction extends SuperAction {
             rootSnapshot.setSchedule(rg_scheduleEntity);
             rg_scheduleEntity.setSnapshot(rootSnapshot);
 
-            //调用排程接口
-            int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
+            //TODO 需要前端传入当前创建排程用户的ID信息
+            int updateResult = UserConfigTools.newScheduleRecord("1", rg_scheduleEntity.getId(), rootSnapshot.getId(), middleShot.getId(), false);
+            if (updateResult > 0) {
+                session.save(rg_scheduleEntity);
 
-            if (result == ApsTools.STARTED) {
+                //调用排程接口
+                int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
 
-                Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-                session.beginTransaction();
-
-                //TODO 需要前端传入当前创建排程用户的ID信息
-                int updateResult = UserConfigTools.newScheduleRecord("1",rg_scheduleEntity.getId(), rootSnapshot.getId(), middleShot.getId(), false);
-                if (updateResult > 0) {
-                    session.save(rg_scheduleEntity);
-                    session.getTransaction().commit();
+                if (result == ApsTools.STARTED) {
+                    tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                 } else {
+                    tx.rollback();
                     printError();
                 }
-
             } else {
+                tx.rollback();
                 printError();
             }
         } catch (Exception e) {
             e.printStackTrace();
 
+            if (tx != null) {
+                tx.rollback();
+            }
             printError();
         }
     }
