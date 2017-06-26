@@ -284,6 +284,7 @@
             bottom: 10px;
             position: absolute;
             overflow: hidden;*/
+            position: relative;
 ">
                 <ng-view></ng-view>
             </div>
