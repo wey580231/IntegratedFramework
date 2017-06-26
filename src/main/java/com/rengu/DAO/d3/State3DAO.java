@@ -119,7 +119,7 @@ public class State3DAO {
                 RG_LayoutDetailEntity detail = iter.next();
                 for (int i = 0; i < arr.length; i++) {
                     if (detail.getId().equals(arr[i].getId())) {
-                        System.out.println(detail.getId()+"__"+arr[i].getId()+"__"+arr[i].getExist());
+                        System.out.println(detail.getId() + "__" + arr[i].getId() + "__" + arr[i].getExist());
                         detail.setPos(arr[i].getPos());
                         detail.setState(arr[i].getState());
                         detail.setItem(arr[i].getItem());
@@ -212,5 +212,48 @@ public class State3DAO {
         }
         session.getTransaction().commit();
         return jsonString;
+    }
+
+    //根据布局和设备ID来更新设备状态
+    public boolean updateDevice(String layoutName, String data) {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        RG_LayoutDetailEntity arr = new RG_LayoutDetailEntity();
+        try {
+            String newData = URLDecoder.decode(data);
+            System.out.println(newData);
+            arr = objectMapper.readValue(newData, RG_LayoutDetailEntity.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        boolean flag = false;
+
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("from RG_LayoutEntity entity where entity.name=:name");
+        query.setParameter("name", layoutName);
+        List<RG_LayoutEntity> layout = query.list();
+        if (layout.size() == 1 && layout.get(0) instanceof RG_LayoutEntity) {
+            RG_LayoutEntity entity = (RG_LayoutEntity) layout.get(0);
+            Set<RG_LayoutDetailEntity> details = entity.getDetails();
+            Iterator<RG_LayoutDetailEntity> iter = details.iterator();
+            while (iter.hasNext()) {
+                RG_LayoutDetailEntity detail = iter.next();
+                if (detail.getId().equals(arr.getId())) {
+                    detail.setPos(arr.getPos());
+                    detail.setState(arr.getState());
+                    detail.setItem(arr.getItem());
+                    detail.setExist(arr.getExist());
+                    session.update(detail);
+                    break;
+                }
+            }
+            flag = true;
+        }
+        session.getTransaction().commit();
+        return flag;
     }
 }

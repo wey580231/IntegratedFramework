@@ -4,7 +4,6 @@ import com.rengu.DAO.AdjustDeviceDAO;
 import com.rengu.entity.RG_AdjustDeviceEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -16,12 +15,9 @@ public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO
     @Override
     public List<RG_AdjustDeviceEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
         String hql = "from RG_AdjustDeviceEntity entity ";
         Query query = session.createQuery(hql);
         List list = query.list();
-        transaction.commit();
-        session.close();
         return list;
     }
 
@@ -34,18 +30,13 @@ public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO
     public RG_AdjustDeviceEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             String hql = "from RG_AdjustDeviceEntity entity where entity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
                 RG_AdjustDeviceEntity rg_adjustDeviceEntity = (RG_AdjustDeviceEntity) query.list().get(0);
-                transaction.commit();
-                session.close();
                 return rg_adjustDeviceEntity;
             } else {
-                transaction.commit();
-                session.close();
                 return null;
             }
 
