@@ -12,8 +12,12 @@ public class SuperDAOImpl implements SuperDAO {
     @Override
     public boolean save(Object object) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
             session.save(object);
             transaction.commit();
             return true;
@@ -26,8 +30,12 @@ public class SuperDAOImpl implements SuperDAO {
     @Override
     public boolean delete(Object object) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
             session.delete(object);
             transaction.commit();
             return true;
@@ -40,8 +48,12 @@ public class SuperDAOImpl implements SuperDAO {
     @Override
     public boolean update(Object object) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
             session.update(object);
             transaction.commit();
             return true;

@@ -4,6 +4,7 @@ import com.rengu.DAO.AdjustProcessDAO;
 import com.rengu.entity.RG_AdjustProcessEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
     @Override
     public List<RG_AdjustProcessEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
         String hql = "from RG_AdjustProcessEntity rg_adjustProcessEntity ";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -30,6 +35,10 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
     public RG_AdjustProcessEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_AdjustProcessEntity rg_adjustProcessEntity  where rg_adjustProcessEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);

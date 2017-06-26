@@ -4,6 +4,7 @@ import com.rengu.DAO.ShiftDAO;
 import com.rengu.entity.RG_ShiftEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntit
     @Override
     public List<RG_ShiftEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
         String hql = "from RG_ShiftEntity rg_shiftEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -30,6 +35,10 @@ public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntit
     public RG_ShiftEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_ShiftEntity rg_shiftEntity where rg_shiftEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
