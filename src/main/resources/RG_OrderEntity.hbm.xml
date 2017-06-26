@@ -92,10 +92,10 @@
         <property name="finished">
             <column name="finished" sql-type="tinyint(1)" not-null="false"/>
         </property>
-        <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
+        <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity" lazy="false">
             <column name="idProduct" not-null="false"/>
         </many-to-one>
-        <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
+        <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity" lazy="false">
             <column name="idClub" not-null="false"/>
         </many-to-one>
 
