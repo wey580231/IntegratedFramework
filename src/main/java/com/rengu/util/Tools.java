@@ -154,7 +154,13 @@ public class Tools {
  */
     public static Date stringConvertToDate(String dateString) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = simpleDateFormat.parse(dateString);
+        Date date = simpleDateFormat.parse(simpleDateFormat.format(dateString));
+        return date;
+    }
+
+    public static Date stringConvertToDate(Long dateLong) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse(simpleDateFormat.format(dateLong));
         return date;
     }
 

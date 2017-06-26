@@ -235,7 +235,7 @@ position: absolute;
                             <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                <%--<td id="orderId" value="{{x.id}}">{{x.id}}</td>--%>
+                                <td id="orderId" style="display:none">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="origin">{{x.origin}}</td>
                                <!-- <td id="idProduct">{{x.idProduct}}</td>-->
@@ -324,12 +324,12 @@ position: absolute;
 <!--填写新增订单信息-->
 <div class="uk-modal uk-overflow-container" id="add">
     <div class="uk-modal-dialog">
-        <button type="button" class="uk-modal-close uk-close"></button>
+        <button type="button" ng-click="reset()" class="uk-modal-close uk-close"></button>
         <div id="dialog-form" title="订单信息">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
-                    <label for="add-id">编码</label> <br/>
-                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+                    <!--<label for="add-id">编码</label> <br/>
+                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>-->
                     <label for="add-name">名称</label><br/>
                     <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-origin">来源</label><br/>
@@ -378,8 +378,8 @@ position: absolute;
         <div id="dialog-form" title="订单信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
-                    <label for="edit-id">编码</label> <br/>
-                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+                    <!--<label for="edit-id">编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>-->
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-origin">来源</label><br/>
