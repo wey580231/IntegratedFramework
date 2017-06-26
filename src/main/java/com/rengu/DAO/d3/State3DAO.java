@@ -29,7 +29,12 @@ public class State3DAO {
     //由3D车间定时查询当前的设置状态
     public String getCurrentState() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+
+        System.out.println(session.getTransaction().isActive()+"+++++++++++"+session.getTransaction().toString());
+
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Query query = session.createQuery("from RG_State3DEntity entity where entity.id =:id");
         query.setParameter("id", 1);
@@ -64,7 +69,9 @@ public class State3DAO {
     //根据ID名获取对应ID的所有信息
     public String getLayoutById(String s) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         String jsonString = "";
 
@@ -106,7 +113,9 @@ public class State3DAO {
         boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Query query = session.createQuery("from RG_LayoutEntity entity where entity.name=:name");
         query.setParameter("name", layoutName);
@@ -149,7 +158,9 @@ public class State3DAO {
         }
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         RG_LayoutEntity layout = new RG_LayoutEntity();
         layout.setId(Tools.getUUID());
@@ -173,7 +184,9 @@ public class State3DAO {
     //查询所有布局信息
     public String queryAllLayout() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Query query = session.createQuery("from RG_LayoutEntity entity ");
         List<RG_LayoutEntity> list = query.list();
@@ -231,7 +244,9 @@ public class State3DAO {
         boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Query query = session.createQuery("from RG_LayoutEntity entity where entity.name=:name");
         query.setParameter("name", layoutName);
