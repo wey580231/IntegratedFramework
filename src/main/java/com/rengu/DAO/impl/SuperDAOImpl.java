@@ -16,7 +16,6 @@ public class SuperDAOImpl implements SuperDAO {
             Transaction transaction = session.beginTransaction();
             session.save(object);
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,7 +30,6 @@ public class SuperDAOImpl implements SuperDAO {
             Transaction transaction = session.beginTransaction();
             session.delete(object);
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,7 +44,6 @@ public class SuperDAOImpl implements SuperDAO {
             Transaction transaction = session.beginTransaction();
             session.update(object);
             transaction.commit();
-            session.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();

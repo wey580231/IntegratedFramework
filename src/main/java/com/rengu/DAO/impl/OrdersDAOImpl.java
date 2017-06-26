@@ -21,8 +21,6 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
-        transaction.commit();
-        session.close();
         return list;
     }
 
@@ -35,8 +33,6 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", username);
             List list = query.list();
-            transaction.commit();
-            session.close();
             return list;
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -55,11 +51,9 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             if (!query.list().isEmpty()) {
                 RG_OrderEntity rg_orderEntity = (RG_OrderEntity) query.list().get(0);
                 transaction.commit();
-                session.close();
                 return rg_orderEntity;
             } else {
                 transaction.commit();
-                session.close();
                 return null;
             }
         } catch (Exception exception) {
@@ -83,8 +77,6 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         query.setParameter(1, endDate);
         query.setParameter("isFinisfed", isFinished);
         List list = query.list();
-        transaction.commit();
-        session.close();
         return list;
     }
 }
