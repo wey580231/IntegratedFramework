@@ -15,10 +15,10 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var lastScheduleDays0;
         var date0;
         /*var ordId;
-        var resId;
-        var resGroId;
-        var siteId;
-        var layId;*/
+         var resId;
+         var resGroId;
+         var siteId;
+         var layId;*/
 
         //重新加载页面，取消选中状态
         var reload = function () {
@@ -87,8 +87,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             $("#chooseOrder").hide();
         }
 
-       //隐藏已订单窗口
-        $scope.hide=function(){
+        //隐藏已订单窗口
+        $scope.hide = function () {
             $("#color_table").hide();
         }
 
@@ -196,80 +196,81 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         $scope.showSchedule = function () {
             //获取上次排程信息
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
-                console.log(response.status);
+                console.log("获取上次排程信息" + response.status);
                 console.log(response.data);
                 var obj = response.data;
-                lastScheduleDays0 = parseInt(obj[0].startCalcTime);
-                date0 = new Date(obj[0].lastScheduleDays);
+                var startCalcTime = new Date(obj.startCalcTime);
+                var endCalcTime = new Date(obj.endCalcTime);
+
+                //当前排程时间长度（b）
+                var scheduleDays = $("input[name='add-scheduleDays']").val();
+                console.log("当前排程时间长度" + scheduleDays);
+
+                //上次排程时间长度（c）
+                //var data = eval('(' + obj + ')');
+                var lastScheduleDays = (endCalcTime.getTime() - startCalcTime.getTime()) / (1000 * 60 * 60 * 24);
+                console.log("上次排程时间长度" + lastScheduleDays);
+                //var lastScheduleDays = 7;
+
+                //距上次开始排程的日期差(c)
+                var myDate = new Date();
+                var temDays = (endCalcTime.getTime() - myDate.getTime()) / (1000 * 60 * 60 * 24);
+                console.log("距上次开始排程的日期差" + temDays);
+                //var tempDays = 30;
+
+                //排程开始时间
+                var startTime = moment().format("YYYY-MM-DD");
+                //排程结束时间
+                var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
+                $(document).ready(function () {
+                    // page is now ready, initialize the calendar...
+                    $('#calendar').fullCalendar({
+                        // put your options and callbacks here
+                        buttonText: {
+                            today: '今天',
+                            month: '月',
+                            week: '周',
+                            day: '天'
+                        },
+                        allDayText: '全天',
+                        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                        monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                        dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+                        dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                        eventSources: [
+                            {
+                                url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
+                                type: 'POST',
+                                data: {
+                                    startTime: startTime,
+                                    endTime: endTime
+                                },
+                                error: function () {
+                                    alert('there was an error while fetching events!');
+                                }
+                            }
+                        ],
+                        viewRender: function (view, element) {
+                            //已执行时间窗口染色
+                            for (var i = 1; i <= tempDays; i++) {
+                                $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
+                            }
+                            //时间窗口染色
+                            for (var i = 0; i < lastScheduleDays - tempDays; i++) {
+                                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
+                            }
+                            //剩余窗口染色
+                            for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
+                                $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+                            }
+                        }
+                    });
+                });
             }, function errorCallback(response) {
                 console.log("请求失败");
             });
 
-            //当前排程时间长度（b）
-            var scheduleDays = $("input[name='add-scheduleDays']").val();
-            console.log("当前排程时间长度"+scheduleDays);
 
-            //上次排程时间长度（c）
-            //var data = eval('(' + obj + ')');
-            var lastScheduleDays = lastScheduleDays0;
-            console.log("上次排程时间长度"+lastScheduleDays);
-            //var lastScheduleDays = 7;
-
-            //距上次开始排程的日期差(c)
-            var myDate = new Date();
-            var date =date0 ;
-            var temDays = (myDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
-            console.log("距上次开始排程的日期差"+temDays);
-            //var tempDays = 30;
-
-            //排程开始时间
-            var startTime = moment().format("YYYY-MM-DD");
-            //排程结束时间
-            var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
-            $(document).ready(function () {
-                // page is now ready, initialize the calendar...
-                $('#calendar').fullCalendar({
-                    // put your options and callbacks here
-                    buttonText: {
-                        today: '今天',
-                        month: '月',
-                        week: '周',
-                        day: '天'
-                    },
-                    allDayText: '全天',
-                    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                    monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                    dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-                    dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                    eventSources: [
-                        {
-                            url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
-                            type: 'POST',
-                            data: {
-                                startTime: startTime,
-                                endTime: endTime
-                            },
-                            error: function () {
-                                alert('there was an error while fetching events!');
-                            }
-                        }
-                    ],
-                    viewRender: function (view, element) {
-                        //已执行时间窗口染色
-                        for (var i = 1; i <= tempDays; i++) {
-                            $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
-                        }
-                        //时间窗口染色
-                        for (var i = 0; i < lastScheduleDays - tempDays; i++) {
-                            $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
-                        }
-                        //剩余窗口染色
-                        for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
-                            $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
-                        }
-                    }
-                });
-            });
         }
 
         $scope.choosedOrder = function () {
