@@ -43,6 +43,7 @@
     #myTable > .uk-text-center > tr> td{
         padding-left: 8px;
     }
+
 </style>
 
 <script>
@@ -119,14 +120,18 @@
 
 </script>
 
-<div class="<%--uk-grid--%>" style="/*height: 8%;*/height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block" style="/*height: 8%;*/height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
 
     <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 45px;">
     </div>
 
-    <div style="float:left;margin-top: 5px;">
+    <div style="float:left;/*margin-top: 5px;*/ vertical-align: middle;
+        display: flex;
+              align-items: center;
+              justify-content: center;
+">
         &nbsp;
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
     </div>
@@ -184,7 +189,7 @@ bottom: 20px;
 position: absolute;
 
 ">--%>
-<div class="uk-width-1-1" style="width: 99%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
+<div class="uk-width-1-1" style="/*width: 99%;*/border-top: 1px solid lightgray;border-bottom: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
 
 top: 80px;
 bottom: 20px;
@@ -252,37 +257,6 @@ position: absolute;
                     </div>
 
                 </div>
-
-                <!--表格测试-->
-                <%--<div id="box">
-                    <table id="tab">
-                        <tr><th>序号</th><th>姓名</th><th>性别</th><th>年龄</th><th>户籍</th><th>身份</th></tr>
-                        <tr><td>1</td><td>唐三藏</td><td>男</td><td>30</td><td>长安</td><td>佛</td></tr>
-                        <tr><td>2</td><td>孙悟空</td><td>男</td><td>1000</td><td>花果山</td><td>佛</td></tr>
-                        <tr><td>3</td><td>猪悟能</td><td>男</td><td>700</td><td>高老庄</td><td>使者</td></tr>
-                        <tr><td>4</td><td>沙悟净</td><td>男</td><td>680</td><td>流沙河</td><td>罗汉</td></tr>
-                        <tr><td>5</td><td>观世音</td><td>不详</td><td>10000</td><td>珞珈山</td><td>尊者</td></tr>
-                        <tr><td>6</td><td>玉皇大帝</td><td>男</td><td>1000000</td><td>凌霄殿</td><td>皇帝</td></tr>
-                        <tr><td>7</td><td>太上老君</td><td>男</td><td>8000</td><td>离恨天</td><td>道尊</td></tr>
-                        <tr><td>8</td><td>哪吒</td><td>男</td><td>570</td><td>陈塘关</td><td>神</td></tr>
-                        <tr><td>9</td><td>女儿国国王</td><td>女</td><td>28</td><td>女儿国</td><td>皇帝</td></tr>
-                        <tr><td>10</td><td>白骨精</td><td>女</td><td>790</td><td>白骨洞</td><td>妖</td></tr>
-                        <tr><td>11</td><td>地藏王</td><td>男</td><td>80000</td><td>幽冥界</td><td>菩萨</td></tr>
-                        <tr><td>12</td><td>嫦娥</td><td>nv</td><td>3000</td><td>广寒宫</td><td>仙</td></tr>
-                        <tr><td>13</td><td>唐三藏</td><td>男</td><td>30</td><td>长安</td><td>佛</td></tr>
-                        <tr><td>14</td><td>孙悟空</td><td>男</td><td>1000</td><td>花果山</td><td>佛</td></tr>
-                        <tr><td>15</td><td>猪悟能</td><td>男</td><td>700</td><td>高老庄</td><td>使者</td></tr>
-                        <tr><td>16</td><td>沙悟净</td><td>男</td><td>680</td><td>流沙河</td><td>罗汉</td></tr>
-                        <tr><td>17</td><td>观世音</td><td>不详</td><td>10000</td><td>珞珈山</td><td>尊者</td></tr>
-                        <tr><td>18</td><td>玉皇大帝</td><td>男</td><td>1000000</td><td>凌霄殿</td><td>皇帝</td></tr>
-                        <tr><td>19</td><td>太上老君</td><td>男</td><td>8000</td><td>离恨天</td><td>道尊</td></tr>
-                        <tr><td>20</td><td>哪吒</td><td>男</td><td>570</td><td>陈塘关</td><td>神</td></tr>
-                        <tr><td>21</td><td>女儿国国王</td><td>女</td><td>28</td><td>女儿国</td><td>皇帝</td></tr>
-                        <tr><td>22</td><td>白骨精</td><td>女</td><td>790</td><td>白骨洞</td><td>妖</td></tr>
-                        <tr><td>23</td><td>地藏王</td><td>男</td><td>80000</td><td>幽冥界</td><td>菩萨</td></tr>
-                        <tr><td>24</td><td>嫦娥</td><td>nv</td><td>3000</td><td>广寒宫</td><td>仙</td></tr>
-                    </table>
-                </div>--%>
 
                 <!--底部页码-->
                 <div style="margin-top: -25px;">
