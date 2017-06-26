@@ -41,27 +41,13 @@ public class ApsTools {
     //集成框架部署的地址和端口号
     private String localAddress;
     private String localPort;
-    private Socket socket;
-    private BufferedReader breader = null;
-    private OutputStream os = null;
 
     private ApsTools() {
-        try {
-            apsHost = Tools.getDatabaseProperties().getProperty("APSHost");
-            apsPort = Integer.parseInt(Tools.getDatabaseProperties().getProperty("APSPort"));
+        apsHost = Tools.getDatabaseProperties().getProperty("APSHost");
+        apsPort = Integer.parseInt(Tools.getDatabaseProperties().getProperty("APSPort"));
 
-            localAddress = Tools.getDatabaseProperties().getProperty("LocalAddress");
-            localPort = Tools.getDatabaseProperties().getProperty("LocalPort");
-
-            socket = new Socket(apsHost, apsPort);
-
-            os = socket.getOutputStream();
-            breader = new BufferedReader(new InputStreamReader(
-                    socket.getInputStream()));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        localAddress = Tools.getDatabaseProperties().getProperty("LocalAddress");
+        localPort = Tools.getDatabaseProperties().getProperty("LocalPort");
     }
 
     public static ApsTools instance() {
@@ -320,7 +306,14 @@ public class ApsTools {
     //执行请求
     private String execute(String command) {
         StringBuffer result = new StringBuffer();
+        Socket socket = null;
+        BufferedReader breader = null;
+        OutputStream os = null;
         try {
+            socket = new Socket(apsHost, apsPort);
+            breader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            os = socket.getOutputStream();
+
             os.write(combineCommand(command).getBytes());
             os.flush();
             String oneline = null;
@@ -331,6 +324,28 @@ public class ApsTools {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (os != null) {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (breader != null) {
+                try {
+                    breader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (socket != null) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         return result.toString().toLowerCase();

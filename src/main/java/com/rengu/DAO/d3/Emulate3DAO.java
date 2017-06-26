@@ -22,7 +22,7 @@ public class Emulate3DAO {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         session.beginTransaction();
 
-        RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, "01");
+        RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, snapshotId);
 
         Set<RG_OrderEntity> orders = null;
 
@@ -47,12 +47,15 @@ public class Emulate3DAO {
             ObjectNode root = mapper.createObjectNode();            //创建根节点
             root.put("result", "0");
 
-            ObjectNode dataNode = mapper.createObjectNode();
+            ArrayNode array = mapper.createArrayNode();
 
             while (iter.hasNext()) {
 
+                ObjectNode dataNode = mapper.createObjectNode();
+
                 RG_OrderEntity entity = iter.next();
 
+                RG_ProductEntity product = entity.getProductByIdProduct();
                 List<RG_EmulateDataEntity> emulateDatas = entity.getEmulateDatas();
                 Iterator<RG_EmulateDataEntity> emulateIter = emulateDatas.iterator();
 
@@ -76,10 +79,13 @@ public class Emulate3DAO {
                     }
                 }
 
-                dataNode.put(entity.getName(), arrayNode);
+                dataNode.put("name", product.getName());
+                dataNode.put("info", arrayNode);
+
+                array.add(dataNode);
             }
 
-            root.put("data", dataNode);
+            root.put("data", array);
 
             try {
                 jsonString.append(mapper.writeValueAsString(root));

@@ -71,6 +71,7 @@ public class RG_ProcessEntity {
     private String batch;
     private String idIcon;
     private Short nbTask;
+    private boolean rootProcess;
     private RG_ProductEntity productByIdProduct;
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private RG_ProcessEntity processByIdProcess;
@@ -556,6 +557,14 @@ public class RG_ProcessEntity {
         this.nbTask = nbTask;
     }
 
+    public boolean isRootProcess() {
+        return rootProcess;
+    }
+
+    public void setRootProcess(boolean rootProcess) {
+        this.rootProcess = rootProcess;
+    }
+
     public RG_ProductEntity getProductByIdProduct() {
         return productByIdProduct;
     }
@@ -587,6 +596,7 @@ public class RG_ProcessEntity {
 
         RG_ProcessEntity that = (RG_ProcessEntity) o;
 
+        if (rootProcess != that.rootProcess) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (idRoot != null ? !idRoot.equals(that.idRoot) : that.idRoot != null) return false;
@@ -730,6 +740,7 @@ public class RG_ProcessEntity {
         result = 31 * result + (batch != null ? batch.hashCode() : 0);
         result = 31 * result + (idIcon != null ? idIcon.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
+        result = 31 * result + (rootProcess ? 1 : 0);
         return result;
     }
 }

@@ -10,10 +10,8 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * APS回调框架更新计算状态

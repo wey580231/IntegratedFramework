@@ -2,6 +2,7 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,9 +18,9 @@ public class RG_GroupresourceEntity {
     private String color;
     private String idSite;
     private RG_ProviderEntity providerByIdProvider;
-    private Set<RG_SiteEntity> sitesById;
-    private Set<RG_ResourceEntity> resourcesById;
-    private Set<RG_ScheduleEntity> schedules;
+    private Set<RG_SiteEntity> sitesById = new HashSet<RG_SiteEntity>();
+    private Set<RG_ResourceEntity> resourcesById = new HashSet<RG_ResourceEntity>();
+    private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
 
     public String getId() {
         return id;

@@ -33,8 +33,8 @@ public class RG_ScheduleEntity {
     private Integer state;                //排程状态,参考本类的静态变量
     private String progress;              //完成进度
 
-    private Integer scheduleWindow;       //排程时间窗
-    private Integer rollTime;             //滚动周期
+    private Integer scheduleWindow;       //排程时间窗   30天
+    private Integer rollTime;             //滚动周期     7天
 
     //APS排程参数
     private Date apsStartTime;            //优化项目开始时间
