@@ -47,6 +47,7 @@ public class Tools {
 
     public static void jsonPrint(String string, HttpServletResponse httpServletResponse) {
         httpServletResponse.setContentType("text/html");
+        httpServletResponse.setCharacterEncoding("utf-8");
         PrintWriter printWriter = null;
         try {
             printWriter = httpServletResponse.getWriter();

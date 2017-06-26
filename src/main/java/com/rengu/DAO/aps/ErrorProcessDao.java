@@ -23,7 +23,9 @@ public class ErrorProcessDao {
     public Integer processDeviceError(String id) {
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Integer result = ApsTools.UNKNOWN;
 
@@ -60,7 +62,9 @@ public class ErrorProcessDao {
     //紧急插单
     public Integer processOrderError(String id) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Integer result = ApsTools.UNKNOWN;
 
@@ -88,7 +92,9 @@ public class ErrorProcessDao {
     //工序异常
     public Integer processProcessError(String id) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Integer result = ApsTools.UNKNOWN;
 

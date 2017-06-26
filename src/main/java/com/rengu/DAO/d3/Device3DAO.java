@@ -62,7 +62,9 @@ public class Device3DAO {
         boolean returnRes = false;
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         Query query = session.createQuery("from RG_OrderEntity entity where entity.id = :id");
         query.setParameter("id", code);
