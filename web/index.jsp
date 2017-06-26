@@ -14,5 +14,6 @@
 <a href="jsps/Login/MainPage.jsp">MainPage</a>
 <a href="jsps/TestPage/FullCalendar.jsp">FullCalendar-Test</a>
 <a href="jsps/TestPage/NotificationTest.jsp">NotificationTest</a>
+<a href="jsps/TestPage/CanvasPage.jsp">CanvasPageTest</a>
 </body>
 </html>

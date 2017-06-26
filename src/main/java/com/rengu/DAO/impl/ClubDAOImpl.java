@@ -4,7 +4,6 @@ import com.rengu.DAO.ClubDAO;
 import com.rengu.entity.RG_ClubEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -27,18 +26,13 @@ public class ClubDAOImpl extends SuperDAOImpl implements ClubDAO<RG_ClubEntity> 
     public RG_ClubEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
                 RG_ClubEntity rg_clubEntity = (RG_ClubEntity) query.list().get(0);
-                transaction.commit();
-                session.close();
                 return rg_clubEntity;
             } else {
-                transaction.commit();
-                session.close();
                 return null;
             }
         } catch (Exception exception) {

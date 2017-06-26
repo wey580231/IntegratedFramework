@@ -4,7 +4,6 @@ import com.rengu.DAO.ScheduleDAO;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -27,23 +26,13 @@ public class ScheduleDAOImpl extends SuperDAOImpl implements ScheduleDAO<RG_Sche
     public RG_ScheduleEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
             String hql = "from RG_ScheduleEntity rg_scheduleEntity where rg_scheduleEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
                 RG_ScheduleEntity rg_scheduleEntity = (RG_ScheduleEntity) query.list().get(0);
-                rg_scheduleEntity.getLayout();
-                rg_scheduleEntity.getOrders();
-                rg_scheduleEntity.getSites();
-                rg_scheduleEntity.getGroups();
-                rg_scheduleEntity.getResources();
-                transaction.commit();
-                session.close();
                 return rg_scheduleEntity;
             } else {
-                transaction.commit();
-                session.close();
                 return null;
             }
         } catch (Exception exception) {
