@@ -4,6 +4,7 @@ import com.rengu.DAO.ResourceDAO;
 import com.rengu.entity.RG_ResourceEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
     public List<RG_ResourceEntity> findAllByUsername(String username) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", username);
@@ -40,6 +45,10 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
     public RG_ResourceEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);

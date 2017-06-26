@@ -4,6 +4,7 @@ import com.rengu.DAO.ProviderDAO;
 import com.rengu.entity.RG_ProviderEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public class ProviderDAOImpl extends SuperDAOImpl implements ProviderDAO<RG_Prov
     public RG_ProviderEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_ProviderEntity rg_providerEntity where rg_providerEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);

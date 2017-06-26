@@ -36,6 +36,7 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
+        rg_resourceEntity.setId(Tools.getUUID());
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.save(rg_resourceEntity)) {
         } else {
