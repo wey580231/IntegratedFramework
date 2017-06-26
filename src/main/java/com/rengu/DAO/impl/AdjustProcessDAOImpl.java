@@ -16,12 +16,13 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
     @Override
     public List<RG_AdjustProcessEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
         String hql = "from RG_AdjustProcessEntity rg_adjustProcessEntity ";
         Query query = session.createQuery(hql);
         List list = query.list();
-        transaction.commit();
-        session.close();
         return list;
     }
 
@@ -34,18 +35,17 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
     public RG_AdjustProcessEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_AdjustProcessEntity rg_adjustProcessEntity  where rg_adjustProcessEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
                 RG_AdjustProcessEntity rg_adjustProcessEntity = (RG_AdjustProcessEntity) query.list().get(0);
-                transaction.commit();
-                session.close();
                 return rg_adjustProcessEntity;
             } else {
-                transaction.commit();
-                session.close();
                 return null;
             }
 

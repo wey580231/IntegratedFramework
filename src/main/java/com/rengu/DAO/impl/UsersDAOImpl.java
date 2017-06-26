@@ -2,20 +2,55 @@ package com.rengu.DAO.impl;
 
 import com.rengu.DAO.UsersDAO;
 import com.rengu.entity.RG_UserEntity;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+import com.rengu.util.MySessionFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 /**
  * Created by hanchangming on 2017/5/11.
  */
-public class UsersDAOImpl extends HibernateDaoSupport implements UsersDAO {
-
+public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity> {
     @Override
-    public boolean userLogin(RG_UserEntity usersEntity) {
-        return false;
+    public List<RG_UserEntity> findAll() {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_UserEntity rg_userEntity";
+        Query query = session.createQuery(hql);
+        List list = query.list();
+        return list;
     }
 
     @Override
-    public boolean userSignin(RG_UserEntity userEntity) {
-        return false;
+    public RG_UserEntity findAllById(String id) {
+        try {
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            String hql = "from RG_UserEntity rg_userEntity where rg_userEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            if (!query.list().isEmpty()) {
+                RG_UserEntity rg_userEntity = (RG_UserEntity) query.list().get(0);
+                return rg_userEntity;
+            } else {
+                return null;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<RG_UserEntity> search(String keyWord) {
+        return null;
     }
 }

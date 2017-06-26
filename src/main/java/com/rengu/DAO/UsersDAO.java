@@ -1,12 +1,14 @@
 package com.rengu.DAO;
 
-import com.rengu.entity.RG_UserEntity;
+import java.util.List;
 
 /**
  * Created by hanchangming on 2017/5/11.
  */
-public interface UsersDAO {
-    boolean userLogin(RG_UserEntity usersEntity);
+public interface UsersDAO<T> {
+    List<T> findAll();
 
-    boolean userSignin(RG_UserEntity userEntity);
+    T findAllById(String id);
+
+    List<T> search(String keyWord);
 }

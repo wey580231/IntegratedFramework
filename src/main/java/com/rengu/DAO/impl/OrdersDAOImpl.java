@@ -17,12 +17,13 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     @Override
     public List<RG_OrderEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
         String hql = "from RG_OrderEntity rg_orderEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
-        transaction.commit();
-        session.close();
         return list;
     }
 
@@ -30,13 +31,14 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     public List<RG_OrderEntity> findAllByUsername(String username) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.clubByIdClub.name =:nameClub";
             Query query = session.createQuery(hql);
             query.setParameter("nameClub", username);
             List list = query.list();
-            transaction.commit();
-            session.close();
             return list;
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -48,18 +50,17 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     public RG_OrderEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.beginTransaction();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);
             if (!query.list().isEmpty()) {
                 RG_OrderEntity rg_orderEntity = (RG_OrderEntity) query.list().get(0);
-                transaction.commit();
-                session.close();
                 return rg_orderEntity;
             } else {
-                transaction.commit();
-                session.close();
                 return null;
             }
         } catch (Exception exception) {
@@ -76,15 +77,16 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     @Override
     public List<RG_OrderEntity> findAllByisFinishedAndDate(Date startDate, Date endDate, boolean isFinished) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
         String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t0 between ? and ? and rg_orderEntity.finished =:isFinisfed";
         Query query = session.createQuery(hql);
         query.setParameter(0, startDate);
         query.setParameter(1, endDate);
         query.setParameter("isFinisfed", isFinished);
         List list = query.list();
-        transaction.commit();
-        session.close();
         return list;
     }
 }
