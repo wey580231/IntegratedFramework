@@ -13,7 +13,6 @@ import java.util.List;
 public class AdjustOrderAction extends SuperAction {
 
     public void getAllAdjustOrderException() throws Exception {
-
         AdjustOrderDAOImpl adjustOrderDAO = DAOFactory.getAdjustOrderDAOImplInstance();
         List<RG_AdjustOrderEntity> adjustOrderEntityList = adjustOrderDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(adjustOrderEntityList);

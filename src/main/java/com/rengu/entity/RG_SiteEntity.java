@@ -2,6 +2,7 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,8 +19,8 @@ public class RG_SiteEntity {
     private String idIcon;
     private Short sizeIcon;
     private Short capacity;
-    private Set<RG_ResourceEntity> resources;
-    private Set<RG_ScheduleEntity> schedules;
+    private Set<RG_ResourceEntity> resources = new HashSet<RG_ResourceEntity>();
+    private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
 
     public String getId() {
         return id;

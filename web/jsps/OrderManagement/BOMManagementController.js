@@ -13,8 +13,8 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         var setting = {
             view: {
                 dblClickExpand: false,
-                showIcon:false,
-                showLine:false
+                showIcon: false,
+                showLine: false
             },
             check: {
                 enable: false
@@ -112,7 +112,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         //显示右键操作
         function showRMenu(type, x, y) {
             $("#rMenu").show();
-            rMenu.css({"top": (y-70) + "px", "left": (x-220) + "px", "visibility": "visible"});
+            rMenu.css({"top": (y - 70) + "px", "left": (x - 220) + "px", "visibility": "visible"});
             $("#container").bind("mousedown", onBodyMouseDown);
         }
 

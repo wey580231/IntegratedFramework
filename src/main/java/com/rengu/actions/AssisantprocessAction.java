@@ -1,6 +1,5 @@
 package com.rengu.actions;
 
-import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.AssisantprocessDAO;
 import com.rengu.DAO.impl.AssisantprocessDAOImpl;
 import com.rengu.entity.RG_AssisantprocessEntity;
@@ -13,13 +12,7 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/31.
  */
-public class AssisantprocessAction extends SuperAction implements ModelDriven<RG_AssisantprocessEntity> {
-    RG_AssisantprocessEntity rg_assisantprocessEntity = new RG_AssisantprocessEntity();
-
-    @Override
-    public RG_AssisantprocessEntity getModel() {
-        return this.rg_assisantprocessEntity;
-    }
+public class AssisantprocessAction extends SuperAction {
 
     public void getAllAssisantProcess() throws Exception {
         AssisantprocessDAO assisantprocessDAO = DAOFactory.getAssisantprocessDAOInstance();
@@ -36,6 +29,7 @@ public class AssisantprocessAction extends SuperAction implements ModelDriven<RG
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_AssisantprocessEntity rg_assisantprocessEntity = Tools.jsonConvertToEntity(jsonString, RG_AssisantprocessEntity.class);
+        rg_assisantprocessEntity.setId(Tools.getUUID());
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.save(rg_assisantprocessEntity)) {
         } else {

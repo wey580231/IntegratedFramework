@@ -36,6 +36,7 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_GroupresourceEntity rg_groupresourceEntity = Tools.jsonConvertToEntity(jsonString, RG_GroupresourceEntity.class);
+        rg_groupresourceEntity.setId(Tools.getUUID());
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.save(rg_groupresourceEntity)) {
         } else {

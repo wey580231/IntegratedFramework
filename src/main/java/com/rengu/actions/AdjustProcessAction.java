@@ -14,7 +14,6 @@ import java.util.List;
 public class AdjustProcessAction extends SuperAction {
 
     public void getAllAdjustProcessException() throws Exception {
-
         AdjustProcessDAOImpl adjustProcessDAO = DAOFactory.getAdjustProcessDAOImplInstance();
         List<RG_AdjustProcessEntity> adjustProcessEntityList = adjustProcessDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(adjustProcessEntityList);

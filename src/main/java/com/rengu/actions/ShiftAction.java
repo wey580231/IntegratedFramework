@@ -36,6 +36,7 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
+        rg_shiftEntity.setId(Tools.getUUID());
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.save(rg_shiftEntity)) {
         } else {

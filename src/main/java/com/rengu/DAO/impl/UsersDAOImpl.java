@@ -4,6 +4,7 @@ import com.rengu.DAO.UsersDAO;
 import com.rengu.entity.RG_UserEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity
     @Override
     public List<RG_UserEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
         String hql = "from RG_UserEntity rg_userEntity";
         Query query = session.createQuery(hql);
         List list = query.list();
@@ -25,6 +30,10 @@ public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity
     public RG_UserEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
             String hql = "from RG_UserEntity rg_userEntity where rg_userEntity.id =:id";
             Query query = session.createQuery(hql);
             query.setParameter("id", id);

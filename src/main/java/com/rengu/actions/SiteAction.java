@@ -36,6 +36,7 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_SiteEntity rg_siteEntity = Tools.jsonConvertToEntity(jsonString, RG_SiteEntity.class);
+        rg_siteEntity.setId(Tools.getUUID());
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.save(rg_siteEntity)) {
         } else {

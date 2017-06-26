@@ -36,6 +36,7 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_TyperescourceEntity rg_typerescourceEntity = Tools.jsonConvertToEntity(jsonString, RG_TyperescourceEntity.class);
+        rg_typerescourceEntity.setId(Tools.getUUID());
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.save(rg_typerescourceEntity)) {
         } else {
