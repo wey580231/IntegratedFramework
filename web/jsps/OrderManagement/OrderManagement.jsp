@@ -183,10 +183,10 @@ bottom: 20px;
 position: absolute;
 
 ">
-    <div style="margin-top: 1%;">
+    <div style="margin-top: 1%;height: 100%;">
 
         <!--tab-->
-        <div style="width: 100%;border: 0px;margin-top: -10px;">
+        <div style="width: 100%;border: 0px;margin-top: -10px;height: 100%;">
 
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
