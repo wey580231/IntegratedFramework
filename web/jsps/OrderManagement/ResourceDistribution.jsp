@@ -101,7 +101,7 @@
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="height: 83%;">
+                    <div class="fixtable-body" style="height: 78%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
                             <tr ng-repeat="x in arr | orderBy: 'id':desc">
