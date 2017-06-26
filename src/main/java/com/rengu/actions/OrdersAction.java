@@ -1,11 +1,13 @@
 package com.rengu.actions;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,8 +22,16 @@ public class OrdersAction extends SuperAction {
         System.out.println(jsonString);
     }
 
-    public void findAllByUsername() throws Exception {
-
+    public void findAllByisFinishedAndDate() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
+        Date startTime = Tools.stringConvertToDate(jsonNode.get("startTime").asLong());
+        Date endTime = Tools.stringConvertToDate(jsonNode.get("endTime").asLong());
+        boolean isFinished = jsonNode.get("isFinished").asBoolean();
+        OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
+        List<RG_OrderEntity> rg_orderEntityList = ordersDAO.findAllByisFinishedAndDate(startTime, endTime, isFinished);
+        String resultString = Tools.entityConvertToJsonString(rg_orderEntityList);
+        Tools.jsonPrint(resultString, this.httpServletResponse);
     }
 
     public void save() throws Exception {
@@ -53,6 +63,5 @@ public class OrdersAction extends SuperAction {
         } else {
             System.out.println("更新失败");
         }
-
     }
 }

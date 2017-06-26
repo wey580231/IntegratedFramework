@@ -18,6 +18,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     public List<RG_OrderEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
+
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
