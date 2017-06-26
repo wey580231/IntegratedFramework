@@ -162,7 +162,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             hideRMenu();
             var nodes = zTree.getSelectedNodes();
             zTree.editName(nodes[0]);
-            newName = nodes[0].name;
+            var newName = nodes[0].name;
             if (newName.length == 0) {
                 alert("节点不能为空！");
                 return false;

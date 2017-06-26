@@ -123,7 +123,7 @@
 
 
     <div style="float:left;">
-        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 45px;">
     </div>
 
     <div style="float:left;margin-top: 5px;">
@@ -176,7 +176,15 @@
 
 
 <!--右侧表格-->
-<div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
+<%--<div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
+
+
+top: 80px;
+bottom: 20px;
+position: absolute;
+
+">--%>
+<div class="uk-width-1-1" style="width: 99%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
 
 top: 80px;
 bottom: 20px;
@@ -220,7 +228,7 @@ position: absolute;
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="height: 83%;">
+                    <div class="fixtable-body" style="height: 79%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
 
