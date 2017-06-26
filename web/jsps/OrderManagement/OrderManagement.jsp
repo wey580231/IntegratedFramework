@@ -390,12 +390,28 @@ position: absolute;
                     <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>
                     <label for="edit-priority">优先级</label><br/>
                     <input type="text" name="edit-priority" id="edit-priority" class="text ui-widget-content ui-corner-all" value="{{x.priority}}"><br/>
-                    <label for="edit-t0">下单时间</label><br/>
-                    <input type="text" name="edit-t0" id="edit-t0" class="text ui-widget-content ui-corner-all" value="{{x.t0}}"><br/>
-                    <label for="edit-t1">最早开工</label><br/>
-                    <input type="text" name="edit-t1" id="edit-t1" class="text ui-widget-content ui-corner-all" value="{{x.t1}}"><br/>
-                    <label for="edit-t2">最晚开工</label><br/>
-                    <input type="text" name="edit-t2" id="edit-t2" class="text ui-widget-content ui-corner-all" value="{{x.t2}}"><br/>
+                    <label for="datepicker edit-t0">下单时间</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker edit-t0"   name="edit-t0" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17"  value="{{x.t0}}" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="edit-t0" id="edit-t0" class="text ui-widget-content ui-corner-all" value="{{x.t0}}"><br/>--%>
+                    <%--<label for="edit-t1">最早开工</label><br/>--%>
+                    <label for="datepicker edit-t1">最早开工</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker edit-t1"   name="edit-t1" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17"  value="{{x.t1}}" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="edit-t1" id="edit-t1" class="text ui-widget-content ui-corner-all" value="{{x.t1}}"><br/>--%>
+                    <label for="datepicker edit-t2">最晚开工</label><br/>
+                    <div class="uk-form-icon">
+                        <i class="uk-icon-calendar"></i>
+                        <input type="datetime-local" id="datepicker edit-t2"   name="edit-t2" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17"  value="{{x.t2}}" style="height: 30px;">
+                    </div><br/>
+                    <%--<input type="text" name="edit-t2" id="edit-t2" class="text ui-widget-content ui-corner-all" value="{{x.t2}}"><br/>--%>
                 </fieldset>
             </form>
         </div>
