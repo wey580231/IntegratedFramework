@@ -24,6 +24,20 @@ public class ProcessDAOImpl extends SuperDAOImpl implements ProcessDAO<RG_Proces
     }
 
     @Override
+    public List<RG_ProcessEntity> findAllByIsRootNode(boolean isRootNode) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_ProcessEntity rg_processEntity where rg_processEntity.rootProcess =:isRootNode";
+        Query query = session.createQuery(hql);
+        query.setParameter("isRootNode", isRootNode);
+        List list = query.list();
+        return list;
+    }
+
+    @Override
     public RG_ProcessEntity findAllById(String id) {
         try {
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
