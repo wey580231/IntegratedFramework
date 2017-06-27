@@ -22,12 +22,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var obj = response.data;
             //var data = eval('(' + obj + ')');
             /*name=obj[0].id;
-            console.log(name);
-            console.log(parseInt(name));
-            var date1 = new Date();
-            var date2 = new Date(obj[0].t2);
-            date=(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24);
-            console.log(date);*/
+             console.log(name);
+             console.log(parseInt(name));
+             var date1 = new Date();
+             var date2 = new Date(obj[0].t2);
+             date=(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24);
+             console.log(date);*/
         });
 
         //重新加载页面信息
@@ -39,7 +39,11 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             myHttpService.get(serviceList.ListOrder).then(function (response) {
                 $scope.arr = response.data;
             });
-        }
+        };
+
+        $('#addButton').click(function () {
+            $("input").val('');
+        });
 
         //新增订单
         var addOrder = function () {
@@ -69,7 +73,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
                 console.log(response.data);
                 //用强制刷新解决按钮不能连续响应
-                setTimeout('window.location.reload();',1);
+                setTimeout('window.location.reload();', 1);
                 //setTimeout(reload(),3000);
             })
         };
@@ -123,14 +127,37 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
                 console.log(response.status);
-               //强制刷新解决按钮不能连续响应
-                setTimeout('window.location.reload();',1);
+                //强制刷新解决按钮不能连续响应
+                setTimeout('window.location.reload();', 1);
                 //setTimeout(reload(),3000);
             });
-        }
+        };
+
+        $('#editButton').click(function () {
+            var a = document.getElementsByName("check");
+            var count = 1;
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].checked) {
+                    count++;
+                    if (count > 2) {
+                        alert("请选中一条需要修改条目！");
+                        break;
+                    } else {
+                        //$('#edit').modal('show');
+                        $('#edit').show();
+                        editOrder();
+                        break;
+                    }
+                } else if (!a[i].checked) {
+                    alert("请选中一条需要修改条目！");
+                    break;
+                }
+            }
+        });
+
 
         //修改订单
-        $scope.editOrder = function () {
+        var editOrder = function () {
             var rows = document.getElementById("table_value").rows;
             var a = document.getElementsByName("check");
             var table = document.getElementById("table_value");
@@ -140,7 +167,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     var row = a[i].parentElement.parentElement.rowIndex;
                     console.log(row);
                     var params = {};
-                    var arr = new Array();
+                    var arr = [];
                     params.id = rows[row].cells[1].innerHTML;
                     params.name = rows[row].cells[2].innerHTML;
                     params.origin = rows[row].cells[3].innerHTML;
@@ -181,12 +208,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateOrder, data).then(function (response) {
                 console.log(response.status);
-                setTimeout('window.location.reload();',1);
+                setTimeout('window.location.reload();', 1);
                 //setTimeout(reload(),3000);
             });
         };
 
-        //信息填写检验
+//信息填写检验
         $scope.orderValidate = function () {
             var name = $("input#add-name").val();
 
@@ -201,7 +228,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             }
         };
         var check = function (name) {
-            if (name == "" ) {
+            if (name == "") {
                 $("input#add-name").addClass("uk-form-danger");
                 UIkit.modal.alert('请填写完整！');
                 return false;
@@ -211,25 +238,25 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         };
 
         /*var checkId = function (id) {
-            console.log(id);
-            var mytable = document.getElementById("table_value");
-            var rows = document.getElementById("table_value").rows;
-            for (var i = 0, row = mytable.rows.length; i < row; i++) {
-                if (rows[i].cells[1].innerHTML == id) {
-                    UIkit.modal.confirm('数据已经存在，请重新填写！', function () {
-                        $("input").val('');
-                        $("input#add-name").removeClass("uk-form-success");
-                    });
-                    return false;
-                }
-            }
-            return true;
-        };
-*/
+         console.log(id);
+         var mytable = document.getElementById("table_value");
+         var rows = document.getElementById("table_value").rows;
+         for (var i = 0, row = mytable.rows.length; i < row; i++) {
+         if (rows[i].cells[1].innerHTML == id) {
+         UIkit.modal.confirm('数据已经存在，请重新填写！', function () {
+         $("input").val('');
+         $("input#add-name").removeClass("uk-form-success");
+         });
+         return false;
+         }
+         }
+         return true;
+         };
+         */
+
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
             $("input#add-name").removeClass("uk-form-success");
         }
-
-    })
+    });

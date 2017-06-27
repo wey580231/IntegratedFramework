@@ -1,6 +1,8 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class RG_TyperescourceEntity {
     private String name;
     private String attribute;
     private Double ratio;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private Set<RG_ResourceEntity> resources;
 
     public String getId() {
@@ -57,9 +60,7 @@ public class RG_TyperescourceEntity {
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (attribute != null ? !attribute.equals(that.attribute) : that.attribute != null) return false;
-        if (ratio != null ? !ratio.equals(that.ratio) : that.ratio != null) return false;
-
-        return true;
+        return ratio != null ? ratio.equals(that.ratio) : that.ratio == null;
     }
 
     @Override

@@ -44,58 +44,14 @@ public class RG_ScheduleEntity {
 
     private String apsFlag;               //用于排程记录和aps结果之间的纽带，aps计算完成后，根据此标识找到记录，并更新状态。
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "LayoutId")
     private RG_LayoutEntity layout;                    //布局
     private Set<RG_OrderEntity> orders = new HashSet<RG_OrderEntity>();                      //订单
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private Set<RG_ResourceEntity> resources = new HashSet<RG_ResourceEntity>();             //资源
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private Set<RG_GroupresourceEntity> groups = new HashSet<RG_GroupresourceEntity>();      //工组
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private Set<RG_SiteEntity> sites = new HashSet<RG_SiteEntity>();                         //工位
 
-
     private RG_SnapshotNodeEntity snapshot;            //排程快照
-
-    public static int getApsDispatch() {
-        return APS_DISPATCH;
-    }
-
-    public static int getApsCompute() {
-        return APS_COMPUTE;
-    }
-
-    public static int getApsSuccess() {
-        return APS_SUCCESS;
-    }
-
-    public static int getApsFail() {
-        return APS_FAIL;
-    }
-
-    public static int getApsAdjust() {
-        return APS_ADJUST;
-    }
-
-    public static int getMesDispatch() {
-        return MES_DISPATCH;
-    }
-
-    public static int getErrorSuccess() {
-        return ERROR_SUCCESS;
-    }
-
-    public static int getErrorAdjust() {
-        return ERROR_ADJUST;
-    }
-
-    public static int getErrorFail() {
-        return ERROR_FAIL;
-    }
-
-    public static int getErrorMesDisptatch() {
-        return ERROR_MES_DISPTATCH;
-    }
 
     public String getId() {
         return id;

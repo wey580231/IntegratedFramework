@@ -10,7 +10,7 @@
 <link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
-
+    
 
 
 </style>
@@ -40,9 +40,12 @@
     }
 
 
+    
+
 </script>
 
-<div class="block" style="height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="<%--uk-grid--%>"
+     style="/*height: 8%;*/height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
 
     <div style="float:left;">
@@ -50,11 +53,11 @@
     </div>
 
     <div style="float:left;margin-top: 5px;/*vertical-align: middle;display: flex;align-items: center;justify-content: center;*/">
+
         &nbsp;
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
     </div>
 
-    <!--搜索框-->
     <div style="float:left;margin-left: 2%;">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
@@ -62,7 +65,6 @@
         </form>
     </div>
 
-    <!--日历-->
     <div style="float:left;margin-left: 2%;">
         <form class="uk-form" style="margin-left: 2%;margin-top: 5px;width: 135px;">
             <div class="uk-form-icon">
@@ -73,6 +75,7 @@
         </form>
     </div>
 
+    <%--</div>--%>
 
     <!--下拉框-->
     <div style="float:left;margin-left: 2%;">
@@ -89,8 +92,11 @@
     <!--按钮-->
 
     <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
-        <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}" >新增</button>
-        <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editOrder()" data-uk-modal="{target:'#edit'}" >修改</button>
+        <button class="uk-button uk-icon-plus uk-button-primary" id="addButton" data-uk-modal="{target:'#add'}">新增
+        </button>
+        <button class="uk-button uk-icon-edit uk-button-primary" id="editButton"
+                ng-click="editOrder()" <%--data-uk-modal="{target:'#edit'}"--%> >修改
+        </button>
         <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteOrder()">删除</button>
     </div>
 
@@ -100,7 +106,15 @@
 
 
 <!--右侧表格-->
-<div class="uk-width-1-1" style="/*width: 99%;*/border-top: 1px solid lightgray;border-bottom: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
+<%--<div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
+
+
+top: 80px;
+bottom: 20px;
+position: absolute;
+
+">--%>
+<div class="uk-width-1-1" style="width: 99%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
 
 top: 80px;
 bottom: 20px;
@@ -117,7 +131,7 @@ position: absolute;
 
                 <!--表格-->
                 <div class="uk-overflow-container" style="height: 96%;">
-                    <div class="fixtable-head" style="height: 50px;">
+                    <div class="fixtable-head">
                         <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
@@ -128,9 +142,11 @@ position: absolute;
                                     </div>
 
                                 </td>
+                                <%--<td>编码</td>--%>
                                 <td>名称</td>
                                 <td>来源</td>
 
+                                <!--<td>产品名称</td>-->
 
                                 <td>数量</td>
                                 <td>优先级</td>
@@ -142,7 +158,7 @@ position: absolute;
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="/*height: 79%;*/top: 50px;bottom: 0px;position: absolute;height: auto;">
+                    <div class="fixtable-body" style="height: 79%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
 
@@ -167,9 +183,10 @@ position: absolute;
 
                 </div>
 
+
                 <!--底部页码-->
-                <%--<div style="margin-top: -25px;">
-                    <ul class="uk-pagination" &lt;%&ndash;style="margin-top: 7%;"&ndash;%&gt; data-uk-pagination="{currentPage:50}">
+                <div style="margin-top: -25px;">
+                    <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
                         <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                         <li><button class="uk-button my"><a href="">上一页</a></button></li>
                         <li><button class="uk-button my"><a href="">下一页</a></button></li>
@@ -182,15 +199,15 @@ position: absolute;
                             <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                         </li>
                     </ul>
-                </div>--%>
+                </div>
 
             </div>
 
         </div>
     </div>
 
-    <!--快捷键-->
-    <%--<div class="uk-clearfix" style="/*margin-top: -4%;*/margin-top: -45px;">
+
+    <div class="uk-clearfix" style="/*margin-top: -4%;*/margin-top: -45px;">
         <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
         </button>
@@ -201,20 +218,21 @@ position: absolute;
                 </div>
             </div>
         </div>
-    </div>--%>
+    </div>
 </div>
 
 <!--填写新增订单信息-->
 <div class="uk-modal uk-overflow-container" id="add">
     <div class="uk-modal-dialog">
         <button type="button" ng-click="reset()" class="uk-modal-close uk-close"></button>
-        <div title="订单信息">
+        <div id="dialog-form" title="订单信息">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
                     <!--<label for="add-id">编码</label> <br/>
                     <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>-->
                     <label for="add-name">名称</label><br/>
-                    <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all" ><br/>
+                    <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all"
+                           onchange=""><br/>
                     <label for="add-origin">来源</label><br/>
                     <input type="text" name="add-origin" id="add-origin" class="text ui-widget-content ui-corner-all"><br/>
                    <!-- <label for="add-idProduct">产品名称</label><br/>
@@ -226,21 +244,24 @@ position: absolute;
                     <label for="datepicker add-t0">下单时间</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="text" id="datepicker add-t0"   name="add-t0" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                        <input id="datepicker add-t0" name="add-t0" &lt;%&ndash;id="add-t0" &ndash;%&gt;
+                               class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
                                placeholder="2017/5/17" style="height: 30px;">
                     </div><br/>
                     <%--<input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>--%>
                     <label for="datepicker add-t1">最早开工</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="text" id="datepicker add-t1"   name="add-t1" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                        <input id="datepicker add-t1" name="add-t1" &lt;%&ndash;id="add-t0" &ndash;%&gt;
+                               class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
                                placeholder="2017/5/17" style="height: 30px;">
                     </div><br/>
                     <%--<input type="text" name="add-t1" id="add-t1" class="text ui-widget-content ui-corner-all"><br/>--%>
                     <label for="datepicker add-t2">最晚开工</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="text" id="datepicker add-t2"   name="add-t2" &lt;%&ndash;id="add-t0"&ndash;%&gt; class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                        <input id="datepicker add-t2" name="add-t2" &lt;%&ndash;id="add-t0" &ndash;%&gt;
+                               class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
                                placeholder="2017/5/17" style="height: 30px;">
                     </div><br/>
                     <%--<input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>--%>
@@ -255,16 +276,20 @@ position: absolute;
 </div>
 
 <!--修改订单信息-->
-<div class="uk-modal uk-overflow-container" id="edit">
+<div class="modal uk-overflow-container" id="edit">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div title="订单信息">
+        <div id="dialog-form" title="订单信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
+                    <!--<label for="edit-id">编码</label> <br/>
+                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>-->
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-origin">来源</label><br/>
                     <input type="text" name="edit-origin" id="edit-origin" class="text ui-widget-content ui-corner-all" value="{{x.origin}}"><br/>
+                    <!--<label for="edit-idProduct">产品名称</label><br/>
+                    <input type="text" name="edit-idProduct" id="edit-idProduct" class="text ui-widget-content ui-corner-all" value="{{x.idProduct}}"><br/>-->
                     <label for="edit-quantity">数量</label><br/>
                     <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>
                     <label for="edit-priority">优先级</label><br/>
@@ -272,21 +297,28 @@ position: absolute;
                     <label for="datepicker edit-t0">下单时间</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="text" id="datepicker edit-t0"   name="edit-t0" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
-                               placeholder="2017/5/17"  value="{{x.t0}}" style="height: 30px;">
+                        <input type="datetime-local" id="datepicker edit-t0" name="edit-t0"
+                               class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" value="{{x.t0}}" style="height: 30px;">
                     </div><br/>
+                    <%--<input type="text" name="edit-t0" id="edit-t0" class="text ui-widget-content ui-corner-all" value="{{x.t0}}"><br/>--%>
+                    <%--<label for="edit-t1">最早开工</label><br/>--%>
                     <label for="datepicker edit-t1">最早开工</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="text" id="datepicker edit-t1"   name="edit-t1" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
-                               placeholder="2017/5/17"  value="{{x.t1}}" style="height: 30px;">
+                        <input type="datetime-local" id="datepicker edit-t1" name="edit-t1"
+                               class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" value="{{x.t1}}" style="height: 30px;">
                     </div><br/>
+                    <%--<input type="text" name="edit-t1" id="edit-t1" class="text ui-widget-content ui-corner-all" value="{{x.t1}}"><br/>--%>
                     <label for="datepicker edit-t2">最晚开工</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="text" id="datepicker edit-t2"   name="edit-t2" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
-                               placeholder="2017/5/17"  value="{{x.t2}}" style="height: 30px;">
+                        <input type="datetime-local" id="datepicker edit-t2" name="edit-t2"
+                               class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                               placeholder="2017/5/17" value="{{x.t2}}" style="height: 30px;">
                     </div><br/>
+                    <%--<input type="text" name="edit-t2" id="edit-t2" class="text ui-widget-content ui-corner-all" value="{{x.t2}}"><br/>--%>
                 </fieldset>
             </form>
         </div>

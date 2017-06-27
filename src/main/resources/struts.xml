@@ -150,4 +150,10 @@
                 method="getLastScheduleInfo"/>
     </package>
 
+    <!--快照树-->
+    <package name="SnapshotManager" namespace="/snapshot" extends="struts-default">
+        <action name="view3DEmulate" class="com.rengu.actions.SnapshotAction" method="viewCurrentSnapshotEmulateData"/>
+        <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="applySnapshotToMes"/>
+    </package>
+
 </struts>

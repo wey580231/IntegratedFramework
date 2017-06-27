@@ -16,6 +16,10 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
     @Override
     public List<RG_ResourceEntity> findAll() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
         String hql = "from RG_ResourceEntity rg_resourceEntity";
         Query query = session.createQuery(hql);
         List list = query.list();

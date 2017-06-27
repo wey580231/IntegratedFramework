@@ -1,6 +1,8 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +22,7 @@ public class RG_GroupresourceEntity {
     private RG_ProviderEntity providerByIdProvider;
     private Set<RG_SiteEntity> sitesById = new HashSet<RG_SiteEntity>();
     private Set<RG_ResourceEntity> resourcesById = new HashSet<RG_ResourceEntity>();
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
 
     public String getId() {
@@ -91,9 +94,7 @@ public class RG_GroupresourceEntity {
         if (idSite0 != null ? !idSite0.equals(that.idSite0) : that.idSite0 != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (color != null ? !color.equals(that.color) : that.color != null) return false;
-        if (idSite != null ? !idSite.equals(that.idSite) : that.idSite != null) return false;
-
-        return true;
+        return idSite != null ? idSite.equals(that.idSite) : that.idSite == null;
     }
 
     @Override

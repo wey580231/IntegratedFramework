@@ -79,7 +79,6 @@ public class ScheduleAction extends SuperAction {
                 tx = session.beginTransaction();
             }
 
-
             //解析Layout数据
             JsonNode layoutNodes = rootNode.get("layout");
             System.out.println(layoutNodes.isArray());
