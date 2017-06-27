@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import java.util.*;
 
@@ -22,26 +20,25 @@ public class Emulate3DAO {
         boolean flag = false;
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
-        RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, snapshotId);
+        RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, snapshotId);
 
         Set<RG_OrderEntity> orders = null;
 
-        if (snapshot != null) {
-            //查找此次排程对应的订单信息
-            RG_ScheduleEntity scheduleEntity = snapshot.getSchedule();
-            if (scheduleEntity != null) {
-                orders = scheduleEntity.getOrders();
+        if (bottomSnapshot != null) {
+
+            RG_SnapshotNodeEntity rootSnapshot = bottomSnapshot.getRootParent();
+
+            if (rootSnapshot != null) {
+                //查找此次排程对应的订单信息
+                RG_ScheduleEntity scheduleEntity = rootSnapshot.getSchedule();
+                if (scheduleEntity != null) {
+                    orders = scheduleEntity.getOrders();
+                }
             }
-
-            //查找此次排程对应的所有订单结果信息
-            Set<RG_PlanEntity> plans = snapshot.getPlans();
-
-            //TODO 等真实需要转换时，再调用。
-//            convertPlanTo3DEmulateData(plans);
         }
 
         if (orders != null) {
@@ -102,32 +99,6 @@ public class Emulate3DAO {
 
         session.getTransaction().commit();
 
-
         return flag;
-    }
-
-    //将plan表转换成3d车间的模拟数据，中间存在的字段需要框架来补充
-    private void convertPlanTo3DEmulateData(Set<RG_PlanEntity> plans) {
-
-        Session session = MySessionFactory.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        Query queryObject = session.createNativeQuery("truncate table rg_emulatedata");
-        if (queryObject.executeUpdate() >= 0) {
-
-            Iterator<RG_PlanEntity> iter = plans.iterator();
-            while (iter.hasNext()) {
-                RG_PlanEntity plan = iter.next();
-
-                //TODO 将plan表转换成3d车间对应的格式
-
-                RG_EmulateDataEntity data = new RG_EmulateDataEntity();
-
-                data.setOrderEntity(plan.getOrderByIdOrder());
-
-                session.save(data);
-            }
-        }
-        session.getTransaction().commit();
     }
 }

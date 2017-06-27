@@ -95,25 +95,20 @@ public class Device3DAO {
                 mainData.put("state", entity.getState());
 
                 //【2】订单子表
-                ObjectNode subData = mapper.createObjectNode();
-                subData.put("idOrder", entity.getId());
+                mainData.put("idOrder", entity.getId());
                 //TODO 需要向MES发送activeMQ发送订单子表请求，将下列字段值更新
-                subData.put("idTask", entity.getId());
-                subData.put("nameTask", entity.getId());
-                subData.put("planDevice", entity.getId());
-                subData.put("planCount", entity.getId());
-                subData.put("planStartTime", entity.getId());
-                subData.put("planFinishTime", entity.getId());
-                subData.put("actualDispatchTime", entity.getId());
-                subData.put("actualFinshTime", entity.getId());
-                subData.put("hasFinished", entity.getId());
-                subData.put("finishPercent", entity.getId());
+                mainData.put("idTask", entity.getId());
+                mainData.put("nameTask", entity.getId());
+                mainData.put("planDevice", entity.getId());
+                mainData.put("planCount", entity.getId());
+                mainData.put("planStartTime", entity.getId());
+                mainData.put("planFinishTime", entity.getId());
+                mainData.put("actualDispatchTime", entity.getId());
+                mainData.put("actualFinshTime", entity.getId());
+                mainData.put("hasFinished", entity.getId());
+                mainData.put("finishPercent", entity.getId());
 
-                ObjectNode dataOrder = mapper.createObjectNode();
-                dataOrder.put("mainOrder", mainData);
-                dataOrder.put("subOrder", subData);
-
-                root.put("data", dataOrder);
+                root.put("data", mainData);
 
                 try {
                     result.append(mapper.writeValueAsString(root));
