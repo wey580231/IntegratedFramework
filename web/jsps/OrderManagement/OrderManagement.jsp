@@ -77,7 +77,7 @@
          *       scrollid   滚动条所在容器的id
          *       size       表头的行数（复杂表头可能不止一行）
          */
-            function scroll(viewid,scrollid,size){
+            /*function scroll(viewid,scrollid,size){
             // 获取滚动条容器
             var container = document.getElementById(scrollid);
             // 将表格拷贝一份
@@ -116,11 +116,11 @@
     // 在页面加载完成后调用该方法
     window.onload = function (){
         scroll("tab","box",1);
-    }
+    }*/
 
 </script>
 
-<div class="block" style="/*height: 8%;*/height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block" style="height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
 
     <div style="float:left;">
@@ -153,7 +153,6 @@
         </form>
     </div>
 
-    <%--</div>--%>
 
     <!--下拉框-->
     <div style="float:left;margin-left: 2%;">
@@ -181,14 +180,6 @@
 
 
 <!--右侧表格-->
-<%--<div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
-
-
-top: 80px;
-bottom: 20px;
-position: absolute;
-
-">--%>
 <div class="uk-width-1-1" style="/*width: 99%;*/border-top: 1px solid lightgray;border-bottom: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
 
 top: 80px;
@@ -352,14 +343,10 @@ position: absolute;
         <div id="dialog-form" title="订单信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
-                    <!--<label for="edit-id">编码</label> <br/>
-                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>-->
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-origin">来源</label><br/>
                     <input type="text" name="edit-origin" id="edit-origin" class="text ui-widget-content ui-corner-all" value="{{x.origin}}"><br/>
-                    <!--<label for="edit-idProduct">产品名称</label><br/>
-                    <input type="text" name="edit-idProduct" id="edit-idProduct" class="text ui-widget-content ui-corner-all" value="{{x.idProduct}}"><br/>-->
                     <label for="edit-quantity">数量</label><br/>
                     <input type="text" name="edit-quantity" id="edit-quantity" class="text ui-widget-content ui-corner-all" value="{{x.quantity}}"><br/>
                     <label for="edit-priority">优先级</label><br/>
@@ -370,22 +357,18 @@ position: absolute;
                         <input type="datetime-local" id="datepicker edit-t0"   name="edit-t0" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
                                placeholder="2017/5/17"  value="{{x.t0}}" style="height: 30px;">
                     </div><br/>
-                    <%--<input type="text" name="edit-t0" id="edit-t0" class="text ui-widget-content ui-corner-all" value="{{x.t0}}"><br/>--%>
-                    <%--<label for="edit-t1">最早开工</label><br/>--%>
                     <label for="datepicker edit-t1">最早开工</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="datetime-local" id="datepicker edit-t1"   name="edit-t1" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                        <input type="text" id="datepicker edit-t1"   name="edit-t1" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
                                placeholder="2017/5/17"  value="{{x.t1}}" style="height: 30px;">
                     </div><br/>
-                    <%--<input type="text" name="edit-t1" id="edit-t1" class="text ui-widget-content ui-corner-all" value="{{x.t1}}"><br/>--%>
                     <label for="datepicker edit-t2">最晚开工</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="datetime-local" id="datepicker edit-t2"   name="edit-t2" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                        <input type="text" id="datepicker edit-t2"   name="edit-t2" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
                                placeholder="2017/5/17"  value="{{x.t2}}" style="height: 30px;">
                     </div><br/>
-                    <%--<input type="text" name="edit-t2" id="edit-t2" class="text ui-widget-content ui-corner-all" value="{{x.t2}}"><br/>--%>
                 </fieldset>
             </form>
         </div>
