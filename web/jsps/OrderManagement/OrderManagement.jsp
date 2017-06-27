@@ -354,7 +354,7 @@ position: absolute;
                     <label for="datepicker edit-t0">下单时间</label><br/>
                     <div class="uk-form-icon">
                         <i class="uk-icon-calendar"></i>
-                        <input type="datetime-local" id="datepicker edit-t0"   name="edit-t0" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
+                        <input type="text" id="datepicker edit-t0"   name="edit-t0" class="text ui-widget-content ui-corner-all" data-uk-datepicker="{format:'YYYY/MM/DD'}"
                                placeholder="2017/5/17"  value="{{x.t0}}" style="height: 30px;">
                     </div><br/>
                     <label for="datepicker edit-t1">最早开工</label><br/>
