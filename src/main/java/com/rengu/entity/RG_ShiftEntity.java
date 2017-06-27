@@ -1,6 +1,8 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class RG_ShiftEntity {
     private String slot;
     private String id0;
     private Short extra;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private Set<RG_ResourceEntity> resources;
 
     public String getId() {
@@ -77,9 +80,7 @@ public class RG_ShiftEntity {
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (slot != null ? !slot.equals(that.slot) : that.slot != null) return false;
         if (id0 != null ? !id0.equals(that.id0) : that.id0 != null) return false;
-        if (extra != null ? !extra.equals(that.extra) : that.extra != null) return false;
-
-        return true;
+        return extra != null ? extra.equals(that.extra) : that.extra == null;
     }
 
     @Override
