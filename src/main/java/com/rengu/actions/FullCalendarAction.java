@@ -61,6 +61,7 @@ public class FullCalendarAction extends SuperAction {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
         RG_ScheduleEntity rg_scheduleEntity = scheduleDAO.findAllById(UserConfigTools.getLatestSchedule("1"));
         String jsonString = Tools.entityConvertToJsonString(rg_scheduleEntity);
+        System.out.println(jsonString);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 }
