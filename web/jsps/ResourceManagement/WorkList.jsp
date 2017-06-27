@@ -122,8 +122,8 @@
                 <br/>
 
                 <!--底部页码-->
-                <div style="margin-top: -25px;">
-                    <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                <%--<div style="margin-top: -25px;">
+                    <ul class="uk-pagination" &lt;%&ndash;style="margin-top: 7%;"&ndash;%&gt; data-uk-pagination="{currentPage:50}">
                         <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                         <li><button class="uk-button my"><a href="">上一页</a></button></li>
                         <li><button class="uk-button my"><a href="">下一页</a></button></li>
@@ -136,15 +136,15 @@
                             <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                         </li>
                     </ul>
-                </div>
+                </div>--%>
 
             </div>
 
         </div>
     </div>
 
-
-    <div class="uk-clearfix" style="margin-top: -3%;">
+    <!--快捷键-->
+    <%--<div class="uk-clearfix" style="margin-top: -3%;">
         <button class="uk-button uk-float-right " id="create-order"
                 style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
@@ -156,7 +156,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 </div>
 <!--填写新增订单信息-->
 <div class="uk-modal uk-overflow-container" id="add">

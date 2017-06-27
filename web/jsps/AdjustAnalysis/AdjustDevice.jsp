@@ -166,35 +166,7 @@
 
                         </table>
 
-                        <!--底部页码-->
-                        <%--<div style="margin-top: -25px;">
-                            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye1.png');color: white;">
-                                        <a href="" style="color: white;">首页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">上一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">下一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">尾页</a></button>
-                                </li>
-                                <li>共88页</li>&nbsp;
-                                <li>
-                                    到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
-                                </li>
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye2.png');color: white;">
-                                        确定
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>--%>
+
                     </div>
 
 
@@ -203,8 +175,8 @@
                 <br/>
 
                 <!--底部页码-->
-                <div style="margin-top: -25px;">
-                    <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                <%--<div style="margin-top: -25px;">
+                    <ul class="uk-pagination" &lt;%&ndash;style="margin-top: 7%;"&ndash;%&gt; data-uk-pagination="{currentPage:50}">
                         <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                         <li><button class="uk-button my"><a href="">上一页</a></button></li>
                         <li><button class="uk-button my"><a href="">下一页</a></button></li>
@@ -217,27 +189,27 @@
                             <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                         </li>
                     </ul>
-                </div>
+                </div>--%>
 
             </div>
 
         </div>
     </div>
 
-
-    <div class="uk-clearfix" style="margin-top: -3%;">
+    <!--快捷键-->
+    <%--<div class="uk-clearfix" style="margin-top: -3%;">
         <button class="uk-button uk-float-right " id="create-order"
                 style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
         </button>
-        <div class=" uk-hidden uk-float-right" <%--id="button"--%>>
+        <div class=" uk-hidden uk-float-right" &lt;%&ndash;id="button"&ndash;%&gt;>
             <div class="uk-panel uk-panel-box">
                 <div class="data-uk-button-radio">
                     <button class="uk-button" style="margin: 3px" data-uk-modal="{target:'#group'}">DAG面板</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 </div>
 <%--</div>--%>
 
