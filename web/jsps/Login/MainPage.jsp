@@ -9,6 +9,8 @@
 <html ng-app="IntegratedFramework">
 <head>
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-3.0/css/uikit.min.css"/>--%>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/notify.gradient.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/uikit.gradient.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/search.min.css"/>
     <link rel="stylesheet"
@@ -305,6 +307,7 @@
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/accordion.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/sticky.js"></script>
 <script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/autocomplete.js"></script>
+<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/notify.min.js"></script>
 
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
@@ -341,6 +344,13 @@
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/WorkListController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceGroupController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/Login/GuideController.js"></script>
+<script src="${pageContext.request.contextPath}/jsps/Login/WebSocketNotification.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        webSocketInit();
+    });
+</script>
 
 </body>
 </html>
