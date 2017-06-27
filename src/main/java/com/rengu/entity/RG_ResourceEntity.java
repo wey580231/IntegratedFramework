@@ -42,6 +42,7 @@ public class RG_ResourceEntity {
     private Set<RG_SiteEntity> sitesById;
     private Set<RG_ShiftEntity> shiftsById;
     private Set<RG_TyperescourceEntity> typeresourcesById;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     private Set<RG_ScheduleEntity> schedules;
 
     public String getId() {
@@ -262,9 +263,7 @@ public class RG_ResourceEntity {
         if (sizeIcon != null ? !sizeIcon.equals(that.sizeIcon) : that.sizeIcon != null) return false;
         if (idIcon != null ? !idIcon.equals(that.idIcon) : that.idIcon != null) return false;
         if (idSite0 != null ? !idSite0.equals(that.idSite0) : that.idSite0 != null) return false;
-        if (unit != null ? !unit.equals(that.unit) : that.unit != null) return false;
-
-        return true;
+        return unit != null ? unit.equals(that.unit) : that.unit == null;
     }
 
     @Override
