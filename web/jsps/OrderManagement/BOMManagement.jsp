@@ -135,7 +135,9 @@
     #rMenu ul li {
         cursor: pointer;
         list-style: none;
-        background-color: #FFFFFF;
+        background-color: #F0FFFF;
+        margin-left: -10px;
+        padding: 2px;
     }
 
     <%--.ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
@@ -297,81 +299,9 @@
              style="height: 82%;background-color: #e2ebf2;">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
-        <!--<div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
-                <div class="uk-form-row">
-                    <div class="wrapper">
-                        <div class="nav-ml">
 
-                            <ul class="nav-first">
-                                <li>
-                                    <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                    <a class="item-1"><i></i>零件1</a>
-                                    <ul class="nav-second fold ">
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件A</a>
-                                            <ul class="nav-three fold">
-                                                <li>
-                                                    <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>自产零件A1</a></li>
-
-                                                <li>
-                                                    <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>自产零件A2</a></li>
-                                                <li>
-                                                    <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>自产零件A3</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件B</a></li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件C</a></li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件D</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <%-- </li>
-                             <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
-                             <li>--%>
-                            <ul class="nav-first">
-                                <li>
-                                    <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                    <a class="item-1"><i></i>零件2</a>
-                                    <ul class="nav-second fold ">
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>子零件2-1</a>
-                                            <ul class="nav-three fold">
-                                                <li>
-                                                    <img src="../../images/bom_img/4.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>外购部件AA</a></li>
-                                                <li>
-                                                    <img src="../../images/bom_img/4.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>外购部件BB</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件CD</a></li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件DD</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            </li>
-                            <%--</ul>--%>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-        <div id="rMenu">
-            <ul>
+        <div id="rMenu" style="width: 80px;">
+            <ul style="margin-top: 10px;">
                 <li id="m_add" ng-click="addTreeNode()">增加</li>
                 <li id="m_del" ng-click="removeTreeNode()">删除</li>
                 <li id="m_re" ng-click="renameTreeNode()">重命名</li>
@@ -464,9 +394,6 @@
                                     <li>
                                         <button class="uk-button my"><a href="">尾页</a></button>
                                     </li>
-                                    <%--<li><a href="#">上一页</a></li>
-                                    <li><a href="#">下一页</a></li>
-                                    <li><a href="#">尾页</a></li>--%>
                                     <li>共88页</li>&nbsp;
                                     <li>
                                         到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页

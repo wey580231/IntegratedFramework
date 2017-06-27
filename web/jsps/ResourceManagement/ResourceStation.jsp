@@ -80,7 +80,7 @@
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
-                                    <div style="border: 1px solid lightgray;margin-left: 42%;width: 30px;height: 15px;background-color: #cddae3;">
+                                    <div class="selectpng" style="/*margin-left: 42%;*/">
                                         <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>

@@ -11,9 +11,7 @@
 
 <style type="text/css">
 
-    #myTable > .uk-text-center > tr> td{
-        padding-left: 8px;
-    }
+
 
 </style>
 
@@ -48,14 +46,10 @@
 
 
     <div style="float:left;">
-        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 45px;">
+        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
-    <div style="float:left;/*margin-top: 5px;*/ vertical-align: middle;
-        display: flex;
-              align-items: center;
-              justify-content: center;
-">
+    <div style="float:left;margin-top: 5px;/*vertical-align: middle;display: flex;align-items: center;justify-content: center;*/">
         &nbsp;
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
     </div>
@@ -129,7 +123,7 @@ position: absolute;
                             <tr style="background-color: #e1eaf1;">
                                 <td>
 
-                                    <div style="border: 1px solid lightgray;/*margin-left: 25%;*/margin-left: 38%;width: 30px;height: 15px;background-color: #cddae3;">
+                                    <div class="selectpng" style="/*border: 1px solid lightgray;margin-left: 38%;width: 30px;height: 15px;background-color: #cddae3;*/">
                                         <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
 

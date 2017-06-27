@@ -254,7 +254,7 @@
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td style="width: 80px;">
-                                    <div style="border: 1px solid lightgray;margin-left: 20%;width: 30px;height: 15px;background-color: #cddae3;">
+                                    <div class="selectpng" style="/*margin-left: 20%;*/">
                                         <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
@@ -288,35 +288,6 @@
 
                         </table>
 
-                        <!--底部页码-->
-                        <%--<div style="margin-top: -25px;">
-                            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye1.png');color: white;">
-                                        <a href="" style="color: white;">首页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">上一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">下一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">尾页</a></button>
-                                </li>
-                                <li>共88页</li>&nbsp;
-                                <li>
-                                    到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
-                                </li>
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye2.png');color: white;">
-                                        确定
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>--%>
 
                     </div>
 
@@ -351,7 +322,7 @@
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
-                                    <div style="border: 1px solid lightgray;margin-left: 33%;width: 30px;height: 15px;background-color: #cddae3;">
+                                    <div class="selectpng" style="/*margin-left: 33%;*/">
                                         <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
