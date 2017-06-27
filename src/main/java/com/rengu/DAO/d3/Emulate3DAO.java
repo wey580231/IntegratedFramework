@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.*;
@@ -20,7 +21,10 @@ public class Emulate3DAO {
     public boolean getEmulateData(String snapshotId, StringBuilder jsonString) {
         boolean flag = false;
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
+
+        if(!session.getTransaction().isActive()){
+            session.beginTransaction();
+        }
 
         RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, snapshotId);
 
@@ -72,8 +76,8 @@ public class Emulate3DAO {
                         node.put("good", emulateData.getGood());
                         node.put("startLocation", emulateData.getStartLocation());
                         node.put("ednLocation", emulateData.getEndLocation());
-                        node.put("startTime", emulateData.getStartTime());
-                        node.put("endTime", emulateData.getEndTime());
+                        node.put("startTime", Integer.parseInt(emulateData.getStartTime()));
+                        node.put("endTime", Integer.parseInt(emulateData.getEndTime()));
 
                         arrayNode.add(node);
                     }
@@ -95,7 +99,9 @@ public class Emulate3DAO {
                 flag = false;
             }
         }
+
         session.getTransaction().commit();
+
 
         return flag;
     }

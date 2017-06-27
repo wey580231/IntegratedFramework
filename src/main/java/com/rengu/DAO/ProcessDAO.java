@@ -10,6 +10,8 @@ public interface ProcessDAO<T> extends SuperDAO {
 
     List<T> findAllByUsername(String username);
 
+    List<T> findAllByIsRootNode(boolean isRootNode);
+
     T findAllById(String id);
 
     List<T> search(String keyWord);

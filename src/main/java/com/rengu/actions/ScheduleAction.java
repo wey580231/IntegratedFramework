@@ -39,9 +39,8 @@ public class ScheduleAction extends SuperAction {
             //获取当前时间
             Date date = new Date();
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            System.out.println(sdf1.format(date));
-            rg_scheduleEntity.setScheduleTime(Calendar.getInstance().getTime());
-            rg_scheduleEntity.setStartCalcTime(Calendar.getInstance().getTime());
+            rg_scheduleEntity.setScheduleTime(new java.sql.Date(date.getTime()));
+            rg_scheduleEntity.setStartCalcTime(date);
             //解析scheduleWindow
             JsonNode scheduleWindowNodes = rootNode.get("scheduleWindow");
             rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
@@ -74,7 +73,12 @@ public class ScheduleAction extends SuperAction {
             }
 
             session = MySessionFactory.getSessionFactory().getCurrentSession();
-            tx = session.beginTransaction();
+
+            tx = session.getTransaction();
+            if(!tx.isActive()){
+                tx = session.beginTransaction();
+            }
+
 
             //解析Layout数据
             JsonNode layoutNodes = rootNode.get("layout");
