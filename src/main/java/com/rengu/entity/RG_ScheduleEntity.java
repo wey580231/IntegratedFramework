@@ -51,48 +51,7 @@ public class RG_ScheduleEntity {
     private Set<RG_GroupresourceEntity> groups = new HashSet<RG_GroupresourceEntity>();      //工组
     private Set<RG_SiteEntity> sites = new HashSet<RG_SiteEntity>();                         //工位
 
-
     private RG_SnapshotNodeEntity snapshot;            //排程快照
-
-    public static int getApsDispatch() {
-        return APS_DISPATCH;
-    }
-
-    public static int getApsCompute() {
-        return APS_COMPUTE;
-    }
-
-    public static int getApsSuccess() {
-        return APS_SUCCESS;
-    }
-
-    public static int getApsFail() {
-        return APS_FAIL;
-    }
-
-    public static int getApsAdjust() {
-        return APS_ADJUST;
-    }
-
-    public static int getMesDispatch() {
-        return MES_DISPATCH;
-    }
-
-    public static int getErrorSuccess() {
-        return ERROR_SUCCESS;
-    }
-
-    public static int getErrorAdjust() {
-        return ERROR_ADJUST;
-    }
-
-    public static int getErrorFail() {
-        return ERROR_FAIL;
-    }
-
-    public static int getErrorMesDisptatch() {
-        return ERROR_MES_DISPTATCH;
-    }
 
     public String getId() {
         return id;
