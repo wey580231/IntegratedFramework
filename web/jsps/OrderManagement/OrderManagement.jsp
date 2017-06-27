@@ -10,35 +10,6 @@
 <link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
-    /*#box{
-        height:214px;
-        width:500px;
-        overflow-y:auto;!** 必须，否则当表格数据过多时，不会产生滚动条，而是自动延长该div的高度 *!
-        position:relative;!** 必须，若不设置，拷贝得来的表头将相对于其设置该属性为该值的父节点（或间接父节点）定位，如果没有，则相对于body *!
-    }
-    table,tr,td,th{
-        border:1px solid #ccd;
-        border-collapse:collapse;
-    }*/
-    /*table{
-        width:100%;
-    }
-    td{
-        height:24px;
-        width:50px;!** 固定单元格宽度，防止分离表头后，表头与数据行错位（缺点） *!
-        !*line-height:24px;*!
-        line-height:28px;
-        padding:3px 5px;
-        word-break:break-all;!** 设置当文本过长时换行 *!
-
-    }
-
-    th{
-        height:24px;
-        width:50px;!** 不管是固定像素或是百分比，应与对应数据列的宽度一致 *!
-        line-height:24px;
-        background-color:#cfc;
-    }*/
 
     #myTable > .uk-text-center > tr> td{
         padding-left: 8px;
@@ -71,53 +42,6 @@
     }
 
 
-        /**
-         * 功能：固定表头
-         * 参数   viewid     表格的id
-         *       scrollid   滚动条所在容器的id
-         *       size       表头的行数（复杂表头可能不止一行）
-         */
-            /*function scroll(viewid,scrollid,size){
-            // 获取滚动条容器
-            var container = document.getElementById(scrollid);
-            // 将表格拷贝一份
-            var tb2 = document.getElementById(viewid).cloneNode(true);
-            // 获取表格的行数
-            var len = tb2.rows.length;
-            // 将拷贝得到的表格中非表头行删除
-            for(var i=tb2.rows.length;i>size;i--){
-                // 每次删除数据行的第一行
-                tb2.deleteRow(size);
-            }
-            // 创建一个div
-            var bak = document.createElement("div");
-            // 将div添加到滚动条容器中
-            container.appendChild(bak);
-            // 将拷贝得到的表格在删除数据行后添加到创建的div中
-            bak.appendChild(tb2);
-            // 设置创建的div的position属性为absolute，即绝对定于滚动条容器（滚动条容器的position属性必须为relative）
-            bak.style.position = "absolute";
-            // 设置创建的div的背景色与原表头的背景色相同（貌似不是必须）
-            bak.style.backgroundColor = "#cfc";
-            // 设置div的display属性为block，即显示div（貌似也不是必须，但如果你不希望总是显示拷贝得来的表头，这个属性还是有用处的）
-            bak.style.display = "block";
-            // 设置创建的div的left属性为0，即该div与滚动条容器紧贴
-            bak.style.left = 0;
-            // 设置div的top属性为0，初期时滚动条位置为0，此属性与left属性协作达到遮盖原表头
-            bak.style.top = "0px";
-            bak.style.width = "100%";
-            // 给滚动条容器绑定滚动条滚动事件，在滚动条滚动事件发生时，调整拷贝得来的表头的top值，保持其在可视范围内，且在滚动条容器的顶端
-            container.onscroll = function(){
-                // 设置div的top值为滚动条距离滚动条容器顶部的距离值
-                bak.style.top = this.scrollTop+"px";
-            }
-        }
-
-    // 在页面加载完成后调用该方法
-    window.onload = function (){
-        scroll("tab","box",1);
-    }*/
-
 </script>
 
 <div class="block" style="height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
@@ -136,6 +60,7 @@
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
     </div>
 
+    <!--搜索框-->
     <div style="float:left;margin-left: 2%;">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
@@ -143,6 +68,7 @@
         </form>
     </div>
 
+    <!--日历-->
     <div style="float:left;margin-left: 2%;">
         <form class="uk-form" style="margin-left: 2%;margin-top: 5px;width: 135px;">
             <div class="uk-form-icon">
@@ -197,7 +123,7 @@ position: absolute;
 
                 <!--表格-->
                 <div class="uk-overflow-container" style="height: 96%;">
-                    <div class="fixtable-head">
+                    <div class="fixtable-head" style="height: 50px;">
                         <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
@@ -208,11 +134,9 @@ position: absolute;
                                     </div>
 
                                 </td>
-                                <%--<td>编码</td>--%>
                                 <td>名称</td>
                                 <td>来源</td>
 
-                                <!--<td>产品名称</td>-->
 
                                 <td>数量</td>
                                 <td>优先级</td>
@@ -224,7 +148,7 @@ position: absolute;
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="height: 79%;">
+                    <div class="fixtable-body" style="/*height: 79%;*/top: 50px;bottom: 0px;position: absolute;height: auto;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
 
@@ -250,8 +174,8 @@ position: absolute;
                 </div>
 
                 <!--底部页码-->
-                <div style="margin-top: -25px;">
-                    <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                <%--<div style="margin-top: -25px;">
+                    <ul class="uk-pagination" &lt;%&ndash;style="margin-top: 7%;"&ndash;%&gt; data-uk-pagination="{currentPage:50}">
                         <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                         <li><button class="uk-button my"><a href="">上一页</a></button></li>
                         <li><button class="uk-button my"><a href="">下一页</a></button></li>
@@ -264,15 +188,15 @@ position: absolute;
                             <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                         </li>
                     </ul>
-                </div>
+                </div>--%>
 
             </div>
 
         </div>
     </div>
 
-
-    <div class="uk-clearfix" style="/*margin-top: -4%;*/margin-top: -45px;">
+    <!--快捷键-->
+    <%--<div class="uk-clearfix" style="/*margin-top: -4%;*/margin-top: -45px;">
         <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
         </button>
@@ -283,7 +207,7 @@ position: absolute;
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 </div>
 
 <!--填写新增订单信息-->
