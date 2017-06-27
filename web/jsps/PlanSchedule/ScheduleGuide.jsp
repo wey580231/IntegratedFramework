@@ -231,7 +231,6 @@ ng-click="showSite()">点击选择需要排程的资源工位
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
                                 </td>
-                                <td>编码</td>
                                 <td>名称</td>
                                 <td>来源</td>
                                 <td>优先级</td>
@@ -246,16 +245,27 @@ ng-click="showSite()">点击选择需要排程的资源工位
                     <div class="fixtable-body" style="height: 83%;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="orders" style="width:100%">
                             <tbody class="uk-text-center">
-                            <tr id="first" ng-repeat="x in ord | orderBy: 'id':desc">
-                                <td><input id="check1" name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                            <tr ng-repeat="x in lastinfo">
+                                <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                <td id="id">{{x.id}}</td>
-                                <td id="name">{{x.name}}</td>
-                                <td id="origin">{{x.origin}}</td>
-                                <td id="priority">{{x.priority}}</td>
-                                <td id="t0">{{x.t0}}</td>
-                                <td id="t1">{{x.t1}}</td>
-                                <td id="t2">{{x.t2}}</td>
+                                <td style="display:none">{{x.id}}</td>
+                                <td>{{x.name}}</td>
+                                <td>{{x.origin}}</td>
+                                <td>{{x.priority}}</td>
+                                <td>{{x.t0}}</td>
+                                <td>{{x.t1}}</td>
+                                <td>{{x.t2}}</td>
+                            </tr>
+                            <tr ng-repeat="x in curinfo">
+                                <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td style="display:none">{{x.id}}</td>
+                                <td>{{x.name}}</td>
+                                <td>{{x.origin}}</td>
+                                <td>{{x.priority}}</td>
+                                <td>{{x.t0}}</td>
+                                <td>{{x.t1}}</td>
+                                <td>{{x.t2}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -533,7 +543,8 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                     <button class="uk-button my" data-uk-modal="{target:'#choose'}"><a href="">上一页</a></button>
                 </li>
                 <li>
-                    <button class="uk-button my" ng-click="showOrder();reset();" data-uk-modal="{target:'#chooseOrder'}"><a href="">下一页</a></button>
+                    <button class="uk-button my" ng-click="showCurInfo();showLastInfo();"
+                            data-uk-modal="{target:'#chooseOrder'}"><a href="">下一页</a></button>
                 </li>
                 <li>
                     <button class="uk-button my" ng-click="showSchedule();"><a href="">确定</a></button>
@@ -565,7 +576,7 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
                                 </td>
-                                <td>编码</td>
+
                                 <td>名称</td>
                                 <td>来源</td>
                                 <!--<td>产品名</td>
@@ -585,13 +596,13 @@ ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                             <tr id="first" ng-repeat="x in form">
                                 <td><input id="check" name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                <td id="id">{{x.id}}</td>
-                                <td id="name">{{x.name}}</td>
-                                <td id="origin">{{x.origin}}</td>
-                                <td id="priority">{{x.priority}}</td>
-                                <td id="t0">{{x.t0}}</td>
-                                <td id="t1">{{x.t1}}</td>
-                                <td id="t2">{{x.t2}}</td>
+                                <td style="display:none">{{x.id}}</td>
+                                <td>{{x.name}}</td>
+                                <td>{{x.origin}}</td>
+                                <td>{{x.priority}}</td>
+                                <td>{{x.t0}}</td>
+                                <td>{{x.t1}}</td>
+                                <td>{{x.t2}}</td>
                             </tr>
                             </tbody>
                         </table>

@@ -30,7 +30,7 @@ angular.module("IntegratedFramework", [
  }])*/
     .config(['$httpProvider', function ($httpProvider) {
         /*$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
-        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';*/
+         $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';*/
     }])
     .factory("myHttpService", ['$http', function ($http) {
         var service = {};
@@ -39,7 +39,7 @@ angular.module("IntegratedFramework", [
                 'method': 'get',
                 'dataType': 'json',
                 'url': servletUrl,
-                'headers':{
+                'headers': {
                     'Content-Type': 'application/json;charset=utf-8',
                 }
             })
@@ -50,18 +50,18 @@ angular.module("IntegratedFramework", [
                 'dataType': 'json',
                 'url': servletUrl,
                 'data': body,
-                'headers':{
+                'headers': {
                     'Content-Type': 'application/json;charset=utf-8',
                 }
             })
         };
-        var _delete = function (servletUrl,body) {
+        var _delete = function (servletUrl, body) {
             return $http({
                 'method': 'delete',
                 'dataType': 'json',
                 'url': servletUrl,
                 'data': body,
-                'headers':{
+                'headers': {
                     'Content-Type': 'application/json;charset=utf-8',
                 }
             })
@@ -80,6 +80,7 @@ angular.module("IntegratedFramework", [
         service.DeleteOrder = backUrl + "orders/delete.action";
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
+        service.LastInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
         <!--工序资源信息-->
         service.ListAssisantProcess = backUrl + "assisantprocess/getAllAssisantProcess.action";
         service.DeleteAssisantProcess = backUrl + "assisantprocess/delete.action";
@@ -118,6 +119,6 @@ angular.module("IntegratedFramework", [
         <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
 
-        service.getLastScheduleInfo=backUrl + "FullCalendar/getLastScheduleInfo.action";
+        service.getLastScheduleInfo = backUrl + "FullCalendar/getLastScheduleInfo.action";
         return service;
-    })
+    });
