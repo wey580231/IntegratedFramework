@@ -32,7 +32,7 @@
     }
 </script>
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block">
 
     <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
@@ -105,44 +105,43 @@
 <%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
 <!--右侧表格-->
-<div class="uk-width-4-5"
-     style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
-    <div style="margin-top: 1%;">
+<div class="uk-width-1-1 tb">
+    <div class="tbfir">
 
         <!--tab-->
-        <div style="width: 100%;border: 0px;margin-top: -10px;">
+        <div class="tbsec">
 
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
 
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 92%;">
+                <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
                         <table class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td style="width: 80px;">
-                                    <div style="border: 1px solid lightgray;margin-left: 33%;width: 30px;height: 15px;background-color: #cddae3;">
+                                    <div class="selectpng" style="/*margin-left: 33%;*/">
                                         <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
 
                                 </td>
                                 <td>处理状态</td>
-                                <td style="width: 85px;">车间名称</td>
+                                <td>车间名称</td>
                                 <td>布局名称</td>
                                 <td>调整备注</td>
-                                <td style="width: 85px;">调整时间</td>
-                                <td style="width: 80px;">布局缩略图</td>
-                                <td style="width: 60px;">处理操作</td>
-                                <td style="width: 105px;">来源</td>
+                                <td>调整时间</td>
+                                <td>缩略图</td>
+                                <td>操作</td>
+                                <td>来源</td>
 
                             </tr>
                             </thead>
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="height: 83%;">
+                    <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
 
@@ -150,35 +149,7 @@
 
                         </table>
 
-                        <!--底部页码-->
-                        <%--<div style="margin-top: -25px;">
-                            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye1.png');color: white;">
-                                        <a href="" style="color: white;">首页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">上一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">下一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my"><a href="">尾页</a></button>
-                                </li>
-                                <li>共88页</li>&nbsp;
-                                <li>
-                                    到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
-                                </li>
-                                <li>
-                                    <button class="uk-button"
-                                            style="background-image: url('../../images/bom_img/ye2.png');color: white;">
-                                        确定
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>--%>
+
                     </div>
 
 
@@ -187,8 +158,8 @@
                 <br/>
 
                 <!--底部页码-->
-                <div style="margin-top: -25px;">
-                    <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                <%--<div style="margin-top: -25px;">
+                    <ul class="uk-pagination" &lt;%&ndash;style="margin-top: 7%;"&ndash;%&gt; data-uk-pagination="{currentPage:50}">
                         <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                         <li><button class="uk-button my"><a href="">上一页</a></button></li>
                         <li><button class="uk-button my"><a href="">下一页</a></button></li>
@@ -201,27 +172,27 @@
                             <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                         </li>
                     </ul>
-                </div>
+                </div>--%>
 
             </div>
 
         </div>
     </div>
 
-
-    <div class="uk-clearfix" style="margin-top: -3%;">
+    <!--快捷键-->
+    <%--<div class="uk-clearfix" style="margin-top: -3%;">
         <button class="uk-button uk-float-right " id="create-order"
                 style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
         </button>
-        <div class=" uk-hidden uk-float-right" <%--id="button"--%>>
+        <div class=" uk-hidden uk-float-right" &lt;%&ndash;id="button"&ndash;%&gt;>
             <div class="uk-panel uk-panel-box">
                 <div class="data-uk-button-radio">
                     <button class="uk-button" style="margin: 3px" data-uk-modal="{target:'#group'}">DAG面板</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 </div>
 <%--</div>--%>
 

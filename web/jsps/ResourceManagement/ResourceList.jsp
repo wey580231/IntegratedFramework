@@ -35,10 +35,8 @@
         }
     </script>
 
-    <div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+    <div class="block">
 
-        <%--<img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">--%>
-        <%--<div class="uk-width-1-4 ">--%>
         <div style="float:left;">
             <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
         </div>
@@ -55,8 +53,6 @@
             </form>
         </div>
 
-
-
         <!--按钮-->
         <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
             <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}">新增</button>
@@ -69,27 +65,27 @@
     <%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
     <!--右侧表格-->
-    <div class="uk-width-4-5" style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
-        <div style="margin-top: 1%;">
+    <div class="uk-width-1-1 tb">
+        <div class="tbfir">
 
-            <div style="width: 100%;border: 0px;margin-top: -10px;">
+            <div class="tbsec">
 
 
                 <div id="tabs-2" style="width: 100%;height: 100%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 92%;">
+                    <div class="uk-overflow-container" style="height: 96%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
                                 <thead class="uk-text-center">
                                 <tr style="background-color: #e1eaf1;">
                                     <td>
-                                        <div style="border: 1px solid lightgray;margin-left: 35%;width: 30px;height: 15px;background-color: #cddae3;">
+                                        <div class="selectpng">
                                             <img src="../../images/bom_img/select.png" style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                         </div>
 
                                     </td>
-                                    <td>编码</td>
+                                    <%--<td>编码</td>--%>
                                     <td>名称</td>
                                     <td>资源类型</td>
                                     <td>工组</td>
@@ -105,13 +101,13 @@
                             </table>
                         </div>
 
-                        <div class="fixtable-body" style="height: 83%;">
+                        <div class="fixtable-body">
                             <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                                 <tbody class="uk-text-center">
                                 <tr ng-repeat="x in arr | orderBy: 'id':desc">
                                     <td><input name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                    <td id="id">{{x.id}}</td>
+                                    <%--<td id="id">{{x.id}}</td>--%>
                                     <td id="name">{{x.name}}</td>
                                     <td id="typeSite">{{x.typeSite}}</td>
                                     <td id="IdSiteGroupResource">{{x.idSiteGroupResource}}</td>
@@ -128,8 +124,8 @@
                     <br/>
 
                     <!--底部页码-->
-                    <div style="margin-top: -25px;">
-                        <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                    <%--<div style="margin-top: -25px;">
+                        <ul class="uk-pagination" &lt;%&ndash;style="margin-top: 7%;"&ndash;%&gt; data-uk-pagination="{currentPage:50}">
                             <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                             <li><button class="uk-button my"><a href="">上一页</a></button></li>
                             <li><button class="uk-button my"><a href="">下一页</a></button></li>
@@ -142,13 +138,14 @@
                                 <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                             </li>
                         </ul>
-                    </div>
+                    </div>--%>
 
                 </div>
             </div>
         </div>
 
-        <div class="uk-clearfix" style="margin-top: -3%;">
+        <!--快捷键-->
+        <%--<div class="uk-clearfix" style="margin-top: -3%;">
             <button class="uk-button uk-float-right " id="create-order" style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                     title="快捷菜单">
             </button>
@@ -159,7 +156,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--%>
     </div>
 <!--填写新增信息-->
 <div class="uk-modal uk-overflow-container" id="add">

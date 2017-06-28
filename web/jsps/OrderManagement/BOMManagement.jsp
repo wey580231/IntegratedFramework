@@ -135,7 +135,9 @@
     #rMenu ul li {
         cursor: pointer;
         list-style: none;
-        background-color: #FFFFFF;
+        background-color: #F0FFFF;
+        margin-left: -10px;
+        padding: 2px;
     }
 
     <%--.ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
@@ -254,7 +256,7 @@
 </script>
 
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block">
     <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     &nbsp;
     <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>
@@ -271,7 +273,7 @@
 </div>
 <br/>
 
-<div class="uk-grid" style="height: 88%;">
+<div class="uk-grid" style="height: 86%;">
     <!--BOM树-->
     <div id="container" class="uk-width-1-5" style="width: 23%;height: 100%;">
         <!--BOM树上部-->
@@ -294,84 +296,12 @@
         </div>
         <!--BOM树下部-->
         <div class="uk-panel uk-panel-box uk-overflow-container"
-             style="height: 82%;background-color: #e2ebf2;">
+             style="/*height: 82%;*/height: 80%;background-color: #e2ebf2;">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
-        <!--<div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
-                <div class="uk-form-row">
-                    <div class="wrapper">
-                        <div class="nav-ml">
 
-                            <ul class="nav-first">
-                                <li>
-                                    <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                    <a class="item-1"><i></i>零件1</a>
-                                    <ul class="nav-second fold ">
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件A</a>
-                                            <ul class="nav-three fold">
-                                                <li>
-                                                    <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>自产零件A1</a></li>
-
-                                                <li>
-                                                    <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>自产零件A2</a></li>
-                                                <li>
-                                                    <img src="../../images/bom_img/3.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>自产零件A3</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件B</a></li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件C</a></li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件D</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <%-- </li>
-                             <img src="../../images/bom_img/2.png" style="margin-left: -20px;">
-                             <li>--%>
-                            <ul class="nav-first">
-                                <li>
-                                    <img src="../../images/bom_img/1.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                    <a class="item-1"><i></i>零件2</a>
-                                    <ul class="nav-second fold ">
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>子零件2-1</a>
-                                            <ul class="nav-three fold">
-                                                <li>
-                                                    <img src="../../images/bom_img/4.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>外购部件AA</a></li>
-                                                <li>
-                                                    <img src="../../images/bom_img/4.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                                    <a>外购部件BB</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件CD</a></li>
-                                        <li>
-                                            <img src="../../images/bom_img/2.png" style="margin-left: -20px;">&nbsp;&nbsp;
-                                            <a class="item-2"><i></i>自产零件DD</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            </li>
-                            <%--</ul>--%>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-        <div id="rMenu">
-            <ul>
+        <div id="rMenu" style="width: 80px;">
+            <ul style="margin-top: 10px;">
                 <li id="m_add" ng-click="addTreeNode()">增加</li>
                 <li id="m_del" ng-click="removeTreeNode()">删除</li>
                 <li id="m_re" ng-click="renameTreeNode()">重命名</li>
@@ -381,7 +311,7 @@
 
     <!--右侧表格-->
     <div class="uk-width-4-5"
-         style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;height:  98%;background-color: white;">
+         style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;/*height:  98%;*/height:  97%;background-color: white;">
         <div style="margin-top: 15px;margin-left: -25px;height: 95%;">
             <!--表格上部-->
             <form class="uk-form" style="height: 22%;">
@@ -429,18 +359,18 @@
 
                                     </td>
                                     <td>准备时间</td>
-                                    <td>单件时间</td>
+                                    <%--<td>单件时间</td>--%>
                                     <td>冷却时间</td>
                                     <td>校验时间</td>
-                                    <td>资源类型</td>
-                                    <td>资源数量</td>
+                                    <td>类型</td>
+                                    <td>数量</td>
                                     <td>工时</td>
-                                    <td>首选时间</td>
+                                    <%--<td>首选时间</td>--%>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
-                        <div class="fixtable-body" style="height: 69%;">
+                        <div class="fixtable-body" style="/*height: 69%;*/height: 39%;width: 76%;top: 300px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                                 <tbody class="uk-text-center">
                                 </tbody>
@@ -448,7 +378,7 @@
                             </table>
 
                             <!--底部页码-->
-                            <div style="margin-top: -25px;">
+                            <%--<div style="margin-top: -25px;">
                                 <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
                                     <li>
                                         <button class="uk-button"
@@ -464,9 +394,6 @@
                                     <li>
                                         <button class="uk-button my"><a href="">尾页</a></button>
                                     </li>
-                                    <%--<li><a href="#">上一页</a></li>
-                                    <li><a href="#">下一页</a></li>
-                                    <li><a href="#">尾页</a></li>--%>
                                     <li>共88页</li>&nbsp;
                                     <li>
                                         到第<input type="text" value="2" style="width: 28px;background-color: #EEF7FC;">页
@@ -478,7 +405,7 @@
                                         </button>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>--%>
                         </div>
 
                     </div>
@@ -488,7 +415,8 @@
         </div>
 
 
-        <div class="uk-clearfix" style="margin-top: -3%;">
+        <!--快捷键-->
+        <%--<div class="uk-clearfix" style="margin-top: -3%;">
             <button class="uk-button uk-float-right " id="create-order"
                     style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                     title="快捷菜单">
@@ -500,7 +428,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--%>
     </div>
 </div>
 <%--</div>--%>

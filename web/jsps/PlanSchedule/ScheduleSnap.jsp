@@ -253,7 +253,7 @@
 <%--<hr class="uk-article-divider">--%>
 <br/>
 
-<div class="uk-grid" style="height: 88%;">
+<div class="uk-grid" style="height: 86%;">
     <!--快照树-->
     <div id="container" class="uk-width-1-5" style="width: 23%;height: 100%;">
         <!--快照树下部-->
@@ -348,7 +348,7 @@
     </div>
     <!--右侧表格-->
     <div class="uk-width-4-5"
-         style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;height:  98%;background-color: white;">
+         style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;height:  97%;background-color: white;">
         <div style="margin-top: 15px;margin-left: -35px;height: 96%;">
 
             <!--tab-->
@@ -369,19 +369,19 @@
                                         </div>
 
                                     </td>
-                                    <td>订单编码</td>
+                                    <%--<td>订单编码</td>--%>
                                     <td>订单名称</td>
-                                    <td>产品名称</td>
+                                    <td>产品名</td>
                                     <td>优先级</td>
                                     <td>订单量</td>
                                     <td>完工延迟</td>
-                                    <td>最早开工</td>
+                                    <%--<td>最早开工</td>--%>
                                     <td>最晚终止</td>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
-                        <div class="fixtable-body" style="height: 78%;">
+                        <div class="fixtable-body" style="height: 72%;width: 77.5%;top: 120px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
 
                                 <tbody class="uk-text-center">
@@ -428,8 +428,8 @@
                     <br/>
 
                     <!--底部页码-->
-                    <div style="margin-top: -25px;">
-                        <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
+                    <%--<div style="margin-top: -25px;">
+                        <ul class="uk-pagination" &lt;%&ndash;style="margin-top: 7%;"&ndash;%&gt; data-uk-pagination="{currentPage:50}">
                             <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                             <li><button class="uk-button my"><a href="">上一页</a></button></li>
                             <li><button class="uk-button my"><a href="">下一页</a></button></li>
@@ -442,15 +442,15 @@
                                 <button class="uk-button" style="background-image: url('../../images/bom_img/ye2.png');color: white;">确定</button>
                             </li>
                         </ul>
-                    </div>
+                    </div>--%>
 
                 </div>
 
             </div>
         </div>
 
-
-        <div class="uk-clearfix" style="margin-top: -3%;">
+        <!--快捷键-->
+        <%--<div class="uk-clearfix" style="margin-top: -3%;">
             <button class="uk-button uk-float-right " id="create-order"
                     style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                     title="快捷菜单">
@@ -462,7 +462,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--%>
     </div>
 </div>
 <%--</div>--%>

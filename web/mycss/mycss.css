@@ -113,10 +113,6 @@ a {
     padding: 8px 22px;
 }
 
-/*.uk-table td, .uk-table th {
-    padding: 8px 18px;
-    border-bottom: 1px solid #ddd;
-}*/
 
 table{
     width:100%;
@@ -130,6 +126,10 @@ td{
     /*background-color:#ddd;*/
     word-break:break-all;/** 设置当文本过长时换行 */
 
+}
+
+#myTable > .uk-text-center > tr> td{
+    padding-left: 5px;
 }
 
 th{
@@ -152,3 +152,52 @@ th{
     margin-top: -8px;
 }
 
+.selectpng{
+    border: 1px solid lightgray;
+    /*margin-left: 35%;*/
+    margin-left: 38%;
+    width: 30px;
+    height: 15px;
+    background-color: #cddae3;
+}
+
+.block{
+    height: 45px;
+    margin-top: 10px;
+    background-color: white;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.tb{
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    background-color: white;
+
+    top: 80px;
+    bottom: 20px;
+    position: absolute;
+}
+
+.tbfir{
+    margin-top: 1%;
+    height: 100%;
+}
+
+.tbsec{
+    width: 100%;
+    border: 0px;
+    margin-top: -10px;
+    height: 100%;
+}
+
+.fixtable-head{
+    height: 50px;
+}
+
+.fixtable-body{
+    top: 50px;
+    bottom: 0px;
+    position: absolute;
+    height: auto;
+}
