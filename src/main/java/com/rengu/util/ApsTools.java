@@ -1,10 +1,9 @@
 package com.rengu.util;
 
-import com.rengu.entity.RG_AdjustDeviceEntity;
-import com.rengu.entity.RG_AdjustProcessEntity;
-import com.rengu.entity.RG_PlanEntity;
-import com.rengu.entity.RG_SnapshotNodeEntity;
+import com.rengu.DAO.impl.*;
+import com.rengu.entity.*;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,28 +62,24 @@ public class ApsTools {
     }
 
     //TODO 待将连接修改成APS提供的访问连接
-    //获取紧急插单
-//    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
-//
-//        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
-//                "&" +
-//                "BUFFER=1\\n2\\n"+entity.getId()+"\\n001\\n2000-01-01\\t06:00\\n120\\n"+entity.getId()+"\\n"+entity.getName()
-//                +"\\n"+entity.getQuantity()+"\\nKqd\\nG01\\n1\\n2014-05-23\\t08:50\\n2014-05-23\\t08:50\\n\n" +
-//                "2014-05-25\\t11:24\n";
-//
-//
-//        String result1 = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
-//                "&" +
-//                "BUFFER=1\\n2\\n" + entity.getId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
-//                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
-//                "&" +
-//                "REPLY=" + ApsTools.instance().getReplyAddress() +
-//                "&" +
-//                "ID=001" +
-//                "&" +
-//                "DELAY=1000\n";
-//        return result;
-//    }
+    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
+
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getOrd().getId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getId() + "\\n" + entity.getOrd().getName()
+                + "\\n" + entity.getOrd().getQuantity() + "\\n" + entity.getOrd().getProductByIdProduct().getId() + "\\n" + entity.getOrd().getIdGroupResource() +
+                "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(entity.getOrd().getT1Interaction()) + "\\n"
+                + ApsTools.instance().convertSpaceWithTab(entity.getOrd().getT2Interaction()) + "\\n"
+                + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT2())) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000";
+
+        return result;
+    }
 
     //获取工序调整
     public static String getAdjustProcessHandlingURL(RG_AdjustProcessEntity entity) {
@@ -147,16 +142,133 @@ public class ApsTools {
     //获取排程结果
     public void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from aps_plan";
-        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
+        for (Object object : list) {
+            if (object instanceof HashMap) {
         for (Object object : list) {
 //        for (int i = 0; i < 5; i++) {
             if (object instanceof HashMap) {
 //            if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
                 rg_planEntity.setId(Tools.getUUID());
+
+                Map tempMap = (HashMap) object;
+                rg_planEntity.setIdTask(tempMap.get("idTask").toString());
+                rg_planEntity.setIdJob(tempMap.get("idJob").toString());
+                rg_planEntity.setNameTask(tempMap.get("nameTask").toString());
+                rg_planEntity.setNameOrder(tempMap.get("nameOrder").toString());
+                rg_planEntity.setNameJob(tempMap.get("nameJob").toString());
+                rg_planEntity.setNameResource(tempMap.get("nameResource").toString());
+                rg_planEntity.setNameGroupResource(tempMap.get("nameGroupResource").toString());
+                rg_planEntity.setNameTypeResource(tempMap.get("nameTypeResource").toString());
+                rg_planEntity.setNameSite(tempMap.get("nameSite").toString());
+                rg_planEntity.setNameProvider(tempMap.get("nameProvider").toString());
+                rg_planEntity.setOrdToParentTask(Short.parseShort(tempMap.get("ordToParentTask").toString()));
+                rg_planEntity.setIdTaskResourceSucc(tempMap.get("idTaskResourceSucc").toString());
+                rg_planEntity.setPreemptiveTask(tempMap.get("preemptiveTask").toString());
+                rg_planEntity.setDivisibleTask(tempMap.get("divisibleTask").toString());
+                rg_planEntity.setContinuousTask(tempMap.get("continuousTask").toString());
+                rg_planEntity.setQuantityTask(Short.parseShort(tempMap.get("quantityTask").toString()));
+                rg_planEntity.setQuantityResourceTask(Short.parseShort(tempMap.get("quantityResourceTask").toString()));
+                rg_planEntity.setQuantityBatchTask(Short.parseShort(tempMap.get("quantityBatchTask").toString()));
+                rg_planEntity.setQtySequence(Short.parseShort(tempMap.get("qtySequence").toString()));
+                rg_planEntity.setT1Task(tempMap.get("t1Task").toString());
+                rg_planEntity.setT2Task(tempMap.get("t2Task").toString());
+                rg_planEntity.setT2ExtendedTask(tempMap.get("t2ExtendedTask").toString());
+                rg_planEntity.setAdvice(tempMap.get("advice").toString());
+                rg_planEntity.setEstimateTask(tempMap.get("estimateTask").toString());
+                rg_planEntity.setTimeTask(tempMap.get("timeTask").toString());
+                rg_planEntity.setInitTimeTask(tempMap.get("initTimeTask").toString());
+                rg_planEntity.setUnitTimeTask(tempMap.get("unitTimeTask").toString());
+                rg_planEntity.setPostTimeTask(tempMap.get("postTimeTask").toString());
+                rg_planEntity.setCheckTimeTask(tempMap.get("checkTimeTask").toString());
+                rg_planEntity.setIdGroupResource0Task(tempMap.get("idGroupResource0Task").toString());
+                rg_planEntity.setIdResource0Task(tempMap.get("idResource0Task").toString());
+                rg_planEntity.setIdSite0Task(tempMap.get("idSite0Task").toString());
+                rg_planEntity.setQuantity0Task(Short.parseShort(tempMap.get("quantity0Task").toString()));
+                rg_planEntity.setT10Task(tempMap.get("t10Task").toString());
+                rg_planEntity.setT20Task(tempMap.get("t20Task").toString());
+                rg_planEntity.setT20ExtendedTask(tempMap.get("t20ExtendedTask").toString());
+                rg_planEntity.setT1Job(tempMap.get("t1Job").toString());
+                rg_planEntity.setT2Job(tempMap.get("t2Job").toString());
+                rg_planEntity.setQuantityJob(Short.parseShort(tempMap.get("quantityJob").toString()));
+                rg_planEntity.setNbTaskJob(Short.parseShort(tempMap.get("nbTaskJob").toString()));
+                rg_planEntity.setRefProductJob(tempMap.get("refProductJob").toString());
+                rg_planEntity.setOrdToRootJob(Short.parseShort(tempMap.get("ordToRootJob").toString()));
+                rg_planEntity.setOrdToRootChildJob(tempMap.get("OrdToRootChildJob").toString());
+                rg_planEntity.setT1Order(tempMap.get("t1Order").toString());
+                rg_planEntity.setT2Order(tempMap.get("t2Order").toString());
+                rg_planEntity.setQuantityOrder(Short.parseShort(tempMap.get("quantityOrder").toString()));
+                rg_planEntity.setPriorityOrder(Short.parseShort(tempMap.get("priorityOrder").toString()));
+                rg_planEntity.setColorOrder(tempMap.get("colorOrder").toString());
+                rg_planEntity.setState(Byte.parseByte(tempMap.get("state").toString()));
+
+                //获取Club实体
+                String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
+                Query query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idClub").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setClubByIdClub((RG_ClubEntity) query.list().get(0));
+                }
+
+                //获取Process实体
+                hql = "from RG_ProcessEntity rg_processEntity where rg_processEntity.id =:id";
+                query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idProcess").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setProcessByIdProcess((RG_ProcessEntity) query.list().get(0));
+                }
+
+                //获取Order实体
+                hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
+                query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idOrder").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setOrderByIdOrder((RG_OrderEntity) query.list().get(0));
+                }
+
+                //获取Resource实体
+                hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
+                query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idResource").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setResourceByIdResource((RG_ResourceEntity) query.list().get(0));
+                }
+
+                //获取Site实体
+                hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
+                query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idSite").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setSiteByIdSite((RG_SiteEntity) query.list().get(0));
+                }
+
+                //获取GroupResource实体
+                hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.id =:id";
+                query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idGroupResource").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setGroupresourceByIdGroupResource((RG_GroupresourceEntity) query.list().get(0));
+                }
+
+                //获取TypeResource实体
+                hql = "from RG_TyperescourceEntity rg_typerescourceEntity where rg_typerescourceEntity.id =:id";
+                query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idTypeResource").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setTyperescourceByIdTypeResource((RG_TyperescourceEntity) query.list().get(0));
+                }
+
+                //获取TypeResource实体
+                hql = "from RG_ProviderEntity rg_providerEntity where rg_providerEntity.id =:id";
+                query = session.createQuery(hql);
+                query.setParameter("id", tempMap.get("idProvider").toString());
+                if (!query.list().isEmpty()) {
+                    rg_planEntity.setProviderByIdProvider((RG_ProviderEntity) query.list().get(0));
+                }
                 Map tempMap = (HashMap) object;
                 rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
                 rg_planEntity.setIdJob(tempMap.get("IDJOB").toString());

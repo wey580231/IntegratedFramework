@@ -7,6 +7,7 @@ import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +63,20 @@ public class OrdersAction extends SuperAction {
         if (ordersDAOInstance.update(rg_orderEntity)) {
         } else {
             System.out.println("更新失败");
+        }
+    }
+
+    public void deleteById() {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+
+        boolean result = false;
+
+        result = DAOFactory.getOrdersDAOInstance().deleteById(jsonString);
+
+        if (result) {
+            Tools.jsonPrint(Tools.resultCode("0", "Success"), this.httpServletResponse);
+        } else {
+            Tools.jsonPrint(Tools.resultCode("1", "Can't execute operation"), this.httpServletResponse);
         }
     }
 }

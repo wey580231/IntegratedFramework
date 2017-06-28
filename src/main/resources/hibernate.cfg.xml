@@ -56,5 +56,9 @@
         <mapping resource="RG_ScheduleEntity.hbm.xml"/>
         <mapping resource="RG_UserConfigEntity.hbm.xml"/>
 
+        <!--设备、订单状态-->
+        <mapping resource="RG_ResourceStateEntity.hbm.xml"/>
+        <mapping resource="RG_OrderStateEntity.hbm.xml"/>
+
     </session-factory>
 </hibernate-configuration>

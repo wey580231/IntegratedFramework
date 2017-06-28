@@ -72,4 +72,12 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
     public List<RG_ResourceEntity> search(String keyWord) {
         return null;
     }
+
+    @Override
+    public boolean deleteById(String id) {
+
+
+
+        return false;
+    }
 }

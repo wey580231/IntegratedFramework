@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_ResourceStateEntity" table="RG_ResourceState" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="identity"/>
+        </id>
+        <property name="idResource">
+            <column name="idResource" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="resourceName">
+            <column name="resourceName" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="manufacturer">
+            <column name="manufacturer" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="idTask">
+            <column name="idTask" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="ordToParentTask">
+            <column name="ordToParentTask" sql-type="tinyint(4)"  not-null="false"/>
+        </property>
+        <property name="idClub">
+            <column name="idClub" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="idProduct">
+            <column name="idProduct" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="productName">
+            <column name="productName" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="t1Task" type="java.util.Date">
+            <column name="t1Task" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="t2Task" type="java.util.Date">
+            <column name="t2Task" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="currTime" type="java.util.Date">
+            <column name="currTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="t1RealTask" type="java.util.Date">
+            <column name="t1RealTask" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="t2RealTask" type="java.util.Date">
+            <column name="t2RealTask" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="state">
+            <column name="state" sql-type="tinyint(4)"  not-null="false"/>
+        </property>
+        <property name="bootstrapTime">
+            <column name="bootstrapTime" sql-type="float"  not-null="false"/>
+        </property>
+        <property name="awaitTime">
+            <column name="awaitTime" sql-type="float"  not-null="false"/>
+        </property>
+        <property name="processTime">
+            <column name="processTime" sql-type="float"  not-null="false"/>
+        </property>
+
+        <many-to-one name="resourceEntity" class="com.rengu.entity.RG_ResourceEntity">
+            <column name="resourceId" not-null="false"/>
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

@@ -205,4 +205,13 @@ public class Tools {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         return df.format(date);
     }
+
+    public static String formatToStandardDate(Date date){
+        if (date == null) {
+            return "";
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return df.format(date);
+    }
 }

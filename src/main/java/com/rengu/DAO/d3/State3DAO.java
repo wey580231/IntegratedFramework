@@ -30,9 +30,9 @@ public class State3DAO {
     public String getCurrentState() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
-        System.out.println(session.getTransaction().isActive()+"+++++++++++"+session.getTransaction().toString());
+        System.out.println(session.getTransaction().isActive() + "+++++++++++" + session.getTransaction().toString());
 
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -69,26 +69,46 @@ public class State3DAO {
     //根据ID名获取对应ID的所有信息
     public String getLayoutById(String s) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
         String jsonString = "";
 
-        System.out.println("getLayoutById：：：" + session.hashCode());
-
         Query query = session.createQuery("from RG_LayoutEntity layout where layout.name = :name");
         query.setParameter("name", s);
         List list = query.list();
-        if (list.size() == 1) {
-            if (list.get(0) instanceof RG_LayoutEntity) {
-                RG_LayoutEntity layout = (RG_LayoutEntity) list.get(0);
-                Set<RG_LayoutDetailEntity> details = layout.getDetails();
-                Iterator<RG_LayoutDetailEntity> iter = details.iterator();
-                while (iter.hasNext()) {
-                    RG_LayoutDetailEntity entity = iter.next();
-                }
-                jsonString = layout.toJson();
+        if (list.size() == 1 && list.get(0) instanceof RG_LayoutEntity) {
+            RG_LayoutEntity layout = (RG_LayoutEntity) list.get(0);
+            Set<RG_LayoutDetailEntity> details = layout.getDetails();
+            Iterator<RG_LayoutDetailEntity> iter = details.iterator();
+
+            ObjectMapper mapper = new ObjectMapper();                //定义转换类
+            ObjectNode root = mapper.createObjectNode();             //创建根节点
+            root.put("result", "0");
+            root.put("id", layout.getName());
+
+            ArrayNode arryaNode = mapper.createArrayNode();
+
+            while (iter.hasNext()) {
+                RG_LayoutDetailEntity entity = iter.next();
+
+                ObjectNode dataNode = mapper.createObjectNode();
+                dataNode.put("id",entity.getId());
+                dataNode.put("item",entity.getItem());
+                dataNode.put("pos",entity.getPos());
+                dataNode.put("state",entity.getState());
+                dataNode.put("exist",entity.getExist());
+
+                arryaNode.add(dataNode);
+            }
+
+            root.put("data",arryaNode);
+
+            try {
+                jsonString = mapper.writeValueAsString(root);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
             }
         }
 
@@ -113,7 +133,7 @@ public class State3DAO {
         boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -158,7 +178,7 @@ public class State3DAO {
         }
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -184,7 +204,7 @@ public class State3DAO {
     //查询所有布局信息
     public String queryAllLayout() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -244,7 +264,7 @@ public class State3DAO {
         boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
