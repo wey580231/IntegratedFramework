@@ -74,7 +74,7 @@
             </div>
         </div>-->
         <button class="uk-button uk-float-right "
-                data-uk-modal="{target:'#schedule'}" style="border-radius:15px; ">新计划排程
+                data-uk-modal="{target:'#schedule'}" id="scheduleButton" style="border-radius:15px; ">新计划排程
         </button>
     </div>
 </div>

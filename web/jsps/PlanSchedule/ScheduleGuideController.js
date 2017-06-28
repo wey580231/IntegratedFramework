@@ -37,6 +37,10 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             });
         };
 
+        $('#scheduleButton').click(function () {
+            $("input").val('');
+        });
+
         /*$scope.showResource = function () {
          myHttpService.get(serviceList.ListResource).then(function (response) {
          console.log(response);
