@@ -1,15 +1,16 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.rengu.DAO.impl.LayoutDAOImpl;
 import com.rengu.entity.*;
 import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by hanchangming on 2017/6/5.
@@ -23,8 +24,8 @@ public class ScheduleAction extends SuperAction {
 
         //初始化数据库表
         try {
-            String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
-            Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
+//            String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
+//            Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
 
             //更新数据库表内容
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
@@ -75,7 +76,7 @@ public class ScheduleAction extends SuperAction {
             session = MySessionFactory.getSessionFactory().getCurrentSession();
 
             tx = session.getTransaction();
-            if(!tx.isActive()){
+            if (!tx.isActive()) {
                 tx = session.beginTransaction();
             }
 

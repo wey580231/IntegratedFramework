@@ -89,7 +89,7 @@ public class Tools {
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
         Properties databaseProperties = getDatabaseProperties();
-        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
@@ -104,7 +104,7 @@ public class Tools {
 
     public static List executeSQLForResultSet(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
         Properties databaseProperties = getDatabaseProperties();
-        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
@@ -134,7 +134,7 @@ public class Tools {
 
     public static void executeSQLForInitTable(String databaseType, String companyName, String[] tableList) throws ClassNotFoundException, SQLException {
         Properties databaseProperties = getDatabaseProperties();
-        String databaseUrl = databaseProperties.getProperty(companyName + "DatabaseUrl");
+        String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
