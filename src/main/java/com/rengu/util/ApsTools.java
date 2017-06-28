@@ -147,7 +147,7 @@ public class ApsTools {
     //获取排程结果
     public void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from aps_plan";
-        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
+        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
@@ -169,7 +169,7 @@ public class ApsTools {
                 rg_planEntity.setNameSite(tempMap.get("NAMESITE").toString());
                 rg_planEntity.setNameProvider(tempMap.get("NAMEPROVIDER").toString());
                 rg_planEntity.setOrdToParentTask(Short.parseShort(tempMap.get("ORDTOPARENTTASK").toString()));
-                rg_planEntity.setIdTaskResourceSucc(tempMap.get("IDTASKRESOURCESUCC").toString());
+//                rg_planEntity.setIdTaskResourceSucc(tempMap.get("IDTASKRESOURCESUCC").toString());
                 rg_planEntity.setPreemptiveTask(tempMap.get("PREEMPTIVETASK").toString());
                 rg_planEntity.setDivisibleTask(tempMap.get("DIVISIBLETASK").toString());
                 rg_planEntity.setContinuousTask(tempMap.get("CONTINUOUSTASK").toString());
@@ -281,7 +281,7 @@ public class ApsTools {
                 session.save(rg_planEntity);
             }
         }
-
+        System.out.println("APS_PLAN 表同步完成");
     }
 
     //拼接请求命令

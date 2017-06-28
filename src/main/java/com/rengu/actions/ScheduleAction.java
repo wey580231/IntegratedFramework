@@ -24,6 +24,7 @@ public class ScheduleAction extends SuperAction {
 
         //初始化数据库表
         try {
+            //清空APS数据库
 //            String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
 //            Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
 
@@ -70,7 +71,7 @@ public class ScheduleAction extends SuperAction {
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
                 }
-                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
+//                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
 
             session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -93,7 +94,9 @@ public class ScheduleAction extends SuperAction {
             Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<RG_OrderEntity>();
             for (JsonNode tempNode : orderNodes) {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").toString());
-                rg_orderEntitySet.add(rg_orderEntity);
+                if (rg_orderEntity != null) {
+                    rg_orderEntitySet.add(rg_orderEntity);
+                }
             }
             rg_scheduleEntity.setOrders(rg_orderEntitySet);
 
@@ -103,8 +106,10 @@ public class ScheduleAction extends SuperAction {
             Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<RG_ResourceEntity>();
             for (JsonNode tempNode : resourcesNodes) {
                 RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, tempNode.get("id").toString());
-                rg_resourceEntity.getSchedules().add(rg_scheduleEntity);
-                rg_resourceEntitySet.add(rg_resourceEntity);
+                if (rg_resourceEntity != null) {
+                    rg_resourceEntity.getSchedules().add(rg_scheduleEntity);
+                    rg_resourceEntitySet.add(rg_resourceEntity);
+                }
             }
             rg_scheduleEntity.setResources(rg_resourceEntitySet);
 
@@ -113,8 +118,10 @@ public class ScheduleAction extends SuperAction {
             Set<RG_GroupresourceEntity> rg_groupresourceEntitySet = new HashSet<RG_GroupresourceEntity>();
             for (JsonNode tempNode : groupResourceNodes) {
                 RG_GroupresourceEntity rg_groupresourceEntity = session.get(RG_GroupresourceEntity.class, tempNode.get("id").toString());
-                rg_groupresourceEntity.getSchedules().add(rg_scheduleEntity);
-                rg_groupresourceEntitySet.add(rg_groupresourceEntity);
+                if (rg_groupresourceEntity != null) {
+                    rg_groupresourceEntity.getSchedules().add(rg_scheduleEntity);
+                    rg_groupresourceEntitySet.add(rg_groupresourceEntity);
+                }
             }
             rg_scheduleEntity.setGroups(rg_groupresourceEntitySet);
 
@@ -124,8 +131,10 @@ public class ScheduleAction extends SuperAction {
             Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<RG_SiteEntity>();
             for (JsonNode tempNode : siteNodes) {
                 RG_SiteEntity rg_siteEntity = session.get(RG_SiteEntity.class, tempNode.get("id").toString());
-                rg_siteEntity.getSchedules().add(rg_scheduleEntity);
-                rg_siteEntitySet.add(rg_siteEntity);
+                if (rg_siteEntity != null) {
+                    rg_siteEntity.getSchedules().add(rg_scheduleEntity);
+                    rg_siteEntitySet.add(rg_siteEntity);
+                }
             }
             rg_scheduleEntity.setSites(rg_siteEntitySet);
 
