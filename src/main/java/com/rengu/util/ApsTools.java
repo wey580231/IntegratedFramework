@@ -1,10 +1,9 @@
 package com.rengu.util;
 
-import com.rengu.entity.RG_AdjustDeviceEntity;
-import com.rengu.entity.RG_AdjustProcessEntity;
-import com.rengu.entity.RG_PlanEntity;
-import com.rengu.entity.RG_SnapshotNodeEntity;
+import com.rengu.DAO.impl.*;
+import com.rengu.entity.*;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,28 +62,24 @@ public class ApsTools {
     }
 
     //TODO 待将连接修改成APS提供的访问连接
-    //获取紧急插单
-//    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
-//
-//        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
-//                "&" +
-//                "BUFFER=1\\n2\\n"+entity.getId()+"\\n001\\n2000-01-01\\t06:00\\n120\\n"+entity.getId()+"\\n"+entity.getName()
-//                +"\\n"+entity.getQuantity()+"\\nKqd\\nG01\\n1\\n2014-05-23\\t08:50\\n2014-05-23\\t08:50\\n\n" +
-//                "2014-05-25\\t11:24\n";
-//
-//
-//        String result1 = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
-//                "&" +
-//                "BUFFER=1\\n2\\n" + entity.getId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
-//                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
-//                "&" +
-//                "REPLY=" + ApsTools.instance().getReplyAddress() +
-//                "&" +
-//                "ID=001" +
-//                "&" +
-//                "DELAY=1000\n";
-//        return result;
-//    }
+    public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
+
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getOrd().getId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getId() + "\\n" + entity.getOrd().getName()
+                + "\\n" + entity.getOrd().getQuantity() + "\\n" + entity.getOrd().getProductByIdProduct().getId() + "\\n" + entity.getOrd().getIdGroupResource() +
+                "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(entity.getOrd().getT1Interaction()) + "\\n"
+                + ApsTools.instance().convertSpaceWithTab(entity.getOrd().getT2Interaction()) + "\\n"
+                + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT2())) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000";
+
+        return result;
+    }
 
     //获取工序调整
     public static String getAdjustProcessHandlingURL(RG_AdjustProcessEntity entity) {
@@ -147,7 +142,7 @@ public class ApsTools {
     //获取排程结果
     public void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from aps_plan";
-        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
@@ -157,6 +152,7 @@ public class ApsTools {
 //            if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
                 rg_planEntity.setId(Tools.getUUID());
+
                 Map tempMap = (HashMap) object;
                 rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
                 rg_planEntity.setIdJob(tempMap.get("IDJOB").toString());

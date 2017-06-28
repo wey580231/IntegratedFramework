@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -39,11 +40,13 @@ public class RG_ResourceEntity {
     private RG_UserEntity userByIdUser;
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
     private RG_GroupresourceEntity groupresourceByIdGroupResource;
-    private Set<RG_SiteEntity> sitesById;
-    private Set<RG_ShiftEntity> shiftsById;
-    private Set<RG_TyperescourceEntity> typeresourcesById;
+    private Set<RG_SiteEntity> sitesById = new HashSet<RG_SiteEntity>();
+    private Set<RG_ShiftEntity> shiftsById = new HashSet<RG_ShiftEntity>();
+    private Set<RG_TyperescourceEntity> typeresourcesById = new HashSet<RG_TyperescourceEntity>();
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     private Set<RG_ScheduleEntity> schedules;
+
+    private Set<RG_ResourceStateEntity> resourceState = new HashSet<RG_ResourceStateEntity>();
 
     public String getId() {
         return id;
@@ -227,6 +230,14 @@ public class RG_ResourceEntity {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public Set<RG_ResourceStateEntity> getResourceState() {
+        return resourceState;
+    }
+
+    public void setResourceState(Set<RG_ResourceStateEntity> resourceState) {
+        this.resourceState = resourceState;
     }
 
     @Override

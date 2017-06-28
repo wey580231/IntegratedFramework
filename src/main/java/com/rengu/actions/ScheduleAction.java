@@ -127,7 +127,6 @@ public class ScheduleAction extends SuperAction {
 
             //解析Site数据
             JsonNode siteNodes = rootNode.get("site");
-            System.out.println(siteNodes.isArray());
             Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<RG_SiteEntity>();
             for (JsonNode tempNode : siteNodes) {
                 RG_SiteEntity rg_siteEntity = session.get(RG_SiteEntity.class, tempNode.get("id").toString());

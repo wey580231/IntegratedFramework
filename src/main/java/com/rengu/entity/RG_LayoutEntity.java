@@ -69,25 +69,4 @@ public class RG_LayoutEntity {
         return result;
     }
 
-    public String toJson() {
-        String detailString = "{ \"result\":\"0\"" + "," +
-                "\"id\":" + "\"" + name + "\",";
-        detailString += ("\"data\":" + "[");
-        Iterator<RG_LayoutDetailEntity> iter = details.iterator();
-
-        int index = 0;
-
-        while (iter.hasNext()) {
-            detailString += iter.next().toJson();
-            index++;
-
-            if (index < details.size()) {
-                detailString += ",";
-            }
-        }
-
-        detailString += ("]}");
-
-        return detailString;
-    }
 }

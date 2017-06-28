@@ -10,22 +10,17 @@
 <link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
-
-
     .uk-table td {
         vertical-align: top;
         width: 72px;
         margin-left: 11px;
     }
-
     #chooseDialog {
         width: 950px;
     }
-
     #choosedDialog {
         width: 950px;
     }
-
 </style>
 
 
@@ -346,11 +341,3 @@
 
 
 </div>
-
-
-
-
-
-
-
-

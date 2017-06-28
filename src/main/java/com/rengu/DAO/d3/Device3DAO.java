@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.RG_OrderEntity;
+import com.rengu.entity.RG_OrderStateEntity;
+import com.rengu.entity.RG_ResourceStateEntity;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -17,52 +20,68 @@ import java.util.List;
  */
 public class Device3DAO {
 
+    //获取设备最新信息
     public boolean getDeviceReport(String requestDevice, String code, StringBuilder result) {
         boolean returnRes = false;
 
-        //TODO 需要向MES发送activeMQ发送设备表请求
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode root = mapper.createObjectNode();
-        root.put("result", "0");
-        root.put("type", requestDevice);
-
-        //【1】订单主表
-        ObjectNode deviceData = mapper.createObjectNode();
-        deviceData.put("idResource", "UR5");
-        deviceData.put("resourceName", "UR5");
-        deviceData.put("manufacturer", "UR5");
-        deviceData.put("idTask", "abc");
-        deviceData.put("ordToParentTask", 12);
-        deviceData.put("idClub", "sfs");
-        deviceData.put("idProduct", "sd");
-        deviceData.put("productName", "232a");
-        deviceData.put("t1Task", "asdf");
-        deviceData.put("t2Task", "asdf");
-        deviceData.put("currTime", "asdf");
-        deviceData.put("t1RealTask", "23ad");
-        deviceData.put("t2RealTask", "asdfbaf");
-        deviceData.put("state", 1);
-        deviceData.put("bootstrapTime", 0.2);
-        deviceData.put("awaitTime", 0.4);
-        deviceData.put("processTime", 0.3);
-
-        root.put("data", deviceData);
-
-        try {
-            result.append(mapper.writeValueAsString(root));
-            returnRes = true;
-        } catch (JsonProcessingException e) {
-
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        if (!session.getTransaction().isActive()) {
+            session.beginTransaction();
         }
+
+        NativeQuery query = session.createNativeQuery("select * from rg_resourcestate where resourceId = ? order by currTime desc limit 0,1").addEntity(RG_ResourceStateEntity.class);
+        query.setParameter(1, code);
+        List list = query.list();
+
+        if (list.size() > 0) {
+            //TODO 需要向MES发送activeMQ发送设备表请求
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode root = mapper.createObjectNode();
+            root.put("result", "0");
+            root.put("type", requestDevice);
+
+            //【1】设备信息
+            ObjectNode deviceData = mapper.createObjectNode();
+
+            RG_ResourceStateEntity entity = (RG_ResourceStateEntity) list.get(0);
+            deviceData.put("idResource", entity.getIdResource());
+            deviceData.put("resourceName", entity.getResourceName());
+            deviceData.put("manufacturer", entity.getManufacturer());
+            deviceData.put("idTask", entity.getIdTask());
+            deviceData.put("ordToParentTask", entity.getOrdToParentTask());
+            deviceData.put("idClub", entity.getIdClub());
+            deviceData.put("idProduct", entity.getIdProduct());
+            deviceData.put("productName", entity.getProductName());
+            deviceData.put("t1Task", Tools.formatToStandardDate(entity.getT1Task()));
+            deviceData.put("t2Task", Tools.formatToStandardDate(entity.getT2Task()));
+            deviceData.put("currTime", Tools.formatToStandardDate(entity.getCurrTime()));
+            deviceData.put("t1RealTask", Tools.formatToStandardDate(entity.getT1RealTask()));
+            deviceData.put("t2RealTask", Tools.formatToStandardDate(entity.getT2RealTask()));
+            deviceData.put("state", entity.getState());
+            deviceData.put("bootstrapTime", entity.getBootstrapTime());
+            deviceData.put("awaitTime", entity.getAwaitTime());
+            deviceData.put("processTime", entity.getProcessTime());
+
+            root.put("data", deviceData);
+
+            try {
+                result.append(mapper.writeValueAsString(root));
+                returnRes = true;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+
         return returnRes;
     }
 
+    //获取订单最新信息
     public boolean getOrderReport(String requestOrder, String code, StringBuilder result) {
 
         boolean returnRes = false;
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -87,38 +106,46 @@ public class Device3DAO {
                 mainData.put("productName", entity.getProductByIdProduct().getName());
                 mainData.put("quantity", entity.getQuantity());
                 //TODO 需要向MES发送activeMQ发送订单表请求
-//                mainData.put("completeNum",entity.get);
-//                mainData.put("completeCent",entity.getId());
+                mainData.put("completeNum", entity.getFinishQuantity());
+                mainData.put("completeCent", (float) entity.getFinishQuantity() / entity.getQuantity());
                 mainData.put("t0", Tools.formatDate(entity.getT0()));
                 mainData.put("currTime", "");
                 mainData.put("t2Plan", Tools.formatDate(entity.getT2Plan()));
                 mainData.put("state", entity.getState());
 
                 //【2】订单子表
-                mainData.put("idOrder", entity.getId());
-                //TODO 需要向MES发送activeMQ发送订单子表请求，将下列字段值更新
-                mainData.put("idTask", entity.getId());
-                mainData.put("nameTask", entity.getId());
-                mainData.put("planDevice", entity.getId());
-                mainData.put("planCount", entity.getId());
-                mainData.put("planStartTime", entity.getId());
-                mainData.put("planFinishTime", entity.getId());
-                mainData.put("actualDispatchTime", entity.getId());
-                mainData.put("actualFinshTime", entity.getId());
-                mainData.put("hasFinished", entity.getId());
-                mainData.put("finishPercent", entity.getId());
+                NativeQuery nativeQuery = session.createNativeQuery("select * from rg_orderstate where orderId = ? order by currTime desc limit 0,1").addEntity(RG_OrderStateEntity.class);
+                nativeQuery.setParameter(1, code);
+                list = nativeQuery.list();
 
-                root.put("data", mainData);
+                if (list.size() > 0) {
+                    RG_OrderStateEntity orderStateEntity = (RG_OrderStateEntity) list.get(0);
 
-                try {
-                    result.append(mapper.writeValueAsString(root));
-                    returnRes = true;
-                } catch (JsonProcessingException e) {
+                    mainData.put("idOrder", entity.getId());
+                    //TODO 需要向MES发送activeMQ发送订单子表请求，将下列字段值更新
+                    mainData.put("idTask", orderStateEntity.getIdTask());
+                    mainData.put("nameTask", orderStateEntity.getNameTask());
+                    mainData.put("planDevice", orderStateEntity.getPlanDevice());
+                    mainData.put("planCount", orderStateEntity.getPlanCount());
+                    mainData.put("planStartTime", Tools.formatToStandardDate(orderStateEntity.getPlanStartTime()));
+                    mainData.put("planFinishTime", Tools.formatToStandardDate(orderStateEntity.getPlanFinishTime()));
+                    mainData.put("actualDispatchDevice", orderStateEntity.getActualDispatchDevice());
+                    mainData.put("actualFinshCount", orderStateEntity.getActualFinishCount());
+                    mainData.put("hasFinished", orderStateEntity.isFinished());
+                    mainData.put("finishPercent", orderStateEntity.getFinishPercent());
 
+                    root.put("data", mainData);
+
+                    try {
+                        result.append(mapper.writeValueAsString(root));
+                        returnRes = true;
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                    //【3】更新order中的对应订单的完成数量
+                    entity.setFinishQuantity((short) 0);
+                    session.update(entity);
                 }
-                //【3】更新order中的对应订单的完成数量
-                entity.setFinishQuantity((short) 0);
-                session.update(entity);
             }
         }
 
