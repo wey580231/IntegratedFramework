@@ -257,15 +257,23 @@
 
 
 <div class="block">
-    <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
-    &nbsp;
-    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>
+    <div class="leftpic">
+        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+    </div>
+    <div class="title">
+        &nbsp;
+        <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>
+    </div>
 
-    <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
-        <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
-               style="width: 150px;border: 1px solid lightgray;">
-    </form>
-    <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
+
+    <div class="search">
+        <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
+            <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
+                   style="width: 150px;border: 1px solid lightgray;">
+        </form>
+    </div>
+
+    <div class="data-uk-button-radio btngroup">
         <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
         <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
