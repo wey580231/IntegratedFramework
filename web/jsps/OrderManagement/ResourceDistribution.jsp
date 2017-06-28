@@ -34,7 +34,7 @@
     }
 </script>
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block">
 
     <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
@@ -67,29 +67,28 @@
 <%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
 <!--右侧表格-->
-<div class="uk-width-4-5"
-     style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
-    <div style="margin-top: 1%;">
+<div class="uk-width-1-1 tb">
+    <div class="tbfir">
 
-        <div style="width: 100%;border: 0px;margin-top: -10px;">
+        <div class="tbsec">
 
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
 
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 92%;">
+                <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
                         <table  id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
-                                    <div class="selectpng">
+                                    <div class="selectpng" style="margin-left: 43%;">
                                         <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
 
                                 </td>
-                                <td>工艺路径编码</td>
+                                <%--<td>工艺路径编码</td>--%>
                                 <td>类型编号集合</td>
                                 <td>资源类型分组</td>
                                 <td>地点编码</td>
@@ -101,13 +100,13 @@
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="height: 78%;">
+                    <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
                             <tr ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                <td id="id">{{x.id}}</td>
+                                <%--<td id="id">{{x.id}}</td>--%>
                                 <td id="grp">{{x.grp}}</td>
                                 <td id="TypeSite">{{ x.typeSite}}</td>
                                 <td id="IdSite">{{x.idSite}}</td>

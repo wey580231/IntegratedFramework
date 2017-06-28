@@ -32,10 +32,8 @@
     }
 </script>
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block">
 
-    <%--<img src="../../images/bom_img/shu.png" style="margin-left: -35px;width: 40px;">--%>
-    <%--<div class="uk-width-1-4 ">--%>
     <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
@@ -45,15 +43,6 @@
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">调整工序</span>
     </div>
 
-    <%--</div>--%>
-    <%--<img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
-
-
-&nbsp;
-<span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>--%>
-    <!--搜索-->
-    <%--<div class="uk-width-1-4 " >--%>
-    <%--<div class="uk-autocomplete" data-uk-autocomplete="{source:'/jsps/OrderManagement/_Aotu.json' }">--%>
     <div style="float:left;margin-left: 2%;">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
@@ -61,8 +50,6 @@
         </form>
     </div>
 
-    <%--            </div>--%>
-    <%--</div>--%>
 
     <!--日历-->
 
@@ -118,18 +105,17 @@
 <%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
 <!--右侧表格-->
-<div class="uk-width-4-5"
-     style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
-    <div style="margin-top: 1%;">
+<div class="uk-width-1-1 tb">
+    <div class="tbfir">
 
         <!--tab-->
-        <div style="width: 100%;border: 0px;margin-top: -10px;">
+        <div class="tbsec">
 
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
 
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 92%;">
+                <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
                         <table class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
@@ -142,13 +128,13 @@
 
                                 </td>
                                 <td>处理状态</td>
-                                <td style="width: 75px;">订单编码</td>
-                                <td style="width: 80px;">上报时间</td>
-                                <td style="width: 80px;">工序码</td>
-                                <td>原始选用资源编码</td>
+                                <td>订单编码</td>
+                                <td>上报时间</td>
+                                <td>工序码</td>
+                                <%--<td>原始选用资源编码</td>
                                 <td>原始开始时间</td>
-                                <td>指定资源编码</td>
-                                <td>指定开始时间</td>
+                                <td>指定资源编码</td>--%>
+                                <td>指定时间</td>
                                 <td>处理方法</td>
                                 <td style="width: 95px;">异常来源</td>
                             </tr>
@@ -156,7 +142,7 @@
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="height: 78%;">
+                    <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
                             </tbody>

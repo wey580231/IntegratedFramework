@@ -44,7 +44,7 @@
 
 </script>
 
-<div class="block" style="height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block">
 
 
     <div style="float:left;">
@@ -102,24 +102,18 @@
 
 
 <!--右侧表格-->
-<div class="uk-width-1-1" style="/*width: 99%;*/border-top: 1px solid lightgray;border-bottom: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
-
-top: 80px;
-bottom: 20px;
-position: absolute;
-
-">
-    <div style="margin-top: 1%;height: 100%;">
+<div class="uk-width-1-1 tb">
+    <div class="tbfir" style="/*margin-top: 1%;height: 100%;*/">
 
         <!--tab-->
-        <div style="width: 100%;border: 0px;margin-top: -10px;height: 100%;">
+        <div class="tbsec" style="/*width: 100%;border: 0px;margin-top: -10px;height: 100%;*/">
 
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
 
                 <!--表格-->
                 <div class="uk-overflow-container" style="height: 96%;">
-                    <div class="fixtable-head" style="height: 50px;">
+                    <div class="fixtable-head">
                         <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
@@ -144,7 +138,7 @@ position: absolute;
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="/*height: 79%;*/top: 50px;bottom: 0px;position: absolute;height: auto;">
+                    <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
 

@@ -160,3 +160,44 @@ th{
     height: 15px;
     background-color: #cddae3;
 }
+
+.block{
+    height: 45px;
+    margin-top: 10px;
+    background-color: white;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.tb{
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    background-color: white;
+
+    top: 80px;
+    bottom: 20px;
+    position: absolute;
+}
+
+.tbfir{
+    margin-top: 1%;
+    height: 100%;
+}
+
+.tbsec{
+    width: 100%;
+    border: 0px;
+    margin-top: -10px;
+    height: 100%;
+}
+
+.fixtable-head{
+    height: 50px;
+}
+
+.fixtable-body{
+    top: 50px;
+    bottom: 0px;
+    position: absolute;
+    height: auto;
+}
