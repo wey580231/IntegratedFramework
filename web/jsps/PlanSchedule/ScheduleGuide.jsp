@@ -177,7 +177,7 @@
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
                     <div class="fixtable-head">
-                        <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
+                        <table id="chooseTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
@@ -300,7 +300,7 @@
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
                     <div class="fixtable-head">
-                        <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
+                        <table id="runTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
                                 <td>
