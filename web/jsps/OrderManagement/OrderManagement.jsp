@@ -47,17 +47,17 @@
 <div class="block">
 
 
-    <div style="float:left;">
+    <div class="leftpic" style="/*float:left;*/">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
-    <div style="float:left;margin-top: 5px;">
+    <div class="title" style="/*float:left;margin-top: 5px;*/">
         &nbsp;
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
     </div>
 
     <!--搜索框-->
-    <div style="float:left;margin-left: 2%;">
+    <div class="search" style="/*float:left;margin-left: 2%;*/">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
                    style="width: 150px;border: 1px solid lightgray;">
@@ -65,7 +65,7 @@
     </div>
 
     <!--日历-->
-    <div style="float:left;margin-left: 2%;">
+    <div class="dateshow" style="/*float:left;margin-left: 2%;*/">
         <form class="uk-form" style="margin-left: 2%;margin-top: 5px;width: 135px;">
             <div class="uk-form-icon">
                 <i class="uk-icon-calendar"></i>
@@ -77,7 +77,7 @@
 
 
     <!--下拉框-->
-    <div style="float:left;margin-left: 2%;">
+    <div class="orderselect" style="/*float:left;margin-left: 2%;*/">
         <form class="uk-form"  style="margin-left: 2%;">
             <div class="" style="margin-top: 4px;">
                 <select class="uk-grid" style="height: 30px;">
@@ -90,7 +90,7 @@
 
     <!--按钮-->
 
-    <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
+    <div class="data-uk-button-radio btngroup" style="/*margin-top: 5px;float: right;margin-right: 1%;*/">
         <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}" >新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editOrder()" data-uk-modal="{target:'#edit'}" >修改</button>
         <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteOrder()">删除</button>

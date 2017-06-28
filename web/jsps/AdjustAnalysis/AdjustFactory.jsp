@@ -34,16 +34,16 @@
 
 <div class="block">
 
-    <div style="float:left;">
+    <div class="leftpic">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
-    <div style="float:left;margin-top: 5px;">
+    <div class="title">
         &nbsp;
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">调整工厂布局</span>
     </div>
 
-    <div style="float:left;margin-left: 2%;">
+    <div class="search">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
                    style="width: 150px;border: 1px solid lightgray;">
@@ -54,7 +54,7 @@
     <!--日历-->
 
     <%--<div class="uk-width-1-4" style="float: left;margin-top: 10px;margin-left: -70px;">--%>
-    <div style="float:left;margin-left: 2%;">
+    <div class="dateshow">
         <form class="uk-form" style="margin-left: 2%;margin-top: 5px;width: 135px;">
             <div class="uk-form-icon">
                 <i class="uk-icon-calendar"></i>
@@ -67,7 +67,7 @@
     <%--</div>--%>
 
     <!--下拉框-->
-    <div style="float:left;margin-left: 2%;">
+    <div class="orderselect">
         <form class="uk-form" style="margin-left: 2%;">
             <div class="" style="margin-top: 4px;">
                 <select class="uk-grid" style="height: 30px;">
