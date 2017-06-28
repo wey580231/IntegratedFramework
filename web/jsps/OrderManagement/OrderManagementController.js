@@ -43,6 +43,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         $('#addButton').click(function () {
             $("input").val('');
+            $("input#add-name").removeClass("uk-form-success");
+            $("input#add-origin").removeClass("uk-form-success");
+            $("input#add-priority").removeClass("uk-form-danger");
+            $("input#add-quantity").removeClass("uk-form-success");
         });
 
         //新增订单
@@ -123,6 +127,14 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var params = {};
             var idVal = operateId;
             params.id = idVal;
+            params.name = "";
+            params.origin = "";
+            // params.idProduct = parseInt(idProductVal);
+            params.quantity = "";
+            params.priority = "";
+            params.t1 = "";
+            params.t2 = "";
+            params.t0 = "";
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
@@ -140,16 +152,18 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 if (a[i].checked) {
                     count++;
                     if (count > 2) {
-                        alert("请选中一条需要修改条目！");
+                        alert("请选择其中一条需要修改条目！");
+                        $("input").val('');
                         break;
                     } else {
                         //$('#edit').modal('show');
-                        $('#edit').show();
                         editOrder();
+                        //$("#edit").show();
                         break;
                     }
                 } else if (!a[i].checked) {
-                    alert("请选中一条需要修改条目！");
+                    alert("请选择一条需要修改条目！");
+                    $("input").val('');
                     break;
                 }
             }
@@ -213,17 +227,21 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             });
         };
 
-//信息填写检验
+        //信息填写检验
         $scope.orderValidate = function () {
             var name = $("input#add-name").val();
-
-            if (check(name)) {
+            var origin = $("input#add-origin").val();
+            var priority = $("input#add-priority").val();
+            var t1 = $("input#add-t1").val();
+            var t0 = $("input#add-t0").val();
+            var t2 = $("input#add-t2").val();
+            if (check(name) && checkOrigin(origin) && checkPriority(priority)) {
                 UIkit.modal.confirm('确定添加吗？', function () {
                     addOrder();
                 });
                 return true;
             } else {
-
+                alert("输入有误！");
                 return false;
             }
         };
@@ -237,26 +255,87 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             return true;
         };
 
-        /*var checkId = function (id) {
-         console.log(id);
-         var mytable = document.getElementById("table_value");
-         var rows = document.getElementById("table_value").rows;
-         for (var i = 0, row = mytable.rows.length; i < row; i++) {
-         if (rows[i].cells[1].innerHTML == id) {
-         UIkit.modal.confirm('数据已经存在，请重新填写！', function () {
-         $("input").val('');
-         $("input#add-name").removeClass("uk-form-success");
-         });
-         return false;
-         }
-         }
-         return true;
-         };
-         */
-
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
             $("input#add-name").removeClass("uk-form-success");
+            $("input#add-origin").removeClass("uk-form-success");
+            $("input#add-priority").removeClass("uk-form-danger");
+            $("input#add-quantity").removeClass("uk-form-success");
         }
+
+        var checkOrigin = function (origin) {
+
+            var OriginRegexp = /^[A-Za-z]+$/;
+            if (!OriginRegexp.test(origin)) {
+                $("input#add-origin").addClass("uk-form-danger");
+                //document.getElementById('origin-span').innerHTML = '请输入a-z/A-Z之间字母组成的字符串！';
+                //showNotification("请输入a-z/A-Z之间字母组成的字符串！", "danger")
+                return false;
+            }
+            $("input#add-origin").addClass("uk-form-success");
+            return true;
+        };
+
+
+        var checkPriority = function (priority) {
+
+            var PriorityRegexp = /^[A-Za-z]+$/;
+            if (!PriorityRegexp.test(priority)) {
+                $("input#add-priority").addClass("uk-form-danger");
+                //document.getElementById('priority-span').innerHTML = '请输入a-z/A-Z之间字母组成的字符串！';
+                return false;
+            }
+            $("input#add-priority").addClass("uk-form-success");
+            return true;
+        };
+
+        var checkQuantity = function (quantity) {
+
+            var QuantityRegexp = /^[0-9]+.?[0-9]*$/;
+            if (!QuantityRegexp.test(quantity)) {
+                $("input#add-quantity").addClass("uk-form-danger");
+                //document.getElementById('quantity-span').innerHTML = '请输入正确的数字！';
+                return false;
+            }
+            $("input#add-quantity").addClass("uk-form-success");
+            return true;
+        };
+
+        var checkT1 = function (t1) {
+
+            var TimeRegexp = /^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]:[0-5][0-9]$/;
+            if (!TimeRegexp.test(t1)) {
+                $("input#add-t1").addClass("uk-form-danger");
+                //document.getElementById('t1-span').innerHTML = '请输入正确的日期格式！';
+                return false;
+            }
+            $("input#add-t1").addClass("uk-form-success");
+            return true;
+        };
+
+        var checkT0 = function (t0) {
+
+            var TimeRegexp = /^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]:[0-5][0-9]$/;
+            if (!TimeRegexp.test(t0)) {
+                $("input#add-t0").addClass("uk-form-danger");
+                //document.getElementById('t0-span').innerHTML = '请输入正确的日期格式！';
+                return false;
+            }
+            $("input#add-t0").addClass("uk-form-success");
+            return true;
+        };
+
+        var checkT2 = function (t2) {
+
+            var TimeRegexp = /^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]:[0-5][0-9]$/;
+            if (!TimeRegexp.test(t2)) {
+                $("input#add-t2").addClass("uk-form-danger");
+                //document.getElementById('t2-span').innerHTML = '请输入正确的日期格式！';
+                return false;
+            }
+            $("input#add-t2").addClass("uk-form-success");
+            return true;
+        };
+
     });

@@ -15,6 +15,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var scheduleDays;
         var obj;
         var curobj;
+        var ordId;
         /*var ordId;
          var resId;
          var resGroId;
@@ -35,6 +36,10 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 $scope.ord = response.data;
             });
         };
+
+        $('#scheduleButton').click(function () {
+            $("input").val('');
+        });
 
         /*$scope.showResource = function () {
          myHttpService.get(serviceList.ListResource).then(function (response) {
@@ -151,17 +156,18 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
             var resourceArr = [];
             var resources = {};
-            resources.id = 2;
+            resources.id = arr.resource.id;
             resourceArr.push(resources);
 
             var groupResourcesArr = [];
             var groupResources = {};
-            groupResources.id = arr.orders[0].idGroupResource;
+            //groupResources.id = arr.orders[0].idGroupResource;
+            groupResources.id = arr.groupResource.id;
             groupResourcesArr.push(groupResources);
 
             var sitesArr = [];
             var sites = {};
-            sites.id = 4;
+            sites.id = arr.site.id;
             sitesArr.push(sites);
             /*var layouts = {};
              layouts.id = layId;
@@ -313,7 +319,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
         $scope.showCurInfo = function () {
             var cur = {};
-
             var startTime = moment().format("YYYY-MM-DD");
             console.log("当前时间1" + startTime);
             cur.startTime = (new Date(startTime)).getTime();
