@@ -34,7 +34,7 @@
     }
 </script>
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block">
 
     <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
@@ -75,17 +75,16 @@
 <%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
 <!--右侧表格-->
-<div class="uk-width-4-5"
-     style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
-    <div style="margin-top: 1%;">
+<div class="uk-width-1-1 tb">
+    <div class="tbfir">
 
-        <div style="width: 100%;border: 0px;margin-top: -10px;">
+        <div class="tbsec">
 
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
 
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 92%;">
+                <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
                         <table class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
@@ -96,7 +95,7 @@
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
                                 </td>
-                                <td style="width: 55px;">序号</td>
+                               <%-- <td style="width: 55px;">序号</td>--%>
                                 <td>排产名称</td>
                                 <td>完成进度</td>
                                 <td>排产日期</td>
@@ -107,7 +106,7 @@
                             </thead>
                         </table>
                     </div>
-                    <div class="fixtable-body" style="height: 83%;">
+                    <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
 
