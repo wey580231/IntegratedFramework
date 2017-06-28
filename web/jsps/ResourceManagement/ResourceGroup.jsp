@@ -34,18 +34,18 @@
     }
 </script>
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
+<div class="block">
 
-    <div style="float:left;">
+    <div class="leftpic">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
-    <div style="float:left;margin-top: 5px;">
+    <div class="title">
         &nbsp;
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">资源工组管理</span>
     </div>
 
-    <div style="float:left;margin-left: 2%;">
+    <div class="search">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
                    style="width: 150px;border: 1px solid lightgray;">
@@ -55,7 +55,7 @@
 
     <!--按钮-->
     <%--<div class="uk-width-1-4" style="margin-left: 36%;">--%>
-    <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
+    <div class="data-uk-button-radio btngroup">
         <button class="uk-button uk-icon-plus uk-button-primary" id="addButton" data-uk-modal="{target:'#add'}">新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editGroupResource()"
                 data-uk-modal="{target:'#edit'}">修改
@@ -69,15 +69,14 @@
 <%--<div class="uk-grid" style="margin-top: -25px;">--%>
 
 <!--右侧表格-->
-<div class="uk-width-4-5"
-     style="width: 98%;border: 1px solid lightgray;margin-left: 1%;height: 85%;background-color: white;">
-    <div style="margin-top: 1%;">
+<div class="uk-width-1-1 tb">
+    <div class="tbfir">
 
-        <div style="width: 100%;border: 0px;margin-top: -10px;">
+        <div class="tbsec">
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
                 <!--表格-->
-                <div class="uk-overflow-container" style="height: 92%;">
+                <div class="uk-overflow-container" style="height: 96%;">
                     <div class="fixtable-head">
                         <table class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
@@ -97,7 +96,7 @@
                         </table>
                     </div>
 
-                    <div class="fixtable-body" style="height: 83%;">
+                    <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
                             <tr ng-repeat="x in arr | orderBy: 'id':desc">

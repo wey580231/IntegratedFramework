@@ -256,16 +256,24 @@
 </script>
 
 
-<div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
-    <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
-    &nbsp;
-    <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>
+<div class="block">
+    <div class="leftpic">
+        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+    </div>
+    <div class="title">
+        &nbsp;
+        <span style="font-size: 18px;font-weight: 700;margin-top: 10px;/*margin-left: -24px;*/font-family: 微软雅黑">制造BOM管理</span>
+    </div>
 
-    <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
-        <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
-               style="width: 150px;border: 1px solid lightgray;">
-    </form>
-    <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
+
+    <div class="search">
+        <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
+            <input class="uk-search-field" type="search" placeholder="搜索某个零部件"
+                   style="width: 150px;border: 1px solid lightgray;">
+        </form>
+    </div>
+
+    <div class="data-uk-button-radio btngroup">
         <button class="uk-button uk-icon-plus uk-button-primary">新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" data-uk-modal="{target:'#edit'}">修改</button>
         <button class="uk-button uk-icon-trash uk-button-primary">删除</button>
@@ -273,7 +281,7 @@
 </div>
 <br/>
 
-<div class="uk-grid" style="height: 88%;">
+<div class="uk-grid" style="height: 86%;">
     <!--BOM树-->
     <div id="container" class="uk-width-1-5" style="width: 23%;height: 100%;">
         <!--BOM树上部-->
@@ -296,7 +304,7 @@
         </div>
         <!--BOM树下部-->
         <div class="uk-panel uk-panel-box uk-overflow-container"
-             style="height: 82%;background-color: #e2ebf2;">
+             style="/*height: 82%;*/height: 80%;background-color: #e2ebf2;">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
 
@@ -311,7 +319,7 @@
 
     <!--右侧表格-->
     <div class="uk-width-4-5"
-         style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;height:  98%;background-color: white;">
+         style="width: 75.5%;border: 1px solid lightgray;margin-left: 15px;/*height:  98%;*/height:  97%;background-color: white;">
         <div style="margin-top: 15px;margin-left: -25px;height: 95%;">
             <!--表格上部-->
             <form class="uk-form" style="height: 22%;">
@@ -359,18 +367,18 @@
 
                                     </td>
                                     <td>准备时间</td>
-                                    <td>单件时间</td>
+                                    <%--<td>单件时间</td>--%>
                                     <td>冷却时间</td>
                                     <td>校验时间</td>
-                                    <td>资源类型</td>
-                                    <td>资源数量</td>
+                                    <td>类型</td>
+                                    <td>数量</td>
                                     <td>工时</td>
-                                    <td>首选时间</td>
+                                    <%--<td>首选时间</td>--%>
                                 </tr>
                                 </thead>
                             </table>
                         </div>
-                        <div class="fixtable-body" style="height: 69%;">
+                        <div class="fixtable-body" style="/*height: 69%;*/height: 39%;width: 76%;top: 300px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                                 <tbody class="uk-text-center">
                                 </tbody>
