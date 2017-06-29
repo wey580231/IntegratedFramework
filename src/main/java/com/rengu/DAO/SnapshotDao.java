@@ -1,8 +1,6 @@
 package com.rengu.DAO;
 
-import com.rengu.entity.RG_EmulateDataEntity;
-import com.rengu.entity.RG_PlanEntity;
-import com.rengu.entity.RG_SnapshotNodeEntity;
+import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.SnapshotLevel;
 import org.hibernate.Session;
@@ -27,7 +25,7 @@ public class SnapshotDao {
 
         RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
 
-        if (bottomSnapshot != null) {
+        if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息
             Set<RG_PlanEntity> plans = bottomSnapshot.getPlans();
@@ -35,13 +33,24 @@ public class SnapshotDao {
             //【2】TODO 等真实需要转换时，再调用。
 //            convertPlanTo3DEmulateData(plans);
 
-            //【3】更新3D车间的对应状态
-            NativeQuery nativeQuery = session.createNativeQuery("update rg_state3d set model = ? , snapshotId = ? where id = ?");
-            nativeQuery.setParameter(1, 1);
-            nativeQuery.setParameter(2, id);
-            nativeQuery.setParameter(3, 1);
-            if (nativeQuery.executeUpdate() > 0) {
-                result = true;
+            RG_SnapshotNodeEntity rootParent = bottomSnapshot.getRootParent();
+
+            try {
+                String layoutName = rootParent.getSchedule().getLayout().getName();
+
+                //【3】更新3D车间的对应状态，将布局、仿真、快照节点更新
+                NativeQuery nativeQuery = session.createNativeQuery("update rg_state3d set layoutState = ?, layoutId = ? ,model = ? , snapshotId = ? where id = ?");
+                nativeQuery.setParameter(1, 1);
+                nativeQuery.setParameter(2, layoutName);
+                nativeQuery.setParameter(3, 1);
+                nativeQuery.setParameter(4, id);
+                nativeQuery.setParameter(5, 1);
+                if (nativeQuery.executeUpdate() > 0) {
+                    result = true;
+                }
+
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
 
@@ -64,7 +73,6 @@ public class SnapshotDao {
                 RG_PlanEntity plan = iter.next();
 
                 //TODO 将plan表转换成3d车间对应的格式
-
                 RG_EmulateDataEntity data = new RG_EmulateDataEntity();
 
                 data.setOrderEntity(plan.getOrderByIdOrder());

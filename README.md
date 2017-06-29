@@ -30,6 +30,7 @@ IntegratedFramework Project
            增加紧急插单APS调用处理接口
            增加根据订单ID删除订单及其相关联信息
 * 20170628:增加设备和订单状态表；嵌入3D车间；部署3D车间至服务器
+* 20170629:嵌入APS activeX控件，支持登录与切换
             
 
 ## 已知问题
@@ -42,3 +43,4 @@ IntegratedFramework Project
 * ~~新建排程中的日期与系统时间相差8小时~~
 * 框架plan表未转换成3D模拟数据格式
 * 将排程结果下发给MES，未添加activeMQ查询
+* IE11不支持3D车间，APS不支持chrome、firfox和edge
