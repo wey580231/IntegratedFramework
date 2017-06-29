@@ -28,8 +28,6 @@
         else
             obj.parentElement.parentElement.style.backgroundColor = jiColor;
     }
-
-
     function checkAll()
     {
         var code_Values = document.getElementById("check");
@@ -44,20 +42,19 @@
 
 </script>
 
-<div class="block">
+<div class="block" style="height: 45px;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
-
-    <div class="leftpic" style="/*float:left;*/">
+    <div style="float:left;">
         <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
-    <div class="title" style="/*float:left;margin-top: 5px;*/">
+    <div style="float:left;margin-top: 5px;">
         &nbsp;
         <span style="font-size: 18px;font-weight: 700;margin-top: 10px;font-family: 微软雅黑">订单管理</span>
     </div>
 
     <!--搜索框-->
-    <div class="search" style="/*float:left;margin-left: 2%;*/">
+    <div style="float:left;margin-left: 2%;">
         <form class="uk-search" data-uk-search style="margin-left: 2%;margin-top: 5px;background-color: #e8edf1;">
             <input class="uk-search-field" type="search" placeholder="请输入搜索项"
                    style="width: 150px;border: 1px solid lightgray;">
@@ -65,7 +62,7 @@
     </div>
 
     <!--日历-->
-    <div class="dateshow" style="/*float:left;margin-left: 2%;*/">
+    <div style="float:left;margin-left: 2%;">
         <form class="uk-form" style="margin-left: 2%;margin-top: 5px;width: 135px;">
             <div class="uk-form-icon">
                 <i class="uk-icon-calendar"></i>
@@ -77,7 +74,7 @@
 
 
     <!--下拉框-->
-    <div class="orderselect" style="/*float:left;margin-left: 2%;*/">
+    <div style="float:left;margin-left: 2%;">
         <form class="uk-form"  style="margin-left: 2%;">
             <div class="" style="margin-top: 4px;">
                 <select class="uk-grid" style="height: 30px;">
@@ -90,7 +87,7 @@
 
     <!--按钮-->
 
-    <div class="data-uk-button-radio btngroup" style="/*margin-top: 5px;float: right;margin-right: 1%;*/">
+    <div class="data-uk-button-radio" style="margin-top: 5px;float: right;margin-right: 1%;">
         <button class="uk-button uk-icon-plus uk-button-primary" data-uk-modal="{target:'#add'}" >新增</button>
         <button class="uk-button uk-icon-edit uk-button-primary" ng-click="editOrder()" data-uk-modal="{target:'#edit'}" >修改</button>
         <button class="uk-button uk-icon-trash uk-button-primary" ng-click="deleteOrder()">删除</button>
@@ -102,18 +99,24 @@
 
 
 <!--右侧表格-->
-<div class="uk-width-1-1 tb">
-    <div class="tbfir" style="/*margin-top: 1%;height: 100%;*/">
+<div class="uk-width-1-1" style="/*width: 99%;*/border-top: 1px solid lightgray;border-bottom: 1px solid lightgray;/*margin-left: 1%;height: 85%;*/background-color: white;
+
+top: 80px;
+bottom: 20px;
+position: absolute;
+
+">
+    <div style="margin-top: 1%;height: 100%;">
 
         <!--tab-->
-        <div class="tbsec" style="/*width: 100%;border: 0px;margin-top: -10px;height: 100%;*/">
+        <div style="width: 100%;border: 0px;margin-top: -10px;height: 100%;">
 
 
             <div id="tabs-2" style="width: 100%;height: 100%;">
 
                 <!--表格-->
                 <div class="uk-overflow-container" style="height: 96%;">
-                    <div class="fixtable-head">
+                    <div class="fixtable-head" style="height: 50px;">
                         <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
                             <thead class="uk-text-center">
                             <tr style="background-color: #e1eaf1;">
@@ -138,7 +141,7 @@
                         </table>
                     </div>
 
-                    <div class="fixtable-body">
+                    <div class="fixtable-body" style="/*height: 79%;*/top: 50px;bottom: 0px;position: absolute;height: auto;">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
 

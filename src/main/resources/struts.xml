@@ -49,6 +49,7 @@
         <action name="findAll" class="com.rengu.actions.OrdersAction" method="findAll"/>
         <action name="findAllByisFinishedAndDate" class="com.rengu.actions.OrdersAction"
                 method="findAllByisFinishedAndDate"/>
+        <action name="deleteById" class="com.rengu.actions.OrdersAction" method="deleteById"/>
     </package>
 
     <!--资源信息接口-->
@@ -154,6 +155,8 @@
     <package name="SnapshotManager" namespace="/snapshot" extends="struts-default">
         <action name="view3DEmulate" class="com.rengu.actions.SnapshotAction" method="viewCurrentSnapshotEmulateData"/>
         <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="applySnapshotToMes"/>
+        <action name="getAllByByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByByLevel"/>
+        <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
     </package>
 
 </struts>

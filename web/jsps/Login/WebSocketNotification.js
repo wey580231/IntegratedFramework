@@ -20,7 +20,7 @@ function webSocketInit() {
         };
         //连接成功建立的回调方法
         webSocket.onopen = function () {
-            showNotification("open", "info");
+            showNotification("通知系统已连接。", "info");
         }
         //接收到消息的回调方法
         webSocket.onmessage = function (event) {

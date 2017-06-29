@@ -5,7 +5,6 @@ import com.rengu.DAO.d3.Device3DAO;
 import com.rengu.actions.SuperAction;
 import com.rengu.util.Tools;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -35,9 +34,9 @@ public class Report3DAction extends SuperAction {
                 String requestType = types[0];
                 String requestCode = codes[0];
                 if (requestType.toLowerCase().equals(requestDevice) && codes[0].length() > 0) {
-                    opresult = deviceDao.getDeviceReport(requestDevice, codes[0],jsonString);
+                    opresult = deviceDao.getDeviceReport(requestDevice, requestCode,jsonString);
                 } else if (requestType.toLowerCase().equals(requestOrder) && codes[0].length() > 0) {
-                    opresult = deviceDao.getOrderReport(requestOrder, codes[0], jsonString);
+                    opresult = deviceDao.getOrderReport(requestOrder,requestCode, jsonString);
                 }
             }
         }

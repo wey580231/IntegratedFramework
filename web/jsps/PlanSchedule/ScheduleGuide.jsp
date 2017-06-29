@@ -10,14 +10,17 @@
 <link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
-
-
     .uk-table td {
         vertical-align: top;
         width: 72px;
         margin-left: 11px;
     }
-
+    #chooseDialog {
+        width: 950px;
+    }
+    #choosedDialog {
+        width: 950px;
+    }
 </style>
 
 
@@ -66,7 +69,7 @@
             </div>
         </div>-->
         <button class="uk-button uk-float-right "
-                data-uk-modal="{target:'#schedule'}" style="border-radius:15px; ">新计划排程
+                data-uk-modal="{target:'#schedule'}" id="scheduleButton" style="border-radius:15px; ">新计划排程
         </button>
     </div>
 </div>
@@ -95,7 +98,7 @@
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
                                 </td>
-                               <%-- <td style="width: 55px;">序号</td>--%>
+                                <%-- <td style="width: 55px;">序号</td>--%>
                                 <td>排产名称</td>
                                 <td>完成进度</td>
                                 <td>排产日期</td>
@@ -169,9 +172,10 @@
 
 
 <!--选择订单弹框-->
-<div class="uk-modal uk-overflow-container" id="chooseOrder">
-    <div class="uk-modal-dialog">
+<div class="uk-modal uk-overflow-container" id="chooseOrder" style="width:100%">
+    <div class="uk-modal-dialog" id="chooseDialog">
         <button type="button" class="uk-modal-close uk-close"></button>
+
         <h3 class="validateTips">选择订单</h3>
 
         <!--表格-->
@@ -253,11 +257,13 @@
                     </div>
 
                 </div>
+
             </div>
 
         </div>
     </div>
 </div>
+
 
 
 <!--排程参数输入弹框-->
@@ -298,7 +304,7 @@
                 </li>
             </ul>
         </div>
-        <div class="uk-overflow-container" >
+        <div class="uk-overflow-container">
             <div id='calendar'></div>
         </div>
     </div>
@@ -307,9 +313,10 @@
 
 <!--第三步-->
 <div class="uk-modal uk-overflow-container" id="color_table">
-    <div class="uk-modal-dialog">
+    <div class="uk-modal-dialog" id="choosedDialog">
         <button type="button" class="uk-modal-close uk-close"></button>
         <h3 class="validateTips">进行排程的订单</h3>
+
 
         <!--表格-->
         <div class="uk-width-1-1 plantb">
@@ -390,6 +397,7 @@
                     </div>
 
                 </div>
+
             </div>
 
         </div>
@@ -398,11 +406,3 @@
 
 
 </div>
-
-
-
-
-
-
-
-
