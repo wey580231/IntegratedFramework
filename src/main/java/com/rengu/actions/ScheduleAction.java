@@ -71,7 +71,7 @@ public class ScheduleAction extends SuperAction {
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
                 }
-//                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
+//                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
 
             session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -96,6 +96,7 @@ public class ScheduleAction extends SuperAction {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").toString());
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
                 }
             }
             rg_scheduleEntity.setOrders(rg_orderEntitySet);
