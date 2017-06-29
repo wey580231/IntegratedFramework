@@ -14,7 +14,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var operateId;
         var scheduleDays;
         var obj;//上次排程的json字符串
-        var curobj;//当前排程的json字符串
+        var curobj = [];//当前排程的json字符串
         var ordId;
         var arr;
         var array = [];
@@ -107,7 +107,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
          $scope.reHide = function () {
          $("#chooseResource").hide()
          }
-
          //勾选资源工组后，记录所选id
          $scope.checkGrReId = function () {
          resGroId = operateId;
@@ -115,7 +114,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
          $scope.grReHide = function () {
          $("#chooseGroupResource").hide()
          }
-
          //勾选资源工位后，记录所选id
          $scope.checkSiId = function () {
          siteId = operateId;
@@ -162,8 +160,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             }
 
             var layouts = {};
-            layouts.id = parseInt(arr.layout.id);
-
+            //layouts.id = parseInt(arr.layout.id);
+            layouts.id = 1;
             console.log("资源");
             var resourceArr = [];
             for (var i = 0; i < arr.resources.length; i++) {
@@ -194,17 +192,14 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
             /*var layouts = {};
              layouts.id = layId;
-
              var resourceArr = [];
              var resources = {};
              resources.id = parseInt(resId);
              resourceArr.push(resources);
-
              var groupResourcesArr = [];
              var groupResources = {};
              groupResources.id = parseInt(resGroId);
              groupResourcesArr.push(groupResources);
-
              var sitesArr = []
              var sites = {};
              sites.id = parseInt(siteId);

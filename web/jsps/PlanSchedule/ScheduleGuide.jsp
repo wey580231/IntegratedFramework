@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="mycss/mycss.css" type="text/css" rel="stylesheet">
+<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
     .uk-table td {
@@ -40,7 +40,7 @@
 <div class="block">
 
     <div style="float:left;">
-        <img src="images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
     <div style="float:left;margin-top: 5px;">
@@ -94,7 +94,7 @@
                             <tr style="background-color: #e1eaf1;">
                                 <td>
                                     <div class="selectpng" style="/*margin-left: 35%;*/">
-                                        <img src="images/bom_img/select.png"
+                                        <img src="../../images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
                                 </td>
@@ -175,126 +175,97 @@
 <div class="uk-modal uk-overflow-container" id="chooseOrder" style="width:100%">
     <div class="uk-modal-dialog" id="chooseDialog">
         <button type="button" class="uk-modal-close uk-close"></button>
+        <h3 class="validateTips">请选择需要排程的订单</h3>
+        <div class="uk-overflow-container">
+            <table class="uk-table uk-table-striped uk-table-hover ">
+                <thead class="uk-text-center">
+                <tr style="background-color: #e1eaf1;">
+                    <td></td>
+                    <td>名称</td>
+                    <td>来源</td>
+                    <td>优先级</td>
+                    <td>下单时间</td>
+                    <td>最早开工</td>
+                    <td>最晚开工</td>
+                </tr>
+                </thead>
+            </table>
+            <table class="uk-table uk-table-striped uk-table-hover " id="orders" style="width:100%">
+                <tbody class="uk-text-center">
+                <tr ng-repeat="x in lastarray">
+                    <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                    <td style="display:none">{{x.id}}</td>
+                    <td>{{x.name}}</td>
+                    <td>{{x.origin}}</td>
+                    <td>{{x.priority}}</td>
+                    <td>{{x.t0}}</td>
+                    <td>{{x.t1}}</td>
+                    <td>{{x.t2}}</td>
+                </tr>
+                <tr ng-repeat="x in curinfo">
+                    <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                    <td style="display:none">{{x.id}}</td>
+                    <td>{{x.name}}</td>
+                    <td>{{x.origin}}</td>
+                    <td>{{x.priority}}</td>
+                    <td>{{x.t0}}</td>
+                    <td>{{x.t1}}</td>
+                    <td>{{x.t2}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--底部页码-->
 
-        <h3 class="validateTips">选择订单</h3>
-
-        <!--表格-->
-        <div class="uk-width-1-1 plantb">
-            <div class="plantbfir">
-
-                <!--tab-->
-                <div class="tbsec" style="/*width: 100%;border: 0px;margin-top: -10px;height: 100%;*/">
-
-
-                    <div <%--id="tabs-2"--%> style="width: 100%;height: 100%;">
-
-                        <!--表格-->
-                        <div class="plantable" style="height: 92%;">
-                            <div class="fixtable-head">
-                                <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
-                                    <thead class="uk-text-center">
-                                    <tr style="background-color: #e1eaf1;">
-                                        <td>
-                                            <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
-                                                <img src="images/bom_img/select.png"
-                                                     style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                            </div>
-                                        </td>
-                                        <td>名称</td>
-                                        <td>来源</td>
-                                        <td>优先级</td>
-                                        <td>下单时间</td>
-                                        <td>最早开工</td>
-                                        <td>最晚开工</td>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
-
-                            <div class="fixtable-body" style="top: 110px;width: 95.5%;bottom: 60px;">
-                                <table class="uk-table uk-table-striped uk-table-hover " id="orders" style="width:100%">
-                                    <tbody class="uk-text-center">
-                                    <tr ng-repeat="x in lastinfo">
-                                        <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                   ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                        <td style="display:none">{{x.id}}</td>
-                                        <td>{{x.name}}</td>
-                                        <td>{{x.origin}}</td>
-                                        <td>{{x.priority}}</td>
-                                        <td>{{x.t0}}</td>
-                                        <td>{{x.t1}}</td>
-                                        <td>{{x.t2}}</td>
-                                    </tr>
-                                    <tr ng-repeat="x in curinfo">
-                                        <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                   ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                        <td style="display:none">{{x.id}}</td>
-                                        <td>{{x.name}}</td>
-                                        <td>{{x.origin}}</td>
-                                        <td>{{x.priority}}</td>
-                                        <td>{{x.t0}}</td>
-                                        <td>{{x.t1}}</td>
-                                        <td>{{x.t2}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-
-                        <!--底部页码-->
-                        <div class="planfooter">
-                            <ul class="uk-pagination">
-                                <li>
-                                    <button class="uk-button my" data-uk-modal="{target:'#schedule'}"><a href="">上一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my" ng-click="choosedOrder();orderHide()" data-uk-modal="{target:'#color_table'}"><a href="">下一页</a></button>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div class="uk-modal-footer uk-text-right">
+            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
+                <li>
+                    <button class="uk-button my" data-uk-modal="{target:'#schedule'}"><a href="">上一页</a>
+                    </button>
+                </li>
+                <li>
+                    <button class="uk-button my" ng-click="choosedOrder();orderHide()"
+                            data-uk-modal="{target:'#color_table'}"><a href="">下一页</a></button>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-
+</div>
+</div>
 
 
 <!--排程参数输入弹框-->
 <div class="uk-modal uk-overflow-container" id="schedule">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <h3 class="validateTips" style="text-align: center;">请填写参数</h3>
-        <div style="width: 200px;margin: 0 auto;">
-            <form class="uk-form uk-form-horizontal">
-                <fieldset>
-                    <label class="planname" for="add-name">名称</label><br/>
-                    <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all planinput"><br/>
-                    <label class="planname" for="add-schedule">排程时间窗</label><br/>
-                    <input type="text" name="add-schedule" id="add-schedule"
-                           class="text ui-widget-content ui-corner-all planinput"><br/>
-                    <label class="planname" for="add-rollTime">滚动周期</label><br/>
-                    <input type="text" name="add-rollTime" id="add-rollTime"
-                           class="text ui-widget-content ui-corner-all planinput"><br/>
-                    <label class="planname" for="add-scheduleDays">当前排程时间长度</label><br/>
-                    <input type="text" name="add-scheduleDays" id="add-scheduleDays"
-                           class="text ui-widget-content ui-corner-all planinput"><br/>
-                    <label class="planname" for="add-t0">开始时间</label><br/>
-                    <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all planinput"><br/>
-                    <label class="planname" for="add-t2">结束时间</label><br/>
-                    <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all planinput"><br/>
-                </fieldset>
-            </form>
-        </div>
-
-        <div class="planfooter" style="margin-top: 20px;">
-            <ul class="uk-pagination">
+        <h3 class="validateTips">请填写参数</h3>
+        <form class="uk-form uk-form-horizontal">
+            <fieldset>
+                <label for="add-name">名称</label><br/>
+                <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-schedule">排程时间窗</label><br/>
+                <input type="text" name="add-schedule" id="add-schedule"
+                       class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-rollTime">滚动周期</label><br/>
+                <input type="text" name="add-rollTime" id="add-rollTime"
+                       class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-scheduleDays">当前排程时间长度</label><br/>
+                <input type="text" name="add-scheduleDays" id="add-scheduleDays"
+                       class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-t0">开始时间</label><br/>
+                <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
+                <label for="add-t2">结束时间</label><br/>
+                <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
+            </fieldset>
+        </form>
+        <div class="uk-modal-footer uk-text-right">
+            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
+                <li>
+                    <button class="uk-button my" data-uk-modal="{target:'#choose'}"><a href="">上一页</a></button>
+                </li>
                 <li>
                     <button class="uk-button my" ng-click="showCurInfo();showLastInfo();"
                             data-uk-modal="{target:'#chooseOrder'}"><a href="">下一页</a></button>
@@ -316,91 +287,53 @@
     <div class="uk-modal-dialog" id="choosedDialog">
         <button type="button" class="uk-modal-close uk-close"></button>
         <h3 class="validateTips">进行排程的订单</h3>
+        <div class="uk-overflow-container">
+            <table id="runTable" class="uk-table uk-table-striped uk-table-hover ">
+                <thead class="uk-text-center">
+                <tr style="background-color: #e1eaf1;">
+                    <td></td>
 
-
-        <!--表格-->
-        <div class="uk-width-1-1 plantb">
-            <div class="plantbfir">
-
-                <!--tab-->
-                <div class="tbsec" style="/*width: 100%;border: 0px;margin-top: -10px;height: 100%;*/">
-
-
-                    <div <%--id="tabs-2"--%> style="width: 100%;height: 100%;">
-
-                        <!--表格-->
-                        <div class="plantable" style="height: 92%;">
-                            <div class="fixtable-head">
-                                <table id="myTable" class="uk-table uk-table-striped uk-table-hover ">
-                                    <thead class="uk-text-center">
-                                    <tr style="background-color: #e1eaf1;">
-                                        <td>
-                                            <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
-                                                <img src="images/bom_img/select.png"
-                                                     style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
-                                            </div>
-                                        </td>
-                                        <td>名称</td>
-                                        <td>来源</td>
-                                        <td>优先级</td>
-                                        <td>下单时间</td>
-                                        <td>最早开工</td>
-                                        <td>最晚开工</td>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
-
-                            <div class="fixtable-body" style="top: 110px;width: 95.5%;bottom: 60px;">
-                                <table class="uk-table uk-table-striped uk-table-hover " id="orders" style="width:100%">
-                                    <tbody class="uk-text-center">
-                                    <tr ng-repeat="x in lastinfo">
-                                        <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                   ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                        <td style="display:none">{{x.id}}</td>
-                                        <td>{{x.name}}</td>
-                                        <td>{{x.origin}}</td>
-                                        <td>{{x.priority}}</td>
-                                        <td>{{x.t0}}</td>
-                                        <td>{{x.t1}}</td>
-                                        <td>{{x.t2}}</td>
-                                    </tr>
-                                    <tr ng-repeat="x in curinfo">
-                                        <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                   ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                        <td style="display:none">{{x.id}}</td>
-                                        <td>{{x.name}}</td>
-                                        <td>{{x.origin}}</td>
-                                        <td>{{x.priority}}</td>
-                                        <td>{{x.t0}}</td>
-                                        <td>{{x.t1}}</td>
-                                        <td>{{x.t2}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-
-                        <!--底部页码-->
-                        <div class="planfooter">
-                            <ul class="uk-pagination">
-                                <li>
-                                    <button class="uk-button my" data-uk-modal="{target:'#chooseOrder'}"><a href="">上一页</a></button>
-                                </li>
-                                <li>
-                                    <button class="uk-button my" ng-click="configAPS();hide()"><a href="">开始排程</a></button>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+                    <td>名称</td>
+                    <td>来源</td>
+                    <!--<td>产品名</td>
+                    <td>数量</td>-->
+                    <td>优先级</td>
+                    <td>下单时间</td>
+                    <td>最早开工</td>
+                    <td>最晚开工</td>
+                </tr>
+                </thead>
+            </table>
+            <table class="uk-table uk-table-striped uk-table-hover " id="ordered" style="width:100%">
+                <tbody class="uk-text-center">
+                <tr id="first" ng-repeat="x in form">
+                    <td><input id="check" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                    <td style="display:none">{{x.id}}</td>
+                    <td>{{x.name}}</td>
+                    <td>{{x.origin}}</td>
+                    <td>{{x.priority}}</td>
+                    <td>{{x.t0}}</td>
+                    <td>{{x.t1}}</td>
+                    <td>{{x.t2}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+        <!--底部页码-->
+
+        <div class="uk-modal-footer uk-text-right">
+            <ul class="uk-pagination" style="margin-top: 7%;" data-uk-pagination="{currentPage:50}">
+                <li>
+                    <button class="uk-button my" data-uk-modal="{target:'#chooseOrder'}"><a href="">上一页</a>
+                    </button>
+                </li>
+                <li>
+                    <button class="uk-button my" ng-click="configAPS();hide()"><a href="">开始排程</a></button>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </div>
 

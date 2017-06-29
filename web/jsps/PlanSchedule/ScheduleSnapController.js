@@ -13,8 +13,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var setting = {
             view: {
                 dblClickExpand: false,
-                showIcon:false,
-                showLine:false
+                showIcon: false,
+                showLine: false
             },
             check: {
                 enable: false
@@ -33,45 +33,17 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 showRemoveBtn: false
             },
         };
+        var zNodes = [];
+        var dataTrue = {"level": "top"};
+
+        myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
+            console.log("*****" + response.status);
+            console.log(response.data);
+            zNodes = response.data;
+        });
+
 
         /*var zNodes = [
-         {
-         id: 1, name: "右键菜单 1", iconSkin: "diy01", open: true,
-         children: [
-         {
-         id: 11, name: "节点 1-1", iconSkin: "diy02",
-         children: [
-         {id: 21, name: "节点 1-11", iconSkin: "diy03"},
-         {id: 22, name: "节点 1-12", iconSkin: "diy03"},
-         {id: 23, name: "节点 1-13", iconSkin: "diy03"},
-         {id: 24, name: "节点 1-14", iconSkin: "diy03"}
-         ]
-         },
-         {id: 12, name: "节点 1-2", iconSkin: "diy02"}
-         ]
-         },
-         {
-         id: 2, name: "右键操作 2", iconSkin: "diy01", open: true,
-         children: [
-         {id: 21, name: "节点 2-1", iconSkin: "diy02"},
-         {id: 22, name: "节点 2-2", iconSkin: "diy02"},
-         {id: 23, name: "节点 2-3", iconSkin: "diy02"},
-         {id: 24, name: "节点 2-4", iconSkin: "diy02"}
-         ]
-         },
-         {
-         id: 3, name: "右键操作 3", iconSkin: "diy01", open: true,
-         children: [
-         {id: 31, name: "节点 3-1", iconSkin: "diy02"},
-         {id: 32, name: "节点 3-2", iconSkin: "diy02"},
-         {id: 33, name: "节点 3-3", iconSkin: "diy02"},
-         {id: 34, name: "节点 3-4", iconSkin: "diy02"}
-         ]
-         }
-         ]; */
-
-
-        var zNodes = [
             {
                 id: 1, name: "右键菜单 1", open: true,
                 children: [
@@ -96,7 +68,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     {id: 24, name: "节点 2-4"}
                 ]
             }
-        ];
+         ];*/
 
         //右键操作
         function OnRightClick(event, treeId, treeNode) {
@@ -112,7 +84,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         //显示右键操作
         function showRMenu(type, x, y) {
             $("#rMenu").show();
-            rMenu.css({"top": (y-70) + "px", "left": (x-220) + "px", "visibility": "visible"});
+            rMenu.css({"top": (y - 70) + "px", "left": (x - 220) + "px", "visibility": "visible"});
             $("#container").bind("mousedown", onBodyMouseDown);
         }
 
@@ -139,7 +111,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             } else {
                 zTree.addNodes(null, newNode);
             }
-        }
+        };
 
         //删除节点
         $scope.removeTreeNode = function () {
@@ -155,7 +127,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     zTree.removeNode(nodes[0]);
                 }
             }
-        }
+        };
 
         //重命名节点
         $scope.renameTreeNode = function () {
@@ -167,7 +139,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 alert("节点不能为空！");
                 return false;
             }
-        }
+        };
 
         var zTree, rMenu;
         //初始化BOM树
@@ -177,4 +149,4 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             rMenu = $("#rMenu");
         });
 
-    })
+    });
