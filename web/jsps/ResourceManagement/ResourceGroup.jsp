@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+<link href="mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
 

@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+<link href="mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
 
@@ -37,7 +37,7 @@
 <div class="block">
 
     <div class="leftpic">
-        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+        <img src="images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
     <div class="title">
@@ -83,7 +83,7 @@
                             <tr style="background-color: #e1eaf1;">
                                 <td>
                                     <div class="selectpng" style="/*margin-left: 38%;*/">
-                                        <img src="../../images/bom_img/select.png"
+                                        <img src="images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
 

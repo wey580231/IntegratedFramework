@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.AdjustFactoryController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/AdjustFactory', {
-            templateUrl: '/jsps/AdjustAnalysis/AdjustFactory.jsp',
+            templateUrl: 'jsps/AdjustAnalysis/AdjustFactory.jsp',
             controller: 'AdjustFactoryController'
         })
     }])

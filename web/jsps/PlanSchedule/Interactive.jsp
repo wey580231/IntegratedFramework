@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="${pageContext.request.contextPath}/myjs/aps/ipServer.js"></script>
-<script src="${pageContext.request.contextPath}/myjs/aps/Interactive.js"></script>
+<script src="myjs/aps/ipServer.js"></script>
+<script src="myjs/aps/Interactive.js"></script>
 
 <div id="content" style="width:100%;height:100%">
     <div id="menuBar" class="block"

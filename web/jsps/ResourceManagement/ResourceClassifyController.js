@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/ResourceClassify', {
-            templateUrl: '/jsps/ResourceManagement/ResourceClassify.jsp',
+            templateUrl: 'jsps/ResourceManagement/ResourceClassify.jsp',
             controller: 'ResourceClassifyController'
         })
     }])

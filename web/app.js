@@ -75,7 +75,7 @@ angular.module("IntegratedFramework", [
 
     .factory("serviceList", function () {
         var service = {};
-        var backUrl = "http://localhost:8080/";
+        var backUrl = "";
         <!--订单信息-->
         service.ListOrder = backUrl + "orders/getAllOrders.action";
         service.DeleteOrder = backUrl + "orders/delete.action";

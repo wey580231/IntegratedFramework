@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.ShowController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/Show', {
-            templateUrl: '/jsps/3DView/Show.jsp',
+            templateUrl: 'jsps/3DView/Show.jsp',
             controller: 'ShowController'
         })
     }])

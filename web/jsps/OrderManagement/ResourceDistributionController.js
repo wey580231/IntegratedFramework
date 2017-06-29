@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/ResourceDistribution', {
-            templateUrl: '/jsps/OrderManagement/ResourceDistribution.jsp',
+            templateUrl: 'jsps/OrderManagement/ResourceDistribution.jsp',
             controller: 'ResourceDistributionController'
         })
     }])

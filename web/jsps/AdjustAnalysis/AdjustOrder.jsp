@@ -144,7 +144,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+<link href="mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
     .uk-table td {
@@ -177,7 +177,7 @@
 <div class="block" style="/*height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;*/">
 
     <div class="leftpic">
-        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+        <img src="images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
     <div class="title">
@@ -255,7 +255,7 @@
                             <tr style="background-color: #e1eaf1;">
                                 <td style="width: 80px;">
                                     <div class="selectpng" style="/*margin-left: 20%;*/">
-                                        <img src="../../images/bom_img/select.png"
+                                        <img src="images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
 
@@ -322,7 +322,7 @@
                             <tr style="background-color: #e1eaf1;">
                                 <td>
                                     <div class="selectpng" style="/*margin-left: 33%;*/">
-                                        <img src="../../images/bom_img/select.png"
+                                        <img src="images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
 

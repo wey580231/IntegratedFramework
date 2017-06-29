@@ -9,6 +9,6 @@
 
 <div style="width: 100%;height:100%;">
     <div style="width: 95%;height: 93%;margin:0px auto;">
-        <img src="../../images/mainpage.png" style="width: 100%;height: 100%;">
+        <img src="images/mainpage.png" style="width: 100%;height: 100%;">
     </div>
 </div>
