@@ -127,12 +127,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         //排程
         $scope.configAPS = function () {
             alert("开始");
-            var nameVal = $("input[name='add-name']").val();
-            var scheduleVal = $("input[name='add-schedule']").val();
-            var rollTimeVal = $("input[name='add-rollTime']").val();
-            var scheduleDaysVal = $("input[name='add-scheduleDays']").val();
-            var t0Val = $("input[name='add-t0']").val();
-            var t2Val = $("input[name='add-t2']").val();
 
             //未完成的记录
             array.push(obj);
@@ -155,30 +149,49 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             }
 
             var APSconfigs = {};
-            APSconfigs.t0 = arr.orders.t0;
-            APSconfigs.t2 = arr.orders.t0;
+            APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
+            APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
 
-            var orders = {};
-            orders.id = operateId;
+            var orders = [];
+            console.log("订单");
+            for (var i = 0; i < arr.orders.length; i++) {
+                var params = {};
+                params.id = parseInt(arr.orders[i].id);
+                orders.push(params);
+                console.log(orders);
+            }
 
             var layouts = {};
-            layouts.id = arr.layout.id;
+            layouts.id = parseInt(arr.layout.id);
 
+            console.log("资源");
             var resourceArr = [];
-            var resources = {};
-            resources.id = 1;
-            resourceArr.push(resources);
+            for (var i = 0; i < arr.resources.length; i++) {
+                var resources = {};
+                resources.id = parseInt(arr.resources[i].id);
+                resourceArr.push(resources);
+                console.log(resourceArr);
+            }
 
+            console.log("工组");
             var groupResourcesArr = [];
-            var groupResources = {};
-            //groupResources.id = arr.orders[0].idGroupResource;
-            groupResources.id = 1;
-            groupResourcesArr.push(groupResources);
+            for (var i = 0; i < arr.groups.length; i++) {
+                var groupResources = {};
+                groupResources.id = parseInt(arr.groups[i].id);
+                groupResourcesArr.push(groupResources);
+                console.log(groupResourcesArr);
+            }
 
+            console.log("工位");
             var sitesArr = [];
-            var sites = {};
-            sites.id = 1;
-            sitesArr.push(sites);
+            for (var i = 0; i < arr.sites.length; i++) {
+                var sites = {};
+                sites.id = parseInt(arr.sites[i].id);
+                sitesArr.push(sites);
+                console.log(sitesArr);
+            }
+
+
             /*var layouts = {};
              layouts.id = layId;
 
@@ -198,12 +211,12 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
              sitesArr.push(sites);*/
 
             var params = {};
-            params.name = nameVal;
-            params.scheduleWindow = parseInt(scheduleVal);
-            params.rollTime = parseInt(rollTimeVal);
+            params.name = arr.name;
+            params.scheduleWindow = parseInt(scheduleDays);
+            params.rollTime = arr.scheduleWindow;
+            params.APSconfig = APSconfigs;
             params.layout = layouts;
             params.orders = orders;
-            params.APSconfig = APSconfigs;
             params.resources = resourceArr;
             params.groupResource = groupResourcesArr;
             params.site = sitesArr;
@@ -212,6 +225,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             $("#schedule").hide();
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
                 console.log("排程返回的数据:" + response.data);
+                console.log(response.data);
                 alert("请求成功，排程成功");
             }, function errorCallback(response) {
                 alert("请求错误！");
@@ -309,7 +323,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         };
 
         $scope.showLastInfo = function () {
-            myHttpService.get(serviceList.getLastScheduleInfo).then(function (response) {
+            myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log("获取上次排程信息状态");
                 console.log(response.status);
                 console.log("获取上次排程信息");
@@ -332,7 +346,9 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 }
                 console.log(lastarray);
                 $scope.lastarray = lastarray;
-            });
+            }, function errorCallback(response) {
+                alert("请求错误！");
+            })
         };
 
 

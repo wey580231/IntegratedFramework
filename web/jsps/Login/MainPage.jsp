@@ -171,7 +171,8 @@
         <!--图标-->
         <div class="uk-width-1-1"
              style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;/*position: absolute;*/">
-            <a href="MainPage.jsp"><img src="../../images/logo2.png" style="margin-top: 16px;margin-left: 16px;"></a>
+            <a href="#!/MainPage"><img src="../../images/logo2.png"
+                                                                                      style="margin-top: 16px;margin-left: 16px;"></a>
 
         </div>
         <!--左侧列表-->
@@ -325,6 +326,7 @@
 
 <script src="/app.js"></script>
 
+<script src="${pageContext.request.contextPath}/jsps/Login/Main.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/3DView/ShowController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustOrderController.js"></script>
 <script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustProcedureController.js"></script>

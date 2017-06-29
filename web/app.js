@@ -22,12 +22,13 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ScheduleGuideController',
     'IntegratedFramework.ScheduleSnapController',
     'IntegratedFramework.InteractiveController',
-    'IntegratedFramework.GuideController'
+    'IntegratedFramework.GuideController',
+    'IntegratedFramework.MainPage'
 ])
-/*.config(['$routeProvider', function ($routeProvider, $locationProvider) {
- // $locationProvider.hashPrefix('!');
- // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OnlineManagement'});
- }])*/
+    .config(['$routeProvider', function ($routeProvider, $locationProvider) {
+        //     // $locationProvider.hashPrefix('!');
+        $routeProvider.otherwise("/MainPage");
+    }])
     .config(['$httpProvider', function ($httpProvider) {
         /*$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
          $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';*/
@@ -80,7 +81,7 @@ angular.module("IntegratedFramework", [
         service.DeleteOrder = backUrl + "orders/delete.action";
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
-        service.LastInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
+        service.CurInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
         <!--工序资源信息-->
         service.ListAssisantProcess = backUrl + "assisantprocess/getAllAssisantProcess.action";
         service.DeleteAssisantProcess = backUrl + "assisantprocess/delete.action";
