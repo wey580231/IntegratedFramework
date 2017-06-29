@@ -22,12 +22,13 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ScheduleGuideController',
     'IntegratedFramework.ScheduleSnapController',
     'IntegratedFramework.InteractiveController',
-    'IntegratedFramework.GuideController'
+    'IntegratedFramework.GuideController',
+    'IntegratedFramework.MainPage'
 ])
-/*.config(['$routeProvider', function ($routeProvider, $locationProvider) {
- // $locationProvider.hashPrefix('!');
- // $routeProvider.otherwise({redirectTo: '/jsps/OrderManagement/OnlineManagement'});
- }])*/
+    .config(['$routeProvider', function ($routeProvider, $locationProvider) {
+        //     // $locationProvider.hashPrefix('!');
+        $routeProvider.otherwise("/MainPage");
+    }])
     .config(['$httpProvider', function ($httpProvider) {
         /*$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
          $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';*/
