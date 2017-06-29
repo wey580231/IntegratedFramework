@@ -1,9 +1,7 @@
 package com.rengu.util;
 
-import com.rengu.DAO.impl.*;
 import com.rengu.entity.*;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -142,17 +140,14 @@ public class ApsTools {
     //获取排程结果
     public void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from aps_plan";
-        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
-
+        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-
         for (Object object : list) {
 //        for (int i = 0; i < 5; i++) {
             if (object instanceof HashMap) {
 //            if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
                 rg_planEntity.setId(Tools.getUUID());
-
                 Map tempMap = (HashMap) object;
                 rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
                 rg_planEntity.setIdJob(tempMap.get("IDJOB").toString());

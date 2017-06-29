@@ -1,6 +1,7 @@
 package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.HashSet;
@@ -24,8 +25,10 @@ public class RG_SnapshotNodeEntity {
     private RG_SnapshotNodeEntity parent;                              //父节点
     //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "rootSnapshotId")
     private RG_SnapshotNodeEntity rootParent;                          //根节点
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
+    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
+    @JsonIgnore
     private RG_ScheduleEntity schedule;                                //排程记录
+    @JsonIgnore
     private Set<RG_PlanEntity> plans = new HashSet<RG_PlanEntity>();               //计划表
 
     public String getId() {
