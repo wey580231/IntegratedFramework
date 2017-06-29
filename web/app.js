@@ -127,5 +127,7 @@ angular.module("IntegratedFramework", [
 
         service.isChildNode = backUrl + "process/getAllById.action";
 
+
+        service.isRootLevel = backUrl + "snapshot/getAllByByLevel.action";
         return service;
     });
