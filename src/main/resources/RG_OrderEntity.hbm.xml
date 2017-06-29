@@ -111,5 +111,11 @@
             <index column="id" type="java.lang.Integer"/>
             <one-to-many class="com.rengu.entity.RG_EmulateDataEntity"/>
         </list>
+
+        <set name="orderStates" inverse="true" cascade="all">
+            <key column="orderId"/>
+            <one-to-many class="com.rengu.entity.RG_OrderStateEntity"/>
+        </set>
+
     </class>
 </hibernate-mapping>

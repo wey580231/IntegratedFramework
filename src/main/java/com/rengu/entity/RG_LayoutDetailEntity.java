@@ -83,13 +83,4 @@ public class RG_LayoutDetailEntity {
         result = 31 * result + (exist != null ? exist.hashCode() : 0);
         return result;
     }
-
-    public String toJson() {
-        return "{\"id\":" + id + "," +
-                "\"item\":" + "\"" + item + "\"" + "," +
-                "\"pos\":" + "\"" + pos + "\"" + "," +
-                "\"state\":" + "\"" + state + "\"" + "," +
-                "\"exist\":" + "\"" + exist + "\"" +
-                "}";
-    }
 }

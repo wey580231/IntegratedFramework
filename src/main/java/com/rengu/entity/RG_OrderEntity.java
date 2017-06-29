@@ -9,36 +9,36 @@ import java.util.*;
 /**
  * Created by wey580231 on 2017/5/23.
  */
-@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class RG_OrderEntity {
     private String id;
-    private String name;
-    private String origin;
-    private String type;
-    private String idClient;
-    private String idProvider;
-    private String idGroupResource;
-    private Short quantity;                 //订单数量
-    private Short finishQuantity;           //完工数量
-    private Short priority;                 //优先级
-    private Date t0;
-    private Date t1;
-    private Date t2;
-    private Short ord;
-    private String idPree;
-    private String idSucc;
-    private String idExclusive;
-    private String t1Interaction;
-    private String t2Interaction;
-    private Date t1Plan;
-    private Date t2Plan;
-    private Short estimate;
-    private Short advance;
-    private Short delay;
-    private String color;
-    private Byte state;
-    private Byte selected;
-    private Short nbTask;
+    private String name;                            //订单名称
+    private String origin;                          //订单来源
+    private String type;                            //订单类型
+    private String idClient;                        //订单所属租户(不用)
+    private String idProvider;                      //订单指定供应商(不用)
+    private String idGroupResource;                 //指定工组编码集合(不用)
+    private Short quantity;                         //订单数量
+    private Short finishQuantity;                   //完工数量
+    private Short priority;                         //优先级
+    private Date t0;                                //下单时间
+    private Date t1;                                //最早开工时间
+    private Date t2;                                //最晚交付时间
+    private Short ord;                              //订单序号(系统生成)
+    private String idPree;                          //前继订单编码集合(不用)
+    private String idSucc;                          //后继订单编码集合(不用)
+    private String idExclusive;                     //互斥订单编码集合(不用)
+    private String t1Interaction;                   //交互最早开工时间(系统生成)
+    private String t2Interaction;                   //交互最晚开工时间(系统生成)
+    private Date t1Plan;                            //计划开工时间(系统生成)
+    private Date t2Plan;                            //计划交付时间(系统生成)
+    private Short estimate;                         //估时(不用)
+    private Short advance;                          //提前天数(系统生成)
+    private Short delay;                            //拖期天数(系统生成)
+    private String color;                           //订单显示颜色
+    private Byte state;                             //状态
+    private Byte selected;                          //是否被选中
+    private Short nbTask;                           //订单工序数(系统生成)
     private boolean finished;
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
@@ -46,6 +46,10 @@ public class RG_OrderEntity {
     private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
     @JsonIgnore
     private List<RG_EmulateDataEntity> emulateDatas = new ArrayList<RG_EmulateDataEntity>();
+
+    @JsonIgnore
+    private Set<RG_OrderStateEntity> orderStates = new HashSet<RG_OrderStateEntity>();
+
 
     public String getId() {
         return id;
@@ -312,6 +316,14 @@ public class RG_OrderEntity {
 
     public void setEmulateDatas(List<RG_EmulateDataEntity> emulateDatas) {
         this.emulateDatas = emulateDatas;
+    }
+
+    public Set<RG_OrderStateEntity> getOrderStates() {
+        return orderStates;
+    }
+
+    public void setOrderStates(Set<RG_OrderStateEntity> orderStates) {
+        this.orderStates = orderStates;
     }
 
     @Override

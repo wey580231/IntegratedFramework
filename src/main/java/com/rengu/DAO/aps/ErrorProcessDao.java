@@ -23,7 +23,7 @@ public class ErrorProcessDao {
     public Integer processDeviceError(String id) {
 
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -62,7 +62,7 @@ public class ErrorProcessDao {
     //紧急插单
     public Integer processOrderError(String id) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -74,7 +74,9 @@ public class ErrorProcessDao {
         if (list.size() == 1 && list.get(0) instanceof RG_AdjustOrderEntity) {
             RG_AdjustOrderEntity entity = (RG_AdjustOrderEntity) list.get(0);
 
-//            result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustOrderHandlingURL(entity));
+            entity.getOrd().getProductByIdProduct();
+
+            result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustOrderHandlingURL(entity));
 
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
@@ -92,7 +94,7 @@ public class ErrorProcessDao {
     //工序异常
     public Integer processProcessError(String id) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if(!session.getTransaction().isActive()){
+        if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
@@ -134,7 +136,7 @@ public class ErrorProcessDao {
             middleSnapshot.setParent(rootSnapshot);
             middleSnapshot.setRootParent(rootSnapshot);
 
-            UserConfigTools.updateMiddleSnapshotId("1",middleSnapshot.getId(),true);
+            UserConfigTools.updateMiddleSnapshotId("1", middleSnapshot.getId(), true);
 
             rootSnapshot.getChilds().add(middleSnapshot);
             session.save(rootSnapshot);

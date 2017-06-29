@@ -16,4 +16,6 @@ public interface OrdersDAO<T> extends SuperDAO {
     List<T> search(String keyWord);
 
     List<T> findAllByisFinishedAndDate(Date startDate, Date endDate, boolean isFinished);
+
+    boolean deleteById(String id);
 }

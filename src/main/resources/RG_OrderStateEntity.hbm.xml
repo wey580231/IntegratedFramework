@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_OrderStateEntity" table="RG_OrderState" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="identity"/>
+        </id>
+        <property name="idTask">
+            <column name="idTask" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="nameTask">
+            <column name="nameTask" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="planDevice">
+            <column name="planDevice" sql-type="varchar(100)" length="100" not-null="false"/>
+        </property>
+        <property name="planCount">
+            <column name="planCount" sql-type="tinyint(4)" not-null="false"/>
+        </property>
+        <property name="planStartTime" type="java.util.Date">
+            <column name="planStartTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="planFinishTime" type="java.util.Date">
+            <column name="planFinishTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="actualDispatchDevice">
+            <column name="actualDispatchDevice" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="actualFinishCount">
+            <column name="actualFinishCount" sql-type="tinyint(4)" not-null="false"/>
+        </property>
+        <property name="currTime" type="java.util.Date">
+            <column name="currTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="finished">
+            <column name="finished" sql-type="tinyint(1)" not-null="false"/>
+        </property>
+        <property name="finishPercent">
+            <column name="finishPercent" sql-type="float" not-null="false"/>
+        </property>
+
+        <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity">
+            <column name="orderId" not-null="false"/>
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

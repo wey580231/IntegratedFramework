@@ -1,9 +1,14 @@
 package com.rengu.actions;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.opensymphony.xwork2.ActionContext;
 import com.rengu.DAO.SnapshotDao;
+import com.rengu.DAO.impl.SnapshotDaoImpl;
+import com.rengu.entity.RG_SnapshotNodeEntity;
+import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,5 +61,25 @@ public class SnapshotAction extends SuperAction {
         } else {
             Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
         }
+    }
+
+    public void getAllByByLevel() throws Exception {
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
+        String level = jsonNode.get("level").asText();
+        SnapshotDaoImpl snapshotDao = DAOFactory.getSnapshotDaoImplInstance();
+        List<RG_SnapshotNodeEntity> rg_snapshotNodeEntityList = snapshotDao.findAllByLevel(level);
+        String jsonString = Tools.entityConvertToJsonString(rg_snapshotNodeEntityList);
+        System.out.println(jsonString);
+        Tools.jsonPrint(jsonString, this.httpServletResponse);
+    }
+
+    public void getAllById() throws Exception {
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
+        String snapshotId = jsonNode.get("id").asText();
+        SnapshotDaoImpl snapshotDao = DAOFactory.getSnapshotDaoImplInstance();
+        RG_SnapshotNodeEntity rg_snapshotNodeEntity = snapshotDao.findAllById(snapshotId);
+        String jsonString = Tools.entityConvertToJsonString(rg_snapshotNodeEntity);
+        System.out.println(jsonString);
+        Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 }

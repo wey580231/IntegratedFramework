@@ -130,7 +130,6 @@ public class FeedBackStateAction extends SuperAction {
                     //APS_PLAN-->RG_PlanEntity共用一个session,确保在一个实务之中
                     if (state[0].equals(APS_RESULT_SUCCESS)) {
                         try {
-
                             ApsTools.instance().getScheduleResult(bottomSnapshot);
 
                             session.getTransaction().commit();
