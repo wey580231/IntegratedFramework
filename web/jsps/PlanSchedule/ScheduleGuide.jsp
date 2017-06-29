@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+<link href="mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
     .uk-table td {
@@ -40,7 +40,7 @@
 <div class="block">
 
     <div style="float:left;">
-        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+        <img src="images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
     <div style="float:left;margin-top: 5px;">
@@ -94,7 +94,7 @@
                             <tr style="background-color: #e1eaf1;">
                                 <td>
                                     <div class="selectpng" style="/*margin-left: 35%;*/">
-                                        <img src="../../images/bom_img/select.png"
+                                        <img src="images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
                                 </td>
@@ -196,7 +196,7 @@
                                     <tr style="background-color: #e1eaf1;">
                                         <td>
                                             <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
-                                                <img src="../../images/bom_img/select.png"
+                                                <img src="images/bom_img/select.png"
                                                      style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                             </div>
                                         </td>
@@ -336,7 +336,7 @@
                                     <tr style="background-color: #e1eaf1;">
                                         <td>
                                             <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
-                                                <img src="../../images/bom_img/select.png"
+                                                <img src="images/bom_img/select.png"
                                                      style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                             </div>
                                         </td>

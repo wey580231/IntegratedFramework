@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/AdjustProcedure', {
-            templateUrl: '/jsps/AdjustAnalysis/AdjustProcedure.jsp',
+            templateUrl: 'jsps/AdjustAnalysis/AdjustProcedure.jsp',
             controller: 'AdjustProcedureController'
         })
     }])

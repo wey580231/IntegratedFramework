@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.GuideController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/Guide', {
-            templateUrl: '/jsps/Login/Guide.jsp',
+            templateUrl: 'jsps/Login/Guide.jsp',
             controller: 'GuideController'
         })
     }])

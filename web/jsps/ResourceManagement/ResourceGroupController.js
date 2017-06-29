@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/ResourceGroup', {
-            templateUrl: '/jsps/ResourceManagement/ResourceGroup.jsp',
+            templateUrl: 'jsps/ResourceManagement/ResourceGroup.jsp',
             controller: 'ResourceGroupController'
         })
     }])

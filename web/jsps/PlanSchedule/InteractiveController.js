@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.InteractiveController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/Interactive', {
-            templateUrl: '/jsps/PlanSchedule/Interactive.jsp',
+            templateUrl: 'jsps/PlanSchedule/Interactive.jsp',
             controller: 'InteractiveController'
         })
     }])

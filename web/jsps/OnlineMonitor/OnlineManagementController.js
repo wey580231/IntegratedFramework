@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.OnlineManagementController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/OnlineManagement', {
-            templateUrl: '/jsps/OnlineMonitor/OnlineManagement.jsp',
+            templateUrl: 'jsps/OnlineMonitor/OnlineManagement.jsp',
             controller: 'OnlineManagementController'
         })
     }])

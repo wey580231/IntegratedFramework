@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.DeviceMonitorController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/DeviceMonitor', {
-            templateUrl: '/jsps/OnlineMonitor/DeviceMonitor.jsp',
+            templateUrl: 'jsps/OnlineMonitor/DeviceMonitor.jsp',
             controller: 'DeviceMonitorController'
         })
     }])
