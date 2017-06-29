@@ -88,6 +88,7 @@ public class Tools {
     }
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
+        System.out.println("执行SQL语句:" + SQLString);
         Properties databaseProperties = getDatabaseProperties();
         String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
@@ -206,7 +207,7 @@ public class Tools {
         return df.format(date);
     }
 
-    public static String formatToStandardDate(Date date){
+    public static String formatToStandardDate(Date date) {
         if (date == null) {
             return "";
         }

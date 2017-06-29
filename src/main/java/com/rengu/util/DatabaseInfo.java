@@ -11,12 +11,12 @@ public class DatabaseInfo {
     //公司名称
     public static final String APS = "APS";
     //APS数据库表名称
-    public static final String APS_TYPERESOURCE = "aps_typeresource";
-    public static final String APS_ORDER = "aps_order";
-    public static final String APS_CONGIF = "aps_config";
-    public static final String APS_RESOURCE = "aps_resource";
-    public static final String APS_GROUPRESOURCE = "aps_groupresource";
-    public static final String APS_SITE = "aps_site";
-    public static final String APS_LOG = "aps_log";
-    public static final String APS_SHIFT = "aps_shift";
+    public static final String APS_TYPERESOURCE = "APS_TYPERESOURCE";
+    public static final String APS_ORDER = "APS_ORDER";
+    public static final String APS_CONGIF = "APS_CONGIF";
+    public static final String APS_RESOURCE = "APS_RESOURCE";
+    public static final String APS_GROUPRESOURCE = "APS_GROUPRESOURCE";
+    public static final String APS_SITE = "APS_SITE";
+    public static final String APS_LOG = "APS_LOG";
+    public static final String APS_SHIFT = "APS_SHIFT";
 }
