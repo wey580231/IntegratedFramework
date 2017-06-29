@@ -17,6 +17,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var curobj;//当前排程的json字符串
         var ordId;
         var arr;
+        var array = [];
         /*var ordId;
          var resId;
          var resGroId;
@@ -94,7 +95,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             $("#chooseOrder").hide();
         };
 
-        //隐藏已订单窗口
+        //隐藏已选订单窗口
         $scope.hide = function () {
             $("#color_table").hide();
         };
@@ -134,23 +135,28 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             var t2Val = $("input[name='add-t2']").val();
 
             //未完成的记录
-            var array = [];
             array.push(obj);
             array.push(curobj);
 
-            console.log("两部分未完成的信息" + array);
+            console.log("两部分未完成的记录");
+            console.log(array);
+            console.log(array[0]);
+            console.log(array.length);
 
             for (var i = 0; i < array.length; i++) {
-                if (array[i].id == operateId) {
-                    console.log("被选中的记录" + array[i]);
-                    arr = array[i];
-                    console.log("被选中的记录arr" + arr);
+                for (var j = 0; j < array[i].orders.length; j++) {
+                    if (array[i].orders[j].id == operateId) {
+                        arr = array[i];
+                        console.log("$$$$$$$$");
+                        console.log(arr);
+                    }
                 }
+                break;
             }
 
             var APSconfigs = {};
-            APSconfigs.t0 = t0Val;
-            APSconfigs.t2 = parseInt(t2Val);
+            APSconfigs.t0 = arr.orders.t0;
+            APSconfigs.t2 = arr.orders.t0;
 
             var orders = {};
             orders.id = operateId;
@@ -160,18 +166,18 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
             var resourceArr = [];
             var resources = {};
-            resources.id = arr.resource.id;
+            resources.id = 1;
             resourceArr.push(resources);
 
             var groupResourcesArr = [];
             var groupResources = {};
             //groupResources.id = arr.orders[0].idGroupResource;
-            groupResources.id = arr.groupResource.id;
+            groupResources.id = 1;
             groupResourcesArr.push(groupResources);
 
             var sitesArr = [];
             var sites = {};
-            sites.id = arr.site.id;
+            sites.id = 1;
             sitesArr.push(sites);
             /*var layouts = {};
              layouts.id = layId;
@@ -198,7 +204,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             params.layout = layouts;
             params.orders = orders;
             params.APSconfig = APSconfigs;
-            params.resource = resourceArr;
+            params.resources = resourceArr;
             params.groupResource = groupResourcesArr;
             params.site = sitesArr;
             var data = JSON.stringify(params);
@@ -206,7 +212,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             $("#schedule").hide();
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
                 console.log("排程返回的数据:" + response.data);
-                alert("请求成功，开始排程");
+                alert("请求成功，排程成功");
             }, function errorCallback(response) {
                 alert("请求错误！");
             })
@@ -222,12 +228,14 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         $scope.showSchedule = function () {
             //获取上次排程信息
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
-                console.log("获取上次排程信息状态" + response.status);
-                console.log("获取上次排程信息" + response.data);
+                console.log("获取上次排程信息状态");
+                console.log(response.status);
+                console.log("获取上次排程信息");
+                console.log(response.data);
                 obj = response.data;
 
                 var startCalcTime = moment(obj.startCalcTime).format("YYYY-MM-DD");
-                console.log("排程时间" + (new Date(startCalcTime)).getTime());
+                console.log("上次排程计算开始时间" + startCalcTime);
 
                 //当前排程时间长度（b）
                 scheduleDays = $("input[name='add-scheduleDays']").val();
@@ -240,7 +248,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
                 //排程开始时间
                 var startTime = moment().format("YYYY-MM-DD");
-                console.log("当前时间" + startTime);
+                console.log("排成开始时间" + startTime);
 
                 //距上次开始排程的日期差(c)
                 var tempDays = ((new Date(startTime)).getTime() - (new Date(startCalcTime)).getTime()) / (24 * 60 * 60 * 1000);
@@ -302,21 +310,25 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
         $scope.showLastInfo = function () {
             myHttpService.get(serviceList.getLastScheduleInfo).then(function (response) {
-                console.log("获取上次排程信息状态" + response.status);
-                console.log("获取上次排程信息" + response.data);
-                var obj = response.data;
+                console.log("获取上次排程信息状态");
+                console.log(response.status);
+                console.log("获取上次排程信息");
+                console.log(response.data);
+                obj = response.data;
                 console.log(obj.orders);
                 console.log(obj.orders[0].finished);
+                console.log(obj.orders[1].finished);
+                console.log(obj.orders.length);
                 var lastarray = [];
                 for (var i = 0; i < obj.orders.length; i++) {
                     if (obj.orders[i].finished == false) {
                         var lastinfo = {};
                         lastinfo = (obj.orders[i]);
                         console.log(lastinfo);
+                        lastarray.push(lastinfo);
                     } else {
-                        console.log("都完成了！");
+                        console.log("完成了！");
                     }
-                    lastarray.push(lastinfo);
                 }
                 console.log(lastarray);
                 $scope.lastarray = lastarray;
@@ -329,18 +341,26 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             var startTime = moment().format("YYYY-MM-DD");
             console.log("当前开始时间" + startTime);
             cur.startTime = (new Date(startTime)).getTime();
+
             console.log("当前排程时间" + scheduleDays);
             var scheduleDays0 = scheduleDays;
+
             var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
             console.log("当前结束时间" + endTime);
             cur.endTime = (new Date(endTime)).getTime();
+
             cur.isFinished = false;
+
             var data = JSON.stringify(cur);
+
             console.log("当前排程json字符串" + data);
-            myHttpService.post(serviceList.LastInfo, data).then(function (response) {
-                console.log("获取当前未完成信息" + response.status);
+
+            myHttpService.post(serviceList.CurInfo, data).then(function (response) {
+                console.log("获取当前排程信息" + response.status);
                 console.log(response.data);
-                curobj = response.data;
+                for (var i = 0; i < response.data.length; i++) {
+                    curobj.push(response.data[i]);
+                }
                 $scope.curinfo = response.data;
             });
         };
@@ -354,7 +374,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 console.log("被选中" + a[i].checked);
                 if (a[i].checked) {
                     var row = a[i].parentElement.parentElement.rowIndex;
-                    console.log("第几行" + row);
+                    console.log("第几行被选中：" + row);
                     var params = {};
                     params.id = rows[row].cells[1].innerHTML;
                     params.name = rows[row].cells[2].innerHTML;
@@ -367,6 +387,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                     arrchoosed.push(params);
                 }
             }
-            $scope.form = arr;
+            $scope.form = arrchoosed;
         };
     });
