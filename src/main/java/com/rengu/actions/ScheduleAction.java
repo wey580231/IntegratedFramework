@@ -1,16 +1,14 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.rengu.DAO.impl.ScheduleDAOImpl;
 import com.rengu.entity.*;
 import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by hanchangming on 2017/6/5.
@@ -190,6 +188,14 @@ public class ScheduleAction extends SuperAction {
             }
             printError();
         }
+    }
+
+    public void getAllSchedules() throws Exception {
+        ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
+        List list = scheduleDAO.findAll();
+        String jsonString = Tools.entityConvertToJsonString(list);
+        Tools.jsonPrint(jsonString, this.httpServletResponse);
+        System.out.println(jsonString);
     }
 
     private void printError() {
