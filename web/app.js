@@ -120,5 +120,11 @@ angular.module("IntegratedFramework", [
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
 
         service.getLastScheduleInfo = backUrl + "FullCalendar/getLastScheduleInfo.action";
+
+        <!--工序信息接口-->
+        service.isRootNode = backUrl + "process/getAllByIsRootNode.action";
+
+        service.isChildNode = backUrl + "process/getAllById.action";
+
         return service;
     });
