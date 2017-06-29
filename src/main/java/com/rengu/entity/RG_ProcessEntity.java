@@ -73,7 +73,7 @@ public class RG_ProcessEntity {
     private Short nbTask;
     private boolean rootProcess;
     private RG_ProductEntity productByIdProduct;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "processId")
     private RG_ProcessEntity processByIdProcess;
     private Set<RG_ProcessEntity> childProcess;
 

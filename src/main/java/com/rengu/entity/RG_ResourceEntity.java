@@ -38,14 +38,14 @@ public class RG_ResourceEntity {
 
     private RG_ClubEntity clubByIdClub;
     private RG_UserEntity userByIdUser;
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "GroupresourceId")
     private RG_GroupresourceEntity groupresourceByIdGroupResource;
     private Set<RG_SiteEntity> sitesById = new HashSet<RG_SiteEntity>();
     private Set<RG_ShiftEntity> shiftsById = new HashSet<RG_ShiftEntity>();
     private Set<RG_TyperescourceEntity> typeresourcesById = new HashSet<RG_TyperescourceEntity>();
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     private Set<RG_ScheduleEntity> schedules;
-
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ResourceStateId")
     private Set<RG_ResourceStateEntity> resourceState = new HashSet<RG_ResourceStateEntity>();
 
     public String getId() {

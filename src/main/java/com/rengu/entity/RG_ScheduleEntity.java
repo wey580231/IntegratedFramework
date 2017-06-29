@@ -47,6 +47,7 @@ public class RG_ScheduleEntity {
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "LayoutId")
     private RG_LayoutEntity layout;                    //布局
     private Set<RG_OrderEntity> orders = new HashSet<RG_OrderEntity>();                      //订单
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ResourceId")
     private Set<RG_ResourceEntity> resources = new HashSet<RG_ResourceEntity>();             //资源
     private Set<RG_GroupresourceEntity> groups = new HashSet<RG_GroupresourceEntity>();      //工组
     private Set<RG_SiteEntity> sites = new HashSet<RG_SiteEntity>();                         //工位
