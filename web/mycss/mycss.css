@@ -231,3 +231,55 @@ th{
     float: right;
     margin-right: 1%;
 }
+
+/*计划排程弹出框*/
+.uk-modal-dialog{
+    width: 70%;
+    height: 70%;
+}
+
+.plansec{
+    width: 100%;
+}
+
+.planthird{
+    margin-left: 19px;
+    width: 100%;
+}
+
+.planchoose{
+    height: 90%;
+    width: 99%;
+}
+
+/*底部页码*/
+.planfooter{
+    width: 100%;
+    margin-top: 2px;
+    border-top: 1px solid lightgray;
+    padding-top:7px;
+}
+
+/*弹框表格*/
+.plantb{
+    border-top: 1px solid lightgray;
+    background-color: white;
+}
+
+.plantbfir{
+    height: 88%;
+    margin-top: 1%;
+}
+
+.plantable{
+    height: 92%;
+    overflow: hidden;
+}
+
+.planname{
+    font-family: sans-serif;
+}
+
+.planinput{
+    width: 200px;
+}
