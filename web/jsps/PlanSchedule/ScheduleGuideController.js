@@ -323,7 +323,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         };
 
         $scope.showLastInfo = function () {
-            myHttpService.get(serviceList.getLastScheduleInfo).then(function (response) {
+            myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log("获取上次排程信息状态");
                 console.log(response.status);
                 console.log("获取上次排程信息");
@@ -346,7 +346,9 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 }
                 console.log(lastarray);
                 $scope.lastarray = lastarray;
-            });
+            }, function errorCallback(response) {
+                alert("请求错误！");
+            })
         };
 
 

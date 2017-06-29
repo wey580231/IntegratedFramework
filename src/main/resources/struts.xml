@@ -28,6 +28,7 @@
     <!--计划排程接口-->
     <package name="schedule" extends="struts-default" namespace="/schedule">
         <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
+        <action name="getAllSchedules" class="com.rengu.actions.ScheduleAction" method="getAllSchedules"/>
     </package>
 
     <!--工序资源信息接口-->
@@ -96,7 +97,6 @@
     </package>
     <!--工序信息接口-->
     <package name="Process" namespace="/process" extends="struts-default">
-        <action name="getAllProcess" class="com.rengu.actions.ProcessAction" method="getAllProcess"/>
         <action name="save" class="com.rengu.actions.ProcessAction" method="save"/>
         <action name="delete" class="com.rengu.actions.ProcessAction" method="delete"/>
         <action name="update" class="com.rengu.actions.ProcessAction" method="update"/>
