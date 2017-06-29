@@ -25,7 +25,7 @@ public class EntityConvertToSQL {
                 + "','" + rg_orderEntity.getT1()
                 + "','" + rg_orderEntity.getT2()
                 + "','" + rg_orderEntity.getColor()
-                + "'," + rg_orderEntity.getState() + ");";
+                + "'," + rg_orderEntity.getState() + ")";
         return SQLString;
     }
 

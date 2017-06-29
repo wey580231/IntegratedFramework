@@ -13,14 +13,6 @@ import java.util.List;
  * Created by hanchangming on 2017/6/26.
  */
 public class ProcessAction extends SuperAction {
-    public void getAllProcess() throws Exception {
-        ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
-        List list = processDAO.findAll();
-        String jsonString = Tools.entityConvertToJsonString(list);
-        Tools.jsonPrint(jsonString, this.httpServletResponse);
-        System.out.println(jsonString);
-    }
-
     public void getAllByIsRootNode() throws Exception {
         JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
         boolean isRootNode = jsonNode.get("isRootNode").asBoolean();
