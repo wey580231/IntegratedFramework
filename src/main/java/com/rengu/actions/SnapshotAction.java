@@ -69,7 +69,6 @@ public class SnapshotAction extends SuperAction {
         SnapshotDaoImpl snapshotDao = DAOFactory.getSnapshotDaoImplInstance();
         List<RG_SnapshotNodeEntity> rg_snapshotNodeEntityList = snapshotDao.findAllByLevel(level);
         String jsonString = Tools.entityConvertToJsonString(rg_snapshotNodeEntityList);
-        System.out.println(jsonString);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
@@ -79,7 +78,6 @@ public class SnapshotAction extends SuperAction {
         SnapshotDaoImpl snapshotDao = DAOFactory.getSnapshotDaoImplInstance();
         RG_SnapshotNodeEntity rg_snapshotNodeEntity = snapshotDao.findAllById(snapshotId);
         String jsonString = Tools.entityConvertToJsonString(rg_snapshotNodeEntity);
-        System.out.println(jsonString);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 }
