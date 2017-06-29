@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/ScheduleGuide', {
-            templateUrl: '/jsps/PlanSchedule/ScheduleGuide.jsp',
+            templateUrl: 'jsps/PlanSchedule/ScheduleGuide.jsp',
             controller: 'ScheduleGuideController'
         })
     }])

@@ -8,13 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel='stylesheet' href='${pageContext.request.contextPath}/lib/FullCalendar-3.4.0/fullcalendar.min.css'/>
+    <link rel='stylesheet' href='lib/FullCalendar-3.4.0/fullcalendar.min.css'/>
 </head>
 <body>
 <div id='calendar'></div>
-<script src='${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js'></script>
-<script src='${pageContext.request.contextPath}/lib/Moment/moment-with-locales.js'></script>
-<script src='${pageContext.request.contextPath}/lib/FullCalendar-3.4.0/fullcalendar.min.js'></script>
+<script src='lib/jquery/jquery-3.2.1.min.js'></script>
+<script src='lib/Moment/moment-with-locales.js'></script>
+<script src='lib/FullCalendar-3.4.0/fullcalendar.min.js'></script>
 <script>
     //当前排程时间长度（b）
     var scheduleDays = 30;

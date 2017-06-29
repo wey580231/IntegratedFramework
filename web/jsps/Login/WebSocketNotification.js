@@ -7,7 +7,7 @@ var webSocketUrl;
 
 function getUsername() {
     username = navigator.appName + new Date().getTime();
-    webSocketUrl = "ws://127.0.0.1:8080/notification/" + username;
+    webSocketUrl = "ws://localhost:8080/IntegratedFramework/notification/" + username;
 }
 
 function webSocketInit() {

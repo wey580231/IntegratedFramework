@@ -9,9 +9,9 @@
 <html>
 <head>
     <title>系统登陆</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/uikit.gradient.min.css"/>
+    <link rel="stylesheet" href="lib/UIKit-2.27.4/css/uikit.gradient.min.css"/>
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/notify.gradient.min.css"/>
+          href="lib/UIKit-2.27.4/css/components/notify.gradient.min.css"/>
 </head>
 <body>
 <div style="width:100%;text-align:center">
@@ -32,9 +32,9 @@
     <button class="uk-button uk-button-link uk-align-left">用户注册</button>
     <button class="uk-button uk-button-link uk-align-right">忘记密码</button>
 </div>
-<script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/uikit.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/notify.min.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/Login/FormValidate.js"></script>
+<script src="lib/jquery/jquery-3.2.1.min.js"></script>
+<script src="lib/UIKit-2.27.4/js/uikit.min.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/notify.min.js"></script>
+<script src="jsps/Login/FormValidate.js"></script>
 </body>
 </html>

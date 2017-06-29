@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+<link href="mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
 
@@ -37,7 +37,7 @@
 <div class="block">
 
     <div class="leftpic">
-        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+        <img src="images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
     <div class="title">

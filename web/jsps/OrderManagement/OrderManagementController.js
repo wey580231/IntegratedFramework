@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/OrderManagement', {
-            templateUrl: '/jsps/OrderManagement/OrderManagement.jsp',
+            templateUrl: 'jsps/OrderManagement/OrderManagement.jsp',
             controller: 'OrderManagementController'
         })
     }])

@@ -5,28 +5,37 @@
   Time: 16:24
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
 <html ng-app="IntegratedFramework">
 <head>
-    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-3.0/css/uikit.min.css"/>--%>
+    <base href="<%=basePath%>">
+    <%--<link rel="stylesheet" href="lib/UIKit-3.0/css/uikit.min.css"/>--%>
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/notify.gradient.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/uikit.gradient.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/search.min.css"/>
+          href="lib/UIKit-2.27.4/css/components/notify.gradient.min.css"/>
+    <link rel="stylesheet" href="lib/UIKit-2.27.4/css/uikit.gradient.min.css"/>
+    <link rel="stylesheet" href="lib/UIKit-2.27.4/css/components/search.min.css"/>
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/datepicker.min.css"/>
+          href="lib/UIKit-2.27.4/css/components/datepicker.min.css"/>
     <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/form-select.min.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/sticky.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/progress.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/accordion.css"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/UIKit-2.27.4/css/components/autocomplete.css"/>
+          href="lib/UIKit-2.27.4/css/components/form-select.min.css"/>
+    <link rel="stylesheet" href="lib/UIKit-2.27.4/css/components/sticky.css"/>
+    <link rel="stylesheet" href="lib/UIKit-2.27.4/css/components/progress.css"/>
+    <link rel="stylesheet" href="lib/UIKit-2.27.4/css/components/accordion.css"/>
+    <link rel="stylesheet" href="lib/UIKit-2.27.4/css/components/autocomplete.css"/>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/ztree/css/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" href="lib/ztree/css/zTreeStyle/zTreeStyle.css"/>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="lib/jqueryui/jquery-ui.min.css"/>
 
-    <link rel='stylesheet' href='${pageContext.request.contextPath}/lib/FullCalendar-3.4.0/fullcalendar.min.css'/>
+    <link rel='stylesheet' href='lib/FullCalendar-3.4.0/fullcalendar.min.css'/>
 
     <style type="text/css">
         .uk-nav-side > li > a {
@@ -50,7 +59,7 @@
             里层li中超链接的背景
         */
         .uk-nav-side ul a:hover {
-            background: url("../../images/left_img/click.png") no-repeat 30px;
+            background: url("images/left_img/click.png") no-repeat 30px;
             color: #ecc412;
         }
 
@@ -66,7 +75,7 @@
             ！！！！
         */
         .uk-nav-side ul a:focus {
-            background: url("../../images/left_img/click.png") no-repeat 30px;
+            background: url("images/left_img/click.png") no-repeat 30px;
             color: #ecc412;
         }
 
@@ -171,7 +180,7 @@
         <!--图标-->
         <div class="uk-width-1-1"
              style="background-color: #1c4f7a; /*height: 10%;*/height: 60px;/*position: absolute;*/">
-            <a href="#!/MainPage"><img src="../../images/logo2.png"
+            <a href="#!/MainPage"><img src="images/logo2.png"
                                                                                       style="margin-top: 16px;margin-left: 16px;"></a>
 
         </div>
@@ -182,7 +191,7 @@
                 <li class="uk-parent">
                     <a href="#">
                         <div>
-                            <img src="../../images/left_img/order.png"> <span style="margin-left: 10px;">订单任务管理</span>
+                            <img src="images/left_img/order.png"> <span style="margin-left: 10px;">订单任务管理</span>
                         </div>
                     </a>
                     <ul class="uk-nav-sub">
@@ -194,7 +203,7 @@
                 <li class="uk-parent">
                     <a href="#">
                         <div>
-                            <img src="../../images/left_img/resource.png"> <span
+                            <img src="images/left_img/resource.png"> <span
                                 style="margin-left: 10px;">资源设备管理</span>
                         </div>
                     </a>
@@ -209,7 +218,7 @@
                 <li class="uk-parent">
                     <a href="#" target="body">
                         <div>
-                            <img src="../../images/left_img/plan.png"> <span style="margin-left: 10px;">计划排程管理</span>
+                            <img src="images/left_img/plan.png"> <span style="margin-left: 10px;">计划排程管理</span>
                         </div>
                     </a>
                     <ul class="uk-nav-sub">
@@ -221,7 +230,7 @@
                 <li class="uk-parent">
                     <a href="#">
                         <div>
-                            <img src="../../images/left_img/online.png"> <span style="margin-left: 10px;">在线监控管理</span>
+                            <img src="images/left_img/online.png"> <span style="margin-left: 10px;">在线监控管理</span>
                         </div>
                     </a>
                     <ul class="uk-nav-sub">
@@ -232,7 +241,7 @@
                 <li class="uk-parent">
                     <a href="#">
                         <div>
-                            <img src="../../images/left_img/adjust.png"> <span style="margin-left: 10px;">高级调整分析</span>
+                            <img src="images/left_img/adjust.png"> <span style="margin-left: 10px;">高级调整分析</span>
                         </div>
                     </a>
                     <ul class="uk-nav-sub">
@@ -245,7 +254,7 @@
                 <li class="uk-parent">
                     <a href="#">
                         <div>
-                            <img src="../../images/left_img/3D.png"> <span style="margin-left: 10px;">三维可视化</span>
+                            <img src="images/left_img/3D.png"> <span style="margin-left: 10px;">三维可视化</span>
                         </div>
                     </a>
                     <ul class="uk-nav-sub">
@@ -264,10 +273,10 @@
         <div class="uk-width-1-1" style="/*height: 10%;*/height: 60px;/*width: 100%;*/position: absolute;">
             <!--欢迎登录-->
             <div style="float: left;width: 95%;height: 55px;margin-top: 5px;">
-                <img src="../../images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
+                <img src="images/user.png" style="margin-left: 87%;width: 50px;height: 50px;"> 欢迎登录
             </div>
             <div style="height: 60px;">
-                <img src="../../images/point.png" style="margin-top: 23px;margin-left: 20px;">
+                <img src="images/point.png" style="margin-top: 23px;margin-left: 20px;">
             </div>
         </div>
 
@@ -298,55 +307,55 @@
 <!--左侧-->
 
 
-<script src="${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
-<%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit.min.js"></script>--%>
-<%--<script src="${pageContext.request.contextPath}/lib/UIKit-3.0/js/uikit-icons.min.js"></script>--%>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/uikit.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/search.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/form-select.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/datepicker.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/accordion.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/sticky.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/autocomplete.js"></script>
-<script src="${pageContext.request.contextPath}/lib/UIKit-2.27.4/js/components/notify.min.js"></script>
+<script src="lib/jquery/jquery-3.2.1.min.js"></script>
+<%--<script src="lib/UIKit-3.0/js/uikit.min.js"></script>--%>
+<%--<script src="lib/UIKit-3.0/js/uikit-icons.min.js"></script>--%>
+<script src="lib/UIKit-2.27.4/js/uikit.min.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/search.min.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/form-select.min.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/datepicker.min.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/accordion.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/sticky.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/autocomplete.js"></script>
+<script src="lib/UIKit-2.27.4/js/components/notify.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular.min.js"></script>
-<script src="${pageContext.request.contextPath}/lib/Angular-1.6.4/angular-route.min.js"></script>
+<script src="lib/Angular-1.6.4/angular.min.js"></script>
+<script src="lib/Angular-1.6.4/angular-route.min.js"></script>
 
-<script src='${pageContext.request.contextPath}/lib/jquery/jquery-3.2.1.min.js'></script>
-<script src='${pageContext.request.contextPath}/lib/Moment/moment-with-locales.js'></script>
-<script src='${pageContext.request.contextPath}/lib/FullCalendar-3.4.0/fullcalendar.min.js'></script>
+<script src='lib/jquery/jquery-3.2.1.min.js'></script>
+<script src='lib/Moment/moment-with-locales.js'></script>
+<script src='lib/FullCalendar-3.4.0/fullcalendar.min.js'></script>
 
-<script src="${pageContext.request.contextPath}/lib/jqueryui/jquery-ui.min.js"></script>
+<script src="lib/jqueryui/jquery-ui.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.core.js"></script>
-<script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.exedit.js "></script>
-<script src="${pageContext.request.contextPath}/lib/ztree/js/jquery.ztree.exhide.js"></script>
+<script src="lib/ztree/js/jquery.ztree.core.js"></script>
+<script src="lib/ztree/js/jquery.ztree.exedit.js "></script>
+<script src="lib/ztree/js/jquery.ztree.exhide.js"></script>
 
 
-<script src="/app.js"></script>
+<script src="app.js"></script>
 
-<script src="${pageContext.request.contextPath}/jsps/Login/Main.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/3DView/ShowController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustOrderController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustProcedureController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustDeviceController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/AdjustAnalysis/AdjustFactoryController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/OnlineMonitor/OnlineManagementController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/OnlineMonitor/DeviceMonitorController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/OrderManagement/OrderManagementController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/OrderManagement/BOMManagementController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/OrderManagement/ResourceDistributionController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/PlanSchedule/ScheduleGuideController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/PlanSchedule/ScheduleSnapController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/PlanSchedule/InteractiveController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceListController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceClassifyController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceStationController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/WorkListController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/ResourceManagement/ResourceGroupController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/Login/GuideController.js"></script>
-<script src="${pageContext.request.contextPath}/jsps/Login/WebSocketNotification.js"></script>
+<script src="jsps/Login/Main.js"></script>
+<script src="jsps/3DView/ShowController.js"></script>
+<script src="jsps/AdjustAnalysis/AdjustOrderController.js"></script>
+<script src="jsps/AdjustAnalysis/AdjustProcedureController.js"></script>
+<script src="jsps/AdjustAnalysis/AdjustDeviceController.js"></script>
+<script src="jsps/AdjustAnalysis/AdjustFactoryController.js"></script>
+<script src="jsps/OnlineMonitor/OnlineManagementController.js"></script>
+<script src="jsps/OnlineMonitor/DeviceMonitorController.js"></script>
+<script src="jsps/OrderManagement/OrderManagementController.js"></script>
+<script src="jsps/OrderManagement/BOMManagementController.js"></script>
+<script src="jsps/OrderManagement/ResourceDistributionController.js"></script>
+<script src="jsps/PlanSchedule/ScheduleGuideController.js"></script>
+<script src="jsps/PlanSchedule/ScheduleSnapController.js"></script>
+<script src="jsps/PlanSchedule/InteractiveController.js"></script>
+<script src="jsps/ResourceManagement/ResourceListController.js"></script>
+<script src="jsps/ResourceManagement/ResourceClassifyController.js"></script>
+<script src="jsps/ResourceManagement/ResourceStationController.js"></script>
+<script src="jsps/ResourceManagement/WorkListController.js"></script>
+<script src="jsps/ResourceManagement/ResourceGroupController.js"></script>
+<script src="jsps/Login/GuideController.js"></script>
+<script src="jsps/Login/WebSocketNotification.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {

@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/AdjustDevice', {
-            templateUrl: '/jsps/AdjustAnalysis/AdjustDevice.jsp',
+            templateUrl: 'jsps/AdjustAnalysis/AdjustDevice.jsp',
             controller: 'AdjustDeviceController'
         })
     }])
