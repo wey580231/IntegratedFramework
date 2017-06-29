@@ -80,7 +80,7 @@ angular.module("IntegratedFramework", [
         service.DeleteOrder = backUrl + "orders/delete.action";
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
-        service.LastInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
+        service.CurInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
         <!--工序资源信息-->
         service.ListAssisantProcess = backUrl + "assisantprocess/getAllAssisantProcess.action";
         service.DeleteAssisantProcess = backUrl + "assisantprocess/delete.action";
