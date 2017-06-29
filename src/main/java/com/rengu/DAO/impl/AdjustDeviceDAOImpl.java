@@ -20,7 +20,7 @@ public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_AdjustDeviceEntity entity ";
+        String hql = "from RG_AdjustDeviceEntity rg_adjustDeviceEntity ";
         Query query = session.createQuery(hql);
         List list = query.list();
         return list;
