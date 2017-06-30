@@ -246,9 +246,6 @@
             <fieldset>
                 <label for="add-name">名称</label><br/>
                 <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-schedule">排程时间窗</label><br/>
-                <input type="text" name="add-schedule" id="add-schedule"
-                       class="text ui-widget-content ui-corner-all"><br/>
                 <label for="add-rollTime">滚动周期</label><br/>
                 <input type="text" name="add-rollTime" id="add-rollTime"
                        class="text ui-widget-content ui-corner-all"><br/>
