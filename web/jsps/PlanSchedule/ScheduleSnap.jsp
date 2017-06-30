@@ -52,14 +52,7 @@
     .nav-ml li:last-child::before {
         height: 30px;
     }
-    .bomspan {
-        font-size: 16px;
-        /*background: url("../../images/bom_img/bomqie.png");*/
-    }
-    .bomdiv {
-        background: url("images/bom_img/bomqie.png") no-repeat;
-        background-size: 100% 100%;
-    }
+
     /*
         BOM树左侧的线条（竖线）
     */
@@ -316,7 +309,7 @@
             </div>
         </div>-->
         <div class="uk-panel uk-panel-box uk-overflow-container"
-             style="height: 82%;background-color: #e2ebf2;">
+             style="height: 90%;background-color: #e2ebf2;">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
         <div id="rMenu">
@@ -333,12 +326,12 @@
         <div style="margin-top: 15px;margin-left: -35px;height: 96%;">
 
             <!--tab-->
-            <div style="width: 100%;border: 0px;margin-top: -15px;">
+            <div style="width: 100%;border: 0px;margin-top: -15px;height: 100%;">
 
-                <div id="tabs-2" style="width: 100%;">
+                <div id="tabs-2" style="width: 100%;height: 100%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 96%;">
+                    <div class="uk-overflow-container" style="height: 100%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
                                 <thead class="uk-text-left">
@@ -362,7 +355,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="fixtable-body" style="height: 72%;width: 77.5%;top: 120px;">
+                        <div class="fixtable-body" style="height: 72%;width: 77.5%;top: 125px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
 
                                 <tbody class="uk-text-center">
