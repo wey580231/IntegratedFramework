@@ -179,6 +179,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             var layouts = {};
             //layouts.id = parseInt(arr.layout.id);
             layouts.id = 1;
+
             console.log("资源");
             var resourceArr = [];
             /*for (var i = 0; i < arr.resources.length; i++) {
@@ -216,7 +217,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             sites.id = 1;
             sitesArr.push(sites);
 
-
             /*var layouts = {};
              layouts.id = layId;
              var resourceArr = [];
@@ -235,7 +235,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             var params = {};
             params.name = arr.name;
             params.scheduleWindow = parseInt(scheduleDays);
-            params.rollTime = arr.scheduleWindow;
+            params.rollTime = 24;
             params.APSConfig = APSConfigs;
             params.layout = layouts;
             params.orders = orders;
