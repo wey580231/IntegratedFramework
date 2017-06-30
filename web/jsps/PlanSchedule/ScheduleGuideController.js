@@ -161,58 +161,32 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             var APSConfigs = {};
             //APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
             //APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
-            APSConfigs.t0 = "2017-06-30 10:05:00";
-            APSConfigs.t2 = "2017-07-01 10:05:00";
+            APSConfigs.t0 = "2017-07-01 14:06:39";
+            APSConfigs.t2 = "2017-07-05 14:10:30";
 
             var orders = [];
             console.log("订单");
-            /*for (var i = 0; i < arr.orders.length; i++) {
-             var params = {};
-             params.id = parseInt(arr.orders[i].id);
-             orders.push(params);
-             console.log(orders);
-             }*/
             var params = {};
             params.id = parseInt(arr.id);
             orders.push(params);
 
             var layouts = {};
-            //layouts.id = parseInt(arr.layout.id);
             layouts.id = 1;
 
             console.log("资源");
             var resourceArr = [];
-            /*for (var i = 0; i < arr.resources.length; i++) {
-             var resources = {};
-             resources.id = parseInt(arr.resources[i].id);
-             resourceArr.push(resources);
-             console.log(resourceArr);
-             }*/
             var resources = {};
             resources.id = 1;
             resourceArr.push(resources);
 
             console.log("工组");
             var groupResourcesArr = [];
-            /* for (var i = 0; i < arr.groups.length; i++) {
-             var groupResources = {};
-             groupResources.id = parseInt(arr.groups[i].id);
-             groupResourcesArr.push(groupResources);
-             console.log(groupResourcesArr);
-             }
-             */
             var groupResources = {};
             groupResources.id = 1;
             groupResourcesArr.push(groupResources);
 
             console.log("工位");
             var sitesArr = [];
-            /*for (var i = 0; i < arr.sites.length; i++) {
-                var sites = {};
-                sites.id = parseInt(arr.sites[i].id);
-                sitesArr.push(sites);
-                console.log(sitesArr);
-             }*/
             var sites = {};
             sites.id = 1;
             sitesArr.push(sites);
@@ -233,7 +207,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
              sitesArr.push(sites);*/
 
             var params = {};
-            params.name = arr.name;
+            params.name = "a";
             params.scheduleWindow = parseInt(scheduleDays);
             params.rollTime = 24;
             params.APSConfig = APSConfigs;
