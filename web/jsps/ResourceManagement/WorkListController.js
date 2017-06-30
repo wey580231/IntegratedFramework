@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/WorkList', {
-            templateUrl: '/jsps/ResourceManagement/WorkList.jsp',
+            templateUrl: 'jsps/ResourceManagement/WorkList.jsp',
             controller: 'WorkListController'
         })
     }])

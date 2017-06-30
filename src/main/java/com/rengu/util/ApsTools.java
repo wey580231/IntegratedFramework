@@ -39,6 +39,7 @@ public class ApsTools {
     //集成框架部署的地址和端口号
     private String localAddress;
     private String localPort;
+    private String localProjectName;
 
     private ApsTools() {
         apsHost = Tools.getDatabaseProperties().getProperty("APSHost");
@@ -46,6 +47,7 @@ public class ApsTools {
 
         localAddress = Tools.getDatabaseProperties().getProperty("LocalAddress");
         localPort = Tools.getDatabaseProperties().getProperty("LocalPort");
+        localProjectName = Tools.getDatabaseProperties().getProperty("LocalProjectName");
     }
 
     public static ApsTools instance() {
@@ -394,6 +396,6 @@ public class ApsTools {
 
     //获取aps计算完后返回结果地址
     public String getReplyAddress() {
-        return localAddress + ":" + localPort + replyApsAction;
+        return localAddress + ":" + localPort + localProjectName+ replyApsAction;
     }
 }

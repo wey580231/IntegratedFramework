@@ -11,7 +11,6 @@ import java.util.List;
  * Created by hanchangming on 2017/6/16.
  */
 public class AdjustOrderAction extends SuperAction {
-
     public void getAllAdjustOrderException() throws Exception {
         AdjustOrderDAOImpl adjustOrderDAO = DAOFactory.getAdjustOrderDAOImplInstance();
         List<RG_AdjustOrderEntity> adjustOrderEntityList = adjustOrderDAO.findAll();

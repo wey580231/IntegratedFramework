@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.MainPage", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/MainPage', {
-            templateUrl: '/jsps/Login/Main.jsp',
+            templateUrl: 'jsps/Login/Main.jsp',
             controller: 'MainPageController'
         })
     }])

@@ -5,7 +5,7 @@
 angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/AdjustOrder', {
-            templateUrl: '/jsps/AdjustAnalysis/AdjustOrder.jsp',
+            templateUrl: 'jsps/AdjustAnalysis/AdjustOrder.jsp',
             controller: 'AdjustOrderController'
         })
     }])

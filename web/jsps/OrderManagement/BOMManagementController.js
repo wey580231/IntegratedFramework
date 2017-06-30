@@ -5,14 +5,13 @@
 angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/BOMManagement', {
-            templateUrl: '/jsps/OrderManagement/BOMManagement.jsp',
+            templateUrl: 'jsps/OrderManagement/BOMManagement.jsp',
             controller: 'BOMManagementController'
         })
     }])
     .controller("BOMManagementController", function ($scope, myHttpService, serviceList) {
         var zNodes = [];
         var dataArr = [];
-
 
         /*var zNodes = [
          {
@@ -154,12 +153,14 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
 
 
             function OnRightClick(event, treeId, treeNode) {
+                var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
+                var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
                 if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
-                    showRMenu("root", event.clientX, event.clientY);
+                    showRMenu("root", x, y);
                 } else if (treeNode && !treeNode.noR) {
                     zTree.selectNode(treeNode);
-                    showRMenu("node", event.clientX, event.clientY);
+                    showRMenu("node", x, y);
                 }
             }
 
@@ -167,7 +168,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             //显示右键操作
             function showRMenu(type, x, y) {
                 $("#rMenu").show();
-                rMenu.css({"top": (y - 70) + "px", "left": (x - 220) + "px", "visibility": "visible"});
+                rMenu.css({"top": y + "px", "left": x + "px", "visibility": "visible"});
                 $("#container").bind("mousedown", onBodyMouseDown);
             }
 

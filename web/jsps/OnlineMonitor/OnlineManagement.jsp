@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
+<link href="mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
 
@@ -37,7 +37,7 @@
 <div class="<%--uk-grid--%>" style="height: 8%;margin-top: 10px;background-color: white;margin-left: 0px;width: 100%;">
 
     <div style="float:left;">
-        <img src="../../images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
+        <img src="images/bom_img/shu.png" style="width: 5px;float: left;height: 35px;">
     </div>
 
     <div style="float:left;margin-top: 5px;">
@@ -75,7 +75,7 @@
                             <tr style="background-color: #e1eaf1;">
                                 <td>
                                     <div style="border: 1px solid lightgray;margin-left: 42%;width: 30px;height: 15px;background-color: #cddae3;">
-                                        <img src="../../images/bom_img/select.png"
+                                        <img src="images/bom_img/select.png"
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
 
@@ -143,7 +143,7 @@
                 <!--底部页码-->
                 <div style="margin-top: -25px;">
                     <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
-                        <li><button class="uk-button" style="background-image: url('../../images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
+                        <li><button class="uk-button" style="background-image: url('images/bom_img/ye1.png');color: white;"><a href="" style="color: white;">首页</a></button></li>
                         <li><button class="uk-button my"><a href="">上一页</a></button></li>
                         <li><button class="uk-button my"><a href="">下一页</a></button></li>
                         <li><button class="uk-button my"><a href="">尾页</a></button></li>
