@@ -158,11 +158,11 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 break;
             }
 
-            var APSconfigs = {};
+            var APSConfigs = {};
             //APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
             //APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
-            APSconfigs.t0 = "2017-06-30 10:05:00";
-            APSconfigs.t2 = "2017-07-01 10:05:00";
+            APSConfigs.t0 = "2017-06-30 10:05:00";
+            APSConfigs.t2 = "2017-07-01 10:05:00";
 
             var orders = [];
             console.log("订单");
@@ -236,7 +236,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             params.name = arr.name;
             params.scheduleWindow = parseInt(scheduleDays);
             params.rollTime = arr.scheduleWindow;
-            params.APSconfig = APSconfigs;
+            params.APSConfig = APSConfigs;
             params.layout = layouts;
             params.orders = orders;
             params.resources = resourceArr;
