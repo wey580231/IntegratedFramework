@@ -82,6 +82,8 @@ angular.module("IntegratedFramework", [
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
         service.CurInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
+        <!--工序信息-->
+        service.ListProcess = backUrl + "process/getAllByIsRootNode.action";
         <!--工序资源信息-->
         service.ListAssisantProcess = backUrl + "assisantprocess/getAllAssisantProcess.action";
         service.DeleteAssisantProcess = backUrl + "assisantprocess/delete.action";
@@ -119,6 +121,7 @@ angular.module("IntegratedFramework", [
         service.get3DReport = backUrl + "3d/get3DReport.action";
         <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
+        service.ListSchedule = backUrl + "schedule/getAllSchedules.action";
 
         service.getLastScheduleInfo = backUrl + "FullCalendar/getLastScheduleInfo.action";
 
@@ -129,5 +132,10 @@ angular.module("IntegratedFramework", [
 
 
         service.isRootLevel = backUrl + "snapshot/getAllByByLevel.action";
+
+        <!--高级调整分析-->
+        service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
+        service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
+
         return service;
     });

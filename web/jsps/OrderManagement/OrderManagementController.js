@@ -19,15 +19,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             console.log(response.data);
             $scope.arr = response.data;
-            var obj = response.data;
-            //var data = eval('(' + obj + ')');
-            /*name=obj[0].id;
-             console.log(name);
-             console.log(parseInt(name));
-             var date1 = new Date();
-             var date2 = new Date(obj[0].t2);
-             date=(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24);
-             console.log(date);*/
         });
 
         //重新加载页面信息

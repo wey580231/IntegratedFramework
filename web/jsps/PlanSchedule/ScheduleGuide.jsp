@@ -110,8 +110,19 @@
                         </table>
                     </div>
                     <div class="fixtable-body">
-                        <table class="uk-table uk-table-striped uk-table-hover " id="order">
+                        <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
+                                <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
+                                    <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                    <td id="Id" style="display:none">{{x.id}}</td>
+                                    <td id="name">{{x.name}}</td>
+                                    <td id="progress">{{x.progress}}</td>
+                                    <td id="scheduleTime">{{x.scheduleTime}}</td>
+                                    <td id="startCalcTime">{{x.startCalcTime}}</td>
+                                    <td id="endCalcTime">{{x.endCalcTime}}</td>
+                                    <td id="state">{{x.state}}</td>
+                                </tr>
 
                             </tbody>
                         </table>

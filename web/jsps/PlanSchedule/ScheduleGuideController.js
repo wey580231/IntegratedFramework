@@ -20,12 +20,14 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var ordId;
         var arr;
         var array = [];
-        var lastarray = [];
-        /*var ordId;
-         var resId;
-         var resGroId;
-         var siteId;
-         var layId;*/
+
+
+
+        myHttpService.get(serviceList.ListSchedule).then(function (response) {
+            console.log(response.data);
+            $scope.arr = response.data;
+        });
+
 
         //重新加载页面，取消选中状态
         var reload = function () {

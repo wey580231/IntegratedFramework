@@ -133,7 +133,7 @@
         <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
     </package>
 
-    <!--异常处理-->
+    <!--高级调整分析-->
     <package name="ExceptionList" namespace="/ExceptionList" extends="struts-default">
         <action name="getAllAdjustOrderException" class="com.rengu.actions.AdjustOrderAction"
                 method="getAllAdjustOrderException"/>

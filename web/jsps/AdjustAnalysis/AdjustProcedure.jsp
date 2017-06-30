@@ -131,11 +131,8 @@
                                 <td>订单编码</td>
                                 <td>上报时间</td>
                                 <td>工序码</td>
-                                <%--<td>原始选用资源编码</td>
-                                <td>原始开始时间</td>
-                                <td>指定资源编码</td>--%>
                                 <td>指定时间</td>
-                                <td>处理方法</td>
+                                <td>指定编码</td>
                                 <td style="width: 95px;">异常来源</td>
                             </tr>
                             </thead>
@@ -145,6 +142,17 @@
                     <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="order">
                             <tbody class="uk-text-center">
+                                <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
+                                    <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                    <td id="state">{{x.state}}</td>
+                                    <td id="idOrder">{{x.idOrder}}</td>
+                                    <td id="reportTime">{{x.reportTime}}</td>
+                                    <td id="idTask">{{x.idTask}}</td>
+                                    <td id="appointStartTime">{{x.appointStartTime}}</td>
+                                    <td id="appointResource">{{x.appointResource}}</td>
+                                    <td id="origin">{{x.origin}}</td>
+                                </tr>
                             </tbody>
 
                         </table>
