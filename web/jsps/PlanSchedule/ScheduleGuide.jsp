@@ -263,10 +263,6 @@
                 <label for="add-scheduleDays">当前排程时间长度</label><br/>
                 <input type="text" name="add-scheduleDays" id="add-scheduleDays"
                        class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-t0">开始时间</label><br/>
-                <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-t2">结束时间</label><br/>
-                <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
             </fieldset>
         </form>
         <div class="uk-modal-footer uk-text-right">
