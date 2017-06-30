@@ -68,8 +68,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             myHttpService.post(serviceList.AddOrder, data).then(function successCallback(response) {
                 console.log(response.data);
                 //用强制刷新解决按钮不能连续响应
-                setTimeout('window.location.reload();', 1);
+                setTimeout('window.location.reload();', 0.1);
                 //setTimeout(reload(),3000);
+            }, function errorCallback(response) {
+                alert("添加失败！");
             })
         };
 
@@ -131,8 +133,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
                 console.log(response.status);
                 //强制刷新解决按钮不能连续响应
-                setTimeout('window.location.reload();', 1);
+                setTimeout('window.location.reload();', 0.1);
                 //setTimeout(reload(),3000);
+            }, function errorCallback(response) {
+                alert("删除失败！");
             });
         };
 
@@ -165,7 +169,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var editOrder = function () {
             var rows = document.getElementById("table_value").rows;
             var a = document.getElementsByName("check");
-            var table = document.getElementById("table_value");
 
             for (var i = 0; i < a.length; i++) {
                 if (a[i].checked) {
@@ -199,7 +202,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var t1Val = $("input[name='edit-t1']").val();
             var t2Val = $("input[name='edit-t2']").val();
             var params = {};
-            //params.id = idVal;
+            params.id = operateId;
             params.name = nameVal;
             params.origin = originVal;
             params.priority = priorityVal;
@@ -211,10 +214,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var data = JSON.stringify(params);
             console.log(data);
             $("#edit").hide();
-            myHttpService.post(serviceList.UpdateOrder, data).then(function (response) {
+            myHttpService.post(serviceList.UpdateOrder, data).then(function successCallback(response) {
                 console.log(response.status);
-                setTimeout('window.location.reload();', 1);
+                setTimeout('window.location.reload();', 0.1);
                 //setTimeout(reload(),3000);
+            }, function errorCallback(response) {
+                alert("更新失败！");
             });
         };
 
@@ -246,14 +251,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             return true;
         };
 
-        //表格信息重置
-        $scope.reset = function () {
-            $("input").val('');
-            $("input#add-name").removeClass("uk-form-success");
-            $("input#add-origin").removeClass("uk-form-success");
-            $("input#add-priority").removeClass("uk-form-danger");
-            $("input#add-quantity").removeClass("uk-form-success");
-        }
 
         var checkOrigin = function (origin) {
 
@@ -328,5 +325,15 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("input#add-t2").addClass("uk-form-success");
             return true;
         };
+
+
+        //表格信息重置
+        $scope.reset = function () {
+            $("input").val('');
+            $("input#add-name").removeClass("uk-form-success");
+            $("input#add-origin").removeClass("uk-form-success");
+            $("input#add-priority").removeClass("uk-form-danger");
+            $("input#add-quantity").removeClass("uk-form-success");
+        }
 
     });

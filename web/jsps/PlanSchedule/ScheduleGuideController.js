@@ -13,6 +13,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var operateId;
         var scheduleDays;
+        var name;
+        var rollTime;
         var obj;//上次排程的json字符串
         var curobj = [];//当前排程的json字符串
         var ordId;
@@ -163,60 +165,34 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             var APSConfigs = {};
             //APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
             //APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
-            APSConfigs.t0 = "2017-06-30 10:05:00";
-            APSConfigs.t2 = "2017-07-01 10:05:00";
+            APSConfigs.t0 = "";
+            APSConfigs.t2 = "";
 
             var orders = [];
             console.log("订单");
-            /*for (var i = 0; i < arr.orders.length; i++) {
-             var params = {};
-             params.id = parseInt(arr.orders[i].id);
-             orders.push(params);
-             console.log(orders);
-             }*/
             var params = {};
             params.id = parseInt(arr.id);
             orders.push(params);
 
             var layouts = {};
-            //layouts.id = parseInt(arr.layout.id);
-            layouts.id = 1;
+            layouts.id = 2;
 
             console.log("资源");
             var resourceArr = [];
-            /*for (var i = 0; i < arr.resources.length; i++) {
-             var resources = {};
-             resources.id = parseInt(arr.resources[i].id);
-             resourceArr.push(resources);
-             console.log(resourceArr);
-             }*/
             var resources = {};
-            resources.id = 1;
+            resources.id = 2;
             resourceArr.push(resources);
 
             console.log("工组");
             var groupResourcesArr = [];
-            /* for (var i = 0; i < arr.groups.length; i++) {
-             var groupResources = {};
-             groupResources.id = parseInt(arr.groups[i].id);
-             groupResourcesArr.push(groupResources);
-             console.log(groupResourcesArr);
-             }
-             */
             var groupResources = {};
-            groupResources.id = 1;
+            groupResources.id = 2;
             groupResourcesArr.push(groupResources);
 
             console.log("工位");
             var sitesArr = [];
-            /*for (var i = 0; i < arr.sites.length; i++) {
-                var sites = {};
-                sites.id = parseInt(arr.sites[i].id);
-                sitesArr.push(sites);
-                console.log(sitesArr);
-             }*/
             var sites = {};
-            sites.id = 1;
+            sites.id = 2;
             sitesArr.push(sites);
 
             /*var layouts = {};
@@ -235,9 +211,9 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
              sitesArr.push(sites);*/
 
             var params = {};
-            params.name = arr.name;
+            params.name = name;
             params.scheduleWindow = parseInt(scheduleDays);
-            params.rollTime = 24;
+            params.rollTime = rollTime;
             params.APSConfig = APSConfigs;
             params.layout = layouts;
             params.orders = orders;
@@ -277,6 +253,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
                 //当前排程时间长度（b）
                 scheduleDays = $("input[name='add-scheduleDays']").val();
+                name = $("input[name='add-name']").val();
+                rollTime = $("input[name='add-rollTime']").val();
                 console.log("当前排程时间长度" + scheduleDays);
 
                 //上次排程时间长度（c）
