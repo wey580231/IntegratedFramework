@@ -267,7 +267,7 @@
                     <button class="uk-button my" data-uk-modal="{target:'#choose'}"><a href="">上一页</a></button>
                 </li>
                 <li>
-                    <button class="uk-button my" ng-click="showCurInfo();showLastInfo();"
+                    <button class="uk-button my" ng-click="showCurInfo();"
                             data-uk-modal="{target:'#chooseOrder'}"><a href="">下一页</a></button>
                 </li>
                 <li>
