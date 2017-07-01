@@ -7,7 +7,6 @@ import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +19,6 @@ public class OrdersAction extends SuperAction {
         List list = ordersDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
-        System.out.println(jsonString);
     }
 
     public void findAllByisFinishedAndDate() throws Exception {

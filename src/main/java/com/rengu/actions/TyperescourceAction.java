@@ -26,7 +26,6 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         List list = typerescourceDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
-        System.out.println(jsonString);
     }
 
     public void findAllByUsername() throws Exception {

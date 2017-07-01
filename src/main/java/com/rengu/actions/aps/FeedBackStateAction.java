@@ -40,10 +40,11 @@ public class FeedBackStateAction extends SuperAction {
             RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
 
             if (id.length > 0 && state.length > 0 && message.length > 0 && userconfig != null && userconfig.getRootSnapshotId().length() > 0) {
-
+                MySessionFactory.getSessionFactory().getCurrentSession().close();
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-                session.beginTransaction();
-
+                if (!session.getTransaction().isActive()) {
+                    session.beginTransaction();
+                }
                 Query query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
                 query.setParameter("id", userconfig.getRootSnapshotId());
                 List list = query.list();
@@ -140,6 +141,9 @@ public class FeedBackStateAction extends SuperAction {
                             WebSocketNotification.broadcast("APS计算结果转换出错!");
                         }
                     }
+                } else {
+                    WebSocketNotification.broadcast("无法获取快照节点!");
+                    session.getTransaction().commit();
                 }
             }
         } else {

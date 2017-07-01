@@ -94,6 +94,7 @@ public class Tools {
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
+        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -109,6 +110,7 @@ public class Tools {
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
+        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
