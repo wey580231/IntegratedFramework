@@ -3,7 +3,6 @@ package com.rengu.util;
 import com.rengu.entity.*;
 import org.hibernate.Session;
 
-import javax.tools.Tool;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -143,7 +142,7 @@ public class ApsTools {
     //获取排程结果
     public void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from aps_plan";
-        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
+        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         for (Object object : list) {
 //        for (int i = 0; i < 5; i++) {

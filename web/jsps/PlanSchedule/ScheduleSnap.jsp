@@ -52,14 +52,7 @@
     .nav-ml li:last-child::before {
         height: 30px;
     }
-    .bomspan {
-        font-size: 16px;
-        /*background: url("../../images/bom_img/bomqie.png");*/
-    }
-    .bomdiv {
-        background: url("images/bom_img/bomqie.png") no-repeat;
-        background-size: 100% 100%;
-    }
+
     /*
         BOM树左侧的线条（竖线）
     */
@@ -108,15 +101,17 @@
         position: absolute;
         visibility: hidden;
         top: 0;
-        background-color: #FFFFFF;
-        padding: 2px;
+        background-color: #F0FFFF;
+        padding: -6px;
+        margin: 1px 3px;
     }
+
     #rMenu ul li {
-        margin: 1px 0;
-        padding: 0 2px;
         cursor: pointer;
-        list-style: none outside none;
-        background-color: #FFFFFF;
+        list-style: none;
+        background-color: #F0FFFF;
+        margin-left: -10px;
+        padding: 2px;
     }
     <%--.ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
     .ztree li span.button.diy02_ico_open,.ztree li span.button.diy02_ico_close{background:url("../../images/bom_img/2.png") no-repeat;}
@@ -124,24 +119,30 @@
     .ztree li span.button.diy03_ico_docu{background:url("../../images/bom_img/3.png") no-repeat;}--%>
     /*第一个图标*/
     .ztree li span.button.switch.level0 {
-        background: url("images/bom_img/1.png") no-repeat;
-        position:relative;
-        margin-top:14px;
-        margin-left:5px;
+        background: url("../../images/bom_img/1.png") no-repeat;
+        position: relative;
+        margin-top: 14px;
+        margin-left: 5px;
     }
-    /*第二个图标*/
+
+    /*
+    第二个图标
+    */
     .ztree li span.button.switch.level1 {
-        background: url("images/bom_img/2.png") no-repeat;
-        position:relative;
-        margin-top:15px;
-        margin-left:10px;
+        background: url("../../images/bom_img/2.png") no-repeat;
+        position: relative;
+        margin-top: 15px;
+        margin-left: 10px;
     }
-    /*第三个图标*/
+
+    /*
+    第三个图标
+    */
     .ztree li span.button.switch.level2 {
-        background: url("images/bom_img/3.png") no-repeat;
-        position:relative;
-        margin-top:15px;
-        margin-left:12px;
+        background: url("../../images/bom_img/3.png") no-repeat;
+        position: relative;
+        margin-top: 15px;
+        margin-left: 12px;
     }
     /*
            BOM树左侧的线条（竖线）
@@ -308,7 +309,7 @@
             </div>
         </div>-->
         <div class="uk-panel uk-panel-box uk-overflow-container"
-             style="height: 82%;background-color: #e2ebf2;">
+             style="height: 90%;background-color: #e2ebf2;">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
         <div id="rMenu">
@@ -325,12 +326,12 @@
         <div style="margin-top: 15px;margin-left: -35px;height: 96%;">
 
             <!--tab-->
-            <div style="width: 100%;border: 0px;margin-top: -15px;">
+            <div style="width: 100%;border: 0px;margin-top: -15px;height: 100%;">
 
-                <div id="tabs-2" style="width: 100%;">
+                <div id="tabs-2" style="width: 100%;height: 100%;">
 
                     <!--表格-->
-                    <div class="uk-overflow-container" style="height: 96%;">
+                    <div class="uk-overflow-container" style="height: 100%;">
                         <div class="fixtable-head">
                             <table class="uk-table uk-table-striped uk-table-hover ">
                                 <thead class="uk-text-left">
@@ -354,7 +355,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="fixtable-body" style="height: 72%;width: 77.5%;top: 120px;">
+                        <div class="fixtable-body" style="height: 72%;width: 77.5%;top: 125px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
 
                                 <tbody class="uk-text-center">

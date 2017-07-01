@@ -13,16 +13,21 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var operateId;
         var scheduleDays;
+        var name;
+        var rollTime;
         var obj;//上次排程的json字符串
-        var curobj;//当前排程的json字符串
+        var curobj = [];//当前排程的json字符串
         var ordId;
         var arr;
         var array = [];
-        /*var ordId;
-         var resId;
-         var resGroId;
-         var siteId;
-         var layId;*/
+
+
+
+        myHttpService.get(serviceList.ListSchedule).then(function (response) {
+            console.log(response.data);
+            $scope.arr = response.data;
+        });
+
 
         //重新加载页面，取消选中状态
         var reload = function () {
@@ -107,7 +112,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
          $scope.reHide = function () {
          $("#chooseResource").hide()
          }
-
          //勾选资源工组后，记录所选id
          $scope.checkGrReId = function () {
          resGroId = operateId;
@@ -115,7 +119,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
          $scope.grReHide = function () {
          $("#chooseGroupResource").hide()
          }
-
          //勾选资源工位后，记录所选id
          $scope.checkSiId = function () {
          siteId = operateId;
@@ -129,92 +132,89 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             alert("开始");
 
             //未完成的记录
-            array.push(obj);
-            array.push(curobj);
+            //array.push(obj);
+            for (var i = 0; i < curobj.length; i++) {
+                array.push(curobj[i]);
+            }
 
             console.log("两部分未完成的记录");
             console.log(array);
             console.log(array[0]);
             console.log(array.length);
 
+            /*for (var i = 0; i < array.length; i++) {
+             for (var j = 0; j < array[i].orders.length; j++) {
+             if (array[i].orders[j].id == operateId) {
+             arr = array[i];
+             console.log("$$$$$$$$");
+             console.log(arr);
+             }
+             }
+             break;
+             }*/
+
             for (var i = 0; i < array.length; i++) {
-                for (var j = 0; j < array[i].orders.length; j++) {
-                    if (array[i].orders[j].id == operateId) {
-                        arr = array[i];
-                        console.log("$$$$$$$$");
-                        console.log(arr);
-                    }
+                if (array[i].id == operateId) {
+                    arr = array[i];
+                    console.log("$$$$$$$$");
+                    console.log(arr);
                 }
                 break;
             }
 
-            var APSconfigs = {};
-            APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
-            APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
+            var APSConfigs = {};
+            //APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
+            //APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
+            APSConfigs.t0 = "";
+            APSConfigs.t2 = "";
 
             var orders = [];
             console.log("订单");
-            for (var i = 0; i < arr.orders.length; i++) {
-                var params = {};
-                params.id = parseInt(arr.orders[i].id);
-                orders.push(params);
-                console.log(orders);
-            }
+            var params = {};
+            params.id = parseInt(arr.id);
+            orders.push(params);
 
             var layouts = {};
-            layouts.id = parseInt(arr.layout.id);
+            layouts.id = 2;
 
             console.log("资源");
             var resourceArr = [];
-            for (var i = 0; i < arr.resources.length; i++) {
-                var resources = {};
-                resources.id = parseInt(arr.resources[i].id);
-                resourceArr.push(resources);
-                console.log(resourceArr);
-            }
+            var resources = {};
+            resources.id = 2;
+            resourceArr.push(resources);
 
             console.log("工组");
             var groupResourcesArr = [];
-            for (var i = 0; i < arr.groups.length; i++) {
-                var groupResources = {};
-                groupResources.id = parseInt(arr.groups[i].id);
-                groupResourcesArr.push(groupResources);
-                console.log(groupResourcesArr);
-            }
+            var groupResources = {};
+            groupResources.id = 2;
+            groupResourcesArr.push(groupResources);
 
             console.log("工位");
             var sitesArr = [];
-            for (var i = 0; i < arr.sites.length; i++) {
-                var sites = {};
-                sites.id = parseInt(arr.sites[i].id);
-                sitesArr.push(sites);
-                console.log(sitesArr);
-            }
-
+            var sites = {};
+            sites.id = 2;
+            sitesArr.push(sites);
 
             /*var layouts = {};
              layouts.id = layId;
-
              var resourceArr = [];
              var resources = {};
              resources.id = parseInt(resId);
              resourceArr.push(resources);
-
              var groupResourcesArr = [];
              var groupResources = {};
              groupResources.id = parseInt(resGroId);
              groupResourcesArr.push(groupResources);
-
              var sitesArr = []
              var sites = {};
              sites.id = parseInt(siteId);
              sitesArr.push(sites);*/
 
             var params = {};
-            params.name = arr.name;
+            params.name = name;
             params.scheduleWindow = parseInt(scheduleDays);
-            params.rollTime = arr.scheduleWindow;
-            params.APSconfig = APSconfigs;
+            params.rollTime = parseInt(rollTime);
+            params.APSConfig = APSConfigs;
             params.layout = layouts;
             params.orders = orders;
             params.resources = resourceArr;
@@ -224,7 +224,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             console.log(data);
             $("#schedule").hide();
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
-                console.log("排程返回的数据:" + response.data);
+                console.log("排程返回的数据:");
                 console.log(response.data);
                 alert("请求成功，排程成功");
             }, function errorCallback(response) {
@@ -253,6 +253,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
                 //当前排程时间长度（b）
                 scheduleDays = $("input[name='add-scheduleDays']").val();
+                name = $("input[name='add-name']").val();
+                rollTime = $("input[name='add-rollTime']").val();
                 console.log("当前排程时间长度" + scheduleDays);
 
                 //上次排程时间长度（c）
@@ -333,7 +335,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 console.log(obj.orders[0].finished);
                 console.log(obj.orders[1].finished);
                 console.log(obj.orders.length);
-                var lastarray = [];
+
                 for (var i = 0; i < obj.orders.length; i++) {
                     if (obj.orders[i].finished == false) {
                         var lastinfo = {};
@@ -344,8 +346,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                         console.log("完成了！");
                     }
                 }
-                console.log(lastarray);
                 $scope.lastarray = lastarray;
+                console.log(lastarray);
             }, function errorCallback(response) {
                 alert("请求错误！");
             })
@@ -377,9 +379,22 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 for (var i = 0; i < response.data.length; i++) {
                     curobj.push(response.data[i]);
                 }
-                $scope.curinfo = response.data;
+                $scope.curinfo = curobj;
+                console.log(curobj);
             });
         };
+
+        /*$scope.showInfo = function () {
+         for (var i = 0; i < curobj.length; i++) {
+         if (curobj[i].id == lastarray[0].id) {
+         $scope.lastarray = lastarray;
+         break;
+         } else {
+         $scope.lastarray = lastarray;
+         $scope.curinfo = curobj;
+         }
+         }
+         }*/
 
         $scope.choosedOrder = function () {
             var rows = document.getElementById("orders").rows;
@@ -404,5 +419,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 }
             }
             $scope.form = arrchoosed;
+            console.log(arrchoosed);
         };
     });

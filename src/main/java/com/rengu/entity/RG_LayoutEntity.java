@@ -1,11 +1,11 @@
 package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
@@ -13,6 +13,7 @@ public class RG_LayoutEntity {
 
     private String id;
     private String name;
+    @JsonIgnore
     private Set<RG_LayoutDetailEntity> details = new HashSet<RG_LayoutDetailEntity>();
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     private Set<RG_ScheduleEntity> schedules;
