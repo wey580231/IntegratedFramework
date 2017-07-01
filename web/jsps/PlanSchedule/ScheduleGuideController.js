@@ -290,6 +290,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                         dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
                         eventSources: [
                             {
+                                // url: 'http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action',
                                 url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
                                 type: 'POST',
                                 data: {

@@ -55,13 +55,15 @@ public class ScheduleAction extends SuperAction {
 
                 if (APS_ConfigNodeKey.equals("t0")) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date statTime = sdf.parse(APS_ConfigNodeValue);
-                    rg_scheduleEntity.setApsStartTime(statTime);
+//                    Date statTime = sdf.parse(APS_ConfigNodeValue);
+//                    rg_scheduleEntity.setApsStartTime(statTime);
+                    rg_scheduleEntity.setApsStartTime(new Date());
                 }
                 if (APS_ConfigNodeKey.equals("t2")) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date endTime = sdf.parse(APS_ConfigNodeValue);
-                    rg_scheduleEntity.setApsEndTime(endTime);
+//                    Date endTime = sdf.parse(APS_ConfigNodeValue);
+//                    rg_scheduleEntity.setApsEndTime(endTime);
+                    rg_scheduleEntity.setApsStartTime(new Date());
                 }
                 if (APS_ConfigNodeKey.equals("objective")) {
                     rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);
@@ -81,7 +83,6 @@ public class ScheduleAction extends SuperAction {
 
             //解析Layout数据
             JsonNode layoutNodes = rootNode.get("layout");
-            System.out.println(layoutNodes.isArray());
             if (layoutNodes.size() == 1) {
                 RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").toString());
                 rg_scheduleEntity.setLayout(layout);
@@ -94,14 +95,13 @@ public class ScheduleAction extends SuperAction {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").toString());
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
-                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
+//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
                 }
             }
             rg_scheduleEntity.setOrders(rg_orderEntitySet);
 
             //解析resources数据
             JsonNode resourcesNodes = rootNode.get("resources");
-            System.out.println(resourcesNodes.isArray());
             Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<RG_ResourceEntity>();
             for (JsonNode tempNode : resourcesNodes) {
                 RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, tempNode.get("id").toString());
@@ -195,7 +195,6 @@ public class ScheduleAction extends SuperAction {
         List list = scheduleDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
-        System.out.println(jsonString);
     }
 
     private void printError() {
