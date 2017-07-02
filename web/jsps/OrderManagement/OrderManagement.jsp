@@ -258,7 +258,7 @@ position: absolute;
 
 
                 <!--底部页码-->
-                <div style="margin-top: -25px;">
+                <!--<div style="margin-top: -25px;">
                     <ul class="uk-pagination" <%--style="margin-top: 7%;"--%> data-uk-pagination="{currentPage:50}">
                         <li>
                             <button class="uk-button"
@@ -284,7 +284,7 @@ position: absolute;
                             </button>
                         </li>
                     </ul>
-                </div>
+                </div>-->
 
             </div>
 
@@ -292,7 +292,7 @@ position: absolute;
     </div>
 
 
-    <div class="uk-clearfix" style="/*margin-top: -4%;*/margin-top: -45px;">
+    <!--<div class="uk-clearfix" style="/*margin-top: -4%;*/margin-top: -45px;">
         <button class="uk-button uk-float-right " id="create-order"
                 style="background-image: url('../../images/kuaijie.png');background-size: 100% 100%;"
                 title="快捷菜单">
@@ -304,7 +304,9 @@ position: absolute;
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
+
+
 </div>
 
 <!--填写新增订单信息-->
