@@ -137,5 +137,7 @@ angular.module("IntegratedFramework", [
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
 
+
+        service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
         return service;
     });

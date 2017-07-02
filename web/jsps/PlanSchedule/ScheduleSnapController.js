@@ -24,7 +24,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     enable: false
                 },
                 callback: {
-                    onRightClick: OnRightClick
+                    onRightClick: OnRightClick,
+                    onDblClick: zTreeOnClick
                 },
                 data: {
                     keep: {
@@ -43,6 +44,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             console.log("*****" + response.status);
             console.log(response.data);
             var dataArr = response.data;
+            $scope.dataArr = response.data;
+
 
             for (var i = 0; i < dataArr.length; i++) {
                 console.log("根节点");
@@ -81,8 +84,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             console.log(dataArr);
             //zNodes = data;
             zNodes = dataArr;
-            console.log("&&&&&&&&&" + zNodes);
-
+            console.log("&&&&&&&&&");
+            console.log(zNodes);
             //右键操作
             /*function OnRightClick(event, treeId, treeNode) {
              if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
@@ -95,11 +98,13 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
              }*/
 
             function OnRightClick(event, treeId, treeNode) {
-                var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
-                var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
+                var x = event.screenX;
+                var y = event.screenY;
+                /*var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
+                 var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));*/
                 if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
-                    showRMenu("root", x, y);
+                    hideRMenu("root", x, y);
                 } else if (treeNode && !treeNode.noR) {
                     zTree.selectNode(treeNode);
                     showRMenu("node", x, y);
@@ -126,6 +131,23 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 }
             }
 
+            function zTreeOnClick(event, treeId, treeNode) {
+                if (treeNode.isParent) {
+                    return false;
+                } else {
+                    alert("aaaa");
+                    var id = zTree.getSelectedNodes()[0].id;
+                    var params = {};
+                    params.id = id;
+                    var data = JSON.stringify(params);
+                    myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
+                        $scope.plan = response.data;
+                        console.log(response.data);
+                    });
+                    return true;
+                }
+            }
+
             var addCount = 1;
             //增加节点
             $scope.addTreeNode = function () {
@@ -134,17 +156,20 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 if (zTree.getSelectedNodes()[0]) {
                     console.log("@@@@@@");
                     console.log(zTree.getSelectedNodes());
-                    console.log(zTree.getSelectedNodes()[0]);
+                    console.log(zTree.getSelectedNodes()[0]);//当前右击的节点（包含自己的）子节点
+                    console.log(zTree.getSelectedNodes()[0].id);//当前点击节点的id值
                     zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
                 } else {
                     zTree.addNodes(null, newNode);
                 }
                 getChildNodes();
+                alert("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
             };
 
             //删除节点
             $scope.removeTreeNode = function () {
                 hideRMenu();
+                alert("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
                 var nodes = zTree.getSelectedNodes();
                 if (nodes && nodes.length > 0) {
                     if (nodes[0].children && nodes[0].children.length > 0) {
@@ -161,6 +186,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             //重命名节点
             $scope.renameTreeNode = function () {
                 hideRMenu();
+                alert("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
                 var nodes = zTree.getSelectedNodes();
                 zTree.editName(nodes[0]);
                 var newName = nodes[0].name;
@@ -168,8 +194,12 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     alert("节点不能为空！");
                     return false;
                 }
+                console.log(zTree.getSelectedNodes()[0]);
             };
 
+
+            //nextSibling是当前节点的下一个同级节点，即<li id="b">bbb</li>
+            //alert(e.firstChild.nextSibling.getAttribute('id'));
             var getChildNodes = function () {
                 var childNodes = zTree.transformToArray(zTree.getSelectedNodes()[0]);
                 console.log(childNodes);
@@ -178,7 +208,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     nodes[i] = childNodes[i].id;
                 }
                 console.log(nodes);
-
                 return nodes.join(",");
             };
 
