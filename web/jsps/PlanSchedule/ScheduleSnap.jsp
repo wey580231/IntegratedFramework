@@ -127,13 +127,30 @@
         padding: 2px;
     }
 
+    #lMenu {
+        position: absolute;
+        visibility: hidden;
+        top: 0;
+        background-color: #F0FFFF;
+        padding: -6px;
+        margin: 1px 3px;
+    }
+
+    #lMenu ul li {
+        cursor: pointer;
+        list-style: none;
+        background-color: #F0FFFF;
+        margin-left: -10px;
+        padding: 2px;
+    }
+
     <%--.ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
     .ztree li span.button.diy02_ico_open,.ztree li span.button.diy02_ico_close{background:url("../../images/bom_img/2.png") no-repeat;}
     .ztree li span.button.diy02_ico_docu{background:url("../../images/bom_img/2.png") no-repeat;}
     .ztree li span.button.diy03_ico_docu{background:url("../../images/bom_img/3.png") no-repeat;}--%>
     /*第一个图标*/
     .ztree li span.button.switch.level0 {
-        background: url("../../images/bom_img/1.png") no-repeat;
+        background: url("${pageContext.request.contextPath}/images/bom_img/1.png") no-repeat;
         position: relative;
         margin-top: 14px;
         margin-left: 5px;
@@ -143,7 +160,7 @@
     第二个图标
     */
     .ztree li span.button.switch.level1 {
-        background: url("../../images/bom_img/2.png") no-repeat;
+        background: url("${pageContext.request.contextPath}/images/bom_img/2.png") no-repeat;
         position: relative;
         margin-top: 15px;
         margin-left: 10px;
@@ -153,7 +170,7 @@
     第三个图标
     */
     .ztree li span.button.switch.level2 {
-        background: url("../../images/bom_img/3.png") no-repeat;
+        background: url("${pageContext.request.contextPath}/images/bom_img/3.png") no-repeat;
         position: relative;
         margin-top: 15px;
         margin-left: 12px;
@@ -214,10 +231,7 @@
         height: 30px;
     }
 
-    #choose {
-        margin-top: -34px;
-        margin-left: 340px;
-    }
+
 </style>
 
 
@@ -361,8 +375,10 @@
 
         <div id="lMenu">
             <ul>
-                <li id="l_add" ng-click="send()">下发MES</li>
-                <li id="l_del" ng-click="show3D()">查看3D状态</li>
+                <li id="l_mes" ng-click="send()">下发MES</li>
+                <li id="l_3D" ng-click="show3D()">查看3D状态</li>
+                <li id="l_del" ng-click="removeTreeNode()">删除</li>
+                <li id="l_re" ng-click="renameTreeNode()">重命名</li>
             </ul>
         </div>
 
@@ -385,7 +401,7 @@
                                 <tr style="background-color: #e1eaf1;">
                                     <td>
                                         <div style="border: 1px solid lightgray;margin-left: 25%;width: 30px;height: 15px;background-color: #cddae3;">
-                                            <img src="../../images/bom_img/select.png"
+                                            <img src="${pageContext.request.contextPath}/images/bom_img/select.png"
                                                  style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                         </div>
 
@@ -514,8 +530,5 @@
         $(this).parent().find(".nav-three").slideToggle(500);
         $(this).children("i").toggleClass("unfold");
     });
-    /*$(".item-3").click(function () {
-     $(this).parent().find(".nav-four").slideToggle(500);
-     $(this).children("i").toggleClass("unfold");
-     });*/
+
 </script>

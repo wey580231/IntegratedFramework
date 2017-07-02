@@ -87,7 +87,7 @@
                                              style="width: 15px;width: 12px;margin-left: 16px;margin-top: 3px;">
                                     </div>
                                 </td>
-                                <td>工组编码</td>
+                                <!--<td>工组编码</td>-->
                                 <td>工组名称</td>
                                 <td>初始位置编码</td>
                                 <td>可工作位置</td>
@@ -102,7 +102,7 @@
                             <tr ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                <td id="id">{{x.id}}</td>
+                                <td id="id" style="display:none">{{x.id}}</td>
                                 <td id="name">{{x.name}}</td>
                                 <td id="idSite0">{{x.idSite0}}</td>
                                 <td id="state">{{x.state}}</td>
@@ -158,11 +158,9 @@
 <div class="uk-modal uk-overflow-container" id="add">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="资源分组信息">
+        <div title="资源分组信息">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
-                    <label for="add-id">工组编码</label> <br/>
-                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-name">工组名称</label><br/>
                     <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all"><br/>
                     <label for="add-idSite0">初始位置编码</label><br/>
@@ -185,12 +183,9 @@
 <div class="uk-modal uk-overflow-container" id="edit">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="资源分组信息">
+        <div title="资源分组信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
-                    <label for="edit-id">工组编码</label> <br/>
-                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all"
-                           value="{{x.id}}"><br/>
                     <label for="edit-name">工组名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all"
                            value="{{x.name}}"><br/>

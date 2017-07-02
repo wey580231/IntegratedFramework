@@ -88,18 +88,44 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             })
         };
 
+        var isCheck = function () {
+            var count = 1;
+            var a = document.getElementsByName("check");
+            for (var i = 0; i < a.length; i++) {
+                console.log(a[i].checked);
+                if (a[i].checked) {
+                    count++;
+                }
+            }
+            if (count > 1) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.edit = function () {
+            console.log(check());
+            if (isCheck()) {
+                //$('#edit').modal('show');
+                editAssisantProcess();
+            } else {
+                alert("请选择一条需要修改条目！");
+                $("input").val('');
+            }
+
+        };
+
         //修改工序资源信息
         $scope.editAssisantProcess = function () {
             var rows = document.getElementById("table_value").rows;
             var a = document.getElementsByName("check");
-            var table = document.getElementById("table_value");
-
             for (var i = 0; i < a.length; i++) {
                 if (a[i].checked) {
                     var row = a[i].parentElement.parentElement.rowIndex;
                     console.log(row);
                     var params = {};
-                    var arr = new Array();
+                    var arr = [];
                     params.id = rows[row].cells[1].innerHTML;
                     params.grp = rows[row].cells[2].innerHTML;
                     params.typeSite = rows[row].cells[3].innerHTML;
@@ -114,7 +140,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             }
         };
         $scope.update = function () {
-            var idVal = $("input[name='edit-id']").val();
+            //var idVal = $("input[name='edit-id']").val();
             var grpVal = $("input[name='edit-grp']").val();
             var typeSiteVal = $("input[name='edit-TypeSite']").val();
             var idSiteVal = $("input[name='edit-IdSite']").val();
@@ -122,7 +148,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             var maxResourceVal = $("input[name='edit-maxResource']").val();
             var weightParallelVal = $("input[name='edit-weightParallel']").val();
             var params = {};
-            params.id = idVal;
+            params.id = operateId;
             params.grp = grpVal;
             params.typeSite = typeSiteVal;
             params.idSite = idSiteVal;
@@ -189,4 +215,4 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         }
 
 
-    })
+    });

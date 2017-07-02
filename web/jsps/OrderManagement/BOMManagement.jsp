@@ -146,7 +146,7 @@
     .ztree li span.button.diy03_ico_docu{background:url("../../images/bom_img/3.png") no-repeat;}--%>
     /*第一个图标*/
     .ztree li span.button.switch.level0 {
-        background: url("../../images/bom_img/1.png") no-repeat;
+        background: url("${pageContext.request.contextPath}/images/bom_img/1.png") no-repeat;
         position: relative;
         margin-top: 14px;
         margin-left: 5px;
@@ -156,7 +156,7 @@
     第二个图标
     */
     .ztree li span.button.switch.level1 {
-        background: url("../../images/bom_img/2.png") no-repeat;
+        background: url("${pageContext.request.contextPath}/images/bom_img/2.png") no-repeat;
         position: relative;
         margin-top: 15px;
         margin-left: 10px;
@@ -166,7 +166,7 @@
     第三个图标
     */
     .ztree li span.button.switch.level2 {
-        background: url("../../images/bom_img/3.png") no-repeat;
+        background: url("${pageContext.request.contextPath}/images/bom_img/3.png") no-repeat;
         position: relative;
         margin-top: 15px;
         margin-left: 12px;
@@ -282,8 +282,7 @@
 
                     <div class="uk-form-row" style="margin-top: 6px;">
                         <select id="testBOM" class="uk-grid"
-                                style="width: 130px;height: 27px;" <%--onChange="showChoose(this.options[this.options.selectedIndex].value)"--%>
-                                ng-click="showTree()">
+                                style="width: 130px;height: 27px;" <%--onChange="showChoose(this.options[this.options.selectedIndex].value)"--%>>
                             <option value="x.name" ng-repeat="x in rootdata" selected>{{x.name}}</option>
                         </select>
                     </div>
@@ -369,28 +368,28 @@
                         <div class="fixtable-body" style="/*height: 69%;*/height: 39%;width: 76%;top: 300px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                                 <tbody class="uk-text-center">
-                                    <%--<tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
-                                    <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                <tr id="first" ng-repeat="x in process>
+                                    <td><input id=" check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                     <td id="initTime">{{x.initTime}}</td>
                                     <td id="postTime">{{x.postTime}}</td>
                                     <td id="checkTime">{{x.checkTime}}</td>
-                                    <td id="delta">{{x.delta}}</td>
+                                <td id="delta">{{x.typeShift}}</td>
                                     <td id="quantity">{{x.quantity}}</td>
                                     <td id="modTimeBatch">{{x.modTimeBatch}}</td>
-                                </tr>--%>
+                                </tr>
 
                                     <!--测试-->
-                                    <tr>
-                                        <td><input type="checkbox" onclick="changeColor(this)"></td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>未知</td>
-                                        <td>100</td>
-                                        <td>50</td>
+                                <%--<tr>
+                                    <td><input type="checkbox" onclick="changeColor(this)"></td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>未知</td>
+                                    <td>100</td>
+                                    <td>50</td>
 
-                                    </tr>
+                                </tr>--%>
                                 </tbody>
 
                             </table>

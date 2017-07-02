@@ -37,7 +37,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             $("#add").hide();
             myHttpService.post(serviceList.AddShift, data).then(function successCallback(response) {
                 alert(response.status);
-                setTimeout('window.location.reload();',1);
+                setTimeout('window.location.reload();', 0.1);
             })
         };
 
@@ -75,23 +75,51 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             console.log(data);
             myHttpService.delete(serviceList.DeleteShift, data).then(function successCallback(response) {
                 alert(response.status);
-                setTimeout('window.location.reload();',1);
+                setTimeout('window.location.reload();', 0.1);
             });
 
-        }
+        };
+
+
+        var isCheck = function () {
+            var count = 1;
+            var a = document.getElementsByName("check");
+            for (var i = 0; i < a.length; i++) {
+                console.log(a[i].checked);
+                if (a[i].checked) {
+                    count++;
+                }
+            }
+            if (count > 1) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.edit = function () {
+            console.log(check());
+            if (isCheck()) {
+                //$('#edit').modal('show');
+                editShift();
+            } else {
+                alert("请选择一条需要修改条目！");
+                $("input").val('');
+            }
+
+        };
 
         //修改班次信息
         $scope.editShift = function () {
             var rows = document.getElementById("table_value").rows;
             var a = document.getElementsByName("check");
-            var table = document.getElementById("table_value");
 
             for (var i = 0; i < a.length; i++) {
                 if (a[i].checked) {
                     var row = a[i].parentElement.parentElement.rowIndex;
                     console.log(row);
                     var params = {};
-                    var arr = new Array();
+                    var arr = [];
                     params.id = rows[row].cells[1].innerHTML;
                     params.name = rows[row].cells[2].innerHTML;
                     params.type = rows[row].cells[3].innerHTML;
@@ -104,13 +132,13 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
         };
         $scope.update = function () {
-            var idVal = $("input[name='edit-id']").val();
+            //var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
             var typeVal = $("input[name='edit-type']").val();
             var extraVal = $("input[name='edit-extra']").val();
             var slotVal = $("input[name='edit-Slot']").val();
             var params = {};
-            params.id = idVal;
+            params.id = operateId;
             params.name = nameVal;
             params.type = typeVal;
             params.extra = extraVal;
@@ -120,7 +148,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateShift, data).then(function (response) {
                 console.log(response.status);
-                setTimeout('window.location.reload();',1);
+                setTimeout('window.location.reload();', 0.1);
             })
 
         };
@@ -175,4 +203,4 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             $("input#add-name").removeClass("uk-form-success");
         }
 
-    })
+    });

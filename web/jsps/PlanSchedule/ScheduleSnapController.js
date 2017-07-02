@@ -40,7 +40,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             };
             var zNodes = [];
 
-
             console.log("*****" + response.status);
             console.log(response.data);
             var dataArr = response.data;
@@ -105,16 +104,28 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
                     hideRMenu("root", x, y);
-                } else if (treeNode && !treeNode.noR) {
+                    hideLMenu("root", x, y);
+                } else if (treeNode.isParent) {
                     zTree.selectNode(treeNode);
+                    hideLMenu("node", x, y);
                     showRMenu("node", x, y);
+                } else {
+                    zTree.selectNode(treeNode);
+                    hideRMenu("node", x, y);
+                    showLMenu("node", x, y);
                 }
             }
 
             //显示右键操作
             function showRMenu(type, x, y) {
                 $("#rMenu").show();
-                rMenu.css({"top": (y - 70) + "px", "left": (x - 220) + "px", "visibility": "visible"});
+                rMenu.css({"top": y + "px", "left": (x - 220) + "px", "visibility": "visible"});
+                $("#container").bind("mousedown", onBodyMouseDown);
+            }
+
+            function showLMenu(type, x, y) {
+                $("#lMenu").show();
+                lMenu.css({"top": y + "px", "left": (x - 220) + "px", "visibility": "visible"});
                 $("#container").bind("mousedown", onBodyMouseDown);
             }
 
@@ -124,10 +135,16 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 $("#container").unbind("mousedown", onBodyMouseDown);
             }
 
+            function hideLMenu() {
+                if (lMenu) lMenu.css({"visibility": "hidden"});
+                $("#container").unbind("mousedown", onBodyMouseDown);
+            }
+
             //鼠标按下操作
             function onBodyMouseDown(event) {
-                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
+                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0 || event.target.id == "lMenu")) {
                     rMenu.css({"visibility": "hidden"});
+                    lMenu.css({"visibility": "hidden"});
                 }
             }
 
@@ -135,7 +152,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 if (treeNode.isParent) {
                     return false;
                 } else {
-                    alert("aaaa");
+                    //alert("aaaa");
                     var id = zTree.getSelectedNodes()[0].id;
                     var params = {};
                     params.id = id;
@@ -152,6 +169,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             //增加节点
             $scope.addTreeNode = function () {
                 hideRMenu();
+                hideLMenu();
                 var newNode = {name: "增加" + (addCount++)};
                 if (zTree.getSelectedNodes()[0]) {
                     console.log("@@@@@@");
@@ -163,13 +181,14 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     zTree.addNodes(null, newNode);
                 }
                 getChildNodes();
-                alert("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
+                console.log("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
             };
 
             //删除节点
             $scope.removeTreeNode = function () {
                 hideRMenu();
-                alert("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
+                hideLMenu();
+                console.log("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
                 var nodes = zTree.getSelectedNodes();
                 if (nodes && nodes.length > 0) {
                     if (nodes[0].children && nodes[0].children.length > 0) {
@@ -186,7 +205,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             //重命名节点
             $scope.renameTreeNode = function () {
                 hideRMenu();
-                alert("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
+                hideLMenu();
+                console.log("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
                 var nodes = zTree.getSelectedNodes();
                 zTree.editName(nodes[0]);
                 var newName = nodes[0].name;
@@ -211,13 +231,45 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 return nodes.join(",");
             };
 
-            var zTree, rMenu;
+            var zTree, rMenu, lMenu;
             //初始化BOM树
             $(document).ready(function () {
                 $.fn.zTree.init($("#treeDemo"), setting, zNodes);
                 zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 rMenu = $("#rMenu");
+                lMenu = $("#lMenu");
             });
+
+            $scope.send = function (treeNode) {
+                changesendColor(treeNode);
+            };
+
+            $scope.show3D = function (treeNode) {
+                changeshow3DColor(treeNode);
+            };
+
+            function changesendColor(obj) {
+                var f = obj.checked;
+                var chkColor = "#c1edfa"; //选中后颜色
+                //var back = obj.parentElement.parentElement.style.backgroundColor;  //偶数行取消选中后的颜色
+                var jiColor = "#FFFFFF";
+                if (f)
+                    obj.parentElement.parentElement.style.backgroundColor = chkColor;
+                else
+                    obj.parentElement.parentElement.style.backgroundColor = jiColor;
+            }
+
+            function changeshow3DColor(obj) {
+                var f = obj.checked;
+                var chkColor = "#c1edfa"; //选中后颜色
+                //var back = obj.parentElement.parentElement.style.backgroundColor;  //偶数行取消选中后的颜色
+                var jiColor = "#FFFFFF";
+                if (f)
+                    obj.parentElement.parentElement.style.backgroundColor = chkColor;
+                else
+                    obj.parentElement.parentElement.style.backgroundColor = jiColor;
+            }
+
         });
 
         /*var zNodes = [

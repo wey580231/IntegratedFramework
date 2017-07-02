@@ -106,7 +106,7 @@
                             <tr ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                <%--<td id="id">{{x.id}}</td>--%>
+                                <td id="id" style="display:none">{{x.id}}</td>
                                 <td id="grp">{{x.grp}}</td>
                                 <td id="TypeSite">{{ x.typeSite}}</td>
                                 <td id="IdSite">{{x.idSite}}</td>
