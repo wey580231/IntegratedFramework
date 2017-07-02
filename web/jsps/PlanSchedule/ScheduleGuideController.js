@@ -288,6 +288,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             });
             curobj.splice(0, curobj.length);
             console.log("222" + curobj);
+            setTimeout('window.location.reload();', 0.1);
         };
 
         //表格信息重置
