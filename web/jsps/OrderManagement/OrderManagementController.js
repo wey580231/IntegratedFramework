@@ -227,7 +227,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateOrder, data).then(function successCallback(response) {
                 console.log(response.status);
-                //setTimeout('window.location.reload();', 0.1);
+                setTimeout('window.location.reload();', 0.1);
                 //setTimeout(reload(),3000);
             }, function errorCallback(response) {
                 alert("更新失败！");
