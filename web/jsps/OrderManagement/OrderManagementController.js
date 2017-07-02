@@ -14,7 +14,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var operateId;
         var name;
-        var date;
+
         //加载页面时数据显示
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             console.log(response.data);
@@ -36,8 +36,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("input").val('');
             $("input#add-name").removeClass("uk-form-success");
             $("input#add-origin").removeClass("uk-form-success");
-            $("input#add-priority").removeClass("uk-form-danger");
+            $("input#add-priority").removeClass("uk-form-success");
             $("input#add-quantity").removeClass("uk-form-success");
+            $("input#add-name").removeClass("uk-form-danger");
+            $("input#add-origin").removeClass("uk-form-danger");
+            $("input#add-priority").removeClass("uk-form-danger");
+            $("input#add-quantity").removeClass("uk-form-danger");
         });
 
         //新增订单
@@ -117,12 +121,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
              }, function errorCallback(response) {
              alert("请求失败！");
              });*/
+            console.log("选中的要删除的" + operateId);
             var params = {};
             var idVal = operateId;
             params.id = idVal;
             params.name = "";
             params.origin = "";
-            // params.idProduct = parseInt(idProductVal);
             params.quantity = "";
             params.priority = "";
             params.t1 = "";
@@ -140,29 +144,33 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             });
         };
 
-        $('#editButton').click(function () {
-            var a = document.getElementsByName("check");
+        var isCheck = function () {
             var count = 1;
+            var a = document.getElementsByName("check");
             for (var i = 0; i < a.length; i++) {
+                console.log(a[i].checked);
                 if (a[i].checked) {
                     count++;
-                    if (count > 2) {
-                        alert("请选择其中一条需要修改条目！");
-                        $("input").val('');
-                        break;
-                    } else {
-                        //$('#edit').modal('show');
-                        editOrder();
-                        //$("#edit").show();
-                        break;
-                    }
-                } else if (!a[i].checked) {
-                    alert("请选择一条需要修改条目！");
-                    $("input").val('');
-                    break;
                 }
             }
-        });
+            if (count > 1) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.edit = function () {
+            console.log(check());
+            if (isCheck()) {
+                //$('#edit').modal('show');
+                editOrder();
+            } else {
+                alert("请选择一条需要修改条目！");
+                $("input").val('');
+            }
+
+        };
 
 
         //修改订单
@@ -186,6 +194,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     params.t2 = rows[row].cells[8].innerHTML;
                     console.log(params);
                     arr.push(params);
+                    console.log(arr);
                     $scope.form = arr;
                 }
             }
@@ -268,7 +277,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         var checkPriority = function (priority) {
 
-            var PriorityRegexp = /^[A-Za-z]+$/;
+            var PriorityRegexp = /^[0-9]+.?[0-9]*$/;
             if (!PriorityRegexp.test(priority)) {
                 $("input#add-priority").addClass("uk-form-danger");
                 //document.getElementById('priority-span').innerHTML = '请输入a-z/A-Z之间字母组成的字符串！';
@@ -332,8 +341,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("input").val('');
             $("input#add-name").removeClass("uk-form-success");
             $("input#add-origin").removeClass("uk-form-success");
-            $("input#add-priority").removeClass("uk-form-danger");
+            $("input#add-priority").removeClass("uk-form-success");
             $("input#add-quantity").removeClass("uk-form-success");
+            $("input#add-name").removeClass("uk-form-danger");
+            $("input#add-origin").removeClass("uk-form-danger");
+            $("input#add-priority").removeClass("uk-form-danger");
+            $("input#add-quantity").removeClass("uk-form-danger");
         }
 
     });

@@ -22,10 +22,57 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var array = [];
 
 
-
         myHttpService.get(serviceList.ListSchedule).then(function (response) {
             console.log(response.data);
-            $scope.arr = response.data;
+
+            var data = response.data;
+            for (var i = 0; i < data.length; i++) {
+                var scheduleTime = moment(data[i].scheduleTime).format("YYYY-MM-DD HH:mm:ss");
+                console.log(scheduleTime);
+                data[i].scheduleTime = scheduleTime;
+                var startCalcTime = moment(data[i].startCalcTime).format("YYYY-MM-DD HH:mm:ss");
+                console.log(startCalcTime);
+                data[i].startCalcTime = startCalcTime;
+                var endCalcTime = moment(data[i].endCalcTime).format("YYYY-MM-DD HH:mm:ss");
+                data[i].endCalcTime = endCalcTime;
+
+                var state = data[i].state;
+                switch (state) {
+                    case 0:
+                        data[i].state = "下发APS";
+                        break;
+                    case 1:
+                        data[i].state = "APS计算中";
+                        break;
+                    case 2:
+                        data[i].state = "APS计算成功";
+                        break;
+                    case 3:
+                        data[i].state = "APS计算失败";
+                        break;
+                    case 4:
+                        data[i].state = "APS优化成功";
+                        break;
+                    case 5:
+                        data[i].state = "已下发MES";
+                        break;
+                    case 10:
+                        data[i].state = "故障计算完成";
+                        break;
+                    case 11:
+                        data[i].state = "APS优化完成";
+                        break;
+                    case 12:
+                        data[i].state = "故障处理失败";
+                        break;
+                    case 13:
+                        data[i].state = "故障应急后下发MES";
+                        break;
+                }
+            }
+
+            $scope.arr = data;
+
         });
 
 
@@ -128,8 +175,16 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
          }*/
 
         //排程
+
+        /*if(document.getElementById("check1")==true){
+
+         }else if(document.getElementById("check2")==true){
+
+         }*/
+
+
         $scope.configAPS = function () {
-            alert("开始");
+
 
             //未完成的记录
             //array.push(obj);
@@ -154,6 +209,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
              }*/
 
             for (var i = 0; i < array.length; i++) {
+                console.log(operateId);
                 if (array[i].id == operateId) {
                     arr = array[i];
                     console.log("$$$$$$$$");
@@ -226,10 +282,12 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
                 console.log("排程返回的数据:");
                 console.log(response.data);
-                alert("请求成功，排程成功");
+                setTimeout('window.location.reload();', 0.1);
             }, function errorCallback(response) {
                 alert("请求错误！");
-            })
+            });
+            curobj.splice(0, curobj.length);
+            console.log("222" + curobj);
         };
 
         //表格信息重置
@@ -237,9 +295,18 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             $("input").val('');
         };
 
+        $scope.hideCalendar = function () {
+            $("#calendar").hide();
+        };
+
+        $scope.showCalendar = function () {
+            $("#calendar").show();
+        };
+
 
         //日历部分
         $scope.showSchedule = function () {
+
             //获取上次排程信息
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log("获取上次排程信息状态");
@@ -253,9 +320,10 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
                 //当前排程时间长度（b）
                 scheduleDays = $("input[name='add-scheduleDays']").val();
+                console.log("当前排程时间长度" + scheduleDays);
                 name = $("input[name='add-name']").val();
                 rollTime = $("input[name='add-rollTime']").val();
-                console.log("当前排程时间长度" + scheduleDays);
+                console.log("当前排程滚动周期" + rollTime);
 
                 //上次排程时间长度（c）
                 var lastScheduleDays = obj.scheduleWindow;
@@ -273,7 +341,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
                 //排程结束时间
                 var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
-                $(document).ready(function () {
+                console.log("排成结束时间" + startTime);
                     // page is now ready, initialize the calendar...
                     $('#calendar').fullCalendar({
                         // put your options and callbacks here
@@ -316,8 +384,9 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                                 $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
                             }
                         }
+
                     });
-                });
+                // $("#calendar").show();
             }, function errorCallback(response) {
                 console.log("请求失败");
             });
@@ -408,13 +477,14 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                     var row = a[i].parentElement.parentElement.rowIndex;
                     console.log("第几行被选中：" + row);
                     var params = {};
-                    params.id = rows[row].cells[1].innerHTML;
-                    params.name = rows[row].cells[2].innerHTML;
-                    params.origin = rows[row].cells[3].innerHTML;
-                    params.priority = rows[row].cells[4].innerHTML;
-                    params.t0 = rows[row].cells[5].innerHTML;
-                    params.t1 = rows[row].cells[6].innerHTML;
-                    params.t2 = rows[row].cells[7].innerHTML;
+                    params.index = rows[row].cells[1].innerHTML;
+                    params.id = rows[row].cells[2].innerHTML;
+                    params.name = rows[row].cells[3].innerHTML;
+                    params.origin = rows[row].cells[4].innerHTML;
+                    params.priority = rows[row].cells[5].innerHTML;
+                    params.t0 = rows[row].cells[6].innerHTML;
+                    params.t1 = rows[row].cells[7].innerHTML;
+                    params.t2 = rows[row].cells[8].innerHTML;
                     console.log(params);
                     arrchoosed.push(params);
                 }

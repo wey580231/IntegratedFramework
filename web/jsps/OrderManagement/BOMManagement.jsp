@@ -223,18 +223,6 @@
         margin-top: 8px;
     }
 
-    .ztree li:first::after {
-        display:none;
-    }
-    .ztree ul li:first::after {
-        display:none;
-    }
-    .ztree ul>li:first::after {
-        display:none;
-    }
-    .ztree ul:first::after {
-        display:none;
-    }
     .ztree li:last-child::before {
         height: 30px;
     }
@@ -293,12 +281,12 @@
                     </div>
 
                     <div class="uk-form-row" style="margin-top: 6px;">
-                        <select class="uk-grid" style="width: 130px;height: 27px;">
-                            <option value="1">产品A</option>
-                            <option value="2">产品B</option>
+                        <select id="testBOM" class="uk-grid"
+                                style="width: 130px;height: 27px;" <%--onChange="showChoose(this.options[this.options.selectedIndex].value)"--%>
+                                ng-click="showTree()">
+                            <option value="x.name" ng-repeat="x in rootdata" selected>{{x.name}}</option>
                         </select>
                     </div>
-
                 </fieldset>
             </form>
         </div>

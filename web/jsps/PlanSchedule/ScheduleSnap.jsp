@@ -14,6 +14,7 @@
     .nav-ml ul {
         margin-bottom: 0px;
     }
+
     .nav-ml ul > li {
         list-style-type: none;
         margin: -5px;
@@ -24,12 +25,14 @@
         cursor: pointer;
         /*width: 440px;*/
     }
+
     .nav-ml li::before, .nav-ml li::after {
         content: '';
         left: -40px;
         position: absolute;
         right: auto
     }
+
     .nav-ml li a {
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
@@ -40,15 +43,19 @@
         text-decoration: none;
         background-color: #f9fcfc;
     }
+
     .fold {
         display: none;
     }
+
     .nav-ml li.nav-first_li > a {
         cursor: pointer
     }
+
     .nav-ml > ul > li::before, .nav-ml > ul > li::after {
         border: 1px;
     }
+
     .nav-ml li:last-child::before {
         height: 30px;
     }
@@ -64,6 +71,7 @@
         width: 1px;
         margin-top: -2px;
     }
+
     /*
         BOM树左侧的线条（横线）
     */
@@ -73,9 +81,11 @@
         top: 25px;
         width: 20px;
     }
+
     .bg {
         background-color: #c1edfa;
     }
+
     /*
         BOM树下部panel
     */
@@ -86,17 +96,20 @@
         border: 1px solid #ddd;
         border-radius: 0px;
     }
+
     .uk-table td {
         vertical-align: top;
         width: 28px;
         margin-left: 11px;
     }
+
     /*
         form表单的位置固定
     */
     .uk-form {
         display: inherit;
     }
+
     #rMenu {
         position: absolute;
         visibility: hidden;
@@ -113,6 +126,7 @@
         margin-left: -10px;
         padding: 2px;
     }
+
     <%--.ztree li span.button.diy01_ico_open,.ztree li span.button.diy01_ico_close{background:url("../../images/bom_img/1.png") no-repeat;}
     .ztree li span.button.diy02_ico_open,.ztree li span.button.diy02_ico_close{background:url("../../images/bom_img/2.png") no-repeat;}
     .ztree li span.button.diy02_ico_docu{background:url("../../images/bom_img/2.png") no-repeat;}
@@ -144,6 +158,7 @@
         margin-top: 15px;
         margin-left: 12px;
     }
+
     /*
            BOM树左侧的线条（竖线）
        */
@@ -155,6 +170,7 @@
         width: 1px;
         margin-top: -2px;
     }
+
     /*
        BOM树左侧的线条（横线）
    */
@@ -164,6 +180,7 @@
         top: 25px;
         width: 22px;
     }
+
     .ztree ul > li {
         list-style-type: none;
         margin-left: 3px;
@@ -173,12 +190,14 @@
         font-size: 12px;
         cursor: pointer;
     }
+
     .ztree li::before, .ztree li::after {
         content: '';
         left: -10px;
         position: absolute;
         right: auto
     }
+
     .ztree li a {
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
@@ -188,14 +207,18 @@
         padding: 3px 10px;
         text-decoration: none;
         background-color: #f9fcfc;
-        margin-top:8px;
+        margin-top: 8px;
     }
+
     .ztree li:last-child::before {
         height: 30px;
     }
+
+    #choose {
+        margin-top: -34px;
+        margin-left: 340px;
+    }
 </style>
-
-
 
 
 <script>
@@ -232,6 +255,22 @@
 <div class="uk-grid" style="height: 86%;">
     <!--快照树-->
     <div id="container" class="uk-width-1-5" style="width: 23%;height: 100%;">
+        <div style="border-bottom: 1px solid lightgray;background-color: white;height: 10%;">
+            <form class="uk-form uk-form-horizontal">
+                <fieldset data-uk-margin>
+                    <div class="bomdiv" style="float: left;margin-left: 10px;margin-top: 10px;">
+                        <span class="bomspan" style="margin-top: 8px;">快照树  </span>&nbsp;&nbsp;
+                    </div>
+
+                    <div class="uk-form-row" style="margin-top: 6px;">
+                        <select class="uk-grid" style="width: 130px;height: 27px;">
+                            <option value="x.id" ng-repeat="x in dataArr">{{x.name}}</option>
+                        </select>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
         <!--快照树下部-->
         <!-- <div class="uk-panel uk-panel-box uk-overflow-container" style="height: 82%;background-color: #e2ebf2;">
             <div class="uk-form-row">
@@ -319,6 +358,14 @@
                 <li id="m_re" ng-click="renameTreeNode()">重命名</li>
             </ul>
         </div>
+
+        <div id="lMenu">
+            <ul>
+                <li id="l_add" ng-click="send()">下发MES</li>
+                <li id="l_del" ng-click="show3D()">查看3D状态</li>
+            </ul>
+        </div>
+
     </div>
     <!--右侧表格-->
     <div class="uk-width-4-5"
@@ -357,8 +404,18 @@
                         </div>
                         <div class="fixtable-body" style="height: 72%;width: 77.5%;top: 125px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
-
                                 <tbody class="uk-text-center">
+                                <tr id="first" ng-repeat="x in plan">
+                                    <td><input id="check" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                    <td style="display:none">{{x.id}}</td>
+                                    <td>{{x.nameOrder}}</td>
+                                    <td>{{x.nameProductOrder}}</td>
+                                    <td>{{x.priorityOrder}}</td>
+                                    <td>{{x.quantityOrder}}</td>
+                                    <td>{{x.postTimeTask}}</td>
+                                    <td>{{x.t2Order}}</td>
+                                </tr>
                                 </tbody>
 
                             </table>
