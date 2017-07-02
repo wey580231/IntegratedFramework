@@ -62,6 +62,7 @@ public class Tools {
     public static String getHttpRequestBody(HttpServletRequest httpServletRequest) {
         String httpRequestBodyString = "";
         try {
+            httpServletRequest.setCharacterEncoding("UTF-8");
             BufferedReader bufferedReader = httpServletRequest.getReader();
             String tempString;
             while ((tempString = bufferedReader.readLine()) != null) {
