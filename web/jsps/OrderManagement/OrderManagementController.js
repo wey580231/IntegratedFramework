@@ -18,6 +18,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //加载页面时数据显示
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             console.log(response.data);
+            var data = response.data;
+            console.log(data[0]);
             $scope.arr = response.data;
         });
 
@@ -129,9 +131,9 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.origin = "";
             params.quantity = "";
             params.priority = "";
-            params.t1 = "";
-            params.t2 = "";
-            params.t0 = "";
+            params.t1 = null;
+            params.t2 = null;
+            params.t0 = null;
             var data = JSON.stringify(params);
             console.log(data);
             myHttpService.delete(serviceList.DeleteOrder, data).then(function successCallback(response) {
@@ -215,9 +217,9 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.name = nameVal;
             params.origin = originVal;
             params.priority = priorityVal;
-            params.t0 = t0Val;
-            params.t1 = t1Val;
-            params.t2 = t2Val;
+            params.t0 = Date.parse(t0Val);
+            params.t1 = Date.parse(t1Val);
+            params.t2 = Date.parse(t2Val);
             params.quantity = quantityVal;
             //params.idProduct = idProductVal;
             var data = JSON.stringify(params);
@@ -225,7 +227,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateOrder, data).then(function successCallback(response) {
                 console.log(response.status);
-                setTimeout('window.location.reload();', 0.1);
+                //setTimeout('window.location.reload();', 0.1);
                 //setTimeout(reload(),3000);
             }, function errorCallback(response) {
                 alert("更新失败！");
