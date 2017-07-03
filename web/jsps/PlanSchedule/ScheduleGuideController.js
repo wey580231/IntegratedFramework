@@ -177,14 +177,11 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         //排程
 
         /*if(document.getElementById("check1")==true){
-
          }else if(document.getElementById("check2")==true){
-
          }*/
 
 
         $scope.configAPS = function () {
-
 
             //未完成的记录
             //array.push(obj);
@@ -210,17 +207,18 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
             for (var i = 0; i < array.length; i++) {
                 console.log(operateId);
+                console.log(array[0].id);
+                console.log(array[1].id);
+                console.log(array[2].id);
                 if (array[i].id == operateId) {
                     arr = array[i];
                     console.log("$$$$$$$$");
                     console.log(arr);
+                    //break;
                 }
-                break;
             }
 
             var APSConfigs = {};
-            //APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
-            //APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
             APSConfigs.t0 = "";
             APSConfigs.t2 = "";
 
@@ -282,13 +280,17 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
                 console.log("排程返回的数据:");
                 console.log(response.data);
-                setTimeout('window.location.reload();', 0.1);
+                curobj.splice(0, curobj.length);
+                array.splice(0, array.length);
+                console.log(curobj);
+                console.log(array);
+                setTimeout('window.location.reload();', 150000);
             }, function errorCallback(response) {
                 alert("请求错误！");
             });
-            curobj.splice(0, curobj.length);
-            console.log("222" + curobj);
-            setTimeout('window.location.reload();', 0.1);
+            //curobj.splice(0, curobj.length);
+            //console.log("222" + curobj);
+            //setTimeout('window.location.reload();', 0.1);
         };
 
         //表格信息重置
@@ -343,50 +345,50 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 //排程结束时间
                 var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
                 console.log("排成结束时间" + startTime);
-                    // page is now ready, initialize the calendar...
-                    $('#calendar').fullCalendar({
-                        // put your options and callbacks here
-                        buttonText: {
-                            today: '今天',
-                            month: '月',
-                            week: '周',
-                            day: '天'
-                        },
-                        allDayText: '全天',
-                        monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                        monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-                        dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-                        dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                        eventSources: [
-                            {
-                                // url: 'http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action',
-                                url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
-                                type: 'POST',
-                                data: {
-                                    startTime: startTime,
-                                    endTime: endTime
-                                },
-                                error: function () {
-                                    alert('there was an error while fetching events!');
-                                }
-                            }
-                        ],
-                        viewRender: function (view, element) {
-                            //已执行时间窗口染色
-                            for (var i = 1; i <= tempDays; i++) {
-                                $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
-                            }
-                            //时间窗口染色
-                            for (var i = 0; i < lastScheduleDays - tempDays; i++) {
-                                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
-                            }
-                            //剩余窗口染色
-                            for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
-                                $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+                // page is now ready, initialize the calendar...
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    buttonText: {
+                        today: '今天',
+                        month: '月',
+                        week: '周',
+                        day: '天'
+                    },
+                    allDayText: '全天',
+                    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                    dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+                    dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                    eventSources: [
+                        {
+                            // url: 'http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action',
+                            url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
+                            type: 'POST',
+                            data: {
+                                startTime: startTime,
+                                endTime: endTime
+                            },
+                            error: function () {
+                                alert('there was an error while fetching events!');
                             }
                         }
+                    ],
+                    viewRender: function (view, element) {
+                        //已执行时间窗口染色
+                        for (var i = 1; i <= tempDays; i++) {
+                            $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
+                        }
+                        //时间窗口染色
+                        for (var i = 0; i < lastScheduleDays - tempDays; i++) {
+                            $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
+                        }
+                        //剩余窗口染色
+                        for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
+                            $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+                        }
+                    }
 
-                    });
+                });
                 // $("#calendar").show();
             }, function errorCallback(response) {
                 console.log("请求失败");
