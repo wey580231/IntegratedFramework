@@ -208,8 +208,8 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             for (var i = 0; i < array.length; i++) {
                 console.log(operateId);
                 console.log(array[0].id);
-                console.log(array[1].id);
-                console.log(array[2].id);
+                //console.log(array[1].id);
+                //console.log(array[2].id);
                 if (array[i].id == operateId) {
                     arr = array[i];
                     console.log("$$$$$$$$");
