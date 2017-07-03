@@ -282,8 +282,9 @@
 
                     <div class="uk-form-row" style="margin-top: 6px;">
                         <select id="testBOM" class="uk-grid"
-                                style="width: 130px;height: 27px;" <%--onChange="showChoose(this.options[this.options.selectedIndex].value)"--%>>
-                            <option value="x.name" ng-repeat="x in rootdata" selected>{{x.name}}</option>
+                                style="width: 130px;height: 27px;"
+                                onchange="showChoose(this.options[this.options.selectedIndex].value)">
+                            <option value="x.name" ng-repeat="x in rootdata">{{x.name}}</option>
                         </select>
                     </div>
                 </fieldset>

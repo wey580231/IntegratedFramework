@@ -117,13 +117,13 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             }
 
             //显示右键操作
-            function showRMenu(type, x, y) {
+            function showRMenu(x, y) {
                 $("#rMenu").show();
                 rMenu.css({"top": y + "px", "left": (x - 220) + "px", "visibility": "visible"});
                 $("#container").bind("mousedown", onBodyMouseDown);
             }
 
-            function showLMenu(type, x, y) {
+            function showLMenu(x, y) {
                 $("#lMenu").show();
                 lMenu.css({"top": y + "px", "left": (x - 220) + "px", "visibility": "visible"});
                 $("#container").bind("mousedown", onBodyMouseDown);
@@ -142,13 +142,13 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             //鼠标按下操作
             function onBodyMouseDown(event) {
-                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0 || event.target.id == "lMenu")) {
+                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0 || event.target.id == "lMenu" || $(event.target).parents("#lMenu").length > 0)) {
                     rMenu.css({"visibility": "hidden"});
                     lMenu.css({"visibility": "hidden"});
                 }
             }
 
-            function zTreeOnClick(event, treeId, treeNode) {
+            function zTreeOnClick(treeNode) {
                 if (treeNode.isParent) {
                     return false;
                 } else {
@@ -169,7 +169,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             //增加节点
             $scope.addTreeNode = function () {
                 hideRMenu();
-                hideLMenu();
                 var newNode = {name: "增加" + (addCount++)};
                 if (zTree.getSelectedNodes()[0]) {
                     console.log("@@@@@@");
@@ -217,7 +216,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 console.log(zTree.getSelectedNodes()[0]);
             };
 
-
             //nextSibling是当前节点的下一个同级节点，即<li id="b">bbb</li>
             //alert(e.firstChild.nextSibling.getAttribute('id'));
             var getChildNodes = function () {
@@ -230,15 +228,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 console.log(nodes);
                 return nodes.join(",");
             };
-
-            var zTree, rMenu, lMenu;
-            //初始化BOM树
-            $(document).ready(function () {
-                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-                zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                rMenu = $("#rMenu");
-                lMenu = $("#lMenu");
-            });
 
             $scope.send = function (treeNode) {
                 changesendColor(treeNode);
@@ -269,6 +258,17 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 else
                     obj.parentElement.parentElement.style.backgroundColor = jiColor;
             }
+
+            var zTree, rMenu, lMenu;
+            //初始化BOM树
+            $(document).ready(function () {
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+                zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                rMenu = $("#rMenu");
+                lMenu = $("#lMenu");
+            });
+
+
 
         });
 
