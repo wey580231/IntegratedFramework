@@ -147,6 +147,7 @@ public class Tools {
         Statement statement = connection.createStatement();
         for (String tableName : tableList) {
             String SQLCommed = "TRUNCATE table " + tableName + ";";
+            System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLCommed);
             statement.execute(SQLCommed);
         }
         statement.close();
@@ -166,6 +167,12 @@ public class Tools {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = simpleDateFormat.parse(simpleDateFormat.format(dateLong));
         return date;
+    }
+
+    public static String dateConvertToString(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String dateString = simpleDateFormat.format(date);
+        return dateString;
     }
 
     public static String resultCode(String result, String description) {
