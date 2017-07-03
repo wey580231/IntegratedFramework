@@ -23,6 +23,7 @@ public class DAOFactory {
     private static final AdjustOrderDAOImpl adjustOrderDAOImpl = new AdjustOrderDAOImpl();
     private static final AdjustProcessDAOImpl adjustProcessDAOImpl = new AdjustProcessDAOImpl();
     private static final SnapshotDaoImpl snapshotDaoImpl = new SnapshotDaoImpl();
+    private static final PlanDAOImpl planDAOImpl = new PlanDAOImpl();
 
     public static UsersDAOImpl getUserDAOInstance() {
         return usersDAOImpl;
@@ -90,5 +91,9 @@ public class DAOFactory {
 
     public static SnapshotDaoImpl getSnapshotDaoImplInstance() {
         return snapshotDaoImpl;
+    }
+
+    public static PlanDAOImpl getPlanDAOImplInstance() {
+        return planDAOImpl;
     }
 }

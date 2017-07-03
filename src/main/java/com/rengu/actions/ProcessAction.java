@@ -19,7 +19,6 @@ public class ProcessAction extends SuperAction {
         ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
         List<RG_ProcessEntity> rg_processEntityList = processDAO.findAllByIsRootNode(isRootNode);
         String jsonString = Tools.entityConvertToJsonString(rg_processEntityList);
-        System.out.println(jsonString);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
@@ -29,7 +28,6 @@ public class ProcessAction extends SuperAction {
         ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
         RG_ProcessEntity rg_processEntity = processDAO.findAllById(processId);
         String jsonString = Tools.entityConvertToJsonString(rg_processEntity);
-        System.out.println(jsonString);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 

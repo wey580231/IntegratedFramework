@@ -10,14 +10,25 @@
 <link href="../../mycss/mycss.css" type="text/css" rel="stylesheet">
 
 <style type="text/css">
+    .uk-form-label {
+        margin: 0px 15px;
+    }
+
+    #truebutton {
+        margin: 0px 28px;
+        color: #fafafa;
+        padding: 0px 6px;
+    }
     .uk-table td {
         vertical-align: top;
         width: 72px;
         margin-left: 11px;
     }
+
     #chooseDialog {
         width: 950px;
     }
+
     #choosedDialog {
         width: 950px;
     }
@@ -69,7 +80,8 @@
             </div>
         </div>-->
         <button class="uk-button uk-float-right "
-                data-uk-modal="{target:'#schedule'}" id="scheduleButton" style="border-radius:15px; ">新计划排程
+                data-uk-modal="{target:'#schedule'}" ng-click="hideCalendar()" id="scheduleButton"
+                style="border-radius:15px; ">新计划排程
         </button>
     </div>
 </div>
@@ -112,17 +124,17 @@
                     <div class="fixtable-body">
                         <table class="uk-table uk-table-striped uk-table-hover " id="table_value">
                             <tbody class="uk-text-center">
-                                <tr id="first" ng-repeat="x in arr | orderBy: 'id':desc">
-                                    <td><input id="check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
-                                               ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                    <td id="Id" style="display:none">{{x.id}}</td>
-                                    <td id="name">{{x.name}}</td>
-                                    <td id="progress">{{x.progress}}</td>
-                                    <td id="scheduleTime">{{x.scheduleTime}}</td>
-                                    <td id="startCalcTime">{{x.startCalcTime}}</td>
-                                    <td id="endCalcTime">{{x.endCalcTime}}</td>
-                                    <td id="state">{{x.state}}</td>
-                                </tr>
+                            <tr id="first1" ng-repeat="x in arr | orderBy: 'id':desc">
+                                <td><input id="check0" name="check" type="checkbox" ng-checked="isSelected(x.id)"
+                                           ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                                <td id="Id" style="display:none">{{x.id}}</td>
+                                <td id="name">{{x.name}}</td>
+                                <td id="progress">{{x.progress}}</td>
+                                <td id="scheduleTime">{{x.scheduleTime}}</td>
+                                <td id="startCalcTime">{{x.startCalcTime}}</td>
+                                <td id="endCalcTime">{{x.endCalcTime}}</td>
+                                <td id="state">{{x.state}}</td>
+                            </tr>
 
                             </tbody>
                         </table>
@@ -204,8 +216,9 @@
             <table class="uk-table uk-table-striped uk-table-hover " id="orders" style="width:100%">
                 <tbody class="uk-text-center">
                 <tr ng-repeat="x in lastarray">
-                    <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                    <td><input id="check1" name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                    <td style="display:none">{{$index+1}}</td>
                     <td style="display:none">{{x.id}}</td>
                     <td>{{x.name}}</td>
                     <td>{{x.origin}}</td>
@@ -215,8 +228,9 @@
                     <td>{{x.t2}}</td>
                 </tr>
                 <tr ng-repeat="x in curinfo">
-                    <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                    <td><input id="check2" name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
+                    <td style="display:none">{{$index+1}}</td>
                     <td style="display:none">{{x.id}}</td>
                     <td>{{x.name}}</td>
                     <td>{{x.origin}}</td>
@@ -250,26 +264,28 @@
 
 <!--排程参数输入弹框-->
 <div class="uk-modal uk-overflow-container" id="schedule">
-    <div class="uk-modal-dialog">
+    <div class="uk-modal-dialog uk-overflow-container">
         <button type="button" class="uk-modal-close uk-close"></button>
         <h3 class="validateTips">请填写参数</h3>
-        <form class="uk-form uk-form-horizontal">
-            <fieldset>
-                <label for="add-name">名称</label><br/>
-                <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-schedule">排程时间窗</label><br/>
-                <input type="text" name="add-schedule" id="add-schedule"
-                       class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-rollTime">滚动周期</label><br/>
-                <input type="text" name="add-rollTime" id="add-rollTime"
-                       class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-scheduleDays">当前排程时间长度</label><br/>
-                <input type="text" name="add-scheduleDays" id="add-scheduleDays"
-                       class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-t0">开始时间</label><br/>
-                <input type="text" name="add-t0" id="add-t0" class="text ui-widget-content ui-corner-all"><br/>
-                <label for="add-t2">结束时间</label><br/>
-                <input type="text" name="add-t2" id="add-t2" class="text ui-widget-content ui-corner-all"><br/>
+        <form class="uk-form">
+            <fieldset data-uk-margin>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="add-name">名称</label>
+
+                    <input type="text" name="add-name" id="add-name" clsss="text ui-widget-content ui-corner-all">
+
+                    <label class="uk-form-label" for="add-rollTime">滚动周期</label>
+
+                    <input type="text" name="add-rollTime" id="add-rollTime"
+                           class="text ui-widget-content ui-corner-all">
+
+                    <label class="uk-form-label" for="add-scheduleDays">当前排程时间长度</label>
+
+                    <input type="text" name="add-scheduleDays" id="add-scheduleDays"
+                           class="text ui-widget-content ui-corner-all">
+                    <button class="uk-button" id="truebutton" ng-click="showSchedule();showCalendar()"><a href="">确定</a>
+                    </button>
+                </div>
             </fieldset>
         </form>
         <div class="uk-modal-footer uk-text-right">
@@ -280,9 +296,6 @@
                 <li>
                     <button class="uk-button my" ng-click="showCurInfo();"
                             data-uk-modal="{target:'#chooseOrder'}"><a href="">下一页</a></button>
-                </li>
-                <li>
-                    <button class="uk-button my" ng-click="showSchedule();"><a href="">确定</a></button>
                 </li>
             </ul>
         </div>
