@@ -54,6 +54,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             console.log(response.data);
             var rootdata = response.data;
             $scope.rootdata = response.data;
+            $scope.process = response.data;
             //showRoot(rootdata);
             showRoot(rootdata);
 
@@ -189,24 +190,24 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 }
             }
 
-            function zTreeOnClick(treeNode) {
-                if (treeNode.isParent) {
-                    return false;
-                } else {
-                    alert("aaaa");
-                    var id = zTree.getSelectedNodes()[0].id;
-                    var params = {};
-                    params.id = id;
-                    var data = JSON.stringify(params);
-                    /*myHttpService.post(serviceList., data).then(function successCallback(response) {
-                     $scope.process = response.data;
-                     console.log("右击节点要显示的信息");
-                     console.log(response.data);
-                     });*/
-                    return true;
-                }
-            }
-
+            /*function zTreeOnClick(treeNode) {
+             if (treeNode.isParent) {
+             alert("aaaa");
+             var id = zTree.getSelectedNodes()[0].id;
+             var params = {};
+             params.id = id;
+             var data = JSON.stringify(params);
+             myHttpService.post(serviceList.isRootNode, data).then(function successCallback(response) {
+             $scope.process = response.data;
+             console.log("右击节点要显示的信息");
+             console.log(response.data);
+             });
+             return true;
+             }else{
+             return false;
+             }
+             }
+             */
             var addCount = 1;
 
             //增加节点
@@ -252,145 +253,145 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 }
             };
             var zTree, rMenu;
-             //初始化BOM树
-             $(document).ready(function () {
-             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-             zTree = $.fn.zTree.getZTreeObj("treeDemo");
-             rMenu = $("#rMenu");
-             });
+            //初始化BOM树
+            $(document).ready(function () {
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+                zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                rMenu = $("#rMenu");
+            });
 
         };
 
         /*$scope.showTree = function () {
 
-            $("#testBOM").children('option:selected').val();
-            var name = $("#testBOM").children('option:selected').attr("name");
-            console.log($("#testBOM").children('option:selected').attr("name"));
-            console.log($("#testBOM").children('option:selected').attr("value"));
+         $("#testBOM").children('option:selected').val();
+         var name = $("#testBOM").children('option:selected').attr("name");
+         console.log($("#testBOM").children('option:selected').attr("name"));
+         console.log($("#testBOM").children('option:selected').attr("value"));
 
-            console.log("选中的要现实的树");
-            //var myselect = document.getElementById("testBOM");
-            var setting = {
-                view: {
-                    dblClickExpand: false,
-                    showIcon: false,
-                    showLine: false
-                },
-                check: {
-                    enable: false
-                },
-                callback: {
-                    onRightClick: OnRightClick
-                },
-                data: {
-                    keep: {
-                        parent: true
-                    }
-                },
-                edit: {
-                    enable: true,
-                    showRenameBtn: false,
-                    showRemoveBtn: false
-                },
-            };
-            var zTreeNodes;
-            for (var i = 0; i < zNodes.length; i++) {
-                console.log(zNodes);
-                if (zNodes[i].name = name) {
-                    zTreeNodes = zNodes[i];
-                }
-                break;
-            }
-            console.log(zTreeNodes);
-
-
-            function OnRightClick(event, treeId, treeNode) {
-                var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
-                var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
-                if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
-                    zTree.cancelSelectedNode();
-                    showRMenu("root", x, y);
-                } else if (treeNode && !treeNode.noR) {
-                    zTree.selectNode(treeNode);
-                    showRMenu("node", x, y);
-                }
-            }
+         console.log("选中的要现实的树");
+         //var myselect = document.getElementById("testBOM");
+         var setting = {
+         view: {
+         dblClickExpand: false,
+         showIcon: false,
+         showLine: false
+         },
+         check: {
+         enable: false
+         },
+         callback: {
+         onRightClick: OnRightClick
+         },
+         data: {
+         keep: {
+         parent: true
+         }
+         },
+         edit: {
+         enable: true,
+         showRenameBtn: false,
+         showRemoveBtn: false
+         },
+         };
+         var zTreeNodes;
+         for (var i = 0; i < zNodes.length; i++) {
+         console.log(zNodes);
+         if (zNodes[i].name = name) {
+         zTreeNodes = zNodes[i];
+         }
+         break;
+         }
+         console.log(zTreeNodes);
 
 
-            //显示右键操作
-            function showRMenu(type, x, y) {
-                $("#rMenu").show();
-                rMenu.css({"top": (y - 70) + "px", "left": (x - 220) + "px", "visibility": "visible"});
-                $("#container").bind("mousedown", onBodyMouseDown);
-            }
+         function OnRightClick(event, treeId, treeNode) {
+         var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
+         var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
+         if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
+         zTree.cancelSelectedNode();
+         showRMenu("root", x, y);
+         } else if (treeNode && !treeNode.noR) {
+         zTree.selectNode(treeNode);
+         showRMenu("node", x, y);
+         }
+         }
 
 
-            //隐藏右键操作
-            function hideRMenu() {
-                if (rMenu) rMenu.css({"visibility": "hidden"});
-                $("#container").unbind("mousedown", onBodyMouseDown);
-            }
+         //显示右键操作
+         function showRMenu(type, x, y) {
+         $("#rMenu").show();
+         rMenu.css({"top": (y - 70) + "px", "left": (x - 220) + "px", "visibility": "visible"});
+         $("#container").bind("mousedown", onBodyMouseDown);
+         }
 
 
-            //鼠标按下操作
-            function onBodyMouseDown(event) {
-                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
-                    rMenu.css({"visibility": "hidden"});
-                }
-            }
-
-            var addCount = 1;
-
-            //增加节点
-            $scope.addTreeNode = function () {
-                hideRMenu();
-                var newNode = {name: "增加" + (addCount++)};
-                if (zTree.getSelectedNodes()[0]) {
-                    console.log(zTree.getSelectedNodes()[0]);
-                    zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
-                    console.log(zTree.getSelectedNodes()[0]);
-                } else {
-                    zTree.addNodes(null, newNode);
-                }
-            };
+         //隐藏右键操作
+         function hideRMenu() {
+         if (rMenu) rMenu.css({"visibility": "hidden"});
+         $("#container").unbind("mousedown", onBodyMouseDown);
+         }
 
 
-            //删除节点
-            $scope.removeTreeNode = function () {
-                hideRMenu();
-                var nodes = zTree.getSelectedNodes();
-                if (nodes && nodes.length > 0) {
-                    if (nodes[0].children && nodes[0].children.length > 0) {
-                        var msg = "要删除的节点是父节点，如果删除将连同子节点一起删掉。\n\n确定删除？";
-                        if (confirm(msg) == true) {
-                            zTree.removeNode(nodes[0]);
-                        }
-                    } else {
-                        zTree.removeNode(nodes[0]);
-                    }
-                }
-            };
+         //鼠标按下操作
+         function onBodyMouseDown(event) {
+         if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
+         rMenu.css({"visibility": "hidden"});
+         }
+         }
+
+         var addCount = 1;
+
+         //增加节点
+         $scope.addTreeNode = function () {
+         hideRMenu();
+         var newNode = {name: "增加" + (addCount++)};
+         if (zTree.getSelectedNodes()[0]) {
+         console.log(zTree.getSelectedNodes()[0]);
+         zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
+         console.log(zTree.getSelectedNodes()[0]);
+         } else {
+         zTree.addNodes(null, newNode);
+         }
+         };
 
 
-            //重命名节点
-            $scope.renameTreeNode = function () {
-                hideRMenu();
-                var nodes = zTree.getSelectedNodes();
-                zTree.editName(nodes[0]);
-                var newName = nodes[0].name;
-                if (newName.length == 0) {
-                    alert("节点不能为空！");
-                    return false;
-                }
-            };
+         //删除节点
+         $scope.removeTreeNode = function () {
+         hideRMenu();
+         var nodes = zTree.getSelectedNodes();
+         if (nodes && nodes.length > 0) {
+         if (nodes[0].children && nodes[0].children.length > 0) {
+         var msg = "要删除的节点是父节点，如果删除将连同子节点一起删掉。\n\n确定删除？";
+         if (confirm(msg) == true) {
+         zTree.removeNode(nodes[0]);
+         }
+         } else {
+         zTree.removeNode(nodes[0]);
+         }
+         }
+         };
 
 
-            var zTree, rMenu;
-            $.fn.zTree.init($("#treeDemo"), setting, zTreeNodes);
-            rMenu = $("#rMenu");
-        }
+         //重命名节点
+         $scope.renameTreeNode = function () {
+         hideRMenu();
+         var nodes = zTree.getSelectedNodes();
+         zTree.editName(nodes[0]);
+         var newName = nodes[0].name;
+         if (newName.length == 0) {
+         alert("节点不能为空！");
+         return false;
+         }
+         };
 
-        //右键操作
+
+         var zTree, rMenu;
+         $.fn.zTree.init($("#treeDemo"), setting, zTreeNodes);
+         rMenu = $("#rMenu");
+         }
+
+         //右键操作
          function OnRightClick(event,treeNode) {
          var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
          var scrollY = document.documentElement.scrollTop || document.body.scrollTop;

@@ -129,7 +129,7 @@
         top: 0;
         background-color: #F0FFFF;
         padding: -6px;
-        margin:1px,3px;
+        margin: 1px 3px;
     }
 
     #rMenu ul li {
@@ -368,18 +368,18 @@
                         <div class="fixtable-body" style="/*height: 69%;*/height: 39%;width: 76%;top: 300px;">
                             <table class="uk-table uk-table-striped uk-table-hover " id="order">
                                 <tbody class="uk-text-center">
-                                <tr id="first" ng-repeat="x in process>
-                                    <td><input id=" check" name="check" type="checkbox"  ng-checked="isSelected(x.id)"
+                                <tr id="first" ng-repeat="x in process">
+                                    <td><input id="check" name="check" type="checkbox" ng-checked="isSelected(x.id)"
                                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                                     <td id="initTime">{{x.initTime}}</td>
                                     <td id="postTime">{{x.postTime}}</td>
                                     <td id="checkTime">{{x.checkTime}}</td>
-                                <td id="delta">{{x.typeShift}}</td>
+                                    <td id="delta">{{x.typeShift}}</td>
                                     <td id="quantity">{{x.quantity}}</td>
                                     <td id="modTimeBatch">{{x.modTimeBatch}}</td>
                                 </tr>
 
-                                    <!--测试-->
+                                <!--测试-->
                                 <%--<tr>
                                     <td><input type="checkbox" onclick="changeColor(this)"></td>
                                     <td>1</td>
