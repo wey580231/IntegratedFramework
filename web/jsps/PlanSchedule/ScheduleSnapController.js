@@ -11,7 +11,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
     }])
     .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList) {
 
-
         var dataTrue = {"level": "top"};
         myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
             var setting = {
@@ -238,25 +237,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             };
 
             function changesendColor(obj) {
-                var f = obj.checked;
-                var chkColor = "#c1edfa"; //选中后颜色
-                //var back = obj.parentElement.parentElement.style.backgroundColor;  //偶数行取消选中后的颜色
-                var jiColor = "#FFFFFF";
-                if (f)
-                    obj.parentElement.parentElement.style.backgroundColor = chkColor;
-                else
-                    obj.parentElement.parentElement.style.backgroundColor = jiColor;
+
             }
 
             function changeshow3DColor(obj) {
-                var f = obj.checked;
-                var chkColor = "#c1edfa"; //选中后颜色
-                //var back = obj.parentElement.parentElement.style.backgroundColor;  //偶数行取消选中后的颜色
-                var jiColor = "#FFFFFF";
-                if (f)
-                    obj.parentElement.parentElement.style.backgroundColor = chkColor;
-                else
-                    obj.parentElement.parentElement.style.backgroundColor = jiColor;
+
             }
 
             var zTree, rMenu, lMenu;
@@ -267,9 +252,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 rMenu = $("#rMenu");
                 lMenu = $("#lMenu");
             });
-
-
-
         });
 
         /*var zNodes = [
@@ -298,6 +280,5 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
          ]
          }
          ];*/
-
 
     });
