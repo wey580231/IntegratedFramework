@@ -23,8 +23,8 @@ public class ScheduleAction extends SuperAction {
         //初始化数据库表
         try {
             //清空APS数据库
-//            String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
-//            Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
+//            String[] tableList = {DatabaseInfo.APS_LOG};
+//            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableList);
 
             //更新数据库表内容
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
@@ -95,7 +95,7 @@ public class ScheduleAction extends SuperAction {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").toString());
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
-//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
                 }
             }
             rg_scheduleEntity.setOrders(rg_orderEntitySet);
@@ -194,6 +194,7 @@ public class ScheduleAction extends SuperAction {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
         List list = scheduleDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
+        System.out.println("SchedulesList的长度为：" + list.size());
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 

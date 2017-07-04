@@ -30,13 +30,13 @@
                 <option value="TableResourceTask.view">资源派工单</option>
                 <option value="TableSiteTask.view">工位派工单</option>
 
-                <option value="GanttOrderTaskMenu.view">订单工序甘特图</option>
-                <option value="GanttResourceTaskMenu.view">资源工序甘特图</option>
-                <option value="GanttJobTaskMenu.view">作业工序甘特图</option>
+                <option value="GanttOrderTask.view">订单工序甘特图</option>
+                <option value="GanttResourceTask.view">资源工序甘特图</option>
+                <option value="GanttJobTask.view">作业工序甘特图</option>
 
-                <option value="DataTableOrder.view">订单信息表</option>
+                <option value="TableOrder.view">订单一览表</option>
                 <option value="DataTableGroupResource.view">工组信息表</option>
-                <option value="DataTableResource.view">资源信息表</option>
+                <option value="TableResource.view">资源一览表</option>
                 <option value="DataTableProcess.view">工艺信息表</option>
             </select>
             <button class="uk-button uk-button-primary" onclick="loginAps()">APS登录</button>

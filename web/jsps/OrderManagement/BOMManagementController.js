@@ -88,7 +88,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         };
 
         var showChild = function () {
-
             var setting = {
                 view: {
                     dblClickExpand: false,
@@ -99,8 +98,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                     enable: false
                 },
                 callback: {
-                    onRightClick: OnRightClick,
-                    onDblClick: zTreeOnClick
+                    onRightClick: OnRightClick
                 },
                 data: {
                     keep: {
@@ -155,7 +153,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             zNodes = dataArr;
             console.log("&&&&&&&&&" + zNodes);
 
-            function OnRightClick(event, treeId, treeNode) {
+            function OnRightClick(event, treeNode) {
                 var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
                 var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
                 if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
@@ -190,24 +188,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 }
             }
 
-            /*function zTreeOnClick(treeNode) {
-             if (treeNode.isParent) {
-             alert("aaaa");
-             var id = zTree.getSelectedNodes()[0].id;
-             var params = {};
-             params.id = id;
-             var data = JSON.stringify(params);
-             myHttpService.post(serviceList.isRootNode, data).then(function successCallback(response) {
-             $scope.process = response.data;
-             console.log("右击节点要显示的信息");
-             console.log(response.data);
-             });
-             return true;
-             }else{
-             return false;
-             }
-             }
-             */
             var addCount = 1;
 
             //增加节点
@@ -240,7 +220,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 }
             };
 
-
             //重命名节点
             $scope.renameTreeNode = function () {
                 hideRMenu();
@@ -252,12 +231,18 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                     return false;
                 }
             };
+
             var zTree, rMenu;
             //初始化BOM树
             $(document).ready(function () {
                 $.fn.zTree.init($("#treeDemo"), setting, zNodes);
                 zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 rMenu = $("#rMenu");
+                $scope.showChoose = function (name) {
+                    //var name = $("#testBOM").children('option:selected').attr("name");
+                    console.log(name);
+                    alert("可以了");
+                }
             });
 
         };
