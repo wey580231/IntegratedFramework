@@ -15,16 +15,15 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
         var scheduleDays;
         var name;
         var rollTime;
-        var obj;//上次排程的json字符串
+        var lastobj = [];//上次排程的json字符串
         var curobj = [];//当前排程的json字符串
         var ordId;
-        var arr;
-        var array = [];
+        var arr;//需要排程的那条记录
+        var array = [];//两次未完成部分
 
 
         myHttpService.get(serviceList.ListSchedule).then(function (response) {
             console.log(response.data);
-
             var data = response.data;
             for (var i = 0; i < data.length; i++) {
                 var scheduleTime = moment(data[i].scheduleTime).format("YYYY-MM-DD HH:mm:ss");
@@ -70,9 +69,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                         break;
                 }
             }
-
             $scope.arr = data;
-
         });
 
 
@@ -83,13 +80,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             $("input").val('');
         };
 
-        //各表单选择时信息显示
-        $scope.showOrder = function () {
-            myHttpService.get(serviceList.ListOrder).then(function (response) {
-                console.log(response);
-                $scope.ord = response.data;
-            });
-        };
 
         $('#scheduleButton').click(function () {
             $("input").val('');
@@ -176,24 +166,12 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
         //排程
 
-        /*if(document.getElementById("check1")==true){
-         }else if(document.getElementById("check2")==true){
-         }*/
-
-
         $scope.configAPS = function () {
 
             //未完成的记录
-            //array.push(obj);
-            for (var i = 0; i < curobj.length; i++) {
-                array.push(curobj[i]);
-            }
-
             console.log("两部分未完成的记录");
             console.log(array);
-            console.log(array[0]);
             console.log(array.length);
-
             /*for (var i = 0; i < array.length; i++) {
              for (var j = 0; j < array[i].orders.length; j++) {
              if (array[i].orders[j].id == operateId) {
@@ -207,18 +185,16 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
             for (var i = 0; i < array.length; i++) {
                 console.log(operateId);
-                console.log(array[0].id);
-                //console.log(array[1].id);
-                //console.log(array[2].id);
                 if (array[i].id == operateId) {
                     arr = array[i];
                     console.log("$$$$$$$$");
                     console.log(arr);
-                    //break;
                 }
             }
 
             var APSConfigs = {};
+            //APSconfigs.t0 = moment(arr.apsStartTime).format('YYYY-MM-DD HH:mm:ss');
+            //APSconfigs.t2 = moment(arr.apsEndTime).format('YYYY-MM-DD HH:mm:ss');
             APSConfigs.t0 = "";
             APSConfigs.t2 = "";
 
@@ -281,16 +257,12 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 console.log("排程返回的数据:");
                 console.log(response.data);
                 curobj.splice(0, curobj.length);
+                lastobj.splice(0, lastobj.length);
                 array.splice(0, array.length);
-                console.log(curobj);
-                console.log(array);
-                setTimeout('window.location.reload();', 150000);
+                //setTimeout('window.location.reload();', 150000);
             }, function errorCallback(response) {
                 alert("请求错误！");
             });
-            //curobj.splice(0, curobj.length);
-            //console.log("222" + curobj);
-            //setTimeout('window.location.reload();', 0.1);
         };
 
         //表格信息重置
@@ -309,14 +281,13 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
         //日历部分
         $scope.showSchedule = function () {
-
             //获取上次排程信息
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log("获取上次排程信息状态");
                 console.log(response.status);
                 console.log("获取上次排程信息");
                 console.log(response.data);
-                obj = response.data;
+                var obj = response.data;
 
                 var startCalcTime = moment(obj.startCalcTime).format("YYYY-MM-DD");
                 console.log("上次排程计算开始时间" + startCalcTime);
@@ -397,77 +368,95 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
         };
 
-        $scope.showLastInfo = function () {
+        $scope.showInfo = function () {
+            var obj = [];
+            obj.splice(0, obj.length);
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log("获取上次排程信息状态");
                 console.log(response.status);
                 console.log("获取上次排程信息");
                 console.log(response.data);
                 obj = response.data;
-                console.log(obj.orders);
-                console.log(obj.orders[0].finished);
-                console.log(obj.orders[1].finished);
-                console.log(obj.orders.length);
 
                 for (var i = 0; i < obj.orders.length; i++) {
                     if (obj.orders[i].finished == false) {
                         var lastinfo = {};
                         lastinfo = (obj.orders[i]);
-                        console.log(lastinfo);
-                        lastarray.push(lastinfo);
+                        lastobj.push(lastinfo);
                     } else {
                         console.log("完成了！");
                     }
                 }
-                $scope.lastarray = lastarray;
-                console.log(lastarray);
+
+                //开始访问当前未完成的记录
+                curobj.splice(0, curobj.length);
+                var cur = {};
+                var startTime = moment().format("YYYY-MM-DD");
+                console.log("当前开始时间" + startTime);
+                cur.startTime = (new Date(startTime)).getTime();
+
+                console.log("当前排程时间" + scheduleDays);
+                var scheduleDays0 = scheduleDays;
+
+                var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
+                console.log("当前结束时间" + endTime);
+                cur.endTime = (new Date(endTime)).getTime();
+
+                cur.isFinished = false;
+
+                var data = JSON.stringify(cur);
+
+                console.log("当前排程json字符串" + data);
+
+                myHttpService.post(serviceList.CurInfo, data).then(function (response) {
+                    console.log("获取当前排程信息" + response.status);
+                    console.log(response.data);
+                    for (var i = 0; i < response.data.length; i++) {
+                        curobj.push(response.data[i]);
+                    }
+
+                    //剔除相同的记录
+                    //把上一次记录push到array
+                    for (var i = 0; i < lastobj.length; i++) {
+                        array.push(lastobj[i]);
+                        console.log("循环一次后");
+                        for (var i = 0; i < curobj.length; i++) {
+                            array.push(curobj[i]);
+                        }
+                    }
+
+                    console.log("删除前的数组");
+                    var result = [];
+                    for (var i = 0; i < array.length; i++) {
+                        /*if(array[i].id==array[i+1].id){
+                         array.splice(i, 1);
+                         console.log(array);
+                         }*/
+                        var flag = true;
+                        for (var j = i; j < array.length - 1; j++) {
+                            if (array[i].id == array[j + 1].id) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            result.push(array[i])
+                        }
+                    }
+                    console.log("删除后的数组");
+                    array = result;
+                    console.log(array);
+
+                    $scope.info = array;
+                });
+
             }, function errorCallback(response) {
                 alert("请求错误！");
-            })
-        };
 
-
-        $scope.showCurInfo = function () {
-            var cur = {};
-            var startTime = moment().format("YYYY-MM-DD");
-            console.log("当前开始时间" + startTime);
-            cur.startTime = (new Date(startTime)).getTime();
-
-            console.log("当前排程时间" + scheduleDays);
-            var scheduleDays0 = scheduleDays;
-
-            var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
-            console.log("当前结束时间" + endTime);
-            cur.endTime = (new Date(endTime)).getTime();
-
-            cur.isFinished = false;
-
-            var data = JSON.stringify(cur);
-
-            console.log("当前排程json字符串" + data);
-
-            myHttpService.post(serviceList.CurInfo, data).then(function (response) {
-                console.log("获取当前排程信息" + response.status);
-                console.log(response.data);
-                for (var i = 0; i < response.data.length; i++) {
-                    curobj.push(response.data[i]);
-                }
-                $scope.curinfo = curobj;
-                console.log(curobj);
             });
+
         };
 
-        /*$scope.showInfo = function () {
-         for (var i = 0; i < curobj.length; i++) {
-         if (curobj[i].id == lastarray[0].id) {
-         $scope.lastarray = lastarray;
-         break;
-         } else {
-         $scope.lastarray = lastarray;
-         $scope.curinfo = curobj;
-         }
-         }
-         }*/
 
         $scope.choosedOrder = function () {
             var rows = document.getElementById("orders").rows;
