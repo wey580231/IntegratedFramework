@@ -15,7 +15,7 @@ import java.util.Map;
 public class APSDatabaseSync {
     public static boolean SyncAPSTable(String tableName) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from " + tableName + "";
-        List list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+        List list = Tools.executeSQLForList(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
         if (tableName.equals(DatabaseInfo.APS_PRODUCT)) {
             return SyncProductTable(list);
         }
