@@ -215,7 +215,7 @@
             </table>
             <table class="uk-table uk-table-striped uk-table-hover " id="orders" style="width:100%">
                 <tbody class="uk-text-center">
-                <tr ng-repeat="x in lastarray">
+                <tr ng-repeat="x in info">
                     <td><input id="check1" name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                     <td style="display:none">{{$index+1}}</td>
@@ -227,7 +227,7 @@
                     <td>{{x.t1}}</td>
                     <td>{{x.t2}}</td>
                 </tr>
-                <tr ng-repeat="x in curinfo">
+                <!--<tr ng-repeat="x in curinfo">
                     <td><input id="check2" name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
                     <td style="display:none">{{$index+1}}</td>
@@ -238,7 +238,7 @@
                     <td>{{x.t0}}</td>
                     <td>{{x.t1}}</td>
                     <td>{{x.t2}}</td>
-                </tr>
+                </tr>-->
                 </tbody>
             </table>
         </div>
@@ -294,7 +294,7 @@
                     <button class="uk-button my" data-uk-modal="{target:'#choose'}"><a href="">上一页</a></button>
                 </li>
                 <li>
-                    <button class="uk-button my" ng-click="showCurInfo();"
+                    <button class="uk-button my" ng-click="showInfo()"
                             data-uk-modal="{target:'#chooseOrder'}"><a href="">下一页</a></button>
                 </li>
             </ul>
