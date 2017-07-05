@@ -6,7 +6,8 @@
 
     <class name="com.rengu.entity.RG_PlanEntity" table="RG_Plan" schema="testdatabase">
         <id name="id">
-            <column name="id" sql-type="varchar(60)" length="60" not-null="true"/>
+            <column name="id" sql-type="int" not-null="true"/>
+            <generator class="identity"></generator>
         </id>
         <property name="idTask">
             <column name="idTask" sql-type="varchar(60)" length="60" not-null="false"/>

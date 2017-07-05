@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_PlanEntity {
-    private String id;
+    private int id;
     private String idTask;                                      //工序编码
     private String idJob;                                       //作业编码
     private String nameTask;                                    //工序名称
@@ -71,11 +71,11 @@ public class RG_PlanEntity {
 
     private RG_SnapshotNodeEntity snapShort;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -566,7 +566,7 @@ public class RG_PlanEntity {
 
         RG_PlanEntity that = (RG_PlanEntity) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (id != that.id) return false;
         if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
         if (idJob != null ? !idJob.equals(that.idJob) : that.idJob != null) return false;
         if (nameTask != null ? !nameTask.equals(that.nameTask) : that.nameTask != null) return false;
@@ -641,7 +641,7 @@ public class RG_PlanEntity {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id;
         result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
         result = 31 * result + (idJob != null ? idJob.hashCode() : 0);
         result = 31 * result + (nameTask != null ? nameTask.hashCode() : 0);
