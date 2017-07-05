@@ -9,6 +9,9 @@ public class DefaultAction extends ActionSupport{
 
     @Override
     public String execute() throws Exception {
+
+        System.out.println("=======");
+
         return super.execute();
     }
 }
