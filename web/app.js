@@ -4,26 +4,7 @@
 'use strict';
 angular.module("IntegratedFramework", [
     'ngRoute',
-    'IntegratedFramework.OrderManagementController',
-    'IntegratedFramework.BOMManagementController',
-    'IntegratedFramework.ResourceDistributionController',
-    'IntegratedFramework.ResourceListController',
-    'IntegratedFramework.ResourceGroupController',
-    'IntegratedFramework.ResourceClassifyController',
-    'IntegratedFramework.ResourceStationController',
-    'IntegratedFramework.WorkListController',
-    'IntegratedFramework.OnlineManagementController',
-    'IntegratedFramework.DeviceMonitorController',
-    'IntegratedFramework.AdjustDeviceController',
-    'IntegratedFramework.AdjustOrderController',
-    'IntegratedFramework.AdjustFactoryController',
-    'IntegratedFramework.AdjustProcedureController',
-    'IntegratedFramework.ShowController',
-    'IntegratedFramework.ScheduleGuideController',
-    'IntegratedFramework.ScheduleSnapController',
-    'IntegratedFramework.InteractiveController',
-    'IntegratedFramework.GuideController',
-    'IntegratedFramework.MainPage'
+    'IntegratedFramework.OrderManagementController'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');
@@ -137,7 +118,6 @@ angular.module("IntegratedFramework", [
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
-
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
         return service;
