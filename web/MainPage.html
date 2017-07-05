@@ -3,7 +3,7 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html>
+<html ng-app="IntegratedFramework">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,42 +74,6 @@ desired effect
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
-                        <!-- Menu toggle button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">4</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 4 messages</li>
-                            <li>
-                                <!-- inner menu: contains the messages -->
-                                <ul class="menu">
-                                    <li><!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <!-- User Image -->
-                                                <img src="dist/img/user2-160x160.jpg" class="img-circle"
-                                                     alt="User Image">
-                                            </div>
-                                            <!-- Message title and timestamp -->
-                                            <h4>
-                                                Support Team
-                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                            </h4>
-                                            <!-- The message -->
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <!-- end message -->
-                                </ul>
-                                <!-- /.menu -->
-                            </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
-                        </ul>
-                    </li>
-                    <!-- /.messages-menu -->
 
                     <!-- Notifications Menu -->
                     <li class="dropdown notifications-menu">
@@ -134,45 +98,7 @@ desired effect
                             <li class="footer"><a href="#">View all</a></li>
                         </ul>
                     </li>
-                    <!-- Tasks Menu -->
-                    <li class="dropdown tasks-menu">
-                        <!-- Menu Toggle Button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-flag-o"></i>
-                            <span class="label label-danger">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 9 tasks</li>
-                            <li>
-                                <!-- Inner menu: contains the tasks -->
-                                <ul class="menu">
-                                    <li><!-- Task item -->
-                                        <a href="#">
-                                            <!-- Task title and progress text -->
-                                            <h3>
-                                                Design some buttons
-                                                <small class="pull-right">20%</small>
-                                            </h3>
-                                            <!-- The progress bar -->
-                                            <div class="progress xs">
-                                                <!-- Change the css width attribute to simulate progress -->
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%"
-                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                     aria-valuemax="100">
-                                                    <span class="sr-only">20% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <!-- end task item -->
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all tasks</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- User Account Menu -->
+                    <!-- 用户 -->
                     <li class="dropdown user user-menu">
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -217,7 +143,7 @@ desired effect
                             </li>
                         </ul>
                     </li>
-                    <!-- Control Sidebar Toggle Button -->
+                    <!-- 设置 -->
                     <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
@@ -243,8 +169,8 @@ desired effect
                 </div>
             </div>
 
-            <!-- search form (Optional) -->
-            <form action="#" method="get" class="sidebar-form">
+            <!-- 搜索 -->
+            <!--<form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search...">
                     <span class="input-group-btn">
@@ -252,26 +178,96 @@ desired effect
                 </button>
               </span>
                 </div>
-            </form>
+            </form>-->
             <!-- /.search form -->
 
-            <!-- Sidebar Menu -->
+            <!-- 左侧列表 -->
             <ul class="sidebar-menu">
-                <li class="header">HEADER</li>
-                <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                <li class="header">NAVIGATOR</li>
+                <!-- 列表 -->
+                <!--订单-->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                    <a href="#"><i class="fa fa-reorder"></i> <span>订单任务管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
+                        <li><a href="#!/OrderManagement"><i class="fa fa-circle-o"></i>订单管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>制造BOM管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>工序资源分配管理</a></li>
                     </ul>
                 </li>
+                <!--资源-->
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-file"></i> <span>资源设备管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i>资源列表管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>资源分类管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>资源工组管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>资源工位管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>资源工作班次管理</a></li>
+                    </ul>
+                </li>
+                <!--计划-->
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-paper-plane-o"></i> <span>计划排程管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i>计划排程管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>计划排程快照管理</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>交互式优化与结果可视化</a></li>
+                    </ul>
+                </li>
+                <!--在线-->
+                <li class="treeview">
+                <a href="#"><i class="fa fa-video-camera"></i> <span>在线监控管理</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i>设备监控</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>订单执行监控</a></li>
+                </ul>
+            </li>
+                <!--高级-->
+                <li class="treeview">
+                <a href="#"><i class="fa fa-gg"></i> <span>高级调整分析</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-circle-o"></i>调整工序</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>调整订单任务</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>调整设备资源</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>调整工厂布局</a></li>
+                </ul>
+            </li>
+                <!--三维-->
+                <li class="treeview">
+                    <a href="#"><i class="fa  fa-yelp"></i> <span>三维可视化</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i>可视化显示</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>可视化配置</a></li>
+                    </ul>
+                </li>
+
+
+
+
             </ul>
             <!-- /.sidebar-menu -->
         </section>
@@ -283,34 +279,36 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>Optional description</small>
+                MainPage
+                <small>放首页图</small>
             </h1>
-            <ol class="breadcrumb">
+            <!--<ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                 <li class="active">Here</li>
-            </ol>
+            </ol>-->
         </section>
 
         <!-- Main content -->
         <section class="content">
 
             <!-- Your Page Content Here -->
-
+            <div>
+                <ng-view></ng-view>
+            </div>
         </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
+    <!--<footer class="main-footer">
+        &lt;!&ndash; To the right &ndash;&gt;
         <div class="pull-right hidden-xs">
             Anything you want
         </div>
-        <!-- Default to the left -->
+        &lt;!&ndash; Default to the left &ndash;&gt;
         <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-    </footer>
+    </footer>-->
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -399,6 +397,14 @@ desired effect
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/app.min.js"></script>
+<!--AngularJS-->
+<script src="Angular/angular.min.js"></script>
+<script src="Angular/angular-route.min.js"></script>
+
+
+<script src="app.js"></script>
+
+<script src="pages/OrderManagement/OrderManagementController.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

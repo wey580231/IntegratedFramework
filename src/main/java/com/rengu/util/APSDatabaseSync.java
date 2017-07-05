@@ -1,5 +1,7 @@
 package com.rengu.util;
 
+import com.rengu.DAO.impl.ProductDAOImpl;
+import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ProductEntity;
 
 import java.sql.SQLException;
@@ -17,6 +19,9 @@ public class APSDatabaseSync {
         if (tableName.equals(DatabaseInfo.APS_PRODUCT)) {
             return SyncProductTable(list);
         }
+        if (tableName.equals(DatabaseInfo.APS_ORDER)) {
+            return SyncOrderTable(list);
+        }
         return false;
     }
 
@@ -31,9 +36,26 @@ public class APSDatabaseSync {
                 rg_productEntity.setRef(getStringFromHashMap(tempMap, "REF"));
                 rg_productEntity.setDepth(getStringFromHashMap(tempMap, "DEPTH"));
                 rg_productEntity.setStock(getShortFromHashMap(tempMap, "STOCK"));
+                ProductDAOImpl productDAO = DAOFactory.getProductDAOImplInstance();
+                productDAO.save(rg_productEntity);
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    private static boolean SyncOrderTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = new HashMap();
+                RG_OrderEntity rg_orderEntity = new RG_OrderEntity();
+                rg_orderEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_orderEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                rg_orderEntity.setType(getStringFromHashMap(tempMap, "TYPE"));
+                return true;
+            }
+        }
+        return false;
     }
 
     private static String getStringFromHashMap(Map map, String mapKay) {

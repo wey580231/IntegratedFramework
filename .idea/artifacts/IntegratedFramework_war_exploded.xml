@@ -7,6 +7,9 @@
           <element id="module-output" name="IntegratedFramework" />
         </element>
         <element id="directory" name="lib">
+          <element id="archive" name="IntegratedFramework-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="IntegratedFramework" />
+          </element>
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
           <element id="library" level="project" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:6.0.6" />
