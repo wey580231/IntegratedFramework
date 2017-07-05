@@ -102,7 +102,7 @@ public class ApsTools {
     //获取排程结果
     public static void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from APS_PLAN";
-        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+        List<?> list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         for (Object object : list) {
 //        for (int i = 0; i < 5; i++) {
@@ -396,6 +396,6 @@ public class ApsTools {
 
     //获取aps计算完后返回结果地址
     public String getReplyAddress() {
-        return localAddress + ":" + localPort + localProjectName+ replyApsAction;
+        return localAddress + ":" + localPort + localProjectName + replyApsAction;
     }
 }

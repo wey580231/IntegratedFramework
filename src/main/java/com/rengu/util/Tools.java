@@ -105,7 +105,7 @@ public class Tools {
         return resultFlag;
     }
 
-    public static List executeSQLForResultSet(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
+    public static ResultSet executeSQLForResultSet(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
         Properties databaseProperties = getDatabaseProperties();
         String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
@@ -116,10 +116,13 @@ public class Tools {
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(SQLString);
-        List list = resultSetConvertToList(resultSet);
         statement.close();
         connection.close();
-        return list;
+        return resultSet;
+    }
+
+    public static List executeSQLForList(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
+        return resultSetConvertToList(executeSQLForResultSet(databaseType, companyName, SQLString));
     }
 
     public static List resultSetConvertToList(ResultSet resultSet) throws SQLException {
