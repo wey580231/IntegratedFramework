@@ -188,6 +188,12 @@
         <property name="rootProcess">
             <column name="rootProcess" sql-type="tinyint(1)" not-null="false"></column>
         </property>
+        <property name="transport">
+            <column name="transport" sql-type="tinyint(1)" not-null="false"/>
+        </property>
+        <property name="operation">
+            <column name="operation" sql-type="varchar(20)" length="20" not-null="false"/>
+        </property>
         <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
             <column name="idProduct" not-null="false"/>
         </many-to-one>

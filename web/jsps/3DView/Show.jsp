@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <div id="d3view" style="width:100%;bottom:1px;margin:0px;padding:0px;">
+    <div id="d3view" style="width:100%;bottom:1px;margin:0px;padding:0px;background-color: red;">
         <iframe id="frame" src="http://localhost:8080/WebGL"
                 style="width:100%;height:100% ;margin:0px;padding:0px"></iframe>
     </div>
@@ -50,6 +50,8 @@
         var height = $("#content").height() - $("#menuBar").height();
         $("#d3view").css("height", height);
         $("#frame").css("height", height);
+
+        console.log(height);
     }
 
     $(document).ready(function () {
