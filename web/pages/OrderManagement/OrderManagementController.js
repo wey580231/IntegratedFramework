@@ -12,5 +12,4 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
     .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList) {
 
-
     });
