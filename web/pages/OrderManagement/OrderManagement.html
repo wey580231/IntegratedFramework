@@ -1,9 +1,49 @@
+<script>
+    $(function () {
+        //Enable iCheck plugin for checkboxes
+        //iCheck for checkbox and radio inputs
+        $('.mailbox-messages input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+
+        //Enable check and uncheck all functionality
+        $(".checkbox-toggle").click(function () {
+            var clicks = $(this).data('clicks');
+            if (clicks) {
+                //Uncheck all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+            } else {
+                //Check all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("check");
+                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+            }
+            $(this).data("clicks", !clicks);
+        });
+    });
+</script>
+
 <div>
-    <div style="margin-top: -20px;">
+    <div style="height: 40px;">
+        <!--按钮-->
+        <div class="btn-group" style="float: right;">
+            <button type="button" class="btn btn-info">新增</button>
+            <button type="button" class="btn btn-info">修改</button>
+            <button type="button" class="btn btn-info">删除</button>
+        </div>
+
+        <!--标题-->
+        <div>
+
             <h3>
-                MainPage
-                <small>放首页图....</small>
+                订单页面
             </h3>
+
+
+        </div>
+
+
     </div>
 
 
@@ -16,131 +56,80 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th style="width: 10px">#</th>
-                    <th>Task</th>
-                    <th>Progress</th>
-                    <th style="width: 40px">Label</th>
+                    <th>名称</th>
+                    <th>类型</th>
+                    <th>来源</th>
+                    <th>数量</th>
+                    <th>下单时间</th>
+                    <th>状态</th>
+
                 </tr>
                 <tr>
-                    <td>1.</td>
-                    <td>Update software</td>
-                    <td>
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                        </div>
-                    </td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
                     <td><span class="badge bg-red">55%</span></td>
                 </tr>
                 <tr>
-                    <td>2.</td>
-                    <td>Clean database</td>
-                    <td>
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-yellow">70%</span></td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>Cron job running</td>
-                    <td>
-                        <div class="progress progress-xs progress-striped active">
-                            <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-light-blue">30%</span></td>
-                </tr>
-                <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td>
-                        <div class="progress progress-xs progress-striped active">
-                            <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-green">90%</span></td>
-                </tr>
-                <tr>
-                    <td>1.</td>
-                    <td>Update software</td>
-                    <td>
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                        </div>
-                    </td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
                     <td><span class="badge bg-red">55%</span></td>
                 </tr>
                 <tr>
-                    <td>2.</td>
-                    <td>Clean database</td>
-                    <td>
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-yellow">70%</span></td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>Cron job running</td>
-                    <td>
-                        <div class="progress progress-xs progress-striped active">
-                            <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-light-blue">30%</span></td>
-                </tr>
-                <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td>
-                        <div class="progress progress-xs progress-striped active">
-                            <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-green">90%</span></td>
-                </tr>
-                <tr>
-                    <td>1.</td>
-                    <td>Update software</td>
-                    <td>
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                        </div>
-                    </td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
                     <td><span class="badge bg-red">55%</span></td>
                 </tr>
                 <tr>
-                    <td>2.</td>
-                    <td>Clean database</td>
-                    <td>
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-yellow">70%</span></td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
+                    <td><span class="badge bg-red">55%</span></td>
                 </tr>
                 <tr>
-                    <td>3.</td>
-                    <td>Cron job running</td>
-                    <td>
-                        <div class="progress progress-xs progress-striped active">
-                            <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-light-blue">30%</span></td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
+                    <td><span class="badge bg-red">55%</span></td>
                 </tr>
                 <tr>
-                    <td>4.</td>
-                    <td>Fix and squish bugs</td>
-                    <td>
-                        <div class="progress progress-xs progress-striped active">
-                            <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                        </div>
-                    </td>
-                    <td><span class="badge bg-green">90%</span></td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
+                    <td><span class="badge bg-red">55%</span></td>
                 </tr>
+                <tr>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
+                    <td><span class="badge bg-red">55%</span></td>
+                </tr>
+                <tr>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>未知</td>
+                    <td>50</td>
+                    <td>2017-7-5</td>
+                    <td><span class="badge bg-red">55%</span></td>
+                </tr>
+
+
 
                 </tbody>
             </table>
