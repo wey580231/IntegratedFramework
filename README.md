@@ -35,6 +35,7 @@ IntegratedFramework Project
 * 20170630:调整页面所有资源的请求地址，使用相对地址代替;解决tomcat中直接部署问题
 * 20170703:增加ActiveMQ库
 * 20170705:增加服务器启动时自动启动hibernate和activemq服务
+* 20170705:增加ActiveMQ的多线程解析、发送
             
 
 ## 已知问题
