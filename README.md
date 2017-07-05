@@ -33,6 +33,8 @@ IntegratedFramework Project
 * 20170629:嵌入APS activeX控件，支持登录与切换
            增加主页流程图
 * 20170630:调整页面所有资源的请求地址，使用相对地址代替;解决tomcat中直接部署问题
+* 20170703:增加ActiveMQ库
+* 20170705:增加服务器启动时自动启动hibernate和activemq服务
             
 
 ## 已知问题

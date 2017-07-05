@@ -8,56 +8,56 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_PlanEntity {
     private String id;
-    private String idTask;
-    private String idJob;
-    private String nameTask;
-    private String nameOrder;
-    private String nameJob;
-    private String nameResource;
-    private String nameGroupResource;
-    private String nameTypeResource;
-    private String nameSite;
-    private String nameProductOrder;
-    private String nameProvider;
-    private Short ordToParentTask;
-    private String idTaskResourceSucc;
-    private String preemptiveTask;
-    private String divisibleTask;
-    private String continuousTask;
-    private Short quantityTask;
-    private Short quantityResourceTask;
-    private Short quantityBatchTask;
-    private Short qtySequence;
-    private String t1Task;
-    private String t2Task;
-    private String t2ExtendedTask;
-    private String advice;
-    private String estimateTask;
-    private String timeTask;
-    private String initTimeTask;
-    private String unitTimeTask;
-    private String postTimeTask;
-    private String checkTimeTask;
-    private String idGroupResource0Task;
-    private String idResource0Task;
-    private String idSite0Task;
-    private Short quantity0Task;
-    private String t10Task;
-    private String t20Task;
-    private String t20ExtendedTask;
-    private String t1Job;
-    private String t2Job;
-    private Short quantityJob;
-    private Short nbTaskJob;
-    private String refProductJob;
-    private Short ordToRootJob;
-    private String ordToRootChildJob;
-    private String t1Order;
-    private String t2Order;
-    private Short quantityOrder;
-    private Short priorityOrder;
-    private String colorOrder;
-    private Byte state;
+    private String idTask;                                      //工序编码
+    private String idJob;                                       //作业编码
+    private String nameTask;                                    //工序名称
+    private String nameOrder;                                   //订单名称
+    private String nameJob;                                     //作业名称
+    private String nameResource;                                //资源名称
+    private String nameGroupResource;                           //资源所在工组名称
+    private String nameTypeResource;                            //资源类型名称
+    private String nameSite;                                    //资源所在工位名称
+    private String nameProductOrder;                            //产品名称
+    private String nameProvider;                                //供应商名称
+    private Short ordToParentTask;                              //工序号
+    private String idTaskResourceSucc;                          //下道工序编码
+    private String preemptiveTask;                              //是否可抢占，1：可抢占；0：不可抢占
+    private String divisibleTask;                               //工序是否可拆分到多个资源上加工
+    private String continuousTask;                              //工序是否连续加工
+    private Short quantityTask;                                 //加工总数量
+    private Short quantityResourceTask;                         //工序在资源上加工的数量
+    private Short quantityBatchTask;                            //工序在资源上批次加工的数量
+    private Short qtySequence;                                  //序列内消耗型资源已消耗数量
+    private String t1Task;                                      //工序开始时间
+    private String t2Task;                                      //工序占用资源的结束时间
+    private String t2ExtendedTask;                              //工序实际结束时间
+    private String advice;                                      //拖期改进建议
+    private String estimateTask;                                //估时
+    private String timeTask;                                    //工序实际加工时间
+    private String initTimeTask;                                //工序准备时间
+    private String unitTimeTask;                                //工序单件时间
+    private String postTimeTask;                                //冷却时间
+    private String checkTimeTask;                               //检验时间
+    private String idGroupResource0Task;                        //工序预固定工组编码
+    private String idResource0Task;                             //工序预固定资源编码
+    private String idSite0Task;                                 //工序预固定工位编码
+    private Short quantity0Task;                                //工序预固定加工数量
+    private String t10Task;                                     //工序预固定开工时间
+    private String t20Task;                                     //工序预固定完工时间
+    private String t20ExtendedTask;                             //工序预固定实际完工时间
+    private String t1Job;                                       //作业开始时间
+    private String t2Job;                                       //作业结束时间
+    private Short quantityJob;                                  //作业数量
+    private Short nbTaskJob;                                    //作业内工序数
+    private String refProductJob;                               //作业图纸号
+    private Short ordToRootJob;                                 //作业号
+    private String ordToRootChildJob;                           //下一级作业号
+    private String t1Order;                                     //订单最早开工时间
+    private String t2Order;                                     //订单最晚交付时间
+    private Short quantityOrder;                                //订单数量
+    private Short priorityOrder;                                //订单优先级
+    private String colorOrder;                                  //订单在View中显示的颜色
+    private Byte state;                                         //状态
 
     private RG_ClubEntity clubByIdClub;
     private RG_ProcessEntity processByIdProcess;

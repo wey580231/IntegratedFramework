@@ -15,13 +15,8 @@
     <package name="default" extends="struts-default" namespace="/">
         <!--设置默认的action，当前包中的action均不满足时，使用此action作为默认跳转的压面-->
         <default-action-ref name="index"/>
-
-        <action name="UsersAction" class="com.rengu.actions.UsersAction" method="doLogin">
-            <result name="error">/jsps/Login/Login_Fail.jsp</result>
-            <result name="success">/jsps/Login/Login_Success.jsp</result>
-        </action>
         <action name="index" class="com.rengu.actions.DefaultAction">
-            <result>jsps/Login/MainPage.jsp</result>
+            <result>pages/MainPage.html</result>
         </action>
     </package>
 

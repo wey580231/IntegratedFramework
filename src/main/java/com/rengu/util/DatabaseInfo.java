@@ -19,4 +19,5 @@ public class DatabaseInfo {
     public static final String APS_SITE = "APS_SITE";
     public static final String APS_LOG = "APS_LOG";
     public static final String APS_SHIFT = "APS_SHIFT";
+    public static final String APS_PRODUCT = "APS_PRODUCT";
 }
