@@ -26,7 +26,7 @@ public class FullCalendarAction extends SuperAction {
         OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
         //按日期和完成状态查询
         List<RG_OrderEntity> rg_orderEntityUnfinishedList = ordersDAO.findAllByisFinishedAndDate(startDate, endDate, false);
-        List<FullCalendarEvent> fullCalendarEventList = new ArrayList<>();
+        List<FullCalendarEvent> fullCalendarEventList = new ArrayList<FullCalendarEvent>();
         for (RG_OrderEntity tempRG_OrderEntity : rg_orderEntityUnfinishedList) {
             FullCalendarEvent fullCalendarEvent = new FullCalendarEvent();
             fullCalendarEvent.setId(Tools.getUUID());

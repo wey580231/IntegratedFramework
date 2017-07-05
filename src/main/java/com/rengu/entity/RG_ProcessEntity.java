@@ -72,6 +72,9 @@ public class RG_ProcessEntity {
     private String idIcon;
     private Short nbTask;
     private boolean rootProcess;
+    private boolean transport;                      //是否为运输工艺，用于在结果转换时判断AGV状态。
+    private String operation;                       //工序对应3D车间的状态
+
     private RG_ProductEntity productByIdProduct;
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "processId")
     private RG_ProcessEntity processByIdProcess;
@@ -565,6 +568,22 @@ public class RG_ProcessEntity {
         this.rootProcess = rootProcess;
     }
 
+    public boolean isTransport() {
+        return transport;
+    }
+
+    public void setTransport(boolean transport) {
+        this.transport = transport;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
+
     public RG_ProductEntity getProductByIdProduct() {
         return productByIdProduct;
     }
@@ -597,6 +616,7 @@ public class RG_ProcessEntity {
         RG_ProcessEntity that = (RG_ProcessEntity) o;
 
         if (rootProcess != that.rootProcess) return false;
+        if (transport != that.transport) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (idRoot != null ? !idRoot.equals(that.idRoot) : that.idRoot != null) return false;
@@ -675,7 +695,8 @@ public class RG_ProcessEntity {
         if (modTimeBatch != null ? !modTimeBatch.equals(that.modTimeBatch) : that.modTimeBatch != null) return false;
         if (batch != null ? !batch.equals(that.batch) : that.batch != null) return false;
         if (idIcon != null ? !idIcon.equals(that.idIcon) : that.idIcon != null) return false;
-        return nbTask != null ? nbTask.equals(that.nbTask) : that.nbTask == null;
+        if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
+        return operation != null ? operation.equals(that.operation) : that.operation == null;
     }
 
     @Override
@@ -741,6 +762,8 @@ public class RG_ProcessEntity {
         result = 31 * result + (idIcon != null ? idIcon.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
         result = 31 * result + (rootProcess ? 1 : 0);
+        result = 31 * result + (transport ? 1 : 0);
+        result = 31 * result + (operation != null ? operation.hashCode() : 0);
         return result;
     }
 }
