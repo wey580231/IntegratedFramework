@@ -1,0 +1,285 @@
+/*
+        form表单的位置固定
+    */
+.uk-form {
+    display: inline-block;
+}
+
+/*
+    所有input的背景色
+*/
+.uk-form input:not([type="radio"]):not([type="checkbox"]), .uk-form select {
+    vertical-align: inherit;
+    background-color: #eef7fc;
+    height: 23px;
+}
+
+/*
+    表格奇数行颜色
+*/
+.uk-table-striped tbody tr:nth-of-type(2n+1) {
+    background: #f3f8fb;
+}
+
+/*
+        表格行高
+*/
+tr {
+    height: 45px;
+}
+
+/*
+        tab样式
+    */
+.uk-tab-grid > li:first-child > a:hover {
+    background: url("../images/bom_img/gongxu.png") no-repeat 30px;
+    background-position: 15px;
+}
+
+.uk-tab > li:nth-child(n+2) > a:hover {
+    background: url("../images/bom_img/gongxu.png") no-repeat 30px;
+    background-position: 15px;
+}
+
+.uk-tab > li:nth-child(n+2) > a:focus {
+    background: url("../images/bom_img/gongxu.png") no-repeat 30px;
+    background-position: 15px;
+
+}
+
+.uk-tab-grid > li:first-child > a:focus {
+    background: url("../images/bom_img/gongxu.png") no-repeat 30px;
+    background-position: 15px;
+
+}
+
+.bg {
+    background-color: #c1edfa;
+}
+
+/*
+       页码li样式
+*/
+.uk-pagination > li {
+    display: inline-block;
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+/*
+       页码样式
+*/
+.my {
+    background-color: #009dd8;
+    color: #fff;
+    background-image: url("../images/bom_img/ye3.png");
+    border-color: rgba(0, 0, 0, .2);
+    border-bottom-color: rgba(0, 0, 0, .4);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+}
+
+a {
+    color: black;
+    cursor: pointer;
+}
+
+/*
+    表格固定
+*/
+
+.fixtable-head table, .table-body table {
+    width: 100%;
+    text-align: left;
+}
+
+.fixtable-body {
+    width: 100%;
+    height: 250px;
+    overflow-y: scroll;
+    text-align: left;
+}
+
+/*
+.uk-table td {
+    vertical-align: top;
+    width: 40px;
+}*/
+
+.uk-table td {
+    vertical-align: top;
+    width: 30px;
+    /*width: 40px;*/
+    margin-left: 11px;
+    padding: 8px 22px;
+}
+
+
+table{
+    width:100%;
+}
+td{
+    height:24px;
+    width:50px;/** 固定单元格宽度，防止分离表头后，表头与数据行错位（缺点） */
+    /*line-height:24px;*/
+    line-height:28px;
+    padding:3px 5px;
+    /*background-color:#ddd;*/
+    word-break:break-all;/** 设置当文本过长时换行 */
+
+}
+
+#myTable > .uk-text-center > tr> td{
+    padding-left: 5px;
+}
+
+th{
+    height:24px;
+    width:50px;/** 不管是固定像素或是百分比，应与对应数据列的宽度一致 */
+    line-height:24px;
+    background-color:#cfc;
+}
+
+/*
+    快捷方式的样式
+*/
+#create-order {
+    border-radius: 50%;
+    /* background: rgba(0,0,0,0.3);
+     color: #fff;*/
+    top: 220px;
+    width: 55px;
+    height: 55px;
+    margin-top: -8px;
+}
+
+.selectpng{
+    border: 1px solid lightgray;
+    /*margin-left: 35%;*/
+    margin-left: 38%;
+    width: 30px;
+    height: 15px;
+    background-color: #cddae3;
+}
+
+.block{
+    height: 45px;
+    margin-top: 10px;
+    background-color: white;
+    margin-left: 0px;
+    width: 100%;
+}
+
+.tb{
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    background-color: white;
+
+    top: 80px;
+    bottom: 20px;
+    position: absolute;
+}
+
+.tbfir{
+    margin-top: 1%;
+    height: 100%;
+}
+
+.tbsec{
+    width: 100%;
+    border: 0px;
+    margin-top: -10px;
+    height: 100%;
+}
+
+.fixtable-head{
+    height: 50px;
+}
+
+.fixtable-body{
+    top: 50px;
+    bottom: 0px;
+    position: absolute;
+    height: auto;
+}
+
+.leftpic{
+    float:left;
+}
+
+.title{
+    float:left;
+    margin-top: 5px;
+}
+
+.search{
+    float:left;
+    margin-left: 2%;
+}
+
+.dateshow{
+    float:left;
+    margin-left: 2%;
+}
+
+.orderselect{
+    float:left;
+    margin-left: 2%;
+}
+
+.btngroup{
+    margin-top: 5px;
+    float: right;
+    margin-right: 1%;
+}
+
+/*计划排程弹出框*/
+.uk-modal-dialog{
+    width: 70%;
+    height: 70%;
+}
+
+.plansec{
+    width: 100%;
+}
+
+.planthird{
+    margin-left: 19px;
+    width: 100%;
+}
+
+.planchoose{
+    height: 90%;
+    width: 99%;
+}
+
+/*底部页码*/
+.planfooter{
+    width: 100%;
+    margin-top: 2px;
+    border-top: 1px solid lightgray;
+    padding-top:7px;
+}
+
+/*弹框表格*/
+.plantb{
+    border-top: 1px solid lightgray;
+    background-color: white;
+}
+
+.plantbfir{
+    height: 88%;
+    margin-top: 1%;
+}
+
+.plantable{
+    height: 92%;
+    overflow: hidden;
+}
+
+.planname{
+    font-family: sans-serif;
+}
+
+.planinput{
+    width: 200px;
+}
