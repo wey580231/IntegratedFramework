@@ -159,4 +159,9 @@
         <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
     </package>
 
+    <!--plan表-->
+    <package name="Plan" namespace="/plan" extends="struts-default">
+        <action name="getAllPlanBySnapshotId" class="com.rengu.actions.PlanAction" method="getAllPlanBySnapshotId"/>
+    </package>
+
 </struts>

@@ -26,7 +26,7 @@ public class FullCalendarAction extends SuperAction {
         OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
         //按日期和完成状态查询
         List<RG_OrderEntity> rg_orderEntityUnfinishedList = ordersDAO.findAllByisFinishedAndDate(startDate, endDate, false);
-        List<FullCalendarEvent> fullCalendarEventList = new ArrayList<>();
+        List<FullCalendarEvent> fullCalendarEventList = new ArrayList<FullCalendarEvent>();
         for (RG_OrderEntity tempRG_OrderEntity : rg_orderEntityUnfinishedList) {
             FullCalendarEvent fullCalendarEvent = new FullCalendarEvent();
             fullCalendarEvent.setId(Tools.getUUID());
@@ -53,7 +53,6 @@ public class FullCalendarAction extends SuperAction {
         }
         String jsonString = Tools.entityConvertToJsonString(fullCalendarEventList);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
-        System.out.println(jsonString);
     }
 
 
@@ -61,7 +60,6 @@ public class FullCalendarAction extends SuperAction {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
         RG_ScheduleEntity rg_scheduleEntity = scheduleDAO.findAllById(UserConfigTools.getLatestSchedule("1"));
         String jsonString = Tools.entityConvertToJsonString(rg_scheduleEntity);
-        System.out.println(jsonString);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 }

@@ -99,50 +99,10 @@ public class ApsTools {
         return result;
     }
 
-    //设备资源取消
-    public String getCancelDeviceURL(RG_AdjustDeviceEntity entity) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/RejectResource.n" +
-                "&" +
-                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n"
-                + convertSpaceWithTab(entity.getCancelTime()) + "\\n" + convertSpaceWithTab(entity.getLatestCancelTime()) +
-                "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
-                "&" +
-                "ID=001" +
-                "&" +
-                "DELAY=1000";
-        return result;
-    }
-
-    //设备资源不可用aps请求连接
-    public String getUnavailableDeviceURL(RG_AdjustDeviceEntity entity) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
-                "&" +
-                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
-                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
-                "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
-                "&" +
-                "ID=001" +
-                "&" +
-                "DELAY=1000\n";
-        return result;
-    }
-
-    //将字符转中包含的\s替换成\t
-    private String convertSpaceWithTab(String source) {
-        source = source.trim();
-
-        Pattern pattern = Pattern.compile("(\\s)+|\t|\r|\n");
-        Matcher match = pattern.matcher(source);
-
-        return match.replaceAll("\\\\t");
-    }
-
     //获取排程结果
-    public void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
-        String SQLString = "select * from aps_plan";
-        List<?> list = Tools.executeSQLForResultSet(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+    public static void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
+        String SQLString = "select * from APS_PLAN";
+        List<?> list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         for (Object object : list) {
 //        for (int i = 0; i < 5; i++) {
@@ -151,7 +111,7 @@ public class ApsTools {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
                 rg_planEntity.setId(Tools.getUUID());
                 Map tempMap = (HashMap) object;
-                rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
+//                rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
                 rg_planEntity.setIdJob(tempMap.get("IDJOB").toString());
                 rg_planEntity.setNameTask(tempMap.get("NAMETASK").toString());
                 rg_planEntity.setNameOrder(tempMap.get("NAMEORDER").toString());
@@ -198,7 +158,7 @@ public class ApsTools {
                 rg_planEntity.setT2Order(tempMap.get("T2ORDER").toString());
                 rg_planEntity.setQuantityOrder(Short.parseShort(tempMap.get("QUANTITYORDER").toString()));
                 rg_planEntity.setPriorityOrder(Short.parseShort(tempMap.get("PRIORITYORDER").toString()));
-                rg_planEntity.setColorOrder(tempMap.get("COLORORDER").toString());
+//                rg_planEntity.setColorOrder(tempMap.get("COLORORDER").toString());
                 rg_planEntity.setState(Byte.parseByte(tempMap.get("STATE").toString()));
 //                //获取Club实体
 //                String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
@@ -275,6 +235,46 @@ public class ApsTools {
             }
         }
         System.out.println("APS_PLAN 表同步完成");
+    }
+
+    //设备资源取消
+    public String getCancelDeviceURL(RG_AdjustDeviceEntity entity) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/RejectResource.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n"
+                + convertSpaceWithTab(entity.getCancelTime()) + "\\n" + convertSpaceWithTab(entity.getLatestCancelTime()) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000";
+        return result;
+    }
+
+    //设备资源不可用aps请求连接
+    public String getUnavailableDeviceURL(RG_AdjustDeviceEntity entity) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/ModifyResourceTimeGantt.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
+                + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
+                "&" +
+                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000\n";
+        return result;
+    }
+
+    //将字符转中包含的\s替换成\t
+    private String convertSpaceWithTab(String source) {
+        source = source.trim();
+
+        Pattern pattern = Pattern.compile("(\\s)+|\t|\r|\n");
+        Matcher match = pattern.matcher(source);
+
+        return match.replaceAll("\\\\t");
     }
 
     //拼接请求命令
@@ -396,6 +396,6 @@ public class ApsTools {
 
     //获取aps计算完后返回结果地址
     public String getReplyAddress() {
-        return localAddress + ":" + localPort + localProjectName+ replyApsAction;
+        return localAddress + ":" + localPort + localProjectName + replyApsAction;
     }
 }

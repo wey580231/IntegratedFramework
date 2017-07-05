@@ -107,7 +107,7 @@
                                 <tr ng-repeat="x in arr | orderBy: 'id':desc">
                                     <td><input name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                                ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                    <%--<td id="id">{{x.id}}</td>--%>
+                                    <td id="id" style="display:none">{{x.id}}</td>
                                     <td id="name">{{x.name}}</td>
                                     <td id="typeSite">{{x.typeSite}}</td>
                                     <td id="IdSiteGroupResource">{{x.idSiteGroupResource}}</td>
@@ -162,11 +162,9 @@
 <div class="uk-modal uk-overflow-container" id="add">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="资源列表信息">
+        <div title="资源列表信息">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
-                    <label for="add-id">编码</label> <br/>
-                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-name">名称</label><br/>
                     <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-TypeSite">资源类型</label><br/>
@@ -193,11 +191,10 @@
 <div class="uk-modal uk-overflow-container" id="edit">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="资源列表信息">
+        <div title="资源列表信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
-                    <label for="edit-id">编码</label> <br/>
-                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-TypeSite">资源类型</label><br/>

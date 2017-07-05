@@ -26,7 +26,6 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         List list = shiftDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
-        System.out.println(jsonString);
     }
 
     public void findAllByUsername() throws Exception {

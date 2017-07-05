@@ -23,8 +23,8 @@ public class ScheduleAction extends SuperAction {
         //初始化数据库表
         try {
             //清空APS数据库
-//            String[] tableList = {DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_SHIFT};
-//            Tools.executeSQLForInitTable(DatabaseInfo.MySQL, DatabaseInfo.APS, tableList);
+//            String[] tableList = {DatabaseInfo.APS_LOG};
+//            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableList);
 
             //更新数据库表内容
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
@@ -55,13 +55,15 @@ public class ScheduleAction extends SuperAction {
 
                 if (APS_ConfigNodeKey.equals("t0")) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date statTime = sdf.parse(APS_ConfigNodeValue);
-                    rg_scheduleEntity.setApsStartTime(statTime);
+//                    Date statTime = sdf.parse(APS_ConfigNodeValue);
+//                    rg_scheduleEntity.setApsStartTime(statTime);
+                    rg_scheduleEntity.setApsStartTime(new Date());
                 }
                 if (APS_ConfigNodeKey.equals("t2")) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date endTime = sdf.parse(APS_ConfigNodeValue);
-                    rg_scheduleEntity.setApsEndTime(endTime);
+//                    Date endTime = sdf.parse(APS_ConfigNodeValue);
+//                    rg_scheduleEntity.setApsEndTime(endTime);
+                    rg_scheduleEntity.setApsStartTime(new Date());
                 }
                 if (APS_ConfigNodeKey.equals("objective")) {
                     rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);
@@ -81,7 +83,6 @@ public class ScheduleAction extends SuperAction {
 
             //解析Layout数据
             JsonNode layoutNodes = rootNode.get("layout");
-            System.out.println(layoutNodes.isArray());
             if (layoutNodes.size() == 1) {
                 RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").toString());
                 rg_scheduleEntity.setLayout(layout);
@@ -101,7 +102,6 @@ public class ScheduleAction extends SuperAction {
 
             //解析resources数据
             JsonNode resourcesNodes = rootNode.get("resources");
-            System.out.println(resourcesNodes.isArray());
             Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<RG_ResourceEntity>();
             for (JsonNode tempNode : resourcesNodes) {
                 RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, tempNode.get("id").toString());
@@ -194,8 +194,8 @@ public class ScheduleAction extends SuperAction {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
         List list = scheduleDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
+        System.out.println("SchedulesList的长度为：" + list.size());
         Tools.jsonPrint(jsonString, this.httpServletResponse);
-        System.out.println(jsonString);
     }
 
     private void printError() {

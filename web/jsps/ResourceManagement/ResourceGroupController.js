@@ -37,7 +37,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             myHttpService.post(serviceList.AddGroupResource, data).then(function successCallback(response) {
                 alert(response.status);
                 //用强制刷新解决按钮不能连续响应
-                setTimeout('window.location.reload();', 1);
+                setTimeout('window.location.reload();', 0.1);
             })
         };
 
@@ -75,22 +75,48 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             var data = JSON.stringify(params);
             myHttpService.delete(serviceList.DeleteGroupResource, data).then(function successCallback(response) {
                 console.log(response.status);
-                setTimeout('window.location.reload();', 1);
+                setTimeout('window.location.reload();', 0.1);
             });
-        }
+        };
+
+        var isCheck = function () {
+            var count = 1;
+            var a = document.getElementsByName("check");
+            for (var i = 0; i < a.length; i++) {
+                console.log(a[i].checked);
+                if (a[i].checked) {
+                    count++;
+                }
+            }
+            if (count > 1) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.edit = function () {
+            console.log(check());
+            if (isCheck()) {
+                //$('#edit').modal('show');
+                editGroupResource();
+            } else {
+                alert("请选择一条需要修改条目！");
+                $("input").val('');
+            }
+
+        };
 
         //修改订单
         $scope.editGroupResource = function () {
             var rows = document.getElementById("table_value").rows;
             var a = document.getElementsByName("check");
-            var table = document.getElementById("table_value");
-
             for (var i = 0; i < a.length; i++) {
                 if (a[i].checked) {
                     var row = a[i].parentElement.parentElement.rowIndex;
                     console.log(row);
                     var params = {};
-                    var arr = new Array();
+                    var arr = [];
                     params.id = rows[row].cells[1].innerHTML;
                     params.name = rows[row].cells[2].innerHTML;
                     params.idSite0 = rows[row].cells[3].innerHTML;
@@ -103,12 +129,12 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
         };
 
         $scope.update = function () {
-            var idVal = $("input[name='edit-id']").val();
+            //var idVal = $("input[name='edit-id']").val();
             var nameVal = $("input[name='edit-name']").val();
             var idSite0Val = $("input[name='edit-idSite0']").val();
             var stateVal = $("input[name='edit-state']").val();
             var params = {};
-            params.id = idVal;
+            params.id = operateId;
             params.name = nameVal;
             params.idSite0 = idSite0Val;
             params.state = stateVal;
@@ -117,7 +143,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             $("#edit").hide();
             myHttpService.post(serviceList.UpdateGroupResource, data).then(function (response) {
                 console.log(response.status);
-                setTimeout('window.location.reload();', 1);
+                setTimeout('window.location.reload();', 0.1);
             });
         };
 
@@ -171,4 +197,4 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             $("input#add-name").removeClass("uk-form-success");
         }
 
-    })
+    });

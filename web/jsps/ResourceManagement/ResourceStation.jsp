@@ -85,7 +85,7 @@
                                     </div>
 
                                 </td>
-                                <td>编码</td>
+                                <!--<td>编码</td>-->
                                 <td>名称</td>
                                 <td>坐标x</td>
                                 <td>坐标y</td>
@@ -101,7 +101,7 @@
                             <tr ng-repeat="x in arr | orderBy: 'id':desc">
                                 <td><input name="check" type="checkbox"  ng-checked="isSelected(x.id)"
                                            ng-click="updateSelection($event,x.id)" onclick="changeColor(this)"></td>
-                                <td>{{x.id}}</td>
+                                <td style="display:none">{{x.id}}</td>
                                 <td>{{x.name}}</td>
                                 <td>{{x.x}}</td>
                                 <td>{{x.y}}</td>
@@ -158,11 +158,10 @@
 <div class="uk-modal uk-overflow-container" id="add">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="资源工位信息">
+        <div title="资源工位信息">
             <form class="uk-form uk-form-horizontal">
                 <fieldset>
-                    <label for="add-id">编码</label> <br/>
-                    <input type="text" name="add-id" id="add-id" class="text ui-widget-content ui-corner-all" ><br/>
+
                     <label for="add-name">名称</label><br/>
                     <input type="text" name="add-name" id="add-name" class="text ui-widget-content ui-corner-all" ><br/>
                     <label for="add-x">坐标x</label><br/>
@@ -185,11 +184,10 @@
 <div class="uk-modal uk-overflow-container" id="edit">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div id="dialog-form" title="资源工位信息">
+        <div title="资源工位信息">
             <form>
                 <fieldset ng-repeat="x in form track by $index">
-                    <label for="edit-id">编码</label> <br/>
-                    <input type="text" name="edit-id" id="edit-id" class="text ui-widget-content ui-corner-all" value="{{x.id}}"><br/>
+
                     <label for="edit-name">名称</label><br/>
                     <input type="text" name="edit-name" id="edit-name" class="text ui-widget-content ui-corner-all" value="{{x.name}}"><br/>
                     <label for="edit-x">坐标x</label><br/>
