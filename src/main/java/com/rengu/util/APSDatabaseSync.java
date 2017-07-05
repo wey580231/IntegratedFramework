@@ -33,6 +33,7 @@ public class APSDatabaseSync {
                 rg_productEntity.setStock(getShortFromHashMap(tempMap, "STOCK"));
             }
         }
+        return true;
     }
 
     private static String getStringFromHashMap(Map map, String mapKay) {
