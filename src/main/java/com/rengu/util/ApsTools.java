@@ -111,7 +111,7 @@ public class ApsTools {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
                 rg_planEntity.setId(Tools.getUUID());
                 Map tempMap = (HashMap) object;
-//                rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
+                rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
                 rg_planEntity.setIdJob(tempMap.get("IDJOB").toString());
                 rg_planEntity.setNameTask(tempMap.get("NAMETASK").toString());
                 rg_planEntity.setNameOrder(tempMap.get("NAMEORDER").toString());

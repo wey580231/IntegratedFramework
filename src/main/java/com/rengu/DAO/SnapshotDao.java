@@ -3,11 +3,16 @@ package com.rengu.DAO;
 import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.SnapshotLevel;
+import freemarker.template.SimpleDate;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,10 +33,10 @@ public class SnapshotDao {
         if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息
-            Set<RG_PlanEntity> plans = bottomSnapshot.getPlans();
+            List<RG_PlanEntity> plans = bottomSnapshot.getPlans();
 
-            //【2】TODO 等真实需要转换时，再调用。
-//            convertPlanTo3DEmulateData(plans);
+            //【2】将plan表转换至模拟数据
+            result = convertPlanTo3DEmulateData(plans);
 
             RG_SnapshotNodeEntity rootParent = bottomSnapshot.getRootParent();
 
@@ -60,27 +65,63 @@ public class SnapshotDao {
     }
 
     //将plan表转换成3d车间的模拟数据，中间存在的字段需要框架来补充
-    private void convertPlanTo3DEmulateData(Set<RG_PlanEntity> plans) {
+    private boolean convertPlanTo3DEmulateData(List<RG_PlanEntity> plans) {
+        boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().openSession();
         session.beginTransaction();
 
         Query queryObject = session.createNativeQuery("truncate table rg_emulatedata");
-        if (queryObject.executeUpdate() >= 0) {
 
-            Iterator<RG_PlanEntity> iter = plans.iterator();
-            while (iter.hasNext()) {
-                RG_PlanEntity plan = iter.next();
+        if (queryObject.executeUpdate() >= 0 && plans.size() > 0) {
 
-                //TODO 将plan表转换成3d车间对应的格式
-                RG_EmulateDataEntity data = new RG_EmulateDataEntity();
+            try {
 
-                data.setOrderEntity(plan.getOrderByIdOrder());
+                RG_PlanEntity startPlan = plans.get(0);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-                session.save(data);
+                Date initialDate = sdf.parse(startPlan.getT1Task());
+
+                for (int i = 0; i < plans.size(); i++) {
+
+                    RG_PlanEntity plan = plans.get(i);
+
+                    RG_EmulateDataEntity data = new RG_EmulateDataEntity();
+
+                    //资源名
+                    data.setItem(plan.getResourceByIdResource().getId());
+                    //动作
+                    data.setState(plan.getProcessByIdProcess().getOperation());
+
+                    //货物
+
+                    //开始位置
+                    data.setStartLocation("CURRENT");
+
+                    //结束位置
+                    data.setEndLocation(plan.getSiteByIdSite().getId());
+
+                    Date startDate = sdf.parse(plan.getT1Task());
+                    Date endDate = sdf.parse(plan.getT2Task());
+
+                    //开始时间
+                    data.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+
+                    //结束时间
+                    data.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+
+                    data.setOrderEntity(plan.getOrderByIdOrder());
+
+                    session.save(data);
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         session.getTransaction().commit();
+
+        return flag;
     }
 
     //TODO 将结果下发给MES，下发之前取得MES的同意
