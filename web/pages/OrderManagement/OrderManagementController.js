@@ -13,6 +13,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
     .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList) {
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             $scope.orderList = response.data;
+            console.log("@@@@@@@");
         });
 
         //渲染checkBox样式
