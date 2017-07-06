@@ -81,6 +81,8 @@ angular.module("IntegratedFramework", [
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
 
+        service.GetOrderById = backUrl + "orders/findAllById.action";
+
         <!--工序信息-->
         service.ListProcess = backUrl + "process/getAllByIsRootNode.action";
         <!--工序资源信息-->
@@ -161,6 +163,15 @@ angular.module("IntegratedFramework", [
 
         service.checkLength = function (l) {
             if (l == "") {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkChinese = function (c) {
+            var CRegexp = /[^\u0000-\u00FF]/;
+            if (!CRegexp.test(c)) {
 
                 return false;
             }
