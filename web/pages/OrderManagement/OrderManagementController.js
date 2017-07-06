@@ -12,7 +12,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
     .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList) {
         myHttpService.get(serviceList.ListOrder).then(function (response) {
-            console.log(response.data);
             $scope.orderList = response.data;
         });
 
@@ -42,5 +41,4 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 });
             }
         }
-
     });
