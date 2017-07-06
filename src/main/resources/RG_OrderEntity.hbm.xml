@@ -81,7 +81,7 @@
             <column name="color" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
         <property name="state">
-            <column name="state" sql-type="tinyint(4)" not-null="false"/>
+            <column name="state" sql-type="tinyint(4)" not-null="false" default="1"/>
         </property>
         <property name="selected">
             <column name="selected" sql-type="tinyint(4)" not-null="false"/>

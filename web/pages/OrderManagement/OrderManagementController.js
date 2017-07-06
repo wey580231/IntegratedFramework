@@ -16,6 +16,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             console.log(response.data);
             $scope.orderList = response.data;
+            console.log("@@@@@@@");
         });
 
         //Date picker
