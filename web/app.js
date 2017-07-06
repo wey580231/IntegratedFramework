@@ -4,7 +4,8 @@
 'use strict';
 angular.module("IntegratedFramework", [
     'ngRoute',
-    'IntegratedFramework.OrderManagementController'
+    'IntegratedFramework.OrderManagementController',
+    'IntegratedFramework.ScheduleSnapController'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');
@@ -63,7 +64,6 @@ angular.module("IntegratedFramework", [
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
 
-
         <!--工序信息-->
         service.ListProcess = backUrl + "process/getAllByIsRootNode.action";
         <!--工序资源信息-->
@@ -112,7 +112,6 @@ angular.module("IntegratedFramework", [
 
         service.isChildNode = backUrl + "process/getAllById.action";
 
-
         service.isRootLevel = backUrl + "snapshot/getAllByByLevel.action";
 
         <!--高级调整分析-->
@@ -120,5 +119,37 @@ angular.module("IntegratedFramework", [
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+        return service;
+    })
+
+    .factory("validate", function () {
+        var service = {};
+        service.checkString = function (s) {
+            var SRegexp = /^[A-Za-z]+$/;
+            if (!SRegexp.test(s)) {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkNumber = function (n) {
+            var NRegexp = /^[0-9]+.?[0-9]*$/;
+            if (!NRegexp.test(n)) {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkLength = function (l) {
+            if (l == "") {
+
+                return false;
+            }
+            return true;
+        };
+
+
         return service;
     });
