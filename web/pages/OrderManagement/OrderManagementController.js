@@ -10,12 +10,23 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         })
     }])
 
-    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate) {
+    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
         var data = [];//保存新增和修改的信息
         var checkedInfo = [];//保存选中的记录信息
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             console.log(response.data);
             $scope.orderList = response.data;
+            console.log("@@@@@@@");
+        });
+
+        //Date picker
+        $('#add-t1-datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy/mm/dd'
+        });
+        $('#add-t2-datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy/mm/dd'
         });
 
         //渲染checkBox样式

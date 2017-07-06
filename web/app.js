@@ -55,6 +55,23 @@ angular.module("IntegratedFramework", [
         return service;
     }])
 
+    .factory("notification", function () {
+        var service = {};
+        service.sendNotification = function (notificationType, message) {
+            // Create an instance of Notyf
+            var notyf = new Notyf();
+            if (notificationType === "alert") {
+                // Display an alert notification
+                notyf.alert(message);
+            }
+            if (notificationType === "confirm") {
+                // Display a success notification
+                notyf.confirm(message);
+            }
+        };
+        return service;
+    })
+
     .factory("serviceList", function () {
         var service = {};
         var backUrl = "";
