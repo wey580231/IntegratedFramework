@@ -36,6 +36,8 @@ IntegratedFramework Project
 * 20170703:增加ActiveMQ库
 * 20170705:增加服务器启动时自动启动hibernate和activemq服务
 * 20170705:增加ActiveMQ的多线程解析、发送
+* 20170706:增加sha1算法，用于给mes发送数据时添加数据校验标识
+           增加对mes数据报文解析、存储
             
 
 ## 已知问题
