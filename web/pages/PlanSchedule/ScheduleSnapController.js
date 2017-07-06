@@ -21,6 +21,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             var setting = {
                 view: {
                     dblClickExpand: false,
+                    showIcon: false,
                     showLine: false
                 },
                 callback: {

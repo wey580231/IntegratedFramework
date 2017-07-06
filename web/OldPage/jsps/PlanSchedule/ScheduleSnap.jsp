@@ -152,7 +152,7 @@
     .ztree li span.button.switch.level0 {
         background: url("${pageContext.request.contextPath}/images/bom_img/1.png") no-repeat;
         position: relative;
-        margin-top: 14px;
+        margin-top: 3px;
         margin-left: 5px;
     }
 
@@ -162,8 +162,8 @@
     .ztree li span.button.switch.level1 {
         background: url("${pageContext.request.contextPath}/images/bom_img/2.png") no-repeat;
         position: relative;
-        margin-top: 15px;
-        margin-left: 10px;
+        margin-top: 300px;
+        margin-left: 100px;
     }
 
     /*
@@ -172,7 +172,7 @@
     .ztree li span.button.switch.level2 {
         background: url("${pageContext.request.contextPath}/images/bom_img/3.png") no-repeat;
         position: relative;
-        margin-top: 15px;
+        margin-top: 3px;
         margin-left: 12px;
     }
 
