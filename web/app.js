@@ -63,7 +63,6 @@ angular.module("IntegratedFramework", [
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
 
-
         <!--工序信息-->
         service.ListProcess = backUrl + "process/getAllByIsRootNode.action";
         <!--工序资源信息-->
@@ -111,7 +110,6 @@ angular.module("IntegratedFramework", [
         service.isRootNode = backUrl + "process/getAllByIsRootNode.action";
 
         service.isChildNode = backUrl + "process/getAllById.action";
-
 
         service.isRootLevel = backUrl + "snapshot/getAllByByLevel.action";
 
