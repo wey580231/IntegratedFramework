@@ -1,3 +1,22 @@
+<style type="text/css">
+    #rMenu {
+        position: absolute;
+        visibility: hidden;
+        top: 0;
+        background-color: #F0FFFF;
+        padding: -6px;
+        margin: 1px 3px;
+    }
+
+    #rMenu ul li {
+        cursor: pointer;
+        list-style: none;
+        background-color: #F0FFFF;
+        margin-left: -10px;
+        padding: 2px;
+    }
+</style>
+
 <div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -14,11 +33,25 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3">
-                <a href="compose.html" class="btn btn-primary btn-block margin-bottom">Compose</a>
 
+                <!--下拉-->
+                <div class="form-group">
+                    <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">Alabama</option>
+                        <option>Alaska</option>
+                        <option>California</option>
+                        <option>Delaware</option>
+                        <option>Tennessee</option>
+                        <option>Texas</option>
+                        <option>Washington</option>
+                    </select>
+                </div>
+
+
+                <!--树-->
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Folders</h3>
+                        <h3 class="box-title">ScheduleSnap</h3>
 
                         <div class="box-tools">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -26,15 +59,18 @@
                         </div>
                     </div>
                     <div class="box-body no-padding">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
-                                <span class="label label-primary pull-right">12</span></a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
-                            <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
-                            <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
-                        </ul>
+
+                        <div>
+                            <ul id="treeDemo" class="ztree"></ul>
+                        </div>
+
+                        <div id="rMenu">
+                            <ul>
+                                <li id="m_add" ng-click="addTreeNode()">增加</li>
+                                <li id="m_del" ng-click="removeTreeNode()">删除</li>
+                                <li id="m_re" ng-click="renameTreeNode()">重命名</li>
+                            </ul>
+                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
