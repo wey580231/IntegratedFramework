@@ -26,7 +26,7 @@
             <table class="table table-hover table-striped">
                 <tbody>
                 <tr>
-                    <td><input type="checkbox"></td>
+                    <td></td>
                     <th>名称</th>
                     <th>类型</th>
                     <th>来源</th>
@@ -44,7 +44,13 @@
                     <td>{{order.quantity}}</td>
                     <td>{{order.t0}}</td>
                     <td>{{order.t2}}</td>
-                    <td>{{order.status}}</td>
+                    <td>
+                        <span class="label label-success" ng-if="order.state == 0">候选</span>
+                        <span class="label label-primary" ng-if="order.state == 1">计划</span>
+                        <span class="label label-danger" ng-if="order.state == 2">锁定</span>
+                        <span class="label label-success" ng-if="order.state == 3">发布</span>
+                        <span class="label label-warning" ng-if="order.state == -1">删除</span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
