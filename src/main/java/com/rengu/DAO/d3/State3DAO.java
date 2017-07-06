@@ -30,8 +30,6 @@ public class State3DAO {
     public String getCurrentState() {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
-        System.out.println(session.getTransaction().isActive() + "+++++++++++" + session.getTransaction().toString());
-
         if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
