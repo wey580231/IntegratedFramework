@@ -120,4 +120,36 @@ angular.module("IntegratedFramework", [
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
         return service;
+    })
+
+    .factory("validate", function () {
+        var service = {};
+        service.checkString = function (s) {
+            var SRegexp = /^[A-Za-z]+$/;
+            if (!SRegexp.test(s)) {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkNumber = function (n) {
+            var NRegexp = /^[0-9]+.?[0-9]*$/;
+            if (!NRegexp.test(n)) {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkLength = function (l) {
+            if (l == "") {
+
+                return false;
+            }
+            return true;
+        };
+
+
+        return service;
     });
