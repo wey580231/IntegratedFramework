@@ -55,6 +55,23 @@ angular.module("IntegratedFramework", [
         return service;
     }])
 
+    .factory("notification", function () {
+        var service = {};
+        service.sendNotification = function (notificationType, message) {
+            // Create an instance of Notyf
+            var notyf = new Notyf();
+            if (notificationType === "alert") {
+                // Display an alert notification
+                notyf.alert(message);
+            }
+            if (notificationType === "confirm") {
+                // Display a success notification
+                notyf.confirm(message);
+            }
+        };
+        return service;
+    })
+
     .factory("serviceList", function () {
         var service = {};
         var backUrl = "";
@@ -119,5 +136,37 @@ angular.module("IntegratedFramework", [
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+        return service;
+    })
+
+    .factory("validate", function () {
+        var service = {};
+        service.checkString = function (s) {
+            var SRegexp = /^[A-Za-z]+$/;
+            if (!SRegexp.test(s)) {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkNumber = function (n) {
+            var NRegexp = /^[0-9]+.?[0-9]*$/;
+            if (!NRegexp.test(n)) {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkLength = function (l) {
+            if (l == "") {
+
+                return false;
+            }
+            return true;
+        };
+
+
         return service;
     });

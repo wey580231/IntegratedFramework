@@ -21,6 +21,16 @@ public class OrdersAction extends SuperAction {
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
+    public void findAllById() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
+        String orderId = jsonNode.get("id").asText();
+        OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
+        RG_OrderEntity rg_orderEntity = ordersDAO.findAllById(orderId);
+        String resultString = Tools.entityConvertToJsonString(rg_orderEntity);
+        Tools.jsonPrint(resultString, this.httpServletResponse);
+    }
+
     public void findAllByisFinishedAndDate() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
@@ -66,11 +76,8 @@ public class OrdersAction extends SuperAction {
 
     public void deleteById() {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-
         boolean result = false;
-
         result = DAOFactory.getOrdersDAOInstance().deleteById(jsonString);
-
         if (result) {
             Tools.jsonPrint(Tools.resultCode("0", "Success"), this.httpServletResponse);
         } else {

@@ -8,10 +8,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -122,7 +121,17 @@ public class Tools {
     }
 
     public static List executeSQLForList(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        return resultSetConvertToList(executeSQLForResultSet(databaseType, companyName, SQLString));
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
+        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
+        Class.forName(databaseDriver);
+        Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(SQLString);
+        return resultSetConvertToList(resultSet);
     }
 
     public static List resultSetConvertToList(ResultSet resultSet) throws SQLException {
@@ -229,7 +238,7 @@ public class Tools {
         return df.format(date);
     }
 
-    public static void showLog(){
+    public static void showLog() {
         System.out.println("○○○○○○○○○╭╭╮╮╮    ╭╭╭╮╮○○○○\n" +
                 "○○○○○○○○○╰╰ ╮╮    ╭╭ ╯╯○○○○○\n" +
                 "○○○○○○○○○○○○○╰╮╭╯○○○○○○○○\n" +
@@ -240,5 +249,35 @@ public class Tools {
                 "○○○○○███████████████○○○○○\n" +
                 "○○○○○◥██████████████○○○○○\n" +
                 "○﹏﹏﹏﹏﹏◥████████████◤﹏﹏﹏﹏﹏**==");
+    }
+
+    public static String getSha(String str){
+        if (null == str || 0 == str.length()){
+            return null;
+        }
+        char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'e', 'f'};
+        try {
+            MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
+            mdTemp.update(str.getBytes("UTF-8"));
+
+            byte[] md = mdTemp.digest();
+            int j = md.length;
+            char[] buf = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                buf[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                buf[k++] = hexDigits[byte0 & 0xf];
+            }
+
+            return new String(buf);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
