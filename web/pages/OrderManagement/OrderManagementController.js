@@ -157,10 +157,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     //用强制刷新解决按钮不能连续响应
                     //setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback(response) {
-                    alert("请求失败！");
+                    notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                alert("输入有误！");
+                notification.sendNotification("alert", "参数错误");
             }
         };
 
@@ -189,7 +189,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 //用强制刷新解决按钮不能连续响应
                 //setTimeout('window.location.reload();', 0.1);
             }, function errorCallback(response) {
-                alert("请求失败！");
+                notification.sendNotification("alert", "请求失败");
             })
         };
 
@@ -200,10 +200,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     data.splice(0, data.length);
                     //setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback(response) {
-                    alert("请求失败！");
+                    notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                alert("输入有误！");
+                notification.sendNotification("alert", "输入有误");
             }
         };
 
@@ -216,7 +216,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 //强制刷新解决按钮不能连续响应
                 //setTimeout('window.location.reload();', 0.1);
             }, function errorCallback(response) {
-                alert("请求失败！");
+                notification.sendNotification("alert", "请求失败");
             });
         };
 
