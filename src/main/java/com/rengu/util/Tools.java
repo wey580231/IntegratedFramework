@@ -122,7 +122,17 @@ public class Tools {
     }
 
     public static List executeSQLForList(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        return resultSetConvertToList(executeSQLForResultSet(databaseType, companyName, SQLString));
+        Properties databaseProperties = getDatabaseProperties();
+        String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
+        String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
+        String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
+        String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
+        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
+        Class.forName(databaseDriver);
+        Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(SQLString);
+        return resultSetConvertToList(resultSet);
     }
 
     public static List resultSetConvertToList(ResultSet resultSet) throws SQLException {
@@ -229,7 +239,7 @@ public class Tools {
         return df.format(date);
     }
 
-    public static void showLog(){
+    public static void showLog() {
         System.out.println("○○○○○○○○○╭╭╮╮╮    ╭╭╭╮╮○○○○\n" +
                 "○○○○○○○○○╰╰ ╮╮    ╭╭ ╯╯○○○○○\n" +
                 "○○○○○○○○○○○○○╰╮╭╯○○○○○○○○\n" +
