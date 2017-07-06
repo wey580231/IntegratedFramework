@@ -4,7 +4,8 @@
 'use strict';
 angular.module("IntegratedFramework", [
     'ngRoute',
-    'IntegratedFramework.OrderManagementController'
+    'IntegratedFramework.OrderManagementController',
+    'IntegratedFramework.ScheduleSnapController'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');
