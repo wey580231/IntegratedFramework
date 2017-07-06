@@ -56,6 +56,31 @@
         margin-left: 12px;
     }
 
+    .ztree li:last-child::before {
+        height: 30px;
+    }
+
+    .ztree li a {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        display: inline-block;
+        padding: 3px 10px;
+        text-decoration: none;
+        background-color: #f9fcfc;
+        margin-top: 8px;
+    }
+
+    .ztree ul > li {
+        list-style-type: none;
+        margin-left: 3px;
+        padding: 10px 0px 5px 5px;
+        position: relative;
+        left: 0px;
+        font-size: 12px;
+        cursor: pointer;
+    }
 
 </style>
 
@@ -89,6 +114,9 @@
                     </select>
                 </div>
 
+                <div>
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
 
                 <!--树-->
                 <div class="box box-solid">
@@ -101,9 +129,7 @@
                         </div>
                     </div>
 
-                    <div>
-                        <ul id="treeDemo" class="ztree"></ul>
-                    </div>
+
 
                     <div class="box-body no-padding">
 
