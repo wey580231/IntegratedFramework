@@ -18,13 +18,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
     <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
 
-    <link rel="stylesheet" type="text/css" href="plugins/iCheck/flat/green.css" />
+    <link rel="stylesheet" type="text/css" href="plugins/iCheck/flat/green.css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -230,30 +232,30 @@ desired effect
                 </li>
                 <!--在线-->
                 <li class="treeview">
-                <a href="#"><i class="fa fa-video-camera"></i> <span>在线监控管理</span>
-                    <span class="pull-right-container">
+                    <a href="#"><i class="fa fa-video-camera"></i> <span>在线监控管理</span>
+                        <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i>设备监控</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i>订单执行监控</a></li>
-                </ul>
-            </li>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i>设备监控</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>订单执行监控</a></li>
+                    </ul>
+                </li>
                 <!--高级-->
                 <li class="treeview">
-                <a href="#"><i class="fa fa-gg"></i> <span>高级调整分析</span>
-                    <span class="pull-right-container">
+                    <a href="#"><i class="fa fa-gg"></i> <span>高级调整分析</span>
+                        <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i>调整工序</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i>调整订单任务</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i>调整设备资源</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i>调整工厂布局</a></li>
-                </ul>
-            </li>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i>调整工序</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>调整订单任务</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>调整设备资源</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>调整工厂布局</a></li>
+                    </ul>
+                </li>
                 <!--三维-->
                 <li class="treeview">
                     <a href="#"><i class="fa  fa-yelp"></i> <span>三维可视化</span>
@@ -266,8 +268,6 @@ desired effect
                         <li><a href="#"><i class="fa fa-circle-o"></i>可视化配置</a></li>
                     </ul>
                 </li>
-
-
 
 
             </ul>
@@ -388,44 +388,15 @@ desired effect
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/app.min.js"></script>
-<script src="plugins/iCheck/icheck.js"></script>
+<!-- iCheck -->
+<script src="plugins/iCheck/icheck.min.js"></script>
 
 <!--AngularJS-->
 <script src="Angular/angular.min.js"></script>
 <script src="Angular/angular-route.min.js"></script>
 
-
 <script src="app.js"></script>
-
 <script src="pages/OrderManagement/OrderManagementController.js"></script>
-
-<script>
-    $(function () {
-        //Enable iCheck plugin for checkboxes
-        //iCheck for checkbox and radio inputs
-        $('.mailbox-messages input[type="checkbox"]').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
-
-        //Enable check and uncheck all functionality
-        $(".checkbox-toggle").click(function () {
-            var clicks = $(this).data('clicks');
-            if (clicks) {
-                //Uncheck all checkboxes
-                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-            } else {
-                //Check all checkboxes
-                $(".mailbox-messages input[type='checkbox']").iCheck("check");
-                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-            }
-            $(this).data("clicks", !clicks);
-        });
-    });
-</script>
-
-
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
