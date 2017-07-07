@@ -115,18 +115,11 @@
 
                 <!--下拉-->
                 <div class="form-group">
-                    <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">Alabama</option>
-                        <option>Alaska</option>
-                        <option>California</option>
-                        <option>Delaware</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Washington</option>
+                    <select class="form-control select2" style="width: 100%;" id="select">
+                        <option selected="selected"></option>
+                        <option ng-repeat="x in dataArr">{{x.name}}</option>
                     </select>
                 </div>
-
-
 
                 <!--树-->
                 <div class="box box-solid" style="/*width: 170px;*/overflow: auto;">
@@ -140,8 +133,8 @@
                     </div>
 
 
-
-                    <div class="box-body no-padding">
+                    <div class="box-body no-padding"
+                         style=" overflow-y:auto; overflow-x:auto; width:200px; height:200px;">
 
                         <div>
                             <ul id="treeDemo" class="ztree"></ul>
@@ -190,10 +183,10 @@
                                     <th>估时</th>
                                     <th>状态</th>
                                 </tr>
-                                <tr ng-repeat="order in orderList" ng-init="renderTable($last)">
+                                <tr ng-repeat="order in plan" ng-init="renderTable($last)">
                                     <td><input name="check" type="checkbox"></td>
                                     <td style="display:none">{{order.id}}</td>
-                                    <td>{{order.name}}</td>
+                                    <td>{{order.nameTask}}</td>
                                     <td>{{order.type}}</td>
                                     <td>{{order.origin}}</td>
                                     <td>{{order.quantity}}</td>
