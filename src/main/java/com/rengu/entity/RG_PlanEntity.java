@@ -34,6 +34,11 @@ public class RG_PlanEntity {
     private String advice;                                      //拖期改进建议
     private String estimateTask;                                //估时
     private String timeTask;                                    //工序实际加工时间
+    private String t10Task;                                     //工序预固定开工时间
+    private String t20Task;                                     //工序预固定完工时间
+    private String t20ExtendedTask;                             //工序预固定实际完工时间
+    private String t1Job;                                       //作业开始时间
+    private String t2Job;                                       //作业结束时间
     private String initTimeTask;                                //工序准备时间
     private String unitTimeTask;                                //工序单件时间
     private String postTimeTask;                                //冷却时间
@@ -42,11 +47,6 @@ public class RG_PlanEntity {
     private String idResource0Task;                             //工序预固定资源编码
     private String idSite0Task;                                 //工序预固定工位编码
     private Short quantity0Task;                                //工序预固定加工数量
-    private String t10Task;                                     //工序预固定开工时间
-    private String t20Task;                                     //工序预固定完工时间
-    private String t20ExtendedTask;                             //工序预固定实际完工时间
-    private String t1Job;                                       //作业开始时间
-    private String t2Job;                                       //作业结束时间
     private Short quantityJob;                                  //作业数量
     private Short nbTaskJob;                                    //作业内工序数
     private String refProductJob;                               //作业图纸号
