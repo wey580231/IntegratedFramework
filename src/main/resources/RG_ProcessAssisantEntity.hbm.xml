@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_ProcessAssisantEntity" table="RG_ProcessAssisant" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="int"/>
+            <generator class="identity"/>
+        </id>
+        <property name="processId">
+            <column name="processId" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="site">
+            <column name="site" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="task">
+            <column name="task" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="goods">
+            <column name="goods" sql-type="varchar(255)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>
