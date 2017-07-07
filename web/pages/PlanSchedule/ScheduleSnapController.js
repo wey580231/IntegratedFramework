@@ -106,7 +106,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 } else {
                     $("#m_del").show();
                 }
-                rMenu.css({"top": (y-160) + "px", "left": (x-250) + "px", "visibility": "visible"});
+                rMenu.css({"top": (y-110) + "px", "left": (x-250) + "px", "visibility": "visible"});
 
                 $("body").bind("mousedown", onBodyMouseDown);
             }
