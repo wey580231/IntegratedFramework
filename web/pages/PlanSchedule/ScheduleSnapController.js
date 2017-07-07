@@ -16,35 +16,15 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             $(".select2").select2();
         });
 
+        var zTreeNodes = [];
+        var zNodes = [];
+
+
         var dataTrue = {"level": "top"};
         myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
-            var setting = {
-                view: {
-                    dblClickExpand: false,
-                    showIcon: false,
-                    showLine: false
-                },
-                callback: {
-                    onRightClick: OnRightClick
-                },
-                data: {
-                    keep: {
-                        parent: true
-                    }
-                },
-                edit: {
-                    enable: true,
-                    showRenameBtn: false,
-                    showRemoveBtn: false
-                },
-            };
-            var zNodes = [];
-
-            console.log("*****" + response.status);
             console.log(response.data);
             var dataArr = response.data;
             $scope.dataArr = response.data;
-
 
             for (var i = 0; i < dataArr.length; i++) {
                 console.log("根节点");
@@ -86,6 +66,51 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             console.log("&&&&&&&&&");
             console.log(zNodes);
 
+        });
+
+
+        $("#select").change(function () {
+            var val = $(this).children('option:selected').val();
+            if (val.length > 0) {
+                for (var i = 0; i < zNodes.length; i++) {
+                    console.log(zNodes);
+                    if (zNodes[i].name = val) {
+                        zTreeNodes.push(zNodes[i]);
+                    }
+                }
+                console.log(zTreeNodes);
+                loadTree();
+            } else {
+                document.getElementById("treeDemo").style.display = "none";
+            }
+            zTreeNodes.splice(0, zTreeNodes.length);
+        });
+
+
+        function loadTree() {
+            var zTree, rMenu;
+            var setting = {
+                view: {
+                    dblClickExpand: false,
+                    showIcon: false,
+                    showLine: false
+                },
+                callback: {
+                    onRightClick: OnRightClick,
+                    onDblClick: zTreeOnClick
+                },
+                data: {
+                    keep: {
+                        parent: true
+                    }
+                },
+                edit: {
+                    enable: true,
+                    showRenameBtn: false,
+                    showRemoveBtn: false
+                },
+            };
+
             //右击
             function OnRightClick(event, treeId, treeNode) {
                 var e = event || window.event;
@@ -106,7 +131,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 } else {
                     $("#m_del").show();
                 }
-                rMenu.css({"top": (y-160) + "px", "left": (x-250) + "px", "visibility": "visible"});
+                rMenu.css({"top": (y - 160) + "px", "left": (x - 250) + "px", "visibility": "visible"});
 
                 $("body").bind("mousedown", onBodyMouseDown);
             }
@@ -124,10 +149,29 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 }
             }
 
+
+            //双击显示表格信息
+            function zTreeOnClick(treeNode) {
+                if (treeNode.isParent) {
+                    return false;
+                } else {
+                    var id = zTree.getSelectedNodes()[0].id;
+                    console.log(id);
+                    var params = {};
+                    params.id = id;
+                    var data = JSON.stringify(params);
+                    myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
+                        $scope.plan = response.data;
+                        console.log(response.data);
+                    });
+                    return true;
+                }
+            }
+
             var addCount = 1;
 
             //增加节点
-            $scope.addTreeNode = function() {
+            $scope.addTreeNode = function () {
                 hideRMenu();
                 var newNode = {name: "增加" + (addCount++)};
                 if (zTree.getSelectedNodes()[0]) {
@@ -136,10 +180,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 } else {
                     zTree.addNodes(null, newNode);
                 }
-            }
+            };
 
             //删除节点
-            $scope.removeTreeNode = function() {
+            $scope.removeTreeNode = function () {
                 hideRMenu();
                 var nodes = zTree.getSelectedNodes();
                 if (nodes && nodes.length > 0) {
@@ -152,30 +196,29 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                         zTree.removeNode(nodes[0]);
                     }
                 }
-            }
+            };
 
             //修改节点
-            $scope.checkTreeNode = function(checked) {
+            $scope.checkTreeNode = function (checked) {
                 var nodes = zTree.getSelectedNodes();
                 if (nodes && nodes.length > 0) {
                     zTree.checkNode(nodes[0], checked, true);
                 }
                 hideRMenu();
-            }
+            };
 
-            $scope.resetTree = function() {
+            $scope.resetTree = function () {
                 hideRMenu();
                 $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-            }
+            };
 
-            var zTree, rMenu;
-            $(document).ready(function () {
-                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-                zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                rMenu = $("#rMenu");
-            });
+            // $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zTreeNodes);
+            zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            rMenu = $("#rMenu");
+            document.getElementById("treeDemo").style.display = "";
+            // });
+        }
 
-
-        });
     });
 
