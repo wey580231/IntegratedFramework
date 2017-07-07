@@ -34,7 +34,7 @@ public class Device3DAO {
         List list = query.list();
 
         if (list.size() > 0) {
-            //TODO 需要向MES发送activeMQ发送设备表请求
+            //TODO 直接从resourceState中读取最新值
             ObjectMapper mapper = new ObjectMapper();
             ObjectNode root = mapper.createObjectNode();
             root.put("result", "0");
@@ -48,7 +48,7 @@ public class Device3DAO {
             deviceData.put("resourceName", entity.getResourceName());
             deviceData.put("manufacturer", entity.getManufacturer());
             deviceData.put("idTask", entity.getIdTask());
-            deviceData.put("ordToParentTask", entity.getOrdToParentTask());
+            deviceData.put("idProcess", entity.getIdProcess());
             deviceData.put("idClub", entity.getIdClub());
             deviceData.put("idProduct", entity.getIdProduct());
             deviceData.put("productName", entity.getProductName());

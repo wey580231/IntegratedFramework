@@ -28,6 +28,7 @@
         <mapping resource="RG_GroupresourceEntity.hbm.xml"/>
         <mapping resource="RG_ProductEntity.hbm.xml"/>
         <mapping resource="RG_ProcessEntity.hbm.xml"/>
+        <mapping resource="RG_ProcessAssisantEntity.hbm.xml"/>
         <mapping resource="RG_SiteEntity.hbm.xml"/>
         <mapping resource="RG_OrderEntity.hbm.xml"/>
         <mapping resource="RG_ResourceEntity.hbm.xml"/>
@@ -49,6 +50,7 @@
         <mapping resource="RG_LayoutEntity.hbm.xml"/>
         <mapping resource="RG_LayoutDetailEntity.hbm.xml"/>
         <mapping resource="RG_EmulateDataEntity.hbm.xml"/>
+        <mapping resource="RG_EmulateResultEntity.hbm.xml"/>
         <mapping resource="RG_RealDataEntity.hbm.xml"/>
         <mapping resource="RG_State3DEntity.hbm.xml"/>
 

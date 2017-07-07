@@ -176,7 +176,21 @@ public class MesConsumer extends Thread {
             }
             //设备状态信息
             else if (mesType.equals(MessTable.MES_DEVICESTATE_INFO)) {
+                RG_ResourceStateEntity stateEntity = new RG_ResourceStateEntity();
+                stateEntity.setResourceName(dataNode.get("resourceName").asText());
+                stateEntity.setManufacturer(dataNode.get("manufacturer").asText());
+                stateEntity.setIdTask(dataNode.get("idTask").asText());
+                stateEntity.setIdProcess((short) dataNode.get("idProces").asInt());
+                stateEntity.setIdProduct(dataNode.get("idProduct").asText());
+                stateEntity.setProductName(dataNode.get("productName").asText());
+                stateEntity.setT1Task(Tools.parseDate(dataNode.get("t1PlanTask").asText()));
+                stateEntity.setT2Task(Tools.parseDate(dataNode.get("t2PlanTask").asText()));
+                stateEntity.setCurrTime(new Date());
+                stateEntity.setT1RealTask(Tools.parseDate(dataNode.get("t1RealTask").asText()));
+                stateEntity.setT2RealTask(Tools.parseDate(dataNode.get("t2RealTask").asText()));
+                stateEntity.setState((short) dataNode.get("state").asInt());
 
+                session.save(stateEntity);
             }
             //订单执行信息
             else if (mesType.equals(MessTable.MES_ORDERSTATE_INFO)) {

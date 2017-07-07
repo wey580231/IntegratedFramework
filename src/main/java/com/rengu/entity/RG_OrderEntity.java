@@ -48,8 +48,10 @@ public class RG_OrderEntity {
     private List<RG_EmulateDataEntity> emulateDatas = new ArrayList<RG_EmulateDataEntity>();
 
     @JsonIgnore
-    private Set<RG_OrderStateEntity> orderStates = new HashSet<RG_OrderStateEntity>();
+    private List<RG_EmulateResultEntity> emulateResults = new ArrayList<RG_EmulateResultEntity>();
 
+    @JsonIgnore
+    private Set<RG_OrderStateEntity> orderStates = new HashSet<RG_OrderStateEntity>();
 
     public String getId() {
         return id;
@@ -131,7 +133,6 @@ public class RG_OrderEntity {
         this.priority = priority;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getT0() {
         return t0;
     }
@@ -140,7 +141,6 @@ public class RG_OrderEntity {
         this.t0 = t0;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getT1() {
         return t1;
     }
@@ -149,7 +149,6 @@ public class RG_OrderEntity {
         this.t1 = t1;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     public Date getT2() {
         return t2;
     }
@@ -316,6 +315,14 @@ public class RG_OrderEntity {
 
     public void setEmulateDatas(List<RG_EmulateDataEntity> emulateDatas) {
         this.emulateDatas = emulateDatas;
+    }
+
+    public List<RG_EmulateResultEntity> getEmulateResults() {
+        return emulateResults;
+    }
+
+    public void setEmulateResults(List<RG_EmulateResultEntity> emulateResults) {
+        this.emulateResults = emulateResults;
     }
 
     public Set<RG_OrderStateEntity> getOrderStates() {
