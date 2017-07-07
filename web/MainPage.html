@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>Integrated Framework</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.6 -->
@@ -24,6 +24,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="plugins/select2/select2.min.css">
     <!--Notyf-->
     <link rel="stylesheet" href="notyf.min.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
@@ -31,6 +33,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
 
     <link rel="stylesheet" type="text/css" href="plugins/iCheck/flat/green.css"/>
+
+    <link rel="stylesheet" href="ztree/css/zTreeStyle/zTreeStyle.css"/>
+
+    <link rel="stylesheet" href="plugins/jQueryUI/jquery-ui.min.css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -76,7 +82,7 @@ desired effect
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
             <!-- Navbar Right Menu -->
@@ -195,7 +201,7 @@ desired effect
                 <!-- 列表 -->
                 <!--订单-->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-reorder"></i> <span>订单任务管理</span>
+                    <a><i class="fa fa-reorder"></i> <span>订单任务管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -208,7 +214,7 @@ desired effect
                 </li>
                 <!--资源-->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-file"></i> <span>资源设备管理</span>
+                    <a><i class="fa fa-file"></i> <span>资源设备管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -223,7 +229,7 @@ desired effect
                 </li>
                 <!--计划-->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-paper-plane-o"></i> <span>计划排程管理</span>
+                    <a><i class="fa fa-paper-plane-o"></i> <span>计划排程管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -236,7 +242,7 @@ desired effect
                 </li>
                 <!--在线-->
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-video-camera"></i> <span>在线监控管理</span>
+                    <a><i class="fa fa-video-camera"></i> <span>在线监控管理</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -262,7 +268,7 @@ desired effect
                 </li>
                 <!--三维-->
                 <li class="treeview">
-                    <a href="#"><i class="fa  fa-yelp"></i> <span>三维可视化</span>
+                    <a><i class="fa  fa-yelp"></i> <span>三维可视化</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -398,17 +404,25 @@ desired effect
 <script src="plugins/select2/select2.full.min.js"></script>
 <!--Notyf-->
 <script src="notyf.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
 
 <!--AngularJS-->
 <script src="Angular/angular.min.js"></script>
 <script src="Angular/angular-route.min.js"></script>
+
+<!--<script src="plugins/jQueryUI/jquery-ui.min.js"></script>-->
+<!--树-->
+<script src="ztree/js/jquery.ztree.core.js"></script>
+<script src="ztree/js/jquery.ztree.exedit.js "></script>
+<script src="ztree/js/jquery.ztree.exhide.js"></script>
 
 <script src="app.js"></script>
 <script src="pages/OrderManagement/OrderManagementController.js"></script>
 <script src="pages/PlanSchedule/ScheduleSnapController.js"></script>
 <script src="WebSocketNotification.js"></script>
 <!--加载通知系统-->
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
         webSocketInit();
     });

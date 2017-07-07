@@ -55,6 +55,23 @@ angular.module("IntegratedFramework", [
         return service;
     }])
 
+    .factory("notification", function () {
+        var service = {};
+        service.sendNotification = function (notificationType, message) {
+            // Create an instance of Notyf
+            var notyf = new Notyf();
+            if (notificationType === "alert") {
+                // Display an alert notification
+                notyf.alert(message);
+            }
+            if (notificationType === "confirm") {
+                // Display a success notification
+                notyf.confirm(message);
+            }
+        };
+        return service;
+    })
+
     .factory("serviceList", function () {
         var service = {};
         var backUrl = "";
@@ -63,6 +80,8 @@ angular.module("IntegratedFramework", [
         service.DeleteOrder = backUrl + "orders/delete.action";
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
+
+        service.GetOrderById = backUrl + "orders/findAllById.action";
 
         <!--工序信息-->
         service.ListProcess = backUrl + "process/getAllByIsRootNode.action";
@@ -144,6 +163,15 @@ angular.module("IntegratedFramework", [
 
         service.checkLength = function (l) {
             if (l == "") {
+
+                return false;
+            }
+            return true;
+        };
+
+        service.checkChinese = function (c) {
+            var CRegexp = /[^\u0000-\u00FF]/;
+            if (!CRegexp.test(c)) {
 
                 return false;
             }
