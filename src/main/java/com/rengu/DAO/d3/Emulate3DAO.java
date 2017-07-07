@@ -80,7 +80,93 @@ public class Emulate3DAO {
                     }
                 }
 
-                dataNode.put("id",entity.getId());
+                dataNode.put("id", entity.getId());
+                dataNode.put("name", product.getName());
+                dataNode.put("info", arrayNode);
+
+                array.add(dataNode);
+            }
+
+            root.put("data", array);
+
+            try {
+                jsonString.append(mapper.writeValueAsString(root));
+                flag = true;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                flag = false;
+            }
+        }
+
+        session.getTransaction().commit();
+
+        return flag;
+    }
+
+    //获取新格式排程结果
+    public boolean getEmulateResult(String snapshotId, StringBuilder jsonString) {
+        boolean flag = false;
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+
+        if (!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+
+        RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, snapshotId);
+
+        Set<RG_OrderEntity> orders = null;
+
+        if (bottomSnapshot != null) {
+
+            RG_SnapshotNodeEntity rootSnapshot = bottomSnapshot.getRootParent();
+
+            if (rootSnapshot != null) {
+                //查找此次排程对应的订单信息
+                RG_ScheduleEntity scheduleEntity = rootSnapshot.getSchedule();
+                if (scheduleEntity != null) {
+                    orders = scheduleEntity.getOrders();
+                }
+            }
+        }
+
+        if (orders != null) {
+            Iterator<RG_OrderEntity> iter = orders.iterator();
+
+            ObjectMapper mapper = new ObjectMapper();               //定义转换类
+            ObjectNode root = mapper.createObjectNode();            //创建根节点
+            root.put("result", "0");
+
+            ArrayNode array = mapper.createArrayNode();
+
+            while (iter.hasNext()) {
+
+                ObjectNode dataNode = mapper.createObjectNode();
+
+                RG_OrderEntity entity = iter.next();
+
+                RG_ProductEntity product = entity.getProductByIdProduct();
+                List<RG_EmulateResultEntity> emulateDatas = entity.getEmulateResults();
+                Iterator<RG_EmulateResultEntity> emulateIter = emulateDatas.iterator();
+
+                ArrayNode arrayNode = mapper.createArrayNode();
+
+                while (emulateIter.hasNext()) {
+                    RG_EmulateResultEntity emulateData = emulateIter.next();
+
+                    if (emulateData != null) {
+                        ObjectNode node = mapper.createObjectNode();
+
+                        node.put("task", emulateData.getTask());
+                        node.put("good", emulateData.getGoods());
+                        node.put("startTime", Integer.parseInt(emulateData.getStartTime()));
+                        node.put("endTime", Integer.parseInt(emulateData.getEndTime()));
+                        node.put("site", emulateData.getSite());
+
+                        arrayNode.add(node);
+                    }
+                }
+
+                dataNode.put("id", entity.getId());
                 dataNode.put("name", product.getName());
                 dataNode.put("info", arrayNode);
 

@@ -21,8 +21,8 @@
         <property name="idTask">
             <column name="idTask" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
-        <property name="ordToParentTask">
-            <column name="ordToParentTask" sql-type="tinyint(4)"  not-null="false"/>
+        <property name="idProcess">
+            <column name="idProcess" sql-type="smallint(4)" not-null="false"/>
         </property>
         <property name="idClub">
             <column name="idClub" sql-type="varchar(50)" length="50" not-null="false"/>

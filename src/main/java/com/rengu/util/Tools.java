@@ -238,6 +238,16 @@ public class Tools {
         return df.format(date);
     }
 
+    public static Date parseDate(String text) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            return df.parse(text);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void showLog() {
         System.out.println("○○○○○○○○○╭╭╮╮╮    ╭╭╭╮╮○○○○\n" +
                 "○○○○○○○○○╰╰ ╮╮    ╭╭ ╯╯○○○○○\n" +
@@ -251,11 +261,11 @@ public class Tools {
                 "○﹏﹏﹏﹏﹏◥████████████◤﹏﹏﹏﹏﹏**==");
     }
 
-    public static String getSha(String str){
-        if (null == str || 0 == str.length()){
+    public static String getSha(String str) {
+        if (null == str || 0 == str.length()) {
             return null;
         }
-        char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'a', 'b', 'c', 'd', 'e', 'f'};
         try {
             MessageDigest mdTemp = MessageDigest.getInstance("SHA1");

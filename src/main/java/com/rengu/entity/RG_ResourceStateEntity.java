@@ -2,7 +2,8 @@ package com.rengu.entity;
 
 import java.util.Date;
 
-/**设备状态信息
+/**
+ * 设备状态信息
  * Created by wey580231 on 2017/6/28.
  */
 public class RG_ResourceStateEntity {
@@ -12,12 +13,12 @@ public class RG_ResourceStateEntity {
     private String resourceName;                //设备名称
     private String manufacturer;                //设备厂商
     private String idTask;                      //当前任务号
-    private short ordToParentTask;              //工序号
+    private short idProcess;                    //工序号
     private String idClub;                      //客户名称
     private String idProduct;                   //零件编号
     private String productName;                 //零件名称
-    private Date t1Task;                        //工序开始时间
-    private Date t2Task;                        //工序占用时间
+    private Date t1Task;                        //计划开工时间
+    private Date t2Task;                        //计划完工时间
     private Date currTime;                      //当前时间
     private Date t1RealTask;                    //工序实际开始时间
     private Date t2RealTask;                    //工序实际完工时间
@@ -68,12 +69,12 @@ public class RG_ResourceStateEntity {
         this.idTask = idTask;
     }
 
-    public short getOrdToParentTask() {
-        return ordToParentTask;
+    public short getIdProcess() {
+        return idProcess;
     }
 
-    public void setOrdToParentTask(short ordToParentTask) {
-        this.ordToParentTask = ordToParentTask;
+    public void setIdProcess(short idProcess) {
+        this.idProcess = idProcess;
     }
 
     public String getIdClub() {
@@ -188,7 +189,7 @@ public class RG_ResourceStateEntity {
         RG_ResourceStateEntity that = (RG_ResourceStateEntity) o;
 
         if (id != that.id) return false;
-        if (ordToParentTask != that.ordToParentTask) return false;
+        if (idProcess != that.idProcess) return false;
         if (state != that.state) return false;
         if (Float.compare(that.bootstrapTime, bootstrapTime) != 0) return false;
         if (Float.compare(that.awaitTime, awaitTime) != 0) return false;
@@ -214,7 +215,7 @@ public class RG_ResourceStateEntity {
         result = 31 * result + (resourceName != null ? resourceName.hashCode() : 0);
         result = 31 * result + (manufacturer != null ? manufacturer.hashCode() : 0);
         result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
-        result = 31 * result + (int) ordToParentTask;
+        result = 31 * result + (int) idProcess;
         result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
         result = 31 * result + (idProduct != null ? idProduct.hashCode() : 0);
         result = 31 * result + (productName != null ? productName.hashCode() : 0);

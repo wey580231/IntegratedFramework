@@ -26,7 +26,8 @@ public class Emulate3DAction extends SuperAction {
         if (parameterMap.size() == 1) {
             String[] types = (String[]) parameterMap.get("snapshotId");
             if (types.length > 0) {
-                result = emulateDao.getEmulateData(types[0], jsonString);
+//                result = emulateDao.getEmulateData(types[0], jsonString);
+                result = emulateDao.getEmulateResult(types[0], jsonString);
             }
         }
 
