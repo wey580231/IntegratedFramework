@@ -21,11 +21,19 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         //Date picker
         $('#modal-add-t1-datepicker').datepicker({
-            format: "yyyy/mm/ss",
+            format: "yyyy/mm/dd",
             autoclose: true
         });
         $('#modal-add-t2-datepicker').datepicker({
-            format: "yyyy/mm/ss",
+            format: "yyyy/mm/dd",
+            autoclose: true
+        });
+        $('#modal-edit-t0-datepicker').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true
+        });
+        $('#modal-edit-t2-datepicker').datepicker({
+            format: "yyyy/mm/dd",
             autoclose: true
         });
 
@@ -204,10 +212,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     //用强制刷新解决按钮不能连续响应
                     setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback(response) {
-                    alert("请求失败！");
+                    notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                alert("输入有误！");
+                notification.sendNotification("alert", "参数错误");
             }
         };
 
@@ -236,7 +244,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 editList.push(response.data);
                 $scope.editList = editList;
             }, function errorCallback(response) {
-                alert("请求失败！");
+                notification.sendNotification("alert", "请求失败");
             })
         };
 
@@ -249,10 +257,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     //editData.splice(0, editData.length);
                     //setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback(response) {
-                    alert("请求失败！");
+                    notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                alert("输入有误！");
+                notification.sendNotification("alert", "输入有误");
             }
         };
 
@@ -268,7 +276,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 //强制刷新解决按钮不能连续响应
                 //setTimeout('window.location.reload();', 0.1);
             }, function errorCallback(response) {
-                alert("请求失败！");
+                notification.sendNotification("alert", "请求失败");
             });
         };
 

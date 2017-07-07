@@ -16,36 +16,15 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             $(".select2").select2();
         });
 
+        var zTreeNodes = [];
+        var zNodes = [];
+
+
         var dataTrue = {"level": "top"};
         myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
-            var setting = {
-                view: {
-                    dblClickExpand: false,
-                    showIcon: false,
-                    showLine: false
-                },
-                callback: {
-                    onRightClick: OnRightClick,
-                    onClick:onClick
-                },
-                data: {
-                    keep: {
-                        parent: true
-                    }
-                },
-                edit: {
-                    enable: true,
-                    showRenameBtn: false,
-                    showRemoveBtn: false
-                },
-            };
-            var zNodes = [];
-
-            console.log("*****" + response.status);
             console.log(response.data);
             var dataArr = response.data;
             $scope.dataArr = response.data;
-
 
             for (var i = 0; i < dataArr.length; i++) {
                 console.log("根节点");
@@ -87,78 +66,131 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             console.log("&&&&&&&&&");
             console.log(zNodes);
 
+        });
+
+
+        $("#select").change(function () {
+            var val = $(this).children('option:selected').val();
+            if (val.length > 0) {
+                for (var i = 0; i < zNodes.length; i++) {
+                    console.log(zNodes);
+                    if (zNodes[i].name = val) {
+                        zTreeNodes.push(zNodes[i]);
+                    }
+                }
+                console.log(zTreeNodes);
+                loadTree();
+            } else {
+                document.getElementById("treeDemo").style.display = "none";
+            }
+            zTreeNodes.splice(0, zTreeNodes.length);
+        });
+
+
+        function loadTree() {
+            var zTree, rMenu;
+            var setting = {
+                view: {
+                    dblClickExpand: false,
+                    showIcon: false,
+                    showLine: false
+                },
+                callback: {
+                    onRightClick: OnRightClick,
+                    onDblClick: zTreeOnClick
+                },
+                data: {
+                    keep: {
+                        parent: true
+                    }
+                },
+                edit: {
+                    enable: true,
+                    showRenameBtn: false,
+                    showRemoveBtn: false
+                },
+            };
+
+            //右击
             function OnRightClick(event, treeId, treeNode) {
-                var x = event.screenX;
-                var y = event.screenY;
-                /*var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
-                 var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));*/
-                if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
+                var e = event || window.event;
+                if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
-                    hideRMenu("root", x, y);
-
-                }else {
+                    showRMenu("root", e.clientX, e.clientY);
+                } else if (treeNode && !treeNode.noR) {
                     zTree.selectNode(treeNode);
-                        showRMenu("node", x, y);
-
+                    showRMenu("node", e.clientX, e.clientY);
                 }
             }
 
-            function onClick(treeNode) {
-                zTree.expandNode(treeNode);
+            //右击菜单显示
+            function showRMenu(type, x, y) {
+                $("#rMenu ul").show();
+                if (type == "root") {
+                    $("#m_del").hide();
+                } else {
+                    $("#m_del").show();
+                }
+
+                rMenu.css({"top": (y-110) + "px", "left": (x-250) + "px", "visibility": "visible"});
+
+
+                $("body").bind("mousedown", onBodyMouseDown);
             }
 
-            //显示右键操作
-            function showRMenu(x, y) {
-
-                rMenu.css({"top": (y-210) + "px", "left": (x+200)+ "px", "visibility": "visible"});
-                $("#container").bind("mousedown", onBodyMouseDown);
-            }
-
-
-            //隐藏右键操作
+            //右击菜单隐藏
             function hideRMenu() {
                 if (rMenu) rMenu.css({"visibility": "hidden"});
-                $("#container").unbind("mousedown", onBodyMouseDown);
+                $("body").unbind("mousedown", onBodyMouseDown);
             }
 
 
-
-            //鼠标按下操作
             function onBodyMouseDown(event) {
-                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0 || event.target.id == "lMenu" || $(event.target).parents("#lMenu").length > 0)) {
+                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
                     rMenu.css({"visibility": "hidden"});
-                    lMenu.css({"visibility": "hidden"});
                 }
             }
 
 
+            //双击显示表格信息
+            function zTreeOnClick(treeNode) {
+                if (treeNode.isParent) {
+                    return false;
+                } else {
+                    var id = zTree.getSelectedNodes()[0].id;
+                    console.log(id);
+                    var params = {};
+                    params.id = id;
+                    var data = JSON.stringify(params);
+                    myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
+                        $scope.plan = response.data;
+                        console.log(response.data);
+                    });
+                    return true;
+                }
+            }
+
             var addCount = 1;
+
             //增加节点
             $scope.addTreeNode = function () {
                 hideRMenu();
                 var newNode = {name: "增加" + (addCount++)};
                 if (zTree.getSelectedNodes()[0]) {
-                    console.log("@@@@@@");
-                    console.log(zTree.getSelectedNodes());
-                    console.log(zTree.getSelectedNodes()[0]);//当前右击的节点（包含自己的）子节点
-                    console.log(zTree.getSelectedNodes()[0].id);//当前点击节点的id值
+                    newNode.checked = zTree.getSelectedNodes()[0].checked;
                     zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
                 } else {
                     zTree.addNodes(null, newNode);
                 }
-                getChildNodes();
-                console.log("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
             };
 
             //删除节点
             $scope.removeTreeNode = function () {
                 hideRMenu();
-                hideLMenu();
-                console.log("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
                 var nodes = zTree.getSelectedNodes();
                 if (nodes && nodes.length > 0) {
                     if (nodes[0].children && nodes[0].children.length > 0) {
-                        var msg = "要删除的节点是父节点，如果删除将连同子节点一起删掉。\n\n确定删除？";
+                        var msg = "要删除的节点是父节点，如果删除将连同子节点一起删掉。\n\n请确认！";
                         if (confirm(msg) == true) {
                             zTree.removeNode(nodes[0]);
                         }
@@ -168,31 +200,27 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 }
             };
 
-            //重命名节点
-            $scope.renameTreeNode = function () {
-                hideRMenu();
-                hideLMenu();
-                console.log("当前操作的节点id:" + zTree.getSelectedNodes()[0].id);
+            //修改节点
+            $scope.checkTreeNode = function (checked) {
                 var nodes = zTree.getSelectedNodes();
-                zTree.editName(nodes[0]);
-                var newName = nodes[0].name;
-                if (newName.length == 0) {
-                    alert("节点不能为空！");
-                    return false;
+                if (nodes && nodes.length > 0) {
+                    zTree.checkNode(nodes[0], checked, true);
                 }
-                console.log(zTree.getSelectedNodes()[0]);
+                hideRMenu();
             };
 
-
-            var zTree, rMenu;
-            //初始化BOM树
-            $(document).ready(function () {
+            $scope.resetTree = function () {
+                hideRMenu();
                 $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-                zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                rMenu = $("#rMenu");
+            };
 
-            });
-        });
+            // $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zTreeNodes);
+            zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            rMenu = $("#rMenu");
+            document.getElementById("treeDemo").style.display = "";
+            // });
+        }
 
     });
 

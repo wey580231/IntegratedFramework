@@ -16,6 +16,9 @@
         padding: 2px;
     }
 
+
+
+
     .ztree * {
         padding: 0;
         margin: 0;
@@ -32,7 +35,7 @@
     .ztree li span.button.switch.level0 {
         background: url("../../images/bom_img/1.png") no-repeat;
         position: relative;
-        margin-top: 14px;
+        margin-top: 12px;
         margin-left: 5px;
     }
 
@@ -52,7 +55,7 @@
     .ztree li span.button.switch.level2 {
         background: url("../../images/bom_img/3.png") no-repeat;
         position: relative;
-        margin-top: 15px;
+        margin-top: 18px;
         margin-left: 12px;
     }
 
@@ -83,12 +86,14 @@
         cursor: pointer;
     }
 
-
-
     .ztree li a.curSelectedNode {
-        height: 20px;
+        height: 24px;
+        padding-top: 2px;
     }
 
+    .box {
+        position: unset;
+    }
 </style>
 
 <div>
@@ -110,21 +115,14 @@
 
                 <!--下拉-->
                 <div class="form-group">
-                    <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">Alabama</option>
-                        <option>Alaska</option>
-                        <option>California</option>
-                        <option>Delaware</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Washington</option>
+                    <select class="form-control select2" style="width: 100%;" id="select">
+                        <option selected="selected"></option>
+                        <option ng-repeat="x in dataArr">{{x.name}}</option>
                     </select>
                 </div>
 
-
-
                 <!--树-->
-                <div class="box box-solid">
+                <div class="box box-solid" style="/*width: 170px;*/overflow: auto;">
                     <div class="box-header with-border">
                         <h3 class="box-title">ScheduleSnap</h3>
 
@@ -135,14 +133,14 @@
                     </div>
 
 
-
-                    <div class="box-body no-padding">
+                    <div class="box-body no-padding"
+                         style=" overflow-y:auto; overflow-x:auto; width:200px; height:200px;">
 
                         <div>
                             <ul id="treeDemo" class="ztree"></ul>
                         </div>
 
-                        <div id="rMenu">
+                        <div id="rMenu" style="width: 100px;">
                             <ul>
                                 <li id="m_add" ng-click="addTreeNode()">增加</li>
                                 <li id="m_del" ng-click="removeTreeNode()">删除</li>
@@ -185,10 +183,10 @@
                                     <th>估时</th>
                                     <th>状态</th>
                                 </tr>
-                                <tr ng-repeat="order in orderList" ng-init="renderTable($last)">
+                                <tr ng-repeat="order in plan" ng-init="renderTable($last)">
                                     <td><input name="check" type="checkbox"></td>
                                     <td style="display:none">{{order.id}}</td>
-                                    <td>{{order.name}}</td>
+                                    <td>{{order.nameTask}}</td>
                                     <td>{{order.type}}</td>
                                     <td>{{order.origin}}</td>
                                     <td>{{order.quantity}}</td>
