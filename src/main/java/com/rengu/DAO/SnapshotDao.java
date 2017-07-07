@@ -85,33 +85,36 @@ public class SnapshotDao {
 
                     RG_PlanEntity plan = plans.get(i);
 
-                    RG_EmulateDataEntity data = new RG_EmulateDataEntity();
+                    String processId = plan.getProcessByIdProcess().getId();
 
-                    //资源名
-                    data.setItem(plan.getResourceByIdResource().getId());
-                    //动作
-                    data.setState(plan.getProcessByIdProcess().getOperation());
+                    NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
+                    nquery.setParameter(1, processId);
+                    List<RG_ProcessAssisantEntity> list = nquery.list();
 
-                    //货物
+                    if (list.size() > 0) {
+                        RG_EmulateResultEntity result = new RG_EmulateResultEntity();
 
-                    //开始位置
-                    data.setStartLocation("CURRENT");
+                        RG_ProcessAssisantEntity entity = list.get(0);
 
-                    //结束位置
-                    data.setEndLocation(plan.getSiteByIdSite().getId());
+                        //任务名
+                        result.setTask(entity.getTask());
+                        //货物名
+                        result.setGoods(entity.getGoods());
+                        //地点名(若不存在为null)
+                        result.setSite(entity.getSite());
 
-                    Date startDate = sdf.parse(plan.getT1Task());
-                    Date endDate = sdf.parse(plan.getT2Task());
+                        Date startDate = sdf.parse(plan.getT1Task());
+                        Date endDate = sdf.parse(plan.getT2Task());
 
-                    //开始时间
-                    data.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                        //开始时间
+                        result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                        //结束时间
+                        result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
 
-                    //结束时间
-                    data.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+                        result.setOrderEntity(plan.getOrderByIdOrder());
 
-                    data.setOrderEntity(plan.getOrderByIdOrder());
-
-                    session.save(data);
+                        session.save(result);
+                    }
                 }
 
             } catch (ParseException e) {
