@@ -19,6 +19,24 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $scope.orderList = response.data;
         });
 
+        //Date picker
+        $('#modal-add-t1-datepicker').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true
+        });
+        $('#modal-add-t2-datepicker').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true
+        });
+        $('#modal-edit-t0-datepicker').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true
+        });
+        $('#modal-edit-t2-datepicker').datepicker({
+            format: "yyyy/mm/dd",
+            autoclose: true
+        });
+
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
             if ($last) {

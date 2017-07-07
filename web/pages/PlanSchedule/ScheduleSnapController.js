@@ -110,7 +110,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             //显示右键操作
             function showRMenu(x, y) {
 
-                rMenu.css({"top": y + "px", "left": x+ "px", "visibility": "visible"});
+                rMenu.css({"top": (y-210) + "px", "left": (x+200)+ "px", "visibility": "visible"});
                 $("#container").bind("mousedown", onBodyMouseDown);
             }
 

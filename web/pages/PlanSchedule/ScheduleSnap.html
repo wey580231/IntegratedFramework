@@ -61,6 +61,7 @@
     }
 
     .ztree li a {
+        height: 24px;
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
         border: 1px solid lightgrey;
@@ -80,6 +81,12 @@
         left: 0px;
         font-size: 12px;
         cursor: pointer;
+    }
+
+
+
+    .ztree li a.curSelectedNode {
+        height: 20px;
     }
 
 </style>
@@ -114,9 +121,7 @@
                     </select>
                 </div>
 
-                <div>
-                    <ul id="treeDemo" class="ztree"></ul>
-                </div>
+
 
                 <!--树-->
                 <div class="box box-solid">
@@ -133,9 +138,9 @@
 
                     <div class="box-body no-padding">
 
-                        <!--<div>
+                        <div>
                             <ul id="treeDemo" class="ztree"></ul>
-                        </div>-->
+                        </div>
 
                         <div id="rMenu">
                             <ul>
