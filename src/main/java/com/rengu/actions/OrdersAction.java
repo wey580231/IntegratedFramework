@@ -6,6 +6,7 @@ import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
+import com.rengu.util.WebSocketNotification;
 
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,7 @@ public class OrdersAction extends SuperAction {
         if (ordersDAOInstance.save(rg_orderEntity)) {
         } else {
             System.out.println("保存失败");
+            WebSocketNotification.broadcast("保存失败");
         }
     }
 
@@ -61,6 +63,7 @@ public class OrdersAction extends SuperAction {
         if (ordersDAOInstance.delete(rg_orderEntity)) {
         } else {
             System.out.println("删除失败");
+            WebSocketNotification.broadcast("删除失败");
         }
     }
 
@@ -71,6 +74,7 @@ public class OrdersAction extends SuperAction {
         if (ordersDAOInstance.update(rg_orderEntity)) {
         } else {
             System.out.println("更新失败");
+            WebSocketNotification.broadcast("更新失败");
         }
     }
 
