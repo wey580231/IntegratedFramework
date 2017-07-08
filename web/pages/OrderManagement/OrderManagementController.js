@@ -10,17 +10,19 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         })
     }])
 
-    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate) {
+    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
         var editData = [];//保存新增和修改的信息
         var addData = [];
+        var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
+
         myHttpService.get(serviceList.ListOrder).then(function (response) {
             $scope.orderList = response.data;
         });
 
         //Date picker
-        $('#modal-add-t1-datepicker').datepicker({
+        $('#modal-add-t0-datepicker').datepicker({
             format: "yyyy/mm/dd",
             autoclose: true
         });
@@ -71,10 +73,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.type = $("input[name='add-type']").val();
             params.quantity = parseInt($("input[name='add-quantity']").val());
             params.origin = $("input[name='add-origin']").val();
-            var t0 = $("input[name='add-t0']").val();
-            var t2 = $("input[name='add-t2']").val();
-            params.t0 = Date.parse($("input[name='add-t0']").val());
-            params.t2 = Date.parse($("input[name='add-t2']").val());
+            var t0 = $("input[id='modal-add-t0-datepicker']").val();
+            var t2 = $("input[id='modal-add-t2-datepicker']").val();
+            params.t0 = Date.parse($("input[id='modal-add-t0-datepicker']").val());
+            params.t2 = Date.parse($("input[id='modal-add-t2-datepicker']").val());
             addData = JSON.stringify(params);
             if (!validate.checkChinese(params.origin) || !validate.checkLength(params.origin)) {
                 $("#add-origin").removeClass(" has-success");
@@ -84,7 +86,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#add-origin").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.type) || !validate.checkLength(params.type)) {
+            if (!validate.checkString(params.type) || !validate.checkLength(params.type)) {
                 $("#add-type").removeClass("has-success");
                 $("#add-type").addClass("has-error");
             } else {
@@ -123,7 +125,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#add-t2").addClass(" has-success");
             }
 
-            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkNumber(params.type) && validate.checkLength(params.type) &&
+            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkString(params.type) && validate.checkLength(params.type) &&
                 validate.checkLength(params.name) && validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t2)) {
                 return true;
@@ -141,10 +143,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.type = $("input[name='edit-type']").val();
             params.quantity = parseInt($("input[name='edit-quantity']").val());
             params.origin = $("input[name='edit-origin']").val();
-            var t0 = $("input[name='edit-t0']").val();
-            var t2 = $("input[name='edit-t2']").val();
-            params.t0 = Date.parse($("input[name='edit-t0']").val());
-            params.t2 = Date.parse($("input[name='edit-t2']").val());
+            var t0 = $("input[id='modal-edit-t1-datepicker']").val();
+            var t2 = $("input[id='modal-edit-t2-datepicker']").val();
+            params.t0 = Date.parse($("input[id='modal-edit-t1-datepicker']").val());
+            params.t2 = Date.parse($("input[id='modal-edit-t2-datepicker']").val());
             editData = params;
             if (!validate.checkChinese(params.origin) || !validate.checkLength(params.origin)) {
                 $("#edit-origin").removeClass(" has-success");
@@ -154,7 +156,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#edit-origin").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.type) || !validate.checkLength(params.type)) {
+            if (!validate.checkString(params.type) || !validate.checkLength(params.type)) {
                 $("#edit-type").removeClass("has-success");
                 $("#edit-type").addClass("has-error");
             } else {
@@ -193,7 +195,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#edit-t2").addClass(" has-success");
             }
 
-            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkNumber(params.type) && validate.checkLength(params.type) &&
+            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkString(params.type) && validate.checkLength(params.type) &&
                 validate.checkLength(params.name) && validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t2)) {
                 return true;
@@ -206,57 +208,92 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //新增订单
         $scope.addOrder = function () {
             if (orderAddValidate()) {
-                $("#modal-add").hide();
-                myHttpService.post(serviceList.AddOrder, addData).then(function successCallback(response) {
-                    //addData.splice(0, addData.length);
+                $("#modal-add").modal('hide');
+                myHttpService.post(serviceList.AddOrder, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
-                    setTimeout('window.location.reload();', 0.1);
-                }, function errorCallback(response) {
+                    location.reload();
+                }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
                 notification.sendNotification("alert", "参数错误");
             }
+            //addData.splice(0, addData.length);
         };
 
         //获得表单信息
+
+        var isCheck = function () {
+            var count = 1;
+            var a = document.getElementsByName("check");
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].checked) {
+                    count++;
+                }
+            }
+            if (count == 1 || count > 2) {
+                notification.sendNotification("alert", "请重新选择！");
+                return false;
+            } else {
+                return true;
+            }
+        };
+
         var getInfo = function () {
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
-            var a = document.getElementsByName("check");
-            var row = 1;
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].checked) {
-                    idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
-                    id_params.id = idVal;
+            if (isCheck()) {
+                var a = document.getElementsByName("check");
+                var row = 1;
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].checked) {
+                        idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
+                        id_params.id = idVal;
+                    }
+                    row++;
                 }
-                row++;
+                console.log("id信息");
+                console.log(id_params);
+                return true;
+            } else {
+
+                return false;
             }
         };
 
         //修改订单
         $scope.update = function () {
-            getInfo();
-            var idInfo = JSON.stringify(id_params);
-            myHttpService.post(serviceList.GetOrderById, idInfo).then(function successCallback(response) {
-                //checkedInfo.splice(0, checkedInfo.length);
-                var editList = [];
-                editList.push(response.data);
-                $scope.editList = editList;
-            }, function errorCallback(response) {
-                notification.sendNotification("alert", "请求失败");
-            })
+            if (getInfo()) {
+                $("#modal-edit").modal('show');
+                var idInfo = JSON.stringify(id_params);
+                myHttpService.post(serviceList.GetOrderById, idInfo).then(function successCallback(response) {
+                    var editList = [];//保存从数据库获取的需要修改的数据
+                    editList.push(response.data);
+                    edit_params = response.data;
+                    $scope.editList = editList;
+                }, function errorCallback(response) {
+                    notification.sendNotification("alert", "请求失败");
+                })
+            } else {
+                $("#modal-edit").modal('hide');
+            }
         };
 
         $scope.editOrder = function () {
             if (editAddValidate()) {
-                $("#modal-edit").hide();
-                editData.id = idVal;
-                editData = JSON.stringify(editData);
-                myHttpService.post(serviceList.UpdateOrder, editData).then(function successCallback(response) {
-                    //editData.splice(0, editData.length);
-                    //setTimeout('window.location.reload();', 0.1);
-                }, function errorCallback(response) {
+                $("#modal-edit").modal('hide');
+                //用获取到的数据代替从数据库取到的数据
+                edit_params.id = idVal;
+                edit_params.name = editData.name;
+                edit_params.type = editData.type;
+                edit_params.quantity = editData.quantity;
+                edit_params.origin = editData.origin;
+                edit_params.t0 = editData.t0;
+                edit_params.t2 = editData.t2;
+                var update_data = JSON.stringify(edit_params);
+                myHttpService.post(serviceList.UpdateOrder, update_data).then(function successCallback() {
+                    location.reload();
+                }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
@@ -267,19 +304,19 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         //删除订单
         $scope.deleteOrder = function () {
-            getInfo();
-            var params = {};
-            params.id = idVal;
-            var idInfo = JSON.stringify(params);
-            myHttpService.delete(serviceList.DeleteOrder, idInfo).then(function successCallback(response) {
-                //checkedInfo.splice(0, checkedInfo.length);
-                //强制刷新解决按钮不能连续响应
-                //setTimeout('window.location.reload();', 0.1);
-            }, function errorCallback(response) {
-                notification.sendNotification("alert", "请求失败");
-            });
+            if (getInfo()) {
+                var params = {};
+                params.id = idVal;
+                var idInfo = JSON.stringify(params);
+                console.log("删除的id信息");
+                console.log(idInfo);
+                myHttpService.delete(serviceList.DeleteOrder, idInfo).then(function successCallback() {
+                    location.reload();
+                }, function errorCallback() {
+                    notification.sendNotification("alert", "请求失败");
+                });
+            }
         };
-
 
         $scope.reset = function () {
             $("input").val('');
