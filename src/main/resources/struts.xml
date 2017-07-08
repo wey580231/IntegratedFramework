@@ -11,29 +11,12 @@
     <!--过滤websocket连接。-->
     <constant name="struts.action.excludePattern" value="/notification/.*"/>
 
-    <!--用户登录-->
     <package name="default" extends="struts-default" namespace="/">
         <!--设置默认的action，当前包中的action均不满足时，使用此action作为默认跳转的压面-->
         <default-action-ref name="index"/>
         <action name="index" class="com.rengu.actions.DefaultAction">
             <result>MainPage.html</result>
         </action>
-    </package>
-
-    <!--计划排程接口-->
-    <package name="schedule" extends="struts-default" namespace="/schedule">
-        <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
-        <action name="getAllSchedules" class="com.rengu.actions.ScheduleAction" method="getAllSchedules"/>
-    </package>
-
-    <!--工序资源信息接口-->
-    <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">
-        <action name="getAllAssisantProcess" class="com.rengu.actions.AssisantprocessAction"
-                method="getAllAssisantProcess"/>
-        <action name="save" class="com.rengu.actions.AssisantprocessAction" method="save"/>
-        <action name="delete" class="com.rengu.actions.AssisantprocessAction" method="delete"/>
-        <action name="update" class="com.rengu.actions.AssisantprocessAction" method="update"/>
-        <action name="findAll" class="com.rengu.actions.AssisantprocessAction" method="findAll"/>
     </package>
 
     <!--订单信息接口-->
@@ -48,6 +31,17 @@
         <action name="deleteById" class="com.rengu.actions.OrdersAction" method="deleteById"/>
     </package>
 
+    <!--工序资源信息接口-->
+    <package name="Assisantprocess" namespace="/assisantprocess" extends="struts-default">
+        <action name="getAllAssisantProcess" class="com.rengu.actions.AssisantprocessAction"
+                method="getAllAssisantProcess"/>
+        <action name="save" class="com.rengu.actions.AssisantprocessAction" method="save"/>
+        <action name="delete" class="com.rengu.actions.AssisantprocessAction" method="delete"/>
+        <action name="update" class="com.rengu.actions.AssisantprocessAction" method="update"/>
+        <action name="findAll" class="com.rengu.actions.AssisantprocessAction" method="findAll"/>
+        <action name="findAllById" class="com.rengu.actions.AssisantprocessAction" method="findAllById"/>
+    </package>
+
     <!--资源信息接口-->
     <package name="Resource" namespace="/resource" extends="struts-default">
         <action name="getAllResource" class="com.rengu.actions.ResourceAction" method="getAllResource"/>
@@ -55,6 +49,7 @@
         <action name="delete" class="com.rengu.actions.ResourceAction" method="delete"/>
         <action name="update" class="com.rengu.actions.ResourceAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.ResourceAction" method="findAll"/>
+        <action name="findAllById" class="com.rengu.actions.ResourceAction" method="findAllById"/>
     </package>
 
     <!--资源类型信息接口-->
@@ -64,6 +59,7 @@
         <action name="delete" class="com.rengu.actions.TyperescourceAction" method="delete"/>
         <action name="update" class="com.rengu.actions.TyperescourceAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.TyperescourceAction" method="findAll"/>
+        <action name="findAllById" class="com.rengu.actions.TyperescourceAction" method="findAllById"/>
     </package>
 
     <!--资源工组信息接口-->
@@ -73,7 +69,9 @@
         <action name="delete" class="com.rengu.actions.GroupResourceAction" method="delete"/>
         <action name="update" class="com.rengu.actions.GroupResourceAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.GroupResourceAction" method="findAll"/>
+        <action name="findAllById" class="com.rengu.actions.GroupResourceAction" method="findAllById"/>
     </package>
+
     <!--资源工位信息接口-->
     <package name="Site" namespace="/site" extends="struts-default">
         <action name="getAllSite" class="com.rengu.actions.SiteAction" method="getAllSite"/>
@@ -81,7 +79,9 @@
         <action name="delete" class="com.rengu.actions.SiteAction" method="delete"/>
         <action name="update" class="com.rengu.actions.SiteAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.SiteAction" method="findAll"/>
+        <action name="findAllById" class="com.rengu.actions.SiteAction" method="findAllById"/>
     </package>
+
     <!--资源班次信息接口-->
     <package name="Shift" namespace="/shift" extends="struts-default">
         <action name="getAllShift" class="com.rengu.actions.ShiftAction" method="getAllShift"/>
@@ -89,7 +89,15 @@
         <action name="delete" class="com.rengu.actions.ShiftAction" method="delete"/>
         <action name="update" class="com.rengu.actions.ShiftAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.ShiftAction" method="findAll"/>
+        <action name="findAllById" class="com.rengu.actions.ShiftAction" method="findAllById"/>
     </package>
+
+    <!--计划排程接口-->
+    <package name="schedule" extends="struts-default" namespace="/schedule">
+        <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
+        <action name="getAllSchedules" class="com.rengu.actions.ScheduleAction" method="getAllSchedules"/>
+    </package>
+
     <!--工序信息接口-->
     <package name="Process" namespace="/process" extends="struts-default">
         <action name="save" class="com.rengu.actions.ProcessAction" method="save"/>
