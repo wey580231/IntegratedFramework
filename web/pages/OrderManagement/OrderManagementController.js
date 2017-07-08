@@ -11,7 +11,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
     }])
 
     .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
-        var editData = [];//保存新增和修改的信息
+        var editData = {};//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
@@ -127,7 +127,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
             if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkString(params.type) && validate.checkLength(params.type) &&
                 validate.checkLength(params.name) && validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
-                validate.checkLength(params.t0) && validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t2)) {
+                validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
 
@@ -137,7 +137,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
 
         //信息填写检验
-        var editAddValidate = function () {
+        var orderEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
             params.type = $("input[name='edit-type']").val();
@@ -197,7 +197,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
             if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkString(params.type) && validate.checkLength(params.type) &&
                 validate.checkLength(params.name) && validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
-                validate.checkLength(params.t0) && validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t2)) {
+                validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
 
@@ -280,17 +280,16 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         };
 
         $scope.editOrder = function () {
-            if (editAddValidate()) {
+            if (orderEditValidate()) {
                 $("#modal-edit").modal('hide');
                 //用获取到的数据代替从数据库取到的数据
-                edit_params.id = idVal;
                 edit_params.name = editData.name;
                 edit_params.type = editData.type;
                 edit_params.quantity = editData.quantity;
                 edit_params.origin = editData.origin;
                 edit_params.t0 = editData.t0;
                 edit_params.t2 = editData.t2;
-                var update_data = JSON.stringify(edit_params);
+                var update_data = angular.toJson(edit_params);
                 myHttpService.post(serviceList.UpdateOrder, update_data).then(function successCallback() {
                     location.reload();
                 }, function errorCallback() {

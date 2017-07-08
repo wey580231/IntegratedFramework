@@ -2,11 +2,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            订单管理
+            工序资源分配管理
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">订单管理</li>
+            <li class="active">工序资源分配管理</li>
         </ol>
     </section>
 
@@ -33,7 +33,7 @@
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                     class="btn btn-default" ng-click="update()"><i class="fa fa-wrench"></i> 修改
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
+                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteAssisantProcess()"><i
                                     class="fa fa-trash-o"></i> 删除
                             </button>
                         </div>
@@ -46,30 +46,22 @@
                         <tbody>
                         <tr>
                             <td></td>
-                            <th>名称</th>
-                            <th>类型</th>
-                            <th>来源</th>
-                            <th>数量</th>
-                            <th>下单时间</th>
-                            <th>完工时间</th>
-                            <th>状态</th>
+                            <th>类型编号集合</th>
+                            <th>资源类型分组</th>
+                            <th>地点编码</th>
+                            <th>最少资源数量</th>
+                            <th>最多资源数量</th>
+                            <th>工序串行权重</th>
                         </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)">
+                        <tr ng-repeat="resourcedis in resourcedisList track by $index" ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
-                            <td style="display:none">{{order.id}}</td>
-                            <td>{{order.name}}</td>
-                            <td>{{order.type}}</td>
-                            <td>{{order.origin}}</td>
-                            <td>{{order.quantity}}</td>
-                            <td>{{order.t0}}</td>
-                            <td>{{order.t2}}</td>
-                            <td>
-                                <span class="label label-success" ng-if="order.state == 0">候选</span>
-                                <span class="label label-primary" ng-if="order.state == 1">计划</span>
-                                <span class="label label-danger" ng-if="order.state == 2">锁定</span>
-                                <span class="label label-success" ng-if="order.state == 3">发布</span>
-                                <span class="label label-warning" ng-if="order.state == -1">删除</span>
-                            </td>
+                            <td style="display:none">{{resourcedis.id}}</td>
+                            <td>{{resourcedis.grp}}</td>
+                            <td>{{resourcedis.typeSite}}</td>
+                            <td>{{resourcedis.idSite}}</td>
+                            <td>{{resourcedis.minResource}}</td>
+                            <td>{{resourcedis.maxResource}}</td>
+                            <td>{{resourcedis.weightParallel}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -87,62 +79,66 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">新增订单信息</h4>
+                        <h4 class="modal-title">新增工序资源信息</h4>
                     </div>
                     <div class="modal-body">
                         <!-- form start -->
                         <form class="form-horizontal">
                             <div class="box-body">
-                                <div class="form-group" id="add-name">
-                                    <label class="col-sm-2 control-label">名称</label>
+                                <div class="form-group" id="add-grp">
+                                    <label class="col-sm-2 control-label">类型编号集合</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-name" title="请输入正确的中文字符！"
+                                        <input class="form-control" name="add-grp" title="请输入0-9之间的数字！！"
                                                placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="add-type">
-                                    <label class="col-sm-2 control-label">类型</label>
+                                <div class="form-group" id="add-typeSite">
+                                    <label class="col-sm-2 control-label">资源类型分组</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-type" title="请输入a-z/A-Z之间字母组成的字符串！"
+                                        <input class="form-control" name="add-typeSite" title="请输入0-9之间的数字！"
                                                placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="add-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
+                                <div class="form-group" id="add-idSite">
+                                    <label class="col-sm-2 control-label">地点编码</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-quantity" title="请输入0-9之间的数字！"
+                                        <input class="form-control" name="add-idSite" title="请输入0-9之间的数字！"
                                                placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="add-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
+                                <div class="form-group" id="add-minResource">
+                                    <label class="col-sm-2 control-label">最少资源数量</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-origin" title="请输入正确的中文字符！"
+                                        <input class="form-control" name="add-minResource" title="请输入0-9之间的数字！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <!-- Date and time range -->
-                                <div class="form-group" id="add-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t0-datepicker">
+                                <div class="form-group" id="add-maxResource">
+                                    <label class="col-sm-2 control-label">最多资源数量</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="add-maxResource" title="请输入0-9之间的数字！！"
+                                               placeholder="">
                                     </div>
                                     <!-- /.input group -->
                                 </div>
-                                <div class="form-group" id="add-t2">
-                                    <label class="col-sm-2 control-label">最晚完工</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t2-datepicker">
+                                <div class="form-group" id="add-weightParallel">
+                                    <label class="col-sm-2 control-label">工序串行权重</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="add-weightParallel" title="请输入0-9之间的数字！"
+                                               placeholder="">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="addOrder()">Add</button>
+                                <button type="submit" class="btn btn-info pull-right" ng-click="addAssisantProcess()">
+                                    Add
+                                </button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -158,64 +154,65 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">修改订单信息</h4>
+                        <h4 class="modal-title">修改工序资源信息</h4>
                     </div>
                     <div class="modal-body">
                         <!-- form start -->
                         <form class="form-horizontal">
-                            <div class="box-body" ng-repeat="order in editList">
-                                <div class="form-group" id="edit-name">
-                                    <label class="col-sm-2 control-label">名称</label>
+                            <div class="box-body" ng-repeat="resourcedis in editList">
+                                <div class="form-group" id="edit-grp">
+                                    <label class="col-sm-2 control-label">类型编号集合</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-name" title="请输入正确的中文字符！"
-                                               value="{{order.name}}" placeholder="">
+                                        <input class="form-control" name="edit-grp" title="请输入0-9之间的数字！"
+                                               value="{{resourcedis.grp}}" placeholder="">
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="edit-type">
-                                    <label class="col-sm-2 control-label">类型</label>
+                                <div class="form-group" id="edit-typeSite">
+                                    <label class="col-sm-2 control-label">资源类型分组</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-type" title="请输入a-z/A-Z之间字母组成的字符串！"
-                                               value="{{order.type}}" placeholder="">
+                                        <input class="form-control" name="edit-typeSite" title="请输入0-9之间的数字！"
+                                               value="{{resourcedis.typeSite}}" placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="edit-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
+                                <div class="form-group" id="edit-idSite">
+                                    <label class="col-sm-2 control-label">地点编码</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-quantity" title="请输入0-9之间的数字！"
-                                               value="{{order.quantity}}" placeholder="">
+                                        <input class="form-control" name="edit-idSite" title="请输入0-9之间的数字！"
+                                               value="{{resourcedis.idSite}}" placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="edit-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
+                                <div class="form-group" id="edit-minResource">
+                                    <label class="col-sm-2 control-label">最少资源数量</label>
 
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-origin" title="请输入正确的中文字符！"
-                                               value="{{order.origin}}" placeholder="">
+                                        <input class="form-control" name="edit-minResource" title="请输入0-9之间的数字！"
+                                               value="{{resourcedis.minResource}}" placeholder="">
                                     </div>
                                 </div>
                                 <!-- Date and time range -->
-                                <div class="form-group" id="edit-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t0-datepicker"
-                                               value="{{order.t0}}">
+                                <div class="form-group" id="edit-maxResource">
+                                    <label class="col-sm-2 control-label">最多资源数量</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="edit-maxResource" title="请输入0-9之间的数字！"
+                                               value="{{resourcedis.maxResource}}" placeholder="">
                                     </div>
                                     <!-- /.input group -->
                                 </div>
-                                <div class="form-group" id="edit-t2">
-                                    <label class="col-sm-2 control-label">完工时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t2-datepicker"
-                                               value="{{order.t2}}">
+                                <div class="form-group" id="edit-weightParallel">
+                                    <label class="col-sm-2 control-label">工序串行权重</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="edit-weightParallel" title="请输入0-9之间的数字！"
+                                               value="{{resourcedis.weightParallel}}" placeholder="">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="editOrder()">Edlt
+                                <button type="submit" class="btn btn-info pull-right" ng-click="editAssisantProcess()">
+                                    Edlt
                                 </button>
                             </div>
                             <!-- /.box-footer -->
