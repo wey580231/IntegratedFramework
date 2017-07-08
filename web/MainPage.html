@@ -209,7 +209,7 @@ desired effect
                     <ul class="treeview-menu">
                         <li><a href="#!/OrderManagement"><i class="fa fa-circle-o"></i>订单管理</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>制造BOM管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>工序资源分配管理</a></li>
+                        <li><a href="#!/ResourceDistribution"><i class="fa fa-circle-o"></i>工序资源分配管理</a></li>
                     </ul>
                 </li>
                 <!--资源-->
@@ -220,11 +220,11 @@ desired effect
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>资源列表管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>资源分类管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>资源工组管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>资源工位管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>资源工作班次管理</a></li>
+                        <li><a href="#!/ResourceList"><i class="fa fa-circle-o"></i>资源列表管理</a></li>
+                        <li><a href="#!/ResourceClassify"><i class="fa fa-circle-o"></i>资源分类管理</a></li>
+                        <li><a href="#!/ResourceGroup"><i class="fa fa-circle-o"></i>资源工组管理</a></li>
+                        <li><a href="#!/ResourceStation"><i class="fa fa-circle-o"></i>资源工位管理</a></li>
+                        <li><a href="#!/WorkList"><i class="fa fa-circle-o"></i>资源工作班次管理</a></li>
                     </ul>
                 </li>
                 <!--计划-->
@@ -325,7 +325,7 @@ desired effect
                 <h3 class="control-sidebar-heading">Recent Activity</h3>
                 <ul class="control-sidebar-menu">
                     <li>
-                        <a href="javascript:;">
+                        <a href="javascript:">
                             <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
                             <div class="menu-info">
@@ -341,7 +341,7 @@ desired effect
                 <h3 class="control-sidebar-heading">Tasks Progress</h3>
                 <ul class="control-sidebar-menu">
                     <li>
-                        <a href="javascript:;">
+                        <a href="javascript:">
                             <h4 class="control-sidebar-subheading">
                                 Custom Template Design
                                 <span class="pull-right-container">
@@ -421,6 +421,14 @@ desired effect
 
 <script src="app.js"></script>
 <script src="pages/OrderManagement/OrderManagementController.js"></script>
+<script src="pages/OrderManagement/ResourceDistributionController.js"></script>
+
+<script src="pages/ResourceManagement/ResourceListController.js"></script>
+<script src="pages/ResourceManagement/ResourceClassifyController.js"></script>
+<script src="pages/ResourceManagement/ResourceStationController.js"></script>
+<script src="pages/ResourceManagement/WorkListController.js"></script>
+<script src="pages/ResourceManagement/ResourceGroupController.js"></script>
+
 <script src="pages/PlanSchedule/ScheduleSnapController.js"></script>
 <script src="WebSocketNotification.js"></script>
 <!--加载通知系统-->

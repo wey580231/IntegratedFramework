@@ -109,6 +109,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             //右击
             function OnRightClick(event, treeNode) {
+                var id = zTree.getSelectedNodes()[0].id;
+                console.log("$$$$$$$$$%%%%%%%");
+                console.log(id);
                 var e = event || window.event;
                 if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
@@ -127,10 +130,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 } else {
                     $("#m_del").show();
                 }
-
                 rMenu.css({"top": (y-110) + "px", "left": (x-250) + "px", "visibility": "visible"});
-
-
                 $("body").bind("mousedown", onBodyMouseDown);
             }
 
@@ -206,7 +206,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 hideRMenu();
                 $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             };
-
 
             // $(document).ready(function () {
             $.fn.zTree.init($("#treeDemo"), setting, zTreeNodes);
