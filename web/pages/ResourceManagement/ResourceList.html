@@ -2,11 +2,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            订单管理
+            资源列表管理
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">订单管理</li>
+            <li class="active">资源列表管理</li>
         </ol>
     </section>
 
@@ -33,7 +33,7 @@
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                     class="btn btn-default" ng-click="update()"><i class="fa fa-wrench"></i> 修改
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
+                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteResource()"><i
                                     class="fa fa-trash-o"></i> 删除
                             </button>
                         </div>
@@ -47,29 +47,19 @@
                         <tr>
                             <td></td>
                             <th>名称</th>
-                            <th>类型</th>
-                            <th>来源</th>
-                            <th>数量</th>
-                            <th>下单时间</th>
-                            <th>完工时间</th>
-                            <th>状态</th>
+                            <th>资源类型</th>
+                            <th>工组</th>
+                            <th>正常班次</th>
+                            <th>状态信息</th>
                         </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)">
+                        <tr ng-repeat="resource in resourceList track by $index" ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
-                            <td style="display:none">{{order.id}}</td>
-                            <td>{{order.name}}</td>
-                            <td>{{order.type}}</td>
-                            <td>{{order.origin}}</td>
-                            <td>{{order.quantity}}</td>
-                            <td>{{order.t0}}</td>
-                            <td>{{order.t2}}</td>
-                            <td>
-                                <span class="label label-success" ng-if="order.state == 0">候选</span>
-                                <span class="label label-primary" ng-if="order.state == 1">计划</span>
-                                <span class="label label-danger" ng-if="order.state == 2">锁定</span>
-                                <span class="label label-success" ng-if="order.state == 3">发布</span>
-                                <span class="label label-warning" ng-if="order.state == -1">删除</span>
-                            </td>
+                            <td style="display:none">{{resource.id}}</td>
+                            <td>{{resource.name}}</td>
+                            <td>{{resource.typeSite}}</td>
+                            <td>{{resource.idSiteGroupResource}}</td>
+                            <td>{{resource.nameShift}}</td>
+                            <td>{{resource.state}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -87,7 +77,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">新增订单信息</h4>
+                        <h4 class="modal-title">新增资源列表信息</h4>
                     </div>
                     <div class="modal-body">
                         <!-- form start -->
@@ -95,54 +85,47 @@
                             <div class="box-body">
                                 <div class="form-group" id="add-name">
                                     <label class="col-sm-2 control-label">名称</label>
-
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-name" title="请输入正确的中文字符！"
+                                        <input class="form-control" name="add-name" title="请输入a-z/A-Z之间字母组成的字符串！"
                                                placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="add-type">
-                                    <label class="col-sm-2 control-label">类型</label>
-
+                                <div class="form-group" id="add-typeSite">
+                                    <label class="col-sm-2 control-label">资源类型</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-type" title="请输入a-z/A-Z之间字母组成的字符串！"
+                                        <input class="form-control" name="add-typeSite" title="请输入0-9之间的数字！"
                                                placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="add-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
-
+                                <div class="form-group" id="add-idSiteGroupResource">
+                                    <label class="col-sm-2 control-label">工组</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-quantity" title="请输入0-9之间的数字！"
+                                        <input class="form-control" name="add-idSiteGroupResource" title="请输入0-9之间的数字！"
                                                placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="add-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
+                                <div class="form-group" id="add-nameShift">
+                                    <label class="col-sm-2 control-label">正常班次</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-origin" title="请输入正确的中文字符！"
+                                        <input class="form-control" name="add-nameShift" title="请输入0-9之间的数字！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <!-- Date and time range -->
-                                <div class="form-group" id="add-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t0-datepicker">
+                                <div class="form-group" id="add-state">
+                                    <label class="col-sm-2 control-label">状态信息</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="add-state" title="请输入0-9之间的数字！"
+                                               placeholder="">
                                     </div>
                                     <!-- /.input group -->
-                                </div>
-                                <div class="form-group" id="add-t2">
-                                    <label class="col-sm-2 control-label">最晚完工</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t2-datepicker">
-                                    </div>
                                 </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="addOrder()">Add</button>
+                                <button type="submit" class="btn btn-info pull-right" ng-click="addResource()">Add
+                                </button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -158,64 +141,55 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">修改订单信息</h4>
+                        <h4 class="modal-title">修改资源列表信息</h4>
                     </div>
                     <div class="modal-body">
                         <!-- form start -->
                         <form class="form-horizontal">
-                            <div class="box-body" ng-repeat="order in editList">
+                            <div class="box-body" ng-repeat="resource in editList">
                                 <div class="form-group" id="edit-name">
                                     <label class="col-sm-2 control-label">名称</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-name" title="请输入正确的中文字符！"
-                                               value="{{order.name}}" placeholder="">
+                                        <input class="form-control" name="edit-name" title="请输入a-z/A-Z之间字母组成的字符串！"
+                                               value="{{resource.name}}" placeholder="">
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="edit-type">
-                                    <label class="col-sm-2 control-label">类型</label>
+                                <div class="form-group" id="edit-typeSite">
+                                    <label class="col-sm-2 control-label">资源类型</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-type" title="请输入a-z/A-Z之间字母组成的字符串！"
-                                               value="{{order.type}}" placeholder="">
+                                        <input class="form-control" name="edit-typeSite" title="请输入0-9之间的数字！"
+                                               value="{{resource.typeSite}}" placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="edit-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
-
+                                <div class="form-group" id="edit-idSiteGroupResource">
+                                    <label class="col-sm-2 control-label">工组</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-quantity" title="请输入0-9之间的数字！"
-                                               value="{{order.quantity}}" placeholder="">
+                                        <input class="form-control" name="edit-idSiteGroupResource" title="请输入0-9之间的数字！"
+                                               value="{{resource.idSiteGroupResource}}" placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="edit-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
-
+                                <div class="form-group" id="edit-nameShift">
+                                    <label class="col-sm-2 control-label">正常班次</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-origin" title="请输入正确的中文字符！"
-                                               value="{{order.origin}}" placeholder="">
+                                        <input class="form-control" name="edit-nameShift" title="请输入0-9之间的数字！"
+                                               value="{{resource.nameShift}}" placeholder="">
                                     </div>
                                 </div>
                                 <!-- Date and time range -->
-                                <div class="form-group" id="edit-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t0-datepicker"
-                                               value="{{order.t0}}">
+                                <div class="form-group" id="edit-state">
+                                    <label class="col-sm-2 control-label">状态信息</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="edit-state" title="请输入0-9之间的数字！"
+                                               value="{{resource.state}}" placeholder="">
                                     </div>
                                     <!-- /.input group -->
-                                </div>
-                                <div class="form-group" id="edit-t2">
-                                    <label class="col-sm-2 control-label">完工时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t2-datepicker"
-                                               value="{{order.t2}}">
-                                    </div>
                                 </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="editOrder()">Edlt
+                                <button type="submit" class="btn btn-info pull-right" ng-click="editResource()">Edlt
                                 </button>
                             </div>
                             <!-- /.box-footer -->

@@ -1,5 +1,6 @@
 package com.rengu.actions;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.ResourceDAO;
 import com.rengu.DAO.impl.ResourceDAOImpl;
@@ -39,7 +40,8 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.save(rg_resourceEntity)) {
         } else {
-            WebSocketNotification.sendMessage("保存失败", rg_resourceEntity.getClubByIdClub().getName());
+            System.out.println("保存失败");
+            WebSocketNotification.broadcast("保存失败");
         }
     }
 
@@ -49,7 +51,8 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.delete(rg_resourceEntity)) {
         } else {
-            WebSocketNotification.sendMessage("删除失败", rg_resourceEntity.getClubByIdClub().getName());
+            System.out.println("删除失败");
+            WebSocketNotification.broadcast("删除失败");
         }
     }
 
@@ -59,8 +62,19 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.update(rg_resourceEntity)) {
         } else {
-            WebSocketNotification.sendMessage("更新失败", rg_resourceEntity.getClubByIdClub().getName());
+            System.out.println("更新失败");
+            WebSocketNotification.broadcast("更新失败");
         }
 
+    }
+
+    public void findAllById() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
+        String resourceId = jsonNode.get("id").asText();
+        ResourceDAOImpl resourceDAO = DAOFactory.getResourceInstance();
+        RG_ResourceEntity rg_resourceEntity = resourceDAO.findAllById(resourceId);
+        String resultString = Tools.entityConvertToJsonString(rg_resourceEntity);
+        Tools.jsonPrint(resultString, this.httpServletResponse);
     }
 }
