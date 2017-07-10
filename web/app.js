@@ -12,7 +12,8 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ResourceStationController',
     'IntegratedFramework.WorkListController',
     'IntegratedFramework.ScheduleSnapController',
-    'IntegratedFramework.EquipmentMonitoringController'
+    'IntegratedFramework.EquipmentMonitoringController',
+    'IntegratedFramework.MainPage'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');
