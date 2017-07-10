@@ -10,8 +10,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         })
     }])
 
-    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
-        var editData = {};//保存新增和修改的信息
+    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+        var editData = [];//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
@@ -45,36 +45,13 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
-            if ($last) {
-                //Enable iCheck plugin for checkboxes
-                //iCheck for checkbox and radio inputs
-                $('.mailbox-messages input[type="checkbox"]').iCheck({
-                    checkboxClass: 'icheckbox_flat-blue',
-                    radioClass: 'iradio_flat-blue'
-                });
-
-                //Enable check and uncheck all functionality
-                $(".checkbox-toggle").click(function () {
-                    var clicks = $(this).data('clicks');
-                    if (clicks) {
-                        //Uncheck all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-                        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-                    } else {
-                        //Check all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("check");
-                        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-                    }
-                    $(this).data("clicks", !clicks);
-                });
-            }
+            renderTableService.renderTable($last);
         };
 
         //信息填写检验
         var orderAddValidate = function () {
             var params = {};
             params.name = $("input[name='add-name']").val();
-            params.type = $("input[name='add-type']").val();
             params.quantity = parseInt($("input[name='add-quantity']").val());
             params.origin = $("input[name='add-origin']").val();
             var t0 = $("input[id='modal-add-t0-datepicker']").val();
@@ -90,13 +67,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#add-origin").addClass(" has-success");
             }
 
-            if (!validate.checkString(params.type) || !validate.checkLength(params.type)) {
-                $("#add-type").removeClass("has-success");
-                $("#add-type").addClass("has-error");
-            } else {
-                $("#add-type").removeClass("has-error");
-                $("#add-type").addClass(" has-success");
-            }
 
             if (!validate.checkLength(params.name) || !validate.checkChinese(params.name)) {
                 $("#add-name").removeClass("has-success");
@@ -129,8 +99,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#add-t2").addClass(" has-success");
             }
 
-            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkString(params.type) && validate.checkLength(params.type) &&
-                validate.checkLength(params.name) && validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
+            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkLength(params.name) &&
+                validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
@@ -144,12 +114,11 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var orderEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
-            params.type = $("input[name='edit-type']").val();
             params.quantity = parseInt($("input[name='edit-quantity']").val());
             params.origin = $("input[name='edit-origin']").val();
-            var t0 = $("input[id='modal-edit-t1-datepicker']").val();
+            var t0 = $("input[id='modal-edit-t0-datepicker']").val();
             var t2 = $("input[id='modal-edit-t2-datepicker']").val();
-            params.t0 = Date.parse($("input[id='modal-edit-t1-datepicker']").val());
+            params.t0 = Date.parse($("input[id='modal-edit-t0-datepicker']").val());
             params.t2 = Date.parse($("input[id='modal-edit-t2-datepicker']").val());
             editData = params;
             if (!validate.checkChinese(params.origin) || !validate.checkLength(params.origin)) {
@@ -160,13 +129,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#edit-origin").addClass(" has-success");
             }
 
-            if (!validate.checkString(params.type) || !validate.checkLength(params.type)) {
-                $("#edit-type").removeClass("has-success");
-                $("#edit-type").addClass("has-error");
-            } else {
-                $("#edit-type").removeClass("has-error");
-                $("#edit-type").addClass(" has-success");
-            }
 
             if (!validate.checkLength(params.name) || !validate.checkChinese(params.name)) {
                 $("#edit-name").removeClass("has-success");
@@ -199,8 +161,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#edit-t2").addClass(" has-success");
             }
 
-            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkString(params.type) && validate.checkLength(params.type) &&
-                validate.checkLength(params.name) && validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
+            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkLength(params.name) &&
+                validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
@@ -215,7 +177,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddOrder, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
-                    location.reload();
+                    location.reload(true);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -236,7 +198,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 }
             }
             if (count == 1 || count > 2) {
-                notification.sendNotification("alert", "请重新选择！");
+                notification.sendNotification("alert", "请选择一条订单！");
                 return false;
             } else {
                 return true;
@@ -288,14 +250,13 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#modal-edit").modal('hide');
                 //用获取到的数据代替从数据库取到的数据
                 edit_params.name = editData.name;
-                edit_params.type = editData.type;
                 edit_params.quantity = editData.quantity;
                 edit_params.origin = editData.origin;
                 edit_params.t0 = editData.t0;
                 edit_params.t2 = editData.t2;
                 var update_data = angular.toJson(edit_params);
                 myHttpService.post(serviceList.UpdateOrder, update_data).then(function successCallback() {
-                    location.reload();
+                    location.reload(true);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -314,7 +275,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 console.log("删除的id信息");
                 console.log(idInfo);
                 myHttpService.delete(serviceList.DeleteOrder, idInfo).then(function successCallback() {
-                    location.reload();
+                    location.reload(true);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 });
