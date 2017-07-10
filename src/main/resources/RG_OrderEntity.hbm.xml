@@ -104,7 +104,7 @@
             <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
 
-        <list name="emulateDatas" cascade="all">
+        <list name="emulateDatas">
             <key>
                 <column name="idOrder" not-null="false"/>
             </key>
@@ -112,7 +112,7 @@
             <one-to-many class="com.rengu.entity.RG_EmulateDataEntity"/>
         </list>
 
-        <list name="emulateResults" cascade="all">
+        <list name="emulateResults">
             <key>
                 <column name="idOrder" not-null="false"/>
             </key>
@@ -120,10 +120,9 @@
             <one-to-many class="com.rengu.entity.RG_EmulateResultEntity"/>
         </list>
 
-        <set name="orderStates" inverse="true" cascade="all">
+        <set name="orderStates">
             <key column="orderId"/>
             <one-to-many class="com.rengu.entity.RG_OrderStateEntity"/>
         </set>
-
     </class>
 </hibernate-mapping>
