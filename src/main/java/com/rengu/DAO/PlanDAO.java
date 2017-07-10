@@ -11,8 +11,4 @@ public interface PlanDAO<T> extends SuperDAO {
     T findAllById(String id);
 
     List<T> findAllBySnapshotId(String id);
-
-    List<T> search(String keyWord);
-
-    boolean deleteById(String id);
 }

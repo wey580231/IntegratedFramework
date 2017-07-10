@@ -8,11 +8,5 @@ import java.util.List;
 public interface ResourceDAO<T> extends SuperDAO {
     List<T> findAll();
 
-    List<T> findAllByUsername(String username);
-
     T findAllById(String id);
-
-    List<T> search(String keyWord);
-
-    boolean deleteById(String id);
 }

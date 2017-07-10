@@ -15,6 +15,7 @@ import java.util.List;
 public class ScheduleDAOImpl extends SuperDAOImpl implements ScheduleDAO<RG_ScheduleEntity> {
     @Override
     public List<RG_ScheduleEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
 
@@ -28,13 +29,9 @@ public class ScheduleDAOImpl extends SuperDAOImpl implements ScheduleDAO<RG_Sche
     }
 
     @Override
-    public List<RG_ScheduleEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_ScheduleEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -53,10 +50,5 @@ public class ScheduleDAOImpl extends SuperDAOImpl implements ScheduleDAO<RG_Sche
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_ScheduleEntity> search(String keyWord) {
-        return null;
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceDAO<RG_TyperescourceEntity> {
     @Override
     public List<RG_TyperescourceEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceD
     }
 
     @Override
-    public List<RG_TyperescourceEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_TyperescourceEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -52,10 +49,5 @@ public class TyperescourceDAOImpl extends SuperDAOImpl implements TyperescourceD
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_TyperescourceEntity> search(String keyWord) {
-        return null;
     }
 }

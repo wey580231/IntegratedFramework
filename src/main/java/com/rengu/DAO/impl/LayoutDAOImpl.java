@@ -7,25 +7,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.util.List;
-
 /**
  * Created by hanchangming on 2017/6/5.
  */
 public class LayoutDAOImpl extends SuperDAOImpl implements LayoutDAO<RG_LayoutEntity> {
     @Override
-    public List<RG_LayoutEntity> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<RG_LayoutEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_LayoutEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -44,10 +33,5 @@ public class LayoutDAOImpl extends SuperDAOImpl implements LayoutDAO<RG_LayoutEn
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_LayoutEntity> search(String keyWord) {
-        return null;
     }
 }
