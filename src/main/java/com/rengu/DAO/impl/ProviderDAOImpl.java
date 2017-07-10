@@ -7,25 +7,14 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.util.List;
-
 /**
  * Created by hanchangming on 2017/6/13.
  */
 public class ProviderDAOImpl extends SuperDAOImpl implements ProviderDAO<RG_ProviderEntity> {
     @Override
-    public List<RG_ProviderEntity> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<RG_ProviderEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_ProviderEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -44,10 +33,5 @@ public class ProviderDAOImpl extends SuperDAOImpl implements ProviderDAO<RG_Prov
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_ProviderEntity> search(String keyWord) {
-        return null;
     }
 }

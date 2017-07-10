@@ -15,6 +15,7 @@ import java.util.List;
 public class GroupResourceDAOImpl extends SuperDAOImpl implements GroupResourceDAO<RG_GroupresourceEntity> {
     @Override
     public List<RG_GroupresourceEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class GroupResourceDAOImpl extends SuperDAOImpl implements GroupResourceD
     }
 
     @Override
-    public List<RG_GroupresourceEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_GroupresourceEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -52,10 +49,5 @@ public class GroupResourceDAOImpl extends SuperDAOImpl implements GroupResourceD
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_GroupresourceEntity> search(String keyWord) {
-        return null;
     }
 }

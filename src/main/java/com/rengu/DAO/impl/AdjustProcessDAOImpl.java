@@ -15,6 +15,7 @@ import java.util.List;
 public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessDAO<RG_AdjustProcessEntity> {
     @Override
     public List<RG_AdjustProcessEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
     }
 
     @Override
-    public List<RG_AdjustProcessEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_AdjustProcessEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -53,10 +50,5 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_AdjustProcessEntity> search(String keyWord) {
-        return null;
     }
 }

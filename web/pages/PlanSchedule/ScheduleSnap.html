@@ -180,15 +180,17 @@
                                     <th>估时</th>
                                     <th>状态</th>
                                 </tr>
-                                <tr ng-repeat="order in plan" ng-init="renderTable($last)">
+                                <tr ng-repeat="plan in planList" ng-init="renderTable($last)">
                                     <td><input name="check" type="checkbox"></td>
-                                    <td style="display:none">{{order.id}}</td>
-                                    <td>{{order.nameTask}}</td>
-                                    <td>{{order.type}}</td>
-                                    <td>{{order.origin}}</td>
-                                    <td>{{order.quantity}}</td>
-                                    <td>{{order.t0}}</td>
-                                    <td>{{order.t2}}</td>
+                                    <td style="display:none">{{plan.id}}</td>
+                                    <td>{{plan.nameTask}}</td>
+                                    <td>{{plan.nameJob}}</td>
+                                    <td>{{plan.nameProductOrder}}</td>
+                                    <td>{{plan.ordToParentTask}}</td>
+                                    <td>{{plan.quantityTask}}</td>
+                                    <td>{{plan.estimateTask}}</td>
+                                    <td>{{plan.state}}</td>
+
                                     <td>
                                         <span class="label label-success" ng-if="order.state == 0">候选</span>
                                         <span class="label label-primary" ng-if="order.state == 1">计划</span>

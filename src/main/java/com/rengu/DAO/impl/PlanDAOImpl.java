@@ -15,6 +15,7 @@ import java.util.List;
 public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> {
     @Override
     public List<RG_PlanEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
 
@@ -30,6 +31,7 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
     @Override
     public RG_PlanEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -52,6 +54,7 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
 
     @Override
     public List<RG_PlanEntity> findAllBySnapshotId(String id) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
 
@@ -63,15 +66,5 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
         query.setParameter("id", id);
         List list = query.list();
         return list;
-    }
-
-    @Override
-    public List<RG_PlanEntity> search(String keyWord) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteById(String id) {
-        return false;
     }
 }

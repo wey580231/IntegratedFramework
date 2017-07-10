@@ -15,6 +15,7 @@ import java.util.List;
 public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntity> {
     @Override
     public List<RG_ShiftEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntit
     }
 
     @Override
-    public List<RG_ShiftEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_ShiftEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -52,10 +49,5 @@ public class ShiftDAOImpl extends SuperDAOImpl implements ShiftDAO<RG_ShiftEntit
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_ShiftEntity> search(String keyWord) {
-        return null;
     }
 }
