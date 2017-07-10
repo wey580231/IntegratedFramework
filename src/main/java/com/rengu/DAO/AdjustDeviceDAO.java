@@ -8,9 +8,5 @@ import java.util.List;
 public interface AdjustDeviceDAO<T> {
     List<T> findAll();
 
-    List<T> findAllByUsername(String username);
-
     T findAllById(String id);
-
-    List<T> search(String keyWord);
 }

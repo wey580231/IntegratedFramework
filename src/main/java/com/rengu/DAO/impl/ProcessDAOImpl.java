@@ -14,17 +14,8 @@ import java.util.List;
  */
 public class ProcessDAOImpl extends SuperDAOImpl implements ProcessDAO<RG_ProcessEntity> {
     @Override
-    public List<RG_ProcessEntity> findAll() {
-        return null;
-    }
-
-    @Override
-    public List<RG_ProcessEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public List<RG_ProcessEntity> findAllByIsRootNode(boolean isRootNode) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -40,6 +31,7 @@ public class ProcessDAOImpl extends SuperDAOImpl implements ProcessDAO<RG_Proces
     @Override
     public RG_ProcessEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -58,10 +50,5 @@ public class ProcessDAOImpl extends SuperDAOImpl implements ProcessDAO<RG_Proces
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_ProcessEntity> search(String keyWord) {
-        return null;
     }
 }

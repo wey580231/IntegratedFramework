@@ -15,6 +15,7 @@ import java.util.List;
 public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity> {
     @Override
     public List<RG_UserEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -29,6 +30,7 @@ public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity
     @Override
     public RG_UserEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -47,10 +49,5 @@ public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_UserEntity> search(String keyWord) {
-        return null;
     }
 }

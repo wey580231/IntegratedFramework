@@ -15,6 +15,7 @@ import java.util.List;
 public class AssisantprocessDAOImpl extends SuperDAOImpl implements AssisantprocessDAO<RG_AssisantprocessEntity> {
     @Override
     public List<RG_AssisantprocessEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class AssisantprocessDAOImpl extends SuperDAOImpl implements Assisantproc
     }
 
     @Override
-    public List<RG_AssisantprocessEntity> findAllByUsername(String username) {
-        return findAll();
-    }
-
-    @Override
     public RG_AssisantprocessEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -53,10 +50,5 @@ public class AssisantprocessDAOImpl extends SuperDAOImpl implements Assisantproc
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_AssisantprocessEntity> search(String keyWord) {
-        return null;
     }
 }

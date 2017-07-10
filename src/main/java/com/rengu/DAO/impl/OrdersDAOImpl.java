@@ -2,7 +2,6 @@ package com.rengu.DAO.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.OrdersDAO;
-import com.rengu.entity.RG_EmulateDataEntity;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.MySessionFactory;
@@ -13,7 +12,10 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by hanchangming on 2017/5/22.
@@ -21,6 +23,7 @@ import java.util.*;
 public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEntity> {
     @Override
     public List<RG_OrderEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
 
@@ -36,6 +39,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     @Override
     public List<RG_OrderEntity> findAllByUsername(String username) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -55,6 +59,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     @Override
     public RG_OrderEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -76,12 +81,8 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     }
 
     @Override
-    public List<RG_OrderEntity> search(String keyWord) {
-        return null;
-    }
-
-    @Override
     public List<RG_OrderEntity> findAllByisFinishedAndDate(Date startDate, Date endDate, boolean isFinished) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -106,7 +107,6 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             e.printStackTrace();
             return false;
         }
-
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!session.getTransaction().isActive()) {
@@ -145,9 +145,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                 session.delete(entity);
             }
         }
-
         session.getTransaction().commit();
-
         return false;
     }
 }

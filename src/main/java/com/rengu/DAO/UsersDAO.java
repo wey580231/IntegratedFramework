@@ -9,6 +9,4 @@ public interface UsersDAO<T> {
     List<T> findAll();
 
     T findAllById(String id);
-
-    List<T> search(String keyWord);
 }
