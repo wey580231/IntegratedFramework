@@ -5,6 +5,12 @@
 angular.module("IntegratedFramework", [
     'ngRoute',
     'IntegratedFramework.OrderManagementController',
+    'IntegratedFramework.ResourceDistributionController',
+    'IntegratedFramework.ResourceListController',
+    'IntegratedFramework.ResourceGroupController',
+    'IntegratedFramework.ResourceClassifyController',
+    'IntegratedFramework.ResourceStationController',
+    'IntegratedFramework.WorkListController',
     'IntegratedFramework.ScheduleSnapController'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
@@ -90,31 +96,37 @@ angular.module("IntegratedFramework", [
         service.DeleteAssisantProcess = backUrl + "assisantprocess/delete.action";
         service.UpdateAssisantProcess = backUrl + "assisantprocess/update.action";
         service.AddAssisantProcess = backUrl + "assisantprocess/save.action";
+        service.GetAssisantProcessById = backUrl + "assisantprocess/findAllById.action";
         <!--资源信息-->
         service.ListResource = backUrl + "resource/getAllResource.action";
         service.DeleteResource = backUrl + "resource/delete.action";
         service.UpdateResource = backUrl + "resource/update.action";
         service.AddResource = backUrl + "resource/save.action";
+        service.GetResourceById = backUrl + "resource/findAllById.action";
         <!--资源类型信息-->
         service.ListTypeRecource = backUrl + "typerescource/getAllTypeRescource.action";
         service.DeleteTypeResource = backUrl + "typerescource/delete.action";
         service.UpdateTypeResource = backUrl + "typerescource/update.action";
         service.AddTypeResource = backUrl + "typerescource/save.action";
+        service.GetTypeResourceById = backUrl + "typerescource/findAllById.action";
         <!--资源工组信息-->
         service.ListGroupResource = backUrl + "groupresource/getAllGroupResource.action";
         service.DeleteGroupResource = backUrl + "groupresource/delete.action";
         service.UpdateGroupResource = backUrl + "groupresource/update.action";
         service.AddGroupResource = backUrl + "groupresource/save.action";
+        service.GetGroupResourceById = backUrl + "groupresource/findAllById.action";
         <!--资源工位信息-->
         service.ListSite = backUrl + "site/getAllSite.action";
         service.DeleteSite = backUrl + "site/delete.action";
         service.UpdateSite = backUrl + "site/update.action";
         service.AddSite = backUrl + "site/save.action";
+        service.GetSiteById = backUrl + "site/findAllById.action";
         <!--资源班次信息-->
         service.ListShift = backUrl + "shift/getAllShift.action";
         service.DeleteShift = backUrl + "shift/delete.action";
         service.UpdateShift = backUrl + "shift/update.action";
         service.AddShift = backUrl + "shift/save.action";
+        service.GetShiftById = backUrl + "shift/findAllById.action";
         <!--3D信息-->
         service.query3DState = backUrl + "3d/query3DState.action";
         service.config3D = backUrl + "3d/config3D.action";
@@ -177,7 +189,6 @@ angular.module("IntegratedFramework", [
             }
             return true;
         };
-
 
         return service;
     });

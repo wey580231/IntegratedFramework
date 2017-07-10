@@ -19,7 +19,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var zTreeNodes = [];
         var zNodes = [];
 
-
         var dataTrue = {"level": "top"};
         myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
             console.log(response.data);
@@ -59,23 +58,21 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     delete(datas.childs);
                     datas.children = temp;
                 }
+                zNodes.push(datas);
             }
-            console.log(dataArr);
-            //zNodes = data;
-            zNodes = dataArr;
             console.log("&&&&&&&&&");
             console.log(zNodes);
-
         });
-
 
         $("#select").change(function () {
             var val = $(this).children('option:selected').val();
+            console.log(val);
+            console.log(zNodes);
             if (val.length > 0) {
                 for (var i = 0; i < zNodes.length; i++) {
-                    console.log(zNodes);
-                    if (zNodes[i].name = val) {
+                    if (zNodes[i].name == val) {
                         zTreeNodes.push(zNodes[i]);
+                        break;
                     }
                 }
                 console.log(zTreeNodes);
@@ -85,7 +82,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             }
             zTreeNodes.splice(0, zTreeNodes.length);
         });
-
 
         function loadTree() {
             var zTree, rMenu;
@@ -112,7 +108,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             };
 
             //右击
-            function OnRightClick(event, treeId, treeNode) {
+            function OnRightClick(event, treeNode) {
+                var id = zTree.getSelectedNodes()[0].id;
+                console.log("$$$$$$$$$%%%%%%%");
+                console.log(id);
                 var e = event || window.event;
                 if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
@@ -131,10 +130,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 } else {
                     $("#m_del").show();
                 }
-
                 rMenu.css({"top": (y-110) + "px", "left": (x-250) + "px", "visibility": "visible"});
-
-
                 $("body").bind("mousedown", onBodyMouseDown);
             }
 
@@ -158,13 +154,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     return false;
                 } else {
                     var id = zTree.getSelectedNodes()[0].id;
-                    console.log(id);
                     var params = {};
                     params.id = id;
                     var data = JSON.stringify(params);
                     myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
                         $scope.plan = response.data;
-                        console.log(response.data);
                     });
                     return true;
                 }
@@ -200,7 +194,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 }
             };
 
-            //修改节点
             $scope.checkTreeNode = function (checked) {
                 var nodes = zTree.getSelectedNodes();
                 if (nodes && nodes.length > 0) {

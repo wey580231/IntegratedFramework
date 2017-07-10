@@ -1,5 +1,6 @@
 package com.rengu.actions;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.AssisantprocessDAO;
 import com.rengu.DAO.impl.AssisantprocessDAOImpl;
 import com.rengu.entity.RG_AssisantprocessEntity;
@@ -32,7 +33,8 @@ public class AssisantprocessAction extends SuperAction {
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.save(rg_assisantprocessEntity)) {
         } else {
-            WebSocketNotification.sendMessage("保存失败", "username");
+            System.out.println("保存失败");
+            WebSocketNotification.broadcast("保存失败");
         }
     }
 
@@ -42,7 +44,8 @@ public class AssisantprocessAction extends SuperAction {
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.delete(rg_assisantprocessEntity)) {
         } else {
-            WebSocketNotification.sendMessage("删除失败", "username");
+            System.out.println("删除失败");
+            WebSocketNotification.broadcast("删除失败");
         }
     }
 
@@ -52,7 +55,18 @@ public class AssisantprocessAction extends SuperAction {
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.update(rg_assisantprocessEntity)) {
         } else {
-            WebSocketNotification.sendMessage("更新失败", "username");
+            System.out.println("更新失败");
+            WebSocketNotification.broadcast("更新失败");
         }
+    }
+
+    public void findAllById() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
+        String assisantProcessId = jsonNode.get("id").asText();
+        AssisantprocessDAOImpl assisantprocessDAO = DAOFactory.getAssisantprocessDAOInstance();
+        RG_AssisantprocessEntity rg_assisantprocessEntity = assisantprocessDAO.findAllById(assisantProcessId);
+        String resultString = Tools.entityConvertToJsonString(rg_assisantprocessEntity);
+        Tools.jsonPrint(resultString, this.httpServletResponse);
     }
 }

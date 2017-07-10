@@ -112,6 +112,14 @@
             <one-to-many class="com.rengu.entity.RG_EmulateDataEntity"/>
         </list>
 
+        <list name="emulateResults" cascade="all">
+            <key>
+                <column name="idOrder" not-null="false"/>
+            </key>
+            <index column="id" type="java.lang.Integer"/>
+            <one-to-many class="com.rengu.entity.RG_EmulateResultEntity"/>
+        </list>
+
         <set name="orderStates" inverse="true" cascade="all">
             <key column="orderId"/>
             <one-to-many class="com.rengu.entity.RG_OrderStateEntity"/>
