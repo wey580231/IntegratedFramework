@@ -15,6 +15,7 @@ import java.util.List;
 public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> {
     @Override
     public List<RG_SiteEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
     }
 
     @Override
-    public List<RG_SiteEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_SiteEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -52,10 +49,5 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_SiteEntity> search(String keyWord) {
-        return null;
     }
 }

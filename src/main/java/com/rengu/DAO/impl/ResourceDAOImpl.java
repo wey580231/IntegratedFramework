@@ -15,6 +15,7 @@ import java.util.List;
 public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_ResourceEntity> {
     @Override
     public List<RG_ResourceEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,27 +28,9 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
     }
 
     @Override
-    public List<RG_ResourceEntity> findAllByUsername(String username) {
-        try {
-            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-            Transaction transaction = session.getTransaction();
-            if (!transaction.isActive()) {
-                session.beginTransaction();
-            }
-            String hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.clubByIdClub.name =:nameClub";
-            Query query = session.createQuery(hql);
-            query.setParameter("nameClub", username);
-            List list = query.list();
-            return list;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
     public RG_ResourceEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -66,18 +49,5 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_ResourceEntity> search(String keyWord) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteById(String id) {
-
-
-
-        return false;
     }
 }

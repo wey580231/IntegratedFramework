@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class SnapshotDaoImpl extends SuperDAOImpl {
     public List<RG_SnapshotNodeEntity> findAllByLevel(String level) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,6 +28,7 @@ public class SnapshotDaoImpl extends SuperDAOImpl {
 
     public RG_SnapshotNodeEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {

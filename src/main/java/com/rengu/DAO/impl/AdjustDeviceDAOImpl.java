@@ -15,6 +15,7 @@ import java.util.List;
 public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO<RG_AdjustDeviceEntity> {
     @Override
     public List<RG_AdjustDeviceEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO
     }
 
     @Override
-    public List<RG_AdjustDeviceEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_AdjustDeviceEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -53,10 +50,5 @@ public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_AdjustDeviceEntity> search(String keyWord) {
-        return null;
     }
 }

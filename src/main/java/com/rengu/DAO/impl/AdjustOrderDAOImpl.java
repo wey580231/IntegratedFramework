@@ -15,6 +15,7 @@ import java.util.List;
 public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<RG_AdjustOrderEntity> {
     @Override
     public List<RG_AdjustOrderEntity> findAll() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
@@ -27,13 +28,9 @@ public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<R
     }
 
     @Override
-    public List<RG_AdjustOrderEntity> findAllByUsername(String username) {
-        return null;
-    }
-
-    @Override
     public RG_AdjustOrderEntity findAllById(String id) {
         try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
             Transaction transaction = session.getTransaction();
             if (!transaction.isActive()) {
@@ -53,10 +50,5 @@ public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<R
             exception.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<RG_AdjustOrderEntity> search(String keyWord) {
-        return null;
     }
 }
