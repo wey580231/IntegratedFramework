@@ -10,8 +10,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         })
     }])
 
-    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
-        var editData = {};//保存新增和修改的信息
+    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+        var editData = [];//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
@@ -41,29 +41,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
-            if ($last) {
-                //Enable iCheck plugin for checkboxes
-                //iCheck for checkbox and radio inputs
-                $('.mailbox-messages input[type="checkbox"]').iCheck({
-                    checkboxClass: 'icheckbox_flat-blue',
-                    radioClass: 'iradio_flat-blue'
-                });
-
-                //Enable check and uncheck all functionality
-                $(".checkbox-toggle").click(function () {
-                    var clicks = $(this).data('clicks');
-                    if (clicks) {
-                        //Uncheck all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-                        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-                    } else {
-                        //Check all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("check");
-                        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-                    }
-                    $(this).data("clicks", !clicks);
-                });
-            }
+            renderTableService.renderTable($last);
         };
 
         //信息填写检验
