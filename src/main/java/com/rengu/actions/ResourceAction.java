@@ -1,7 +1,6 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.ResourceDAO;
 import com.rengu.DAO.impl.ResourceDAOImpl;
 import com.rengu.entity.RG_ResourceEntity;
@@ -14,23 +13,13 @@ import java.util.List;
 /**
  * Created by hanchangming on 2017/5/31.
  */
-public class ResourceAction extends SuperAction implements ModelDriven<RG_ResourceEntity> {
-    RG_ResourceEntity rg_resourceEntity = new RG_ResourceEntity();
-
-    @Override
-    public RG_ResourceEntity getModel() {
-        return this.rg_resourceEntity;
-    }
+public class ResourceAction extends SuperAction {
 
     public void getAllResource() throws Exception {
         ResourceDAO resourceDAO = DAOFactory.getResourceInstance();
         List list = resourceDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
-    }
-
-    public void findAllByUsername() throws Exception {
-
     }
 
     public void save() throws Exception {
@@ -47,7 +36,8 @@ public class ResourceAction extends SuperAction implements ModelDriven<RG_Resour
 
     public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
+        RG_ResourceEntity rg_resourceEntity = new RG_ResourceEntity();
+        rg_resourceEntity.setId(Tools.jsonTreeModelParse(jsonString).get("id").asText());
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.delete(rg_resourceEntity)) {
         } else {

@@ -52,7 +52,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         var resourceAddValidate = function () {
             var params = {};
             params.name = $("input[name='add-name']").val();
-            params.TypeSite = $("input[name='add-TypeSite']").val();
             params.idSiteGroupResource = $("input[name='add-idSiteGroupResource']").val();
             params.nameShift = $("input[name='add-nameShift']").val();
             params.state = $("input[name='add-state']").val();
@@ -66,13 +65,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#add-name").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.TypeSite) || !validate.checkLength(params.TypeSite)) {
-                $("#add-TypeSite").removeClass("has-success");
-                $("#add-TypeSite").addClass("has-error");
-            } else {
-                $("#add-TypeSite").removeClass("has-error");
-                $("#add-TypeSite").addClass(" has-success");
-            }
 
             if (!validate.checkNumber(params.idSiteGroupResource) || !validate.checkLength(params.idSiteGroupResource)) {
                 $("#add-idSiteGroupResource").removeClass("has-success");
@@ -98,7 +90,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#add-state").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.TypeSite) && validate.checkNumber(params.TypeSite) &&
+            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
                 validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift) && validate.checkNumber(params.nameShift) &&
                 validate.checkLength(params.state) && validate.checkNumber(params.state)) {
                 return true;
@@ -112,7 +104,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         var resourceEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
-            params.TypeSite = $("input[name='edit-TypeSite']").val();
             params.idSiteGroupResource = $("input[name='edit-idSiteGroupResource']").val();
             params.nameShift = $("input[name='edit-nameShift']").val();
             params.state = $("input[name='edit-state']").val();
@@ -126,13 +117,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#edit-name").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.TypeSite) || !validate.checkLength(params.TypeSite)) {
-                $("#edit-TypeSite").removeClass("has-success");
-                $("#edit-TypeSite").addClass("has-error");
-            } else {
-                $("#edit-TypeSite").removeClass("has-error");
-                $("#edit-TypeSite").addClass(" has-success");
-            }
+
 
             if (!validate.checkNumber(params.idSiteGroupResource) || !validate.checkLength(params.idSiteGroupResource)) {
                 $("#edit-idSiteGroupResource").removeClass("has-success");
@@ -158,7 +143,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#edit-state").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.TypeSite) && validate.checkNumber(params.TypeSite) &&
+            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
                 validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift) && validate.checkNumber(params.nameShift) &&
                 validate.checkLength(params.state) && validate.checkNumber(params.state)) {
                 return true;
@@ -246,7 +231,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#modal-edit").modal('hide');
                 //用获取到的数据代替从数据库取到的数据
                 edit_params.name = editData.name;
-                edit_params.TypeSite = editData.TypeSite;
                 edit_params.idSiteGroupResource = editData.idSiteGroupResource;
                 edit_params.nameShift = editData.nameShift;
                 edit_params.state = editData.state;
