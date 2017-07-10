@@ -23,7 +23,6 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
 
 
         myHttpService.get(serviceList.ListSchedule).then(function (response) {
-            console.log(response.data);
             var data = response.data;
             for (var i = 0; i < data.length; i++) {
                 var scheduleTime = moment(data[i].scheduleTime).format("YYYY-MM-DD HH:mm:ss");

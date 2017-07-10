@@ -1,0 +1,173 @@
+<style>
+    .modal-dialog {
+        width: 70%;
+        height: 60%;
+    }
+
+    .modal-body, .modal-content {
+        height: 100%;
+        padding: 0px;
+    }
+
+    #MyContainer {
+        width: 100%;
+        height: 90%;
+        overflow: hidden;
+        padding: 5px;
+    }
+
+    .MyPage {
+        width: 100%;
+        height: 100%;
+        float: left;
+        position: relative;
+    }
+
+    #MyUl {
+        list-style: none;
+        margin: 0px;
+        height: 30px;
+        width: 100%;
+        background-color: rgba(200, 200, 200, 0.2);
+    }
+
+    .MyPageTip {
+        float: left;
+        display: block;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    #tipHover {
+        position: absolute;
+        background-color: #f44336;
+        box-shadow: 0 16px 26px -10px rgba(244, 67, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(244, 67, 54, 0.2);
+        height: 32px;
+        border-radius: 2px;
+        line-height: 32px;
+        text-align: center;
+        color: white;
+        font-weight: 600;
+    }
+</style>
+
+<div>
+    <section class="content-header">
+        <h1>
+            计划排程管理
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">计划排程管理</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="box box-primary">
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+                <div class="mailbox-controls">
+                    <!-- Check all button -->
+                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <!-- /.btn-group -->
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                    data-target="#modal-add"
+                                    class="btn btn-default" ng-click="prepareNewSchedule()"><i class="fa fa-plus"></i>
+                                新增排程
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
+                                    class="fa fa-trash-o"></i> 删除
+                            </button>
+                        </div>
+                        <!-- /.btn-group -->
+                    </div>
+                    <!-- /.pull-right -->
+                </div>
+                <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped" id="table_value">
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <th>排程名</th>
+                            <th>排程时间</th>
+                            <th>开始计算时间</th>
+                            <th>时间窗</th>
+                            <th>滚动周期</th>
+                            <th>状态</th>
+                        </tr>
+                        <tr ng-repeat="schedule in scheduleList | orderBy: 'scheduleTime': asc"
+                            ng-init="renderTable($last)">
+                            <td><input name="check" type="checkbox"></td>
+                            <td style="display:none">{{schedule.id}}</td>
+                            <td>{{schedule.name}}</td>
+                            <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{schedule.scheduleWindow}}</td>
+                            <td>{{schedule.rollTime}}</td>
+                            <td>
+                                <span class="label label-success" ng-if="schedule.state == 0">下发APS</span>
+                                <span class="label label-primary" ng-if="schedule.state == 1">APS计算中</span>
+                                <span class="label label-success" ng-if="schedule.state == 2">APS计算成功</span>
+                                <span class="label label-danger" ng-if="schedule.state == 3">APS计算失败</span>
+                                <span class="label label-success" ng-if="schedule.state == 4">APS优化完成</span>
+                                <span class="label label-info" ng-if="schedule.state == 5">已下发MES</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--新增窗口-->
+        <div class="modal fade " id="modal-add">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">新建排程</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="MyContainer">
+                            <div>
+                                <div id="tipHover"></div>
+                                <ul id="MyUl">
+                                    <li class="MyPageTip">基础信息</li>
+                                    <li class="MyPageTip">订单信息</li>
+                                    <li class="MyPageTip">工组信息</li>
+                                </ul>
+                            </div>
+                            <!--新增排程页面时，只需要新增div并且class='MyPage'即可-->
+                            <div class="MyPage">
+                                1
+                            </div>
+                            <div class="MyPage">
+                                2
+                            </div>
+                            <div class="MyPage">
+                                3
+                            </div>
+                        </div>
+                        <div class="box-footer" style="clear:both;height:10%">
+                            <button id="previouseStep" type="submit" class="btn btn-default" ng-click="previous()">上一步
+                            </button>
+                            <button id="nextStep" type="submit" class="btn btn-info pull-right" ng-click="next()">下一步
+                            </button>
+                            <button id="startSchedule" type="submit" class="btn btn-info pull-right"
+                                    ng-click="submitForm()">开始排程
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
