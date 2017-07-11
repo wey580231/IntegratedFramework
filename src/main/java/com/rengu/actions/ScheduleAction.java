@@ -194,7 +194,6 @@ public class ScheduleAction extends SuperAction {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
         List list = scheduleDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(list);
-        System.out.println("SchedulesList的长度为：" + list.size());
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
