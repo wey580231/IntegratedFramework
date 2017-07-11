@@ -122,13 +122,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             params.rollTime = $("input[name='add-rollTime']").val();
             params.scheduleDays = $("input[name='add-scheduleDays']").val();
 
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
-                $("#add-name").removeClass("has-success");
-                $("#add-name").addClass("has-error");
-            } else {
-                $("#add-name").removeClass("has-error");
-                $("#add-name").addClass(" has-success");
-            }
 
             if (!validate.checkNumber(params.rollTime) || !validate.checkLength(params.rollTime)) {
                 $("#add-rollTime").removeClass("has-success");
@@ -146,7 +139,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $("#add-scheduleDays").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) &&
+            if (validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) &&
                 validate.checkLength(params.scheduleDays) && validate.checkNumber(params.scheduleDays)) {
                 document.getElementById("nextStep").disabled = false;
                 showSchedule();
@@ -302,7 +295,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 });
                 // $("#calendar").show();
             }, function errorCallback(response) {
-                console.log("请求失败");
+                notification.sendNotification("alert", "请求失败");
             });
 
 

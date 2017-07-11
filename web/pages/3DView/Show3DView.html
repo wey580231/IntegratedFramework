@@ -18,26 +18,33 @@
                     <div class="pull-right">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm"
-                                    class="btn btn-default" ng-click="reset()"><i class="fa fa-plus"></i> 实时模式
+                                    class="btn btn-default" onclick="realModel()"><i class="fa fa-plus"></i> 实时模式
                             </button>
                             <button type="button" class="btn btn-default btn-sm"
-                                    class="btn btn-default" ng-click="reset()"><i class="fa fa-plus"></i> 仿真模式
+                                    class="btn btn-default" onclick="emulateModel()"><i class="fa fa-plus"></i> 仿真模式
                             </button>
                             <button type="button" class="btn btn-default btn-sm"
-                                    class="btn btn-default" ng-click="update()"><i class="fa fa-wrench"></i> 单屏
+                                    class="btn btn-default" onclick="fullView()"><i class="fa fa-arrows-alt"></i> 全屏
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
-                                    class="fa fa-trash-o"></i> 双屏
+                            <button type="button" class="btn btn-default btn-sm"
+                                    onclick="doubleView()"><i
+                                    class="fa fa-angle-double-down"></i> 双屏
                             </button>
                         </div>
                     </div>
                 </div>
+                <!--src="-->
                 <iframe id="frame" src="http://localhost:8080/WebGL" style="width:100%;border:none;margin-top:5px;">
                 </iframe>
             </div>
         </div>
     </div>
 </div>
+
+<!--弹出框-->
+<link rel="stylesheet" href="../../3rdLib/layer/css/layui.css">
+<script src="../../3rdLib/layer/lay/dest/layui.all.js" type="text/javascript"></script>
+<script src="../../3rdLib/jquery_resize.js"/>
 
 <script>
     function resizeD3ViewSize() {
@@ -52,10 +59,124 @@
 
     $(document).ready(function () {
         resizeD3ViewSize();
+
+        $("#RenGu").resize(function () {
+        });
     });
 
     $(window).resize(function () {
         resizeD3ViewSize();
     });
+
+
+    //实时
+    function realModel() {
+
+    }
+
+    //模拟
+    function emulateModel() {
+
+    }
+
+    var fullOuterH, fullMainContentH, fullFrameH;
+
+    //全屏
+    function fullView() {
+        var el = document.getElementById("frame");
+        var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+        if (typeof rfs != "undefined" && rfs) {
+            rfs.call(el);
+        } else if (typeof window.ActiveXObject != "undefined") {
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript != null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    }
+
+    //退出全屏
+    function exitFullScreen() {
+        var el = document;
+        var cfs = el.cancelFullScreen || el.webkitCancelFullScreen || el.mozCancelFullScreen || el.exitFullScreen;
+
+        if (typeof cfs != "undefined" && cfs) {
+            cfs.call(el);
+        } else if (typeof window.ActiveXObject != "undefined") {
+            //for IE，这里和fullScreen相同，模拟按下F11键退出全屏
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript != null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    }
+
+    //进入全屏监听事件
+    document.addEventListener("fullscreenchange", function (e) {
+        if (document.fullscreen) {
+            fullOuterH = $("#OuterDiv").height();
+        }
+        else {
+            $("#OuterDiv").css("height", fullOuterH + "px");
+        }
+
+    });
+
+    //火狐浏览器进入/退出全屏监听事件
+    document.addEventListener("mozfullscreenchange", function (e) {
+        if (document.mozFullScreen) {
+            fullOuterH = $("#OuterDiv").height();
+        }
+        else {
+            $("#OuterDiv").css("height", fullOuterH + "px");
+        }
+
+        console.log(fullOuterH);
+    });
+
+    //webkit进入/退出全屏监听事件
+    document.addEventListener("webkitfullscreenchange", function (e) {
+        if (document.webkitIsFullScreen) {
+            fullOuterH = $("#OuterDiv").height();
+        }
+        else {
+            $("#OuterDiv").css("height", fullOuterH + "px");
+        }
+    });
+
+    document.addEventListener("msfullscreenchange", function (e) {
+        if (document.msFullscreenElement) {
+            fullOuterH = $("#OuterDiv").height();
+        }
+        else {
+            $("#OuterDiv").css("height", fullOuterH + "px");
+        }
+    });
+
+    //双屏
+    function doubleView() {
+        layer.open({
+            type: 2,
+            title: '左侧',
+            maxmin: true,
+            shadeClose: true,
+            shade: false,
+            offset: 'l',
+            area: ['50%', '100%'],
+            content: "http://localhost:8080/WebGL"
+        });
+
+        layer.open({
+            type: 2,
+            title: '右屏',
+            maxmin: true,
+            shadeClose: true,
+            shade: false,
+            offset: 'r',
+            area: ['50%', '100%'],
+            content: "http://localhost:8080/WebGL"
+        });
+    }
 
 </script>
