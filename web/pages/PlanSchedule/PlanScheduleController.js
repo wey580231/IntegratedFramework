@@ -45,6 +45,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         //新建排程
         $scope.prepareNewSchedule = function () {
             resetContent();
+
+            reset();
         }
 
         function resetContent() {
@@ -105,6 +107,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             showInfo();
 
             choosedOrder();
+
+            reset();
 
             //getIdSelections();
         }
@@ -185,38 +189,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     for (var i = 0; i < response.data.length; i++) {
                         curobj.push(response.data[i]);
                     }
-
-                    //剔除相同的记录
-                    // //把上一次记录push到array
-                    // for (var i = 0; i < lastobj.length; i++) {
-                    //     array.push(lastobj[i]);
-                    //     console.log("循环一次后");
-                    //     for (var j = 0; j < curobj.length; j++) {
-                    //         array.push(curobj[j]);
-                    //     }
-                    // }
-                    //
-                    // console.log("删除前的数组");
-                    // var result = [];
-                    // for (var i = 0; i < array.length; i++) {
-                    //     /*if(array[i].id==array[i+1].id){
-                    //      array.splice(i, 1);
-                    //      console.log(array);
-                    //      }*/
-                    //     var flag = true;
-                    //     for (var j = i; j < array.length - 1; j++) {
-                    //         if (array[i].id == array[j + 1].id) {
-                    //             flag = false;
-                    //             break;
-                    //         }
-                    //     }
-                    //     if (flag) {
-                    //         result.push(array[i])
-                    //     }
-                    // }
-                    // console.log("删除后的数组");
-                    // array = result;
-                    // console.log(array);
 
                     $scope.info = curobj;
                 });
@@ -379,7 +351,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                             }
                         }
                     ],
-                    viewRender: function (view, element) {
+                   /* viewRender: function (view, element) {
                         //已执行时间窗口染色
                         for (var i = 1; i <= tempDays; i++) {
                             $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
@@ -392,7 +364,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
                             $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
                         }
-                    }
+                    }*/
 
                 });
                 // $("#calendar").show();
@@ -404,7 +376,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         };
 
         //表格信息重置
-        $scope.reset = function () {
+        function reset() {
             $("input").val('');
         };
 
