@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             controller: 'PlanScheduleController'
         })
     }])
-    .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService, validate) {
+    .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService, validate, notification) {
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var editData = [];//保存基础信息
         var operateId;
@@ -191,6 +191,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $scope.info = curobj;
             });
         }
+
         //显示已选择订单的信息
         function choosedOrder() {
             var rows = document.getElementById("orders").rows;
@@ -218,6 +219,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $scope.form = arrchoosed;
             console.log(arrchoosed);
         }
+
         //日历部分
         var showSchedule = function () {
             //获取上次排程信息
@@ -321,10 +323,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $("#calendar").show();
         };
 
-
-
         var updateSelected = function (action, id) {
-            operateId = id;
+            //operateId = id;
             if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
                 selectedCheckArray.push(id);
                 console.log(id + "被选中");
@@ -357,8 +357,11 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             var orders = [];
             console.log("订单");
             var params = {};
-            params.id = operateId;
-            orders.push(params);
+            for (var i = 0; i < selectedCheckArray.length; i++) {
+                params.id = selectedCheckArray[i];
+                orders.push(params);
+            }
+
 
             var layouts = {};
             layouts.id = 2;
@@ -401,7 +404,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 array.splice(0, array.length);
                 location.reload(true);
             }, function errorCallback(response) {
-                alert("请求错误！");
+                notification.sendNotification("alert", "请求失败");
             });
         }
     });
