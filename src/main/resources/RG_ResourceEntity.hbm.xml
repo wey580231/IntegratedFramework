@@ -5,7 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.rengu.entity.RG_ResourceEntity" table="RG_Resource" schema="testdatabase">
-        <id name="id">
+        <id name="idR">
             <column name="id" sql-type="varchar(255)" length="255"/>
         </id>
         <property name="name">

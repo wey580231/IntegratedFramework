@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class RG_ResourceStateEntity {
 
-    private int id;
+    private String id;
     private String idResource;                  //设备编号
     private String resourceName;                //设备名称
     private String manufacturer;                //设备厂商
@@ -29,11 +29,11 @@ public class RG_ResourceStateEntity {
 
     private RG_ResourceEntity resourceEntity;   //资源
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -179,55 +179,5 @@ public class RG_ResourceStateEntity {
 
     public void setResourceEntity(RG_ResourceEntity resourceEntity) {
         this.resourceEntity = resourceEntity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_ResourceStateEntity that = (RG_ResourceStateEntity) o;
-
-        if (id != that.id) return false;
-        if (idProcess != that.idProcess) return false;
-        if (state != that.state) return false;
-        if (Float.compare(that.bootstrapTime, bootstrapTime) != 0) return false;
-        if (Float.compare(that.awaitTime, awaitTime) != 0) return false;
-        if (Float.compare(that.processTime, processTime) != 0) return false;
-        if (idResource != null ? !idResource.equals(that.idResource) : that.idResource != null) return false;
-        if (resourceName != null ? !resourceName.equals(that.resourceName) : that.resourceName != null) return false;
-        if (manufacturer != null ? !manufacturer.equals(that.manufacturer) : that.manufacturer != null) return false;
-        if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
-        if (idClub != null ? !idClub.equals(that.idClub) : that.idClub != null) return false;
-        if (idProduct != null ? !idProduct.equals(that.idProduct) : that.idProduct != null) return false;
-        if (productName != null ? !productName.equals(that.productName) : that.productName != null) return false;
-        if (t1Task != null ? !t1Task.equals(that.t1Task) : that.t1Task != null) return false;
-        if (t2Task != null ? !t2Task.equals(that.t2Task) : that.t2Task != null) return false;
-        if (currTime != null ? !currTime.equals(that.currTime) : that.currTime != null) return false;
-        if (t1RealTask != null ? !t1RealTask.equals(that.t1RealTask) : that.t1RealTask != null) return false;
-        return t2RealTask != null ? t2RealTask.equals(that.t2RealTask) : that.t2RealTask == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (idResource != null ? idResource.hashCode() : 0);
-        result = 31 * result + (resourceName != null ? resourceName.hashCode() : 0);
-        result = 31 * result + (manufacturer != null ? manufacturer.hashCode() : 0);
-        result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
-        result = 31 * result + (int) idProcess;
-        result = 31 * result + (idClub != null ? idClub.hashCode() : 0);
-        result = 31 * result + (idProduct != null ? idProduct.hashCode() : 0);
-        result = 31 * result + (productName != null ? productName.hashCode() : 0);
-        result = 31 * result + (t1Task != null ? t1Task.hashCode() : 0);
-        result = 31 * result + (t2Task != null ? t2Task.hashCode() : 0);
-        result = 31 * result + (currTime != null ? currTime.hashCode() : 0);
-        result = 31 * result + (t1RealTask != null ? t1RealTask.hashCode() : 0);
-        result = 31 * result + (t2RealTask != null ? t2RealTask.hashCode() : 0);
-        result = 31 * result + (int) state;
-        result = 31 * result + (bootstrapTime != +0.0f ? Float.floatToIntBits(bootstrapTime) : 0);
-        result = 31 * result + (awaitTime != +0.0f ? Float.floatToIntBits(awaitTime) : 0);
-        result = 31 * result + (processTime != +0.0f ? Float.floatToIntBits(processTime) : 0);
-        return result;
     }
 }

@@ -84,7 +84,7 @@ public class MesConsumer extends Thread {
             //资源
             else if (mesType.equals(MessTable.MES_RESOURCE)) {
                 RG_ResourceEntity resource = new RG_ResourceEntity();
-                resource.setId(dataNode.get("id").asText());
+                resource.setIdR(dataNode.get("id").asText());
                 resource.setName(dataNode.get("name").asText());
                 resource.setMobility((short) dataNode.get("mobility").asInt());
 
