@@ -1,8 +1,12 @@
 package com.rengu.util;
 
+import com.rengu.DAO.impl.AssisantprocessDAOImpl;
 import com.rengu.DAO.impl.OrdersDAOImpl;
+import com.rengu.DAO.impl.ProcessDAOImpl;
 import com.rengu.DAO.impl.ProductDAOImpl;
+import com.rengu.entity.RG_AssisantprocessEntity;
 import com.rengu.entity.RG_OrderEntity;
+import com.rengu.entity.RG_ProcessEntity;
 import com.rengu.entity.RG_ProductEntity;
 
 import java.sql.SQLException;
@@ -17,16 +21,24 @@ import java.util.Map;
  * Created by hanch on 2017/7/4.
  */
 public class APSDatabaseSync {
-    public static boolean SyncAPSTable(String tableName) throws SQLException, ClassNotFoundException, ParseException {
-        String SQLString = "select * from " + tableName + "";
-        List list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
-        if (tableName.equals(DatabaseInfo.APS_PRODUCT)) {
-            return SyncProductTable(list);
+    public static void SyncAPSTable(String[] tableNameLists, String databaseType, String databaseName) throws SQLException, ClassNotFoundException, ParseException {
+        for (String tableName : tableNameLists) {
+            //读取目标数据库
+            String SQLString = "select * from " + tableName + "";
+            List list = Tools.executeSQLForList(databaseType, databaseName, SQLString);
+            if (tableName.equals(DatabaseInfo.APS_PRODUCT)) {
+                SyncProductTable(list);
+            }
+            if (tableName.equals(DatabaseInfo.APS_ORDER)) {
+                SyncOrderTable(list);
+            }
+            if (tableName.equals(DatabaseInfo.ASSISANTPROCESS)) {
+                SyncAssisantProcessTable(list);
+            }
+            if (tableName.equals(DatabaseInfo.PROCESS)) {
+                SyncAssisantProcessTable(list);
+            }
         }
-        if (tableName.equals(DatabaseInfo.APS_ORDER)) {
-            return SyncOrderTable(list);
-        }
-        return false;
     }
 
     //同步产品表
@@ -44,9 +56,75 @@ public class APSDatabaseSync {
                 ProductDAOImpl productDAO = DAOFactory.getProductDAOImplInstance();
                 productDAO.save(rg_productEntity);
             } else {
+                System.out.println("产品表同步失败");
                 return false;
             }
         }
+        System.out.println("产品表同步成功");
+        return true;
+    }
+
+    //同步工艺表
+    private static boolean SyncProcessTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_ProcessEntity rg_processEntity = new RG_ProcessEntity();
+                rg_processEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_processEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                rg_processEntity.setIdPrec(getStringFromHashMap(tempMap, "IDPREC"));
+                rg_processEntity.setIdSucc(getStringFromHashMap(tempMap, "IDSUCC"));
+                rg_processEntity.setMinTimeSucc(getShortFromHashMap(tempMap, "MINTIMESUCC"));
+                rg_processEntity.setMaxTimeSucc(getShortFromHashMap(tempMap, "MAXTIMESUCC"));
+                rg_processEntity.setOrdToParent(getShortFromHashMap(tempMap, "ORDTOPPARENT"));
+                rg_processEntity.setSlot1(getStringFromHashMap(tempMap, "SLOT1"));
+                rg_processEntity.setSlot2(getStringFromHashMap(tempMap, "SLOT2"));
+                rg_processEntity.setInitTime(getShortFromHashMap(tempMap, "INITTIME"));
+                rg_processEntity.setUnitTime(getShortFromHashMap(tempMap, "UNITTIME"));
+                rg_processEntity.setPostTime(getShortFromHashMap(tempMap, "POSTTIME"));
+                rg_processEntity.setCheckTime(getShortFromHashMap(tempMap, "CHECKTIME"));
+                rg_processEntity.setDelta(getShortFromHashMap(tempMap, "DELTA"));
+                rg_processEntity.setEstimate(getShortFromHashMap(tempMap, "ESTIMATE"));
+                rg_processEntity.setContinuous(getStringFromHashMap(tempMap, "CONTINUOUS"));
+                rg_processEntity.setQuantity(getShortFromHashMap(tempMap, "QUANTITY"));
+                rg_processEntity.setMinQtySwitch(getShortFromHashMap(tempMap, "MINQTSWITCH"));
+                rg_processEntity.setMaxQtySwitch(getShortFromHashMap(tempMap, "MAXQTSWITCH"));
+                rg_processEntity.setMaxResourceDivision(getShortFromHashMap(tempMap, "MAXRESOURCEDIVISION"));
+                rg_processEntity.setMinTimeDivision(getShortFromHashMap(tempMap, "MINTIMEDIVISION"));
+                ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
+                processDAO.save(rg_processEntity);
+            } else {
+                System.out.println("工艺表同步失败");
+                return false;
+            }
+        }
+        System.out.println("工艺表同步成功");
+        return true;
+    }
+
+    //同步工艺辅表
+    private static boolean SyncAssisantProcessTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_AssisantprocessEntity rg_assisantprocessEntity = new RG_AssisantprocessEntity();
+                rg_assisantprocessEntity.setId(Tools.getUUID());
+                rg_assisantprocessEntity.setMinResource(getShortFromHashMap(tempMap, "MINRESOURCE"));
+                rg_assisantprocessEntity.setMaxResource(getShortFromHashMap(tempMap, "MAXRESOURCE"));
+                rg_assisantprocessEntity.setGrp(getShortFromHashMap(tempMap, "GRP"));
+                rg_assisantprocessEntity.setWeightParallel(getShortFromHashMap(tempMap, "WEIGHTPARALLEL"));
+                rg_assisantprocessEntity.setWeightSequence(getShortFromHashMap(tempMap, "WEIGHTPSEQUENCE"));
+                rg_assisantprocessEntity.setTypeSite(getStringFromHashMap(tempMap, "TYPESITE"));
+                rg_assisantprocessEntity.setIdSite(getStringFromHashMap(tempMap, "IDSITE"));
+                rg_assisantprocessEntity.setSiteInGroupResource(getStringFromHashMap(tempMap, "SITEINGROUPERSOURCE"));
+                AssisantprocessDAOImpl assisantprocessDAO = DAOFactory.getAssisantprocessDAOInstance();
+                assisantprocessDAO.save(rg_assisantprocessEntity);
+            } else {
+                System.out.println("工艺辅表同步失败");
+                return false;
+            }
+        }
+        System.out.println("工艺辅表同步成功");
         return true;
     }
 
@@ -81,9 +159,11 @@ public class APSDatabaseSync {
                 OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
                 ordersDAO.save(rg_orderEntity);
             } else {
+                System.out.println("订单表同步失败");
                 return false;
             }
         }
+        System.out.println("订单表同步成功");
         return true;
     }
 
