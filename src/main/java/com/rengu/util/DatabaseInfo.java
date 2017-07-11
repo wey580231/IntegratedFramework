@@ -19,7 +19,7 @@ public class DatabaseInfo {
     public static final String APS_LOG = "APS_LOG";
     public static final String APS_SHIFT = "APS_SHIFT";
     public static final String APS_PRODUCT = "APS_PRODUCT";
-    public static final String APS_ASSISANTPROCESS = "APS_ASSISANTPROCESS";
+    public static final String APS_PROCESS_TYPERESOURCE_SITE = "APS_PROCESS_TYPERESOURCE_SITE";
     public static final String APS_PROCESS = "APS_PROCESS";
     public static final String APS_TYPERESOURCE = "APS_TYPERESOURCE";
 }

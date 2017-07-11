@@ -23,22 +23,31 @@ public class APSDatabaseSync {
             switch (tableName) {
                 case DatabaseInfo.APS_PRODUCT:
                     SyncProductTable(list);
+                    break;
                 case DatabaseInfo.APS_ORDER:
                     SyncOrderTable(list);
-                case DatabaseInfo.APS_ASSISANTPROCESS:
+                    break;
+                case DatabaseInfo.APS_PROCESS_TYPERESOURCE_SITE:
                     SyncAssisantProcessTable(list);
+                    break;
                 case DatabaseInfo.APS_PROCESS:
                     SyncProcessTable(list);
+                    break;
                 case DatabaseInfo.APS_RESOURCE:
                     SyncResourceTable(list);
+                    break;
                 case DatabaseInfo.APS_TYPERESOURCE:
                     SyncTypeRescourceTable(list);
+                    break;
                 case DatabaseInfo.APS_GROUPRESOURCE:
                     SyncGroupResourceTable(list);
+                    break;
                 case DatabaseInfo.APS_SITE:
                     SyncSiteTable(list);
+                    break;
                 case DatabaseInfo.APS_SHIFT:
                     SyncShiftTable(list);
+                    break;
                 default:
                     System.out.println("无法同步：" + tableName + "表。");
             }
