@@ -112,7 +112,7 @@ public class FeedBackStateAction extends SuperAction {
 
                     RG_SnapshotNodeEntity bottomSnapshot = null;
 
-                    if (middleSnapshot != null) {
+                    if (state[0].equals(APS_RESULT_SUCCESS) && middleSnapshot != null) {
                         bottomSnapshot = new RG_SnapshotNodeEntity();
                         bottomSnapshot.setId(Tools.getUUID());
                         bottomSnapshot.setName(nodeName);
@@ -140,6 +140,9 @@ public class FeedBackStateAction extends SuperAction {
                             session.getTransaction().rollback();
                             WebSocketNotification.broadcast("APS计算结果转换出错!");
                         }
+                    } else {
+                        session.update(schedule);
+                        session.getTransaction().commit();
                     }
                 } else {
                     WebSocketNotification.broadcast("无法获取快照节点!");

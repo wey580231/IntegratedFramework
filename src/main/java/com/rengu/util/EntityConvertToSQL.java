@@ -15,12 +15,12 @@ public class EntityConvertToSQL {
     }
 
     public static String insertSQLForAPS(RG_OrderEntity rg_orderEntity) {
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,idClub,priority,idProduct,quantity,t0,t1,t2,color,state) VALUES ('" + Tools.getUUID()
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,priority,quantity,t0,t1,t2,color,state) VALUES ('" + Tools.getUUID()
                 + "','" + rg_orderEntity.getName()
-                + "','" + rg_orderEntity.getClubByIdClub().getId()
+//                + "','" + rg_orderEntity.getClubByIdClub().getId()
                 + "'," + rg_orderEntity.getPriority()
-                + ",'" + rg_orderEntity.getProductByIdProduct().getId()
-                + "'," + rg_orderEntity.getQuantity()
+//                + ",'" + rg_orderEntity.getProductByIdProduct().getId()
+                + "," + rg_orderEntity.getQuantity()
                 + ",'" + Tools.dateConvertToString(rg_orderEntity.getT0())
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT1())
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT2())
