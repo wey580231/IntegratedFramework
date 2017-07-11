@@ -11,7 +11,7 @@ public class RG_UserConfigEntity {
     private String rootSnapshotId;                  //当前快照的根节点ID，创建新schedule排程时更新
     private String middleSnapshotId;                //快照树第二层节点ID，创建schedule或紧急排程时更新，用于在接收aps reply后根据ID创建bottom节点
     private String bottomSnapshotId;                //快照树第三层节点ID
-    private boolean errorSchedule;                //是否为紧急排程
+    private boolean errorSchedule;                  //是否为紧急排程
     private Integer apsReplyCount;                  //aps在当前MiddleSnapshotId节点下返回结果的次数(区分是否为优化结果)
 
     private RG_UserConfigEntity user;               //

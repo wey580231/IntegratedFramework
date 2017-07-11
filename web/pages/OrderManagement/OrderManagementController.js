@@ -24,18 +24,22 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //Date picker
         $('#modal-add-t0-datepicker').datepicker({
             format: "yyyy/mm/dd",
+            todayHighlight: true,
             autoclose: true
         });
         $('#modal-add-t2-datepicker').datepicker({
             format: "yyyy/mm/dd",
+            todayHighlight: true,
             autoclose: true
         });
         $('#modal-edit-t0-datepicker').datepicker({
             format: "yyyy/mm/dd",
+            todayHighlight: true,
             autoclose: true
         });
         $('#modal-edit-t2-datepicker').datepicker({
             format: "yyyy/mm/dd",
+            todayHighlight: true,
             autoclose: true
         });
 

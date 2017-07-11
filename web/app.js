@@ -12,8 +12,11 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ResourceStationController',
     'IntegratedFramework.WorkListController',
     'IntegratedFramework.ScheduleSnapController',
-    'IntegratedFramework.PlanScheduleController'
-
+    'IntegratedFramework.PlanScheduleController',
+    'IntegratedFramework.InteractiveController',
+    'IntegratedFramework.ShowController',
+    'IntegratedFramework.EquipmentMonitoringController',
+    'IntegratedFramework.MainPage'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');
@@ -222,7 +225,6 @@ angular.module("IntegratedFramework", [
             }
             return true;
         };
-
 
         return service;
     });

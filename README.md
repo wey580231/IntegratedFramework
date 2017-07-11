@@ -40,6 +40,8 @@ IntegratedFramework Project
            增加对mes数据报文解析、存储
 * 20170707:调整3d车间模拟数据处理接口
 * 20170710:调整排程页面，增加自定义向导式排程
+           增加3D车间和ASP页面嵌入
+           解决user_config无法创建问题，hibernate中不能存在default字段
             
 
 ## 已知问题

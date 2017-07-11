@@ -24,11 +24,16 @@ public class Tools {
 
     private static Properties properties = null;
 
-    public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) throws IOException {
+    public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-        return objectMapper.readValue(jsonString, classType);
+        try {
+            return objectMapper.readValue(jsonString, classType);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static String entityConvertToJsonString(Object object) throws JsonProcessingException {

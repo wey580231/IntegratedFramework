@@ -38,33 +38,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <link rel="stylesheet" href="plugins/jQueryUI/jquery-ui.min.css"/>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
     <script src="html5shiv.min.js"></script>
     <script src="respond.min.js"></script>
-    <![endif]-->
+
+    <style>
+        /*.modal-backdrop{*/
+        /*z-index: 20;*/
+        /*}*/
+
+    </style>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -72,7 +56,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="#!/MainPage" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
             <!-- logo for regular state and mobile devices -->
@@ -237,7 +221,7 @@ desired effect
                     <ul class="treeview-menu">
                         <li><a href="#!/ScheduleGuide"><i class="fa fa-circle-o"></i>计划排程管理</a></li>
                         <li><a href="#!/ScheduleSnap"><i class="fa fa-circle-o"></i>计划排程快照管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>交互式优化与结果可视化</a></li>
+                        <li><a href="#!/Interactive"><i class="fa fa-circle-o"></i>交互式优化与结果可视化</a></li>
                     </ul>
                 </li>
                 <!--在线-->
@@ -248,7 +232,7 @@ desired effect
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>设备监控</a></li>
+                        <li><a href="#!/EquipmentMonitoring"><i class="fa fa-circle-o"></i>设备监控</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>订单执行监控</a></li>
                     </ul>
                 </li>
@@ -274,11 +258,10 @@ desired effect
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>可视化显示</a></li>
+                        <li><a href="#!/Show3D"><i class="fa fa-circle-o"></i>可视化显示</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>可视化配置</a></li>
                     </ul>
                 </li>
-
 
             </ul>
             <!-- /.sidebar-menu -->
@@ -286,31 +269,9 @@ desired effect
         <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-
-        <!-- Main content -->
-        <section class="content">
-
-            <!-- Your Page Content Here -->
-            <div>
-                <ng-view></ng-view>
-            </div>
-        </section>
-        <!-- /.content -->
+    <div id="RenGu" class="content-wrapper" style="height: 100%;">
+        <ng-view></ng-view>
     </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <!--<footer class="main-footer">
-        &lt;!&ndash; To the right &ndash;&gt;
-        <div class="pull-right hidden-xs">
-            Anything you want
-        </div>
-        &lt;!&ndash; Default to the left &ndash;&gt;
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-    </footer>-->
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -406,8 +367,18 @@ desired effect
 <script src="notyf.min.js"></script>
 <!-- bootstrap datepicker -->
 <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
-<!--jquery-validate-->
-<script src="plugins/material-bootstrap-wizard/assets/js/jquery.validate.min.js"></script>
+<!-- FastClick -->
+<script src="plugins/fastclick/fastclick.js"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="plugins/chartjs/Chart.min.js"></script>
+<!-- FLOT CHARTS -->
+<script src="plugins/flot/jquery.flot.min.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="plugins/flot/jquery.flot.resize.min.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="plugins/flot/jquery.flot.pie.min.js"></script>
+<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
+<script src="plugins/flot/jquery.flot.categories.min.js"></script>
 
 <!--AngularJS-->
 <script src="Angular/angular.min.js"></script>
@@ -429,9 +400,14 @@ desired effect
 <script src="pages/ResourceManagement/ResourceStationController.js"></script>
 <script src="pages/ResourceManagement/WorkListController.js"></script>
 <script src="pages/ResourceManagement/ResourceGroupController.js"></script>
+<script src="pages/OnlineMonitoringAndManagement/EquipmentMonitoringController.js"></script>
 
 <script src="pages/PlanSchedule/ScheduleSnapController.js"></script>
 <script src="pages/PlanSchedule/PlanSchedule.js"></script>
+<script src="pages/PlanSchedule/InteractiveController.js"></script>
+
+<script src="pages/3DView/ShowController.js"></script>
+
 <script src="WebSocketNotification.js"></script>
 <!--加载通知系统-->
 <script>

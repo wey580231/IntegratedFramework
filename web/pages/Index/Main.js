@@ -5,11 +5,9 @@
 angular.module("IntegratedFramework.MainPage", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/MainPage', {
-            templateUrl: 'pages/Index/Main.jsp',
+            templateUrl: 'pages/Index/MainPage.html',
             controller: 'MainPageController'
         })
     }])
     .controller("MainPageController", function ($scope) {
-
-
     });

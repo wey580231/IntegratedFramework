@@ -39,6 +39,7 @@ function loginAps() {
         if (successLogin == 1) {
             firstLog = 2;
             $("#activeSelector").attr("disabled", false);
+            $("#loginInAPS").attr("disabled", true);
         }
     }
 
@@ -130,15 +131,15 @@ temp.onload = function () {
     heightSet = heightScreen - 60 - 20 - 20;
     widthSet = widthScreen - 300;
 
-    if (heightSet * widthWelcomePage / heightWelcomePage > widthSet) {
-        document.getElementById("welcome_page").style.width = widthSet + "px";
-        document.getElementById("welcome_page").style.height = widthSet * heightWelcomePage / widthWelcomePage + "px";
-        document.getElementById("welcome_page").style.paddingTop = (heightScreen - 60 - 20 - 25 - widthSet * heightWelcomePage / widthWelcomePage) / 2 + "px";
-    }
-    else {
-        document.getElementById("welcome_page").style.width = heightSet * widthWelcomePage / heightWelcomePage + "px";
-        document.getElementById("welcome_page").style.height = heightSet + "px";
-    }
+    // if (heightSet * widthWelcomePage / heightWelcomePage > widthSet) {
+    //     document.getElementById("welcome_page").style.width = widthSet + "px";
+    //     document.getElementById("welcome_page").style.height = widthSet * heightWelcomePage / widthWelcomePage + "px";
+    //     document.getElementById("welcome_page").style.paddingTop = (heightScreen - 60 - 20 - 25 - widthSet * heightWelcomePage / widthWelcomePage) / 2 + "px";
+    // }
+    // else {
+    //     document.getElementById("welcome_page").style.width = heightSet * widthWelcomePage / heightWelcomePage + "px";
+    //     document.getElementById("welcome_page").style.height = heightSet + "px";
+    // }
 }
 
 document.onselectstart = new Function("return false"); //to not select items
