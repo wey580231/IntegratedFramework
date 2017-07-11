@@ -12,7 +12,7 @@ import java.util.Set;
  */
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_ResourceEntity {
-    private String id;
+    private String idR;
     private String name;
     private String idFeatureResource;
     private String idSiteGroupResource;
@@ -48,12 +48,12 @@ public class RG_ResourceEntity {
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ResourceStateId")
     private Set<RG_ResourceStateEntity> resourceState = new HashSet<RG_ResourceStateEntity>();
 
-    public String getId() {
-        return id;
+    public String getIdR() {
+        return idR;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdR(String idR) {
+        this.idR = idR;
     }
 
     public String getName() {
@@ -232,20 +232,12 @@ public class RG_ResourceEntity {
         this.unit = unit;
     }
 
-    public Set<RG_ResourceStateEntity> getResourceState() {
-        return resourceState;
+    public RG_ClubEntity getClubByIdClub() {
+        return clubByIdClub;
     }
 
-    public void setResourceState(Set<RG_ResourceStateEntity> resourceState) {
-        this.resourceState = resourceState;
-    }
-
-    public RG_GroupresourceEntity getGroupresourceByIdGroupResource() {
-        return groupresourceByIdGroupResource;
-    }
-
-    public void setGroupresourceByIdGroupResource(RG_GroupresourceEntity groupresourceByIdGroupResource) {
-        this.groupresourceByIdGroupResource = groupresourceByIdGroupResource;
+    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
+        this.clubByIdClub = clubByIdClub;
     }
 
     public RG_UserEntity getUserByIdUser() {
@@ -256,12 +248,12 @@ public class RG_ResourceEntity {
         this.userByIdUser = userByIdUser;
     }
 
-    public RG_ClubEntity getClubByIdClub() {
-        return clubByIdClub;
+    public RG_GroupresourceEntity getGroupresourceByIdGroupResource() {
+        return groupresourceByIdGroupResource;
     }
 
-    public void setClubByIdClub(RG_ClubEntity clubByIdClub) {
-        this.clubByIdClub = clubByIdClub;
+    public void setGroupresourceByIdGroupResource(RG_GroupresourceEntity groupresourceByIdGroupResource) {
+        this.groupresourceByIdGroupResource = groupresourceByIdGroupResource;
     }
 
     public Set<RG_SiteEntity> getSitesById() {
@@ -296,4 +288,11 @@ public class RG_ResourceEntity {
         this.schedules = schedules;
     }
 
+    public Set<RG_ResourceStateEntity> getResourceState() {
+        return resourceState;
+    }
+
+    public void setResourceState(Set<RG_ResourceStateEntity> resourceState) {
+        this.resourceState = resourceState;
+    }
 }

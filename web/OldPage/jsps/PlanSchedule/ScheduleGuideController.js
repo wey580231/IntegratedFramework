@@ -483,4 +483,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             $scope.form = arrchoosed;
             console.log(arrchoosed);
         };
+
+
+
     });

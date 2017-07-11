@@ -19,7 +19,7 @@ import java.util.Map;
 public class APSDatabaseSync {
     public static boolean SyncAPSTable(String tableName) throws SQLException, ClassNotFoundException, ParseException {
         String SQLString = "select * from " + tableName + "";
-        List list = Tools.executeSQLForList(DatabaseInfo.MySQL, DatabaseInfo.APS, SQLString);
+        List list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
         if (tableName.equals(DatabaseInfo.APS_PRODUCT)) {
             return SyncProductTable(list);
         }
@@ -33,7 +33,7 @@ public class APSDatabaseSync {
     private static boolean SyncProductTable(List list) {
         for (Object object : list) {
             if (object instanceof HashMap) {
-                Map tempMap = new HashMap();
+                Map tempMap = (HashMap) object;
                 RG_ProductEntity rg_productEntity = new RG_ProductEntity();
                 rg_productEntity.setId(getStringFromHashMap(tempMap, "ID"));
                 rg_productEntity.setName(getStringFromHashMap(tempMap, "NAME"));
@@ -43,17 +43,18 @@ public class APSDatabaseSync {
                 rg_productEntity.setStock(getShortFromHashMap(tempMap, "STOCK"));
                 ProductDAOImpl productDAO = DAOFactory.getProductDAOImplInstance();
                 productDAO.save(rg_productEntity);
-                return true;
+            } else {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     //同步订单表
     private static boolean SyncOrderTable(List list) throws ParseException {
         for (Object object : list) {
             if (object instanceof HashMap) {
-                Map tempMap = new HashMap();
+                Map tempMap = (HashMap) object;
                 RG_OrderEntity rg_orderEntity = new RG_OrderEntity();
                 rg_orderEntity.setId(getStringFromHashMap(tempMap, "ID"));
                 rg_orderEntity.setName(getStringFromHashMap(tempMap, "NAME"));
@@ -79,10 +80,11 @@ public class APSDatabaseSync {
                 rg_orderEntity.setNbTask(getShortFromHashMap(tempMap, "NBTASK"));
                 OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
                 ordersDAO.save(rg_orderEntity);
-                return true;
+            } else {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private static String getStringFromHashMap(Map map, String mapKay) {
@@ -111,8 +113,8 @@ public class APSDatabaseSync {
 
     private static Date getDateFromHashMap(Map map, String mapKay) throws ParseException {
         if (map.get(mapKay) != null) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(" yyyy-MM-dd HH:mm:ss ");
-            return simpleDateFormat.parse(map.get(mapKay).toString());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return simpleDateFormat.parse(map.get(mapKay).toString().trim());
         } else {
             return null;
         }
