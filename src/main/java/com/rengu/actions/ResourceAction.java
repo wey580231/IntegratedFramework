@@ -25,7 +25,7 @@ public class ResourceAction extends SuperAction {
     public void save() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = Tools.jsonConvertToEntity(jsonString, RG_ResourceEntity.class);
-        rg_resourceEntity.setId(Tools.getUUID());
+        rg_resourceEntity.setIdR(Tools.getUUID());
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.save(rg_resourceEntity)) {
         } else {
@@ -37,7 +37,7 @@ public class ResourceAction extends SuperAction {
     public void delete() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_ResourceEntity rg_resourceEntity = new RG_ResourceEntity();
-        rg_resourceEntity.setId(Tools.jsonTreeModelParse(jsonString).get("id").asText());
+        rg_resourceEntity.setIdR(Tools.jsonTreeModelParse(jsonString).get("id").asText());
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.delete(rg_resourceEntity)) {
         } else {
@@ -55,7 +55,6 @@ public class ResourceAction extends SuperAction {
             System.out.println("更新失败");
             WebSocketNotification.broadcast("更新失败");
         }
-
     }
 
     public void findAllById() throws Exception {

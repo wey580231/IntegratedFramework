@@ -54,7 +54,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.attribute = $("input[name='add-attribute']").val();
             addData = JSON.stringify(params);
-            if (!validate.checkLength(params.name) || !validate.checkNumber(params.name)) {
+            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
                 $("#add-name").removeClass("has-success");
                 $("#add-name").addClass("has-error");
             } else {
@@ -70,7 +70,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#add-attribute").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkNumber(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
+            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
                 return true;
             } else {
 
@@ -85,7 +85,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
             params.name = $("input[name='edit-name']").val();
             params.attribute = $("input[name='edit-attribute']").val();
             editData = params;
-            if (!validate.checkLength(params.name) || !validate.checkNumber(params.name)) {
+            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
                 $("#edit-name").removeClass("has-success");
                 $("#edit-name").addClass("has-error");
             } else {
@@ -101,7 +101,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#edit-attribute").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkNumber(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
+            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
                 return true;
             } else {
 

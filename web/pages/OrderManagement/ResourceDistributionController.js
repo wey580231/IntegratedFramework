@@ -186,7 +186,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddAssisantProcess, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
-                    location.reload();
+                    location.reload(true);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -266,7 +266,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 edit_params.weightParallel = editData.weightParallel;
                 var update_data = angular.toJson(edit_params);
                 myHttpService.post(serviceList.UpdateAssisantProcess, update_data).then(function successCallback() {
-                    location.reload();
+                    location.reload(true);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -285,7 +285,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 console.log("删除的id信息");
                 console.log(idInfo);
                 myHttpService.delete(serviceList.DeleteAssisantProcess, idInfo).then(function successCallback() {
-                    location.reload();
+                    location.reload(true);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 });

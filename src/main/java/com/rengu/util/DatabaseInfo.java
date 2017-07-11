@@ -11,7 +11,6 @@ public class DatabaseInfo {
     //公司名称
     public static final String APS = "APS";
     //APS数据库表名称
-    public static final String APS_TYPERESOURCE = "APS_TYPERESOURCE";
     public static final String APS_ORDER = "APS_ORDER";
     public static final String APS_CONGIF = "APS_CONGIF";
     public static final String APS_RESOURCE = "APS_RESOURCE";
@@ -20,4 +19,7 @@ public class DatabaseInfo {
     public static final String APS_LOG = "APS_LOG";
     public static final String APS_SHIFT = "APS_SHIFT";
     public static final String APS_PRODUCT = "APS_PRODUCT";
+    public static final String APS_PROCESS_TYPERESOURCE_SITE = "APS_PROCESS_TYPERESOURCE_SITE";
+    public static final String APS_PROCESS = "APS_PROCESS";
+    public static final String APS_TYPERESOURCE = "APS_TYPERESOURCE";
 }

@@ -54,7 +54,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.type = $("input[name='add-type']").val();
             params.slot = $("input[name='add-slot']").val();
-            params.extra = $("input[name='add-extra']").val();
+            params.extra = parseInt($("input[name='add-extra']").val());
             addData = JSON.stringify(params);
             if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
                 $("#add-name").removeClass(" has-success");
@@ -63,15 +63,6 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#add-name").removeClass(" has-error");
                 $("#add-name").addClass(" has-success");
             }
-
-            if (!validate.checkNumber(params.type) || !validate.checkLength(params.type)) {
-                $("#add-type").removeClass("has-success");
-                $("#add-type").addClass("has-error");
-            } else {
-                $("#add-type").removeClass("has-error");
-                $("#add-type").addClass(" has-success");
-            }
-
             if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
                 $("#add-slot").removeClass("has-success");
                 $("#add-slot").addClass("has-error");
@@ -88,7 +79,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#add-extra").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.type) && validate.checkNumber(params.type) &&
+            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
                 validate.checkLength(params.slot) && validate.checkNumber(params.slot) && validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
                 return true;
             } else {
@@ -102,9 +93,8 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         var workEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
-            params.type = $("input[name='edit-type']").val();
             params.slot = $("input[name='edit-slot']").val();
-            params.extra = $("input[name='edit-extra']").val();
+            params.extra = parseInt($("input[name='edit-extra']").val());
             editData = params;
             if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
                 $("#edit-name").removeClass(" has-success");
@@ -114,13 +104,6 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#edit-name").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.type) || !validate.checkLength(params.type)) {
-                $("#edit-type").removeClass("has-success");
-                $("#edit-type").addClass("has-error");
-            } else {
-                $("#edit-type").removeClass("has-error");
-                $("#edit-type").addClass(" has-success");
-            }
 
             if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
                 $("#edit-slot").removeClass("has-success");
@@ -138,7 +121,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#edit-extra").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.type) && validate.checkNumber(params.type) &&
+            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
                 validate.checkLength(params.slot) && validate.checkNumber(params.slot) && validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
                 return true;
             } else {
