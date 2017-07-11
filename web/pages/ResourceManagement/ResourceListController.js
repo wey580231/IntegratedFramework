@@ -250,7 +250,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         $scope.deleteResource = function () {
             if (getInfo()) {
                 var params = {};
-                params.id = idVal;
+                params.idR = idVal;
                 var idInfo = JSON.stringify(params);
                 console.log("删除的id信息");
                 console.log(idInfo);
