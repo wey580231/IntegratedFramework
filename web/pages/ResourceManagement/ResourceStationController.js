@@ -53,9 +53,9 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         var siteAddValidate = function () {
             var params = {};
             params.name = $("input[name='add-name']").val();
-            params.x = $("input[name='add-x']").val();
-            params.y = $("input[name='add-y']").val();
-            params.capacity = $("input[name='add-capacity']").val();
+            params.x = parseInt($("input[name='add-x']").val());
+            params.y = parseInt($("input[name='add-y']").val());
+            params.capacity = parseInt($("input[name='add-capacity']").val());
             addData = JSON.stringify(params);
 
             if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
@@ -104,9 +104,9 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         var siteEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
-            params.x = $("input[name='edit-x']").val();
-            params.y = $("input[name='edit-y']").val();
-            params.capacity = $("input[name='edit-capacity']").val();
+            params.x = parseInt($("input[name='edit-x']").val());
+            params.y = parseInt($("input[name='edit-y']").val());
+            params.capacity = parseInt($("input[name='edit-capacity']").val());
             editData = params;
             if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
                 $("#edit-name").removeClass("has-success");
