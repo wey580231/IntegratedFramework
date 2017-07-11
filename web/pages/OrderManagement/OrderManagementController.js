@@ -48,6 +48,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             renderTableService.renderTable($last);
         };
 
+
         //信息填写检验
         var orderAddValidate = function () {
             var params = {};

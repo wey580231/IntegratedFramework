@@ -47,6 +47,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         //新建排程
         $scope.prepareNewSchedule = function () {
             resetContent();
+
+            reset();
         }
 
         function resetContent() {
@@ -389,7 +391,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         }
 
         //表格信息重置
-        $scope.reset = function () {
+        function reset() {
             $("input").val('');
         };
 
