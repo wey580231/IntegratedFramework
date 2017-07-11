@@ -28,6 +28,7 @@ public class ScheduleAction extends SuperAction {
 
             //更新数据库表内容
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
+            System.out.println(jsonString);
             JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
             RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
             rg_scheduleEntity.setId(Tools.getUUID());
@@ -84,7 +85,7 @@ public class ScheduleAction extends SuperAction {
             //解析Layout数据
             JsonNode layoutNodes = rootNode.get("layout");
             if (layoutNodes.size() == 1) {
-                RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").toString());
+                RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
                 rg_scheduleEntity.setLayout(layout);
             }
 
@@ -92,7 +93,7 @@ public class ScheduleAction extends SuperAction {
             JsonNode orderNodes = rootNode.get("orders");
             Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<RG_OrderEntity>();
             for (JsonNode tempNode : orderNodes) {
-                RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").toString());
+                RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
@@ -104,7 +105,7 @@ public class ScheduleAction extends SuperAction {
             JsonNode resourcesNodes = rootNode.get("resources");
             Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<RG_ResourceEntity>();
             for (JsonNode tempNode : resourcesNodes) {
-                RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, tempNode.get("id").toString());
+                RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, tempNode.get("id").asText());
                 if (rg_resourceEntity != null) {
                     rg_resourceEntity.getSchedules().add(rg_scheduleEntity);
                     rg_resourceEntitySet.add(rg_resourceEntity);
@@ -116,7 +117,7 @@ public class ScheduleAction extends SuperAction {
             JsonNode groupResourceNodes = rootNode.get("groupResource");
             Set<RG_GroupresourceEntity> rg_groupresourceEntitySet = new HashSet<RG_GroupresourceEntity>();
             for (JsonNode tempNode : groupResourceNodes) {
-                RG_GroupresourceEntity rg_groupresourceEntity = session.get(RG_GroupresourceEntity.class, tempNode.get("id").toString());
+                RG_GroupresourceEntity rg_groupresourceEntity = session.get(RG_GroupresourceEntity.class, tempNode.get("id").asText());
                 if (rg_groupresourceEntity != null) {
                     rg_groupresourceEntity.getSchedules().add(rg_scheduleEntity);
                     rg_groupresourceEntitySet.add(rg_groupresourceEntity);
@@ -128,7 +129,7 @@ public class ScheduleAction extends SuperAction {
             JsonNode siteNodes = rootNode.get("site");
             Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<RG_SiteEntity>();
             for (JsonNode tempNode : siteNodes) {
-                RG_SiteEntity rg_siteEntity = session.get(RG_SiteEntity.class, tempNode.get("id").toString());
+                RG_SiteEntity rg_siteEntity = session.get(RG_SiteEntity.class, tempNode.get("id").asText());
                 if (rg_siteEntity != null) {
                     rg_siteEntity.getSchedules().add(rg_scheduleEntity);
                     rg_siteEntitySet.add(rg_siteEntity);
