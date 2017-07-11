@@ -20,6 +20,6 @@ public class DatabaseInfo {
     public static final String APS_LOG = "APS_LOG";
     public static final String APS_SHIFT = "APS_SHIFT";
     public static final String APS_PRODUCT = "APS_PRODUCT";
-    public static final String ASSISANTPROCESS = "ASSISANTPROCESS";
-    public static final String PROCESS = "PROCESS";
+    public static final String APS_ASSISANTPROCESS = "APS_ASSISANTPROCESS";
+    public static final String APS_PROCESS = "APS_PROCESS";
 }
