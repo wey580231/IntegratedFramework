@@ -75,7 +75,7 @@ public class EntityConvertToSQL {
         }
         IdShift = IdShift + "}";
         String SQLString = "INSERT INTO " + DatabaseInfo.APS_RESOURCE + " (id,name,IdTypeResource,idGroupResource,IdSite,mobility,critical,IdShift,NameShift,DateForbidden,weekend) VALUES ('"
-                + rg_resourceEntity.getId() + "','"
+                + rg_resourceEntity.getIdR() + "','"
                 + rg_resourceEntity.getName() + "','"
                 + IdTypeResource + "','"
                 + rg_resourceEntity.getGroupresourceByIdGroupResource().getId() + "','"
