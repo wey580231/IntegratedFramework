@@ -20,20 +20,27 @@ public class APSDatabaseSync {
             //读取目标数据库
             String SQLString = "select * from " + tableName + "";
             List list = Tools.executeSQLForList(databaseType, databaseName, SQLString);
-            if (tableName.equals(DatabaseInfo.APS_PRODUCT)) {
-                SyncProductTable(list);
-            }
-            if (tableName.equals(DatabaseInfo.APS_ORDER)) {
-                SyncOrderTable(list);
-            }
-            if (tableName.equals(DatabaseInfo.APS_ASSISANTPROCESS)) {
-                SyncAssisantProcessTable(list);
-            }
-            if (tableName.equals(DatabaseInfo.APS_PROCESS)) {
-                SyncAssisantProcessTable(list);
-            }
-            if (tableName.equals(DatabaseInfo.APS_RESOURCE)) {
-                SyncAssisantProcessTable(list);
+            switch (tableName) {
+                case DatabaseInfo.APS_PRODUCT:
+                    SyncProductTable(list);
+                case DatabaseInfo.APS_ORDER:
+                    SyncOrderTable(list);
+                case DatabaseInfo.APS_ASSISANTPROCESS:
+                    SyncAssisantProcessTable(list);
+                case DatabaseInfo.APS_PROCESS:
+                    SyncProcessTable(list);
+                case DatabaseInfo.APS_RESOURCE:
+                    SyncResourceTable(list);
+                case DatabaseInfo.APS_TYPERESOURCE:
+                    SyncTypeRescourceTable(list);
+                case DatabaseInfo.APS_GROUPRESOURCE:
+                    SyncGroupResourceTable(list);
+                case DatabaseInfo.APS_SITE:
+                    SyncSiteTable(list);
+                case DatabaseInfo.APS_SHIFT:
+                    SyncShiftTable(list);
+                default:
+                    System.out.println("无法同步：" + tableName + "表。");
             }
         }
     }
@@ -58,6 +65,99 @@ public class APSDatabaseSync {
             }
         }
         System.out.println("产品表同步成功");
+        return true;
+    }
+
+    //同步资源班次表
+    private static boolean SyncShiftTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_ShiftEntity rg_shiftEntity = new RG_ShiftEntity();
+                rg_shiftEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                rg_shiftEntity.setSlot(getStringFromHashMap(tempMap, "SLOT"));
+                rg_shiftEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_shiftEntity.setId0(getStringFromHashMap(tempMap, "ID0"));
+                rg_shiftEntity.setType(getByteFromHashMap(tempMap, "TYPE"));
+                rg_shiftEntity.setExtra(getShortFromHashMap(tempMap, "EXTRA"));
+                ShiftDAOImpl shiftDAO = DAOFactory.getShiftInstance();
+                shiftDAO.save(rg_shiftEntity);
+            } else {
+                System.out.println("资源班次表同步失败");
+                return false;
+            }
+        }
+        System.out.println("资源班次表同步成功");
+        return true;
+    }
+
+    //同步资源工位表
+    private static boolean SyncSiteTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_SiteEntity rg_siteEntity = new RG_SiteEntity();
+                rg_siteEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_siteEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                rg_siteEntity.setX(getShortFromHashMap(tempMap, "X"));
+                rg_siteEntity.setY(getShortFromHashMap(tempMap, "Y"));
+                rg_siteEntity.setType(getStringFromHashMap(tempMap, "TYPE"));
+                rg_siteEntity.setIdIcon(getStringFromHashMap(tempMap, "IDICON"));
+                rg_siteEntity.setSizeIcon(getShortFromHashMap(tempMap, "SIZEICON"));
+                rg_siteEntity.setCapacity(getShortFromHashMap(tempMap, "CAPACITY"));
+                rg_siteEntity.setColor(getStringFromHashMap(tempMap, "COLOR"));
+                SiteDAOImpl siteDAO = DAOFactory.getSiteInstance();
+                siteDAO.save(rg_siteEntity);
+            } else {
+                System.out.println("资源工位表同步失败");
+                return false;
+            }
+        }
+        System.out.println("资源工位表同步成功");
+        return true;
+    }
+
+    //同步资源工组表
+    private static boolean SyncGroupResourceTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_GroupresourceEntity rg_groupresourceEntity = new RG_GroupresourceEntity();
+                rg_groupresourceEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_groupresourceEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                rg_groupresourceEntity.setIdSite(getStringFromHashMap(tempMap, "IDSITE"));
+                rg_groupresourceEntity.setState(getByteFromHashMap(tempMap, "STATE"));
+                rg_groupresourceEntity.setColor(getStringFromHashMap(tempMap, "COLOR"));
+                rg_groupresourceEntity.setIdSite0(getStringFromHashMap(tempMap, "IDSITE0"));
+                rg_groupresourceEntity.setExternal(getByteFromHashMap(tempMap, "EXTERNAL"));
+                GroupResourceDAOImpl groupResourceDAO = DAOFactory.getGroupResourceInstance();
+                groupResourceDAO.save(rg_groupresourceEntity);
+            } else {
+                System.out.println("资源工组表同步失败");
+                return false;
+            }
+        }
+        System.out.println("资源工组表同步成功");
+        return true;
+    }
+
+    //同步资源类型表
+    private static boolean SyncTypeRescourceTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_TyperescourceEntity rg_typerescourceEntity = new RG_TyperescourceEntity();
+                rg_typerescourceEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_typerescourceEntity.setRatio(getDoubleFromHashMap(tempMap, "RATIO"));
+                rg_typerescourceEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                TyperescourceDAOImpl typerescourceDAO = DAOFactory.getTyperescourceInstance();
+                typerescourceDAO.save(rg_typerescourceEntity);
+            } else {
+                System.out.println("资源类型表同步失败");
+                return false;
+            }
+        }
+        System.out.println("资源类型表同步成功");
         return true;
     }
 
@@ -93,11 +193,11 @@ public class APSDatabaseSync {
                 ResourceDAOImpl resourceDAO = DAOFactory.getResourceInstance();
                 resourceDAO.save(rg_resourceEntity);
             } else {
-                System.out.println("产品表同步失败");
+                System.out.println("资源表同步失败");
                 return false;
             }
         }
-        System.out.println("产品表同步成功");
+        System.out.println("资源表同步成功");
         return true;
     }
 
