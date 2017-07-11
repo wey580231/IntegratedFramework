@@ -16,7 +16,9 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.InteractiveController',
     'IntegratedFramework.ShowController',
     'IntegratedFramework.EquipmentMonitoringController',
-    'IntegratedFramework.MainPage'
+    'IntegratedFramework.MainPage',
+    'IntegratedFramework.BOMManagementController',
+    'IntegratedFramework.AdjustDeviceController'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');
@@ -155,6 +157,9 @@ angular.module("IntegratedFramework", [
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+
+        service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action";
+
         return service;
     })
     .factory("renderTableService", function () {

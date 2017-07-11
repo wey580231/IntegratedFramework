@@ -237,5 +237,4 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             document.getElementById("treeDemo").style.display = "";
             // });
         }
-
     });
