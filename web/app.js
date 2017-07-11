@@ -12,6 +12,9 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ResourceStationController',
     'IntegratedFramework.WorkListController',
     'IntegratedFramework.ScheduleSnapController',
+    'IntegratedFramework.PlanScheduleController',
+    'IntegratedFramework.InteractiveController',
+    'IntegratedFramework.ShowController',
     'IntegratedFramework.EquipmentMonitoringController',
     'IntegratedFramework.MainPage'
 ])

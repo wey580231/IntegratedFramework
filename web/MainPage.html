@@ -38,33 +38,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <link rel="stylesheet" href="plugins/jQueryUI/jquery-ui.min.css"/>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
     <script src="html5shiv.min.js"></script>
     <script src="respond.min.js"></script>
-    <![endif]-->
+
+    <style>
+        /*.modal-backdrop{*/
+        /*z-index: 20;*/
+        /*}*/
+
+    </style>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -237,7 +221,7 @@ desired effect
                     <ul class="treeview-menu">
                         <li><a href="#!/ScheduleGuide"><i class="fa fa-circle-o"></i>计划排程管理</a></li>
                         <li><a href="#!/ScheduleSnap"><i class="fa fa-circle-o"></i>计划排程快照管理</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i>交互式优化与结果可视化</a></li>
+                        <li><a href="#!/Interactive"><i class="fa fa-circle-o"></i>交互式优化与结果可视化</a></li>
                     </ul>
                 </li>
                 <!--在线-->
@@ -274,11 +258,10 @@ desired effect
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-circle-o"></i>可视化显示</a></li>
+                        <li><a href="#!/Show3D"><i class="fa fa-circle-o"></i>可视化显示</a></li>
                         <li><a href="#"><i class="fa fa-circle-o"></i>可视化配置</a></li>
                     </ul>
                 </li>
-
 
             </ul>
             <!-- /.sidebar-menu -->
@@ -286,31 +269,9 @@ desired effect
         <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-
-        <!-- Main content -->
-        <section class="content">
-
-            <!-- Your Page Content Here -->
-            <div>
-                <ng-view></ng-view>
-            </div>
-        </section>
-        <!-- /.content -->
+    <div id="RenGu" class="content-wrapper" style="height: 100%;">
+        <ng-view></ng-view>
     </div>
-    <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <!--<footer class="main-footer">
-        &lt;!&ndash; To the right &ndash;&gt;
-        <div class="pull-right hidden-xs">
-            Anything you want
-        </div>
-        &lt;!&ndash; Default to the left &ndash;&gt;
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-    </footer>-->
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -440,10 +401,13 @@ desired effect
 <script src="pages/ResourceManagement/WorkListController.js"></script>
 <script src="pages/ResourceManagement/ResourceGroupController.js"></script>
 <script src="pages/OnlineMonitoringAndManagement/EquipmentMonitoringController.js"></script>
-<script src="pages/Index/Main.js"></script>
 
 <script src="pages/PlanSchedule/ScheduleSnapController.js"></script>
 <script src="pages/PlanSchedule/PlanSchedule.js"></script>
+<script src="pages/PlanSchedule/InteractiveController.js"></script>
+
+<script src="pages/3DView/ShowController.js"></script>
+
 <script src="WebSocketNotification.js"></script>
 <!--加载通知系统-->
 <script>
