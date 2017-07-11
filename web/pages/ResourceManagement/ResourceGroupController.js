@@ -54,7 +54,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.state = parseInt($("input[name='add-state']").val());
             params.idSite0 = $("input[name='add-idSite0']").val();
-
+            addData = JSON.stringify(params);
             if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
                 $("#add-name").removeClass("has-success");
                 $("#add-name").addClass("has-error");
@@ -135,7 +135,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddGroupResource, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
-                    location.reload();
+                    //location.reload();
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })

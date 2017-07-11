@@ -69,7 +69,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             }
 
 
-            if (!validate.checkLength(params.name) || !validate.checkChinese(params.name)) {
+            if (!validate.checkLength(params.name) || validate.checkNumber(params.name)) {
                 $("#add-name").removeClass("has-success");
                 $("#add-name").addClass("has-error");
             } else {
@@ -100,8 +100,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#add-t2").addClass(" has-success");
             }
 
-            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkLength(params.name) &&
-                validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
+            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) &&
+                validate.checkLength(params.name) && !validate.checkNumber(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
@@ -131,7 +131,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             }
 
 
-            if (!validate.checkLength(params.name) || !validate.checkChinese(params.name)) {
+            if (!validate.checkLength(params.name) || validate.checkNumber(params.name)) {
                 $("#edit-name").removeClass("has-success");
                 $("#edit-name").addClass("has-error");
             } else {
@@ -162,8 +162,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#edit-t2").addClass(" has-success");
             }
 
-            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) && validate.checkLength(params.name) &&
-                validate.checkChinese(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
+            if (validate.checkChinese(params.origin) && validate.checkLength(params.origin) &&
+                validate.checkLength(params.name) && !validate.checkNumber(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
@@ -178,14 +178,14 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddOrder, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
-                    location.reload(true);
+                    //location.reload(true);
+                    setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
                 notification.sendNotification("alert", "参数错误");
             }
-            //addData.splice(0, addData.length);
         };
 
         //获得表单信息
@@ -199,7 +199,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 }
             }
             if (count == 1 || count > 2) {
-                notification.sendNotification("alert", "请选择一条订单！");
+                notification.sendNotification("alert", "请重新选择！");
                 return false;
             } else {
                 return true;
@@ -233,6 +233,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             if (getInfo()) {
                 $("#modal-edit").modal('show');
                 var idInfo = JSON.stringify(id_params);
+                console.log("&&&&&&&&&&&");
+                console.log(id_params);
                 myHttpService.post(serviceList.GetOrderById, idInfo).then(function successCallback(response) {
                     var editList = [];//保存从数据库获取的需要修改的数据
                     editList.push(response.data);
@@ -257,7 +259,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 edit_params.t2 = editData.t2;
                 var update_data = angular.toJson(edit_params);
                 myHttpService.post(serviceList.UpdateOrder, update_data).then(function successCallback() {
-                    location.reload(true);
+                    //location.reload(true);
+                    setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -270,13 +273,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //删除订单
         $scope.deleteOrder = function () {
             if (getInfo()) {
-                var params = {};
-                params.id = idVal;
-                var idInfo = JSON.stringify(params);
+                var idInfo = JSON.stringify(id_params);
                 console.log("删除的id信息");
                 console.log(idInfo);
                 myHttpService.delete(serviceList.DeleteOrder, idInfo).then(function successCallback() {
-                    location.reload(true);
+                    //location.reload(true);
+                    setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 });
@@ -287,5 +289,36 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("input").val('');
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
+        };
+
+        function clicked(id) {
+            var o, i;
+            o = document.getElementById(id).rows;//表格所有行
+            for (i = 0; i < o.length; i++) {
+                o[i].ondblclick = function () { //设置事件
+                    var oo;
+                    oo = this.cells[1]; //取得第二列对象
+                    alert(oo.innerHTML);
+                }
+            }
         }
+
+        window.onload = function () {
+            clicked('table_value'); //设置表格事件
+        }
+        /*    $scope.getInfo = function () {
+         $("#modal-info").modal('show');
+         var trs = document.getElementsByTagName('tr');
+         for (var i = 1; i < trs.length; i++) {
+         trs[i].onclick = function () {
+         var id=this.children[1].innerHTML;
+         myHttpService.post(serviceList.GetOrderById, id).then(function successCallback(response) {
+         $scope.infoList = response.data;
+         }, function errorCallback() {
+         notification.sendNotification("alert", "请求失败");
+         })
+         break;
+         }
+         }
+         }*/
     });
