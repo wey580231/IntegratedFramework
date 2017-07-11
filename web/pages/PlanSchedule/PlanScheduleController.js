@@ -10,6 +10,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         })
     }])
     .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService) {
+        var selectedCheckArray = [];    //选中的checkbox的id值集合
         var editData = [];//保存基础信息
         var operateId;
         var scheduleDays;
@@ -110,8 +111,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             //getIdSelections();
         }
 
+        //开始排程
         $scope.submitForm = function () {
-
+            configAPS();
         }
 
 
@@ -277,12 +279,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //日历排程染色
         $(function () {
-            //当前排程时间长度（b）
+          /*  //当前排程时间长度（b）
             var scheduleDays = 30;
             //上次排程时间长度（c）
             var lastScheduleDays = 30;
             //距上次开始排程的日期差(c)
-            var tempDays = 7;
+            var tempDays = 7;*/
             //排程开始时间
             var startTime = moment().format("YYYY-MM-DD");
             //排程结束时间
@@ -314,8 +316,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                                 alert('there was an error while fetching events!');
                             }
                         }
-                    ],
-                    viewRender: function (view, element) {
+                    ]
+                    /* viewRender: function (view, element) {
                         //已执行时间窗口染色
                         for (var i = 1; i <= tempDays; i++) {
                             $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
@@ -328,13 +330,164 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
                             $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
                         }
-                    }
+                    }*/
                 });
             });
         });
+
+
+
+        //日历部分
+        $scope.showSchedule = function () {
+            //获取上次排程信息
+            myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
+                console.log("获取上次排程信息状态");
+                console.log(response.status);
+                console.log("获取上次排程信息");
+                console.log(response.data);
+                var obj = response.data;
+
+                var startCalcTime = moment(obj.startCalcTime).format("YYYY-MM-DD");
+                var startCalcTime="2016-07-08";
+                console.log("上次排程计算开始时间" + startCalcTime);
+
+                //当前排程时间长度（b）
+                scheduleDays = $("input[name='add-scheduleDays']").val();
+                console.log("当前排程时间长度" + scheduleDays);
+                name = $("input[name='add-name']").val();
+                rollTime = $("input[name='add-rollTime']").val();
+                console.log("当前排程滚动周期" + rollTime);
+
+                var tempDays = 7;
+
+                //上次排程时间长度（c）
+                var lastScheduleDays = obj.scheduleWindow;
+                var lastScheduleDays =12;
+
+
+                // page is now ready, initialize the calendar...
+
+                    // page is now ready, initialize the calendar...
+
+                        // put your options and callbacks here
+
+
+                            //已执行时间窗口染色
+                            for (var i = 1; i <= tempDays; i++) {
+                                $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
+                            }
+                            //时间窗口染色
+                            for (var i = 0; i < lastScheduleDays - tempDays; i++) {
+                                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
+                            }
+                            //剩余窗口染色
+                            for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
+                                $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+                            }
+
+            });
+        }
 
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
         };
+
+
+        var updateSelected = function (action, id) {
+            operateId = id;
+            if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
+                selectedCheckArray.push(id);
+                console.log(id + "被选中");
+            }
+            if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
+                selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
+                console.log(id + "取消选中");
+            }
+        };
+
+        //用于监控点击事件，checkbox选择了就更新
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id);
+        };
+        $scope.isSelected = function (id) {
+            return selectedCheckArray.indexOf(id) >= 0;
+        };
+
+
+        //排程
+
+        function configAPS() {
+
+            //未完成的记录
+            console.log("两部分未完成的记录");
+            console.log(array);
+            console.log(array.length);
+
+            for (var i = 0; i < array.length; i++) {
+                console.log(operateId);
+                if (array[i].id == operateId) {
+                    arr = array[i];
+                    console.log("$$$$$$$$");
+                    console.log(arr);
+                }
+            }
+
+            var APSConfigs = {};
+            APSConfigs.t0 = "";
+            APSConfigs.t2 = "";
+
+            var orders = [];
+            console.log("订单");
+            var params = {};
+            params.id = parseInt(arr.id);
+            orders.push(params);
+
+            var layouts = {};
+            layouts.id = 2;
+
+            console.log("资源");
+            var resourceArr = [];
+            var resources = {};
+            resources.id = 2;
+            resourceArr.push(resources);
+
+            console.log("工组");
+            var groupResourcesArr = [];
+            var groupResources = {};
+            groupResources.id = 2;
+            groupResourcesArr.push(groupResources);
+
+            console.log("工位");
+            var sitesArr = [];
+            var sites = {};
+            sites.id = 2;
+            sitesArr.push(sites);
+
+            var params = {};
+            params.name = name;
+            params.scheduleWindow = parseInt(scheduleDays);
+            params.rollTime = parseInt(rollTime);
+            params.APSConfig = APSConfigs;
+            params.layout = layouts;
+            params.orders = orders;
+            params.resources = resourceArr;
+            params.groupResource = groupResourcesArr;
+            params.site = sitesArr;
+            var data = JSON.stringify(params);
+            console.log(data);
+            $("#schedule").hide();
+            myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
+                console.log(response.status);
+                curobj.splice(0, curobj.length);
+                lastobj.splice(0, lastobj.length);
+                array.splice(0, array.length);
+                location.reload(true);
+            }, function errorCallback(response) {
+                alert("请求错误！");
+            });
+        };
+
     });
