@@ -10,6 +10,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         })
     }])
     .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService) {
+        var selectedCheckArray = [];    //选中的checkbox的id值集合
         var editData = [];//保存基础信息
         var operateId;
         var scheduleDays;
@@ -17,8 +18,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var rollTime;
         var lastobj = [];//上次排程的json字符串
         var curobj = [];//当前排程的json字符串
-        var ordId;
-        var arr;//需要排程的那条记录
         var array = [];//两次未完成部分
 
 
@@ -110,8 +109,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             //getIdSelections();
         }
 
+        //开始排程
         $scope.submitForm = function () {
-
+            configAPS();
         }
 
 
@@ -158,24 +158,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //显示订单信息
         function showInfo() {
-            var obj = [];
-            obj.splice(0, obj.length);
-            myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
-                console.log("获取上次排程信息状态");
-                console.log(response.status);
-                console.log("获取上次排程信息");
-                console.log(response.data);
-                obj = response.data;
-
-                for (var i = 0; i < obj.orders.length; i++) {
-                    if (obj.orders[i].finished == false) {
-                        var lastinfo = {};
-                        lastinfo = (obj.orders[i]);
-                        lastobj.push(lastinfo);
-                    } else {
-                        console.log("完成了！");
-                    }
-                }
 
                 //开始访问当前未完成的记录
                 curobj.splice(0, curobj.length);
@@ -205,44 +187,41 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     }
 
                     //剔除相同的记录
-                    //把上一次记录push到array
-                    for (var i = 0; i < lastobj.length; i++) {
-                        array.push(lastobj[i]);
-                        console.log("循环一次后");
-                        for (var j = 0; j < curobj.length; j++) {
-                            array.push(curobj[j]);
-                        }
-                    }
+                    // //把上一次记录push到array
+                    // for (var i = 0; i < lastobj.length; i++) {
+                    //     array.push(lastobj[i]);
+                    //     console.log("循环一次后");
+                    //     for (var j = 0; j < curobj.length; j++) {
+                    //         array.push(curobj[j]);
+                    //     }
+                    // }
+                    //
+                    // console.log("删除前的数组");
+                    // var result = [];
+                    // for (var i = 0; i < array.length; i++) {
+                    //     /*if(array[i].id==array[i+1].id){
+                    //      array.splice(i, 1);
+                    //      console.log(array);
+                    //      }*/
+                    //     var flag = true;
+                    //     for (var j = i; j < array.length - 1; j++) {
+                    //         if (array[i].id == array[j + 1].id) {
+                    //             flag = false;
+                    //             break;
+                    //         }
+                    //     }
+                    //     if (flag) {
+                    //         result.push(array[i])
+                    //     }
+                    // }
+                    // console.log("删除后的数组");
+                    // array = result;
+                    // console.log(array);
 
-                    console.log("删除前的数组");
-                    var result = [];
-                    for (var i = 0; i < array.length; i++) {
-                        /*if(array[i].id==array[i+1].id){
-                         array.splice(i, 1);
-                         console.log(array);
-                         }*/
-                        var flag = true;
-                        for (var j = i; j < array.length - 1; j++) {
-                            if (array[i].id == array[j + 1].id) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) {
-                            result.push(array[i])
-                        }
-                    }
-                    console.log("删除后的数组");
-                    array = result;
-                    console.log(array);
-
-                    $scope.info = array;
+                    $scope.info = curobj;
                 });
 
-            }, function errorCallback(response) {
-                alert("请求错误！");
 
-            });
 
         };
 
@@ -275,175 +254,103 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             console.log(arrchoosed);
         };
 
-        /*$(function () {
-
-         /!* initialize the external events
-         -----------------------------------------------------------------*!/
-         function ini_events(ele) {
-         ele.each(function () {
-
-         // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-         // it doesn't need to have a start or end
-         var eventObject = {
-         title: $.trim($(this).text()) // use the element's text as the event title
-         };
-
-         // store the Event Object in the DOM element so we can get to it later
-         $(this).data('eventObject', eventObject);
-
-         // make the event draggable using jQuery UI
-         $(this).draggable({
-         zIndex: 1070,
-         revert: true, // will cause the event to go back to its
-         revertDuration: 0  //  original position after the drag
-         });
-
-         });
-         }
-
-         ini_events($('#external-events div.external-event'));
-
-         /!* initialize the calendar
-         -----------------------------------------------------------------*!/
-         //Date for the calendar events (dummy data)
-         var date = new Date();
-         var d = date.getDate(),
-         m = date.getMonth(),
-         y = date.getFullYear();
-         $('#calendar').fullCalendar({
-         header: {
-         left: 'prev,next today',
-         center: 'title',
-         right: 'month,agendaWeek,agendaDay'
-         },
-         buttonText: {
-         today: 'today',
-         month: 'month',
-         week: 'week',
-         day: 'day'
-         },
-         //Random default events
-         events: [
-         {
-         title: 'All Day Event',
-         start: new Date(y, m, 1),
-         backgroundColor: "#f56954", //red
-         borderColor: "#f56954" //red
-         },
-         {
-         title: 'Long Event',
-         start: new Date(y, m, d - 5),
-         end: new Date(y, m, d - 2),
-         backgroundColor: "#f39c12", //yellow
-         borderColor: "#f39c12" //yellow
-         },
-         {
-         title: 'Meeting',
-         start: new Date(y, m, d, 10, 30),
-         allDay: false,
-         backgroundColor: "#0073b7", //Blue
-         borderColor: "#0073b7" //Blue
-         },
-         {
-         title: 'Lunch',
-         start: new Date(y, m, d, 12, 0),
-         end: new Date(y, m, d, 14, 0),
-         allDay: false,
-         backgroundColor: "#00c0ef", //Info (aqua)
-         borderColor: "#00c0ef" //Info (aqua)
-         },
-         {
-         title: 'Birthday Party',
-         start: new Date(y, m, d + 1, 19, 0),
-         end: new Date(y, m, d + 1, 22, 30),
-         allDay: false,
-         backgroundColor: "#00a65a", //Success (green)
-         borderColor: "#00a65a" //Success (green)
-         },
-         {
-         title: 'Click for Google',
-         start: new Date(y, m, 28),
-         end: new Date(y, m, 29),
-         url: 'http://google.com/',
-         backgroundColor: "#3c8dbc", //Primary (light-blue)
-         borderColor: "#3c8dbc" //Primary (light-blue)
-         }
-         ],
-         editable: true,
-         droppable: true, // this allows things to be dropped onto the calendar !!!
-         drop: function (date, allDay) { // this function is called when something is dropped
-
-         // retrieve the dropped element's stored Event Object
-         var originalEventObject = $(this).data('eventObject');
-
-         // we need to copy it, so that multiple events don't have a reference to the same object
-         var copiedEventObject = $.extend({}, originalEventObject);
-
-         // assign it the date that was reported
-         copiedEventObject.start = date;
-         copiedEventObject.allDay = allDay;
-         copiedEventObject.backgroundColor = $(this).css("background-color");
-         copiedEventObject.borderColor = $(this).css("border-color");
-
-         // render the event on the calendar
-         // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-         $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-         // is the "remove after drop" checkbox checked?
-         if ($('#drop-remove').is(':checked')) {
-         // if so, remove the element from the "Draggable Events" list
-         $(this).remove();
-         }
-
-         }
-         });
-
-         /!* ADDING EVENTS *!/
-         var currColor = "#3c8dbc"; //Red by default
-         //Color chooser button
-         var colorChooser = $("#color-chooser-btn");
-         $("#color-chooser > li > a").click(function (e) {
-         e.preventDefault();
-         //Save color
-         currColor = $(this).css("color");
-         //Add color effect to button
-         $('#add-new-event').css({"background-color": currColor, "border-color": currColor});
-         });
-         $("#add-new-event").click(function (e) {
-         e.preventDefault();
-         //Get value and make sure it is not null
-         var val = $("#new-event").val();
-         if (val.length == 0) {
-         return;
-         }
-
-         //Create events
-         var event = $("<div />");
-         event.css({"background-color": currColor, "border-color": currColor, "color": "#fff"}).addClass("external-event");
-         event.html(val);
-         $('#external-events').prepend(event);
-
-         //Add draggable funtionality
-         ini_events(event);
-
-         //Remove event from text input
-         $("#new-event").val("");
-         });
-         });*/
+        // //日历排程染色
+        // $(function () {
+        //   /*  //当前排程时间长度（b）
+        //     var scheduleDays = 30;
+        //     //上次排程时间长度（c）
+        //     var lastScheduleDays = 30;
+        //     //距上次开始排程的日期差(c)
+        //     var tempDays = 7;*/
+        //     //排程开始时间
+        //     var startTime = moment().format("YYYY-MM-DD");
+        //     //排程结束时间
+        //     var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
+        //     $(document).ready(function () {
+        //         // page is now ready, initialize the calendar...
+        //         $('#calendar').fullCalendar({
+        //             // put your options and callbacks here
+        //             buttonText: {
+        //                 today: '今天',
+        //                 month: '月',
+        //                 week: '周',
+        //                 day: '天'
+        //             },
+        //             allDayText: '全天',
+        //             monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        //             monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        //             dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+        //             dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+        //             eventSources: [
+        //                 {
+        //                     url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
+        //                     type: 'POST',
+        //                     data: {
+        //                         startTime: startTime,
+        //                         endTime: endTime
+        //                     },
+        //                     error: function () {
+        //                         alert('there was an error while fetching events!');
+        //                     }
+        //                 }
+        //             ]
+        //             /* viewRender: function (view, element) {
+        //                 //已执行时间窗口染色
+        //                 for (var i = 1; i <= tempDays; i++) {
+        //                     $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
+        //                 }
+        //                 //时间窗口染色
+        //                 for (var i = 0; i < lastScheduleDays - tempDays; i++) {
+        //                     $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
+        //                 }
+        //                 //剩余窗口染色
+        //                 for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
+        //                     $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+        //                 }
+        //             }*/
+        //         });
+        //     });
+        // });
 
 
-        $(function () {
-            //当前排程时间长度（b）
-            var scheduleDays = 30;
-            //上次排程时间长度（c）
-            var lastScheduleDays = 30;
-            //距上次开始排程的日期差(c)
-            var tempDays = 7;
-            //排程开始时间
-            var startTime = moment().format("YYYY-MM-DD");
-            //排程结束时间
-            var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
-            $(document).ready(function () {
+
+        //日历部分
+        $scope.showSchedule = function () {
+            //获取上次排程信息
+            myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
+                console.log("获取上次排程信息状态");
+                console.log(response.status);
+                console.log("获取上次排程信息");
+                console.log(response.data);
+                var obj = response.data;
+
+                var startCalcTime = moment(obj.startCalcTime).format("YYYY-MM-DD");
+                console.log("上次排程计算开始时间" + startCalcTime);
+
+                //当前排程时间长度（b）
+                scheduleDays = $("input[name='add-scheduleDays']").val();
+                console.log("当前排程时间长度" + scheduleDays);
+                name = $("input[name='add-name']").val();
+                rollTime = $("input[name='add-rollTime']").val();
+                console.log("当前排程滚动周期" + rollTime);
+
+                //上次排程时间长度（c）
+                var lastScheduleDays = obj.scheduleWindow;
+                console.log("上次排程时间长度" + lastScheduleDays);
+                //var lastScheduleDays = 7;
+
+                //排程开始时间
+                var startTime = moment().format("YYYY-MM-DD");
+                console.log("排成开始时间" + startTime);
+
+                //距上次开始排程的日期差(c)
+                var tempDays = ((new Date(startTime)).getTime() - (new Date(startCalcTime)).getTime()) / (24 * 60 * 60 * 1000);
+                console.log("距上次开始排程的日期差" + ((new Date(startTime)).getTime() - (new Date(startCalcTime)).getTime()) / (24 * 60 * 60 * 1000));
+                //var tempDays = 30;
+
+                //排程结束时间
+                var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
+                console.log("排成结束时间" + startTime);
                 // page is now ready, initialize the calendar...
                 $('#calendar').fullCalendar({
                     // put your options and callbacks here
@@ -460,6 +367,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
                     eventSources: [
                         {
+                            // url: 'http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action',
                             url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
                             type: 'POST',
                             data: {
@@ -485,7 +393,116 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                             $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
                         }
                     }
+
                 });
+                // $("#calendar").show();
+            }, function errorCallback(response) {
+                console.log("请求失败");
             });
-        });
+
+
+        };
+
+        //表格信息重置
+        $scope.reset = function () {
+            $("input").val('');
+        };
+
+
+        var updateSelected = function (action, id) {
+            operateId = id;
+            if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
+                selectedCheckArray.push(id);
+                console.log(id + "被选中");
+            }
+            if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
+                selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
+                console.log(id + "取消选中");
+            }
+        };
+
+        //用于监控点击事件，checkbox选择了就更新
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id);
+        };
+        $scope.isSelected = function (id) {
+            return selectedCheckArray.indexOf(id) >= 0;
+        };
+
+
+        //排程
+
+        function configAPS() {
+
+            // //未完成的记录
+            // console.log("两部分未完成的记录");
+            // console.log(array);
+            // console.log(array.length);
+            //
+            // for (var i = 0; i < array.length; i++) {
+            //     console.log(operateId);
+            //     if (array[i].id == operateId) {
+            //         arr = array[i];
+            //         console.log("$$$$$$$$");
+            //         console.log(arr);
+            //     }
+            // }
+
+            var APSConfigs = {};
+            APSConfigs.t0 = "";
+            APSConfigs.t2 = "";
+
+            var orders = [];
+            console.log("订单");
+            var params = {};
+            params.id = operateId;
+            orders.push(params);
+
+            var layouts = {};
+            layouts.id = 2;
+
+            console.log("资源");
+            var resourceArr = [];
+            var resources = {};
+            resources.id = 2;
+            resourceArr.push(resources);
+
+            console.log("工组");
+            var groupResourcesArr = [];
+            var groupResources = {};
+            groupResources.id = 2;
+            groupResourcesArr.push(groupResources);
+
+            console.log("工位");
+            var sitesArr = [];
+            var sites = {};
+            sites.id = 2;
+            sitesArr.push(sites);
+
+            var params = {};
+            params.name = name;
+            params.scheduleWindow = parseInt(scheduleDays);
+            params.rollTime = parseInt(rollTime);
+            params.APSConfig = APSConfigs;
+            params.layout = layouts;
+            params.orders = orders;
+            params.resources = resourceArr;
+            params.groupResource = groupResourcesArr;
+            params.site = sitesArr;
+            var data = JSON.stringify(params);
+            console.log(data);
+            $("#schedule").hide();
+            myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
+                console.log(response.status);
+                curobj.splice(0, curobj.length);
+                lastobj.splice(0, lastobj.length);
+                array.splice(0, array.length);
+                location.reload(true);
+            }, function errorCallback(response) {
+                alert("请求错误！");
+            });
+        };
+
     });
