@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             controller: 'PlanScheduleController'
         })
     }])
-    .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService) {
+    .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService, validate) {
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var editData = [];//保存基础信息
         var operateId;
@@ -40,12 +40,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $(this).css("width", 1 / pageTipCount * 100 + "%");
             });
             $("#tipHover").css("width", 1 / pageTipCount * 100 + "%");
+            document.getElementById("nextStep").disabled = true;
         });
 
         //新建排程
         $scope.prepareNewSchedule = function () {
             resetContent();
-        }
+        };
 
         function resetContent() {
             $("#startSchedule").hide();
@@ -84,7 +85,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $("#nextStep").show();
             }
             choosePageTip();
-        }
+        };
 
         //下一步
         $scope.next = function () {
@@ -105,127 +106,91 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             showInfo();
 
             choosedOrder();
-
             //getIdSelections();
-        }
+        };
 
         //开始排程
         $scope.submitForm = function () {
             configAPS();
-        }
+        };
 
 
         //基本信息检验
-        var orderEditValidate = function () {
+        $scope.infoValidate = function () {
             var params = {};
-            params.name = $("input[name='edit-name']").val();
-            params.rollTime = $("input[name='edit-rollTime']").val();
-            params.scheduleDays = $("input[name='edit-scheduleDays']").val();
-            editData = params;
+            params.name = $("input[name='add-name']").val();
+            params.rollTime = $("input[name='add-rollTime']").val();
+            params.scheduleDays = $("input[name='add-scheduleDays']").val();
 
-            if (!validate.checkLength(params.name) || !validate.checkChinese(params.name)) {
-                $("#edit-name").removeClass("has-success");
-                $("#edit-name").addClass("has-error");
+            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+                $("#add-name").removeClass("has-success");
+                $("#add-name").addClass("has-error");
             } else {
-                $("#edit-name").removeClass("has-error");
-                $("#edit-name").addClass(" has-success");
+                $("#add-name").removeClass("has-error");
+                $("#add-name").addClass(" has-success");
             }
 
             if (!validate.checkNumber(params.rollTime) || !validate.checkLength(params.rollTime)) {
-                $("#edit-rollTime").removeClass("has-success");
-                $("#edit-rollTime").addClass("has-error");
+                $("#add-rollTime").removeClass("has-success");
+                $("#add-rollTime").addClass("has-error");
             } else {
-                $("#edit-rollTime").removeClass("has-error");
-                $("#edit-rollTime").addClass(" has-success");
+                $("#add-rollTime").removeClass("has-error");
+                $("#add-rollTime").addClass(" has-success");
             }
 
             if (!validate.checkNumber(params.scheduleDays) || !validate.checkLength(params.scheduleDays)) {
-                $("#edit-scheduleDays").removeClass("has-success");
-                $("#edit-scheduleDays").addClass("has-error");
+                $("#add-scheduleDays").removeClass("has-success");
+                $("#add-scheduleDays").addClass("has-error");
             } else {
-                $("#edit-scheduleDays").removeClass("has-error");
-                $("#edit-scheduleDays").addClass(" has-success");
+                $("#add-scheduleDays").removeClass("has-error");
+                $("#add-scheduleDays").addClass(" has-success");
             }
 
-
-            if (validate.checkLength(params.name) && validate.checkChinese(params.name) && validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) &&
+            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) &&
                 validate.checkLength(params.scheduleDays) && validate.checkNumber(params.scheduleDays)) {
+                document.getElementById("nextStep").disabled = false;
+                showSchedule();
+
                 return true;
+
             } else {
                 return false;
+                document.getElementById("nextStep").disabled = true;
             }
         };
+
 
         //显示订单信息
         function showInfo() {
+            //开始访问当前未完成的记录
+            curobj.splice(0, curobj.length);
+            var cur = {};
+            var startTime = moment().format("YYYY-MM-DD");
+            console.log("当前开始时间" + startTime);
+            cur.startTime = (new Date(startTime)).getTime();
 
-                //开始访问当前未完成的记录
-                curobj.splice(0, curobj.length);
-                var cur = {};
-                var startTime = moment().format("YYYY-MM-DD");
-                console.log("当前开始时间" + startTime);
-                cur.startTime = (new Date(startTime)).getTime();
+            console.log("当前排程时间" + scheduleDays);
+            var scheduleDays0 = scheduleDays;
 
-                console.log("当前排程时间" + scheduleDays);
-                var scheduleDays0 = scheduleDays;
+            var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
+            console.log("当前结束时间" + endTime);
+            cur.endTime = (new Date(endTime)).getTime();
 
-                var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
-                console.log("当前结束时间" + endTime);
-                cur.endTime = (new Date(endTime)).getTime();
+            cur.isFinished = false;
 
-                cur.isFinished = false;
+            var data = JSON.stringify(cur);
 
-                var data = JSON.stringify(cur);
+            console.log("当前排程json字符串" + data);
 
-                console.log("当前排程json字符串" + data);
-
-                myHttpService.post(serviceList.CurInfo, data).then(function (response) {
-                    console.log("获取当前排程信息" + response.status);
-                    console.log(response.data);
-                    for (var i = 0; i < response.data.length; i++) {
-                        curobj.push(response.data[i]);
-                    }
-
-                    //剔除相同的记录
-                    // //把上一次记录push到array
-                    // for (var i = 0; i < lastobj.length; i++) {
-                    //     array.push(lastobj[i]);
-                    //     console.log("循环一次后");
-                    //     for (var j = 0; j < curobj.length; j++) {
-                    //         array.push(curobj[j]);
-                    //     }
-                    // }
-                    //
-                    // console.log("删除前的数组");
-                    // var result = [];
-                    // for (var i = 0; i < array.length; i++) {
-                    //     /*if(array[i].id==array[i+1].id){
-                    //      array.splice(i, 1);
-                    //      console.log(array);
-                    //      }*/
-                    //     var flag = true;
-                    //     for (var j = i; j < array.length - 1; j++) {
-                    //         if (array[i].id == array[j + 1].id) {
-                    //             flag = false;
-                    //             break;
-                    //         }
-                    //     }
-                    //     if (flag) {
-                    //         result.push(array[i])
-                    //     }
-                    // }
-                    // console.log("删除后的数组");
-                    // array = result;
-                    // console.log(array);
-
-                    $scope.info = curobj;
-                });
-
-
-
-        };
-
-
+            myHttpService.post(serviceList.CurInfo, data).then(function (response) {
+                console.log("获取当前排程信息" + response.status);
+                console.log(response.data);
+                for (var i = 0; i < response.data.length; i++) {
+                    curobj.push(response.data[i]);
+                }
+                $scope.info = curobj;
+            });
+        }
         //显示已选择订单的信息
         function choosedOrder() {
             var rows = document.getElementById("orders").rows;
@@ -252,70 +217,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }
             $scope.form = arrchoosed;
             console.log(arrchoosed);
-        };
-
-        // //日历排程染色
-        // $(function () {
-        //   /*  //当前排程时间长度（b）
-        //     var scheduleDays = 30;
-        //     //上次排程时间长度（c）
-        //     var lastScheduleDays = 30;
-        //     //距上次开始排程的日期差(c)
-        //     var tempDays = 7;*/
-        //     //排程开始时间
-        //     var startTime = moment().format("YYYY-MM-DD");
-        //     //排程结束时间
-        //     var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
-        //     $(document).ready(function () {
-        //         // page is now ready, initialize the calendar...
-        //         $('#calendar').fullCalendar({
-        //             // put your options and callbacks here
-        //             buttonText: {
-        //                 today: '今天',
-        //                 month: '月',
-        //                 week: '周',
-        //                 day: '天'
-        //             },
-        //             allDayText: '全天',
-        //             monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-        //             monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-        //             dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-        //             dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-        //             eventSources: [
-        //                 {
-        //                     url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
-        //                     type: 'POST',
-        //                     data: {
-        //                         startTime: startTime,
-        //                         endTime: endTime
-        //                     },
-        //                     error: function () {
-        //                         alert('there was an error while fetching events!');
-        //                     }
-        //                 }
-        //             ]
-        //             /* viewRender: function (view, element) {
-        //                 //已执行时间窗口染色
-        //                 for (var i = 1; i <= tempDays; i++) {
-        //                     $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
-        //                 }
-        //                 //时间窗口染色
-        //                 for (var i = 0; i < lastScheduleDays - tempDays; i++) {
-        //                     $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
-        //                 }
-        //                 //剩余窗口染色
-        //                 for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
-        //                     $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
-        //                 }
-        //             }*/
-        //         });
-        //     });
-        // });
-
-
-
+        }
         //日历部分
-        $scope.showSchedule = function () {
+        var showSchedule = function () {
             //获取上次排程信息
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log("获取上次排程信息状态");
@@ -379,21 +283,20 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                             }
                         }
                     ],
-                    viewRender: function (view, element) {
-                        //已执行时间窗口染色
-                        for (var i = 1; i <= tempDays; i++) {
-                            $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
-                        }
-                        //时间窗口染色
-                        for (var i = 0; i < lastScheduleDays - tempDays; i++) {
-                            $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
-                        }
-                        //剩余窗口染色
-                        for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
-                            $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
-                        }
-                    }
-
+                    /*viewRender: function (view, element) {
+                     //已执行时间窗口染色
+                     for (var i = 1; i <= tempDays; i++) {
+                     $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
+                     }
+                     //时间窗口染色
+                     for (var i = 0; i < lastScheduleDays - tempDays; i++) {
+                     $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
+                     }
+                     //剩余窗口染色
+                     for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
+                     $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+                     }
+                     }*/
                 });
                 // $("#calendar").show();
             }, function errorCallback(response) {
@@ -406,7 +309,18 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
+            $("div").removeClass("has-error");
+            $("div").removeClass("has-success");
         };
+
+        $scope.hideCalendar = function () {
+            $("#calendar").hide();
+        };
+
+        $scope.showCalendar = function () {
+            $("#calendar").show();
+        };
+
 
 
         var updateSelected = function (action, id) {
@@ -435,20 +349,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         //排程
 
         function configAPS() {
-
-            // //未完成的记录
-            // console.log("两部分未完成的记录");
-            // console.log(array);
-            // console.log(array.length);
-            //
-            // for (var i = 0; i < array.length; i++) {
-            //     console.log(operateId);
-            //     if (array[i].id == operateId) {
-            //         arr = array[i];
-            //         console.log("$$$$$$$$");
-            //         console.log(arr);
-            //     }
-            // }
 
             var APSConfigs = {};
             APSConfigs.t0 = "";
@@ -503,6 +403,5 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }, function errorCallback(response) {
                 alert("请求错误！");
             });
-        };
-
+        }
     });
