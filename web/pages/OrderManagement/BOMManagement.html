@@ -97,11 +97,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            计划排程快照管理
+            制造BOM管理
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">计划排程快照管理</li>
+            <li class="active">制造BOM管理</li>
         </ol>
     </section>
 
@@ -114,17 +114,18 @@
                 <div class="form-group">
                     <select class="form-control select2" style="width: 100%;" id="select">
                         <option selected="selected"></option>
-                        <option ng-repeat="data in dataArr">{{data.name}}</option>
+                        <option ng-repeat="data in rootdata">{{data.name}}</option>
                     </select>
                 </div>
 
                 <!--树-->
                 <div class="box box-solid" style="/*width: 170px;*/overflow: auto;">
                     <div class="box-header with-border">
-                        <h3 class="box-title">ScheduleSnap</h3>
+                        <h3 class="box-title">BOM</h3>
 
                         <div class="box-tools">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
@@ -139,8 +140,8 @@
 
                         <div id="rMenu" style="width: 100px;">
                             <ul>
-                                <li id="m_add" ng-click="show3D()">查看3D状态</li>
-                                <li id="m_del" ng-click="sendMES()">下发MES</li>
+                                <li id="m_add" ng-click="addTreeNode()">新增</li>
+                                <li id="m_del" ng-click="removeTreeNode()">删除</li>
                             </ul>
                         </div>
                     </div>
@@ -158,10 +159,13 @@
                     <div class="box-body no-padding">
                         <div class="mailbox-controls">
                             <!-- Check all button -->
-                            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
+                                    class="fa fa-square-o"></i></button>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
+                                </button>
                             </div>
 
                             <!-- /.pull-right -->
@@ -171,23 +175,21 @@
                                 <tbody>
                                 <tr>
                                     <td></td>
-                                    <th>工序名称</th>
-                                    <th>作业名称</th>
-                                    <th>产品名称</th>
-                                    <th>工序号</th>
-                                    <th>加工总数量</th>
-                                    <th>估时</th>
-                                    <th>状态</th>
+                                    <th>准备时间</th>
+                                    <th>冷却时间</th>
+                                    <th>校验时间</th>
+                                    <th>类型</th>
+                                    <th>数量</th>
+                                    <th>工时</th>
                                 </tr>
-                                <tr ng-repeat="order in planList" ng-init="renderTable($last)">
+                                <tr ng-repeat="process in processdata" ng-init="renderTable($last)">
                                     <td><input name="check" type="checkbox"></td>
-                                    <td style="display:none">{{order.id}}</td>
-                                    <td>{{order.nameTask}}</td>
-                                    <td>{{order.type}}</td>
-                                    <td>{{order.origin}}</td>
-                                    <td>{{order.quantity}}</td>
-                                    <td>{{order.t0}}</td>
-                                    <td>{{order.t2}}</td>
+                                    <td>{{process.initTime}}</td>
+                                    <td>{{process.postTime}}</td>
+                                    <td>{{process.checkTime}}</td>
+                                    <td>{{process.typeShift}}</td>
+                                    <td>{{process.quantity}}</td>
+                                    <td>{{process.modTimeBatch}}</td>
                                 </tr>
                                 </tbody>
                             </table>

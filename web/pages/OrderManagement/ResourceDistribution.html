@@ -1,4 +1,10 @@
+<style>
+    .myLabel {
+        margin-left: -15px;
+    }
+</style>
 <div>
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -86,49 +92,49 @@
                         <form class="form-horizontal">
                             <div class="box-body">
                                 <div class="form-group" id="add-grp">
-                                    <label class="col-sm-2 control-label">类型编号集合</label>
+                                    <label class="col-sm-3 control-label myLabel">类型编号集合</label>
 
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-grp" title="请输入0-9之间的数字！！"
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="add-grp" title="请输入数字！！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="add-typeSite">
-                                    <label class="col-sm-2 control-label">资源类型分组</label>
+                                    <label class="col-sm-3 control-label myLabel">资源类型分组</label>
 
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-typeSite" title="请输入0-9之间的数字！"
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="add-typeSite" title="请输入数字！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="add-idSite">
-                                    <label class="col-sm-2 control-label">地点编码</label>
+                                    <label class="col-sm-3 control-label myLabel">地点编码</label>
 
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-idSite" title="请输入0-9之间的数字！"
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="add-idSite" title="请输入数字！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="add-minResource">
-                                    <label class="col-sm-2 control-label">最少资源数量</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-minResource" title="请输入0-9之间的数字！"
+                                    <label class="col-sm-3 control-label myLabel">最少资源数量</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="add-minResource" title="请输入数字！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <!-- Date and time range -->
                                 <div class="form-group" id="add-maxResource">
-                                    <label class="col-sm-2 control-label">最多资源数量</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-maxResource" title="请输入0-9之间的数字！！"
+                                    <label class="col-sm-3 control-label myLabel">最多资源数量</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="add-maxResource" title="请输入数字！！"
                                                placeholder="">
                                     </div>
                                     <!-- /.input group -->
                                 </div>
                                 <div class="form-group" id="add-weightParallel">
-                                    <label class="col-sm-2 control-label">工序串行权重</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-weightParallel" title="请输入0-9之间的数字！"
+                                    <label class="col-sm-3 control-label myLabel">工序串行权重</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="add-weightParallel" title="请输入数字！"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -161,49 +167,49 @@
                         <form class="form-horizontal">
                             <div class="box-body" ng-repeat="resourcedis in editList">
                                 <div class="form-group" id="edit-grp">
-                                    <label class="col-sm-2 control-label">类型编号集合</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-grp" title="请输入0-9之间的数字！"
+                                    <label class="col-sm-3 control-label myLabel">类型编号集合</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="edit-grp" title="请输入数字！"
                                                value="{{resourcedis.grp}}" placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="form-group" id="edit-typeSite">
-                                    <label class="col-sm-2 control-label">资源类型分组</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-typeSite" title="请输入0-9之间的数字！"
+                                    <label class="col-sm-3 control-label myLabel">资源类型分组</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="edit-typeSite" title="请输入数字！"
                                                value="{{resourcedis.typeSite}}" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="edit-idSite">
-                                    <label class="col-sm-2 control-label">地点编码</label>
+                                    <label class="col-sm-3 control-label myLabel">地点编码</label>
 
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-idSite" title="请输入0-9之间的数字！"
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="edit-idSite" title="请输入数字！"
                                                value="{{resourcedis.idSite}}" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="edit-minResource">
-                                    <label class="col-sm-2 control-label">最少资源数量</label>
+                                    <label class="col-sm-3 control-label myLabel">最少资源数量</label>
 
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-minResource" title="请输入0-9之间的数字！"
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="edit-minResource" title="请输入数字！"
                                                value="{{resourcedis.minResource}}" placeholder="">
                                     </div>
                                 </div>
                                 <!-- Date and time range -->
                                 <div class="form-group" id="edit-maxResource">
-                                    <label class="col-sm-2 control-label">最多资源数量</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-maxResource" title="请输入0-9之间的数字！"
+                                    <label class="col-sm-3 control-label myLabel">最多资源数量</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="edit-maxResource" title="请输入数字！"
                                                value="{{resourcedis.maxResource}}" placeholder="">
                                     </div>
                                     <!-- /.input group -->
                                 </div>
                                 <div class="form-group" id="edit-weightParallel">
-                                    <label class="col-sm-2 control-label">工序串行权重</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-weightParallel" title="请输入0-9之间的数字！"
+                                    <label class="col-sm-3 control-label myLabel">工序串行权重</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" name="edit-weightParallel" title="请输入数字！"
                                                value="{{resourcedis.weightParallel}}" placeholder="">
                                     </div>
                                 </div>

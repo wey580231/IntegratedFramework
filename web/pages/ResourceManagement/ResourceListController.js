@@ -52,7 +52,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         var resourceAddValidate = function () {
             var params = {};
             params.name = $("input[name='add-name']").val();
-            params.idSiteGroupResource = $("input[name='add-idSiteGroupResource']").val();
+            params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
             params.nameShift = $("input[name='add-nameShift']").val();
             params.state = $("input[name='add-state']").val();
             addData = JSON.stringify(params);
@@ -104,7 +104,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         var resourceEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
-            params.idSiteGroupResource = $("input[name='edit-idSiteGroupResource']").val();
+            params.idSiteGroupResource = $("input[name='edit-siteGroupResource']").val();
             params.nameShift = $("input[name='edit-nameShift']").val();
             params.state = $("input[name='edit-state']").val();
             editData = params;
@@ -116,7 +116,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#edit-name").removeClass("has-error");
                 $("#edit-name").addClass(" has-success");
             }
-
 
 
             if (!validate.checkNumber(params.idSiteGroupResource) || !validate.checkLength(params.idSiteGroupResource)) {
@@ -195,7 +194,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].checked) {
                         idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
-                        id_params.id = idVal;
+                        id_params.idR = idVal;
                     }
                     row++;
                 }
@@ -235,6 +234,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 edit_params.nameShift = editData.nameShift;
                 edit_params.state = editData.state;
                 var update_data = angular.toJson(edit_params);
+                console.log(update_data);
                 myHttpService.post(serviceList.UpdateResource, update_data).then(function successCallback() {
                     location.reload();
                 }, function errorCallback() {
