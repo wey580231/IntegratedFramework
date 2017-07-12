@@ -194,6 +194,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].checked) {
                         idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
+                        console.log(idVal);
                         id_params.idR = idVal;
                     }
                     row++;
@@ -211,10 +212,14 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         $scope.update = function () {
             if (getInfo()) {
                 $("#modal-edit").modal('show');
+                var temps = id_params.idR;
+                delete(id_params.idR);
+                id_params.id = temps;
                 var idInfo = JSON.stringify(id_params);
                 myHttpService.post(serviceList.GetResourceById, idInfo).then(function successCallback(response) {
                     var editList = [];//保存从数据库获取的需要修改的数据
                     editList.push(response.data);
+                    console.log(editList);
                     edit_params = response.data;
                     $scope.editList = editList;
                 }, function errorCallback(response) {
