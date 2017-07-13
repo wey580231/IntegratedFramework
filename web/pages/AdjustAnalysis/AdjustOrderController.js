@@ -10,8 +10,13 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         })
     }])
 
-    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList) {
+    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList,renderTableService) {
         myHttpService.get(serviceList.AdjustOrder).then(function (response) {
             $scope.adjustOrder = response.data;
         });
+
+        //渲染checkBox样式
+        $scope.renderTable = function ($last) {
+            renderTableService.renderTable($last);
+        };
     });
