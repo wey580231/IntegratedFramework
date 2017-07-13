@@ -96,7 +96,11 @@ public class ScheduleAction extends SuperAction {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
-//                    Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
+                    if (Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, "select * from " + DatabaseInfo.APS_ORDER + " where id='" + rg_orderEntity.getId() + "'").size() == 0) {
+                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
+                    } else {
+                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateSQLForAPS(rg_orderEntity));
+                    }
                 }
             }
             rg_scheduleEntity.setOrders(rg_orderEntitySet);
