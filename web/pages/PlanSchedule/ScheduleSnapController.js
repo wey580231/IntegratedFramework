@@ -121,7 +121,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             function OnRightClick(event, treeNode) {
                 idVal = "";
                 console.log(idVal);
-                idVal = zTree.getSelectedNodes()[0];
+                idVal = zTree.getSelectedNodes()[0].id;
                 console.log("$$$$$$$$$%%%%%%%");
                 console.log(idVal);
                 var e = event || window.event;
