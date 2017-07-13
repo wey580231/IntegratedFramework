@@ -102,7 +102,6 @@
                             <th>排程时间</th>
                             <th>开始计算时间</th>
                             <th>时间窗</th>
-                            <th>滚动周期</th>
                             <th>状态</th>
                         </tr>
                         <tr ng-repeat="schedule in scheduleList | orderBy: 'scheduleTime': asc"
@@ -113,7 +112,6 @@
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>{{schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>{{schedule.scheduleWindow}}</td>
-                            <td>{{schedule.rollTime}}</td>
                             <td>
                                 <span class="label label-success" ng-if="schedule.state == 0">下发APS</span>
                                 <span class="label label-primary" ng-if="schedule.state == 1">APS计算中</span>

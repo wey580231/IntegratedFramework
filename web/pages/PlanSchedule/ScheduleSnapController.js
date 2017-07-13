@@ -107,6 +107,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     showRenameBtn: false,
                     showRemoveBtn: false
                 },
+                check:{
+                    enable: true
+                }
             };
             /*
              function zTreeBeforeRightClick() {
@@ -128,7 +131,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
                     showRMenu("root", e.clientX, e.clientY);
+<<<<<<< HEAD
                 } else if (treeNode && zTree.getSelectedNodes()[0].level == "2") {
+=======
+                } else if (treeNode && !treeNode.noR && zTree.getSelectedNodes()[0].children == null) {
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                     zTree.selectNode(treeNode);
                     showRMenu("node", e.clientX, e.clientY);
                 }
@@ -138,8 +145,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             function showRMenu(type, x, y) {
                 $("#rMenu ul").show();
                 if (type == "root") {
+                    $("#m_add").hide();
                     $("#m_del").hide();
                 } else {
+                    $("#m_add").show();
                     $("#m_del").show();
                 }
                 rMenu.css({"top": (y - 110) + "px", "left": (x - 250) + "px", "visibility": "visible"});
@@ -192,21 +201,62 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             $scope.show3D = function () {
                 hideRMenu();
+<<<<<<< HEAD
+=======
+                /*var url = "http://localhost:8080/3d/query3DState.action?" + "id=" + idVal;*/
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                 var url = "http://localhost:8080/snapshot/view3DEmulate.action?" + "id=" + idVal;
                 $http({
                     'method': 'get',
                     'url': url
                 })
+                /* promise.then(function(resp){
+                 //resp是一个响应对象
+                 console.log(resp.data);
+                 },function(resp){
+
+                 //带有错误信息的resp
+                 console.log(resp.data);
+                 if (resp.data == "error") {
+                 notification.sendNotification("alert", "无法查看");
+                 }
+
+                 });*/
+
             };
 
             $scope.sendMES = function () {
+<<<<<<< HEAD
                 hideRMenu();
                 var url = "http://localhost:8080/snapshot/dispatcherResultToMess.action?" + "id=" + idVal;
                 $http({
                     'method': 'get',
                     'url': url
                 })
+
+                /* promise.then(function(resp){
+                 //resp是一个响应对象
+
+                 },function(resp){
+
+                 //带有错误信息的resp
+                 console.log(resp.data);
+                 if (resp.data == "error") {
+                 notification.sendNotification("alert", "无法查看");
+                 }
+
+                 });*/
+
             };
+=======
+             hideRMenu();
+                var url = "http://localhost:8080/snapshot/dispatcherResultToMess.action?" + "id=" + idVal;
+             $http({
+             'method': 'get',
+             'url': url
+             })
+             };
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
 
             //删除节点
             $scope.removeTreeNode = function () {

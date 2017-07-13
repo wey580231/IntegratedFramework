@@ -6,6 +6,7 @@ angular.module("IntegratedFramework", [
     'ngRoute',
     'IntegratedFramework.OrderManagementController',
     'IntegratedFramework.ResourceDistributionController',
+    'IntegratedFramework.BOMManagementController',
     'IntegratedFramework.ResourceListController',
     'IntegratedFramework.ResourceGroupController',
     'IntegratedFramework.ResourceClassifyController',
@@ -17,7 +18,13 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ShowController',
     'IntegratedFramework.EquipmentMonitoringController',
     'IntegratedFramework.MainPage',
-    'IntegratedFramework.BOMManagementController'
+    'IntegratedFramework.BOMManagementController',
+    'IntegratedFramework.AdjustProcedureController',
+<<<<<<< HEAD
+    'IntegratedFramework.AdjustFactoryController'
+=======
+    'IntegratedFramework.AdjustOrderController'
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');

@@ -30,14 +30,13 @@
         </many-to-one>
 
         <many-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" unique="true"/>
-        
-        <list name="plans" cascade="all">
+
+        <set name="plans" cascade="all" inverse="true">
             <key>
                 <column name="idSnapshort" not-null="false"/>
             </key>
-            <index column="id" type="java.lang.Integer"/>
             <one-to-many class="com.rengu.entity.RG_PlanEntity"/>
-        </list>
+        </set>
 
     </class>
 </hibernate-mapping>

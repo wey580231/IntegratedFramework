@@ -13,41 +13,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         var zNodes = [];
         var dataArr = [];
 
-        /*var zNodes = [
-         {
-         id: 1, name: "右键菜单 1", iconSkin: "diy01", open: true,
-         children: [
-         {
-         id: 11, name: "节点 1-1", iconSkin: "diy02",
-         children: [
-         {id: 21, name: "节点 1-11", iconSkin: "diy03"},
-         {id: 22, name: "节点 1-12", iconSkin: "diy03"},
-         {id: 23, name: "节点 1-13", iconSkin: "diy03"},
-         {id: 24, name: "节点 1-14", iconSkin: "diy03"}
-         ]
-         },
-         {id: 12, name: "节点 1-2", iconSkin: "diy02"}
-         ]
-         },
-         {
-         id: 2, name: "右键操作 2", iconSkin: "diy01", open: true,
-         children: [
-         {id: 21, name: "节点 2-1", iconSkin: "diy02"},
-         {id: 22, name: "节点 2-2", iconSkin: "diy02"},
-         {id: 23, name: "节点 2-3", iconSkin: "diy02"},
-         {id: 24, name: "节点 2-4", iconSkin: "diy02"}
-         ]
-         },
-         {
-         id: 3, name: "右键操作 3", iconSkin: "diy01", open: true,
-         children: [
-         {id: 31, name: "节点 3-1", iconSkin: "diy02"},
-         {id: 32, name: "节点 3-2", iconSkin: "diy02"},
-         {id: 33, name: "节点 3-3", iconSkin: "diy02"},
-         {id: 34, name: "节点 3-4", iconSkin: "diy02"}
-         ]
-         }
-         ]; */
         var dataTrue = {"isRootNode": true};
         myHttpService.post(serviceList.isRootNode, dataTrue).then(function successCallback(response) {
             console.log("*****" + response.status);
@@ -55,9 +20,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             var rootdata = response.data;
             $scope.rootdata = response.data;
             $scope.process = response.data;
-            //showRoot(rootdata);
             showRoot(rootdata);
-
         });
 
         var showRoot = function (rootdata) {
@@ -66,8 +29,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 var params = {};
                 var id = rootdata[i].id;
                 params.id = id;
-                /*var idList=[];
-                 idList.push(params);*/
                 console.log(params);
                 var dataId = JSON.stringify(params);
                 console.log("根节点的id");
@@ -238,15 +199,25 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 $.fn.zTree.init($("#treeDemo"), setting, zNodes);
                 zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 rMenu = $("#rMenu");
-                $scope.showChoose = function (name) {
-                    //var name = $("#testBOM").children('option:selected').attr("name");
-                    console.log(name);
-                    alert("可以了");
-                }
             });
 
         };
 
+        $("#testBOM").change(function () {
+            var val = $(this).children('option:selected').val();
+            if (val.length > 0) {
+                for (var i = 0; i < zNodes.length; i++) {
+                    console.log(zNodes);
+                    if (zNodes[i].name = val) {
+                        var zTreeNodes = zNodes[i];
+                    }
+                    break;
+                }
+            }
+            else {
+
+            }
+        });
         /*$scope.showTree = function () {
 
          $("#testBOM").children('option:selected').val();
