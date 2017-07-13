@@ -2,49 +2,6 @@
  * Created by wey580231 on 2017/6/29.
  */
 
-var ViewPath;
-var Server = ServerIP + ":" + ServerPort;
-var firstLog = 1;
-var currentview = "null";
-var comview1 = "null";
-var comview2 = "null";
-var comview3 = "null";
-var nbComView;
-var comviewselected = 0;
-var isZoomInSelected = false;
-var isZoomOutSelected = false;
-var widthWelcomePage = 0;
-var heightWelcomePage = 0;
-var widthScreen = document.body.clientWidth;
-var heightScreen = document.documentElement.clientHeight;
-var idComviewSelected = 0;
-var ystart = 0;
-var xstart = 0;
-var userId = "";
-var szMacros = "{/*(Login; 4; (string,IDUSER,IDUSER,,,); (string,IDCLUB,IDCLUB,,,); (string,AUTHORITY,AUTHORITY,,,); (string,PASSWORD,PASSWORD,,,);)*/}";
-var table_view = new Array(
-    "TableProcess.view",
-    "TableTypeResourceProduct.view",
-    "TableOrder.view",
-    "TableResource.view",
-    "TableJob.view",
-    "TableSite.view",
-    "TableOrderTaskMenu.view",
-    "TableResourceTaskMenu.view",
-    "TableJobTaskMenu.view",
-    "TableSiteTask.view",
-    "GanttOrderTaskMenu.view",
-    "GanttResourceTaskMenu.view",
-    "GanttJobTaskMenu.view",
-    "GanttSiteTaskMenu.view",
-    "GanttJobOverviewMenu.view",
-    "HistogramResource.view",
-    "HistogramOrderResourceMenu.view",
-    "SimulationJobMenu.view",
-    "SimulationResource.view",
-    "TableSnapShot.view",
-    "TableOrderBottleneckedMenu.view");
-
 function resizeD3ViewSize() {
     var height = $("#content").height() - $("#menuBar").height();
     $("#div_center").css("height", height);
@@ -120,7 +77,48 @@ $(window).resize(function () {
     resizeD3ViewSize();
 });
 
-
+var ViewPath;
+var Server = ServerIP + ":" + ServerPort;
+var firstLog = 1;
+var currentview = "null";
+var comview1 = "null";
+var comview2 = "null";
+var comview3 = "null";
+var nbComView;
+var comviewselected = 0;
+var isZoomInSelected = false;
+var isZoomOutSelected = false;
+var widthWelcomePage = 0;
+var heightWelcomePage = 0;
+var widthScreen = document.body.clientWidth;
+var heightScreen = document.documentElement.clientHeight;
+var idComviewSelected = 0;
+var ystart = 0;
+var xstart = 0;
+var userId = "";
+var szMacros = "{/*(Login; 4; (string,IDUSER,IDUSER,,,); (string,IDCLUB,IDCLUB,,,); (string,AUTHORITY,AUTHORITY,,,); (string,PASSWORD,PASSWORD,,,);)*/}";
+var table_view = new Array(
+    "TableProcess.view",
+    "TableTypeResourceProduct.view",
+    "TableOrder.view",
+    "TableResource.view",
+    "TableJob.view",
+    "TableSite.view",
+    "TableOrderTaskMenu.view",
+    "TableResourceTaskMenu.view",
+    "TableJobTaskMenu.view",
+    "TableSiteTask.view",
+    "GanttOrderTaskMenu.view",
+    "GanttResourceTaskMenu.view",
+    "GanttJobTaskMenu.view",
+    "GanttSiteTaskMenu.view",
+    "GanttJobOverviewMenu.view",
+    "HistogramResource.view",
+    "HistogramOrderResourceMenu.view",
+    "SimulationJobMenu.view",
+    "SimulationResource.view",
+    "TableSnapShot.view",
+    "TableOrderBottleneckedMenu.view");
 
 if (typeUser == 0) {
     ViewPath = "/View/" + idUser + "/";

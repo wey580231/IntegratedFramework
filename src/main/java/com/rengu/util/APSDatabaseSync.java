@@ -49,7 +49,7 @@ public class APSDatabaseSync {
                     SyncShiftTable(list);
                     break;
                 case DatabaseInfo.APS_CLUB:
-                    SyncShiftTable(list);
+                    SyncClubTable(list);
                     break;
                 default:
                     System.out.println("无法同步：" + tableName + "表。");
