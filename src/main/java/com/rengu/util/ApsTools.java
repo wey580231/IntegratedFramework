@@ -110,6 +110,7 @@ public class ApsTools {
 //            if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
                 Map tempMap = (HashMap) object;
+                rg_planEntity.setId(Tools.getUUID());
                 rg_planEntity.setIdTask(tempMap.get("IDTASK").toString());
                 rg_planEntity.setIdJob(tempMap.get("IDJOB").toString());
                 rg_planEntity.setNameTask(tempMap.get("NAMETASK").toString());
@@ -152,13 +153,14 @@ public class ApsTools {
                 rg_planEntity.setNbTaskJob(Short.parseShort(tempMap.get("NBTASKJOB").toString()));
                 rg_planEntity.setRefProductJob(tempMap.get("REFPRODUCTJOB").toString());
                 rg_planEntity.setOrdToRootJob(Short.parseShort(tempMap.get("ORDTOROOTJOB").toString()));
-                rg_planEntity.setOrdToRootChildJob(tempMap.get("ORDTOROOTCHILDJOB").toString());
+//                rg_planEntity.setOrdToRootChildJob(tempMap.get("ORDTOROOTCHILDJOB").toString());
                 rg_planEntity.setT1Order(tempMap.get("T1ORDER").toString());
                 rg_planEntity.setT2Order(tempMap.get("T2ORDER").toString());
                 rg_planEntity.setQuantityOrder(Short.parseShort(tempMap.get("QUANTITYORDER").toString()));
                 rg_planEntity.setPriorityOrder(Short.parseShort(tempMap.get("PRIORITYORDER").toString()));
 //                rg_planEntity.setColorOrder(tempMap.get("COLORORDER").toString());
                 rg_planEntity.setState(Byte.parseByte(tempMap.get("STATE").toString()));
+                rg_planEntity.setProcessByIdProcess(session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString()));
 //                //获取Club实体
 //                String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
 //                Query query = session.createQuery(hql);
