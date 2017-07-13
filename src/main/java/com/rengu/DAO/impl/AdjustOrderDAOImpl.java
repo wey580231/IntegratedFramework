@@ -45,7 +45,6 @@ public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<R
             } else {
                 return null;
             }
-
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
