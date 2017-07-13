@@ -22,4 +22,5 @@ public class DatabaseInfo {
     public static final String APS_PROCESS_TYPERESOURCE_SITE = "APS_PROCESS_TYPERESOURCE_SITE";
     public static final String APS_PROCESS = "APS_PROCESS";
     public static final String APS_TYPERESOURCE = "APS_TYPERESOURCE";
+    public static final String APS_CLUB = "APS_CLUB";
 }

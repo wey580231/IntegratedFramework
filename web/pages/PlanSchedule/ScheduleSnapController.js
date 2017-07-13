@@ -106,6 +106,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     showRenameBtn: false,
                     showRemoveBtn: false
                 },
+                check:{
+                    enable: true
+                }
             };
 
             //右击
@@ -119,7 +122,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
                     showRMenu("root", e.clientX, e.clientY);
-                } else if (treeNode && !treeNode.noR) {
+                } else if (treeNode && !treeNode.noR && zTree.getSelectedNodes()[0].children == null) {
                     zTree.selectNode(treeNode);
                     showRMenu("node", e.clientX, e.clientY);
                 }
@@ -129,8 +132,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             function showRMenu(type, x, y) {
                 $("#rMenu ul").show();
                 if (type == "root") {
+                    $("#m_add").hide();
                     $("#m_del").hide();
                 } else {
+                    $("#m_add").show();
                     $("#m_del").show();
                 }
                 rMenu.css({"top": (y - 110) + "px", "left": (x - 250) + "px", "visibility": "visible"});
@@ -182,21 +187,22 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             $scope.show3D = function () {
                 hideRMenu();
-                var url = "http://localhost:8080/3d/query3DState.action?" + "id=" + idVal;
+                /*var url = "http://localhost:8080/3d/query3DState.action?" + "id=" + idVal;*/
+                var url = "http://localhost:8080/snapshot/view3DEmulate.action?" + "id=" + idVal;
                 $http({
                     'method': 'get',
                     'url': url
                 })
             };
 
-            /*$scope.sendMES = function () {
+            $scope.sendMES = function () {
              hideRMenu();
-             var url="http://localhost:8080/3d/query3DState.action?"+"id="+idVal;
+                var url = "http://localhost:8080/snapshot/dispatcherResultToMess.action?" + "id=" + idVal;
              $http({
              'method': 'get',
              'url': url
              })
-             };*/
+             };
 
             //删除节点
             $scope.removeTreeNode = function () {
