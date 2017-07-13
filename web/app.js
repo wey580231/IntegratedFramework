@@ -17,7 +17,9 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.ShowController',
     'IntegratedFramework.EquipmentMonitoringController',
     'IntegratedFramework.MainPage',
-    'IntegratedFramework.BOMManagementController'
+    'IntegratedFramework.BOMManagementController',
+    'IntegratedFramework.AdjustProcedureController',
+    'IntegratedFramework.AdjustOrderController'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');

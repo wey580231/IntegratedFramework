@@ -119,7 +119,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
                     showRMenu("root", e.clientX, e.clientY);
-                } else if (treeNode && !treeNode.noR) {
+                } else if (treeNode && !treeNode.noR && zTree.getSelectedNodes()[0].children == null) {
                     zTree.selectNode(treeNode);
                     showRMenu("node", e.clientX, e.clientY);
                 }
