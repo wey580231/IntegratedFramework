@@ -2,8 +2,6 @@
  * Created by wey580231 on 2017/6/29.
  */
 
-
-
 function resizeD3ViewSize() {
     var height = $("#content").height() - $("#menuBar").height();
     $("#div_center").css("height", height);
@@ -26,6 +24,10 @@ $(document).ready(function () {
 
     document.getElementById("welcome_page").style.display = "block";
     document.getElementById('ComView1').focus();
+
+    setTimeout(function () {
+        loginAps();
+    }, 500);
 });
 
 function loginAps() {
@@ -34,13 +36,16 @@ function loginAps() {
     var successLogin = -1;
     if (firstLog == 1) {
         document.getElementById("Login").Initialize("");
-        document.getElementById("Login").LoadFile(Server + ViewPath + "ButtonLogin.view");
-        successLogin = document.getElementById("Login").RunScript("Login");
-        if (successLogin == 1) {
-            firstLog = 2;
-            $("#activeSelector").attr("disabled", false);
-            $("#loginInAPS").attr("disabled", true);
-        }
+        document.getElementById("Login").SetVariables(szMacros);
+        document.getElementById("Login").SetVariableValue("IDUSER", "Login", idUser);
+        // document.getElementById("Login").Initialize("");
+        // document.getElementById("Login").LoadFile(Server + ViewPath + "ButtonLogin.view");
+        // successLogin = document.getElementById("Login").RunScript("Login");
+        // if (successLogin == 1) {
+        //     firstLog = 2;
+        $("#activeSelector").attr("disabled", false);
+        // $("#loginInAPS").attr("disabled", true);
+        // }
     }
 
     document.getElementById("AutoScheduling").Initialize("");
@@ -90,6 +95,8 @@ var heightScreen = document.documentElement.clientHeight;
 var idComviewSelected = 0;
 var ystart = 0;
 var xstart = 0;
+var userId = "";
+var szMacros = "{/*(Login; 4; (string,IDUSER,IDUSER,,,); (string,IDCLUB,IDCLUB,,,); (string,AUTHORITY,AUTHORITY,,,); (string,PASSWORD,PASSWORD,,,);)*/}";
 var table_view = new Array(
     "TableProcess.view",
     "TableTypeResourceProduct.view",
@@ -546,6 +553,8 @@ function CloseView(id) {
         document.getElementById("welcome_page").style.display = "block";
         nbComView = 0;
         comviewselected = 0;
+
+        $("#activeSelector").get(0).selectedIndex = 0;
     }
     else if (nbComView == 2) {
         document.getElementById("ComView1").style.display = "none";

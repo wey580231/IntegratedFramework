@@ -154,15 +154,22 @@ public class Emulate3DAO {
                     RG_EmulateResultEntity emulateData = emulateIter.next();
 
                     if (emulateData != null) {
-                        ObjectNode node = mapper.createObjectNode();
 
-                        node.put("task", emulateData.getTask());
-                        node.put("good", emulateData.getGoods());
-                        node.put("startTime", Integer.parseInt(emulateData.getStartTime()));
-                        node.put("endTime", Integer.parseInt(emulateData.getEndTime()));
-                        node.put("site", emulateData.getSite());
+                        if (emulateData.getStartTime() != null && emulateData.getEndTime() != null) {
+                            ObjectNode node = mapper.createObjectNode();
 
-                        arrayNode.add(node);
+                            node.put("task", emulateData.getTask());
+                            node.put("good", emulateData.getGoods());
+                            node.put("startTime", Integer.parseInt(emulateData.getStartTime()));
+                            node.put("endTime", Integer.parseInt(emulateData.getEndTime()));
+                            if (emulateData.getSite() == null) {
+                                node.put("site", "");
+                            } else {
+                                node.put("site", emulateData.getSite());
+                            }
+
+                            arrayNode.add(node);
+                        }
                     }
                 }
 
