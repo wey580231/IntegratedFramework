@@ -103,6 +103,7 @@ public class ApsTools {
     public static void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from APS_PLAN";
         List<?> list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+        System.out.println("APS_PLAN总计：" + list.size() + "个条目。");
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         for (Object object : list) {
 //        for (int i = 0; i < 5; i++) {
@@ -161,6 +162,8 @@ public class ApsTools {
 //                rg_planEntity.setColorOrder(tempMap.get("COLORORDER").toString());
                 rg_planEntity.setState(Byte.parseByte(tempMap.get("STATE").toString()));
                 rg_planEntity.setProcessByIdProcess(session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString()));
+                rg_planEntity.setOrderByIdOrder(session.get(RG_OrderEntity.class, tempMap.get("IDORDER").toString()));
+                rg_planEntity.setResourceByIdResource(session.get(RG_ResourceEntity.class, tempMap.get("IDRESOURCE").toString()));
 //                //获取Club实体
 //                String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
 //                Query query = session.createQuery(hql);
