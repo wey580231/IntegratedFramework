@@ -77,10 +77,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     }
                 }
                 console.log(zTreeNodes);
-                loadTree();
+
             } else {
                 document.getElementById("treeDemo").style.display = "none";
             }
+            loadTree();
             zTreeNodes.splice(0, zTreeNodes.length);
         });
 
@@ -107,19 +108,27 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     showRemoveBtn: false
                 },
             };
+            /*
+             function zTreeBeforeRightClick() {
+             if (zTree.getSelectedNodes()[0].level!="middle") {
+             return false;
+             } else {
+             return true;
+             }
+             };*/
 
             //右击
             function OnRightClick(event, treeNode) {
                 idVal = "";
                 console.log(idVal);
-                idVal = zTree.getSelectedNodes()[0].id;
+                idVal = zTree.getSelectedNodes()[0];
                 console.log("$$$$$$$$$%%%%%%%");
                 console.log(idVal);
                 var e = event || window.event;
                 if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
                     showRMenu("root", e.clientX, e.clientY);
-                } else if (treeNode && !treeNode.noR) {
+                } else if (treeNode && zTree.getSelectedNodes()[0].level == "2") {
                     zTree.selectNode(treeNode);
                     showRMenu("node", e.clientX, e.clientY);
                 }
@@ -180,23 +189,24 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 }
             };
 
+
             $scope.show3D = function () {
                 hideRMenu();
-                var url = "http://localhost:8080/3d/query3DState.action?" + "id=" + idVal;
+                var url = "http://localhost:8080/snapshot/view3DEmulate.action?" + "id=" + idVal;
                 $http({
                     'method': 'get',
                     'url': url
                 })
             };
 
-            /*$scope.sendMES = function () {
-             hideRMenu();
-             var url="http://localhost:8080/3d/query3DState.action?"+"id="+idVal;
-             $http({
-             'method': 'get',
-             'url': url
-             })
-             };*/
+            $scope.sendMES = function () {
+                hideRMenu();
+                var url = "http://localhost:8080/snapshot/dispatcherResultToMess.action?" + "id=" + idVal;
+                $http({
+                    'method': 'get',
+                    'url': url
+                })
+            };
 
             //删除节点
             $scope.removeTreeNode = function () {
