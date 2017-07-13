@@ -291,8 +291,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("div").removeClass("has-success");
         };
 
-        function clicked(id) {
-            var o, i;
+        $scope.clicked=function(id){
+           // $("#modal-info").modal('show');
             o = document.getElementById(id).rows;//表格所有行
             for (i = 0; i < o.length; i++) {
                 o[i].ondblclick = function () { //设置事件
@@ -303,15 +303,28 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             }
         }
 
+        /*function clicked(id) {
+            var o, i;
+            o = document.getElementById(id).rows;//表格所有行
+            for (i = 0; i < o.length; i++) {
+                o[i].ondblclick = function () { //设置事件
+                    var oo;
+                    oo = this.cells[1]; //取得第二列对象
+                    alert(oo.innerHTML);
+                }
+            }
+        }*/
+
         window.onload = function () {
             clicked('table_value'); //设置表格事件
         }
-        /*    $scope.getInfo = function () {
+
+        /*$scope.getInfo = function () {
          $("#modal-info").modal('show');
          var trs = document.getElementsByTagName('tr');
          for (var i = 1; i < trs.length; i++) {
-         trs[i].onclick = function () {
-         var id=this.children[1].innerHTML;
+         var id = this.children[1].innerHTML;
+         console.log(id);
          myHttpService.post(serviceList.GetOrderById, id).then(function successCallback(response) {
          $scope.infoList = response.data;
          }, function errorCallback() {
@@ -319,6 +332,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
          })
          break;
          }
-         }
          }*/
+
+
     });

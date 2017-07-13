@@ -231,7 +231,6 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 console.log(id_params);
                 return true;
             } else {
-
                 return false;
             }
         };
@@ -258,6 +257,9 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             if (resourcedisEditValidate()) {
                 $("#modal-edit").modal('hide');
                 //用获取到的数据代替从数据库取到的数据
+                var temps = edit_params.id;
+                delete(edit_params.id);
+                edit_params.id = temps;
                 edit_params.grp = editData.grp;
                 edit_params.typeSite = editData.typeSite;
                 edit_params.idSite = editData.idSite;

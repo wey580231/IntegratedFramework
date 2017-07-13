@@ -402,6 +402,5 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }, function errorCallback() {
                 notification.sendNotification("alert", "请求失败");
             });
-            //$("#scheduleButt").setAttribute("disabled", false);
         }
     });

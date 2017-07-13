@@ -175,21 +175,17 @@
                                 <tbody>
                                 <tr>
                                     <td></td>
-                                    <th>准备时间</th>
+                                    <th>名称</th>
                                     <th>冷却时间</th>
                                     <th>校验时间</th>
-                                    <th>类型</th>
                                     <th>数量</th>
-                                    <th>工时</th>
                                 </tr>
                                 <tr ng-repeat="process in processdata" ng-init="renderTable($last)">
                                     <td><input name="check" type="checkbox"></td>
-                                    <td>{{process.initTime}}</td>
+                                    <td>{{process.name}}</td>
                                     <td>{{process.postTime}}</td>
                                     <td>{{process.checkTime}}</td>
-                                    <td>{{process.typeShift}}</td>
                                     <td>{{process.quantity}}</td>
-                                    <td>{{process.modTimeBatch}}</td>
                                 </tr>
                                 </tbody>
                             </table>
