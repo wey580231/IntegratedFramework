@@ -41,27 +41,72 @@
                     </div>
                     <!-- /.pull-right -->
                 </div>
-                <div class="table-responsive mailbox-messages">
-                    <table class="table table-hover table-striped" id="table_value">
-                        <tbody>
-                        <tr>
-                            <td></td>
-                            <td>状态</td>
-                            <td>名称</td>
-                            <td>产品名</td>
-                            <td>数量</td>
-                            <td>优先级</td>
-                            <td>租户名</td>
-                            <td>操作</td>
-                            <td>来源</td>
-                        </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" onclick="a(this)">
 
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- /.table -->
+                <!--tab-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Custom Tabs -->
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="/AdjustOrder/#tab_1" data-toggle="tab">交期承诺分析</a></li>
+                                <li><a href="/AdjustOrder/#tab_2" data-toggle="tab">紧急插单分析</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1">
+                                    <!--表格1-->
+                                    <div class="table-responsive mailbox-messages">
+                                        <table class="table table-hover table-striped" id="table_value">
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td>状态</td>
+                                                <td>名称</td>
+                                                <td>产品名</td>
+                                                <td>数量</td>
+                                                <td>优先级</td>
+                                                <td>租户名</td>
+                                                <td>操作</td>
+                                                <td>来源</td>
+                                            </tr>
+                                            <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" onclick="a(this)">
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- /.table -->
+                                    </div>
+                                </div>
+                                <!-- /.tab-pane -->
+                                <div class="tab-pane" id="tab_2">
+                                    <!--表格2-->
+                                    <div class="table-responsive mailbox-messages">
+                                        <table class="table table-hover table-striped">
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td>紧急插单信息</td>
+                                                <td>异常来源</td>
+                                                <td>异常状态</td>
+                                            </tr>
+                                            <tr  ng-repeat="x in adjustOrder" ng-init="renderTable($last)" onclick="a(this)">
+                                                <td><input name="check" type="checkbox"></td>
+                                                <td id="ord">{{x.ord.name}}</td>
+                                                <td id="origin">{{x.origin}}</td>
+                                                <td id="state">{{x.state}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- /.table -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- nav-tabs-custom -->
+                    </div>
                 </div>
+
+
                 <!-- /.mail-box-messages -->
             </div>
             <!-- /.box-body -->

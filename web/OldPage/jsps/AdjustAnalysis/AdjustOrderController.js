@@ -10,4 +10,5 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         })
     }])
     .controller("AdjustOrderController", function ($scope) {
+
     });
