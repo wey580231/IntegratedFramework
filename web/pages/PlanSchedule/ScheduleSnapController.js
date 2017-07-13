@@ -197,6 +197,19 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     'method': 'get',
                     'url': url
                 })
+                /* promise.then(function(resp){
+                 //resp是一个响应对象
+                 console.log(resp.data);
+                 },function(resp){
+
+                 //带有错误信息的resp
+                 console.log(resp.data);
+                 if (resp.data == "error") {
+                 notification.sendNotification("alert", "无法查看");
+                 }
+
+                 });*/
+
             };
 
             $scope.sendMES = function () {
@@ -206,6 +219,20 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     'method': 'get',
                     'url': url
                 })
+
+                /* promise.then(function(resp){
+                 //resp是一个响应对象
+
+                 },function(resp){
+
+                 //带有错误信息的resp
+                 console.log(resp.data);
+                 if (resp.data == "error") {
+                 notification.sendNotification("alert", "无法查看");
+                 }
+
+                 });*/
+
             };
 
             //删除节点

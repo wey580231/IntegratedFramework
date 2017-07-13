@@ -15,8 +15,12 @@ import java.util.List;
 public class AssisantprocessDAOImpl extends SuperDAOImpl implements AssisantprocessDAO<RG_AssisantprocessEntity> {
     @Override
     public List<RG_AssisantprocessEntity> findAll() {
-        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session st = MySessionFactory.getSessionFactory().getCurrentSession();
+        System.out.println(st.hashCode()+"=====");
+        st.close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+
+        System.out.println(session.hashCode()+"==*****===");
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
             session.beginTransaction();

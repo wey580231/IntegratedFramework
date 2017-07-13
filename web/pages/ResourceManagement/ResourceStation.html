@@ -49,7 +49,6 @@
                             <th>名称</th>
                             <th>坐标x</th>
                             <th>坐标y</th>
-                            <th>可停放资源数</th>
                         </tr>
                         <tr ng-repeat="site in siteList track by $index" ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
@@ -57,7 +56,6 @@
                             <td>{{site.name}}</td>
                             <td>{{site.x}}</td>
                             <td>{{site.y}}</td>
-                            <td>{{site.capacity}}</td>
                         </tr>
                         </tbody>
                     </table>

@@ -95,7 +95,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
              }
              }*/
 
-            function OnRightClick(event, treeId, treeNode) {
+            function OnRightClick(event, treeNode) {
                 var x = event.screenX;
                 var y = event.screenY;
                 /*var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
@@ -153,6 +153,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 } else {
                     //alert("aaaa");
                     var id = zTree.getSelectedNodes()[0].id;
+                    console.log(id);
                     var params = {};
                     params.id = id;
                     var data = JSON.stringify(params);
@@ -228,21 +229,26 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 return nodes.join(",");
             };
 
-            $scope.send = function (treeNode) {
-                changesendColor(treeNode);
+            $scope.send = function () {
+                hideLMenu();
+                var data = zTree.getSelectedNodes()[0].id;
+                console.log(data);
+                $http({
+                    method:'get',
+                    url:'http://localhost:8080/snapshot/applySnapshotToMes.action?id=data',
+                })
             };
 
-            $scope.show3D = function (treeNode) {
-                changeshow3DColor(treeNode);
+            $scope.show3D = function () {
+                hideLMenu();
+                var data = zTree.getSelectedNodes()[0].id;
+                console.log(data);
+                $http({
+                    method:'get',
+                    url:'http://localhost:8080/snapshot/viewCurrentSnapshotEmulateData.action?id=data',
+                })
             };
 
-            function changesendColor(obj) {
-
-            }
-
-            function changeshow3DColor(obj) {
-
-            }
 
             var zTree, rMenu, lMenu;
             //初始化BOM树
@@ -254,31 +260,5 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             });
         });
 
-        /*var zNodes = [
-         {
-         id: 1, name: "右键菜单 1", open: true,
-         children: [
-         {
-         id: 11, name: "节点 1-1",
-         children: [
-         {id: 21, name: "节点 1-11"},
-         {id: 22, name: "节点 1-12"},
-         {id: 23, name: "节点 1-13"},
-         {id: 24, name: "节点 1-14"}
-         ]
-         },
-         {id: 12, name: "节点 1-2"}
-         ]
-         },
-         {
-         id: 2, name: "右键操作 2", open: true,
-         children: [
-         {id: 21, name: "节点 2-1"},
-         {id: 22, name: "节点 2-2"},
-         {id: 23, name: "节点 2-3"},
-         {id: 24, name: "节点 2-4"}
-         ]
-         }
-         ];*/
 
     });
