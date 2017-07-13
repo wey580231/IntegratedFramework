@@ -10,9 +10,7 @@ import org.hibernate.query.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/6/27.
@@ -32,7 +30,9 @@ public class SnapshotDao {
         if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息
-            List<RG_PlanEntity> plans = bottomSnapshot.getPlans();
+            NativeQuery nquery = session.createNativeQuery("select * from rg_plan where idSnapshort=:id  order by t1Task asc", RG_PlanEntity.class);
+            nquery.setParameter("id", id);
+            List<RG_PlanEntity> plans = nquery.list();
 
             //【2】将plan表转换至模拟数据
             result = convertPlanTo3DEmulateData(plans);
@@ -85,35 +85,39 @@ public class SnapshotDao {
 
                     RG_PlanEntity plan = plans.get(i);
 
-                    String processId = plan.getProcessByIdProcess().getId();
+                    RG_ResourceEntity res = plan.getResourceByIdResource();
 
-                    NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
-                    nquery.setParameter(1, processId);
-                    List<RG_ProcessAssisantEntity> list = nquery.list();
+                    if (res.getCritical() != null && res.getCritical().equals("T")) {
+                        String processId = plan.getProcessByIdProcess().getId();
 
-                    if (list.size() > 0) {
-                        RG_EmulateResultEntity result = new RG_EmulateResultEntity();
+                        NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
+                        nquery.setParameter(1, processId);
+                        List<RG_ProcessAssisantEntity> list = nquery.list();
 
-                        RG_ProcessAssisantEntity entity = list.get(0);
+                        if (list.size() > 0) {
+                            RG_EmulateResultEntity result = new RG_EmulateResultEntity();
 
-                        //任务名
-                        result.setTask(entity.getTask());
-                        //货物名
-                        result.setGoods(entity.getGoods());
-                        //地点名(若不存在为null)
-                        result.setSite(entity.getSite());
+                            RG_ProcessAssisantEntity entity = list.get(0);
 
-                        Date startDate = sdf.parse(plan.getT1Task());
-                        Date endDate = sdf.parse(plan.getT2Task());
+                            //任务名
+                            result.setTask(entity.getTask());
+                            //货物名
+                            result.setGoods(entity.getGoods());
+                            //地点名(若不存在为null)
+                            result.setSite(entity.getSite());
 
-                        //开始时间
-                        result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
-                        //结束时间
-                        result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+                            Date startDate = sdf.parse(plan.getT1Task());
+                            Date endDate = sdf.parse(plan.getT2Task());
 
-                        result.setOrderEntity(plan.getOrderByIdOrder());
+                            //开始时间
+                            result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                            //结束时间
+                            result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
 
-                        session.save(result);
+                            result.setOrderEntity(plan.getOrderByIdOrder());
+
+                            session.save(result);
+                        }
                     }
                 }
 
