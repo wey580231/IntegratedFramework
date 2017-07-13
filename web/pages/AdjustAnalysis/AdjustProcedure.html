@@ -54,7 +54,7 @@
                             <td>指定编码</td>
                             <td style="width: 95px;">异常来源</td>
                         </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" onclick="a(this)">
+                        <tr  ng-repeat="x in arr | orderBy: 'id':desc" ng-init="renderTable($last)" onclick="a(this)">
                             <td><input name="check" type="checkbox"></td>
                             <td id="state">{{x.state}}</td>
                             <td id="idOrder">{{x.idOrder}}</td>
