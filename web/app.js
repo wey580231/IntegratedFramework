@@ -20,7 +20,11 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.MainPage',
     'IntegratedFramework.BOMManagementController',
     'IntegratedFramework.AdjustProcedureController',
+<<<<<<< HEAD
     'IntegratedFramework.AdjustFactoryController'
+=======
+    'IntegratedFramework.AdjustOrderController'
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');

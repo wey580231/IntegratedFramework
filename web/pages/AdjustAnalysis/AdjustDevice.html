@@ -2,19 +2,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-<<<<<<< HEAD
-            管理
+            调整设备资源
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">订单管理</li>
-=======
-            调整工序
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">调整工序</li>
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
+            <li class="active">调整设备资源</li>
         </ol>
     </section>
 
@@ -54,16 +46,14 @@
                         <tbody>
                         <tr>
                             <td></td>
-<<<<<<< HEAD
                             <th>名称</th>
                             <th>来源</th>
                             <th>数量</th>
                             <th>下单时间</th>
                             <th>完工时间</th>
                             <th>状态</th>
-                            <th></th>
                         </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" id="value">
+                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" onclick="a(this)">
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{order.id}}</td>
                             <td>{{order.name}}</td>
@@ -78,28 +68,6 @@
                                 <span class="label label-success" ng-if="order.state == 3">发布</span>
                                 <span class="label label-warning" ng-if="order.state == -1">删除</span>
                             </td>
-                            <td>
-                                <span class="label label-success" ng-click="click()">...</span>
-                            </td>
-=======
-                            <td>处理状态</td>
-                            <td>订单编码</td>
-                            <td>上报时间</td>
-                            <td>工序码</td>
-                            <td>指定时间</td>
-                            <td>指定编码</td>
-                            <td style="width: 95px;">异常来源</td>
-                        </tr>
-                        <tr  ng-repeat="x in arr track by $index" ng-init="renderTable($last)" onclick="a(this)">
-                            <td><input name="check" type="checkbox"></td>
-                            <td id="state">{{x.state}}</td>
-                            <td id="idOrder">{{x.idOrder}}</td>
-                            <td id="reportTime">{{x.reportTime}}</td>
-                            <td id="idTask">{{x.idTask}}</td>
-                            <td id="appointStartTime">{{x.appointStartTime}}</td>
-                            <td id="appointResource">{{x.appointResource}}</td>
-                            <td id="origin">{{x.origin}}</td>
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                         </tr>
                         </tbody>
                     </table>
@@ -127,38 +95,22 @@
                                     <label class="col-sm-2 control-label">名称</label>
 
                                     <div class="col-sm-10">
-<<<<<<< HEAD
-                                        <input class="form-control" name="add-name" title="请输入订单名称！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-
-=======
                                         <input class="form-control" name="add-name" title="请输入正确的中文字符！"
                                                placeholder="">
                                     </div>
                                 </div>
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                 <div class="form-group" id="add-quantity">
                                     <label class="col-sm-2 control-label">数量</label>
 
                                     <div class="col-sm-10">
-<<<<<<< HEAD
-                                        <input class="form-control" name="add-quantity" title="请输入数字！"
-=======
                                         <input class="form-control" name="add-quantity" title="请输入0-9之间的数字！"
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="add-origin">
                                     <label class="col-sm-2 control-label">来源</label>
                                     <div class="col-sm-10">
-<<<<<<< HEAD
-                                        <input class="form-control" name="add-origin" title="请输入订单来源！"
-=======
                                         <input class="form-control" name="add-origin" title="请输入正确的中文字符！"
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                                placeholder="">
                                     </div>
                                 </div>
@@ -205,27 +157,16 @@
                                 <div class="form-group" id="edit-name">
                                     <label class="col-sm-2 control-label">名称</label>
                                     <div class="col-sm-10">
-<<<<<<< HEAD
-                                        <input class="form-control" name="edit-name" title="请输入订单名称！"
-                                               value="{{order.name}}" placeholder="">
-                                    </div>
-                                </div>
-=======
                                         <input class="form-control" name="edit-name" title="请输入正确的中文字符！"
                                                value="{{order.name}}" placeholder="">
                                     </div>
                                 </div>
 
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                 <div class="form-group" id="edit-quantity">
                                     <label class="col-sm-2 control-label">数量</label>
 
                                     <div class="col-sm-10">
-<<<<<<< HEAD
-                                        <input class="form-control" name="edit-quantity" title="请输入数字！"
-=======
                                         <input class="form-control" name="edit-quantity" title="请输入0-9之间的数字！"
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                                value="{{order.quantity}}" placeholder="">
                                     </div>
                                 </div>
@@ -233,11 +174,7 @@
                                     <label class="col-sm-2 control-label">来源</label>
 
                                     <div class="col-sm-10">
-<<<<<<< HEAD
-                                        <input class="form-control" name="edit-origin" title="请输入订单来源！！"
-=======
                                         <input class="form-control" name="edit-origin" title="请输入正确的中文字符！"
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                                value="{{order.origin}}" placeholder="">
                                     </div>
                                 </div>
@@ -246,11 +183,7 @@
                                     <label class="col-sm-2 control-label">下单时间</label>
                                     <div class="col-sm-10" style="z-index: 9999">
                                         <input type="text" class="form-control pull-right" id="modal-edit-t0-datepicker"
-<<<<<<< HEAD
-                                               value="{{order.t0 | date:'yyyy-MM-dd hh:mm:ss' }}">
-=======
                                                value="{{order.t0}}">
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                     </div>
                                     <!-- /.input group -->
                                 </div>
@@ -258,11 +191,7 @@
                                     <label class="col-sm-2 control-label">完工时间</label>
                                     <div class="col-sm-10" style="z-index: 9999">
                                         <input type="text" class="form-control pull-right" id="modal-edit-t2-datepicker"
-<<<<<<< HEAD
-                                               value="{{order.t2 | date:'yyyy-MM-dd hh:mm:ss'}}">
-=======
                                                value="{{order.t2}}">
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                                     </div>
                                 </div>
                             </div>
@@ -278,56 +207,5 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-
-        <!--详细信息窗口-->
-        <div class="modal fade" id="modal-info">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">订单详细信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        <!-- form start -->
-                        <div class="box">
-                            <!-- /.box-header -->
-                            <div class="box-body no-padding">
-                                <table class="table table-condensed">
-                                    <tr ng-repeat="info in infoList track by $index">
-                                        <td>产品名称</td>
-                                        <td>{{info.name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>订单数量</td>
-                                        <td>{{info.quantity}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>完工数量</td>
-                                        <td>{{info.finishQuantity}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>产品名称</td>
-                                        <td>{{info.productByIdProduct.name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>租户名称</td>
-                                        <td>{{info.clubByIdClub.name}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
-</section>
-</div>
-=======
     </section>
 </div>
->>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
