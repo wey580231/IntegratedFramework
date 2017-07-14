@@ -16,6 +16,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
+        var slot;
 
         myHttpService.get(serviceList.ListShift).then(function (response) {
             $scope.workList = response.data;
@@ -48,12 +49,20 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
         };
 
+        $("#select").change(function () {
+
+            slot = $(this).children('option:selected').val();
+
+        })
+
         //信息填写检验
         var workAddValidate = function () {
             var params = {};
             params.name = $("input[name='add-name']").val();
             params.type = $("input[name='add-type']").val();
-            params.slot = $("input[name='add-slot']").val();
+            /* params.slot = $("input[name='add-slot']").val();*/
+           /* params.slot = $(this).children('option:selected').val();*/
+            params.slot=slot;
             params.extra = parseInt($("input[name='add-extra']").val());
             addData = JSON.stringify(params);
             if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
@@ -63,13 +72,13 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#add-name").removeClass(" has-error");
                 $("#add-name").addClass(" has-success");
             }
-            if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
-                $("#add-slot").removeClass("has-success");
-                $("#add-slot").addClass("has-error");
-            } else {
-                $("#add-slot").removeClass("has-error");
-                $("#add-slot").addClass(" has-success");
-            }
+            // if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
+            //     $("#add-slot").removeClass("has-success");
+            //     $("#add-slot").addClass("has-error");
+            // } else {
+            //     $("#add-slot").removeClass("has-error");
+            //     $("#add-slot").addClass(" has-success");
+            // }
 
             if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
                 $("#add-extra").removeClass("has-success");
@@ -80,7 +89,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
 
             if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                validate.checkLength(params.slot) && validate.checkNumber(params.slot) && validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
+                /*validate.checkLength(params.slot) && validate.checkNumber(params.slot) && */validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
                 return true;
             } else {
 
@@ -88,14 +97,15 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
         };
 
-
         //信息填写检验
         var workEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
-            params.slot = $("input[name='edit-slot']").val();
+            /*params.slot = $("input[name='edit-slot']").val();*/
+            params.slot=slot;
             params.extra = parseInt($("input[name='edit-extra']").val());
             editData = params;
+
             if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
                 $("#edit-name").removeClass(" has-success");
                 $("#edit-name").addClass(" has-error");
@@ -104,14 +114,13 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#edit-name").addClass(" has-success");
             }
 
-
-            if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
-                $("#edit-slot").removeClass("has-success");
-                $("#edit-slot").addClass("has-error");
-            } else {
-                $("#edit-slot").removeClass("has-error");
-                $("#edit-slot").addClass(" has-success");
-            }
+            /* if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
+             $("#edit-slot").removeClass("has-success");
+             $("#edit-slot").addClass("has-error");
+             } else {
+             $("#edit-slot").removeClass("has-error");
+             $("#edit-slot").addClass(" has-success");
+             }*/
 
             if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
                 $("#edit-extra").removeClass("has-success");
@@ -122,7 +131,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
 
             if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                validate.checkLength(params.slot) && validate.checkNumber(params.slot) && validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
+                /* validate.checkLength(params.slot) && validate.checkNumber(params.slot) &&*/ validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
                 return true;
             } else {
 

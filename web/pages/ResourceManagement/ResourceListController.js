@@ -51,11 +51,16 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         //信息填写检验
         var resourceAddValidate = function () {
             var params = {};
+            var myselect = document.getElementById("select");
+            var index = myselect.selectedIndex ;
             params.name = $("input[name='add-name']").val();
             params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
-            params.nameShift = $("input[name='add-nameShift']").val();
-            params.state = $("input[name='add-state']").val();
+            /*params.nameShift = $("input[name='add-nameShift']").val();*/
+            params.nameShift = $("myselect.options[index].text");
+            console.log(params.nameShift);
+                params.state = $("input[name='add-state']").val();
             addData = JSON.stringify(params);
+
 
             if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
                 $("#add-name").removeClass("has-success");
@@ -74,13 +79,13 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#add-idSiteGroupResource").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.nameShift) || !validate.checkLength(params.nameShift)) {
+            /*if (!validate.checkNumber(params.nameShift) || !validate.checkLength(params.nameShift)) {
                 $("#add-nameShift").removeClass("has-success");
                 $("#add-nameShift").addClass("has-error");
             } else {
                 $("#add-nameShift").removeClass("has-error");
                 $("#add-nameShift").addClass(" has-success");
-            }
+            }*/
 
             if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
                 $("#add-state").removeClass("has-success");
@@ -91,7 +96,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             }
 
             if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift) && validate.checkNumber(params.nameShift) &&
+                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && /*validate.checkLength(params.nameShift) && validate.checkNumber(params.nameShift) &&*/
                 validate.checkLength(params.state) && validate.checkNumber(params.state)) {
                 return true;
             } else {
@@ -157,6 +162,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddResource, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
+
                     location.reload();
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
@@ -194,6 +200,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].checked) {
                         idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
+                        console.log(idVal);
                         id_params.idR = idVal;
                     }
                     row++;
@@ -211,10 +218,14 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         $scope.update = function () {
             if (getInfo()) {
                 $("#modal-edit").modal('show');
+                var temps = id_params.idR;
+                delete(id_params.idR);
+                id_params.id = temps;
                 var idInfo = JSON.stringify(id_params);
                 myHttpService.post(serviceList.GetResourceById, idInfo).then(function successCallback(response) {
                     var editList = [];//保存从数据库获取的需要修改的数据
                     editList.push(response.data);
+                    console.log(editList);
                     edit_params = response.data;
                     $scope.editList = editList;
                 }, function errorCallback(response) {

@@ -256,8 +256,11 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                 console.log("排程返回的数据:");
                 console.log(response.data);
                 curobj.splice(0, curobj.length);
+                console.log(curobj);
                 lastobj.splice(0, lastobj.length);
+                console.log(lastobj);
                 array.splice(0, array.length);
+                console.log(array);
                 //setTimeout('window.location.reload();', 150000);
             }, function errorCallback(response) {
                 alert("请求错误！");
@@ -363,13 +366,11 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
             }, function errorCallback(response) {
                 console.log("请求失败");
             });
-
-
         };
 
         $scope.showInfo = function () {
             var obj = [];
-            obj.splice(0, obj.length);
+            console.log(obj);
             myHttpService.get(serviceList.getLastScheduleInfo).then(function successCallback(response) {
                 console.log("获取上次排程信息状态");
                 console.log(response.status);
@@ -387,32 +388,65 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                     }
                 }
 
+                console.log("当前时间是否为空"+scheduleDays);
                 //开始访问当前未完成的记录
-                curobj.splice(0, curobj.length);
-                var cur = {};
-                var startTime = moment().format("YYYY-MM-DD");
-                console.log("当前开始时间" + startTime);
-                cur.startTime = (new Date(startTime)).getTime();
+                if (scheduleDays != null) {
+                    curobj.splice(0, curobj.length);
+                    var cur = {};
+                    var startTime = moment().format("YYYY-MM-DD");
+                    console.log("当前开始时间" + startTime);
+                    cur.startTime = (new Date(startTime)).getTime();
 
-                console.log("当前排程时间" + scheduleDays);
-                var scheduleDays0 = scheduleDays;
+                    console.log("当前排程时间" + scheduleDays);
+                    var scheduleDays0 = scheduleDays;
 
-                var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
-                console.log("当前结束时间" + endTime);
-                cur.endTime = (new Date(endTime)).getTime();
+                    var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
+                    console.log("当前结束时间" + endTime);
+                    cur.endTime = (new Date(endTime)).getTime();
 
-                cur.isFinished = false;
+                    cur.isFinished = false;
 
-                var data = JSON.stringify(cur);
+                    var data = JSON.stringify(cur);
 
-                console.log("当前排程json字符串" + data);
+                    console.log("当前排程json字符串" + data);
 
-                myHttpService.post(serviceList.CurInfo, data).then(function (response) {
-                    console.log("获取当前排程信息" + response.status);
-                    console.log(response.data);
-                    for (var i = 0; i < response.data.length; i++) {
-                        curobj.push(response.data[i]);
-                    }
+                    myHttpService.post(serviceList.CurInfo, data).then(function (response) {
+                        console.log("获取当前排程信息" + response.status);
+                        console.log(response.data);
+                        for (var i = 0; i < response.data.length; i++) {
+                            curobj.push(response.data[i]);
+                        }
+                        //剔除相同的记录
+                        //把上一次记录push到array
+                        for (var i = 0; i < lastobj.length; i++) {
+                            array.push(lastobj[i]);
+                            console.log("循环一次后");
+                            for (var i = 0; i < curobj.length; i++) {
+                                array.push(curobj[i]);
+                            }
+                        }
+                        console.log("删除前的数组");
+                        var result = [];
+                        for (var i = 0; i < array.length; i++) {
+                            var flag = true;
+                            for (var j = i; j < array.length - 1; j++) {
+                                if (array[i].id == array[j + 1].id) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                result.push(array[i]);
+                            }
+                        }
+                        console.log("删除后的数组");
+                        array = result;
+                        console.log(array);
+
+                        $scope.info = array;
+                        scheduleDays="";
+                    })
+                } else {
 
                     //剔除相同的记录
                     //把上一次记录push到array
@@ -423,14 +457,9 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                             array.push(curobj[i]);
                         }
                     }
-
                     console.log("删除前的数组");
                     var result = [];
                     for (var i = 0; i < array.length; i++) {
-                        /*if(array[i].id==array[i+1].id){
-                         array.splice(i, 1);
-                         console.log(array);
-                         }*/
                         var flag = true;
                         for (var j = i; j < array.length - 1; j++) {
                             if (array[i].id == array[j + 1].id) {
@@ -439,7 +468,7 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                             }
                         }
                         if (flag) {
-                            result.push(array[i])
+                            result.push(array[i]);
                         }
                     }
                     console.log("删除后的数组");
@@ -447,15 +476,10 @@ angular.module("IntegratedFramework.ScheduleGuideController", ['ngRoute'])
                     console.log(array);
 
                     $scope.info = array;
-                });
-
-            }, function errorCallback(response) {
-                alert("请求错误！");
-
+                    scheduleDays="";
+                }
             });
-
-        };
-
+        }
 
         $scope.choosedOrder = function () {
             var rows = document.getElementById("orders").rows;
