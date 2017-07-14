@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+<style>
+    .dropdown-menu.pull-right {
+        text-align: center;
+        border: 1px solid #a1a1a1;
+        width: 95px;
+        border-radius: 1000px;
+        margin-top: -78px;
+        margin-right: -2px;
+        height: 43px;
+
+    }
+
+    .dropdown-menu {
+        min-width: 1px;
+        padding: 0 0 5px 5px;
+    }
+
+</style>
+=======
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
 <div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -23,6 +44,31 @@
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
                         </button>
                     </div>
+<<<<<<< HEAD
+
+                    <!-- Menu Toggle Button -->
+                    <button class="btn btn-default btn-sm dropdown-toggle pull-right" data-toggle="dropdown">
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">异常模拟</span>
+                    </button>
+                    <ul class="dropdown-menu pull-right">
+                        <!-- Menu Body -->
+                        <li>
+                            <div style="z-index: 9999">
+                                <div class="text-center">
+                                    <a href="#">MES</a>
+                                </div>
+                                <div class="text-center">
+                                    <a href="#">手工模拟</a>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                        </li>
+                    </ul>
+
+                </div>
+
+=======
                     <!-- /.btn-group -->
                     <div class="pull-right">
                         <div class="btn-group">
@@ -41,11 +87,34 @@
                     </div>
                     <!-- /.pull-right -->
                 </div>
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                 <div class="table-responsive mailbox-messages">
                     <table class="table table-hover table-striped" id="table_value">
                         <tbody>
                         <tr>
                             <td></td>
+<<<<<<< HEAD
+                            <th>处理状态</th>
+                            <th>车间名称</th>
+                            <th>布局名称</th>
+                            <th>调整备注</th>
+                            <th>调整时间</th>
+                            <th>操作</th>
+                            <th>来源</th>
+                        </tr>
+                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" id="value">
+                            <td><input name="check" type="checkbox"></td>
+                            <td style="display:none">{{order.id}}</td>
+                            <td>许越</td>
+                            <td>许越</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+=======
                             <th>名称</th>
                             <th>来源</th>
                             <th>数量</th>
@@ -68,6 +137,7 @@
                                 <span class="label label-success" ng-if="order.state == 3">发布</span>
                                 <span class="label label-warning" ng-if="order.state == -1">删除</span>
                             </td>
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9
                         </tr>
                         </tbody>
                     </table>
@@ -78,6 +148,10 @@
             <!-- /.box-body -->
             <!-- Horizontal Form -->
         </div>
+<<<<<<< HEAD
+    </section>
+</div>
+=======
         <!--新增窗口-->
         <div class="modal fade" id="modal-add">
             <div class="modal-dialog">
@@ -209,3 +283,4 @@
         </div>
     </section>
 </div>
+>>>>>>> 2737b5cc55a7fc0b418b365a69f8cf1594c219b9

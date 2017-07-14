@@ -48,6 +48,9 @@ public class APSDatabaseSync {
                 case DatabaseInfo.APS_SHIFT:
                     SyncShiftTable(list);
                     break;
+                case DatabaseInfo.APS_CLUB:
+                    SyncShiftTable(list);
+                    break;
                 default:
                     System.out.println("无法同步：" + tableName + "表。");
             }
@@ -74,6 +77,25 @@ public class APSDatabaseSync {
             }
         }
         System.out.println("产品表同步成功");
+        return true;
+    }
+
+    //同步租户表
+    private static boolean SyncClubTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_ClubEntity rg_clubEntity = new RG_ClubEntity();
+                rg_clubEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_clubEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                ClubDAOImpl clubDAO = DAOFactory.getClubDAOImplInstance();
+                clubDAO.save(rg_clubEntity);
+            } else {
+                System.out.println("租户表同步失败");
+                return false;
+            }
+        }
+        System.out.println("租户表同步成功");
         return true;
     }
 

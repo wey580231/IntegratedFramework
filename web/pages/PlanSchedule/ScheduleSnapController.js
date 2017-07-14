@@ -77,10 +77,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     }
                 }
                 console.log(zTreeNodes);
-                loadTree();
+
             } else {
                 document.getElementById("treeDemo").style.display = "none";
             }
+            loadTree();
             zTreeNodes.splice(0, zTreeNodes.length);
         });
 
@@ -110,6 +111,14 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     enable: true
                 }
             };
+            /*
+             function zTreeBeforeRightClick() {
+             if (zTree.getSelectedNodes()[0].level!="middle") {
+             return false;
+             } else {
+             return true;
+             }
+             };*/
 
             //右击
             function OnRightClick(event, treeNode) {
@@ -122,7 +131,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
                     showRMenu("root", e.clientX, e.clientY);
-                } else if (treeNode && !treeNode.noR && zTree.getSelectedNodes()[0].children == null) {
+                } else if (treeNode && zTree.getSelectedNodes()[0].level == "2") {
                     zTree.selectNode(treeNode);
                     showRMenu("node", e.clientX, e.clientY);
                 }
@@ -185,23 +194,36 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 }
             };
 
+
             $scope.show3D = function () {
                 hideRMenu();
-                /*var url = "http://localhost:8080/3d/query3DState.action?" + "id=" + idVal;*/
                 var url = "http://localhost:8080/snapshot/view3DEmulate.action?" + "id=" + idVal;
                 $http({
                     'method': 'get',
                     'url': url
                 })
+                /* promise.then(function(resp){
+                 //resp是一个响应对象
+                 console.log(resp.data);
+                 },function(resp){
+
+                 //带有错误信息的resp
+                 console.log(resp.data);
+                 if (resp.data == "error") {
+                 notification.sendNotification("alert", "无法查看");
+                 }
+
+                 });*/
+
             };
 
             $scope.sendMES = function () {
              hideRMenu();
                 var url = "http://localhost:8080/snapshot/dispatcherResultToMess.action?" + "id=" + idVal;
-             $http({
-             'method': 'get',
-             'url': url
-             })
+                $http({
+                    'method': 'get',
+                    'url': url
+                })
              };
 
             //删除节点

@@ -6,6 +6,7 @@ angular.module("IntegratedFramework", [
     'ngRoute',
     'IntegratedFramework.OrderManagementController',
     'IntegratedFramework.ResourceDistributionController',
+    'IntegratedFramework.BOMManagementController',
     'IntegratedFramework.ResourceListController',
     'IntegratedFramework.ResourceGroupController',
     'IntegratedFramework.ResourceClassifyController',

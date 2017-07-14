@@ -229,7 +229,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             rollTime = $("input[name='add-rollTime']").val();
             console.log("当前排程滚动周期" + rollTime);
 
-
             //排程开始时间
             var startTime = moment().format("YYYY-MM-DD");
             console.log("排成开始时间" + startTime);
@@ -238,6 +237,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
             console.log("排成结束时间" + startTime);
 
+            $("#calendar").show();
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
@@ -281,7 +281,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                  }
                  }*/
             });
-            $("#calendar").show();
+
             // $("#calendar").show();
 
 
@@ -296,6 +296,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         $scope.hideCalendar = function () {
             $("#calendar").hide();
+            $("input").val('');
+            $("div").removeClass("has-error");
+            $("div").removeClass("has-success");
         };
 
         $scope.showCalendar = function () {
@@ -335,8 +338,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             var orders = [];
             console.log("订单");
-            var params = {};
+
             for (var i = 0; i < selectedCheckArray.length; i++) {
+                var params = {};
                 params.id = selectedCheckArray[i];
                 orders.push(params);
             }
@@ -374,9 +378,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             params.site = sitesArr;
             var data = JSON.stringify(params);
             console.log(data);
-            $("#schedule").hide();
+            $("#modal-add").hide();
+            $(".modal-backdrop").remove();
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
-                console.log(response.status);
                 //清空所用的数组和变量
                 curobj.splice(0, curobj.length);
                 array.splice(0, array.length);
@@ -384,16 +388,17 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 name = "";
                 scheduleDays = "";
                 rollTime = "";
-                console.log(curobj);
-                console.log(array);
-                console.log(selectedCheckArray);
-                console.log(name);
-                console.log(scheduleDays);
-                //location.reload(true);
-                //刷新表格
-                myHttpService.get(serviceList.ListSchedule).then(function (response) {
-                    $scope.scheduleList = response.data;
-                });
+                var data = response.data;
+                if (data.result == "error") {
+                    notification.sendNotification("alert", "排程失败");
+                } else {
+                    //location.reload(true);
+                    //刷新表格
+                    myHttpService.get(serviceList.ListSchedule).then(function (response) {
+                        $scope.scheduleList = response.data;
+                    });
+                    notification.sendNotification("alert", "排程成功");
+                }
             }, function errorCallback() {
                 notification.sendNotification("alert", "请求失败");
             });
