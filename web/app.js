@@ -158,6 +158,7 @@ angular.module("IntegratedFramework", [
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
+        service.AddAdjustOrder = backUrl + "ExceptionSimulat/creatOrderException.action";
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
 

@@ -66,18 +66,18 @@ public class ApsTools {
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
                 "&" +
-                "BUFFER=1\\n2\\n" + entity.getOrd().getId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getId() + "\\n" + entity.getOrd().getName()
+                "BUFFER=1\\n2\\n" + "K" + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n" + entity.getOrd().getId() + "\\n" + entity.getOrd().getName()
                 + "\\n" + entity.getOrd().getQuantity() + "\\n" + entity.getOrd().getProductByIdProduct().getId() + "\\n" + entity.getOrd().getIdGroupResource() +
-                "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT0())) + "\\n"
-                + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT1())) + "\\n"
-                + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT2())) +
+                "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT0())) + "\\n"
+                + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT1())) + "\\n"
+                + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT2())) +
                 "&" +
                 "REPLY=" + ApsTools.instance().getReplyAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
                 "DELAY=1000";
-
+        System.out.println("APS链接地址：" + result);
         return result;
     }
 
@@ -95,7 +95,7 @@ public class ApsTools {
                 "ID=001" +
                 "&" +
                 "DELAY=1000";
-
+        System.out.println("APS链接地址：" + result);
         return result;
     }
 
@@ -253,6 +253,7 @@ public class ApsTools {
                 "ID=001" +
                 "&" +
                 "DELAY=1000";
+        System.out.println("APS链接地址：" + result);
         return result;
     }
 
@@ -268,6 +269,7 @@ public class ApsTools {
                 "ID=001" +
                 "&" +
                 "DELAY=1000\n";
+        System.out.println("APS链接地址：" + result);
         return result;
     }
 
