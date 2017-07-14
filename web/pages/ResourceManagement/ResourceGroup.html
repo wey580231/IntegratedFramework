@@ -52,14 +52,14 @@
                         <tr>
                             <td></td>
                             <th>工组名称</th>
-                            <th>初始位置编码</th>
+                           <!-- <th>初始位置编码</th>-->
                             <th>可工作位置</th>
                         </tr>
                         <tr ng-repeat="group in groupList track by $index" ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{group.id}}</td>
                             <td>{{group.name}}</td>
-                            <td>{{group.idSite0}}</td>
+                       <!--     <td>{{group.idSite}}</td>-->
                             <td>{{group.state}}</td>
                         </tr>
                         </tbody>

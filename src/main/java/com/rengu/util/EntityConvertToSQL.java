@@ -14,13 +14,18 @@ public class EntityConvertToSQL {
         return SQLString;
     }
 
+    public static String updateSQLForAPS(RG_OrderEntity rg_orderEntity) {
+        String SQLString = "update " + DatabaseInfo.APS_ORDER + " set name = '" + rg_orderEntity.getName() + "',idclub = '" + rg_orderEntity.getClubByIdClub().getId() + "',priority = '" + rg_orderEntity.getPriority() + "',IDPRODUCT = '" + rg_orderEntity.getProductByIdProduct().getId() + "',quantity = '" + rg_orderEntity.getQuantity() + "', t0 = '" + Tools.dateConvertToString(rg_orderEntity.getT0()) + "',t1 = '" + Tools.dateConvertToString(rg_orderEntity.getT1()) + "',t2 = '" + Tools.dateConvertToString(rg_orderEntity.getT2()) + "',color = '" + rg_orderEntity.getColor() + "',state = '" + rg_orderEntity.getState() + "' where id = '" + rg_orderEntity.getId() + "'";
+        return SQLString;
+    }
+
     public static String insertSQLForAPS(RG_OrderEntity rg_orderEntity) {
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,priority,quantity,t0,t1,t2,color,state) VALUES ('" + Tools.getUUID()
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,IDCLUB,priority,IDPRODUCT,quantity,t0,t1,t2,color,state) VALUES ('" + rg_orderEntity.getId()
                 + "','" + rg_orderEntity.getName()
-//                + "','" + rg_orderEntity.getClubByIdClub().getId()
+                + "','" + rg_orderEntity.getClubByIdClub().getId()
                 + "'," + rg_orderEntity.getPriority()
-//                + ",'" + rg_orderEntity.getProductByIdProduct().getId()
-                + "," + rg_orderEntity.getQuantity()
+                + ",'" + rg_orderEntity.getProductByIdProduct().getId()
+                + "'," + rg_orderEntity.getQuantity()
                 + ",'" + Tools.dateConvertToString(rg_orderEntity.getT0())
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT1())
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT2())

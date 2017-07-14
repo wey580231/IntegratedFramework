@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -31,7 +29,7 @@ public class RG_SnapshotNodeEntity {
     @JsonIgnore
     private RG_ScheduleEntity schedule;                                //排程记录
     @JsonIgnore
-    private List<RG_PlanEntity> plans = new ArrayList<RG_PlanEntity>();               //计划表
+    private Set<RG_PlanEntity> plans = new HashSet<RG_PlanEntity>();               //计划表
 
     public String getId() {
         return id;
@@ -97,33 +95,11 @@ public class RG_SnapshotNodeEntity {
         this.schedule = schedule;
     }
 
-    public List<RG_PlanEntity> getPlans() {
+    public Set<RG_PlanEntity> getPlans() {
         return plans;
     }
 
-    public void setPlans(List<RG_PlanEntity> plans) {
+    public void setPlans(Set<RG_PlanEntity> plans) {
         this.plans = plans;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_SnapshotNodeEntity that = (RG_SnapshotNodeEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (apply != null ? !apply.equals(that.apply) : that.apply != null) return false;
-        return level != null ? level.equals(that.level) : that.level == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (apply != null ? apply.hashCode() : 0);
-        result = 31 * result + (level != null ? level.hashCode() : 0);
-        return result;
     }
 }

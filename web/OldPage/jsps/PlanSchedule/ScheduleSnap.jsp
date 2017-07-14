@@ -278,7 +278,7 @@
 
                     <div class="uk-form-row" style="margin-top: 6px;">
                         <select class="uk-grid" style="width: 130px;height: 27px;">
-                            <option value="x.id" ng-repeat="x in dataArr">{{x.name}}</option>
+                            <option value="x.name" ng-repeat="x in dataArr">{{x.name}}</option>
                         </select>
                     </div>
 
