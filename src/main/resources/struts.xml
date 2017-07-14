@@ -121,6 +121,7 @@
 
         <!--仿真或实时数据驱动-->
         <action name="drive3DEmulateFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getEmulateFlow"/>
+        <action name="drive3DEmulateFlowAllOrder" class="com.rengu.actions.d3.Emulate3DAction" method="getAllOrderEmulateFlow"/>
         <action name="drive3DRealFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getRealFlow"/>
     </package>
 
