@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 
 import java.util.*;
 
@@ -15,7 +16,7 @@ import java.util.*;
  */
 public class Emulate3DAO {
 
-    //TODO 3D车间的模拟数据，根据一次排程所涉及的订单数量，按照订单排程结果，分别发送给会3D车间
+    @Deprecated
     public boolean getEmulateData(String snapshotId, StringBuilder jsonString) {
         boolean flag = false;
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -139,7 +140,6 @@ public class Emulate3DAO {
             ArrayNode array = mapper.createArrayNode();
 
             while (iter.hasNext()) {
-
                 ObjectNode dataNode = mapper.createObjectNode();
 
                 RG_OrderEntity entity = iter.next();
@@ -160,8 +160,11 @@ public class Emulate3DAO {
                         node.put("good", emulateData.getGoods());
                         node.put("startTime", Integer.parseInt(emulateData.getStartTime()));
                         node.put("endTime", Integer.parseInt(emulateData.getEndTime()));
-                        node.put("site", emulateData.getSite());
-
+                        if (emulateData.getSite() != null) {
+                            node.put("site", emulateData.getSite());
+                        } else {
+                            node.put("site", "");
+                        }
                         arrayNode.add(node);
                     }
                 }
@@ -172,6 +175,69 @@ public class Emulate3DAO {
 
                 array.add(dataNode);
             }
+
+            root.put("data", array);
+
+            try {
+                jsonString.append(mapper.writeValueAsString(root));
+                flag = true;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                flag = false;
+            }
+        }
+
+        session.getTransaction().commit();
+
+        return flag;
+    }
+
+    //获取所有订单信息，利用在快招树节点转换后的结果，直接查询
+    public boolean getAllOrderEmulateResult(String snapshotId, StringBuilder jsonString) {
+        boolean flag = false;
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+
+        if (!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+
+        NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idSnapshort=:id ", RG_EmulateResultEntity.class);
+        query.setParameter("id", snapshotId);
+
+        List<RG_EmulateResultEntity> results = query.list();
+
+        if (results.size() > 0) {
+
+            ObjectMapper mapper = new ObjectMapper();               //定义转换类
+            ObjectNode root = mapper.createObjectNode();            //创建根节点
+            root.put("result", "0");
+
+            ArrayNode array = mapper.createArrayNode();
+
+            ObjectNode dataNode = mapper.createObjectNode();
+            dataNode.put("id", "All Orders");
+            dataNode.put("name", "orders");
+
+            ArrayNode arrayNode = mapper.createArrayNode();
+
+            for (int i = 0; i < results.size(); i++) {
+                RG_EmulateResultEntity entity = results.get(i);
+                ObjectNode node = mapper.createObjectNode();
+
+                node.put("task", entity.getTask());
+                node.put("good", entity.getGoods());
+                node.put("startTime", Integer.parseInt(entity.getStartTime()));
+                node.put("endTime", Integer.parseInt(entity.getEndTime()));
+                if (entity.getSite() != null) {
+                    node.put("site", entity.getSite());
+                } else {
+                    node.put("site", "");
+                }
+                arrayNode.add(node);
+            }
+            dataNode.put("info", arrayNode);
+
+            array.add(dataNode);
 
             root.put("data", array);
 

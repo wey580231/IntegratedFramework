@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,7 +31,9 @@ public class RG_SnapshotNodeEntity {
     @JsonIgnore
     private RG_ScheduleEntity schedule;                                //排程记录
     @JsonIgnore
-    private Set<RG_PlanEntity> plans = new HashSet<RG_PlanEntity>();               //计划表
+    private List<RG_PlanEntity> plans = new ArrayList<RG_PlanEntity>();   //计划表
+    @JsonIgnore
+    private List<RG_EmulateResultEntity> results = new ArrayList<RG_EmulateResultEntity>();
 
     public String getId() {
         return id;
@@ -95,11 +99,19 @@ public class RG_SnapshotNodeEntity {
         this.schedule = schedule;
     }
 
-    public Set<RG_PlanEntity> getPlans() {
+    public List<RG_PlanEntity> getPlans() {
         return plans;
     }
 
-    public void setPlans(Set<RG_PlanEntity> plans) {
+    public void setPlans(List<RG_PlanEntity> plans) {
         this.plans = plans;
+    }
+
+    public List<RG_EmulateResultEntity> getResults() {
+        return results;
+    }
+
+    public void setResults(List<RG_EmulateResultEntity> results) {
+        this.results = results;
     }
 }

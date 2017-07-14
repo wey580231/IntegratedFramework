@@ -13,6 +13,7 @@ public class RG_EmulateResultEntity {
     private String site;                            //地点
 
     private RG_OrderEntity orderEntity;
+    private RG_SnapshotNodeEntity snapshotNodeEntity;
 
     public int getId() {
         return id;
@@ -70,29 +71,11 @@ public class RG_EmulateResultEntity {
         this.orderEntity = orderEntity;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_EmulateResultEntity that = (RG_EmulateResultEntity) o;
-
-        if (id != that.id) return false;
-        if (task != null ? !task.equals(that.task) : that.task != null) return false;
-        if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
-        if (goods != null ? !goods.equals(that.goods) : that.goods != null) return false;
-        return site != null ? site.equals(that.site) : that.site == null;
+    public RG_SnapshotNodeEntity getSnapshotNodeEntity() {
+        return snapshotNodeEntity;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (task != null ? task.hashCode() : 0);
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + (goods != null ? goods.hashCode() : 0);
-        result = 31 * result + (site != null ? site.hashCode() : 0);
-        return result;
+    public void setSnapshotNodeEntity(RG_SnapshotNodeEntity snapshotNodeEntity) {
+        this.snapshotNodeEntity = snapshotNodeEntity;
     }
 }

@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class SnapshotDao {
 
+    //将所有订单一起转换
     public boolean switchToEmulateData(String userId, String id) {
         boolean result = false;
 
@@ -34,8 +35,10 @@ public class SnapshotDao {
             nquery.setParameter("id", id);
             List<RG_PlanEntity> plans = nquery.list();
 
-            //【2】将plan表转换至模拟数据
-            result = convertPlanTo3DEmulateData(plans);
+            if (plans.size() > 0) {
+                //【2】将plan表转换至模拟数据
+                result = convertPlanTo3DEmulateData(plans, id);
+            }
 
             RG_SnapshotNodeEntity rootParent = bottomSnapshot.getRootParent();
 
@@ -64,18 +67,18 @@ public class SnapshotDao {
     }
 
     //将plan表转换成3d车间的模拟数据，中间存在的字段需要框架来补充
-    private boolean convertPlanTo3DEmulateData(List<RG_PlanEntity> plans) {
+    private boolean convertPlanTo3DEmulateData(List<RG_PlanEntity> plans, String snapShotId) {
         boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Query queryObject = session.createNativeQuery("truncate table rg_emulatedata");
+        Query queryObject = session.createNativeQuery("truncate table rg_emulateresult");
 
-        if (queryObject.executeUpdate() >= 0 && plans.size() > 0) {
+        if (queryObject.executeUpdate() >= 0) {
 
             try {
-
+                //【1】将当前快照对应的所有订单按照时间升序转换
                 RG_PlanEntity startPlan = plans.get(0);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -116,16 +119,74 @@ public class SnapshotDao {
 
                             result.setOrderEntity(plan.getOrderByIdOrder());
 
+                            result.setSnapshotNodeEntity(plan.getSnapShort());
+
                             session.save(result);
                         }
                     }
                 }
 
+                //【2】将快照对应的所有订单，按照订单逐个转换
+                NativeQuery nativeQuery = session.createNativeQuery("select idOrder from rg_plan where idSnapshort =:id group by idOrder");
+                nativeQuery.setParameter("id", snapShotId);
+                List<String> orders = nativeQuery.list();
+                for (int i = 0; i < orders.size(); i++) {
+                    NativeQuery nQuery = session.createNativeQuery("select * from rg_plan where idOrder =:idOrder order by t1Task asc", RG_PlanEntity.class);
+                    nQuery.setParameter("idOrder", orders.get(i));
+                    List<RG_PlanEntity> orderPlans = nQuery.list();
+
+                    startPlan = orderPlans.get(0);
+
+                    initialDate = sdf.parse(startPlan.getT1Task());
+
+                    for (int j = 0; j < orderPlans.size(); j++) {
+
+                        RG_PlanEntity plan = orderPlans.get(j);
+
+                        RG_ResourceEntity res = plan.getResourceByIdResource();
+
+                        if (res.getCritical() != null && res.getCritical().equals("T")) {
+                            String processId = plan.getProcessByIdProcess().getId();
+
+                            NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
+                            nquery.setParameter(1, processId);
+                            List<RG_ProcessAssisantEntity> list = nquery.list();
+
+                            if (list.size() > 0) {
+                                RG_EmulateResultEntity result = new RG_EmulateResultEntity();
+
+                                RG_ProcessAssisantEntity entity = list.get(0);
+
+                                //任务名
+                                result.setTask(entity.getTask());
+                                //货物名
+                                result.setGoods(entity.getGoods());
+                                //地点名(若不存在为null)
+                                result.setSite(entity.getSite());
+
+                                Date startDate = sdf.parse(plan.getT1Task());
+                                Date endDate = sdf.parse(plan.getT2Task());
+
+                                //开始时间
+                                result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                                //结束时间
+                                result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+
+                                result.setOrderEntity(plan.getOrderByIdOrder());
+
+                                session.save(result);
+                            }
+                        }
+                    }
+                }
+
+                flag = true;
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
         session.getTransaction().commit();
+        session.close();
 
         return flag;
     }

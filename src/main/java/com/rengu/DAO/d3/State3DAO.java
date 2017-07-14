@@ -92,16 +92,16 @@ public class State3DAO {
                 RG_LayoutDetailEntity entity = iter.next();
 
                 ObjectNode dataNode = mapper.createObjectNode();
-                dataNode.put("id",entity.getId());
-                dataNode.put("item",entity.getItem());
-                dataNode.put("pos",entity.getPos());
-                dataNode.put("state",entity.getState());
-                dataNode.put("exist",entity.getExist());
+                dataNode.put("id", entity.getId());
+                dataNode.put("item", entity.getItem());
+                dataNode.put("pos", entity.getPos());
+                dataNode.put("state", entity.getState());
+                dataNode.put("exist", entity.getExist());
 
                 arryaNode.add(dataNode);
             }
 
-            root.put("data",arryaNode);
+            root.put("data", arryaNode);
 
             try {
                 jsonString = mapper.writeValueAsString(root);
