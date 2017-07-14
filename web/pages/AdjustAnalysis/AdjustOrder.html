@@ -15,6 +15,12 @@
         padding: 0 0 5px 5px;
     }
 
+    .btn-block {
+        display: block;
+        width: 60%;
+        padding: 0px 10px;
+    }
+
 </style>
 <div>
     <!-- Content Header (Page header) -->
@@ -92,19 +98,30 @@
                                 <div class="tab-pane" id="tab_2">
                                     <!--表格2-->
                                     <div class="table-responsive mailbox-messages">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped" id="table_adjust">
                                             <tbody>
                                             <tr>
                                                 <td></td>
                                                 <td>紧急插单信息</td>
                                                 <td>异常来源</td>
                                                 <td>异常状态</td>
+                                                <td>异常处理</td>
                                             </tr>
                                             <tr  ng-repeat="x in adjustOrder" ng-init="renderTable($last)" onclick="a(this)">
                                                 <td><input name="check" type="checkbox"></td>
+                                                <td style="display:none">{{x.id}}</td>
                                                 <td id="ord">{{x.ord.name}}</td>
                                                 <td id="origin">{{x.origin}}</td>
-                                                <td id="state">{{x.state}}</td>
+                                                <td>
+                                                    <span class="label label-danger" ng-if="x.state == 1">异常未处理</span>
+                                                    <span class="label label-primary" ng-if="x.state == 2">aps处理中</span>
+                                                    <span class="label label-success" ng-if="x.state == 3">aps处理完成</span>
+                                                    <span class="label label-success" ng-if="x.state == 4">调整完成</span>
+                                                    <span class="label label-warning" ng-if="x.state == 5">处理完成</span>
+                                                </td>
+                                                <td>
+                                                    <button id="handle" type="button" class="btn btn-block btn-sm btn-info" ng-click="exceptionHandling(event)">处理</button>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
