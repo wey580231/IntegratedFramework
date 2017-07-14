@@ -160,6 +160,8 @@ angular.module("IntegratedFramework", [
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+
+        service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action"
         return service;
     })
     .factory("renderTableService", function () {
