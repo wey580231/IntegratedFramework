@@ -68,8 +68,8 @@ public class ApsTools {
                 "&" +
                 "BUFFER=1\\n2\\n" + entity.getOrd().getId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getId() + "\\n" + entity.getOrd().getName()
                 + "\\n" + entity.getOrd().getQuantity() + "\\n" + entity.getOrd().getProductByIdProduct().getId() + "\\n" + entity.getOrd().getIdGroupResource() +
-                "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(entity.getOrd().getT1Interaction()) + "\\n"
-                + ApsTools.instance().convertSpaceWithTab(entity.getOrd().getT2Interaction()) + "\\n"
+                "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT0())) + "\\n"
+                + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT1())) + "\\n"
                 + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOrd().getT2())) +
                 "&" +
                 "REPLY=" + ApsTools.instance().getReplyAddress() +
