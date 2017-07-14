@@ -45,10 +45,8 @@ public class RG_OrderEntity {
     private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
     @JsonIgnore
     private List<RG_EmulateDataEntity> emulateDatas = new ArrayList<RG_EmulateDataEntity>();
-
     @JsonIgnore
     private List<RG_EmulateResultEntity> emulateResults = new ArrayList<RG_EmulateResultEntity>();
-
     @JsonIgnore
     private Set<RG_OrderStateEntity> orderStates = new HashSet<RG_OrderStateEntity>();
 
