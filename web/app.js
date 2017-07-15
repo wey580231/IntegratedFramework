@@ -165,9 +165,9 @@ angular.module("IntegratedFramework", [
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
 
-        service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action"
+        service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action";
 
-        service.getAllLayout = backUrl + "3d/get3DLayout.action";
+        service.getAllLayout = backUrl + "layout/get3DLayout.action";
 
         return service;
     })
