@@ -84,10 +84,13 @@ public class ScheduleAction extends SuperAction {
 
             //解析Layout数据
             JsonNode layoutNodes = rootNode.get("layout");
-            if (layoutNodes.size() == 1) {
-                RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
-                rg_scheduleEntity.setLayout(layout);
-            }
+            // TODO 设置默认layout
+            RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, "1");
+            rg_scheduleEntity.setLayout(layout);
+//            if (layoutNodes.size() == 1) {
+//                RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
+//                rg_scheduleEntity.setLayout(layout);
+//            }
 
             //解析订单数据
             JsonNode orderNodes = rootNode.get("orders");

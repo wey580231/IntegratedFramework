@@ -143,11 +143,15 @@
         <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
         <action name="OrderExceptionHandling" class="com.rengu.actions.AdjustOrderAction"
                 method="OrderExceptionHandling"/>
+        <action name="processExceptionHandling" class="com.rengu.actions.AdjustProcessAction"
+                method="processExceptionHandling"/>
     </package>
 
     <!--异常模拟-->
     <package name="ExceptionSimulat" namespace="/ExceptionSimulat" extends="struts-default">
         <action name="creatOrderException" class="com.rengu.actions.AdjustOrderAction" method="creatOrderException"/>
+        <action name="creatProcessException" class="com.rengu.actions.AdjustProcessAction"
+                method="creatProcessException"/>
     </package>
 
     <!--高级调整分析-->
@@ -172,7 +176,7 @@
     <package name="SnapshotManager" namespace="/snapshot" extends="struts-default">
         <action name="view3DEmulate" class="com.rengu.actions.SnapshotAction" method="viewCurrentSnapshotEmulateData"/>
         <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="applySnapshotToMes"/>
-        <action name="getAllByByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByByLevel"/>
+        <action name="getAllByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByByLevel"/>
         <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
     </package>
 
@@ -180,5 +184,4 @@
     <package name="Plan" namespace="/plan" extends="struts-default">
         <action name="getAllPlanBySnapshotId" class="com.rengu.actions.PlanAction" method="getAllPlanBySnapshotId"/>
     </package>
-
 </struts>
