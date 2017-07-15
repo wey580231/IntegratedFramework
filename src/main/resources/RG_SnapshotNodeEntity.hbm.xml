@@ -31,13 +31,10 @@
 
         <many-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" unique="true"/>
 
-        <list name="plans">
-            <key>
-                <column name="idSnapshort" not-null="false"/>
-            </key>
-            <index column="id" type="java.lang.Integer"/>
+        <set name="plans" cascade="all" inverse="true">
+            <key column="idSnapshort"></key>
             <one-to-many class="com.rengu.entity.RG_PlanEntity"/>
-        </list>
+        </set>
 
         <list name="results">
             <key>
