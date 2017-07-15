@@ -115,16 +115,19 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //开始排程
         $scope.submitForm = function () {
+            if (selectedCheckArray.length == 0) {
+                document.getElementById("startSchedule").disabled = true;
+            }
             //保存选中的布局信息
             for (var i = 0; i < selectedCheckArray.length; i++) {
                 var params = {};
                 params.id = selectedCheckArray[i];
                 layouts = params;
+                document.getElementById("startSchedule").disabled = "";
             }
             selectedCheckArray.splice(0, selectedCheckArray.length);
             console.log("所选择的布局信息");
             console.log(layouts);
-
 
             configAPS();
         };
@@ -205,11 +208,15 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $scope.ordinfo = curorder;
                 //curorder.splice(0, curorder.length);
 
+                if (selectedCheckArray.length == 0) {
+                    document.getElementById("nextStep").disabled = true;
+                }
+
                 for (var i = 0; i < selectedCheckArray.length; i++) {
                     var params = {};
                     params.id = selectedCheckArray[i];
                     orders.push(params);
-
+                    document.getElementById("nextStep").disabled = "";
                 }
                 selectedCheckArray.splice(0, selectedCheckArray.length);
 
@@ -221,12 +228,10 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             myHttpService.get(serviceList.getAllLayout).then(function (response) {
                 var curlayout = [];
                 var layout = response.data;
-                console.log(layout.data.length);
                 for (var i = 0; i < layout.data.length; i++) {
-                    console.log(layout.data[i]);
-                    var temp = layout.data[i].layoutId;
+                    /* var temp = layout.data[i].layoutId;
                     delete(layout.data[i].layoutId);
-                    layout.data[i].id = temp;
+                     layout.data[i].id = temp;*/
                     curlayout.push(layout.data[i]);
                 }
 
@@ -237,7 +242,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         }
 
         /*
-
          function getChoosedOrder() {
          for (var i = 0; i < selectedCheckArray.length; i++) {
          var params = {};
