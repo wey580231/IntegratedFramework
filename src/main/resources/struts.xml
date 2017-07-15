@@ -143,11 +143,15 @@
         <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
         <action name="OrderExceptionHandling" class="com.rengu.actions.AdjustOrderAction"
                 method="OrderExceptionHandling"/>
+        <action name="processExceptionHandling" class="com.rengu.actions.AdjustProcessAction"
+                method="processExceptionHandling"/>
     </package>
 
     <!--异常模拟-->
     <package name="ExceptionSimulat" namespace="/ExceptionSimulat" extends="struts-default">
         <action name="creatOrderException" class="com.rengu.actions.AdjustOrderAction" method="creatOrderException"/>
+        <action name="creatProcessException" class="com.rengu.actions.AdjustProcessAction"
+                method="creatProcessException"/>
     </package>
 
     <!--高级调整分析-->
