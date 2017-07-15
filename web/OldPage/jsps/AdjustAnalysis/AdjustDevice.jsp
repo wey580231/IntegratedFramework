@@ -129,11 +129,6 @@
                                 <td style="width: 94px;">上报时间</td>
                                 <td>资源编码</td>
                                 <td style="width: 95px;">撤销时间</td>
-                                <%--<td style="width: 90px;">最晚撤销时间</td>
-                                <td>不可用开始段时间</td>
-                                <td>不可用结束段时间</td>
-                                <td>不可用开始段日期</td>
-                                <td>不可用结束段日期</td>--%>
                                 <td>处理方法</td>
                                 <td style="width: 90px;">异常来源</td>
                             </tr>

@@ -164,6 +164,11 @@ angular.module("IntegratedFramework", [
         service.ExceptionHandling = backUrl + "ExceptionHandling/OrderExceptionHandling.action";
 
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+
+        service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action";
+
+        service.getAllLayout = backUrl + "layout/get3DLayout.action";
+
         return service;
     })
     .factory("renderTableService", function () {

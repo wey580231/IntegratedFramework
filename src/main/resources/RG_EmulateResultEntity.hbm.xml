@@ -27,5 +27,9 @@
         <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity">
             <column name="idOrder" not-null="false"/>
         </many-to-one>
+
+        <many-to-one name="snapshotNodeEntity" class="com.rengu.entity.RG_SnapshotNodeEntity">
+            <column name="idSnapshort" not-null="false"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

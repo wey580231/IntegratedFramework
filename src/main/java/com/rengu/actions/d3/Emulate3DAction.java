@@ -26,8 +26,29 @@ public class Emulate3DAction extends SuperAction {
         if (parameterMap.size() == 1) {
             String[] types = (String[]) parameterMap.get("snapshotId");
             if (types.length > 0) {
-                result = emulateDao.getEmulateData(types[0], jsonString);
-//                result = emulateDao.getEmulateResult(types[0], jsonString);
+                result = emulateDao.getEmulateResult(types[0], jsonString);
+            }
+        }
+
+        if (result) {
+            Tools.jsonPrint(jsonString.toString(), this.httpServletResponse);
+        } else {
+            Tools.jsonPrint(Tools.resultCode("1", "Can't execute operation"), this.httpServletResponse);
+        }
+    }
+
+    //获取所有订单结果信息，按照时间排序
+    public void getAllOrderEmulateFlow(){
+        ActionContext context = ActionContext.getContext();
+        Map<String, Object> parameterMap = context.getParameters();
+
+        boolean result = false;
+        StringBuilder jsonString = new StringBuilder();
+
+        if (parameterMap.size() == 1) {
+            String[] types = (String[]) parameterMap.get("snapshotId");
+            if (types.length > 0) {
+                result = emulateDao.getAllOrderEmulateResult(types[0], jsonString);
             }
         }
 

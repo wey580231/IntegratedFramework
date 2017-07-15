@@ -107,6 +107,11 @@
         <action name="getAllById" class="com.rengu.actions.ProcessAction" method="getAllById"/>
     </package>
 
+    <!--布局信息-->
+    <package name="Layout" namespace="/layout" extends="struts-default">
+        <action name="get3DLayout" class="com.rengu.actions.LayoutAction" method="query3DLayout"/>
+    </package>
+
     <!--3D车间访问接口-->
     <package name="State3D" namespace="/3d" extends="struts-default">
         <!--状态查询-->
@@ -121,6 +126,8 @@
 
         <!--仿真或实时数据驱动-->
         <action name="drive3DEmulateFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getEmulateFlow"/>
+        <action name="drive3DEmulateFlowAllOrder" class="com.rengu.actions.d3.Emulate3DAction"
+                method="getAllOrderEmulateFlow"/>
         <action name="drive3DRealFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getRealFlow"/>
     </package>
 
