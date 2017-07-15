@@ -128,25 +128,31 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 console.log("$$$$$$$$$%%%%%%%");
                 console.log(idVal);
                 var e = event || window.event;
-                if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
+                /*if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
                     zTree.cancelSelectedNode();
                     showRMenu("root", e.clientX, e.clientY);
                 } else if (treeNode && zTree.getSelectedNodes()[0].level == "2") {
                     zTree.selectNode(treeNode);
                     showRMenu("node", e.clientX, e.clientY);
-                }
+                }*/
+
             }
 
             //右击菜单显示
             function showRMenu(type, x, y) {
-                $("#rMenu ul").show();
+               /* $("#rMenu ul").show();
                 if (type == "root") {
                     $("#m_add").hide();
                     $("#m_del").hide();
                 } else {
                     $("#m_add").show();
                     $("#m_del").show();
-                }
+                }*/
+               if(type == "root"){
+                   $("#rMenu ul").hide();
+               }else{
+                   $("#rMenu ul").show();
+               }
                 rMenu.css({"top": (y - 110) + "px", "left": (x - 250) + "px", "visibility": "visible"});
                 $("body").bind("mousedown", onBodyMouseDown);
             }
