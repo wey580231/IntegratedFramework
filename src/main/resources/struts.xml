@@ -172,7 +172,7 @@
     <package name="SnapshotManager" namespace="/snapshot" extends="struts-default">
         <action name="view3DEmulate" class="com.rengu.actions.SnapshotAction" method="viewCurrentSnapshotEmulateData"/>
         <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="applySnapshotToMes"/>
-        <action name="getAllByByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByByLevel"/>
+        <action name="getAllByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByByLevel"/>
         <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
     </package>
 
@@ -180,5 +180,4 @@
     <package name="Plan" namespace="/plan" extends="struts-default">
         <action name="getAllPlanBySnapshotId" class="com.rengu.actions.PlanAction" method="getAllPlanBySnapshotId"/>
     </package>
-
 </struts>

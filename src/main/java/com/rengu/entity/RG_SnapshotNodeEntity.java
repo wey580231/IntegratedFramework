@@ -23,15 +23,13 @@ public class RG_SnapshotNodeEntity {
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "childsSnapshotId")
     private Set<RG_SnapshotNodeEntity> childs = new HashSet<RG_SnapshotNodeEntity>();      //子节点
-    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "parentSnapshotId")
-    private RG_SnapshotNodeEntity parent;                              //父节点
-    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "rootSnapshotId")
-    private RG_SnapshotNodeEntity rootParent;                          //根节点
-    //    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     @JsonIgnore
+    private RG_SnapshotNodeEntity parent;                              //父节点
+    @JsonIgnore
+    private RG_SnapshotNodeEntity rootParent;                          //根节点
     private RG_ScheduleEntity schedule;                                //排程记录
     @JsonIgnore
-    private List<RG_PlanEntity> plans = new ArrayList<RG_PlanEntity>();   //计划表
+    private Set<RG_PlanEntity> plans = new HashSet<RG_PlanEntity>();   //计划表
     @JsonIgnore
     private List<RG_EmulateResultEntity> results = new ArrayList<RG_EmulateResultEntity>();
 
@@ -99,11 +97,11 @@ public class RG_SnapshotNodeEntity {
         this.schedule = schedule;
     }
 
-    public List<RG_PlanEntity> getPlans() {
+    public Set<RG_PlanEntity> getPlans() {
         return plans;
     }
 
-    public void setPlans(List<RG_PlanEntity> plans) {
+    public void setPlans(Set<RG_PlanEntity> plans) {
         this.plans = plans;
     }
 

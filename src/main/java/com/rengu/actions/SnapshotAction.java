@@ -1,6 +1,11 @@
 package com.rengu.actions;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.opensymphony.xwork2.ActionContext;
 import com.rengu.DAO.SnapshotDao;
 import com.rengu.DAO.impl.SnapshotDaoImpl;
@@ -68,8 +73,23 @@ public class SnapshotAction extends SuperAction {
         String level = jsonNode.get("level").asText();
         SnapshotDaoImpl snapshotDao = DAOFactory.getSnapshotDaoImplInstance();
         List<RG_SnapshotNodeEntity> rg_snapshotNodeEntityList = snapshotDao.findAllByLevel(level);
-        String jsonString = Tools.entityConvertToJsonString(rg_snapshotNodeEntityList);
-        Tools.jsonPrint(jsonString, this.httpServletResponse);
+        if (rg_snapshotNodeEntityList.size() > 0) {
+            //生成根节点树
+            JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+            JsonFactory jsonFactory = new JsonFactory();
+            //根节点
+            ArrayNode arrayNode = jsonNodeFactory.arrayNode();
+            for (RG_SnapshotNodeEntity rg_snapshotNodeEntity : rg_snapshotNodeEntityList) {
+                ObjectNode snapshotNode = jsonNodeFactory.objectNode();
+                snapshotNode.put("id", rg_snapshotNodeEntity.getId());
+                snapshotNode.put("name", rg_snapshotNodeEntity.getName());
+                arrayNode.add(snapshotNode);
+            }
+            String jsonString = new ObjectMapper().writeValueAsString(arrayNode);
+            Tools.jsonPrint(jsonString, this.httpServletResponse);
+        } else {
+            Tools.jsonPrint(null, this.httpServletResponse);
+        }
     }
 
     public void getAllById() throws Exception {

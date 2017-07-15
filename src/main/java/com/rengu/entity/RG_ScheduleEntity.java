@@ -1,6 +1,7 @@
 package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -51,7 +52,7 @@ public class RG_ScheduleEntity {
     private Set<RG_ResourceEntity> resources = new HashSet<RG_ResourceEntity>();             //资源
     private Set<RG_GroupresourceEntity> groups = new HashSet<RG_GroupresourceEntity>();      //工组
     private Set<RG_SiteEntity> sites = new HashSet<RG_SiteEntity>();                         //工位
-
+    @JsonIgnore
     private RG_SnapshotNodeEntity snapshot;            //排程快照
 
     public String getId() {
