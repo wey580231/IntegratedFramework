@@ -40,6 +40,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             });
             $("#tipHover").css("width", 1 / pageTipCount * 100 + "%");
             document.getElementById("nextStep").disabled = true;
+            document.getElementById("startSchedule").disabled = true;
         });
 
         //新建排程
@@ -107,7 +108,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }
 
             showLayoutInfo();
-
+            document.getElementById("startSchedule").disabled = true;
 
             //choosedOrder();
             //getIdSelections();
@@ -165,7 +166,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             if (validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) &&
                 validate.checkLength(params.scheduleDays) && validate.checkNumber(params.scheduleDays) && validate.checkLength(params.name)) {
-                document.getElementById("nextStep").disabled = false;
+                document.getElementById("nextStep").disabled = "";
                 showSchedule();
 
                 return true;
@@ -394,11 +395,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
                 selectedCheckArray.push(id);
                 document.getElementById("nextStep").disabled = "";
+                document.getElementById("startSchedule").disabled = "";
                 console.log(id + "被选中");
             }
             if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
                 selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
                 document.getElementById("nextStep").disabled = true;
+                document.getElementById("startSchedule").disabled = true;
                 console.log(id + "取消选中");
             }
         };
@@ -486,5 +489,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }, function errorCallback() {
                 notification.sendNotification("alert", "请求失败");
             });
+            document.getElementById("nextStep").disabled = true;
         }
     });
