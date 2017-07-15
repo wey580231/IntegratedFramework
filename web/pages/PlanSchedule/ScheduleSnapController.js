@@ -11,9 +11,15 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
     }])
     .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList) {
 
+        layer.load(0);
+
         $(function () {
             //初始化下拉数据
             $(".select2").select2();
+
+            loadRightFloatMenu();
+
+            hideLoadingPage();
         });
 
         var zTreeNodes = [];

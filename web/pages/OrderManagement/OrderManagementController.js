@@ -11,15 +11,24 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
     }])
 
     .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+
+        layer.load(0);
+
+        $(function () {
+            loadRightFloatMenu();
+
+            myHttpService.get(serviceList.ListOrder).then(function (response) {
+                $scope.orderList = response.data;
+
+                hideLoadingPage();
+            });
+        });
+
         var editData = [];//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
-
-        myHttpService.get(serviceList.ListOrder).then(function (response) {
-            $scope.orderList = response.data;
-        });
 
         //Date picker
         $('#modal-add-t0-datepicker').datepicker({

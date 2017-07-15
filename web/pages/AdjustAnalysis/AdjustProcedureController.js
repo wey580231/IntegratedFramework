@@ -10,9 +10,16 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
         })
     }])
     .controller('AdjustProcedureController', function ($scope, $http, myHttpService, serviceList,renderTableService) {
-        //加载页面时数据显示
-        myHttpService.get(serviceList.AdjustProcess).then(function (response) {
-            $scope.arr = response.data;
+
+        layer.load(0);
+
+        $(function () {
+            //加载页面时数据显示
+            myHttpService.get(serviceList.AdjustProcess).then(function (response) {
+                $scope.arr = response.data;
+
+                hideLoadingPage();
+            });
         });
 
         //渲染checkBox样式
