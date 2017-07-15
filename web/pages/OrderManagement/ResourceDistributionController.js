@@ -11,16 +11,24 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
     }])
 
     .controller('ResourceDistributionController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
+
+        layer.load(0);
+
+        $(function () {
+            loadRightFloatMenu();
+
+            myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {
+                $scope.resourcedisList = response.data;
+
+                hideLoadingPage();
+            });
+        });
+
         var editData = {};//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
-
-        myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {
-            $scope.resourcedisList = response.data;
-        });
-
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {

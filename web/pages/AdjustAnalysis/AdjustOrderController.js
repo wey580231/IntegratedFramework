@@ -12,13 +12,19 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
 
     .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList,validate,renderTableService,notification) {
 
+        layer.load(0);
+
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
-        myHttpService.get(serviceList.AdjustOrder).then(function (response) {
-            $scope.adjustOrder = response.data;
+        $(function () {
+            myHttpService.get(serviceList.AdjustOrder).then(function (response) {
+                $scope.adjustOrder = response.data;
+
+                hideLoadingPage();
+            });
         });
 
         //渲染checkBox样式

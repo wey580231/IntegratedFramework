@@ -10,54 +10,41 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceListController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
+    .controller('ResourceListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+
+        layer.load(0);
+
         var editData = {};//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
-        myHttpService.get(serviceList.ListResource).then(function (response) {
-            $scope.resourceList = response.data;
+        $(function () {
+            loadRightFloatMenu();
+
+            myHttpService.get(serviceList.ListResource).then(function (response) {
+                $scope.resourceList = response.data;
+
+                hideLoadingPage();
+            });
         });
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
-            if ($last) {
-                //Enable iCheck plugin for checkboxes
-                //iCheck for checkbox and radio inputs
-                $('.mailbox-messages input[type="checkbox"]').iCheck({
-                    checkboxClass: 'icheckbox_flat-blue',
-                    radioClass: 'iradio_flat-blue'
-                });
-
-                //Enable check and uncheck all functionality
-                $(".checkbox-toggle").click(function () {
-                    var clicks = $(this).data('clicks');
-                    if (clicks) {
-                        //Uncheck all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-                        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-                    } else {
-                        //Check all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("check");
-                        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-                    }
-                    $(this).data("clicks", !clicks);
-                });
-            }
+            renderTableService.renderTable($last);
         };
 
         //信息填写检验
         var resourceAddValidate = function () {
             var params = {};
             var myselect = document.getElementById("select");
-            var index = myselect.selectedIndex ;
+            var index = myselect.selectedIndex;
             params.name = $("input[name='add-name']").val();
             params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
             /*params.nameShift = $("input[name='add-nameShift']").val();*/
             /*params.nameShift = $("myselect.options[index].text");*/
-            params.nameShift = $ ("#selectAdd option:selected").val();
+            params.nameShift = $("#selectAdd option:selected").val();
             console.log(params.nameShift);
             params.state = $("input[name='add-state']").val();
             addData = JSON.stringify(params);
@@ -81,12 +68,12 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             }
 
             /*if (!validate.checkNumber(params.nameShift) || !validate.checkLength(params.nameShift)) {
-                $("#add-nameShift").removeClass("has-success");
-                $("#add-nameShift").addClass("has-error");
-            } else {
-                $("#add-nameShift").removeClass("has-error");
-                $("#add-nameShift").addClass(" has-success");
-            }*/
+             $("#add-nameShift").removeClass("has-success");
+             $("#add-nameShift").addClass("has-error");
+             } else {
+             $("#add-nameShift").removeClass("has-error");
+             $("#add-nameShift").addClass(" has-success");
+             }*/
 
             if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
                 $("#add-state").removeClass("has-success");
@@ -112,7 +99,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             params.name = $("input[name='edit-name']").val();
             params.idSiteGroupResource = $("input[name='edit-siteGroupResource']").val();
             /*params.nameShift = $("input[name='edit-nameShift']").val();*/
-            params.nameShift = $ ("#selectEdit option:selected").val();
+            params.nameShift = $("#selectEdit option:selected").val();
             params.state = $("input[name='edit-state']").val();
             editData = params;
 
