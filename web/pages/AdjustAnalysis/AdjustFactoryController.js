@@ -11,10 +11,5 @@ angular.module("IntegratedFramework.AdjustFactoryController", ['ngRoute'])
     }])
     .controller("AdjustFactoryController", function ($scope) {
 
-        /* $("#wheel-button").wheelmenu({
-         animation: "fly",
-         animationSpeed: "medium",
-         angle: "all"
-         });*/
 
     });
