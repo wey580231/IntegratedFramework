@@ -10,9 +10,12 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         })
     }])
 
-    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList,validate,renderTableService) {
+    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList,validate,renderTableService,notification) {
 
         var addData = [];
+        var edit_params = {};//获取需改后的数据
+        var idVal;
+        var id_params = {}; //保存选中的记录的id信息
 
         myHttpService.get(serviceList.AdjustOrder).then(function (response) {
             $scope.adjustOrder = response.data;
@@ -83,19 +86,45 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             }
         };
 
-        //新增订单
+        //异常状态
         $scope.addAdjustOrder = function () {
             if (orderAddValidate()) {
                 $("#modal-add").modal('hide');
                 console.log(addData);
                 myHttpService.post(serviceList.AddAdjustOrder, addData).then(function successCallback() {
-                    //setTimeout('window.location.reload();', 0.1);
+                    setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
                 notification.sendNotification("alert", "参数错误");
             }
+        };
+
+        //异常处理
+        $scope.exceptionHandling = function (event) {
+            var index;
+            var idInfo;
+            var rows = document.getElementById("table_adjust").rows;
+            /*event = event ? event : window.event;
+            var e = event.srcElement ? event.srcElement : event.target;*/
+            var e = event||window.event;
+           // var e= document.all ? window.event : arguments[0] ? arguments[0] : event;
+            var target = e.target || e.srcElement;
+            if (target.parentNode.tagName.toLowerCase() == "td") {
+                var rowIndex = target.parentNode.parentNode.rowIndex;
+                index = rows[rowIndex].cells[1].innerHTML;
+                var params={};
+                params.id=index;
+                idInfo=JSON.stringify(params);
+            }
+            alert(idInfo);
+                myHttpService.post(serviceList.ExceptionHandling, idInfo).then(function successCallback(response) {
+                    notification.sendNotification("alert", "请求成功");
+                }, function errorCallback(response) {
+                    notification.sendNotification("alert", "请求失败");
+                })
+
         };
 
 
