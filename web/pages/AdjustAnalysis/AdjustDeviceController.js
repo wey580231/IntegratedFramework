@@ -14,17 +14,23 @@ angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
     }])
 
     .controller('AdjustDeviceController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+
+        layer.load(0);
+
         var editData = [];//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
-        myHttpService.get(serviceList.getAllAdjustDeviceException).then(function (response) {
-            $scope.adjustDeviceList = response.data;
-        });
+        $(function () {
+            myHttpService.get(serviceList.getAllAdjustDeviceException).then(function (response) {
+                $scope.adjustDeviceList = response.data;
 
-        //Date picker
+                hideLoadingPage();
+            });
+
+        });
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {

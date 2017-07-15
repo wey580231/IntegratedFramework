@@ -28,10 +28,10 @@ public class ScheduleAction extends SuperAction {
 
             //更新数据库表内容
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
-            System.out.println(jsonString);
             JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
             RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
             rg_scheduleEntity.setId(Tools.getUUID());
+
             //解析排程名称
             JsonNode nameNodes = rootNode.get("name");
             rg_scheduleEntity.setName(nameNodes.asText());
@@ -47,7 +47,7 @@ public class ScheduleAction extends SuperAction {
             rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
             //解析rollTime
             JsonNode rollTimeNodes = rootNode.get("rollTime");
-            rg_scheduleEntity.setScheduleWindow(rollTimeNodes.asInt());
+            rg_scheduleEntity.setRollTime(rollTimeNodes.asInt());
             //解析APS_Config数据
             JsonNode APS_ConfigNode = rootNode.get("APSConfig");
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
@@ -195,6 +195,7 @@ public class ScheduleAction extends SuperAction {
         }
     }
 
+    //获取所有的排程
     public void getAllSchedules() throws Exception {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
         List list = scheduleDAO.findAll();

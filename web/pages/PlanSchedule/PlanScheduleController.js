@@ -10,6 +10,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         })
     }])
     .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService, validate, notification) {
+
+        layer.load(0);
+
         var selectedCheckArray = [];    //选中的checkbox的id值集合
         var scheduleDays;
         var name;
@@ -19,10 +22,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var orders = [];
         var layouts = {};
 
-        myHttpService.get(serviceList.ListSchedule).then(function (response) {
-            $scope.scheduleList = response.data;
-        });
+        $(function () {
+            myHttpService.get(serviceList.ListSchedule).then(function (response) {
+                $scope.scheduleList = response.data;
 
+                hideLoadingPage();
+            });
+        });
 
         var pageCount = 0;
         var currPage = 0;
@@ -172,8 +178,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 return true;
 
             } else {
-                return false;
                 document.getElementById("nextStep").disabled = true;
+                return false;
             }
         };
 
