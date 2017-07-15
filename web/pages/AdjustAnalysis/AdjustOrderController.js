@@ -106,10 +106,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             var index;
             var idInfo;
             var rows = document.getElementById("table_adjust").rows;
-            /*event = event ? event : window.event;
-            var e = event.srcElement ? event.srcElement : event.target;*/
             var e = event||window.event;
-           // var e= document.all ? window.event : arguments[0] ? arguments[0] : event;
             var target = e.target || e.srcElement;
             if (target.parentNode.tagName.toLowerCase() == "td") {
                 var rowIndex = target.parentNode.parentNode.rowIndex;
