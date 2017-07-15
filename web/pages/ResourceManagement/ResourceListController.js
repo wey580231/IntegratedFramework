@@ -56,9 +56,10 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
             /*params.nameShift = $("input[name='add-nameShift']").val();*/
-            params.nameShift = $("myselect.options[index].text");
+            /*params.nameShift = $("myselect.options[index].text");*/
+            params.nameShift = $ ("#selectAdd option:selected").val();
             console.log(params.nameShift);
-                params.state = $("input[name='add-state']").val();
+            params.state = $("input[name='add-state']").val();
             addData = JSON.stringify(params);
 
 
@@ -110,7 +111,8 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='edit-name']").val();
             params.idSiteGroupResource = $("input[name='edit-siteGroupResource']").val();
-            params.nameShift = $("input[name='edit-nameShift']").val();
+            /*params.nameShift = $("input[name='edit-nameShift']").val();*/
+            params.nameShift = $ ("#selectEdit option:selected").val();
             params.state = $("input[name='edit-state']").val();
             editData = params;
 
