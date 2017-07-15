@@ -224,7 +224,7 @@
                                             <td>最晚开工</td>
                                         </tr>
                                         <tr ng-repeat="x in ordinfo">
-                                            <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                                            <td><input id="check1" name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                                        ng-click="updateSelection($event,x.id)"></td>
                                             <td style="display:none">{{x.id}}</td>
                                             <td>{{x.name}}</td>
@@ -251,7 +251,8 @@
                                         <tr ng-repeat="x in layout">
                                             <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
                                                        ng-click="updateSelection($event,x.id)"></td>
-                                            <td>{{x.id}}</td>
+                                            <td style="display:none">{{x.id}}</td>
+                                            <td>{{x.name}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

@@ -115,15 +115,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //开始排程
         $scope.submitForm = function () {
-            if (selectedCheckArray.length == 0) {
-                document.getElementById("startSchedule").disabled = true;
-            }
+
             //保存选中的布局信息
             for (var i = 0; i < selectedCheckArray.length; i++) {
                 var params = {};
                 params.id = selectedCheckArray[i];
                 layouts = params;
-                document.getElementById("startSchedule").disabled = "";
+
             }
             selectedCheckArray.splice(0, selectedCheckArray.length);
             console.log("所选择的布局信息");
@@ -216,12 +214,23 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     var params = {};
                     params.id = selectedCheckArray[i];
                     orders.push(params);
-                    document.getElementById("nextStep").disabled = "";
                 }
                 selectedCheckArray.splice(0, selectedCheckArray.length);
 
             });
         }
+
+
+        /*$("#check1").click(function () {
+            if ($(this).attr("checked") == true) {
+                //当前为选中状态
+                document.getElementById("nextStep").disabled = "";
+            } else {
+                //当前为不选中状态
+                document.getElementById("nextStep").disabled = true;
+            }
+        })*/
+
 
 
         function showLayoutInfo() {
@@ -230,7 +239,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 var layout = response.data;
                 for (var i = 0; i < layout.data.length; i++) {
                     /* var temp = layout.data[i].layoutId;
-                    delete(layout.data[i].layoutId);
+                     delete(layout.data[i].layoutId);
                      layout.data[i].id = temp;*/
                     curlayout.push(layout.data[i]);
                 }
@@ -384,10 +393,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             //operateId = id;
             if (action == 'add' & selectedCheckArray.indexOf(id) == -1) {
                 selectedCheckArray.push(id);
+                document.getElementById("nextStep").disabled = "";
                 console.log(id + "被选中");
             }
             if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
                 selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
+                document.getElementById("nextStep").disabled = true;
                 console.log(id + "取消选中");
             }
         };
