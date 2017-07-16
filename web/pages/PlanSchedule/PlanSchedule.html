@@ -81,7 +81,7 @@
                         <div class="btn-group">
                             <button type="button" id="scheduleButt"
                                     class="btn btn-default btn-sm" data-toggle="modal"
-                                    data-target="#modal-add" ng-click="prepareNewSchedule();hideCalendar()">
+                                    ng-click="prepareNewSchedule();hideCalendar()">
                                 <i class="fa fa-plus"></i>
                                 新增排程
                             </button>
@@ -110,7 +110,11 @@
                             ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{schedule.id}}</td>
-                            <td>{{schedule.name}}</td>
+                            <td style="position: absolute">{{schedule.name}}<span class="label label-success"
+                                                                                  style="position:relative;left:0px;top:0px;cursor: pointer;"
+                                                                                  ng-if="schedule.state == 2 && $last"
+                                                                                  ng-click="interactiveSchedule()">交互优化</span>
+                            </td>
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>{{schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>
@@ -121,7 +125,8 @@
                             <td>{{schedule.rollTime}}</td>
                             <td>
                                 <span class="label label-success" ng-if="schedule.state == 0">下发APS</span>
-                                <span class="label label-primary" ng-if="schedule.state == 1"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
+                                <span class="label label-primary" ng-if="schedule.state == 1"><i
+                                        class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
                                 <span class="label label-success" ng-if="schedule.state == 2">计算成功</span>
                                 <span class="label label-danger" ng-if="schedule.state == 3">计算失败</span>
                                 <span class="label label-success" ng-if="schedule.state == 4">优化完成</span>
@@ -148,16 +153,13 @@
                                 <div id="tipHover"></div>
                                 <ul id="MyUl">
                                     <li class="MyPageTip">基础信息</li>
-                                    <li class="MyPageTip">订单信息</li>
                                     <li class="MyPageTip">布局信息</li>
+                                    <li class="MyPageTip">订单信息</li>
                                 </ul>
                             </div>
                             <!--新增排程页面时，只需要新增div并且class='MyPage'即可-->
                             <div class="MyPage">
-
                                 <div class="" style="height: 100%;">
-
-                                    <!-- Main content -->
                                     <section class="content" style="height: 100%;">
                                         <div class="row" style="height: 100%;">
                                             <div class="col-md-4">
@@ -223,8 +225,27 @@
                                 </div>
 
                             </div>
+
                             <div class="MyPage">
 
+                                <div class="table-responsive mailbox-messages">
+                                    <table class="table table-hover table-striped" id="layouts">
+                                        <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>布局</td>
+                                        </tr>
+                                        <tr ng-repeat="x in layout">
+                                            <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                                                       ng-click="updateSelection($event,x.id)"></td>
+                                            <td style="display:none">{{x.id}}</td>
+                                            <td>{{x.name}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="MyPage">
                                 <div class="table-responsive mailbox-messages">
                                     <table class="table table-hover table-striped" id="orders">
                                         <tbody>
@@ -252,27 +273,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-                            </div>
-                            <div class="MyPage">
-
-                                <div class="table-responsive mailbox-messages">
-                                    <table class="table table-hover table-striped" id="layouts">
-                                        <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>布局</td>
-                                        </tr>
-                                        <tr ng-repeat="x in layout">
-                                            <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                       ng-click="updateSelection($event,x.id)"></td>
-                                            <td style="display:none">{{x.id}}</td>
-                                            <td>{{x.name}}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
                             </div>
                         </div>
                         <div class="box-footer" style="clear:both;height:15%">

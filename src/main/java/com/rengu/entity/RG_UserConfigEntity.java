@@ -88,38 +88,4 @@ public class RG_UserConfigEntity {
         this.user = user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_UserConfigEntity that = (RG_UserConfigEntity) o;
-
-        if (errorSchedule != that.errorSchedule) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (latestScheduleId != null ? !latestScheduleId.equals(that.latestScheduleId) : that.latestScheduleId != null)
-            return false;
-        if (currScheduleId != null ? !currScheduleId.equals(that.currScheduleId) : that.currScheduleId != null)
-            return false;
-        if (rootSnapshotId != null ? !rootSnapshotId.equals(that.rootSnapshotId) : that.rootSnapshotId != null)
-            return false;
-        if (middleSnapshotId != null ? !middleSnapshotId.equals(that.middleSnapshotId) : that.middleSnapshotId != null)
-            return false;
-        if (bottomSnapshotId != null ? !bottomSnapshotId.equals(that.bottomSnapshotId) : that.bottomSnapshotId != null)
-            return false;
-        return apsReplyCount != null ? apsReplyCount.equals(that.apsReplyCount) : that.apsReplyCount == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (latestScheduleId != null ? latestScheduleId.hashCode() : 0);
-        result = 31 * result + (currScheduleId != null ? currScheduleId.hashCode() : 0);
-        result = 31 * result + (rootSnapshotId != null ? rootSnapshotId.hashCode() : 0);
-        result = 31 * result + (middleSnapshotId != null ? middleSnapshotId.hashCode() : 0);
-        result = 31 * result + (bottomSnapshotId != null ? bottomSnapshotId.hashCode() : 0);
-        result = 31 * result + (errorSchedule ? 1 : 0);
-        result = 31 * result + (apsReplyCount != null ? apsReplyCount.hashCode() : 0);
-        return result;
-    }
 }

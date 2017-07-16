@@ -148,26 +148,30 @@ angular.module("IntegratedFramework", [
         service.CurInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
         <!--工序信息接口-->
         service.isRootNode = backUrl + "process/getAllByIsRootNode.action";
-
         service.isChildNode = backUrl + "process/getAllById.action";
 
+        <!--快照信息-->
         service.isRootLevel = backUrl + "snapshot/getAllByLevel.action";
         service.getTree = backUrl + "snapshot/getAllById.action";
-
+        service.view3DEmulate = backUrl + "snapshot/view3DEmulate.action";
+        service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
 
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
         <!--异常状态-->
         service.AddAdjustOrder = backUrl + "ExceptionSimulat/creatOrderException.action";
-        <!--异常处理-->
-        service.ExceptionHandling = backUrl + "ExceptionHandling/OrderExceptionHandling.action";
 
-        service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+        <!--异常处理-->
+        service.deviceProcessHandling = backUrl + "exceptionHandling/deviceProcessHandling.action";
+        service.orderExceptionHandling = backUrl + "exceptionHandling/orderExceptionHandling.action";
+        service.processExceptionHandling = backUrl + "exceptionHandling/processExceptionHandling.action";
 
         service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action";
-
         service.getAllLayout = backUrl + "layout/get3DLayout.action";
+
+        service.queryApsState = backUrl + "aps/apsState.action";
+        service.currSheduleInfo = backUrl + "aps/scheduleDetail.action";
 
         return service;
     })
@@ -244,14 +248,14 @@ angular.module("IntegratedFramework", [
     })
     .factory("dispatchApsService", ['notification', function (notification) {
         var service = {};
-        service.dispatchAps = function (confirmDispatchAps,resetDispatchAps) {
+        service.dispatchAps = function (confirmDispatchAps, resetDispatchAps) {
             if (hasCheckRows()) {
                 layer.confirm('将选中数据下发APS？', {
                     btn: ['下发', '取消'] //按钮
                 }, function () {
-                   confirmDispatchAps();
+                    confirmDispatchAps();
                 }, function () {
-                   resetDispatchAps();
+                    resetDispatchAps();
                 });
             } else {
                 notification.sendNotification("alert", "请选择一条记录！");

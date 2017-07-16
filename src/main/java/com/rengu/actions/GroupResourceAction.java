@@ -39,8 +39,8 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         rg_groupresourceEntity.setId(Tools.getUUID());
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.save(rg_groupresourceEntity)) {
+            Tools.jsonPrint(Tools.resultCode("ok", "Operate success"), this.httpServletResponse);
         } else {
-            System.out.println("保存失败");
             WebSocketNotification.broadcast("保存失败");
         }
     }

@@ -10,13 +10,13 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         })
     }])
     .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList) {
-
         layer.load(0);
 
         var zNodes = [];
         var idVal;//所点击的节点id值
         var rootData = [];
         var planList = [];
+        var currTreeSelectedId = null;
 
         $(function () {
             //初始化下拉数据
@@ -34,9 +34,32 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         //3D车间查看转换结果
         $scope.viewIn3DFactory = function () {
-            layer.load();
+            if (currTreeSelectedId == null) {
+                layer.msg('未选择节点信息!', {icon: 2});
+                return;
+            }
 
-            hideLoadingPage();
+            layer.load();
+            myHttpService.get(serviceList.view3DEmulate + "?id=" + currTreeSelectedId).then(function success(response) {
+                if (response.data.result == "ok") {
+                    layer.msg('数据转换成功,3D车间启动中...', {icon: 1});
+                    setTimeout(function () {
+                        layer.open({
+                            type: 2,
+                            title: '3D车间',
+                            maxmin: true,
+                            shadeClose: true,
+                            shade: false,
+                            offset: 'l',
+                            area: ['100%', '100%'],
+                            content: "http://localhost:8080/WebGL"
+                        });
+                    }, 1500);
+                } else {
+                    layer.msg('数据转换失败!', {icon: 2});
+                }
+                hideLoadingPage();
+            });
         };
 
         //将选中结果下发MES
@@ -59,6 +82,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             zNodes.splice(0, zNodes.length);
             planList.splice(0, planList.length);
             var idRoot;
+            currTreeSelectedId = null;
             var val = $(this).children('option:selected').val();
             if (val.length > 0) {
                 for (var i = 0; i < rootData.length; i++) {
@@ -72,7 +96,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 var id = JSON.stringify(params);
 
                 layer.load();
-
                 myHttpService.post(serviceList.getTree, id).then(function successCallback(response) {
                     var datas = response.data;
                     $scope.snapShotData = response.data;
@@ -115,7 +138,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         });
 
         function loadTree() {
-
             var setting = {
                 view: {
                     dblClickExpand: false,
@@ -144,7 +166,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             //单击显示表格信息
             function zTreeOnClick(e, treeId, treeNode) {
-
                 var tree = [];
                 var params = {};
                 params.id = zNodes[0].id;
@@ -192,13 +213,13 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 zTree.expandNode(treeNode, null, null, null, true);
 
-                var dataTrea;
-                var id = zTree.getSelectedNodes()[0].id;
+                var tmpId = zTree.getSelectedNodes()[0].id;
                 for (var i = 0; i < tree.length; i++) {
-                    if (id == tree[i].id && tree[i].level == "三级节点") {
+                    if (tmpId == tree[i].id && tree[i].level == "三级节点") {
                         var treeInfo = tree[i];
                         var params = {};
-                        params.id = id;
+                        currTreeSelectedId = zTree.getSelectedNodes()[0].id;
+                        params.id = currTreeSelectedId;
                         var data = JSON.stringify(params);
                         layer.load();
                         myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
@@ -207,7 +228,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                             hideLoadingPage();
                         });
                         break;
-                    } else if (id == tree[i].id) {
+                    } else if (tmpId == tree[i].id) {
                         $("#table_value  tr:not(:first)").html("");
                         var treeInfo = tree[i];
                         break;
@@ -294,15 +315,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             function onExpand(event, treeId, treeNode) {
                 curExpandNode = treeNode;
             }
-
-
-            $scope.show3D = function () {
-                var url = "http://localhost:8080/snapshot/view3DEmulate.action?" + "id=" + idVal;
-                $http({
-                    'method': 'get',
-                    'url': url
-                })
-            };
 
             $scope.sendMES = function () {
                 hideRMenu();
