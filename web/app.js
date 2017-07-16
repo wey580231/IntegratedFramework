@@ -152,6 +152,8 @@ angular.module("IntegratedFramework", [
         service.isChildNode = backUrl + "process/getAllById.action";
 
         service.isRootLevel = backUrl + "snapshot/getAllByLevel.action";
+        service.getTree = backUrl + "snapshot/getAllById.action";
+
 
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
