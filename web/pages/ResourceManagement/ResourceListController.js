@@ -57,7 +57,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         //信息填写检验
         var resourceAddValidate = function () {
             var params = {};
-            var myselect = document.getElementById("select");
+            var myselect = document.getElementById("selectAdd");
             var index = myselect.selectedIndex;
             params.name = $("input[name='add-name']").val();
             params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
@@ -192,7 +192,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                     if (a[i].checked) {
                         idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
                         console.log(idVal);
-                        id_params.idR = idVal;
+                        id_params.id = idVal;
                     }
                     row++;
                 }
@@ -202,6 +202,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 return false;
             }
         };
+
 
         //修改订单
         $scope.update = function () {
