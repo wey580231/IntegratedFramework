@@ -40,7 +40,9 @@
 
     <script src="3rdLib/html5shiv.min.js"></script>
     <script src="3rdLib/respond.min.js"></script>
+
     <script type="text/javascript">
+        //右侧快捷工具栏距离底部的距离
         var naviBottomValue = 200;
 
         function loadRightFloatMenu() {
@@ -60,6 +62,21 @@
                     $("#navigationMenu").css("height", naviHeight + "px");
                 });
             }, 800);
+        }
+
+        //检测是否选中一条记录
+        function hasCheckRows() {
+            var count = 0;
+            var a = document.getElementsByName("check");
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].checked) {
+                    count++;
+                }
+            }
+            if (count == 1) {
+                return true;
+            }
+            return false;
         }
 
         //关闭等待层
