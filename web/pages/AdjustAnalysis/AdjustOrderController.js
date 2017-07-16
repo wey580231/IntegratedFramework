@@ -12,13 +12,19 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
 
     .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList,validate,renderTableService,notification) {
 
+        layer.load(0);
+
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
-        myHttpService.get(serviceList.AdjustOrder).then(function (response) {
-            $scope.adjustOrder = response.data;
+        $(function () {
+            myHttpService.get(serviceList.AdjustOrder).then(function (response) {
+                $scope.adjustOrder = response.data;
+
+                hideLoadingPage();
+            });
         });
 
         //渲染checkBox样式
@@ -106,10 +112,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             var index;
             var idInfo;
             var rows = document.getElementById("table_adjust").rows;
-            /*event = event ? event : window.event;
-            var e = event.srcElement ? event.srcElement : event.target;*/
             var e = event||window.event;
-           // var e= document.all ? window.event : arguments[0] ? arguments[0] : event;
             var target = e.target || e.srcElement;
             if (target.parentNode.tagName.toLowerCase() == "td") {
                 var rowIndex = target.parentNode.parentNode.rowIndex;

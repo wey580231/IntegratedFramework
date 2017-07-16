@@ -10,7 +10,10 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         })
     }])
 
-    .controller('WorkListController', function ($scope, $http, myHttpService, serviceList, validate, notification) {
+    .controller('WorkListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
+
+        layer.load(0);
+
         var editData = {};//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
@@ -18,35 +21,38 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         var id_params = {}; //保存选中的记录的id信息
         var slot;
 
-        myHttpService.get(serviceList.ListShift).then(function (response) {
-            $scope.workList = response.data;
+        $(function () {
+            loadRightFloatMenu();
+
+            myHttpService.get(serviceList.ListShift).then(function (response) {
+                $scope.workList = response.data;
+
+                hideLoadingPage();
+            });
         });
+
+        //确认下发APS
+        function confirmDispatchAps() {
+            layer.load();
+            setTimeout(function () {
+                layer.msg('已下发', {icon: 1});
+                hideLoadingPage();
+            }, 2000);
+        }
+
+        //取消下发APS
+        function resetDispatchAps() {
+            layer.msg('取消下发', {icon: 2});
+        }
+
+        //将选中记录下发APS
+        $scope.dispatchRecord = function () {
+            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+        };
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
-            if ($last) {
-                //Enable iCheck plugin for checkboxes
-                //iCheck for checkbox and radio inputs
-                $('.mailbox-messages input[type="checkbox"]').iCheck({
-                    checkboxClass: 'icheckbox_flat-blue',
-                    radioClass: 'iradio_flat-blue'
-                });
-
-                //Enable check and uncheck all functionality
-                $(".checkbox-toggle").click(function () {
-                    var clicks = $(this).data('clicks');
-                    if (clicks) {
-                        //Uncheck all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-                        $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-                    } else {
-                        //Check all checkboxes
-                        $(".mailbox-messages input[type='checkbox']").iCheck("check");
-                        $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-                    }
-                    $(this).data("clicks", !clicks);
-                });
-            }
+            renderTableService.renderTable($last);
         };
 
         $("#select").change(function () {
@@ -61,8 +67,8 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.type = $("input[name='add-type']").val();
             /* params.slot = $("input[name='add-slot']").val();*/
-           /* params.slot = $(this).children('option:selected').val();*/
-            params.slot=slot;
+            /* params.slot = $(this).children('option:selected').val();*/
+            params.slot = slot;
             params.extra = parseInt($("input[name='add-extra']").val());
             addData = JSON.stringify(params);
             if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
@@ -102,7 +108,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='edit-name']").val();
             /*params.slot = $("input[name='edit-slot']").val();*/
-            params.slot=slot;
+            params.slot = slot;
             params.extra = parseInt($("input[name='edit-extra']").val());
             editData = params;
 
@@ -156,27 +162,10 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         };
 
         //获得表单信息
-
-        var isCheck = function () {
-            var count = 1;
-            var a = document.getElementsByName("check");
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].checked) {
-                    count++;
-                }
-            }
-            if (count == 1 || count > 2) {
-                notification.sendNotification("alert", "请重新选择！");
-                return false;
-            } else {
-                return true;
-            }
-        };
-
         var getInfo = function () {
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
-            if (isCheck()) {
+            if (hasCheckRows()) {
                 var a = document.getElementsByName("check");
                 var row = 1;
                 for (var i = 0; i < a.length; i++) {
@@ -186,11 +175,9 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                     }
                     row++;
                 }
-                console.log("id信息");
-                console.log(id_params);
                 return true;
             } else {
-
+                notification.sendNotification("alert", "请重新选择！");
                 return false;
             }
         };

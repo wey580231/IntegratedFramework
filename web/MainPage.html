@@ -36,9 +36,56 @@
 
     <link rel="stylesheet" href="plugins/jQueryUI/jquery-ui.min.css"/>
 
+    <link rel="stylesheet" href="css/MainPage.css">
+
     <script src="3rdLib/html5shiv.min.js"></script>
     <script src="3rdLib/respond.min.js"></script>
-    <![endif]-->
+
+    <script type="text/javascript">
+        //右侧快捷工具栏距离底部的距离
+        var naviBottomValue = 200;
+
+        function loadRightFloatMenu() {
+            setTimeout(function () {
+                $("#navigationMenu").animate({bottom: naviBottomValue + 'px'}, 400);
+
+                $(window).resize(function () {
+                    var winHeight = $(window).height();
+                    var naviHeight = $("#navigationMenu li").outerHeight() * $("#navigationMenu li").size();
+                    if (naviHeight + naviBottomValue >= winHeight) {
+                        $("#navigationMenu").css("bottom", "");
+                        $("#navigationMenu").css("top", "0px");
+                    } else {
+                        $("#navigationMenu").css("top", "");
+                        $("#navigationMenu").css("bottom", naviBottomValue + "px");
+                    }
+                    $("#navigationMenu").css("height", naviHeight + "px");
+                });
+            }, 800);
+        }
+
+        //检测是否选中一条记录
+        function hasCheckRows() {
+            var count = 0;
+            var a = document.getElementsByName("check");
+            for (var i = 0; i < a.length; i++) {
+                if (a[i].checked) {
+                    count++;
+                }
+            }
+            if (count == 1) {
+                return true;
+            }
+            return false;
+        }
+
+        //关闭等待层
+        function hideLoadingPage() {
+            setTimeout(function () {
+                layer.closeAll('loading');
+            }, 600);
+        }
+    </script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -410,10 +457,17 @@
 
 <script src="3rdLib/WebSocketNotification.js"></script>
 
+<!--弹出框-->
+<link rel="stylesheet" href="3rdLib/layer/css/layui.css">
+<script src="3rdLib/layer/lay/dest/layui.all.js" type="text/javascript"></script>
+<script src="3rdLib/jquery_resize.js"/>
+
 <script>
-    <!--加载通知系统-->
     $(document).ready(function () {
+        <!--加载通知系统-->
         webSocketInit();
+
+        loadRightFloatMenu();
     });
 </script>
 

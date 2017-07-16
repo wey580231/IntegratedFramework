@@ -10,16 +10,26 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         })
     }])
 
-    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+    .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
+
+        layer.load(0);
+
+        $(function () {
+            loadRightFloatMenu();
+
+            myHttpService.get(serviceList.ListOrder).then(function (response) {
+                $scope.orderList = response.data;
+
+                hideLoadingPage();
+
+            });
+        });
+
         var editData = [];//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
-
-        myHttpService.get(serviceList.ListOrder).then(function (response) {
-            $scope.orderList = response.data;
-        });
 
         //Date picker
         $('#modal-add-t0-datepicker').datepicker({
@@ -48,6 +58,24 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             renderTableService.renderTable($last);
         };
 
+        //确认下发APS
+        function confirmDispatchAps() {
+            layer.load();
+            setTimeout(function () {
+                layer.msg('已下发', {icon: 1});
+                hideLoadingPage();
+            }, 2000);
+        }
+
+        //取消下发APS
+        function resetDispatchAps() {
+            layer.msg('取消下发', {icon: 2});
+        }
+
+        //将选中记录下发APS
+        $scope.dispatchRecord = function () {
+            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+        };
 
         //信息填写检验
         var orderAddValidate = function () {
@@ -188,28 +216,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             }
         };
 
-        //获得表单信息
-
-        var isCheck = function () {
-            var count = 1;
-            var a = document.getElementsByName("check");
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].checked) {
-                    count++;
-                }
-            }
-            if (count == 1 || count > 2) {
-                notification.sendNotification("alert", "请重新选择！");
-                return false;
-            } else {
-                return true;
-            }
-        };
-
         var getInfo = function () {
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
-            if (isCheck()) {
+            if (hasCheckRows()) {
                 var a = document.getElementsByName("check");
                 var row = 1;
                 for (var i = 0; i < a.length; i++) {
@@ -219,11 +229,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     }
                     row++;
                 }
-                console.log("id信息");
-                console.log(id_params);
                 return true;
             } else {
-
                 return false;
             }
         };
@@ -274,10 +281,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         $scope.deleteOrder = function () {
             if (getInfo()) {
                 var idInfo = JSON.stringify(id_params);
-                console.log("删除的id信息");
-                console.log(idInfo);
                 myHttpService.delete(serviceList.DeleteOrder, idInfo).then(function successCallback() {
-                    //location.reload(true);
                     setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
@@ -291,8 +295,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             $("div").removeClass("has-success");
         };
 
-        $scope.clicked=function(id){
-           // $("#modal-info").modal('show');
+        $scope.clicked = function (id) {
+            // $("#modal-info").modal('show');
             o = document.getElementById(id).rows;//表格所有行
             for (i = 0; i < o.length; i++) {
                 o[i].ondblclick = function () { //设置事件
@@ -304,16 +308,16 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         }
 
         /*function clicked(id) {
-            var o, i;
-            o = document.getElementById(id).rows;//表格所有行
-            for (i = 0; i < o.length; i++) {
-                o[i].ondblclick = function () { //设置事件
-                    var oo;
-                    oo = this.cells[1]; //取得第二列对象
-                    alert(oo.innerHTML);
-                }
-            }
-        }*/
+         var o, i;
+         o = document.getElementById(id).rows;//表格所有行
+         for (i = 0; i < o.length; i++) {
+         o[i].ondblclick = function () { //设置事件
+         var oo;
+         oo = this.cells[1]; //取得第二列对象
+         alert(oo.innerHTML);
+         }
+         }
+         }*/
 
         window.onload = function () {
             clicked('table_value'); //设置表格事件

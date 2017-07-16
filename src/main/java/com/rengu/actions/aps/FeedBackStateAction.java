@@ -10,6 +10,7 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,7 @@ public class FeedBackStateAction extends SuperAction {
 
                     //TODO 查询schedule时会级联查询出其对应的set集合
                     RG_ScheduleEntity schedule = rootSnapshot.getSchedule();
+                    schedule.setApsEndTime(new Date());
 
                     String nodeName = "";
 

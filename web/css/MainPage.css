@@ -1,0 +1,58 @@
+#navigationMenu {
+    position: fixed;
+    right: 0px;
+    margin: 0px;
+    bottom: 0px;
+    z-index: 1200;
+}
+
+#navigationMenu li {
+    list-style: none;
+    height: 40px;
+    padding: 2px;
+    width: 40px;
+    padding-bottom: 1px;
+}
+
+#navigationMenu span {
+    width: 0;
+    left: -127px;
+    padding: 0;
+    position: absolute;
+    overflow: hidden;
+    background-color: #3C8DBC;
+    color: white;
+
+    font-family: 'Myriad Pro', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    line-height: 39px;
+
+    -webkit-transition: 0.25s;
+    -moz-transition: 0.25s;
+    transition: 0.25s;
+}
+
+#navigationMenu a {
+    color: #444444;
+    border-radius: 2px;
+    background-color: #F4F4F4;
+    height: 39px;
+    width: 38px;
+    display: block;
+    position: relative;
+    text-align: center;
+    line-height: 39px;
+    border: 1px solid #DDDDDD;
+}
+
+#navigationMenu a:hover span {
+    width: 125px;
+    padding: 0 20px;
+    overflow: visible;
+}
+
+#navigationMenu a:hover {
+    text-decoration: none;
+}

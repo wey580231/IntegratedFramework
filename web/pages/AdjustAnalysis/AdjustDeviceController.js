@@ -14,17 +14,23 @@ angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
     }])
 
     .controller('AdjustDeviceController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+
+        layer.load(0);
+
         var editData = [];//保存新增和修改的信息
         var addData = [];
         var edit_params = {};//获取需改后的数据
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
-        myHttpService.get(serviceList.getAllAdjustDeviceException).then(function (response) {
-            $scope.adjustDeviceList = response.data;
-        });
+        $(function () {
+            myHttpService.get(serviceList.getAllAdjustDeviceException).then(function (response) {
+                $scope.adjustDeviceList = response.data;
 
-        //Date picker
+                hideLoadingPage();
+            });
+
+        });
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
@@ -172,27 +178,10 @@ angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
         };
 
         //获得表单信息
-
-        var isCheck = function () {
-            var count = 1;
-            var a = document.getElementsByName("check");
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].checked) {
-                    count++;
-                }
-            }
-            if (count == 1 || count > 2) {
-                notification.sendNotification("alert", "请重新选择！");
-                return false;
-            } else {
-                return true;
-            }
-        };
-
         var getInfo = function () {
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
-            if (isCheck()) {
+            if (hasCheckRows()) {
                 var a = document.getElementsByName("check");
                 var row = 1;
                 for (var i = 0; i < a.length; i++) {
@@ -202,11 +191,9 @@ angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
                     }
                     row++;
                 }
-                console.log("id信息");
-                console.log(id_params);
                 return true;
             } else {
-
+                notification.sendNotification("alert", "请重新选择！");
                 return false;
             }
         };

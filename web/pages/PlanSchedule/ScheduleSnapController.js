@@ -11,16 +11,45 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
     }])
     .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList) {
 
+        layer.load(0);
+
+        var zTreeNodes = [];
+
+        var zNodes = [];
+        var idVal;//所右击的节点id值
+        var dataTrue = {"level": "top"};
+
         $(function () {
             //初始化下拉数据
             $(".select2").select2();
+
+            loadRightFloatMenu();
+
+            hideLoadingPage();
         });
 
-        var zTreeNodes = [];
-        var zNodes = [];
-        var idVal;//所右击的节点id值
+        //3D车间查看转换结果
+        $scope.viewIn3DFactory = function () {
+            layer.load();
 
-        var dataTrue = {"level": "top"};
+            hideLoadingPage();
+        };
+
+        //将选中结果下发MES
+        $scope.dispatchMes = function () {
+            layer.confirm('将结果下发MES？', {
+                btn: ['下发', '取消'] //按钮
+            }, function () {
+                layer.load();
+                setTimeout(function () {
+                    layer.msg('已下发', {icon: 1});
+                    hideLoadingPage();
+                }, 2000);
+            }, function () {
+                layer.msg('取消下发', {icon: 2});
+            });
+        };
+
         myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
             console.log(response.data);
             var dataArr = response.data;
