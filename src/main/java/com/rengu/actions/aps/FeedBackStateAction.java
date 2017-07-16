@@ -157,11 +157,21 @@ public class FeedBackStateAction extends SuperAction {
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
-    //TODO 查询APS状态,在对APS数据库操作之前，都要先执行状态查询操作
+    //查询APS状态,在对APS数据库操作之前，都要先执行状态查询操作
     public void queryApsState() {
         StringBuilder result = new StringBuilder();
 
         if (apsDao.queryCurrState(result)) {
+            Tools.jsonPrint(result.toString(), this.httpServletResponse);
+        } else {
+            Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+        }
+    }
+
+    //获取最新排程的基础信息
+    public void queryScheduleInfo() {
+        StringBuilder result = new StringBuilder();
+        if (apsDao.getScheduleInfo(result)) {
             Tools.jsonPrint(result.toString(), this.httpServletResponse);
         } else {
             Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);

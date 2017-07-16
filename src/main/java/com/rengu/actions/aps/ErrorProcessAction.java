@@ -47,7 +47,7 @@ public class ErrorProcessAction extends SuperAction {
         if (parameterMap.size() == 1) {
             String[] id = (String[]) parameterMap.get("id");
             if (id.length == 1) {
-                result = dao.processOrderError(id[0]);
+                result = dao.processProcessError(id[0]);
             }
         }
 
@@ -68,7 +68,7 @@ public class ErrorProcessAction extends SuperAction {
         if (parameterMap.size() == 1) {
             String[] id = (String[]) parameterMap.get("id");
             if (id.length == 1) {
-                result = dao.processProcessError(id[0]);
+                result = dao.processOrderError(id[0]);
             }
         }
 

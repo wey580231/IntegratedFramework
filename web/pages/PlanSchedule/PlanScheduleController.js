@@ -42,7 +42,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     //TODO 待解决path不能直接跳转问题
                     $location.path('/Interactive');
                     window.location.href = $location.absUrl();
-                },1200);
+                }, 1200);
             }, function () {
 
             });
@@ -65,6 +65,18 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //新建排程
         $scope.prepareNewSchedule = function () {
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
+                if (response.data.result == "ok") {
+                    if (response.data.data.state == 0) {
+                        $("#modal-add").modal({show: 'true'});
+                    } else {
+                        layer.msg('APS正在计算中，无法排程!', {icon: 2});
+                    }
+                } else {
+                    layer.msg('查询APS状态失败，请重试!', {icon: 2});
+                }
+            });
+
             resetContent();
         };
 
@@ -122,7 +134,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $("#startSchedule").show();
             }
             choosePageTip();
-
+            console.log(orders.lenght+"====");
             if (orders.length == 0) {
                 showOrderInfo();
             }
@@ -183,7 +195,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 showSchedule();
 
                 return true;
-
             } else {
                 document.getElementById("nextStep").disabled = true;
                 return false;
@@ -377,7 +388,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
 
         //排程
-
         function configAPS() {
             if (selectedCheckArray.length > 1) {
                 selectedCheckArray.splice(0, selectedCheckArray.length);

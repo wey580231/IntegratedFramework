@@ -68,7 +68,7 @@ public class SnapshotAction extends SuperAction {
         }
     }
 
-    public void getAllByByLevel() throws Exception {
+    public void getAllByLevel() throws Exception {
         JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
         String level = jsonNode.get("level").asText();
         SnapshotDaoImpl snapshotDao = DAOFactory.getSnapshotDaoImplInstance();

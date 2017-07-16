@@ -99,6 +99,18 @@ angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
             }
         };
 
+        myHttpService.get(serviceList.queryApsState).then(function (response) {
+            if (response.data.result == "ok") {
+                if (response.data.data.state == 0) {
+                    $("#modal-add").modal({show: 'true'});
+                } else {
+                    layer.msg('APS正在计算中，无法排程!', {icon: 2});
+                }
+            } else {
+                layer.msg('查询APS状态失败，请重试!', {icon: 2});
+            }
+        });
+
 
         //信息填写检验
         var orderEditValidate = function () {
