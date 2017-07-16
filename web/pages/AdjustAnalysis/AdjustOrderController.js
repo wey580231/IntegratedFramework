@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         })
     }])
 
-    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList,validate,renderTableService,notification) {
+    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList, validate, renderTableService, notification) {
 
         layer.load(0);
 
@@ -109,27 +109,38 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
 
         //异常处理
         $scope.exceptionHandling = function (event) {
-            var index;
+
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
+                if (response.data.result == "ok") {
+                    if (response.data.data.state == 0) {
+                        processError();
+                    } else {
+                        layer.msg('APS正在计算中，无法排程!', {icon: 2});
+                    }
+                } else {
+                    layer.msg('查询APS状态失败，请重试!', {icon: 2});
+                }
+            });
+        };
+
+        function processError() {
             var idInfo;
-            var rows = document.getElementById("table_adjust").rows;
-            var e = event||window.event;
+            var e = event || window.event;
             var target = e.target || e.srcElement;
             if (target.parentNode.tagName.toLowerCase() == "td") {
                 var rowIndex = target.parentNode.parentNode.rowIndex;
-                index = rows[rowIndex].cells[1].innerHTML;
-                var params={};
-                params.id=index;
-                idInfo=JSON.stringify(params);
-            }
-            alert(idInfo);
-                myHttpService.post(serviceList.ExceptionHandling, idInfo).then(function successCallback(response) {
-                    notification.sendNotification("alert", "请求成功");
+                var id = document.getElementById("table_adjust").rows[rowIndex].cells[0].innerHTML;
+                myHttpService.get(serviceList.orderExceptionHandling + "?id=" + id, idInfo).then(function successCallback(response) {
+                    if (response.data.result == "ok") {
+                        notification.sendNotification("confirm", "异常处理中...");
+                    } else {
+                        notification.sendNotification("alert", "请求失败");
+                    }
                 }, function errorCallback(response) {
                     notification.sendNotification("alert", "请求失败");
                 })
-
-        };
-
+            }
+        }
 
         $scope.reset = function () {
             $("input").val('');

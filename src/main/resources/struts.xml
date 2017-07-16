@@ -136,15 +136,14 @@
         <!--状态查询-->
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="update"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
+        <action name="scheduleDetail" class="com.rengu.actions.aps.FeedBackStateAction" method="queryScheduleInfo"/>
     </package>
 
     <!--异常处理-->
-    <package name="ExceptionHandling" namespace="/ExceptionHandling" extends="struts-default">
-        <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
-        <action name="OrderExceptionHandling" class="com.rengu.actions.AdjustOrderAction"
-                method="OrderExceptionHandling"/>
-        <action name="processExceptionHandling" class="com.rengu.actions.AdjustProcessAction"
-                method="processExceptionHandling"/>
+    <package name="ExceptionHandling" namespace="/exceptionHandling" extends="struts-default">
+        <action name="deviceProcessHandling" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
+        <action name="orderExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction" method="processOrderError"/>
+        <action name="processExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction" method="processProcessError"/>
     </package>
 
     <!--异常模拟-->
@@ -176,7 +175,7 @@
     <package name="SnapshotManager" namespace="/snapshot" extends="struts-default">
         <action name="view3DEmulate" class="com.rengu.actions.SnapshotAction" method="viewCurrentSnapshotEmulateData"/>
         <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="applySnapshotToMes"/>
-        <action name="getAllByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByByLevel"/>
+        <action name="getAllByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByLevel"/>
         <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
     </package>
 

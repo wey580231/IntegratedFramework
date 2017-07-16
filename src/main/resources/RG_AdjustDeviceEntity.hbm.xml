@@ -49,7 +49,5 @@
 
         <many-to-one name="resourceEntity" class="com.rengu.entity.RG_ResourceEntity" column="resource_id"
                      unique="true"></many-to-one>
-
-
     </class>
 </hibernate-mapping>
