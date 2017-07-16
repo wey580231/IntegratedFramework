@@ -9,7 +9,7 @@
         /*padding: 2px;*/
     }
 
-    #rMenu ul{
+    #rMenu ul {
         padding: 0px;
         border: 0;
         outline: 0;
@@ -25,7 +25,7 @@
     #rMenu ul li {
         cursor: pointer;
         list-style: none outside none;
-        padding:2px 10px;
+        padding: 2px 10px;
         margin: 1px 0;
         background-color: white;
         vertical-align: middle;
@@ -106,6 +106,32 @@
     .box {
         position: unset;
     }
+
+    .spanKey {
+        width: 120px;
+        height: 30px;
+        /*background-color:red;*/
+        float: left;
+        text-align: center;
+        padding-right: 5px;
+        margin-right: 5px;
+        line-height: 30px;
+    }
+
+    .spanVal {
+        width: 150px;
+        height: 30px;
+        /*background-color: red;*/
+        color: white;
+        float: left;
+        text-align: left;
+        line-height: 30px;
+        padding-left: 10px;
+        margin-right: 5px;
+        color: black;
+        border-bottom: 1px solid lightgrey;
+    }
+
 </style>
 
 <div>
@@ -123,22 +149,22 @@
     <div id="floatRightMenu">
         <ul id="navigationMenu">
             <li>
-                <a class="home" href="#"><i class="fa fa-video-camera"></i>
+                <a class="home" href="" ng-click="viewIn3DFactory()"><i class="fa fa-video-camera"></i>
                     <span>3D车间显示</span>
                 </a>
             </li>
             <li>
-                <a class="home" href="#"><i class="fa fa-wrench" aria-hidden="true"></i>
+                <a class="home" href="" ng-click="dispatchMes()"><i class="fa fa-wrench" aria-hidden="true"></i>
                     <span>下发MES</span>
                 </a>
             </li>
             <li>
-                <a class="home" href="#"><i class="fa fa-usb" aria-hidden="true"></i>
+                <a class="home" href=""><i class="fa fa-usb" aria-hidden="true"></i>
                     <span>快照对比</span>
                 </a>
             </li>
             <li>
-                <a class="home" href="#"><i class="fa fa-undo" aria-hidden="true"></i>
+                <a class="home" href=""><i class="fa fa-undo" aria-hidden="true"></i>
                     <span>恢复快照</span>
                 </a>
             </li>
@@ -149,39 +175,31 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3">
-
-                <!--下拉-->
                 <div class="form-group">
-                    <select class="form-control select2" style="width: 100%;" id="select">
+                    <label contenteditable="true" style="float: left;">选取排程:</label>
+                    <select class="form-control select2" style="float:left;" id="select">
                         <option selected="selected"></option>
                         <option ng-repeat="data in dataArr">{{data.name}}</option>
                     </select>
                 </div>
 
                 <!--树-->
-                <div class="box box-solid" style="/*width: 170px;*/overflow: auto;">
+                <div class="box box-solid" style="overflow: auto;">
                     <div class="box-header with-border">
-                        <h3 class="box-title">ScheduleSnap</h3>
+                        <h3 class="box-title">快照信息</h3>
 
                         <div class="box-tools">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
-
 
                     <div class="box-body no-padding"
                          style=" overflow-y:auto;/* overflow-x:auto; width:200px; height:200px;*/">
 
                         <div>
                             <ul id="treeDemo" class="ztree"></ul>
-                        </div>
-
-                        <div class="myMenu" id="rMenu" style="width: 120px;">
-                            <ul>
-                                <li id="m_add" ng-click="show3D()"><i class="fa fa-eye"></i> <span>&nbsp;查看3D状态</span></li>
-                                <li id="m_del" ng-click="sendMES()"><i class="fa fa-bicycle"></i> <span>下发MES</span></li>
-                            </ul>
                         </div>
                     </div>
                     <!-- /.box-body -->
@@ -191,17 +209,46 @@
             </div>
             <!-- /.col -->
             <div class="col-md-9">
+                <h2 style="font-size: 17px;font-weight: 600;margin-bottom: 8px">基本信息</h2>
+                <div style="height: auto;margin-bottom: 3px;">
+                    <div style="display: block;height:35px;">
+                        <span class="spanKey">排程名称</span>
+                        <span class="spanVal">{{snapShotData.name}}</span>
+                        <span class="spanKey">排程状态</span>
+                        <span class="spanVal">
+                                <span ng-if="snapShotData.schedule.state == 0">下发APS</span>
+                                <span ng-if="snapShotData.schedule.state == 1"><i
+                                        class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
+                                <span ng-if="snapShotData.schedule.state == 2">计算成功</span>
+                                <span ng-if="snapShotData.schedule.state == 3">计算失败</span>
+                                <span ng-if="snapShotData.schedule.state == 4">优化完成</span>
+                                <span ng-if="snapShotData.schedule.state == 5">下发MES</span>
+                        </span>
+                        <span class="spanKey">排程周期</span>
+                        <span class="spanVal">{{snapShotData.schedule.scheduleWindow}}&nbsp;天</span>
+                        <span class="spanKey">滚动周期</span>
+                        <span class="spanVal">{{snapShotData.schedule.rollTime}}&nbsp;天</span>
+                    </div>
+                    <div style="display: block;height:35px;">
+                        <span class="spanKey">排程时间</span>
+                        <span class="spanVal">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        <span class="spanKey">计算开始时间</span>
+                        <span class="spanVal">{{snapShotData.schedule.startCalcTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        <span class="spanKey">计算结束时间</span>
+                        <span class="spanVal">{{snapShotData.schedule.endCalcTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                    </div>
+                </div>
 
-                <div class="box box-primary">
+                <div class="box box-primary" style="clear: both;">
 
-                    <!-- /.box-header -->
                     <div class="box-body no-padding">
                         <div class="mailbox-controls">
                             <!-- Check all button -->
-                            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i></button>
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
+                                </button>
                             </div>
 
                             <!-- /.pull-right -->
@@ -210,23 +257,19 @@
                             <table class="table table-hover table-striped" id="table_value">
                                 <tbody>
                                 <tr>
-                                    <td></td>
-                                    <th>工序名称</th>
-                                    <th>作业名称</th>
                                     <th>订单名称</th>
-                                    <th>资源名称</th>
-                                    <th>资源所在工组名称</th>
-                                    <th>加工总数量</th>
+                                    <th>供应商</th>
+                                    <th>作业时间</th>
+                                    <th>作业初始时间</th>
+                                    <th>作业更新时间</th>
                                 </tr>
                                 <tr ng-repeat="plan in planList" ng-init="renderTable($last)">
-                                    <td><input name="check" type="checkbox"></td>
                                     <td style="display:none">{{plan.id}}</td>
-                                    <td>{{plan.nameTask}}</td>
-                                    <td>{{plan.nameJob}}</td>
                                     <td>{{plan.nameOrder}}</td>
-                                    <td>{{plan.nameResource}}</td>
-                                    <td>{{plan.nameGroupResource}}</td>
-                                    <td>{{plan.quantityTask}}</td>
+                                    <td>{{plan.nameProvider}}</td>
+                                    <td>{{plan.timeTask}}</td>
+                                    <td>{{plan.initTimeTask}}</td>
+                                    <td>{{plan.postTimeTask}}</td>
                                 </tr>
                                 </tbody>
                             </table>

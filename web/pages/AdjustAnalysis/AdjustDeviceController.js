@@ -178,27 +178,10 @@ angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
         };
 
         //获得表单信息
-
-        var isCheck = function () {
-            var count = 1;
-            var a = document.getElementsByName("check");
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].checked) {
-                    count++;
-                }
-            }
-            if (count == 1 || count > 2) {
-                notification.sendNotification("alert", "请重新选择！");
-                return false;
-            } else {
-                return true;
-            }
-        };
-
         var getInfo = function () {
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
-            if (isCheck()) {
+            if (hasCheckRows()) {
                 var a = document.getElementsByName("check");
                 var row = 1;
                 for (var i = 0; i < a.length; i++) {
@@ -208,11 +191,9 @@ angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
                     }
                     row++;
                 }
-                console.log("id信息");
-                console.log(id_params);
                 return true;
             } else {
-
+                notification.sendNotification("alert", "请重新选择！");
                 return false;
             }
         };

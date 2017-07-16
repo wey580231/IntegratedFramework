@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceStationController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+    .controller('ResourceStationController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
 
         layer.load(0);
 
@@ -29,6 +29,25 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
                 hideLoadingPage();
             });
         });
+
+        //确认下发APS
+        function confirmDispatchAps() {
+            layer.load();
+            setTimeout(function () {
+                layer.msg('已下发', {icon: 1});
+                hideLoadingPage();
+            }, 2000);
+        }
+
+        //取消下发APS
+        function resetDispatchAps() {
+            layer.msg('取消下发', {icon: 2});
+        }
+
+        //将选中记录下发APS
+        $scope.dispatchRecord = function () {
+            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+        };
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
@@ -152,27 +171,10 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         };
 
         //获得表单信息
-
-        var isCheck = function () {
-            var count = 1;
-            var a = document.getElementsByName("check");
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].checked) {
-                    count++;
-                }
-            }
-            if (count == 1 || count > 2) {
-                notification.sendNotification("alert", "请重新选择！");
-                return false;
-            } else {
-                return true;
-            }
-        };
-
         var getInfo = function () {
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
-            if (isCheck()) {
+            if (hasCheckRows()) {
                 var a = document.getElementsByName("check");
                 var row = 1;
                 for (var i = 0; i < a.length; i++) {
@@ -182,11 +184,9 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
                     }
                     row++;
                 }
-                console.log("id信息");
-                console.log(id_params);
                 return true;
             } else {
-
+                notification.sendNotification("alert", "请重新选择！");
                 return false;
             }
         };

@@ -83,7 +83,7 @@ public class FeedBackStateAction extends SuperAction {
                             }
                         }
                         //计算失败
-                        else if (state[0].equals(APS_RESULT_FAIL)) {
+                        else if (!(state[0].equals(APS_RESULT_SUCCESS))) {
                             schedule.setState(RG_ScheduleEntity.APS_FAIL);
                             WebSocketNotification.broadcast("APS计算失败!");
                         }
@@ -104,7 +104,7 @@ public class FeedBackStateAction extends SuperAction {
                             }
                         }
                         //计算失败
-                        else if (state[0].equals(APS_RESULT_FAIL)) {
+                        else if (!(state[0].equals(APS_RESULT_SUCCESS))) {
                             schedule.setState(RG_ScheduleEntity.ERROR_FAIL);
                             WebSocketNotification.broadcast("APS应急失败!");
                         }

@@ -9,9 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 用于aps进行异常的处理
@@ -103,16 +100,18 @@ public class ErrorProcessDao {
         Query query = session.createQuery("from RG_AdjustProcessEntity entity where entity.id=:id");
         query.setParameter("id", id);
         List list = query.list();
-        if (list.size() == 1 && list.get(0) instanceof RG_AdjustProcessEntity) {
+        if (list.size() == 1 ) {
             RG_AdjustProcessEntity entity = (RG_AdjustProcessEntity) list.get(0);
+
+            entity.setState(ErrorState.ERROR_APS_PROCESS);
+            createSnapNode();
+            session.update(entity);
 
             result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustProcessHandlingURL(entity));
 
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
-                entity.setState(ErrorState.ERROR_APS_PROCESS);
-                createSnapNode();
-                session.update(entity);
+
             }
         }
 
