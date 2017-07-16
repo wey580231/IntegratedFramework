@@ -126,8 +126,8 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#edit-idSite0").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkString(params.name) && validate.checkLength(params.name) &&
-                validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)) {
+            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkString(params.name) && validate.checkLength(params.name) /*&&
+                validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)*/) {
                 return true;
             } else {
 
@@ -141,7 +141,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddGroupResource, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
-                    //location.reload();
+                    location.reload();
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })

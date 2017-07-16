@@ -61,8 +61,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             var index = myselect.selectedIndex;
             params.name = $("input[name='add-name']").val();
             params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
-            /*params.nameShift = $("input[name='add-nameShift']").val();*/
-            /*params.nameShift = $("myselect.options[index].text");*/
             params.nameShift = $("#selectAdd option:selected").val();
             console.log(params.nameShift);
             params.state = $("input[name='add-state']").val();
@@ -86,13 +84,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#add-idSiteGroupResource").addClass(" has-success");
             }
 
-            /*if (!validate.checkNumber(params.nameShift) || !validate.checkLength(params.nameShift)) {
-             $("#add-nameShift").removeClass("has-success");
-             $("#add-nameShift").addClass("has-error");
-             } else {
-             $("#add-nameShift").removeClass("has-error");
-             $("#add-nameShift").addClass(" has-success");
-             }*/
 
             if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
                 $("#add-state").removeClass("has-success");
@@ -117,7 +108,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='edit-name']").val();
             params.idSiteGroupResource = $("input[name='edit-siteGroupResource']").val();
-            /*params.nameShift = $("input[name='edit-nameShift']").val();*/
             params.nameShift = $("#selectEdit option:selected").val();
             params.state = $("input[name='edit-state']").val();
             editData = params;
@@ -178,7 +168,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             } else {
                 notification.sendNotification("alert", "参数错误");
             }
-            //addData.splice(0, addData.length);
         };
 
         //获得表单信息
