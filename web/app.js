@@ -77,11 +77,9 @@ angular.module("IntegratedFramework", [
             // Create an instance of Notyf
             var notyf = new Notyf();
             if (notificationType === "alert") {
-                // Display an alert notification
                 notyf.alert(message);
             }
             if (notificationType === "confirm") {
-                // Display a success notification
                 notyf.confirm(message);
             }
         };
@@ -153,7 +151,7 @@ angular.module("IntegratedFramework", [
 
         service.isChildNode = backUrl + "process/getAllById.action";
 
-        service.isRootLevel = backUrl + "snapshot/getAllByByLevel.action";
+        service.isRootLevel = backUrl + "snapshot/getAllByLevel.action";
 
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
@@ -241,4 +239,21 @@ angular.module("IntegratedFramework", [
         };
 
         return service;
-    });
+    })
+    .factory("dispatchApsService", ['notification', function (notification) {
+        var service = {};
+        service.dispatchAps = function (confirmDispatchAps,resetDispatchAps) {
+            if (hasCheckRows()) {
+                layer.confirm('将选中数据下发APS？', {
+                    btn: ['下发', '取消'] //按钮
+                }, function () {
+                   confirmDispatchAps();
+                }, function () {
+                   resetDispatchAps();
+                });
+            } else {
+                notification.sendNotification("alert", "请选择一条记录！");
+            }
+        }
+        return service;
+    }]);
