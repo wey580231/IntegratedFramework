@@ -2,6 +2,14 @@
 <script src="../../3rdLib/aps/Interactive.js"></script>
 <script src="../../3rdLib/bootstrap/js/bootstrap-select.js"></script>
 
+<style>
+    .spanKey {
+        height: 30px;
+        line-height: 30px;
+        margin-right: 5px;
+    }
+</style>
+
 <div id="OuterDiv" style="min-height: 100%;position:relative;">
     <section class="content-header">
         <h1>
@@ -36,6 +44,20 @@
                             <option value="TableResource.view">资源一览表</option>
                             <option value="DataTableProcess.view">工艺信息表</option>
                         </select>
+                        <div style="float: right;margin-right: 1%;height:30px;">
+                            <span class="spanKey">排程名称:</span>
+                            <span class="spanKey">{{schedule.data.name}}</span>
+
+                            <span class="spanKey">状态:</span>
+
+                            <span ng-if="schedule.data.state == 0">下发APS</span>
+                            <span ng-if="schedule.data.state == 1"><i
+                                    class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
+                            <span ng-if="schedule.data.state == 2">计算成功</span>
+                            <span ng-if="schedule.data.state == 3">计算失败</span>
+                            <span ng-if="schedule.data.state == 4">优化完成</span>
+                            <span ng-if="schedule.data.state == 5">下发MES</span>
+                        </div>
                         <!--<div class="data-uk-button-radio" style="float: right;margin-right: 1%;">-->
                         <!--<button id="loginInAPS" type="button" class="btn btn-default btn-sm" onclick="loginAps()"-->
                         <!--class="btn btn-default" ng-click="reset()"><i class="fa fa-user-o"></i> APS登录-->

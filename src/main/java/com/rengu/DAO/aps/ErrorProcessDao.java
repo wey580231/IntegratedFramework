@@ -44,9 +44,7 @@ public class ErrorProcessDao {
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
-
-                createSnapNode();
-
+                createSnapNode("设备异常应急");
                 session.update(entity);
             }
         }
@@ -78,7 +76,7 @@ public class ErrorProcessDao {
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
-                createSnapNode();
+                createSnapNode("紧急插单应急");
                 session.update(entity);
             }
         }
@@ -100,11 +98,11 @@ public class ErrorProcessDao {
         Query query = session.createQuery("from RG_AdjustProcessEntity entity where entity.id=:id");
         query.setParameter("id", id);
         List list = query.list();
-        if (list.size() == 1 ) {
+        if (list.size() == 1) {
             RG_AdjustProcessEntity entity = (RG_AdjustProcessEntity) list.get(0);
 
             entity.setState(ErrorState.ERROR_APS_PROCESS);
-            createSnapNode();
+            createSnapNode("工序异常应急");
             session.update(entity);
 
             result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustProcessHandlingURL(entity));
@@ -120,7 +118,7 @@ public class ErrorProcessDao {
         return result;
     }
 
-    private void createSnapNode() {
+    private void createSnapNode(String name) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Query query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
         query.setParameter("id", UserConfigTools.getRootSnapId("1"));
@@ -130,7 +128,7 @@ public class ErrorProcessDao {
 
             RG_SnapshotNodeEntity middleSnapshot = new RG_SnapshotNodeEntity();
             middleSnapshot.setId(Tools.getUUID());
-            middleSnapshot.setName("工序异常应急");
+            middleSnapshot.setName(name);
             middleSnapshot.setLevel(SnapshotLevel.MIDDLE);
             middleSnapshot.setParent(rootSnapshot);
             middleSnapshot.setRootParent(rootSnapshot);

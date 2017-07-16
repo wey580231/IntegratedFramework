@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             controller: 'PlanScheduleController'
         })
     }])
-    .controller('PlanScheduleController', function ($scope, $http, myHttpService, serviceList, renderTableService, validate, notification) {
+    .controller('PlanScheduleController', function ($scope, $location, $http, myHttpService, serviceList, renderTableService, validate, notification) {
 
         layer.load(0);
 
@@ -21,6 +21,10 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var orders = [];
         var layouts = {};
 
+        var pageCount = 0;
+        var currPage = 0;
+        var pageTipCount = 0;
+
         $(function () {
             myHttpService.get(serviceList.ListSchedule).then(function (response) {
                 $scope.scheduleList = response.data;
@@ -28,9 +32,21 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             });
         });
 
-        var pageCount = 0;
-        var currPage = 0;
-        var pageTipCount = 0;
+        //跳转至交互优化界面
+        $scope.interactiveSchedule = function () {
+            layer.confirm('是否优化此次排程？', {
+                btn: ['确定', '取消']
+            }, function () {
+                layer.msg('页面跳转中...', {icon: 1});
+                setTimeout(function () {
+                    //TODO 待解决path不能直接跳转问题
+                    $location.path('/Interactive');
+                    window.location.href = $location.absUrl();
+                }, 1200);
+            }, function () {
+
+            });
+        };
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
@@ -49,6 +65,18 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //新建排程
         $scope.prepareNewSchedule = function () {
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
+                if (response.data.result == "ok") {
+                    if (response.data.data.state == 0) {
+                        $("#modal-add").modal({show: 'true'});
+                    } else {
+                        layer.msg('APS正在计算中，无法排程!', {icon: 2});
+                    }
+                } else {
+                    layer.msg('查询APS状态失败，请重试!', {icon: 2});
+                }
+            });
+
             resetContent();
         };
 
@@ -106,7 +134,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $("#startSchedule").show();
             }
             choosePageTip();
-
+            console.log(orders.lenght+"====");
             if (orders.length == 0) {
                 showOrderInfo();
             }
@@ -120,18 +148,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //开始排程
         $scope.submitForm = function () {
-
             //保存选中的布局信息
             for (var i = 0; i < selectedCheckArray.length; i++) {
                 var params = {};
                 params.id = selectedCheckArray[i];
                 layouts = params;
-
             }
-
-            console.log("所选择的布局信息");
-            console.log(layouts);
-
             configAPS();
         };
 
@@ -142,7 +164,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.rollTime = $("input[name='add-rollTime']").val();
             params.scheduleDays = $("input[name='add-scheduleDays']").val();
-
 
             if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
@@ -174,34 +195,27 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 showSchedule();
 
                 return true;
-
             } else {
                 document.getElementById("nextStep").disabled = true;
                 return false;
             }
         };
 
-
         //显示订单信息
         function showOrderInfo() {
             //开始访问当前未完成的记录
             var cur = {};
             var startTime = moment().format("YYYY-MM-DD");
-            console.log("当前开始时间" + startTime);
             cur.startTime = (new Date(startTime)).getTime();
 
-            console.log("当前排程时间" + scheduleDays);
             var scheduleDays0 = scheduleDays;
 
             var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
-            console.log("当前结束时间" + endTime);
             cur.endTime = (new Date(endTime)).getTime();
 
             cur.isFinished = false;
 
             var data = JSON.stringify(cur);
-
-            console.log("当前json字符串" + data);
 
             myHttpService.post(serviceList.CurInfo, data).then(function (response) {
                 var curorder = [];
@@ -221,27 +235,20 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     orders.push(params);
                 }
                 selectedCheckArray.splice(0, selectedCheckArray.length);
-
             });
         }
 
-
-
+        //显示布局信息
         function showLayoutInfo() {
             myHttpService.get(serviceList.getAllLayout).then(function (response) {
                 var curlayout = [];
                 var layout = response.data;
                 for (var i = 0; i < layout.data.length; i++) {
-                    /* var temp = layout.data[i].layoutId;
-                     delete(layout.data[i].layoutId);
-                     layout.data[i].id = temp;*/
                     curlayout.push(layout.data[i]);
                 }
 
                 $scope.layout = curlayout;
-                //curlayout.splice(0, curlayout.length);
             });
-
         }
 
         //显示已选择订单的信息
@@ -251,10 +258,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             var arrchoosed = [];
 
             for (var i = 0; i < a.length; i++) {
-                console.log("被选中" + a[i].checked);
                 if (a[i].checked) {
                     var row = a[i].parentElement.parentElement.rowIndex;
-                    console.log("第几行被选中：" + row);
                     var params = {};
                     params.index = rows[row].cells[1].innerHTML;
                     params.id = rows[row].cells[2].innerHTML;
@@ -264,12 +269,10 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     params.t0 = rows[row].cells[6].innerHTML;
                     params.t1 = rows[row].cells[7].innerHTML;
                     params.t2 = rows[row].cells[8].innerHTML;
-                    console.log(params);
                     arrchoosed.push(params);
                 }
             }
             $scope.form = arrchoosed;
-            console.log(arrchoosed);
         }
 
         //日历部分
@@ -277,19 +280,15 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             //当前排程时间长度（b）
             scheduleDays = $("input[name='add-scheduleDays']").val();
-            console.log("当前排程时间长度" + scheduleDays);
 
             name = $("input[name='add-name']").val();
             rollTime = $("input[name='add-rollTime']").val();
-            console.log("当前排程滚动周期" + rollTime);
 
             //排程开始时间
             var startTime = moment().format("YYYY-MM-DD");
-            console.log("排成开始时间" + startTime);
 
             //排程结束时间
             var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
-            console.log("排成结束时间" + startTime);
 
             $("#calendar").show();
             // page is now ready, initialize the calendar...
@@ -367,7 +366,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     document.getElementById("nextStep").disabled = "";
                     document.getElementById("startSchedule").disabled = "";
                 }
-                console.log(id + "被选中");
             }
             if (action == 'remove' && selectedCheckArray.indexOf(id) != -1) {
                 selectedCheckArray.splice(selectedCheckArray.indexOf(id), 1);
@@ -375,7 +373,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     document.getElementById("nextStep").disabled = true;
                     document.getElementById("startSchedule").disabled = true;
                 }
-                console.log(id + "取消选中");
             }
         };
 
@@ -391,9 +388,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
 
         //排程
-
         function configAPS() {
-            if (selectedCheckArray.length  > 1) {
+            if (selectedCheckArray.length > 1) {
                 selectedCheckArray.splice(0, selectedCheckArray.length);
                 notification.sendNotification("alert", "只能选择一条排程信息");
                 return false;
@@ -403,19 +399,16 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 APSConfigs.t2 = "";
 
 
-                console.log("资源");
                 var resourceArr = [];
                 var resources = {};
                 resources.id = 2;
                 resourceArr.push(resources);
 
-                console.log("工组");
                 var groupResourcesArr = [];
                 var groupResources = {};
                 groupResources.id = 2;
                 groupResourcesArr.push(groupResources);
 
-                console.log("工位");
                 var sitesArr = [];
                 var sites = {};
                 sites.id = 2;
@@ -432,7 +425,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 params.groupResource = groupResourcesArr;
                 params.site = sitesArr;
                 var data = JSON.stringify(params);
-                console.log(data);
                 $("#modal-add").hide();
                 $(".modal-backdrop").remove();
                 myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
@@ -453,7 +445,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         myHttpService.get(serviceList.ListSchedule).then(function (response) {
                             $scope.scheduleList = response.data;
                         });
-                        notification.sendNotification("alert", "排程成功");
+                        notification.sendNotification("confirm", "排程成功");
                     }
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");

@@ -39,9 +39,6 @@
             <!-- /.box-header -->
             <div class="box-body no-padding">
                 <div class="mailbox-controls">
-                    <!-- Check all button -->
-                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                    </button>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
@@ -52,65 +49,34 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                     data-target="#modal-simulate"
-                                    ng-click="reset()"><i class="fa fa-map-signs"></i> 异常模拟
+                                    ng-click="reset()"><i class="fa fa-map-signs"></i>异常模拟
                             </button>
                         </div>
                     </div>
-
-
                 </div>
 
-                <!--tab-->
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Custom Tabs -->
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="/AdjustOrder/#tab_1" data-toggle="tab">交期承诺分析</a></li>
-                                <li><a href="/AdjustOrder/#tab_2" data-toggle="tab">紧急插单分析</a></li>
+                                <li class="active"><a href="/AdjustOrder/#tab_1" data-toggle="tab">紧急插单分析</a></li>
+                                <li><a href="/AdjustOrder/#tab_2" data-toggle="tab">交期承诺分析</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_1">
-                                    <!--表格1-->
-                                    <div class="table-responsive mailbox-messages">
-                                        <table class="table table-hover table-striped" id="table_value">
-                                            <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td>状态</td>
-                                                <td>名称</td>
-                                                <td>产品名</td>
-                                                <td>数量</td>
-                                                <td>优先级</td>
-                                                <td>租户名</td>
-                                                <td>操作</td>
-                                                <td>来源</td>
-                                            </tr>
-                                            <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" onclick="a(this)">
-
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- /.table -->
-                                    </div>
-                                </div>
-                                <!-- /.tab-pane -->
-                                <div class="tab-pane" id="tab_2">
-                                    <!--表格2-->
                                     <div class="table-responsive mailbox-messages">
                                         <table class="table table-hover table-striped" id="table_adjust">
                                             <tbody>
                                             <tr>
-                                                <td></td>
-                                                <th>紧急插单名称</th>
-                                                <th>订单优先级</th>
-                                                <th>订单数量</th>
+                                                <th>订单名称</th>
                                                 <th>异常来源</th>
+                                                <th>优先级</th>
+                                                <th>数 量</th>
                                                 <th>异常状态</th>
-                                                <th>异常处理</th>
+                                                <th>操作</th>
                                             </tr>
                                             <tr  ng-repeat="x in adjustOrder" ng-init="renderTable($last)" onclick="a(this)">
-                                                <td><input name="check" type="checkbox"></td>
                                                 <td style="display:none" id="id">{{x.id}}</td>
                                                 <td id="ord">{{x.ord.name}}</td>
                                                 <td>{{x.ord.priority}}</td>
@@ -124,8 +90,29 @@
                                                     <span class="label label-warning" ng-if="x.state == 5">处理完成</span>
                                                 </td>
                                                 <td>
-                                                    <button id="handle" type="button" class="btn btn-block btn-sm btn-info" ng-click="exceptionHandling($event)">处理</button>
+                                                    <button type="button" class="btn btn-block btn-sm btn-info" ng-click="exceptionHandling($event)">处理</button>
                                                 </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- /.table -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_2">
+                                    <div class="table-responsive mailbox-messages">
+                                        <table class="table table-hover table-striped" id="table_value">
+                                            <tbody>
+                                            <tr>
+                                                <th>名称</th>
+                                                <td>来源</td>
+                                                <th>优先级</th>
+                                                <th>数量</th>
+                                                <th>下单时间</th>
+                                                <th>完工时间</th>
+                                                <th>状态</th>
+                                                <td>操作</td>
+                                            </tr>
+                                            <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" onclick="a(this)">
                                             </tr>
                                             </tbody>
                                         </table>
