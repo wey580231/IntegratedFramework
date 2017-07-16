@@ -3,6 +3,7 @@ package com.rengu.actions.aps;
 import com.opensymphony.xwork2.ActionContext;
 import com.rengu.DAO.aps.ApsDao;
 import com.rengu.actions.SuperAction;
+import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.entity.RG_UserConfigEntity;
@@ -13,6 +14,7 @@ import org.hibernate.query.Query;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * APS回调框架更新计算状态
@@ -74,18 +76,21 @@ public class FeedBackStateAction extends SuperAction {
                                 schedule.setState(RG_ScheduleEntity.APS_SUCCESS);
                                 nodeName = "排程结果";
                                 WebSocketNotification.broadcast("APS计算完成!");
+                                setOrdersState("1", schedule, session);
                             } else {
                                 schedule.setState(RG_ScheduleEntity.APS_ADJUST);
                                 if (middleSnapshot != null) {
                                     nodeName = "优化调整" + middleSnapshot.getChilds().size();
                                 }
                                 WebSocketNotification.broadcast("APS优化计算完成!");
+                                setOrdersState("1", schedule, session);
                             }
                         }
                         //计算失败
                         else if (!(state[0].equals(APS_RESULT_SUCCESS))) {
                             schedule.setState(RG_ScheduleEntity.APS_FAIL);
                             WebSocketNotification.broadcast("APS计算失败!");
+                            setOrdersState("1", schedule, session);
                         }
                     }
                     //故障应急排程
@@ -95,18 +100,21 @@ public class FeedBackStateAction extends SuperAction {
                                 schedule.setState(RG_ScheduleEntity.ERROR_SUCCESS);
                                 nodeName = "应急结果";
                                 WebSocketNotification.broadcast("APS应急计算完成!");
+                                setOrdersState("1", schedule, session);
                             } else {
                                 schedule.setState(RG_ScheduleEntity.ERROR_ADJUST);
                                 if (middleSnapshot != null) {
                                     nodeName = "应急优化调整" + middleSnapshot.getChilds().size();
                                 }
                                 WebSocketNotification.broadcast("APS应急优化计算完成!");
+                                setOrdersState("1", schedule, session);
                             }
                         }
                         //计算失败
                         else if (!(state[0].equals(APS_RESULT_SUCCESS))) {
                             schedule.setState(RG_ScheduleEntity.ERROR_FAIL);
                             WebSocketNotification.broadcast("APS应急失败!");
+                            setOrdersState("1", schedule, session);
                         }
                     }
 
@@ -141,6 +149,7 @@ public class FeedBackStateAction extends SuperAction {
                             e.printStackTrace();
                             session.getTransaction().rollback();
                             WebSocketNotification.broadcast("APS计算结果转换出错!");
+                            setOrdersState("1", schedule, session);
                         }
                     } else {
                         session.update(schedule);
@@ -175,6 +184,17 @@ public class FeedBackStateAction extends SuperAction {
             Tools.jsonPrint(result.toString(), this.httpServletResponse);
         } else {
             Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+        }
+    }
+
+    //设置订单状态
+    private void setOrdersState(String state, RG_ScheduleEntity rg_scheduleEntity, Session session) {
+        Set<RG_OrderEntity> rg_orderEntitySet = rg_scheduleEntity.getOrders();
+        if (rg_orderEntitySet.size() >= 0) {
+            for (RG_OrderEntity orderEntity : rg_orderEntitySet) {
+                orderEntity.setState(Byte.parseByte(state));
+                session.save(orderEntity);
+            }
         }
     }
 }
