@@ -151,9 +151,11 @@ angular.module("IntegratedFramework", [
 
         service.isChildNode = backUrl + "process/getAllById.action";
 
+        <!--快照信息-->
         service.isRootLevel = backUrl + "snapshot/getAllByLevel.action";
         service.getTree = backUrl + "snapshot/getAllById.action";
-
+        service.view3DEmulate = backUrl + "snapshot/view3DEmulate.action";
+        service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
 
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
@@ -162,8 +164,6 @@ angular.module("IntegratedFramework", [
         service.AddAdjustOrder = backUrl + "ExceptionSimulat/creatOrderException.action";
         <!--异常处理-->
         service.ExceptionHandling = backUrl + "ExceptionHandling/OrderExceptionHandling.action";
-
-        service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
 
         service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action";
 
