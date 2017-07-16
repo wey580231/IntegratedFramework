@@ -21,7 +21,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $scope.orderList = response.data;
 
                 hideLoadingPage();
-
             });
         });
 

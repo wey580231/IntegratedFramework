@@ -18,14 +18,18 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var rootData = [];
         var planList = [];
 
-
         $(function () {
             //初始化下拉数据
             $(".select2").select2();
 
-            loadRightFloatMenu();
+            var dataTrue = {"level": "top"};
+            myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
+                rootData = response.data;
+                $scope.dataArr = response.data;
 
-            hideLoadingPage();
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
         });
 
         //3D车间查看转换结果
@@ -50,13 +54,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             });
         };
 
-        var dataTrue = {"level": "top"};
-        myHttpService.post(serviceList.isRootLevel, dataTrue).then(function successCallback(response) {
-            rootData = response.data;
-            $scope.dataArr = response.data;
-
-        });
-
+        //下拉框事件改变
         $("#select").change(function () {
             zNodes.splice(0, zNodes.length);
             planList.splice(0, planList.length);
@@ -72,12 +70,12 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 var params = {};
                 params.id = idRoot;
                 var id = JSON.stringify(params);
-                console.log(id);
+
+                layer.load();
+
                 myHttpService.post(serviceList.getTree, id).then(function successCallback(response) {
-
                     var datas = response.data;
-
-                    console.log(datas);
+                    $scope.snapShotData = response.data;
                     var count = 0;
                     if (datas.hasOwnProperty("childs") == true) {
                         count++;
@@ -90,48 +88,27 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                         }
                     }
 
-
-                    var dataTrea = "节点：" + datas.name + "，类型：一级节点，" + "" +
-                        "子节点分" + count + "级";
-                    document.getElementById("textarea").value = dataTrea;
-
-                    console.log(datas);
-                    console.log("根节点");
-                    console.log("是否有一级");
-                    console.log(datas.hasOwnProperty("childs"));
                     if (datas.hasOwnProperty("childs") == true) {
                         var childList = datas.childs;
-                        console.log("根节点下的一级");
-                        console.log(childList);
-                        console.log("根节点下的一级长度");
-                        console.log(childList.length);
                         for (var j = 0; j < childList.length; j++) {
-                            console.log("一级节点下是否有");
-                            console.log(childList[j].hasOwnProperty("childs"));
                             var childLists = childList[j];
                             if (childLists.hasOwnProperty("childs") == true) {
-                                console.log("一级节点下删除前的二级");
-                                console.log(childLists);
                                 var temps = childLists.childs;
                                 delete(childLists.childs);
                                 childLists.children = temps;
-                                console.log("一级节点下删除后的二级");
-                                console.log(childLists);
                                 childList[j] = childLists;
                             }
                         }
-                        console.log(childList);
                         var temp = datas.childs;
                         delete(datas.childs);
                         datas.children = temp;
                     }
                     zNodes.push(datas);
-                    console.log("&&&&&&&&&");
-                    console.log(zNodes);
                     loadTree();
+
+                    hideLoadingPage();
                 })
             } else {
-                document.getElementById("textarea").value = "";
                 document.getElementById("treeDemo").style.display = "none";
                 $("#table_value  tr:not(:first)").html("");
             }
@@ -170,12 +147,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
                 var tree = [];
                 var params = {};
-                console.log(zNodes);
                 params.id = zNodes[0].id;
                 params.name = zNodes[0].name;
                 params.level = zNodes[0].level;
                 tree.push(params);
-                console.log(tree);
 
                 if (zNodes[0].hasOwnProperty("children") == true) {
                     for (var i = 0; i < zNodes[0].children.length; i++) {
@@ -185,7 +160,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                         params.name = dataMiddle.name;
                         params.level = dataMiddle.level;
                         tree.push(params);
-                        console.log(tree);
                         if (dataMiddle.hasOwnProperty("children") == true) {
                             for (var j = 0; j < dataMiddle.children.length; j++) {
                                 var dataBootum = dataMiddle.children[j];
@@ -197,14 +171,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                 tree.push(params);
                             }
                         }
-                        console.log(tree);
                     }
                 }
 
-
                 for (var i = 0; i < tree.length; i++) {
                     var state = tree[i].level;
-                    console.log(state);
                     switch (state) {
                         case "top":
                             tree[i].level = "一级节点";
@@ -221,36 +192,28 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 zTree.expandNode(treeNode, null, null, null, true);
 
-
                 var dataTrea;
-                document.getElementById("textarea").value = "";
                 var id = zTree.getSelectedNodes()[0].id;
-                console.log(id);
                 for (var i = 0; i < tree.length; i++) {
                     if (id == tree[i].id && tree[i].level == "三级节点") {
                         var treeInfo = tree[i];
                         var params = {};
                         params.id = id;
                         var data = JSON.stringify(params);
-                        dataTrea = "节点：" + treeInfo.name + "，类型：" + treeInfo.level + "\n" + "排程开始时间：" + moment(treeInfo.schedule.startCalcTime).format("YYYY-MM-DD")
-                            + "，排程结束时间：" + moment(treeInfo.schedule.endCalcTime).format("YYYY-MM-DD") + "，排程周期长度：" + treeInfo.schedule.scheduleWindow + "\n" +"APS计算开始时间"
-                            + moment(treeInfo.schedule.apsStartTime).format("YYYY-MM-DD") + "，APS计算结束时间" + moment(treeInfo.schedule.apsEndTime).format("YYYY-MM-DD");
-                        document.getElementById("textarea").value = dataTrea;
+                        layer.load();
                         myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
                             planList = response.data
                             $scope.planList = planList;
+                            hideLoadingPage();
                         });
                         break;
                     } else if (id == tree[i].id) {
                         $("#table_value  tr:not(:first)").html("");
                         var treeInfo = tree[i];
-                        dataTrea = "节点：" + treeInfo.name + "，类型：" + treeInfo.level;
-                        document.getElementById("textarea").value = dataTrea;
                         break;
                     }
                 }
             }
-
 
             var curExpandNode = null;
 
@@ -352,8 +315,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             document.getElementById("treeDemo").style.display = "";
-
         }
-
     });
 
