@@ -110,7 +110,11 @@
                             ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{schedule.id}}</td>
-                            <td>{{schedule.name}}</td>
+                            <td style="position: absolute">{{schedule.name}}<span class="label label-success"
+                                                                                  style="position:relative;left:0px;top:0px;cursor: pointer;"
+                                                                                  ng-if="schedule.state == 2 && $last"
+                                                                                  ng-click="interactiveSchedule()">交互优化</span>
+                            </td>
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>{{schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>
@@ -121,7 +125,8 @@
                             <td>{{schedule.rollTime}}</td>
                             <td>
                                 <span class="label label-success" ng-if="schedule.state == 0">下发APS</span>
-                                <span class="label label-primary" ng-if="schedule.state == 1"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
+                                <span class="label label-primary" ng-if="schedule.state == 1"><i
+                                        class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
                                 <span class="label label-success" ng-if="schedule.state == 2">计算成功</span>
                                 <span class="label label-danger" ng-if="schedule.state == 3">计算失败</span>
                                 <span class="label label-success" ng-if="schedule.state == 4">优化完成</span>
