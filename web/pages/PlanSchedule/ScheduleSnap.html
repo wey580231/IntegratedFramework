@@ -219,10 +219,15 @@
                                 <span ng-if="snapShotData.schedule.state == 0">下发APS</span>
                                 <span ng-if="snapShotData.schedule.state == 1"><i
                                         class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
-                                <span ng-if="snapShotData.schedule.state == 2">计算成功</span>
-                                <span ng-if="snapShotData.schedule.state == 3">计算失败</span>
-                                <span ng-if="snapShotData.schedule.state == 4">优化完成</span>
-                                <span ng-if="snapShotData.schedule.state == 5">下发MES</span>
+                                <span class="label label-success" ng-if="snapShotData.schedule.state == 2">计算成功</span>
+                                <span class="label label-danger" ng-if="snapShotData.schedule.state == 3">计算失败</span>
+                                <span class="label label-success" ng-if="snapShotData.schedule.state == 4">优化完成</span>
+                                <span class="label label-info" ng-if="snapShotData.schedule.state == 5">下发MES</span>
+
+                                <span class="label label-success" ng-if="snapShotData.schedule.state == 10">应急计算成功</span>
+                                <span class="label label-danger" ng-if="snapShotData.schedule.state == 12">应急计算失败</span>
+                                <span class="label label-success" ng-if="snapShotData.schedule.state == 11">应急优化完成</span>
+                                <span class="label label-info" ng-if="snapShotData.schedule.state == 13">应急下发MES</span>
                         </span>
                         <span class="spanKey">排程周期</span>
                         <span class="spanVal">{{snapShotData.schedule.scheduleWindow}}&nbsp;天</span>
