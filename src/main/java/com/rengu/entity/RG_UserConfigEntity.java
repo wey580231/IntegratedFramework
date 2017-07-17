@@ -13,6 +13,7 @@ public class RG_UserConfigEntity {
     private String bottomSnapshotId;                //快照树第三层节点ID
     private boolean errorSchedule;                  //是否为紧急排程
     private Integer apsReplyCount;                  //aps在当前MiddleSnapshotId节点下返回结果的次数(区分是否为优化结果)
+    private boolean resetApsTable;                  //是否要清空aps表,1为要清空，0为不清空。
 
     private RG_UserConfigEntity user;               //
 
@@ -88,4 +89,11 @@ public class RG_UserConfigEntity {
         this.user = user;
     }
 
+    public boolean isResetApsTable() {
+        return resetApsTable;
+    }
+
+    public void setResetApsTable(boolean resetApsTable) {
+        this.resetApsTable = resetApsTable;
+    }
 }

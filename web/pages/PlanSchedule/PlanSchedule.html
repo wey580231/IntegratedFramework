@@ -113,7 +113,7 @@
                             <td style="position: absolute">{{schedule.name}}
                                     <span class="label label-success"
                                       style="position:relative;left:5px;top:0px;cursor: pointer;"
-                                      ng-if="schedule.state == 2 || schedule.state == 4 ||schedule.state == 10||schedule.state == 11&& $last"
+                                      ng-if="(schedule.state == 2 || schedule.state == 4 ||schedule.state == 10||schedule.state == 11) && $last"
                                       ng-click="interactiveSchedule()">交互优化</span>
                             </td>
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
