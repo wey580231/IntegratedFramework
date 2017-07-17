@@ -32,7 +32,7 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
             myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
                     if (response.data.data.state == 0) {
-                        processError();
+                        processError(event);
                     } else {
                         layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
@@ -42,7 +42,7 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
             });
         };
 
-        function processError() {
+        function processError(event) {
             var idInfo;
             var e = event || window.event;
             var target = e.target || e.srcElement;
