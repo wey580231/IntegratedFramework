@@ -244,9 +244,11 @@ public class Tools {
     }
 
     public static Date parseDate(String text) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        long timeStmp = Long.parseLong(text);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String time = simpleDateFormat.format(timeStmp);
         try {
-            return df.parse(text);
+            return simpleDateFormat.parse(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }
