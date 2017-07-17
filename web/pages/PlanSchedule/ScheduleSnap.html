@@ -195,17 +195,13 @@
                         </div>
                     </div>
 
-                    <div class="box-body no-padding"
-                         style=" overflow-y:auto;/* overflow-x:auto; width:200px; height:200px;*/">
-
+                    <div class="box-body no-padding" style=" overflow-y:auto;/* overflow-x:auto; width:200px; height:200px;*/">
                         <div>
                             <ul id="treeDemo" class="ztree"></ul>
                         </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
-
-                <!-- /.box -->
             </div>
             <!-- /.col -->
             <div class="col-md-9">
@@ -236,7 +232,7 @@
                         <span class="spanVal" ng-if="snapShotData.schedule.scheduleWindow!=null">{{snapShotData.schedule.scheduleWindow}}&nbsp;天</span>
                         <span class="spanKey">滚动周期</span>
                         <span class="spanVal" ng-if="snapShotData.schedule.rollTime==null"></span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.rollTime!=null">{{snapShotData.schedule.rollTime}}&nbsp;天</span>
+                        <span class="spanVal" >{{snapShotData.schedule.rollTime}}&nbsp;天</span>
                     </div>
                     <div style="display: block;height:35px;">
                         <span class="spanKey">排程时间</span>

@@ -11,6 +11,9 @@
         <property name="reportTime" type="java.util.Date">
             <column name="reportTime" sql-type="datetime" not-null="false"/>
         </property>
+        <property name="processTime" type="java.util.Date">
+            <column name="processTime" sql-type="datetime" not-null="false"/>
+        </property>
         <property name="idTask">
             <column name="idTask" sql-type="varchar(60)" length="60" not-null="false"/>
         </property>

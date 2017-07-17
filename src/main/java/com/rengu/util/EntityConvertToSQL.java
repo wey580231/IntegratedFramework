@@ -30,7 +30,7 @@ public class EntityConvertToSQL {
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT1())
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT2())
                 + "','" + rg_orderEntity.getColor()
-                + "'," + rg_orderEntity.getState() + ")";
+                + "'," +  0 + ")";   //rg_orderEntity.getState()
         return SQLString;
     }
 
