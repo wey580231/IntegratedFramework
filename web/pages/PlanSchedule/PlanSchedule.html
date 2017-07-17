@@ -81,7 +81,7 @@
                         <div class="btn-group">
                             <button type="button" id="scheduleButt"
                                     class="btn btn-default btn-sm" data-toggle="modal"
-                                    ng-click="prepareNewSchedule();hideCalendar()">
+                                    ng-click="prepareNewSchedule();">
                                 <i class="fa fa-plus"></i>
                                 新增排程
                             </button>
@@ -117,13 +117,13 @@
                                       ng-click="interactiveSchedule()">交互优化</span>
                             </td>
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td>{{schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{schedule.apsStartTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>
-                                <span ng-if="schedule.endCalcTime==null">---</span>
-                                <span ng-if="schedule.endCalcTime!=null">{{schedule.endCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                                <span ng-if="schedule.apsEndTime==null">---</span>
+                                <span ng-if="schedule.apsEndTime!=null">{{schedule.apsEndTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
-                            <td>{{schedule.scheduleWindow}}</td>
-                            <td>{{schedule.rollTime}}</td>
+                            <td>{{schedule.scheduleWindow}}&nbsp;天</td>
+                            <td>{{schedule.rollTime}}&nbsp;天</td>
                             <td>
                                 <span class="label label-success" ng-if="schedule.state == 0">下发APS</span>
                                 <span class="label label-primary" ng-if="schedule.state == 1"><i
@@ -132,6 +132,11 @@
                                 <span class="label label-danger" ng-if="schedule.state == 3">计算失败</span>
                                 <span class="label label-success" ng-if="schedule.state == 4">优化完成</span>
                                 <span class="label label-info" ng-if="schedule.state == 5">下发MES</span>
+
+                                <span class="label label-success" ng-if="schedule.state == 10">应急计算成功</span>
+                                <span class="label label-danger" ng-if="schedule.state == 12">应急计算失败</span>
+                                <span class="label label-success" ng-if="schedule.state == 11">应急优化完成</span>
+                                <span class="label label-info" ng-if="schedule.state == 13">应急下发MES</span>
                             </td>
                         </tr>
                         </tbody>

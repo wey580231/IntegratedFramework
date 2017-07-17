@@ -22,7 +22,7 @@ public class RG_ScheduleEntity {
     public static final int ERROR_SUCCESS = 10;         //故障计算完成
     public static final int ERROR_ADJUST = 11;          //APS优化完成
     public static final int ERROR_FAIL = 12  ;          //故障处理失败
-    public static final int ERROR_MES_DISPTATCH = 12;   //故障应急后下发MES
+    public static final int ERROR_MES_DISPTATCH = 13;   //故障应急后下发MES
 
     private String id;
 
