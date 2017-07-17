@@ -33,6 +33,12 @@
         <property name="resetApsTable">
             <column name="resetApsTable" sql-type="tinyint(1)" not-null="false"/>
         </property>
+        <property name="errorType">
+            <column name="errorType" sql-type="varchar(100)" length="20" not-null="false"/>
+        </property>
+        <property name="errorId">
+            <column name="errorId" sql-type="varchar(100)" length="20" not-null="false"/>
+        </property>
 
         <many-to-one name="user" class="com.rengu.entity.RG_UserEntity">
             <column name="idUser" not-null="false"/>
