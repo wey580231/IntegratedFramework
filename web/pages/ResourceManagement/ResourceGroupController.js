@@ -177,14 +177,15 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             if (getInfo()) {
                 $("#modal-edit").modal('show');
                 var idInfo = JSON.stringify(id_params);
-                myHttpService.post(serviceList.GetGroupResourceById, idInfo).then(function successCallback(response) {
+                myHttpService.post(serviceList.GetSiteById, idInfo).then(function successCallback(response) {
                     var editList = [];//保存从数据库获取的需要修改的数据
                     editList.push(response.data);
                     edit_params = response.data;
                     $scope.editList = editList;
-                }, function errorCallback(response) {
+                }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
+
             } else {
                 $("#modal-edit").modal('hide');
             }
