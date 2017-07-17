@@ -159,8 +159,10 @@ angular.module("IntegratedFramework", [
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
+
         <!--异常状态-->
         service.AddAdjustOrder = backUrl + "ExceptionSimulat/creatOrderException.action";
+        service.AddAdjustProcess = backUrl + "ExceptionSimulat/creatProcessException.action";
 
         <!--异常处理-->
         service.deviceProcessHandling = backUrl + "exceptionHandling/deviceProcessHandling.action";
