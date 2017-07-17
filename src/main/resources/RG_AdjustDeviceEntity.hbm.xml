@@ -11,8 +11,8 @@
         <property name="orderId">
             <column name="orderId" sql-type="varchar(255)" not-null="false"/>
         </property>
-        <property name="reportTime">
-            <column name="reportTime" sql-type="varchar(255)" not-null="false"/>
+        <property name="reportTime" type="java.util.Date">
+            <column name="reportTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="resoureId">
             <column name="resoureId" sql-type="varchar(255)" not-null="false"/>
@@ -22,6 +22,9 @@
         </property>
         <property name="state" type="java.lang.Integer">
             <column name="state" sql-type="int" not-null="false"/>
+        </property>
+        <property name="processTime" type="java.util.Date">
+            <column name="processTime" sql-type="datetime" not-null="false"/>
         </property>
 
         <property name="cancelTime">

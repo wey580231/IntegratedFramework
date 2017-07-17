@@ -40,23 +40,30 @@
                     <table class="table table-hover table-striped" id="table_value">
                         <tbody>
                         <tr>
-                            <th>订单状态</th>
                             <th>订单编码</th>
-                            <th>上报时间</th>
+                            <th>订单状态</th>
                             <th>资源编码</th>
                             <th>撤销时间</th>
-                            <!--<th>处理方法</th>-->
+                            <th>上报时间</th>
                             <th>异常来源</th>
+                            <th>异常状态</th>
+                            <th>处理时间</th>
+                            <th>操作</th>
                         </tr>
-                        <tr ng-repeat="device in adjustDeviceList track by $index" ng-init="renderTable($last)" onclick="a(this)">
-                            <td>{{device.state}}</td>
+                        <tr ng-repeat="device in adjustDeviceList track by $index" ng-init="renderTable($last)"
+                            onclick="a(this)">
                             <td>{{device.orderId}}</td>
-                            <td>{{device.reportTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td>{{device.state}}</td>
                             <td>{{device.resoureId}}</td>
                             <td>{{device.cancelTime | date:'yyyy-MM-dd hh:mm:ss' }}</td>
-                            <!--<td></td>-->
+                            <td>{{device.reportTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>{{device.origin}}</td>
-
+                            <td>{{device.state}}</td>
+                            <td>
+                                <span ng-if="device.processTime ==null">--</span>
+                                <span ng-if="device.processTime !=null">{{device.processTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                            </td>
+                            <td></td>
                         </tr>
                         </tbody>
                     </table>

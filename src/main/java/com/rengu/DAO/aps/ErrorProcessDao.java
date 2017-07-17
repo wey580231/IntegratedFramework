@@ -8,6 +8,7 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +45,7 @@ public class ErrorProcessDao {
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
+                entity.setProcessTime(new Date());
                 createSnapNode("设备异常应急");
                 session.update(entity);
             }
@@ -76,6 +78,7 @@ public class ErrorProcessDao {
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
+                entity.setProcessTime(new Date());
                 createSnapNode("紧急插单应急");
                 session.update(entity);
             }
@@ -102,6 +105,7 @@ public class ErrorProcessDao {
             RG_AdjustProcessEntity entity = (RG_AdjustProcessEntity) list.get(0);
 
             entity.setState(ErrorState.ERROR_APS_PROCESS);
+            entity.setProcessTime(new Date());
             createSnapNode("工序异常应急");
             session.update(entity);
 

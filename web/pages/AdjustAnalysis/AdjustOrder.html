@@ -74,9 +74,10 @@
                                                 <th>优先级</th>
                                                 <th>数 量</th>
                                                 <th>异常状态</th>
+                                                <th>处理时间</th>
                                                 <th>操作</th>
                                             </tr>
-                                            <tr  ng-repeat="x in adjustOrder" ng-init="renderTable($last)" onclick="a(this)">
+                                            <tr  ng-repeat="x in adjustOrder" ng-init="renderTable($last)">
                                                 <td style="display:none" id="id">{{x.id}}</td>
                                                 <td id="ord">{{x.ord.name}}</td>
                                                 <td>{{x.ord.priority}}</td>
@@ -88,6 +89,10 @@
                                                     <span class="label label-success" ng-if="x.state == 3">aps处理完成</span>
                                                     <span class="label label-success" ng-if="x.state == 4">调整完成</span>
                                                     <span class="label label-warning" ng-if="x.state == 5">处理完成</span>
+                                                </td>
+                                                <td>
+                                                    <span ng-if="x.processTime ==null">--</span>
+                                                    <span ng-if="x.processTime !=null">{{x.processTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-block btn-sm btn-info" ng-click="exceptionHandling($event)">处理</button>

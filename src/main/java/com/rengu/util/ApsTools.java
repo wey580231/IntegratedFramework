@@ -32,7 +32,7 @@ public class ApsTools {
 
     //aps部署的地址和端口号
     private static ApsTools apsTool = null;
-    private final String replyApsAction = "/aps/updateProgress.action";
+    private final String replyApsAction = "/aps/updateProgress";
     private String apsHost;
     private int apsPort;
 
