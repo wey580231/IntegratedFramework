@@ -178,6 +178,10 @@ public class ScheduleAction extends SuperAction {
                         session.save(rg_orderEntity);
                     }
                 }
+
+                //TODO 更新aps的modescheduing字段改成"正向"
+                ApsTools.instance().updateApsModuleSheduing();
+
                 //调用排程接口
                 int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
                 rg_scheduleEntity.setOrders(rg_orderEntitySet);

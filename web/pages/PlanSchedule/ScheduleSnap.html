@@ -106,32 +106,6 @@
     .box {
         position: unset;
     }
-
-    .spanKey {
-        width: 120px;
-        height: 30px;
-        /*background-color:red;*/
-        float: left;
-        text-align: center;
-        padding-right: 5px;
-        margin-right: 5px;
-        line-height: 30px;
-    }
-
-    .spanVal {
-        width: 150px;
-        height: 30px;
-        /*background-color: red;*/
-        color: white;
-        float: left;
-        text-align: left;
-        line-height: 30px;
-        padding-left: 10px;
-        margin-right: 5px;
-        color: black;
-        border-bottom: 1px solid lightgrey;
-    }
-
 </style>
 
 <div>
@@ -175,15 +149,15 @@
     <section class="content">
         <div class="row">
             <div class="col-md-3">
+
                 <div class="form-group">
-                    <label contenteditable="true" style="float: left;">选取排程:</label>
-                    <select class="form-control select2" style="float:left;" id="select">
+                    <label>选择排程</label>
+                    <select class="form-control select2" style="width: 100%;float:left;" id="select">
                         <option selected="selected"></option>
                         <option ng-repeat="data in dataArr">{{data.name}}</option>
                     </select>
                 </div>
 
-                <!--树-->
                 <div class="box box-solid" style="overflow: auto;">
                     <div class="box-header with-border">
                         <h3 class="box-title">快照信息</h3>
@@ -195,7 +169,7 @@
                         </div>
                     </div>
 
-                    <div class="box-body no-padding" style=" overflow-y:auto;/* overflow-x:auto; width:200px; height:200px;*/">
+                    <div class="box-body no-padding" style=" overflow-y:auto;">
                         <div>
                             <ul id="treeDemo" class="ztree"></ul>
                         </div>
@@ -207,12 +181,13 @@
             <div class="col-md-9">
                 <h2 style="font-size: 17px;font-weight: 600;margin-bottom: 8px">基本信息</h2>
                 <div style="height: auto;margin-bottom: 3px;">
-                    <div style="display: block;height:35px;">
-                        <span class="spanKey">排程名称</span>
-                        <span class="spanVal">{{snapShotData.name}}</span>
-                        <span class="spanKey">排程状态</span>
-                        <span class="spanVal">
-                                <span ng-if="snapShotData.schedule.state == 0">下发APS</span>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <td><span class="spanKey">排程名称</span></td>
+                            <td><span class="spanVal">{{snapShotData.name}}</span></td>
+                            <td><span class="spanKey">排程状态</span></td>
+                            <td><span ng-if="snapShotData.schedule.state == 0">下发APS</span>
                                 <span ng-if="snapShotData.schedule.state == 1"><i
                                         class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
                                 <span class="label label-success" ng-if="snapShotData.schedule.state == 2">计算成功</span>
@@ -226,24 +201,33 @@
                                 <span class="label label-success"
                                       ng-if="snapShotData.schedule.state == 11">应急优化完成</span>
                                 <span class="label label-info" ng-if="snapShotData.schedule.state == 13">应急下发MES</span>
-                        </span>
-                        <span class="spanKey">排程周期</span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.scheduleWindow==null"></span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.scheduleWindow!=null">{{snapShotData.schedule.scheduleWindow}}&nbsp;天</span>
-                        <span class="spanKey">滚动周期</span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.rollTime==null"></span>
-                        <span class="spanVal" >{{snapShotData.schedule.rollTime}}&nbsp;天</span>
-                    </div>
-                    <div style="display: block;height:35px;">
-                        <span class="spanKey">排程时间</span>
-                        <span class="spanVal">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-                        <span class="spanKey">计算开始时间</span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.apsStartTime==null"></span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.apsStartTime!=null">{{snapShotData.schedule.apsStartTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-                        <span class="spanKey">计算结束时间</span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.apsEndTime==null"></span>
-                        <span class="spanVal" ng-if="snapShotData.schedule.apsEndTime!=null">{{snapShotData.schedule.apsEndTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-                    </div>
+                            </td>
+                            <td><span class="spanKey">排程周期</span></td>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.scheduleWindow==null">--</span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.scheduleWindow!=null">{{snapShotData.schedule.scheduleWindow}}&nbsp;天</span>
+                            </td>
+                            <td><span class="spanKey">滚动周期</span></td>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.rollTime==null">--</span>
+                                <span class="spanVal">{{snapShotData.schedule.rollTime}}&nbsp;天</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="spanKey">排程时间</span></td>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.scheduleTime==null">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.scheduleTime!=null">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                            </td>
+                            <td><span class="spanKey">计算开始时间</span></td>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.apsStartTime==null"></span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.apsStartTime!=null">{{snapShotData.schedule.apsStartTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                            </td>
+                            <td><span class="spanKey">计算结束时间</span></td>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.apsEndTime==null"></span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.apsEndTime!=null">{{snapShotData.schedule.apsEndTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
                 </div>
 
                 <div class="box box-primary" style="clear: both;">

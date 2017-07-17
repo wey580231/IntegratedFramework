@@ -2,6 +2,7 @@ package com.rengu.servlet;
 
 import com.rengu.actions.mes.MesConsumer;
 import com.rengu.actions.mes.MesReceiver;
+import com.rengu.util.ApsTools;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
 
@@ -49,6 +50,10 @@ public class StartUpServlet extends HttpServlet {
         } catch (ConnectException e) {
             e.printStackTrace();
         }
+
+        //【4】第一次排程時将job、task、plan、log、order清空
+        ApsTools.instance().resetApsDatabase();
+
     }
 
     @Override

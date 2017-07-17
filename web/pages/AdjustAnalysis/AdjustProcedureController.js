@@ -179,7 +179,7 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
                 var id = document.getElementById("table_adjust").rows[rowIndex].cells[0].innerHTML;
                 myHttpService.get(serviceList.processExceptionHandling + "?id=" + id, idInfo).then(function successCallback(response) {
                     if (response.data.result == "ok") {
-                        notification.sendNotification("confirm", "异常处理中...");
+                        notification.sendNotification("confirm", "工序调整处理中...");
                     } else {
                         notification.sendNotification("alert", "请求失败");
                     }
