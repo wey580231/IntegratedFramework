@@ -66,7 +66,7 @@ public class ApsTools {
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
                 "&" +
-                "BUFFER=1\\n2\\n" + "K" + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n" + entity.getOrd().getId() + "\\n" + entity.getOrd().getName()
+                "BUFFER=1\\n2\\n" + "null" + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n" + entity.getOrd().getId() + "\\n" + entity.getOrd().getName()
                 + "\\n" + entity.getOrd().getQuantity() + "\\n" + entity.getOrd().getProductByIdProduct().getId() + "\\n" + entity.getOrd().getIdGroupResource() +
                 "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT0())) + "\\n"
                 + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT1())) + "\\n"

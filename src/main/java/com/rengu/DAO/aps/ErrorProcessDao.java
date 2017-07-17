@@ -138,6 +138,7 @@ public class ErrorProcessDao {
             middleSnapshot.setRootParent(rootSnapshot);
 
             UserConfigTools.updateMiddleSnapshotId("1", middleSnapshot.getId(), true);
+            UserConfigTools.updateApsReplyCount("1", 0);
 
             rootSnapshot.getChilds().add(middleSnapshot);
             session.save(rootSnapshot);

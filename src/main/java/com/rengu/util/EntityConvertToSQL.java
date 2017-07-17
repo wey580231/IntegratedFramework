@@ -19,6 +19,7 @@ public class EntityConvertToSQL {
         return SQLString;
     }
 
+    //TODO 临时将插入aps的订单状态强制改成1
     public static String insertSQLForAPS(RG_OrderEntity rg_orderEntity) {
         String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,IDCLUB,priority,IDPRODUCT,quantity,t0,t1,t2,color,state) VALUES ('" + rg_orderEntity.getId()
                 + "','" + rg_orderEntity.getName()
