@@ -250,17 +250,17 @@
                                 <tr>
                                     <th>订单名称</th>
                                     <th>供应商</th>
-                                    <th>作业时间</th>
-                                    <th>作业初始时间</th>
-                                    <th>作业更新时间</th>
+                                    <th>订单优先级</th>
+                                    <th>订单数量</th>
+                                    <th>最晚完工</th>
                                 </tr>
                                 <tr ng-repeat="plan in planList" ng-init="renderTable($last)">
                                     <td style="display:none">{{plan.id}}</td>
                                     <td>{{plan.nameOrder}}</td>
                                     <td>{{plan.nameProvider}}</td>
-                                    <td>{{plan.timeTask}}</td>
-                                    <td>{{plan.initTimeTask}}</td>
-                                    <td>{{plan.postTimeTask}}</td>
+                                    <td>{{plan.priorityOrder}}</td>
+                                    <td>{{plan.quantityOrder}}</td>
+                                    <td>{{plan.t2Order}}</td>
                                 </tr>
                                 </tbody>
                             </table>

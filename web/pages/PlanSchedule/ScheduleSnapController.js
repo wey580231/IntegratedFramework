@@ -145,9 +145,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     showLine: false
                 },
                 callback: {
-                    onClick: zTreeOnClick,
-                    beforeExpand: beforeExpand,
-                    onExpand: onExpand
+                    onClick: zTreeOnClick
                 },
                 data: {
                     keep: {
@@ -210,8 +208,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     }
                 }
 
+            /*    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                zTree.expandNode(treeNode, null, null, null, true);*/
+
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                zTree.expandNode(treeNode, null, null, null, true);
+                zTree.expandNode(treeNode);
 
                 var tmpId = zTree.getSelectedNodes()[0].id;
                 for (var i = 0; i < tree.length; i++) {
@@ -234,11 +235,18 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                         break;
                     }
                 }
+
+
             }
 
-            var curExpandNode = null;
 
-            function beforeExpand(treeId, treeNode) {
+
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            document.getElementById("treeDemo").style.display = "";
+
+            // var curExpandNode = null;
+
+        /*    function beforeExpand(treeId, treeNode) {
                 var pNode = curExpandNode ? curExpandNode.getParentNode() : null;
                 var treeNodeP = treeNode.parentTId ? treeNode.getParentNode() : null;
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
@@ -314,7 +322,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             function onExpand(event, treeId, treeNode) {
                 curExpandNode = treeNode;
-            }
+            }*/
 
             $scope.sendMES = function () {
                 hideRMenu();
@@ -325,8 +333,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 })
             };
 
-            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-            document.getElementById("treeDemo").style.display = "";
+
         }
     });
 
