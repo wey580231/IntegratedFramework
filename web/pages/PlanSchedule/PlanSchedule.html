@@ -50,6 +50,25 @@
         color: white;
         font-weight: 600;
     }
+
+    .myInput {
+        height: 24px;
+        width: 163.933px;
+    }
+
+    .form-group {
+        margin-bottom: 13px;
+    }
+
+    .myInputform-control {
+        font-size: 11px;
+    }
+
+    #selectAdd {
+        width: 163.933px;
+        height: 24px;
+    }
+
 </style>
 
 <div>
@@ -111,7 +130,7 @@
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{schedule.id}}</td>
                             <td style="position: absolute">{{schedule.name}}
-                                    <span class="label label-success"
+                                <span class="label label-success"
                                       style="position:relative;left:5px;top:0px;cursor: pointer;"
                                       ng-if="(schedule.state == 2 || schedule.state == 4 ||schedule.state == 10||schedule.state == 11) && $last"
                                       ng-click="interactiveSchedule()">交互优化</span>
@@ -171,33 +190,68 @@
                                             <div class="col-md-4">
                                                 <div class="modal-body">
                                                     <form class="form-horizontal">
-                                                        <div class="box-body">
+                                                        <div class="box-body"
+                                                             ng-repeat="schedule in scheduleList | orderBy: 'scheduleTime': asc">
                                                             <div class="form-group" id="add-name">
                                                                 <label class="col-sm-4 control-label">名称</label>
 
                                                                 <div class="col-sm-8">
-                                                                    <input class="form-control" name="add-name"
+                                                                    <input class="myInput form-control" name="add-name"
                                                                            title="请输入英文字符！"
                                                                            placeholder="">
                                                                 </div>
                                                             </div>
+
+
                                                             <div class="form-group" id="add-rollTime">
                                                                 <label class="col-sm-4 control-label">滚动周期</label>
 
                                                                 <div class="col-sm-8">
-                                                                    <input class="form-control" name="add-rollTime"
+                                                                    <input class="myInput form-control"
+                                                                           name="add-rollTime"
                                                                            title="请输入数字！"
                                                                            placeholder="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" id="add-scheduleDays">
-                                                                <label class="col-sm-4 control-label">排程时间长度</label>
+                                                                <label class="col-sm-4 control-label">排程时间</label>
                                                                 <div class="col-sm-8">
-                                                                    <input class="form-control" name="add-scheduleDays"
+                                                                    <input class="myInput form-control"
+                                                                           name="add-scheduleDays"
                                                                            title="请输入数字！"
                                                                            placeholder="">
                                                                 </div>
                                                             </div>
+
+                                                            <div class="form-group" id="add-schedule">
+                                                                <label class="col-sm-4 control-label">排程模式</label>
+
+                                                                <div class="col-sm-8">
+                                                                    <select id="selectAdd" class="myInput  myInputform-control"
+                                                                            name="add-schedule" placeholder="正向">
+                                                                        <option value="正向">正向</option>
+                                                                        <option value="反向">反向</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group"  id="add-start">
+                                                                <label class="col-sm-4 control-label">优化开始</label>
+                                                                <div class="col-sm-8 layui-inline">
+                                                                    <input class="myInput myInputform-control" name="add-start"
+                                                                           placeholder="2017-07-18 00:00:00" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" id="add-end">
+                                                                <label class="col-sm-4 control-label">优化结束</label>
+
+                                                                <div class="col-sm-8">
+                                                                    <input class="myInput myInputform-control" name="add-end"
+                                                                           placeholder="2017-07-18 00:00:00" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                                </div>
+                                                            </div>
+
                                                             <div>
                                                                 <button type="submit"
                                                                         class="btn btn-primary btn-flat pull-right"
