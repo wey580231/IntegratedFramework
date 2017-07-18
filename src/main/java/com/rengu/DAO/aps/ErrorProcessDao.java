@@ -46,7 +46,7 @@ public class ErrorProcessDao {
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
                 entity.setProcessTime(new Date());
-                createSnapNode("设备异常应急");
+                createSnapNode("设备异常应急", "rg_adjustdevice", id);
                 session.update(entity);
             }
         }
@@ -79,7 +79,7 @@ public class ErrorProcessDao {
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
                 entity.setProcessTime(new Date());
-                createSnapNode("紧急插单应急");
+                createSnapNode("设备异常应急", "rg_adjustorder", id);
                 session.update(entity);
             }
         }
@@ -106,7 +106,7 @@ public class ErrorProcessDao {
 
             entity.setState(ErrorState.ERROR_APS_PROCESS);
             entity.setProcessTime(new Date());
-            createSnapNode("工序异常应急");
+            createSnapNode("设备异常应急", "rg_adjustprocess", id);
             session.update(entity);
 
             result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustProcessHandlingURL(entity));
@@ -122,7 +122,8 @@ public class ErrorProcessDao {
         return result;
     }
 
-    private void createSnapNode(String name) {
+    //创建故障应急节点
+    private void createSnapNode(String name, String errorType, String errorId) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Query query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
         query.setParameter("id", UserConfigTools.getRootSnapId("1"));
@@ -139,6 +140,7 @@ public class ErrorProcessDao {
 
             UserConfigTools.updateMiddleSnapshotId("1", middleSnapshot.getId(), true);
             UserConfigTools.updateApsReplyCount("1", 0);
+            UserConfigTools.updateErroInfo("1", errorType, errorId);
 
             rootSnapshot.getChilds().add(middleSnapshot);
             session.save(rootSnapshot);

@@ -9,6 +9,7 @@ import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.entity.RG_UserConfigEntity;
 import com.rengu.util.*;
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import java.util.Date;
@@ -78,21 +79,21 @@ public class FeedBackStateAction extends SuperAction {
                                 schedule.setState(RG_ScheduleEntity.APS_SUCCESS);
                                 nodeName = "排程结果";
                                 WebSocketNotification.broadcast("APS计算完成!");
-                                setOrdersState("1", schedule, session);
+                                setOrdersState("1", schedule);
                             } else {
                                 schedule.setState(RG_ScheduleEntity.APS_ADJUST);
                                 if (middleSnapshot != null) {
                                     nodeName = "优化调整" + middleSnapshot.getChilds().size();
                                 }
                                 WebSocketNotification.broadcast("APS优化计算完成!");
-                                setOrdersState("1", schedule, session);
+                                setOrdersState("1", schedule);
                             }
                         }
                         //计算失败
                         else if (!(state[0].equals(APS_RESULT_SUCCESS))) {
                             schedule.setState(RG_ScheduleEntity.APS_FAIL);
                             WebSocketNotification.broadcast("APS计算失败!");
-                            setOrdersState("1", schedule, session);
+                            setOrdersState("1", schedule);
                         }
                     }
                     //故障应急排程
@@ -102,21 +103,24 @@ public class FeedBackStateAction extends SuperAction {
                                 schedule.setState(RG_ScheduleEntity.ERROR_SUCCESS);
                                 nodeName = "应急结果";
                                 WebSocketNotification.broadcast("APS应急计算完成!");
-                                setOrdersState("1", schedule, session);
+                                setOrdersState("1", schedule);
+                                setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_APS_FINISH);
                             } else {
                                 schedule.setState(RG_ScheduleEntity.ERROR_ADJUST);
                                 if (middleSnapshot != null) {
                                     nodeName = "应急优化调整" + middleSnapshot.getChilds().size();
                                 }
-                                WebSocketNotification.broadcast("APS应急优化计算完成!");
-                                setOrdersState("1", schedule, session);
+                                WebSocketNotification.broadcast("APS应急优化完成!");
+                                setOrdersState("1", schedule);
+                                setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ADJUSTED);
                             }
                         }
                         //计算失败
                         else if (!(state[0].equals(APS_RESULT_SUCCESS))) {
                             schedule.setState(RG_ScheduleEntity.ERROR_FAIL);
-                            WebSocketNotification.broadcast("APS应急失败!");
-                            setOrdersState("1", schedule, session);
+                            WebSocketNotification.broadcast("APS应急处理失败!");
+                            setOrdersState("1", schedule);
+                            setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ERROR);
                         }
                     }
 
@@ -151,7 +155,7 @@ public class FeedBackStateAction extends SuperAction {
                             e.printStackTrace();
                             session.getTransaction().rollback();
                             WebSocketNotification.broadcast("APS计算结果转换出错!");
-                            setOrdersState("1", schedule, session);
+                            setOrdersState("1", schedule);
                         }
                     } else {
                         session.update(schedule);
@@ -190,7 +194,8 @@ public class FeedBackStateAction extends SuperAction {
     }
 
     //设置订单状态
-    private void setOrdersState(String state, RG_ScheduleEntity rg_scheduleEntity, Session session) {
+    private void setOrdersState(String state, RG_ScheduleEntity rg_scheduleEntity) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Set<RG_OrderEntity> rg_orderEntitySet = rg_scheduleEntity.getOrders();
         if (rg_orderEntitySet.size() >= 0) {
             for (RG_OrderEntity orderEntity : rg_orderEntitySet) {
@@ -198,5 +203,15 @@ public class FeedBackStateAction extends SuperAction {
                 session.save(orderEntity);
             }
         }
+    }
+
+    //设置对应故障的状态
+    private int setErrorState(String errorType, String errorId, Integer state) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        NativeQuery tquery = session.createNativeQuery("update " + errorType + " set state = ? where id = ?");
+        tquery.setParameter(1, state);
+        tquery.setParameter(2, errorId);
+
+        return tquery.executeUpdate();
     }
 }
