@@ -84,13 +84,10 @@ public class ScheduleAction extends SuperAction {
 
             //解析Layout数据
             JsonNode layoutNodes = rootNode.get("layout");
-            // TODO 设置默认layout
-            RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, "1");
-            rg_scheduleEntity.setLayout(layout);
-//            if (layoutNodes.size() == 1) {
-//                RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
-//                rg_scheduleEntity.setLayout(layout);
-//            }
+            if (layoutNodes.size() == 1) {
+                RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
+                rg_scheduleEntity.setLayout(layout);
+            }
 
             //解析订单数据
             JsonNode orderNodes = rootNode.get("orders");
@@ -173,10 +170,21 @@ public class ScheduleAction extends SuperAction {
 
                 //用户新建排程时，需要将当前用户的排程记录记为0
                 UserConfigTools.updateApsReplyCount("1", 0);
+                //更新订单状态
+                for (JsonNode tempNode : orderNodes) {
+                    RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
+                    if (rg_orderEntity != null) {
+                        rg_orderEntity.setState(Byte.parseByte("2"));
+                        session.save(rg_orderEntity);
+                    }
+                }
+
+                //TODO 更新aps的modescheduing字段改成"正向"
+                ApsTools.instance().updateApsModuleSheduing();
 
                 //调用排程接口
                 int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
-
+                rg_scheduleEntity.setOrders(rg_orderEntitySet);
                 if (result == ApsTools.STARTED) {
                     tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);

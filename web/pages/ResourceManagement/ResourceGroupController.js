@@ -126,8 +126,8 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#edit-idSite0").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkString(params.name) && validate.checkLength(params.name) &&
-                validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)) {
+            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkString(params.name) && validate.checkLength(params.name) /*&&
+                validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)*/) {
                 return true;
             } else {
 
@@ -141,7 +141,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddGroupResource, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
-                    //location.reload();
+                    location.reload();
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -177,14 +177,15 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             if (getInfo()) {
                 $("#modal-edit").modal('show');
                 var idInfo = JSON.stringify(id_params);
-                myHttpService.post(serviceList.GetGroupResourceById, idInfo).then(function successCallback(response) {
+                myHttpService.post(serviceList.GetSiteById, idInfo).then(function successCallback(response) {
                     var editList = [];//保存从数据库获取的需要修改的数据
                     editList.push(response.data);
                     edit_params = response.data;
                     $scope.editList = editList;
-                }, function errorCallback(response) {
+                }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
+
             } else {
                 $("#modal-edit").modal('hide');
             }

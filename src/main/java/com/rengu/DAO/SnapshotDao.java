@@ -133,8 +133,9 @@ public class SnapshotDao {
                 nativeQuery.setParameter("id", snapShotId);
                 List<String> orders = nativeQuery.list();
                 for (int i = 0; i < orders.size(); i++) {
-                    NativeQuery nQuery = session.createNativeQuery("select * from rg_plan where idOrder =:idOrder order by t1Task asc", RG_PlanEntity.class);
-                    nQuery.setParameter("idOrder", orders.get(i));
+                    NativeQuery nQuery = session.createNativeQuery("select * from rg_plan where idOrder = ? and idSnapshort = ? order by t1Task asc", RG_PlanEntity.class);
+                    nQuery.setParameter(1, orders.get(i));
+                    nQuery.setParameter(2, snapShotId);
                     List<RG_PlanEntity> orderPlans = nQuery.list();
 
                     startPlan = orderPlans.get(0);

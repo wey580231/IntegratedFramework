@@ -66,7 +66,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='add-name']").val();
             params.type = $("input[name='add-type']").val();
-            /* params.slot = $("input[name='add-slot']").val();*/
+             params.slot = $("input[name='add-slot']").val();
             /* params.slot = $(this).children('option:selected').val();*/
             params.slot = slot;
             params.extra = parseInt($("input[name='add-extra']").val());
@@ -78,13 +78,13 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#add-name").removeClass(" has-error");
                 $("#add-name").addClass(" has-success");
             }
-            // if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
-            //     $("#add-slot").removeClass("has-success");
-            //     $("#add-slot").addClass("has-error");
-            // } else {
-            //     $("#add-slot").removeClass("has-error");
-            //     $("#add-slot").addClass(" has-success");
-            // }
+             if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
+                 $("#add-slot").removeClass("has-success");
+                 $("#add-slot").addClass("has-error");
+             } else {
+                 $("#add-slot").removeClass("has-error");
+                 $("#add-slot").addClass(" has-success");
+             }
 
             if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
                 $("#add-extra").removeClass("has-success");
@@ -95,7 +95,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
 
             if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                /*validate.checkLength(params.slot) && validate.checkNumber(params.slot) && */validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
+                validate.checkLength(params.slot) && validate.checkNumber(params.slot) && validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
                 return true;
             } else {
 

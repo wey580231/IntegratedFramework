@@ -35,7 +35,7 @@ public class RG_OrderEntity {
     private Short advance;                          //提前天数(系统生成)
     private Short delay;                            //拖期天数(系统生成)
     private String color;                           //订单显示颜色
-    private Byte state;                             //状态(0：候选 1：计划 2：锁定 3：发布 -1：删除)
+    private Byte state;                             //状态(0：候选 1：计划 2：APS计算中 3：下发MES -1：删除)
     private Byte selected;                          //是否被选中
     private Short nbTask;                           //订单工序数(系统生成)
     private boolean finished;

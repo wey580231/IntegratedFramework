@@ -110,6 +110,15 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group" id="add-priority">
+                                    <label class="col-sm-2 control-label">优先级</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="add-priority" title="请输入数字！"
+                                               placeholder="">
+                                    </div>
+                                </div>
+
                                 <div class="form-group" id="add-quantity">
                                     <label class="col-sm-2 control-label">数量</label>
 
@@ -118,13 +127,7 @@
                                                placeholder="">
                                     </div>
                                 </div>
-                                <div class="form-group" id="add-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-origin" title="请输入订单来源！"
-                                               placeholder="">
-                                    </div>
-                                </div>
+
                                 <!-- Date and time range -->
                                 <div class="form-group" id="add-t0">
                                     <label class="col-sm-2 control-label">下单时间</label>
@@ -172,20 +175,22 @@
                                                value="{{order.name}}" placeholder="">
                                     </div>
                                 </div>
+
+                                <div class="form-group" id="edit-priority">
+                                    <label class="col-sm-2 control-label">优先级</label>
+
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="edit-priority" title="请输入数字！"
+                                               value="{{order.priority}}" placeholder="">
+                                    </div>
+                                </div>
+
                                 <div class="form-group" id="edit-quantity">
                                     <label class="col-sm-2 control-label">数量</label>
 
                                     <div class="col-sm-10">
                                         <input class="form-control" name="edit-quantity" title="请输入数字！"
                                                value="{{order.quantity}}" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="edit-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-origin" title="请输入订单来源！！"
-                                               value="{{order.origin}}" placeholder="">
                                     </div>
                                 </div>
                                 <!-- Date and time range -->
