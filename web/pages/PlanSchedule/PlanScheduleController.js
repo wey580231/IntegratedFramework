@@ -91,18 +91,20 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //新建排程
         $scope.prepareNewSchedule = function () {
-           /* myHttpService.get(serviceList.queryApsState).then(function (response) {
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {*/
-                        $("#modal-add").modal({show: 'true'});
+                    if (response.data.data.state == 0) {
+                        $('#modal-add').modal({backdrop: 'static', keyboard: false});
+                        $("#modal-add").show();
                         hideCalendar();
-            /*        } else {
+                    } else {
                         layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
                 } else {
                     layer.msg('查询APS状态失败，请重试!', {icon: 2});
                 }
-            });*/
+            },function(response){
+            });
 
             resetContent();
         };
@@ -568,6 +570,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 });
+            }else{
+                layer.msg('请选择一条排程记录!', {icon: 2});
             }
         };
     });

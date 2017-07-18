@@ -14,6 +14,9 @@
         <property name="level">
             <column name="level" sql-type="varchar(255)" not-null="false"/>
         </property>
+        <property name="nodeCreateTime" type="java.util.Date">
+            <column name="nodeCreateTime" sql-type="datetime" not-null="false"/>
+        </property>
         <property name="apply">
             <column name="apply" sql-type="tinyint(1)" not-null="false"></column>
         </property>
