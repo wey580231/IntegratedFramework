@@ -59,14 +59,15 @@
         margin-bottom: 13px;
     }
 
-    .myInputform-control {
+    /*.myInputform-control {
         font-size: 11px;
-    }
+    }*/
 
     #selectAdd {
         width: 166.933px;
         height: 24px;
     }
+
     .form-horizontal .control-label {
         padding-top: 4px;
     }
@@ -192,8 +193,7 @@
                                             <div class="col-md-4">
                                                 <div class="modal-body">
                                                     <form class="form-horizontal">
-                                                        <div class="box-body"
-                                                             ng-repeat="schedule in scheduleList | orderBy: 'scheduleTime': asc">
+                                                        <div class="box-body">
                                                             <div class="form-group" id="add-name">
                                                                 <label class="col-sm-4 control-label">名称</label>
 
@@ -203,7 +203,6 @@
                                                                            placeholder="">
                                                                 </div>
                                                             </div>
-
 
                                                             <div class="form-group" id="add-rollTime">
                                                                 <label class="col-sm-4 control-label">滚动周期</label>
@@ -229,7 +228,7 @@
                                                                 <label class="col-sm-4 control-label">排程模式</label>
 
                                                                 <div class="col-sm-8">
-                                                                    <select id="selectAdd" class="myInput myInputform-control form-control"
+                                                                    <select id="selectAdd" class="myInput form-control"
                                                                             name="add-schedule" placeholder="正向" style="padding: 1px 8px;">
                                                                         <option value="正向">正向</option>
                                                                         <option value="反向">反向</option>
@@ -240,16 +239,15 @@
                                                             <div class="form-group"  id="add-start">
                                                                 <label class="col-sm-4 control-label">优化开始</label>
                                                                 <div class="col-sm-8 layui-inline">
-                                                                    <input class="myInput myInputform-control form-control" name="add-start"
+                                                                    <input class="myInput form-control" name="add-start"
                                                                            placeholder="2017-07-18 00:00:00" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group" id="add-end">
                                                                 <label class="col-sm-4 control-label">优化结束</label>
-
                                                                 <div class="col-sm-8">
-                                                                    <input class="myInput myInputform-control form-control" name="add-end"
+                                                                    <input class="myInput form-control" name="add-end"
                                                                            placeholder="2017-07-18 00:00:00" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                                 </div>
                                                             </div>
