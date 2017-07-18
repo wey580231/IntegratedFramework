@@ -113,7 +113,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
                     if (response.data.data.state == 0) {
-                        processError();
+                        processError(event);
                     } else {
                         layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
@@ -123,7 +123,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             });
         };
 
-        function processError() {
+        function processError(event) {
             var idInfo;
             var e = event || window.event;
             var target = e.target || e.srcElement;
@@ -132,7 +132,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
                 var id = document.getElementById("table_adjust").rows[rowIndex].cells[0].innerHTML;
                 myHttpService.get(serviceList.orderExceptionHandling + "?id=" + id, idInfo).then(function successCallback(response) {
                     if (response.data.result == "ok") {
-                        notification.sendNotification("confirm", "异常处理中...");
+                        notification.sendNotification("confirm", "紧急插单处理中...");
                     } else {
                         notification.sendNotification("alert", "请求失败");
                     }

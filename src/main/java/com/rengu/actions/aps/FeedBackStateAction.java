@@ -40,6 +40,8 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
+            System.out.println("=============收到回复消息啦============");
+
             RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
 
             if (id.length > 0 && state.length > 0 && message.length > 0 && userconfig != null && userconfig.getRootSnapshotId().length() > 0) {

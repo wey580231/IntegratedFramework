@@ -113,7 +113,7 @@
                             <td style="position: absolute">{{schedule.name}}
                                     <span class="label label-success"
                                       style="position:relative;left:5px;top:0px;cursor: pointer;"
-                                      ng-if="schedule.state == 2 && $last"
+                                      ng-if="(schedule.state == 2 || schedule.state == 4 ||schedule.state == 10||schedule.state == 11) && $last"
                                       ng-click="interactiveSchedule()">交互优化</span>
                             </td>
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -134,8 +134,8 @@
                                 <span class="label label-info" ng-if="schedule.state == 5">下发MES</span>
 
                                 <span class="label label-success" ng-if="schedule.state == 10">应急计算成功</span>
-                                <span class="label label-danger" ng-if="schedule.state == 12">应急计算失败</span>
                                 <span class="label label-success" ng-if="schedule.state == 11">应急优化完成</span>
+                                <span class="label label-danger" ng-if="schedule.state == 12">应急计算失败</span>
                                 <span class="label label-info" ng-if="schedule.state == 13">应急下发MES</span>
                             </td>
                         </tr>

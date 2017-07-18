@@ -2,6 +2,8 @@ package com.rengu.util;
 
 import com.rengu.entity.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +34,7 @@ public class ApsTools {
 
     //aps部署的地址和端口号
     private static ApsTools apsTool = null;
-    private final String replyApsAction = "/aps/updateProgress.action";
+    private final String replyApsAction = "/aps/updateProgress";
     private String apsHost;
     private int apsPort;
 
@@ -66,7 +68,7 @@ public class ApsTools {
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
                 "&" +
-                "BUFFER=1\\n2\\n" + "K" + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n" + entity.getOrd().getId() + "\\n" + entity.getOrd().getName()
+                "BUFFER=1\\n2\\n" + "null" + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n" + entity.getOrd().getId() + "\\n" + entity.getOrd().getName()
                 + "\\n" + entity.getOrd().getQuantity() + "\\n" + entity.getOrd().getProductByIdProduct().getId() + "\\n" + entity.getOrd().getIdGroupResource() +
                 "\\n1\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT0())) + "\\n"
                 + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT1())) + "\\n"
@@ -404,4 +406,36 @@ public class ApsTools {
     public String getReplyAddress() {
         return localAddress + ":" + localPort + localProjectName + replyApsAction;
     }
+
+    //tomcat启动时根据当前排程信息来
+    public void resetApsDatabase() {
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        NativeQuery query = session.createNativeQuery("select resetApsTable from rg_userconfig where idUser = ?");
+        query.setParameter(1, "1");
+        List lists = query.getResultList();
+        if (lists.size() == 1) {
+            boolean flag = (boolean) lists.get(0);
+            if (flag) {
+                //TODO 待清空Oracle数据中job、task、plan、log、order表
+
+
+
+                query = session.createNativeQuery("update rg_userconfig set resetApsTable = ? where iduser = ? ");
+                query.setParameter(1, false);
+                query.setParameter(2, "1");
+                query.executeUpdate();
+            }
+        }
+        tx.commit();
+        session.close();
+    }
+
+    //更新APS的oracle中aps_config表modescheduing字段为'正向'
+    public void updateApsModuleSheduing() {
+
+
+    }
+
 }

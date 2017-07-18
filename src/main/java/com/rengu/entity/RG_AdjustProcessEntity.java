@@ -11,6 +11,7 @@ import java.util.Date;
 public class RG_AdjustProcessEntity {
     private String id;
     private Date reportTime;                    //故障上报时间
+    private Date processTime;                   //处理时间
     private String idTask;                      //选中工序编码
     private String idJob;                       //工序作业编码
     private String idOrder;                     //工序订单编码
@@ -36,6 +37,14 @@ public class RG_AdjustProcessEntity {
 
     public void setReportTime(Date reportTime) {
         this.reportTime = reportTime;
+    }
+
+    public Date getProcessTime() {
+        return processTime;
+    }
+
+    public void setProcessTime(Date processTime) {
+        this.processTime = processTime;
     }
 
     public String getIdTask() {
@@ -108,45 +117,5 @@ public class RG_AdjustProcessEntity {
 
     public void setState(Integer state) {
         this.state = state;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_AdjustProcessEntity that = (RG_AdjustProcessEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (reportTime != null ? !reportTime.equals(that.reportTime) : that.reportTime != null) return false;
-        if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
-        if (idJob != null ? !idJob.equals(that.idJob) : that.idJob != null) return false;
-        if (idOrder != null ? !idOrder.equals(that.idOrder) : that.idOrder != null) return false;
-        if (originalResource != null ? !originalResource.equals(that.originalResource) : that.originalResource != null)
-            return false;
-        if (originalStartTime != null ? !originalStartTime.equals(that.originalStartTime) : that.originalStartTime != null)
-            return false;
-        if (appointResource != null ? !appointResource.equals(that.appointResource) : that.appointResource != null)
-            return false;
-        if (appointStartTime != null ? !appointStartTime.equals(that.appointStartTime) : that.appointStartTime != null)
-            return false;
-        if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
-        return state != null ? state.equals(that.state) : that.state == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (reportTime != null ? reportTime.hashCode() : 0);
-        result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
-        result = 31 * result + (idJob != null ? idJob.hashCode() : 0);
-        result = 31 * result + (idOrder != null ? idOrder.hashCode() : 0);
-        result = 31 * result + (originalResource != null ? originalResource.hashCode() : 0);
-        result = 31 * result + (originalStartTime != null ? originalStartTime.hashCode() : 0);
-        result = 31 * result + (appointResource != null ? appointResource.hashCode() : 0);
-        result = 31 * result + (appointStartTime != null ? appointStartTime.hashCode() : 0);
-        result = 31 * result + (origin != null ? origin.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        return result;
     }
 }
