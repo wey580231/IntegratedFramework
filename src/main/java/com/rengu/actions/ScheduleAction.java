@@ -16,7 +16,6 @@ import java.util.*;
 public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() {
-
         Session session = null;
         Transaction tx = null;
 
@@ -59,7 +58,7 @@ public class ScheduleAction extends SuperAction {
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
                 }
-                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
+//                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
 
             session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -162,8 +161,6 @@ public class ScheduleAction extends SuperAction {
                 int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
                 rg_scheduleEntity.setOrders(rg_orderEntitySet);
                 if (result == ApsTools.STARTED) {
-                    tx.commit();
-                    Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                     //更新订单状态
                     for (JsonNode tempNode : orderNodes) {
                         RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
@@ -172,6 +169,8 @@ public class ScheduleAction extends SuperAction {
                             session.save(rg_orderEntity);
                         }
                     }
+                    tx.commit();
+                    Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                 } else {
                     tx.rollback();
                     printError();
@@ -200,5 +199,12 @@ public class ScheduleAction extends SuperAction {
 
     private void printError() {
         Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+    }
+
+    public void delete() throws Exception {
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
+        String scheduleId = jsonNode.get("id").asText();
+        RG_ScheduleEntity rg_scheduleEntity = DAOFactory.getScheduleDAOImplInstance().findAllById(scheduleId);
+        DAOFactory.getScheduleDAOImplInstance().delete(rg_scheduleEntity);
     }
 }
