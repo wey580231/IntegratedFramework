@@ -16,16 +16,11 @@ import java.util.*;
 public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() {
-
         Session session = null;
         Transaction tx = null;
 
         //初始化数据库表
         try {
-            //清空APS数据库
-//            String[] tableList = {DatabaseInfo.APS_LOG};
-//            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableList);
-
             //更新数据库表内容
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
             JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
@@ -55,19 +50,10 @@ public class ScheduleAction extends SuperAction {
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
 
                 if (APS_ConfigNodeKey.equals("t0")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//                    Date statTime = sdf.parse(APS_ConfigNodeValue);
-//                    rg_scheduleEntity.setApsStartTime(statTime);
-                    rg_scheduleEntity.setApsStartTime(new Date());
+                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
                 }
                 if (APS_ConfigNodeKey.equals("t2")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//                    Date endTime = sdf.parse(APS_ConfigNodeValue);
-//                    rg_scheduleEntity.setApsEndTime(endTime);
-                    rg_scheduleEntity.setApsStartTime(new Date());
-                }
-                if (APS_ConfigNodeKey.equals("objective")) {
-                    rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);
+                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
                 }
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
@@ -170,22 +156,19 @@ public class ScheduleAction extends SuperAction {
 
                 //用户新建排程时，需要将当前用户的排程记录记为0
                 UserConfigTools.updateApsReplyCount("1", 0);
-                //更新订单状态
-                for (JsonNode tempNode : orderNodes) {
-                    RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
-                    if (rg_orderEntity != null) {
-                        rg_orderEntity.setState(Byte.parseByte("2"));
-                        session.save(rg_orderEntity);
-                    }
-                }
-
-                //TODO 更新aps的modescheduing字段改成"正向"
-                ApsTools.instance().updateApsModuleSheduing();
 
                 //调用排程接口
                 int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
                 rg_scheduleEntity.setOrders(rg_orderEntitySet);
                 if (result == ApsTools.STARTED) {
+                    //更新订单状态
+                    for (JsonNode tempNode : orderNodes) {
+                        RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
+                        if (rg_orderEntity != null) {
+                            rg_orderEntity.setState(Byte.parseByte("2"));
+                            session.save(rg_orderEntity);
+                        }
+                    }
                     tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                 } else {
@@ -216,5 +199,12 @@ public class ScheduleAction extends SuperAction {
 
     private void printError() {
         Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+    }
+
+    public void delete() throws Exception {
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
+        String scheduleId = jsonNode.get("id").asText();
+        RG_ScheduleEntity rg_scheduleEntity = DAOFactory.getScheduleDAOImplInstance().findAllById(scheduleId);
+        DAOFactory.getScheduleDAOImplInstance().delete(rg_scheduleEntity);
     }
 }
