@@ -19,6 +19,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var rollTime;
         var array = [];//未完成部分
 
+        var idVal;
+        var id_params = {}; //保存选中的记录的id信息
+
         var orders = [];
         var layouts = {};
 
@@ -497,4 +500,36 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             });
             document.getElementById("nextStep").disabled = true;
         }
+
+        //获取信息
+        var getInfo = function () {
+            $("div").removeClass("has-error");
+            $("div").removeClass("has-success");
+            if (hasCheckRows()) {
+                var a = document.getElementsByName("check");
+                var row = 1;
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].checked) {
+                        idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
+                        id_params.id = idVal;
+                    }
+                    row++;
+                }
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        //删除
+        $scope.deleteSchedule = function () {
+            if (getInfo()) {
+                var idInfo = JSON.stringify(id_params);
+                myHttpService.delete(serviceList.DeleteSchedule, idInfo).then(function successCallback() {
+                    setTimeout('window.location.reload();', 0.1);
+                }, function errorCallback() {
+                    notification.sendNotification("alert", "请求失败");
+                });
+            }
+        };
     });
