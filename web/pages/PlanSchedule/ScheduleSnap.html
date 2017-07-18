@@ -213,16 +213,16 @@
                         </tr>
                         <tr>
                             <td><span class="spanKey">排程时间</span></td>
-                            <td><span class="spanVal" ng-if="snapShotData.schedule.scheduleTime==null">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.scheduleTime==null"></span>
                                 <span class="spanVal" ng-if="snapShotData.schedule.scheduleTime!=null">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
                             </td>
                             <td><span class="spanKey">计算开始时间</span></td>
-                            <td><span class="spanVal" ng-if="snapShotData.schedule.apsStartTime==null"></span>
-                                <span class="spanVal" ng-if="snapShotData.schedule.apsStartTime!=null">{{snapShotData.schedule.apsStartTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.startCalcTime==null"></span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.startCalcTime!=null">{{snapShotData.schedule.startCalcTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
                             </td>
                             <td><span class="spanKey">计算结束时间</span></td>
-                            <td><span class="spanVal" ng-if="snapShotData.schedule.apsEndTime==null"></span>
-                                <span class="spanVal" ng-if="snapShotData.schedule.apsEndTime!=null">{{snapShotData.schedule.apsEndTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                            <td><span class="spanVal" ng-if="snapShotData.schedule.endCalcTime==null"></span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.endCalcTime!=null">{{snapShotData.schedule.endCalcTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
                             </td>
                             <td></td>
                             <td></td>
