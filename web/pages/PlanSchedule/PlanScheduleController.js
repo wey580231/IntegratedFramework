@@ -19,6 +19,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var rollTime;
         var apsStart;
         var apsEnd;
+        var modeSchedule;
         var array = [];//未完成部分
 
         var orders = [];
@@ -87,18 +88,18 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //新建排程
         $scope.prepareNewSchedule = function () {
-            /*myHttpService.get(serviceList.queryApsState).then(function (response) {
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {*/
+                    if (response.data.data.state == 0) {
                         $("#modal-add").modal({show: 'true'});
                         hideCalendar();
-                   /* } else {
+                    } else {
                         layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
                 } else {
                     layer.msg('查询APS状态失败，请重试!', {icon: 2});
                 }
-            });*/
+            });
 
             resetContent();
         };
@@ -273,7 +274,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.rollTime = $("input[name='add-rollTime']").val();
             params.scheduleDays = $("input[name='add-scheduleDays']").val();
-            params.nameSchedule = $("#selectAdd option:selected").val();
+            params.modeSchedule = $("#selectAdd option:selected").val();
             var apsStart = $("input[name='add-start']").val();
             var apsEnd = $("input[name='add-end']").val();
             params.apsStart = (new Date($("input[name='add-start']").val())).getTime();
@@ -314,11 +315,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             if (!validate.checkLength(apsEnd)) {
                 $("#add-end").removeClass("has-success");
                 $("#add-end").addClass("has-error");
+
             } else {
                 $("#add-end").removeClass("has-error");
                 $("#add-end").addClass(" has-success");
             }
-            if (!validate.checkLength(params.nameSchedule)) {
+            if (!validate.checkLength(params.modeSchedule)) {
                 $("#add-schedule").removeClass("has-success");
                 $("#add-schedule").addClass("has-error");
             } else {
@@ -328,7 +330,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             if (validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) &&
                 validate.checkLength(params.scheduleDays) && validate.checkNumber(params.scheduleDays) && validate.checkLength(params.name)
-                &&validate.checkLength(params.apsStart) && validate.checkLength(params.apsEnd) && validate.checkLength(params.nameSchedule)) {
+                &&validate.checkLength(params.apsStart) && validate.checkLength(params.apsEnd) && validate.checkLength(params.modeSchedule)) {
                 document.getElementById("nextStep").disabled = "";
                 showSchedule();
                 return true;
@@ -372,6 +374,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             apsStart = $("input[name='add-start']").val();
             apsEnd =$("input[name='add-end']").val();
+            modeSchedule=$("#selectAdd option:selected").val();
 
             var startTime = moment().format("YYYY-MM-DD");
             var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
@@ -477,6 +480,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             var APSConfigs = {};
             APSConfigs.t0 = apsStart;
             APSConfigs.t2 = apsEnd;
+            APSConfigs.modeScheduling = modeSchedule;
 
             var resourceArr = [];
             var resources = {};
