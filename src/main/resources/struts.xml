@@ -96,6 +96,7 @@
     <package name="schedule" extends="struts-default" namespace="/schedule">
         <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
         <action name="getAllSchedules" class="com.rengu.actions.ScheduleAction" method="getAllSchedules"/>
+        <action name="delete" class="com.rengu.actions.ScheduleAction" method="delete"/>
     </package>
 
     <!--工序信息接口-->
@@ -141,9 +142,12 @@
 
     <!--异常处理-->
     <package name="ExceptionHandling" namespace="/exceptionHandling" extends="struts-default">
-        <action name="deviceProcessHandling" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
-        <action name="orderExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction" method="processOrderError"/>
-        <action name="processExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction" method="processProcessError"/>
+        <action name="deviceProcessHandling" class="com.rengu.actions.aps.ErrorProcessAction"
+                method="processDeviceError"/>
+        <action name="orderExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction"
+                method="processOrderError"/>
+        <action name="processExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction"
+                method="processProcessError"/>
     </package>
 
     <!--异常模拟-->

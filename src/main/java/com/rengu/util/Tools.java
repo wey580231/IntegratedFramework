@@ -244,6 +244,9 @@ public class Tools {
     }
 
     public static Date parseDate(String text) {
+        if (text.equals("")) {
+            return null;
+        }
         long timeStmp = Long.parseLong(text);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String time = simpleDateFormat.format(timeStmp);
