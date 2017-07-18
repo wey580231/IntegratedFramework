@@ -514,19 +514,10 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $("#modal-add").hide();
             $(".modal-backdrop").remove();
             myHttpService.post(serviceList.beginSchedule, data).then(function successCallback(response) {
-                //清空所用的数组和变量
-                array.splice(0, array.length);
-                selectedCheckArray.splice(0, selectedCheckArray.length);
-                orders.splice(0, orders.length);
-                delete layouts.id;
-                name = "";
-                scheduleDays = "";
-                rollTime = "";
                 var data = response.data;
                 if (data.result == "error") {
                     notification.sendNotification("alert", "排程失败");
                 } else {
-                    //location.reload(true);
                     //刷新表格
                     myHttpService.get(serviceList.ListSchedule).then(function (response) {
                         $scope.scheduleList = response.data;
@@ -536,6 +527,17 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }, function errorCallback() {
                 notification.sendNotification("alert", "请求失败");
             });
+            //清空所用的数组和变量
+            array.splice(0, array.length);
+            selectedCheckArray.splice(0, selectedCheckArray.length);
+            orders.splice(0, orders.length);
+            delete layouts.id;
+            name = "";
+            scheduleDays = "";
+            rollTime = "";
+            apsStart="";
+            apsEnd="";
+            console.log();
             document.getElementById("nextStep").disabled = true;
         }
 
