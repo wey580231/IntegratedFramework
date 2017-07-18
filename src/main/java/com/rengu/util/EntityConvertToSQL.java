@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class EntityConvertToSQL {
     public static String insertAPSConfigSQL(String name, String value) {
-        String SQLString = "UPDATE " + DatabaseInfo.APS_CONGIF + " SET value='" + value + "' WHERE name='" + name + "';";
+        String SQLString = "UPDATE " + DatabaseInfo.APS_CONGIF + " SET value='" + value + "' WHERE name='" + name + "'";
         return SQLString;
     }
 

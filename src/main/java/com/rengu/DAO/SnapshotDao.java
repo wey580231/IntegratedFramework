@@ -20,14 +20,13 @@ public class SnapshotDao {
     //将所有订单一起转换
     public boolean switchToEmulateData(String userId, String id) {
         boolean result = false;
-
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
         RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-
         if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息
