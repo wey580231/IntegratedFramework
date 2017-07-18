@@ -7,6 +7,7 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -16,9 +17,16 @@ import java.util.*;
 public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() {
+        try {
+            String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN};
+            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Session session = null;
         Transaction tx = null;
-
         //初始化数据库表
         try {
             //更新数据库表内容
@@ -49,15 +57,15 @@ public class ScheduleAction extends SuperAction {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
 
-                if (APS_ConfigNodeKey.equals("t0")) {
-                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
-                }
-                if (APS_ConfigNodeKey.equals("t2")) {
-                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
-                }
-                if (APS_ConfigNodeKey.equals("modeScheduling")) {
-                    rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
-                }
+//                if (APS_ConfigNodeKey.equals("t0")) {
+//                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+//                }
+//                if (APS_ConfigNodeKey.equals("t2")) {
+//                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+//                }
+//                if (APS_ConfigNodeKey.equals("modeScheduling")) {
+//                    rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
+//                }
 //                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
 
