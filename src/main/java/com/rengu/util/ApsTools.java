@@ -166,70 +166,11 @@ public class ApsTools {
                 rg_planEntity.setProcessByIdProcess(session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString()));
                 rg_planEntity.setOrderByIdOrder(session.get(RG_OrderEntity.class, tempMap.get("IDORDER").toString()));
                 rg_planEntity.setResourceByIdResource(session.get(RG_ResourceEntity.class, tempMap.get("IDRESOURCE").toString()));
-//                //获取Club实体
-//                String hql = "from RG_ClubEntity rg_clubEntity where rg_clubEntity.id =:id";
-//                Query query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idClub").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setClubByIdClub((RG_ClubEntity) query.list().get(0));
-//                }
-//
-//                //获取Process实体
-//                hql = "from RG_ProcessEntity rg_processEntity where rg_processEntity.id =:id";
-//                query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idProcess").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setProcessByIdProcess((RG_ProcessEntity) query.list().get(0));
-//                }
-//
-//                //获取Order实体
-//                hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.id =:id";
-//                query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idOrder").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setOrderByIdOrder((RG_OrderEntity) query.list().get(0));
-//                }
-//
-//                //获取Resource实体
-//                hql = "from RG_ResourceEntity rg_resourceEntity where rg_resourceEntity.id =:id";
-//                query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idResource").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setResourceByIdResource((RG_ResourceEntity) query.list().get(0));
-//                }
-//
-//                //获取Site实体
-//                hql = "from RG_SiteEntity rg_siteEntity where rg_siteEntity.id =:id";
-//                query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idSite").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setSiteByIdSite((RG_SiteEntity) query.list().get(0));
-//                }
-//
-//                //获取GroupResource实体
-//                hql = "from RG_GroupresourceEntity rg_groupresourceEntity where rg_groupresourceEntity.id =:id";
-//                query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idGroupResource").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setGroupresourceByIdGroupResource((RG_GroupresourceEntity) query.list().get(0));
-//                }
-//
-//                //获取TypeResource实体
-//                hql = "from RG_TyperescourceEntity rg_typerescourceEntity where rg_typerescourceEntity.id =:id";
-//                query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idTypeResource").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setTyperescourceByIdTypeResource((RG_TyperescourceEntity) query.list().get(0));
-//                }
-//
-//                //获取TypeResource实体
-//                hql = "from RG_ProviderEntity rg_providerEntity where rg_providerEntity.id =:id";
-//                query = session.createQuery(hql);
-//                query.setParameter("id", tempMap.get("idProvider").toString());
-//                if (!query.list().isEmpty()) {
-//                    rg_planEntity.setProviderByIdProvider((RG_ProviderEntity) query.list().get(0));
-//                }
-
+                rg_planEntity.setClubByIdClub(session.get(RG_ClubEntity.class, tempMap.get("IDCLUB").toString()));
+                rg_planEntity.setSiteByIdSite(session.get(RG_SiteEntity.class, tempMap.get("IDSITE").toString()));
+                rg_planEntity.setTyperescourceByIdTypeResource(session.get(RG_TyperescourceEntity.class, tempMap.get("IDGROUPRESOURCE").toString()));
+                rg_planEntity.setGroupresourceByIdGroupResource(session.get(RG_GroupresourceEntity.class, tempMap.get("IDTYPERESOURCE").toString()));
+                rg_planEntity.setProviderByIdProvider(session.get(RG_ProviderEntity.class, tempMap.get("IDPROVIDER").toString()));
                 //Snapshot
                 if (bottomSnapshot != null) {
                     bottomSnapshot.getPlans().add(rg_planEntity);
@@ -419,9 +360,14 @@ public class ApsTools {
             boolean flag = (boolean) lists.get(0);
             if (flag) {
                 //TODO 待清空Oracle数据中job、task、plan、log、order表
-
-
-
+                String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_PLAN, DatabaseInfo.APS_LOG, DatabaseInfo.APS_ORDER};
+                try {
+                    Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 query = session.createNativeQuery("update rg_userconfig set resetApsTable = ? where iduser = ? ");
                 query.setParameter(1, false);
                 query.setParameter(2, "1");
@@ -431,11 +377,4 @@ public class ApsTools {
         tx.commit();
         session.close();
     }
-
-    //更新APS的oracle中aps_config表modescheduing字段为'正向'
-    public void updateApsModuleSheduing() {
-
-
-    }
-
 }
