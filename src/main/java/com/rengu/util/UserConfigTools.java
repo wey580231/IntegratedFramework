@@ -17,7 +17,7 @@ public class UserConfigTools {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
         NativeQuery query = session.createNativeQuery("update rg_userconfig set latestScheduleId=?, rootSnapshotId=?,middleSnapshotId=?,errorSchedule=? where idUser = ?");
-        query.setParameter(1,scheduleId);
+        query.setParameter(1, scheduleId);
         query.setParameter(2, rootId);
         query.setParameter(3, middleId);
         query.setParameter(4, isError);
@@ -84,8 +84,8 @@ public class UserConfigTools {
         String result = "";
 
         NativeQuery query = session.createNativeQuery("update rg_userconfig set middleSnapshotId = ?,errorSchedule = ? where idUser = ?");
-        query.setParameter(1,middleId );
-        query.setParameter(2,errorSchedule);
+        query.setParameter(1, middleId);
+        query.setParameter(2, errorSchedule);
         query.setParameter(3, userId);
 
         return query.executeUpdate();
@@ -113,6 +113,9 @@ public class UserConfigTools {
             entity.setBottomSnapshotId(rowdata[5].toString());
             entity.setErrorSchedule(Boolean.parseBoolean(rowdata[6].toString()));
             entity.setApsReplyCount(Integer.parseInt(rowdata[7].toString()));
+            entity.setResetApsTable(Boolean.parseBoolean(rowdata[8].toString()));
+            entity.setErrorType(rowdata[9].toString());
+            entity.setErrorId(rowdata[10].toString());
         }
 
         session.getTransaction().commit();
@@ -149,5 +152,16 @@ public class UserConfigTools {
         session.close();
 
         return result;
+    }
+
+    //故障应急时，保存当前应急的故障信息，待结果返回时，根据此信息更新对应故障的状态信息
+    public static int updateErroInfo(String userId, String errorType, String errorId) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+
+        NativeQuery query = session.createNativeQuery("update rg_userconfig set errorType = ?, errorId = ? where idUser = ?");
+        query.setParameter(1, errorType);
+        query.setParameter(2, errorId);
+        query.setParameter(3, userId);
+        return query.executeUpdate();
     }
 }
