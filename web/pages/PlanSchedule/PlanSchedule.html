@@ -142,10 +142,10 @@
                                       ng-click="interactiveSchedule()">交互优化</span>
                             </td>
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td>{{schedule.apsStartTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>{{schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>
-                                <span ng-if="schedule.apsEndTime==null">---</span>
-                                <span ng-if="schedule.apsEndTime!=null">{{schedule.apsEndTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                                <span ng-if="schedule.endCalcTime==null">---</span>
+                                <span ng-if="schedule.endCalcTime!=null">{{schedule.endCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
                             <td>{{schedule.scheduleWindow}}&nbsp;天</td>
                             <td>{{schedule.rollTime}}&nbsp;天</td>

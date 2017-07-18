@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 快照管理树形节点
@@ -20,6 +17,8 @@ public class RG_SnapshotNodeEntity {
 
     private Boolean apply;                  //是否下发mes,当bottm下发之后，将其父节点(middle节点)状态更新为true，防止重复下发
     private String level;                   //节点层级(top、middle、bottom)
+
+    private Date nodeCreateTime;            //节点创建时的日期，用于查询时进行排序
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "childsSnapshotId")
     private Set<RG_SnapshotNodeEntity> childs = new HashSet<RG_SnapshotNodeEntity>();      //子节点
@@ -63,6 +62,14 @@ public class RG_SnapshotNodeEntity {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public Date getNodeCreateTime() {
+        return nodeCreateTime;
+    }
+
+    public void setNodeCreateTime(Date nodeCreateTime) {
+        this.nodeCreateTime = nodeCreateTime;
     }
 
     public Set<RG_SnapshotNodeEntity> getChilds() {

@@ -135,6 +135,7 @@ public class ErrorProcessDao {
             middleSnapshot.setId(Tools.getUUID());
             middleSnapshot.setName(name);
             middleSnapshot.setLevel(SnapshotLevel.MIDDLE);
+            middleSnapshot.setNodeCreateTime(new Date());
             middleSnapshot.setParent(rootSnapshot);
             middleSnapshot.setRootParent(rootSnapshot);
 

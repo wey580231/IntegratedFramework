@@ -144,11 +144,13 @@ public class ScheduleAction extends SuperAction {
             rootSnapshot.setId(Tools.getUUID());
             rootSnapshot.setName(rg_scheduleEntity.getName());
             rootSnapshot.setLevel(SnapshotLevel.TOP);
+            rootSnapshot.setNodeCreateTime(new Date());
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
             middleShot.setId(Tools.getUUID());
             middleShot.setName("APS排程结果");
             middleShot.setLevel(SnapshotLevel.MIDDLE);
+            middleShot.setNodeCreateTime(new Date());
 
             middleShot.setParent(rootSnapshot);
             middleShot.setRootParent(rootSnapshot);
