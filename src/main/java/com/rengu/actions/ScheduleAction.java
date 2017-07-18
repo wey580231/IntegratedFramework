@@ -57,16 +57,16 @@ public class ScheduleAction extends SuperAction {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
 
-//                if (APS_ConfigNodeKey.equals("t0")) {
-//                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
-//                }
-//                if (APS_ConfigNodeKey.equals("t2")) {
-//                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
-//                }
-//                if (APS_ConfigNodeKey.equals("modeScheduling")) {
-//                    rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
-//                }
-//                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
+                if (APS_ConfigNodeKey.equals("t0")) {
+                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+                }
+                if (APS_ConfigNodeKey.equals("t2")) {
+                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+                }
+                if (APS_ConfigNodeKey.equals("modeScheduling")) {
+                    rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
+                }
+                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
 
             session = MySessionFactory.getSessionFactory().getCurrentSession();
