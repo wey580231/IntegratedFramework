@@ -16,11 +16,14 @@ public class DatabaseInfo {
     public static final String APS_RESOURCE = "APS_RESOURCE";
     public static final String APS_GROUPRESOURCE = "APS_GROUPRESOURCE";
     public static final String APS_SITE = "APS_SITE";
-    public static final String APS_LOG = "APS_LOG";
     public static final String APS_SHIFT = "APS_SHIFT";
     public static final String APS_PRODUCT = "APS_PRODUCT";
     public static final String APS_PROCESS_TYPERESOURCE_SITE = "APS_PROCESS_TYPERESOURCE_SITE";
     public static final String APS_PROCESS = "APS_PROCESS";
     public static final String APS_TYPERESOURCE = "APS_TYPERESOURCE";
     public static final String APS_CLUB = "APS_CLUB";
+    public static final String APS_JOB = "APS_JOB";
+    public static final String APS_TASK = "APS_TASK";
+    public static final String APS_PLAN = "APS_PLAN";
+    public static final String APS_LOG = "APS_LOG";
 }

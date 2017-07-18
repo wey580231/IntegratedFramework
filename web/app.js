@@ -143,6 +143,7 @@ angular.module("IntegratedFramework", [
         <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         service.ListSchedule = backUrl + "schedule/getAllSchedules.action";
+        service.DeleteSchedule = backUrl + "schedule/delete.action";
 
         service.getLastScheduleInfo = backUrl + "FullCalendar/getLastScheduleInfo.action";
         service.CurInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
