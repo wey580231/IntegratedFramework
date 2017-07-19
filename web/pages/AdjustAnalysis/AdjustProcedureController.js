@@ -142,15 +142,17 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
         //异常状态
         $scope.addAdjustProcess = function () {
             if (processAddValidate()) {
-                $("#modal-add").modal('hide');
-                console.log(addData);
+                $("#modal-simulate").modal('hide');
                 myHttpService.post(serviceList.AddAdjustProcess, addData).then(function successCallback() {
-                    //setTimeout('window.location.reload();', 0.1);
+                    myHttpService.get(serviceList.AdjustProcess).then(function (response) {
+                        $scope.arr = response.data;
+                        notification.sendNotification("confirm", "添加成功");
+                    })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                notification.sendNotification("alert", "参数错误");
+                notification.sendNotification("alert", "输入有误");
             }
         };
 
@@ -162,10 +164,12 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
                     if (response.data.data.state == 0) {
                         processError(event);
                     } else {
-                        layer.msg('APS正在计算中，无法排程!', {icon: 2});
+                        notification.sendNotification("alert", "APS正在计算中，无法排程");
+                       /* layer.msg('APS正在计算中，无法排程!', {icon: 2});*/
                     }
                 } else {
-                    layer.msg('查询APS状态失败，请重试!', {icon: 2});
+                    notification.sendNotification("alert", "查询APS状态失败，请重试");
+                    // layer.msg('查询APS状态失败，请重试!', {icon: 2});
                 }
             });
         };

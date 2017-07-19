@@ -19,7 +19,7 @@
                         </button>
                     </div>
                     <!-- /.btn-group -->
-                    <div class="pull-right">
+               <!--     <div class="pull-right">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                     data-target="#modal-add"
@@ -28,12 +28,12 @@
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                     class="btn btn-default" ng-click="update()"><i class="fa fa-wrench"></i> 修改
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
+                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteDevice()"><i
                                     class="fa fa-trash-o"></i> 删除
                             </button>
                         </div>
-                        <!-- /.btn-group -->
-                    </div>
+                        &lt;!&ndash; /.btn-group &ndash;&gt;
+                    </div>-->
                     <!-- /.pull-right -->
                 </div>
                 <div class="table-responsive mailbox-messages">
@@ -41,24 +41,19 @@
                         <tbody>
                         <tr>
                             <th>订单编码</th>
-                            <th>订单状态</th>
                             <th>资源编码</th>
                             <th>撤销时间</th>
                             <th>上报时间</th>
                             <th>异常来源</th>
-                            <th>异常状态</th>
                             <th>处理时间</th>
-                            <th>操作</th>
                         </tr>
                         <tr ng-repeat="device in adjustDeviceList track by $index" ng-init="renderTable($last)"
                             onclick="a(this)">
                             <td>{{device.orderId}}</td>
-                            <td>{{device.state}}</td>
                             <td>{{device.resoureId}}</td>
                             <td>{{device.cancelTime | date:'yyyy-MM-dd hh:mm:ss' }}</td>
                             <td>{{device.reportTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>{{device.origin}}</td>
-                            <td>{{device.state}}</td>
                             <td>
                                 <span ng-if="device.processTime ==null">--</span>
                                 <span ng-if="device.processTime !=null">{{device.processTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
@@ -74,135 +69,5 @@
             <!-- /.box-body -->
             <!-- Horizontal Form -->
         </div>
-        <!--新增窗口-->
-        <div class="modal fade" id="modal-add">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">新增订单信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        <!-- form start -->
-                        <form class="form-horizontal">
-                            <div class="box-body">
-                                <div class="form-group" id="add-name">
-                                    <label class="col-sm-2 control-label">名称</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-name" title="请输入正确的中文字符！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="add-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-quantity" title="请输入0-9之间的数字！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="add-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-origin" title="请输入正确的中文字符！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-                                <!-- Date and time range -->
-                                <div class="form-group" id="add-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t0-datepicker">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                                <div class="form-group" id="add-t2">
-                                    <label class="col-sm-2 control-label">最晚完工</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t2-datepicker">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="addOrder()">Add</button>
-                            </div>
-                            <!-- /.box-footer -->
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--修改窗口-->
-        <div class="modal fade" id="modal-edit">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">修改订单信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        <!-- form start -->
-                        <form class="form-horizontal">
-                            <div class="box-body" ng-repeat="order in editList">
-                                <div class="form-group" id="edit-name">
-                                    <label class="col-sm-2 control-label">名称</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-name" title="请输入正确的中文字符！"
-                                               value="{{order.name}}" placeholder="">
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="edit-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-quantity" title="请输入0-9之间的数字！"
-                                               value="{{order.quantity}}" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="edit-origin">
-                                    <label class="col-sm-2 control-label">来源</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-origin" title="请输入正确的中文字符！"
-                                               value="{{order.origin}}" placeholder="">
-                                    </div>
-                                </div>
-                                <!-- Date and time range -->
-                                <div class="form-group" id="edit-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t0-datepicker"
-                                               value="{{order.t0}}">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                                <div class="form-group" id="edit-t2">
-                                    <label class="col-sm-2 control-label">完工时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t2-datepicker"
-                                               value="{{order.t2}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="editOrder()">Edlt
-                                </button>
-                            </div>
-                            <!-- /.box-footer -->
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </section>
 </div>

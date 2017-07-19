@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
+    .controller('ResourceListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
 
         layer.load(0);
 
@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
 
         //将选中记录下发APS
         $scope.dispatchRecord = function () {
-            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+            dispatchApsService.dispatchAps(confirmDispatchAps, resetDispatchAps);
         };
 
         //渲染checkBox样式
@@ -62,17 +62,24 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
             params.nameShift = $("#selectAdd option:selected").val();
-            console.log(params.nameShift);
             params.state = $("input[name='add-state']").val();
             addData = JSON.stringify(params);
 
 
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
                 $("#add-name").addClass("has-error");
             } else {
                 $("#add-name").removeClass("has-error");
                 $("#add-name").addClass(" has-success");
+            }
+
+            if (!validate.checkLength(params.nameShift)) {
+                $("#add-nameShift").removeClass("has-success");
+                $("#add-nameShift").addClass("has-error");
+            } else {
+                $("#add-nameShift").removeClass("has-error");
+                $("#add-nameShift").addClass(" has-success");
             }
 
 
@@ -93,9 +100,9 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#add-state").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && /*validate.checkLength(params.nameShift) && validate.checkNumber(params.nameShift) &&*/
-                validate.checkLength(params.state) && validate.checkNumber(params.state)) {
+            if (validate.checkLength(params.name) &&
+                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift)
+                && validate.checkLength(params.state) && validate.checkNumber(params.state)) {
                 return true;
             } else {
                 return false;
@@ -112,7 +119,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             params.state = $("input[name='edit-state']").val();
             editData = params;
 
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#edit-name").removeClass("has-success");
                 $("#edit-name").addClass("has-error");
             } else {
@@ -145,7 +152,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#edit-state").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
+            if (validate.checkLength(params.name) &&
                 validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift) && validate.checkNumber(params.nameShift) &&
                 validate.checkLength(params.state) && validate.checkNumber(params.state)) {
                 return true;
@@ -159,14 +166,15 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             if (resourceAddValidate()) {
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddResource, addData).then(function successCallback() {
-                    //用强制刷新解决按钮不能连续响应
-
-                    location.reload();
+                    myHttpService.get(serviceList.ListResource).then(function (response) {
+                        $scope.resourceList = response.data;
+                        notification.sendNotification("confirm", "添加成功");
+                    })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                notification.sendNotification("alert", "参数错误");
+                notification.sendNotification("alert", "输入有误");
             }
         };
 
@@ -180,7 +188,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 for (var i = 0; i < a.length; i++) {
                     if (a[i].checked) {
                         idVal = $("#table_value").find("tr").eq(row).find("td").eq(1).html();
-                        console.log(idVal);
                         id_params.id = idVal;
                     }
                     row++;
@@ -197,9 +204,9 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         $scope.update = function () {
             if (getInfo()) {
                 $("#modal-edit").modal('show');
-                var temps = id_params.idR;
+                /*var temps = id_params.idR;
                 delete(id_params.idR);
-                id_params.id = temps;
+                id_params.id = temps;*/
                 var idInfo = JSON.stringify(id_params);
                 myHttpService.post(serviceList.GetResourceById, idInfo).then(function successCallback(response) {
                     var editList = [];//保存从数据库获取的需要修改的数据
@@ -207,7 +214,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                     console.log(editList);
                     edit_params = response.data;
                     $scope.editList = editList;
-                }, function errorCallback(response) {
+                }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
@@ -216,22 +223,27 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         };
 
         $scope.editResource = function () {
-            if (resourceEditValidate()) {
-                $("#modal-edit").modal('hide');
-                //用获取到的数据代替从数据库取到的数据
-                edit_params.name = editData.name;
-                edit_params.idSiteGroupResource = editData.idSiteGroupResource;
-                edit_params.nameShift = editData.nameShift;
-                edit_params.state = editData.state;
-                var update_data = angular.toJson(edit_params);
-                console.log(update_data);
-                myHttpService.post(serviceList.UpdateResource, update_data).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                })
-            } else {
-                notification.sendNotification("alert", "输入有误");
+            if (confirm.confirmEdit()) {
+                if (resourceEditValidate()) {
+                    $("#modal-edit").modal('hide');
+                    //用获取到的数据代替从数据库取到的数据
+                    edit_params.name = editData.name;
+                    edit_params.idSiteGroupResource = editData.idSiteGroupResource;
+                    edit_params.nameShift = editData.nameShift;
+                    edit_params.state = editData.state;
+                    var update_data = angular.toJson(edit_params);
+                    console.log(update_data);
+                    myHttpService.post(serviceList.UpdateResource, update_data).then(function successCallback() {
+                        myHttpService.get(serviceList.ListResource).then(function (response) {
+                            $scope.resourceList = response.data;
+                            notification.sendNotification("confirm", "修改成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    })
+                } else {
+                    notification.sendNotification("alert", "输入有误");
+                }
             }
         };
 
@@ -239,16 +251,19 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         //删除订单
         $scope.deleteResource = function () {
             if (getInfo()) {
-                var params = {};
-                params.idR = idVal;
-                var idInfo = JSON.stringify(params);
-                console.log("删除的id信息");
-                console.log(idInfo);
-                myHttpService.delete(serviceList.DeleteResource, idInfo).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                });
+                if (confirm.confirmDel()) {
+                    var params = {};
+                    params.idR = idVal;
+                    var idInfo = JSON.stringify(params);
+                    myHttpService.delete(serviceList.DeleteResource, idInfo).then(function successCallback() {
+                        myHttpService.get(serviceList.ListResource).then(function (response) {
+                            $scope.resourceList = response.data;
+                            notification.sendNotification("confirm", "删除成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    });
+                }
             }
         };
 

@@ -15,9 +15,6 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         layer.load(0);
 
         var addData = [];
-        var edit_params = {};//获取需改后的数据
-        var idVal;
-        var id_params = {}; //保存选中的记录的id信息
 
         $(function () {
             myHttpService.get(serviceList.AdjustOrder).then(function (response) {
@@ -95,10 +92,13 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         //异常状态
         $scope.addAdjustOrder = function () {
             if (orderAddValidate()) {
-                $("#modal-add").modal('hide');
+                $("#modal-simulate").modal('hide');
                 console.log(addData);
                 myHttpService.post(serviceList.AddAdjustOrder, addData).then(function successCallback() {
-                    setTimeout('window.location.reload();', 0.1);
+                    myHttpService.get(serviceList.AdjustOrder).then(function (response) {
+                        $scope.adjustOrder = response.data;
+                        notification.sendNotification("confirm", "添加成功");
+                    })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -115,10 +115,12 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
                     if (response.data.data.state == 0) {
                         processError(event);
                     } else {
-                        layer.msg('APS正在计算中，无法排程!', {icon: 2});
+                        notification.sendNotification("alert", "APS正在计算中，无法排程");
+                        // layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
                 } else {
-                    layer.msg('查询APS状态失败，请重试!', {icon: 2});
+                    notification.sendNotification("alert", "查询APS状态失败，请重试");
+                    // layer.msg('查询APS状态失败，请重试!', {icon: 2});
                 }
             });
         };
@@ -130,13 +132,13 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             if (target.parentNode.tagName.toLowerCase() == "td") {
                 var rowIndex = target.parentNode.parentNode.rowIndex;
                 var id = document.getElementById("table_adjust").rows[rowIndex].cells[0].innerHTML;
-                myHttpService.get(serviceList.orderExceptionHandling + "?id=" + id, idInfo).then(function successCallback(response) {
+                myHttpService.get(serviceList.orderExceptionHandling + "?id=" + id).then(function successCallback(response) {
                     if (response.data.result == "ok") {
                         notification.sendNotification("confirm", "紧急插单处理中...");
                     } else {
                         notification.sendNotification("alert", "请求失败");
                     }
-                }, function errorCallback(response) {
+                }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             }
