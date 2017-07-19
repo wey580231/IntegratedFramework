@@ -1,20 +1,4 @@
 <style>
-    .dropdown-menu.pull-right {
-        text-align: center;
-        border: 1px solid #a1a1a1;
-        width: 95px;
-        border-radius: 50px;
-        margin-top: -78px;
-        margin-right: -2px;
-        height: 43px;
-
-    }
-
-    .dropdown-menu {
-        min-width: 1px;
-        padding: 0 0 5px 5px;
-    }
-
     .btn-block {
         display: block;
         width: 60%;
@@ -45,14 +29,14 @@
                         </button>
                     </div>
 
-                    <div class="pull-right">
+               <!--     <div class="pull-right">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
                                     data-target="#modal-simulate"
                                     ng-click="reset()"><i class="fa fa-map-signs"></i>异常模拟
                             </button>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
                 <div class="row">
@@ -138,7 +122,7 @@
             <!-- Horizontal Form -->
         </div>
         <!--异常模拟窗口-->
-        <div class="modal fade" id="modal-simulate">
+      <!--  <div class="modal fade" id="modal-simulate">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -147,17 +131,17 @@
                         <h4 class="modal-title">异常模拟</h4>
                     </div>
                     <div class="modal-body">
-                        <!-- form start -->
+                        &lt;!&ndash; form start &ndash;&gt;
                         <form class="form-horizontal">
                             <div class="box-body">
 
-                                <!-- Date and time range -->
+                                &lt;!&ndash; Date and time range &ndash;&gt;
                                 <div class="form-group" id="add-t0">
                                     <label class="col-sm-3 control-label">下单时间</label>
                                     <div class="col-sm-8" style="z-index: 9999">
                                         <input type="text" class="form-control pull-right" id="modal-add-t0-datepicker">
                                     </div>
-                                    <!-- /.input group -->
+                                    &lt;!&ndash; /.input group &ndash;&gt;
                                 </div>
 
                                 <div class="form-group" id="add-t1">
@@ -165,7 +149,7 @@
                                     <div class="col-sm-8" style="z-index: 9999">
                                         <input type="text" class="form-control pull-right" id="modal-add-t1-datepicker">
                                     </div>
-                                    <!-- /.input group -->
+                                    &lt;!&ndash; /.input group &ndash;&gt;
                                 </div>
                                 <div class="form-group" id="add-t2">
                                     <label class="col-sm-3 control-label">最晚交付时间</label>
@@ -174,17 +158,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- /.box-body -->
+                            &lt;!&ndash; /.box-body &ndash;&gt;
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
                                 <button type="submit" class="btn btn-info pull-right" ng-click="addAdjustOrder()">插入异常</button>
                             </div>
-                            <!-- /.box-footer -->
+                            &lt;!&ndash; /.box-footer &ndash;&gt;
                         </form>
 
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </section>
 </div>

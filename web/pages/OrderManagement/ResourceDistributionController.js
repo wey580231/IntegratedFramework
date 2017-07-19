@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         })
     }])
 
-    .controller('ResourceDistributionController', function ($scope, $http, myHttpService, serviceList, validate, notification, dispatchApsService) {
+    .controller('ResourceDistributionController', function ($scope, $http, myHttpService, serviceList, validate, notification, dispatchApsService, confirm) {
 
         var editData = {};//保存新增和修改的信息
         var addData = [];
@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
 
         //将选中记录下发APS
         $scope.dispatchRecord = function () {
-            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+            dispatchApsService.dispatchAps(confirmDispatchAps, resetDispatchAps);
         };
 
         //渲染checkBox样式
@@ -212,8 +212,10 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             if (resourcedisAddValidate()) {
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddAssisantProcess, addData).then(function successCallback() {
-                    //用强制刷新解决按钮不能连续响应
-                    location.reload(true);
+                    myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {
+                        $scope.resourcedisList = response.data;
+                        notification.sendNotification("confirm", "添加成功");
+                    })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -263,26 +265,31 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         };
 
         $scope.editAssisantProcess = function () {
-            if (resourcedisEditValidate()) {
-                $("#modal-edit").modal('hide');
-                //用获取到的数据代替从数据库取到的数据
-                var temps = edit_params.id;
-                delete(edit_params.id);
-                edit_params.id = temps;
-                edit_params.grp = editData.grp;
-                edit_params.typeSite = editData.typeSite;
-                edit_params.idSite = editData.idSite;
-                edit_params.maxResource = editData.maxResource;
-                edit_params.minResource = editData.minResource;
-                edit_params.weightParallel = editData.weightParallel;
-                var update_data = angular.toJson(edit_params);
-                myHttpService.post(serviceList.UpdateAssisantProcess, update_data).then(function successCallback() {
-                    location.reload(true);
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                })
-            } else {
-                notification.sendNotification("alert", "输入有误");
+            if (confirm.confirmEdit()) {
+                if (resourcedisEditValidate()) {
+                    $("#modal-edit").modal('hide');
+                    //用获取到的数据代替从数据库取到的数据
+                    var temps = edit_params.id;
+                    delete(edit_params.id);
+                    edit_params.id = temps;
+                    edit_params.grp = editData.grp;
+                    edit_params.typeSite = editData.typeSite;
+                    edit_params.idSite = editData.idSite;
+                    edit_params.maxResource = editData.maxResource;
+                    edit_params.minResource = editData.minResource;
+                    edit_params.weightParallel = editData.weightParallel;
+                    var update_data = angular.toJson(edit_params);
+                    myHttpService.post(serviceList.UpdateAssisantProcess, update_data).then(function successCallback() {
+                        myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {
+                            $scope.resourcedisList = response.data;
+                            notification.sendNotification("confirm", "修改成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    })
+                } else {
+                    notification.sendNotification("alert", "输入有误");
+                }
             }
         };
 
@@ -290,14 +297,19 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         //删除订单
         $scope.deleteAssisantProcess = function () {
             if (getInfo()) {
-                var params = {};
-                params.id = idVal;
-                var idInfo = JSON.stringify(params);
-                myHttpService.delete(serviceList.DeleteAssisantProcess, idInfo).then(function successCallback() {
-                    location.reload(true);
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                });
+                if (confirm.confirmEdit()) {
+                    var params = {};
+                    params.id = idVal;
+                    var idInfo = JSON.stringify(params);
+                    myHttpService.delete(serviceList.DeleteAssisantProcess, idInfo).then(function successCallback() {
+                        myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {
+                            $scope.resourcedisList = response.data;
+                            notification.sendNotification("confirm", "删除成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    });
+                }
             }
         };
 

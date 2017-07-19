@@ -19,7 +19,8 @@ angular.module("IntegratedFramework.InteractiveController", ['ngRoute'])
                     $scope.schedule = response.data;
                     hideLoadingPage();
                 } else {
-                    layer.msg('获取排程信息失败!', {icon: 2});
+                    notification.sendNotification("alert", "获取排程信息失败");
+                    // layer.msg('获取排程信息失败!', {icon: 2});
                 }
             }, function (response) {
                 hideLoadingPage();

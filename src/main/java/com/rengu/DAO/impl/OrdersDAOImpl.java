@@ -1,21 +1,16 @@
 package com.rengu.DAO.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.OrdersDAO;
+import com.rengu.entity.RG_AdjustOrderEntity;
 import com.rengu.entity.RG_OrderEntity;
-import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
-import java.io.IOException;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by hanchangming on 2017/5/22.
@@ -88,64 +83,36 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t0 between ? and ? and rg_orderEntity.finished =:isFinisfed";
+        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ? and rg_orderEntity.state =:state";
+//        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.state =:state";
         Query query = session.createQuery(hql);
         query.setParameter(0, startDate);
         query.setParameter(1, endDate);
-        query.setParameter("isFinisfed", isFinished);
+        byte stateByte = 0;
+        query.setParameter("state", stateByte);
         List list = query.list();
         return list;
     }
 
-    @Override
-    //支持同时删除多个订单
-    public boolean deleteById(String jsonString) {
-        JsonNode rootNode = null;
-        try {
-            rootNode = Tools.jsonTreeModelParse(jsonString);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public boolean delete(Object object) {
+        RG_OrderEntity rg_orderEntity;
+        if (object instanceof RG_OrderEntity) {
+            rg_orderEntity = (RG_OrderEntity) object;
+            String orderId = rg_orderEntity.getId();
+            RG_AdjustOrderEntity rg_adjustOrderEntity = DAOFactory.getAdjustOrderDAOImplInstance().findAllByOrderId(orderId);
+            if (rg_adjustOrderEntity != null) {
+                if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                //直接删除
+                return super.delete(rg_orderEntity);
+            }
+        } else {
+            //参数错误
             return false;
         }
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
-
-        for (JsonNode node : rootNode.get("id")) {
-            String orderId = node.get("id").toString();
-
-            RG_OrderEntity entity = session.get(RG_OrderEntity.class, orderId);
-            if (entity != null) {
-                Set<RG_ScheduleEntity> schedules = entity.getSchedules();
-
-                //删除schedule
-                Iterator<RG_ScheduleEntity> iters = schedules.iterator();
-                while (iters.hasNext()) {
-                    RG_ScheduleEntity schedule = iters.next();
-                    schedule.getOrders().remove(entity);
-                }
-
-                //删除emulateData
-                NativeQuery query = session.createNativeQuery(" delete from rg_emulatedata where idOrder= ? ");
-                query.setParameter(1, orderId);
-                query.executeUpdate();
-
-                //删除紧急插单
-                query = session.createNativeQuery("delete from rg_adjustorder where idOrder = ?");
-                query.setParameter(1, orderId);
-                query.executeUpdate();
-
-                //将plan表中order字段置为null
-                query = session.createNativeQuery("update rg_plan set idOrder = null where idOrder = ?");
-                query.setParameter(1, "1");
-                query.executeUpdate();
-
-                session.delete(entity);
-            }
-        }
-        session.getTransaction().commit();
-        return false;
     }
 }
