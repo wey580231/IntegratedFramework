@@ -97,7 +97,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
                         hideCalendar();
-                    } else {
+                   } else {
                         layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
                 } else {

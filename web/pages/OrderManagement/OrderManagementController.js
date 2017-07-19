@@ -205,6 +205,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         $scope.addOrder = function () {
             if (orderAddValidate()) {
                 $("#modal-add").modal('hide');
+                console.log(addData);
                 myHttpService.post(serviceList.AddOrder, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
                     //location.reload(true);
