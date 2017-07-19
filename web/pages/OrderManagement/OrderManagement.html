@@ -1,3 +1,10 @@
+<style>
+    .myPages {
+        display: table;
+        margin:40px auto;
+    }
+
+</style>
 <div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -64,7 +71,7 @@
                             <th>状态</th>
                         </tr>
                         <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" id="value">
-                            <td><input name="check" type="checkbox"></td>
+                            <td><input id="check" name="check" type="checkbox"></td>
                             <td style="display:none">{{order.id}}</td>
                             <td>{{order.name}}</td>
                             <td>{{order.priority}}</td>
@@ -85,9 +92,21 @@
                 </div>
                 <!-- /.mail-box-messages -->
             </div>
+
             <!-- /.box-body -->
             <!-- Horizontal Form -->
         </div>
+
+        <!--<div class="myPages">
+            <a href="?curPage=1">首页</a>
+
+            <a href="?curPage=<%curPage-1%>">上一页</a>
+
+            <a href="?curPage=<%curPage+1%>">下一页</a>
+
+            <a href="?curPage=<%pageCount%>">尾页</a>
+        </div>-->
+
         <!--新增窗口-->
         <div class="modal fade" id="modal-add">
             <div class="modal-dialog">
@@ -120,7 +139,7 @@
                                 </div>
 
                                 <div class="form-group" id="add-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
+                                    <label class="col-sm-2 control-label">数量(个)</label>
 
                                     <div class="col-sm-10">
                                         <input class="form-control" name="add-quantity" title="请输入数字！"
@@ -186,7 +205,7 @@
                                 </div>
 
                                 <div class="form-group" id="edit-quantity">
-                                    <label class="col-sm-2 control-label">数量</label>
+                                    <label class="col-sm-2 control-label">数量(个)</label>
 
                                     <div class="col-sm-10">
                                         <input class="form-control" name="edit-quantity" title="请输入数字！"
@@ -224,48 +243,48 @@
         </div>
 
         <!--详细信息窗口-->
-      <!--  <div class="modal fade" id="modal-info">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">订单详细信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        &lt;!&ndash; form start &ndash;&gt;
-                        <div class="box">
-                            &lt;!&ndash; /.box-header &ndash;&gt;
-                            <div class="box-body no-padding">
-                                <table class="table table-condensed">
-                                    <tr ng-repeat="info in infoList track by $index">
-                                        <td>产品名称</td>
-                                        <td>{{info.name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>订单数量</td>
-                                        <td>{{info.quantity}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>完工数量</td>
-                                        <td>{{info.finishQuantity}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>产品名称</td>
-                                        <td>{{info.productByIdProduct.name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>租户名称</td>
-                                        <td>{{info.clubByIdClub.name}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            &lt;!&ndash; /.box-body &ndash;&gt;
-                        </div>
-                        &lt;!&ndash; /.box &ndash;&gt;
-                    </div>
-                </div>
-            </div>
-        </div>-->
+        <!--  <div class="modal fade" id="modal-info">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">订单详细信息</h4>
+                      </div>
+                      <div class="modal-body">
+                          &lt;!&ndash; form start &ndash;&gt;
+                          <div class="box">
+                              &lt;!&ndash; /.box-header &ndash;&gt;
+                              <div class="box-body no-padding">
+                                  <table class="table table-condensed">
+                                      <tr ng-repeat="info in infoList track by $index">
+                                          <td>产品名称</td>
+                                          <td>{{info.name}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td>订单数量</td>
+                                          <td>{{info.quantity}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td>完工数量</td>
+                                          <td>{{info.finishQuantity}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td>产品名称</td>
+                                          <td>{{info.productByIdProduct.name}}</td>
+                                      </tr>
+                                      <tr>
+                                          <td>租户名称</td>
+                                          <td>{{info.clubByIdClub.name}}</td>
+                                      </tr>
+                                  </table>
+                              </div>
+                              &lt;!&ndash; /.box-body &ndash;&gt;
+                          </div>
+                          &lt;!&ndash; /.box &ndash;&gt;
+                      </div>
+                  </div>
+              </div>
+          </div>-->
     </section>
 </div>

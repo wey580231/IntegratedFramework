@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceGroupController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
+    .controller('ResourceGroupController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
 
         layer.load(0);
 
@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
 
         //将选中记录下发APS
         $scope.dispatchRecord = function () {
-            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+            dispatchApsService.dispatchAps(confirmDispatchAps, resetDispatchAps);
         };
 
         //渲染checkBox样式
@@ -61,7 +61,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             params.state = parseInt($("input[name='add-state']").val());
             params.idSite0 = $("input[name='add-idSite0']").val();
             addData = JSON.stringify(params);
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
                 $("#add-name").addClass("has-error");
             } else {
@@ -85,7 +85,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#add-idSite0").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkString(params.name) && validate.checkLength(params.name) &&
+            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkLength(params.name) &&
                 validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)) {
                 return true;
             } else {
@@ -102,7 +102,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             params.state = parseInt($("input[name='edit-state']").val());
             params.idSite0 = $("input[name='edit-idSite0']").val();
             editData = params;
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#edit-name").removeClass("has-success");
                 $("#edit-name").addClass("has-error");
             } else {
@@ -126,8 +126,8 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#edit-idSite0").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkString(params.name) && validate.checkLength(params.name) /*&&
-                validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)*/) {
+            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkLength(params.name)&&
+             validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)) {
                 return true;
             } else {
 
@@ -140,13 +140,15 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             if (groupAddValidate()) {
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddGroupResource, addData).then(function successCallback() {
-                    //用强制刷新解决按钮不能连续响应
-                    location.reload();
+                    myHttpService.get(serviceList.ListGroupResource).then(function (response) {
+                        $scope.groupList = response.data;
+                        notification.sendNotification("confirm", "添加成功");
+                    })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                notification.sendNotification("alert", "参数错误");
+                notification.sendNotification("alert", "输入有误");
             }
             //addData.splice(0, addData.length);
         };
@@ -177,7 +179,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             if (getInfo()) {
                 $("#modal-edit").modal('show');
                 var idInfo = JSON.stringify(id_params);
-                myHttpService.post(serviceList.GetSiteById, idInfo).then(function successCallback(response) {
+                myHttpService.post(serviceList.GetGroupResourceById, idInfo).then(function successCallback(response) {
                     var editList = [];//保存从数据库获取的需要修改的数据
                     editList.push(response.data);
                     edit_params = response.data;
@@ -192,20 +194,25 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
         };
 
         $scope.editGroup = function () {
-            if (groupEditValidate()) {
-                $("#modal-edit").modal('hide');
-                //用获取到的数据代替从数据库取到的数据
-                edit_params.name = editData.name;
-                edit_params.state = editData.state;
-                edit_params.idSite0 = editData.idSite0;
-                var update_data = angular.toJson(edit_params);
-                myHttpService.post(serviceList.UpdateGroupResource, update_data).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                })
-            } else {
-                notification.sendNotification("alert", "输入有误");
+            if (confirm.confirmEdit()) {
+                if (groupEditValidate()) {
+                    $("#modal-edit").modal('hide');
+                    //用获取到的数据代替从数据库取到的数据
+                    edit_params.name = editData.name;
+                    edit_params.state = editData.state;
+                    edit_params.idSite0 = editData.idSite0;
+                    var update_data = angular.toJson(edit_params);
+                    myHttpService.post(serviceList.UpdateGroupResource, update_data).then(function successCallback() {
+                        myHttpService.get(serviceList.ListGroupResource).then(function (response) {
+                            $scope.groupList = response.data;
+                            notification.sendNotification("confirm", "修改成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    })
+                } else {
+                    notification.sendNotification("alert", "输入有误");
+                }
             }
         };
 
@@ -213,16 +220,21 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
         //删除订单
         $scope.deleteGroup = function () {
             if (getInfo()) {
-                var params = {};
-                params.id = idVal;
-                var idInfo = JSON.stringify(params);
-                console.log("删除的id信息");
-                console.log(idInfo);
-                myHttpService.delete(serviceList.DeleteGroupResource, idInfo).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                });
+                if (confirm.confirmDel()) {
+                    var params = {};
+                    params.id = idVal;
+                    var idInfo = JSON.stringify(params);
+                    console.log("删除的id信息");
+                    console.log(idInfo);
+                    myHttpService.delete(serviceList.DeleteGroupResource, idInfo).then(function successCallback() {
+                        myHttpService.get(serviceList.ListGroupResource).then(function (response) {
+                            $scope.groupList = response.data;
+                            notification.sendNotification("confirm", "删除成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    });
+                }
             }
         };
 

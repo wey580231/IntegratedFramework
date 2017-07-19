@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceClassifyController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
+    .controller('ResourceClassifyController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
 
         layer.load(0);
 
@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
 
         //将选中记录下发APS
         $scope.dispatchRecord = function () {
-            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+            dispatchApsService.dispatchAps(confirmDispatchAps, resetDispatchAps);
         };
 
         //渲染checkBox样式
@@ -60,7 +60,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.attribute = $("input[name='add-attribute']").val();
             addData = JSON.stringify(params);
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
                 $("#add-name").addClass("has-error");
             } else {
@@ -76,7 +76,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#add-attribute").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
+            if (validate.checkLength(params.name)&& validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
                 return true;
             } else {
 
@@ -91,7 +91,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
             params.name = $("input[name='edit-name']").val();
             params.attribute = $("input[name='edit-attribute']").val();
             editData = params;
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#edit-name").removeClass("has-success");
                 $("#edit-name").addClass("has-error");
             } else {
@@ -107,7 +107,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#edit-attribute").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
+            if (validate.checkLength(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
                 return true;
             } else {
 
@@ -120,13 +120,15 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
             if (typeAddValidate()) {
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddTypeResource, addData).then(function successCallback() {
-                    //用强制刷新解决按钮不能连续响应
-                    location.reload();
+                    myHttpService.get(serviceList.ListTypeRecource).then(function (response) {
+                        $scope.typeList = response.data;
+                        notification.sendNotification("confirm", "添加成功");
+                    })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                notification.sendNotification("alert", "参数错误");
+                notification.sendNotification("alert", "输入有误");
             }
             //addData.splice(0, addData.length);
         };
@@ -173,20 +175,25 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
         };
 
         $scope.editType = function () {
-            if (typeEditValidate()) {
-                $("#modal-edit").modal('hide');
-                //用获取到的数据代替从数据库取到的数据
-                edit_params.name = editData.name;
-                edit_params.attribute = editData.attribute;
-                var update_data = angular.toJson(edit_params);
-                console.log(update_data);
-                myHttpService.post(serviceList.UpdateTypeResource, update_data).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                })
-            } else {
-                notification.sendNotification("alert", "输入有误");
+            if (confirm.confirmEdit()) {
+                if (typeEditValidate()) {
+                    $("#modal-edit").modal('hide');
+                    //用获取到的数据代替从数据库取到的数据
+                    edit_params.name = editData.name;
+                    edit_params.attribute = editData.attribute;
+                    var update_data = angular.toJson(edit_params);
+                    console.log(update_data);
+                    myHttpService.post(serviceList.UpdateTypeResource, update_data).then(function successCallback() {
+                        myHttpService.get(serviceList.ListTypeRecource).then(function (response) {
+                            $scope.typeList = response.data;
+                            notification.sendNotification("confirm", "修改成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    })
+                } else {
+                    notification.sendNotification("alert", "输入有误");
+                }
             }
         };
 
@@ -194,16 +201,21 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
         //删除订单
         $scope.deleteType = function () {
             if (getInfo()) {
-                var params = {};
-                params.id = idVal;
-                var idInfo = JSON.stringify(params);
-                console.log("删除的id信息");
-                console.log(idInfo);
-                myHttpService.delete(serviceList.DeleteTypeResource, idInfo).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                });
+                if (confirm.confirmDel()) {
+                    var params = {};
+                    params.id = idVal;
+                    var idInfo = JSON.stringify(params);
+                    console.log("删除的id信息");
+                    console.log(idInfo);
+                    myHttpService.delete(serviceList.DeleteTypeResource, idInfo).then(function successCallback() {
+                        myHttpService.get(serviceList.ListTypeRecource).then(function (response) {
+                            $scope.typeList = response.data;
+                            notification.sendNotification("confirm", "删除成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    });
+                }
             }
         };
 

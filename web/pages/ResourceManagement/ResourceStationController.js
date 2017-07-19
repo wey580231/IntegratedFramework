@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceStationController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
+    .controller('ResourceStationController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
 
         layer.load(0);
 
@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
 
         //将选中记录下发APS
         $scope.dispatchRecord = function () {
-            dispatchApsService.dispatchAps(confirmDispatchAps,resetDispatchAps);
+            dispatchApsService.dispatchAps(confirmDispatchAps, resetDispatchAps);
         };
 
         //渲染checkBox样式
@@ -63,7 +63,7 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             params.capacity = parseInt($("input[name='add-capacity']").val());
             addData = JSON.stringify(params);
 
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
                 $("#add-name").addClass("has-error");
             } else {
@@ -96,7 +96,7 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             }
 
             if (validate.checkNumber(params.x) && validate.checkLength(params.x) && validate.checkNumber(params.y) && validate.checkLength(params.y) &&
-                validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.capacity) && validate.checkNumber(params.capacity)) {
+                validate.checkLength(params.name)&& validate.checkLength(params.capacity) && validate.checkNumber(params.capacity)) {
                 return true;
             } else {
 
@@ -113,7 +113,7 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             params.y = parseInt($("input[name='edit-y']").val());
             params.capacity = parseInt($("input[name='edit-capacity']").val());
             editData = params;
-            if (!validate.checkLength(params.name) || !validate.checkString(params.name)) {
+            if (!validate.checkLength(params.name)) {
                 $("#edit-name").removeClass("has-success");
                 $("#edit-name").addClass("has-error");
             } else {
@@ -146,7 +146,7 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             }
 
             if (validate.checkNumber(params.x) && validate.checkLength(params.x) && validate.checkNumber(params.y) && validate.checkLength(params.y) &&
-                validate.checkLength(params.name) && validate.checkString(params.name) && validate.checkLength(params.capacity) && validate.checkNumber(params.capacity)) {
+                validate.checkLength(params.name) && validate.checkLength(params.capacity) && validate.checkNumber(params.capacity)) {
                 return true;
             } else {
 
@@ -159,13 +159,15 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             if (siteAddValidate()) {
                 $("#modal-add").modal('hide');
                 myHttpService.post(serviceList.AddSite, addData).then(function successCallback() {
-                    //用强制刷新解决按钮不能连续响应
-                    location.reload();
+                    myHttpService.get(serviceList.ListSite).then(function (response) {
+                        $scope.siteList = response.data;
+                        notification.sendNotification("confirm", "添加成功");
+                    })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
             } else {
-                notification.sendNotification("alert", "参数错误");
+                notification.sendNotification("alert", "输入有误");
             }
             //addData.splice(0, addData.length);
         };
@@ -210,21 +212,26 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         };
 
         $scope.editSite = function () {
-            if (siteEditValidate()) {
-                $("#modal-edit").modal('hide');
-                //用获取到的数据代替从数据库取到的数据
-                edit_params.name = editData.name;
-                edit_params.x = editData.x;
-                edit_params.y = editData.y;
-                edit_params.capacity = editData.capacity;
-                var update_data = angular.toJson(edit_params);
-                myHttpService.post(serviceList.UpdateSite, update_data).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                })
-            } else {
-                notification.sendNotification("alert", "输入有误");
+            if (confirm.confirmEdit()) {
+                if (siteEditValidate()) {
+                    $("#modal-edit").modal('hide');
+                    //用获取到的数据代替从数据库取到的数据
+                    edit_params.name = editData.name;
+                    edit_params.x = editData.x;
+                    edit_params.y = editData.y;
+                    edit_params.capacity = editData.capacity;
+                    var update_data = angular.toJson(edit_params);
+                    myHttpService.post(serviceList.UpdateSite, update_data).then(function successCallback() {
+                        myHttpService.get(serviceList.ListSite).then(function (response) {
+                            $scope.siteList = response.data;
+                            notification.sendNotification("confirm", "修改成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    })
+                } else {
+                    notification.sendNotification("alert", "输入有误");
+                }
             }
         };
 
@@ -232,16 +239,21 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         //删除订单
         $scope.deleteSite = function () {
             if (getInfo()) {
-                var params = {};
-                params.id = idVal;
-                var idInfo = JSON.stringify(params);
-                console.log("删除的id信息");
-                console.log(idInfo);
-                myHttpService.delete(serviceList.DeleteSite, idInfo).then(function successCallback() {
-                    location.reload();
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                });
+                if (confirm.confirmEdit()) {
+                    var params = {};
+                    params.id = idVal;
+                    var idInfo = JSON.stringify(params);
+                    console.log("删除的id信息");
+                    console.log(idInfo);
+                    myHttpService.delete(serviceList.DeleteSite, idInfo).then(function successCallback() {
+                        myHttpService.get(serviceList.ListSite).then(function (response) {
+                            $scope.siteList = response.data;
+                            notification.sendNotification("confirm", "删除成功");
+                        })
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
+                    });
+                }
             }
         };
 
