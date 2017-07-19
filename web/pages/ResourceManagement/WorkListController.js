@@ -21,6 +21,11 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         var id_params = {}; //保存选中的记录的id信息
         var slot;
 
+        //Timepicker
+        $(".timepicker").timepicker({
+            showInputs: false
+        });
+
         $(function () {
             loadRightFloatMenu();
 
@@ -55,20 +60,38 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             renderTableService.renderTable($last);
         };
 
-        $("#select").change(function () {
+        /*$("#select").change(function () {
 
             slot = $(this).children('option:selected').val();
 
-        })
+        });*/
+
+        function StringBuffer() {
+            this.__strings__ = new Array();
+        }
+        StringBuffer.prototype.append = function (str) {
+            this.__strings__.push(str);
+            return this;    //方便链式操作
+        }
+
+        StringBuffer.prototype.toString = function () {
+            return this.__strings__.join("");
+        }
 
         //信息填写检验
-        var workAddValidate = function () {
+        var workAddValidate;
+        workAddValidate = function () {
             var params = {};
             params.name = $("input[name='add-name']").val();
             params.type = $("input[name='add-type']").val();
-             params.slot = $("input[name='add-slot']").val();
-            /* params.slot = $(this).children('option:selected').val();*/
-            params.slot = slot;
+            /*var slot1 = $("input[id='modal-add-slot1']").val();
+            var slot2 = $("input[id='modal-add-slot2']").val();
+
+            var slot3 = new StringBuffer();
+            slot3.append(moment(slot1).format("hh:mm")).append("--").append(moment(slot2).format("hh:mm"));
+            params.slot = slot3.toString();
+            console.log(params.slot);*/
+
             params.extra = parseInt($("input[name='add-extra']").val());
             addData = JSON.stringify(params);
             if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
@@ -78,13 +101,22 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#add-name").removeClass(" has-error");
                 $("#add-name").addClass(" has-success");
             }
-             if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
-                 $("#add-slot").removeClass("has-success");
-                 $("#add-slot").addClass("has-error");
-             } else {
-                 $("#add-slot").removeClass("has-error");
-                 $("#add-slot").addClass(" has-success");
-             }
+
+            /*if (!validate.checkLength(slot1)) {
+                $("#add-slot1").removeClass("has-success");
+                $("#add-slot1").addClass("has-error");
+            } else {
+                $("#add-slot1").removeClass("has-error");
+                $("#add-slot1").addClass(" has-success");
+            }
+
+            if (!validate.checkLength(slot2)) {
+                $("#add-slot2").removeClass("has-success");
+                $("#add-slot2").addClass("has-error");
+            } else {
+                $("#add-slot2").removeClass("has-error");
+                $("#add-slot2").addClass(" has-success");
+            }*/
 
             if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
                 $("#add-extra").removeClass("has-success");
@@ -95,7 +127,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
 
             if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                validate.checkLength(params.slot) && validate.checkNumber(params.slot) && validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
+                validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
                 return true;
             } else {
 
@@ -120,13 +152,6 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 $("#edit-name").addClass(" has-success");
             }
 
-            /* if (!validate.checkNumber(params.slot) || !validate.checkLength(params.slot)) {
-             $("#edit-slot").removeClass("has-success");
-             $("#edit-slot").addClass("has-error");
-             } else {
-             $("#edit-slot").removeClass("has-error");
-             $("#edit-slot").addClass(" has-success");
-             }*/
 
             if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
                 $("#edit-extra").removeClass("has-success");
@@ -149,6 +174,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         $scope.addWork = function () {
             if (workAddValidate()) {
                 $("#modal-add").modal('hide');
+                console.log(addData);
                 myHttpService.post(serviceList.AddShift, addData).then(function successCallback() {
                     //用强制刷新解决按钮不能连续响应
                     location.reload();

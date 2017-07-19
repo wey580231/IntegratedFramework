@@ -23,6 +23,7 @@ public class SnapshotDaoImpl extends SuperDAOImpl {
         Query query = session.createQuery(hql);
         query.setParameter("level", level);
         List list = query.list();
+        transaction.commit();
         return list;
     }
 
