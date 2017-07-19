@@ -89,7 +89,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             }
         };
 
-        //异常状态
+      /*  //异常状态
         $scope.addAdjustOrder = function () {
             if (orderAddValidate()) {
                 $("#modal-simulate").modal('hide');
@@ -105,7 +105,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             } else {
                 notification.sendNotification("alert", "参数错误");
             }
-        };
+        };*/
 
         //异常处理
         $scope.exceptionHandling = function (event) {
