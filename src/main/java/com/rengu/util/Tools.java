@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +24,7 @@ import java.util.Date;
  * Created by hanchangming on 2017/5/24.
  */
 public class Tools {
-
-    private static Properties properties = null;
+    static Properties properties = null;
 
     public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -81,7 +82,6 @@ public class Tools {
     public static Properties getDatabaseProperties() {
         if (properties == null) {
             properties = new Properties();
-
             try {
                 InputStream inputStream = Tools.class.getResourceAsStream("/Database.properties");
                 properties.load(inputStream);
@@ -90,6 +90,37 @@ public class Tools {
             }
         }
         return properties;
+    }
+
+    public static String creatNotificationMessage(String message, String notificationType) {
+        //生成根节点树
+        JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+        ObjectNode objectNode = jsonNodeFactory.objectNode();
+        objectNode.put("MessageType", "notification");
+        objectNode.put("NotificationType", notificationType);
+        objectNode.put("Message", message);
+        String jsonString = null;
+        try {
+            jsonString = new ObjectMapper().writeValueAsString(objectNode);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return jsonString;
+    }
+
+    public static String creat3DMessage(String message) {
+        //生成根节点树
+        JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+        ObjectNode objectNode = jsonNodeFactory.objectNode();
+        objectNode.put("MessageType", "3DMessage");
+        objectNode.put("Message", message);
+        String jsonString = null;
+        try {
+            jsonString = new ObjectMapper().writeValueAsString(objectNode);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return jsonString;
     }
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {

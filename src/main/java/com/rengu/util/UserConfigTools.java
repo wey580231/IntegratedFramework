@@ -147,7 +147,6 @@ public class UserConfigTools {
         if (list.size() > 0) {
             result = list.get(0).toString();
         }
-
         session.getTransaction().commit();
         session.close();
 

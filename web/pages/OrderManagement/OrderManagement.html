@@ -64,8 +64,10 @@
                         <tr>
                             <td></td>
                             <th>名称</th>
+                            <th>订单来源</th>
                             <th>优先级</th>
                             <th>数量</th>
+                            <th>完成数量</th>
                             <th>下单时间</th>
                             <th>完工时间</th>
                             <th>状态</th>
@@ -74,16 +76,20 @@
                             <td><input id="check" name="check" type="checkbox"></td>
                             <td style="display:none">{{order.id}}</td>
                             <td>{{order.name}}</td>
+                            <td>
+                                <span class="label label-primary" ng-if="order.origin == 0">手动输入</span>
+                                <span class="label label-success" ng-if="order.origin == 1">云排产</span>
+                            </td>
                             <td>{{order.priority}}</td>
                             <td>{{order.quantity}}</td>
+                            <td>{{order.finishQuantity}}</td>
                             <td>{{order.t0 | date:'yyyy-MM-dd hh:mm:ss' }}</td>
                             <td>{{order.t2 | date:'yyyy-MM-dd hh:mm:ss'}}</td>
                             <td>
-                                <span class="label label-success" ng-if="order.state == 0">候选</span>
-                                <span class="label label-primary" ng-if="order.state == 1">计划</span>
-                                <span class="label label-danger" ng-if="order.state == 2">锁定</span>
-                                <span class="label label-success" ng-if="order.state == 3">发布</span>
-                                <span class="label label-warning" ng-if="order.state == -1">删除</span>
+                                <span class="label label-primary" ng-if="order.state == 0">计划</span>
+                                <span class="label label-danger" ng-if="order.state == 1">排程中</span>
+                                <span class="label label-warning" ng-if="order.state == 2">已下发</span>
+                                <span class="label label-success" ng-if="order.state == 3">已完工</span>
                             </td>
                         </tr>
                         </tbody>

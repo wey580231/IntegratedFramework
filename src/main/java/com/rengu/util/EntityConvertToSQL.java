@@ -9,7 +9,7 @@ import java.util.Iterator;
  * Created by hanchangming on 2017/5/27.
  */
 public class EntityConvertToSQL {
-    public static String insertAPSConfigSQL(String name, String value) {
+    public static String updateAPSConfigSQL(String name, String value) {
         String SQLString = "UPDATE " + DatabaseInfo.APS_CONGIF + " SET value='" + value + "' WHERE name='" + name + "'";
         return SQLString;
     }
@@ -19,7 +19,6 @@ public class EntityConvertToSQL {
         return SQLString;
     }
 
-    //TODO 临时将插入aps的订单状态强制改成1
     public static String insertSQLForAPS(RG_OrderEntity rg_orderEntity) {
         String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,IDCLUB,priority,IDPRODUCT,quantity,t0,t1,t2,color,state) VALUES ('" + rg_orderEntity.getId()
                 + "','" + rg_orderEntity.getName()
@@ -31,7 +30,7 @@ public class EntityConvertToSQL {
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT1())
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT2())
                 + "','" + rg_orderEntity.getColor()
-                + "'," +  0 + ")";   //rg_orderEntity.getState()
+                + "'," + 0 + ")";   //rg_orderEntity.getState()
         return SQLString;
     }
 
@@ -42,26 +41,21 @@ public class EntityConvertToSQL {
         while (rg_typerescourceEntityIterator.hasNext()) {
             RG_TyperescourceEntity rg_typerescourceEntity = rg_typerescourceEntityIterator.next();
             if (rg_typerescourceEntityIterator.hasNext()) {
-                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_typerescourceEntity));
-                IdTypeResource = IdTypeResource + rg_typerescourceEntity.getId() + ",";
+                IdTypeResource = IdTypeResource + "\"" + rg_typerescourceEntity.getId() + "\",\"";
             } else {
-                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_typerescourceEntity));
-                IdTypeResource = IdTypeResource + rg_typerescourceEntity.getId();
+                IdTypeResource = IdTypeResource + "\"" + rg_typerescourceEntity.getId() + "\"";
             }
         }
         IdTypeResource = IdTypeResource + "}";
-
         //拼接IdSite集合
         String IdSite = "{";
         Iterator<RG_SiteEntity> rg_siteEntityIterator = rg_resourceEntity.getSitesById().iterator();
         while (rg_siteEntityIterator.hasNext()) {
             RG_SiteEntity rg_siteEntity = rg_siteEntityIterator.next();
             if (rg_siteEntityIterator.hasNext()) {
-                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_siteEntity));
-                IdSite = IdSite + rg_siteEntity.getId() + ",";
+                IdSite = IdSite + "\"" + rg_siteEntity.getId() + "\",\"";
             } else {
-                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_siteEntity));
-                IdSite = IdSite + rg_siteEntity.getId();
+                IdSite = IdSite + "\"" + rg_siteEntity.getId() + "\"";
             }
         }
         IdSite = IdSite + "}";
@@ -72,11 +66,9 @@ public class EntityConvertToSQL {
         while (rg_shiftEntityIterator.hasNext()) {
             RG_ShiftEntity rg_shiftEntity = rg_shiftEntityIterator.next();
             if (rg_shiftEntityIterator.hasNext()) {
-                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_shiftEntity));
-                IdShift = IdShift + rg_shiftEntity.getId() + ",";
+                IdShift = IdShift + "\"" + rg_shiftEntity.getId() + "\",\"";
             } else {
-                Tools.executeSQLForUpdate(DatabaseInfo.MySQL, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_shiftEntity));
-                IdShift = IdShift + rg_shiftEntity.getId();
+                IdShift = IdShift + "\"" + rg_shiftEntity.getId() + "\"";
             }
         }
         IdShift = IdShift + "}";
