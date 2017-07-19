@@ -12,7 +12,7 @@ public class DatabaseInfo {
     public static final String APS = "APS";
     //APS数据库表名称
     public static final String APS_ORDER = "APS_ORDER";
-    public static final String APS_CONGIF = "APS_CONGIF";
+    public static final String APS_CONGIF = "APS_CONFIG";
     public static final String APS_RESOURCE = "APS_RESOURCE";
     public static final String APS_GROUPRESOURCE = "APS_GROUPRESOURCE";
     public static final String APS_SITE = "APS_SITE";

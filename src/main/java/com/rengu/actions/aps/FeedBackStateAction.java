@@ -68,7 +68,7 @@ public class FeedBackStateAction extends SuperAction {
 
                     //TODO 查询schedule时会级联查询出其对应的set集合
                     RG_ScheduleEntity schedule = rootSnapshot.getSchedule();
-                    schedule.setApsEndTime(new Date());
+                    schedule.setEndCalcTime(new Date());
 
                     String nodeName = "";
 
@@ -133,6 +133,7 @@ public class FeedBackStateAction extends SuperAction {
                         bottomSnapshot.setId(Tools.getUUID());
                         bottomSnapshot.setName(nodeName);
                         bottomSnapshot.setLevel(SnapshotLevel.BOTTOM);
+                        bottomSnapshot.setNodeCreateTime(new Date());
 
                         bottomSnapshot.setParent(middleSnapshot);
                         bottomSnapshot.setRootParent(rootSnapshot);

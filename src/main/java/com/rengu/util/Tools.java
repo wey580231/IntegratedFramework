@@ -163,7 +163,8 @@ public class Tools {
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
         for (String tableName : tableList) {
-            String SQLCommed = "TRUNCATE table " + tableName + ";";
+//            String SQLCommed = "TRUNCATE table " + tableName + ";";
+            String SQLCommed = "delete from " + tableName + "";
             System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLCommed);
             statement.execute(SQLCommed);
         }
