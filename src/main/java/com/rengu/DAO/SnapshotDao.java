@@ -20,14 +20,22 @@ public class SnapshotDao {
     //将所有订单一起转换
     public boolean switchToEmulateData(String userId, String id) {
         boolean result = false;
-
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
 
         RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-
+//        while (bottomSnapshot == null) {
+//            System.out.println("重新获取RG_SnapshotNodeEntity节点");
+//            MySessionFactory.getSessionFactory().getCurrentSession().close();
+//            session = MySessionFactory.getSessionFactory().getCurrentSession();
+//            if (!session.getTransaction().isActive()) {
+//                session.beginTransaction();
+//            }
+//            bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
+//        }
         if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息
@@ -38,26 +46,28 @@ public class SnapshotDao {
             if (plans.size() > 0) {
                 //【2】将plan表转换至模拟数据
                 result = convertPlanTo3DEmulateData(plans, id);
-            }
 
-            RG_SnapshotNodeEntity rootParent = bottomSnapshot.getRootParent();
+                if (result) {
+                    RG_SnapshotNodeEntity rootParent = bottomSnapshot.getRootParent();
 
-            try {
-                String layoutName = rootParent.getSchedule().getLayout().getName();
+                    try {
+                        String layoutName = rootParent.getSchedule().getLayout().getName();
 
-                //【3】更新3D车间的对应状态，将布局、仿真、快照节点更新
-                NativeQuery nativeQuery = session.createNativeQuery("update rg_state3d set layoutState = ?, layoutId = ? ,model = ? , snapshotId = ? where id = ?");
-                nativeQuery.setParameter(1, 1);
-                nativeQuery.setParameter(2, layoutName);
-                nativeQuery.setParameter(3, 1);
-                nativeQuery.setParameter(4, id);
-                nativeQuery.setParameter(5, 1);
-                if (nativeQuery.executeUpdate() > 0) {
-                    result = true;
+                        //【3】更新3D车间的对应状态，将布局、仿真、快照节点更新
+                        NativeQuery nativeQuery = session.createNativeQuery("update rg_state3d set layoutState = ?, layoutId = ? ,model = ? , snapshotId = ? where id = ?");
+                        nativeQuery.setParameter(1, 1);
+                        nativeQuery.setParameter(2, layoutName);
+                        nativeQuery.setParameter(3, 1);
+                        nativeQuery.setParameter(4, id);
+                        nativeQuery.setParameter(5, 1);
+                        if (nativeQuery.executeUpdate() > 0) {
+                            result = true;
+                        }
+
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-            } catch (NullPointerException e) {
-                e.printStackTrace();
             }
         }
 
@@ -131,8 +141,9 @@ public class SnapshotDao {
                 nativeQuery.setParameter("id", snapShotId);
                 List<String> orders = nativeQuery.list();
                 for (int i = 0; i < orders.size(); i++) {
-                    NativeQuery nQuery = session.createNativeQuery("select * from rg_plan where idOrder =:idOrder order by t1Task asc", RG_PlanEntity.class);
-                    nQuery.setParameter("idOrder", orders.get(i));
+                    NativeQuery nQuery = session.createNativeQuery("select * from rg_plan where idOrder = ? and idSnapshort = ? order by t1Task asc", RG_PlanEntity.class);
+                    nQuery.setParameter(1, orders.get(i));
+                    nQuery.setParameter(2, snapShotId);
                     List<RG_PlanEntity> orderPlans = nQuery.list();
 
                     startPlan = orderPlans.get(0);

@@ -19,10 +19,11 @@ public class SnapshotDaoImpl extends SuperDAOImpl {
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_SnapshotNodeEntity rg_snapshotNodeEntity where rg_snapshotNodeEntity.level =:level";
+        String hql = "from RG_SnapshotNodeEntity entity where entity.level =:level order by entity.nodeCreateTime desc";
         Query query = session.createQuery(hql);
         query.setParameter("level", level);
         List list = query.list();
+        transaction.commit();
         return list;
     }
 

@@ -2,6 +2,8 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
+
 /**
  * Created by hanchangming on 2017/6/16.
  */
@@ -13,6 +15,8 @@ public class RG_AdjustOrderEntity {
 
     private String origin;              //异常来源，MES、手工模拟
     private Integer state;              //异常状态，参照ErrorState类
+    private Date reportTime;            //故障上报时间
+    private Date processTime;           //处理时间
 
     public String getId() {
         return id;
@@ -46,23 +50,19 @@ public class RG_AdjustOrderEntity {
         this.state = state;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_AdjustOrderEntity that = (RG_AdjustOrderEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
-        return state != null ? state.equals(that.state) : that.state == null;
+    public Date getReportTime() {
+        return reportTime;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (origin != null ? origin.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        return result;
+    public void setReportTime(Date reportTime) {
+        this.reportTime = reportTime;
+    }
+
+    public Date getProcessTime() {
+        return processTime;
+    }
+
+    public void setProcessTime(Date processTime) {
+        this.processTime = processTime;
     }
 }

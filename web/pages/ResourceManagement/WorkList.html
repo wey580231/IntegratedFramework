@@ -10,6 +10,21 @@
         </ol>
     </section>
 
+    <div id="floatRightMenu">
+        <ul id="navigationMenu">
+            <li>
+                <a class="home" href=""><i class="fa fa-calendar"></i>
+                    <span>班次设定</span>
+                </a>
+            </li>
+            <li>
+                <a class="home" href="" ng-click="dispatchRecord()"><i class="fa fa-paper-plane"></i>
+                    <span>下发APS</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <section class="content">
         <div class="box box-primary">
             <!-- /.box-header -->
@@ -88,23 +103,77 @@
                                 <div class="form-group" id="add-slot">
                                     <label class="col-sm-2 control-label">时间段</label>
 
+                                    <!-- select -->
+                                    <div class="col-sm-10" style="margin-bottom: 15px;">
+                                        <select class="form-control">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                            <option>option 5</option>
+                                        </select>
+                                    </div>
+                                    <br/>
+                                    <br/>
+
+                                    <div>
+                                        <label class="col-sm-2 control-label"></label>
+
+                                        <div class="bootstrap-timepicker col-sm-3" style="margin-left: 15px;">
+                                            <div class="form-group">
+
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control timepicker" id="modal-add-slot1-timepicker">
+
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </div>
+                                                </div>
+                                                <!-- /.input group -->
+                                            </div>
+                                            <!-- /.form group -->
+                                        </div>
+
+                                        <div class="bootstrap-timepicker col-sm-3" style="margin-left: 10px;">
+                                            <div class="form-group">
+
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control timepicker" id="modal-add-slot2-timepicker">
+
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-clock-o"></i>
+                                                    </div>
+                                                </div>
+                                                <!-- /.input group -->
+                                            </div>
+                                            <!-- /.form group -->
+                                        </div>
+
+                                        <div class="btn-group col-sm-3 pull-right">
+                                            <button type="submit" class="btn btn-info" ng-click="reset()">增加</button>
+                                            <button type="submit" class="btn btn-danger pull-right" ng-click="addWork()">删除</button>
+                                            <!--<button type="button" class="btn btn-block btn-danger">Danger</button>-->
+                                        </div>
+                                    </div>
+
+
+                                    <!--<div class="col-sm-4 layui-inline">
+                                        <input class="layui-input"  name="add-slot1" placeholder="初始日期" id="modal-add-slot1" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                    </div>
+                                    <label class="col-sm-1 control-label" style="font-weight: 400;">&#45;&#45;&#45;&#45;</label>
+                                    <div class="col-sm-4 layui-inline">
+                                        <input class="layui-input"  name="add-slot2" placeholder="截止日期" id="modal-add-slot2" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                    </div>-->
+                                </div>
+                                <!--<div class="form-group" id="add-slot">
+                                    <label class="col-sm-2 control-label">时间段</label>
+
                                     <div class="col-sm-10">
                                         <input class="form-control" name="add-slot" title="请输入数字！"
                                                placeholder="">
                                     </div>
-                                </div>
-                              <!--  <div class="form-group" id="add-slot">
-                                    <label class="col-sm-2 control-label">时间段</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control select2" style="width: 100%;" id="select">
-                                            <option selected="selected"></option>
-                                            <option>8:00-12:00</option>
-                                            <option>1:00-5:00</option>
-                                            <option>6:00-8:00</option>
-                                        </select>
-                                    </div>
                                 </div>-->
-                                <div class="form-group" id="add-extra">
+                                <div class="form-group" id="add-extra" style="margin-top: -10px;">
                                     <label class="col-sm-2 control-label">加班</label>
                                     <div class="col-sm-10">
                                         <input class="form-control" name="add-extra" title="请输入数字！！"
@@ -168,6 +237,7 @@
                                     </button>
                                 </div>
                                 <!-- /.box-footer -->
+                            </div>
                         </form>
                     </div>
                 </div>

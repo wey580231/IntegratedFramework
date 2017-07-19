@@ -96,6 +96,7 @@
     <package name="schedule" extends="struts-default" namespace="/schedule">
         <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
         <action name="getAllSchedules" class="com.rengu.actions.ScheduleAction" method="getAllSchedules"/>
+        <action name="delete" class="com.rengu.actions.ScheduleAction" method="delete"/>
     </package>
 
     <!--工序信息接口-->
@@ -105,6 +106,11 @@
         <action name="update" class="com.rengu.actions.ProcessAction" method="update"/>
         <action name="getAllByIsRootNode" class="com.rengu.actions.ProcessAction" method="getAllByIsRootNode"/>
         <action name="getAllById" class="com.rengu.actions.ProcessAction" method="getAllById"/>
+    </package>
+
+    <!--布局信息-->
+    <package name="Layout" namespace="/layout" extends="struts-default">
+        <action name="get3DLayout" class="com.rengu.actions.LayoutAction" method="query3DLayout"/>
     </package>
 
     <!--3D车间访问接口-->
@@ -121,7 +127,8 @@
 
         <!--仿真或实时数据驱动-->
         <action name="drive3DEmulateFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getEmulateFlow"/>
-        <action name="drive3DEmulateFlowAllOrder" class="com.rengu.actions.d3.Emulate3DAction" method="getAllOrderEmulateFlow"/>
+        <action name="drive3DEmulateFlowAllOrder" class="com.rengu.actions.d3.Emulate3DAction"
+                method="getAllOrderEmulateFlow"/>
         <action name="drive3DRealFlow" class="com.rengu.actions.d3.Emulate3DAction" method="getRealFlow"/>
     </package>
 
@@ -130,18 +137,24 @@
         <!--状态查询-->
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="update"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
+        <action name="scheduleDetail" class="com.rengu.actions.aps.FeedBackStateAction" method="queryScheduleInfo"/>
     </package>
 
     <!--异常处理-->
-    <package name="ExceptionHandling" namespace="/ExceptionHandling" extends="struts-default">
-        <action name="errorProcess" class="com.rengu.actions.aps.ErrorProcessAction" method="processDeviceError"/>
-        <action name="OrderExceptionHandling" class="com.rengu.actions.AdjustOrderAction"
-                method="OrderExceptionHandling"/>
+    <package name="ExceptionHandling" namespace="/exceptionHandling" extends="struts-default">
+        <action name="deviceProcessHandling" class="com.rengu.actions.aps.ErrorProcessAction"
+                method="processDeviceError"/>
+        <action name="orderExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction"
+                method="processOrderError"/>
+        <action name="processExceptionHandling" class="com.rengu.actions.aps.ErrorProcessAction"
+                method="processProcessError"/>
     </package>
 
     <!--异常模拟-->
     <package name="ExceptionSimulat" namespace="/ExceptionSimulat" extends="struts-default">
         <action name="creatOrderException" class="com.rengu.actions.AdjustOrderAction" method="creatOrderException"/>
+        <action name="creatProcessException" class="com.rengu.actions.AdjustProcessAction"
+                method="creatProcessException"/>
     </package>
 
     <!--高级调整分析-->
@@ -166,7 +179,7 @@
     <package name="SnapshotManager" namespace="/snapshot" extends="struts-default">
         <action name="view3DEmulate" class="com.rengu.actions.SnapshotAction" method="viewCurrentSnapshotEmulateData"/>
         <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="applySnapshotToMes"/>
-        <action name="getAllByByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByByLevel"/>
+        <action name="getAllByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByLevel"/>
         <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
     </package>
 
@@ -174,5 +187,4 @@
     <package name="Plan" namespace="/plan" extends="struts-default">
         <action name="getAllPlanBySnapshotId" class="com.rengu.actions.PlanAction" method="getAllPlanBySnapshotId"/>
     </package>
-
 </struts>

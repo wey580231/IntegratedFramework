@@ -50,6 +50,31 @@
         color: white;
         font-weight: 600;
     }
+
+    .myInput {
+        height: 27px;
+    }
+
+    .form-group {
+        margin-bottom: 13px;
+    }
+
+    /*.myInputform-control {
+        font-size: 11px;
+    }*/
+
+    #selectAdd {
+        width: 166.933px;
+        height: 24px;
+    }
+
+    .form-horizontal .control-label {
+        padding-top: 4px;
+    }
+
+    .MyPage {
+        height: 92%;
+    }
 </style>
 
 <div>
@@ -81,11 +106,11 @@
                         <div class="btn-group">
                             <button type="button" id="scheduleButt"
                                     class="btn btn-default btn-sm" data-toggle="modal"
-                                    data-target="#modal-add" ng-click="prepareNewSchedule();hideCalendar()">
+                                    ng-click="prepareNewSchedule();">
                                 <i class="fa fa-plus"></i>
                                 新增排程
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
+                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteSchedule()"><i
                                     class="fa fa-trash-o"></i> 删除
                             </button>
                         </div>
@@ -100,25 +125,44 @@
                             <td></td>
                             <th>排程名</th>
                             <th>排程时间</th>
-                            <th>开始计算时间</th>
-                            <th>时间窗</th>
+                            <th>计算开始时间</th>
+                            <th>计算结束时间</th>
+                            <th>排程时间窗</th>
+                            <th>滚动周期</th>
                             <th>状态</th>
                         </tr>
                         <tr ng-repeat="schedule in scheduleList | orderBy: 'scheduleTime': asc"
                             ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{schedule.id}}</td>
-                            <td>{{schedule.name}}</td>
+                            <td style="position: absolute">{{schedule.name}}
+                                <span
+                                        style="position:relative;left:5px;top:0px;cursor: pointer;"
+                                        ng-if="(schedule.state == 2 || schedule.state == 4 ||schedule.state == 10||schedule.state == 11) && $last"
+                                        ng-click="interactiveSchedule()"><i class="fa fa-hand-lizard-o"
+                                                                            aria-hidden="true"></i></span>
+                            </td>
                             <td>{{schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>{{schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td>{{schedule.scheduleWindow}}</td>
+                            <td>
+                                <span ng-if="schedule.endCalcTime==null">---</span>
+                                <span ng-if="schedule.endCalcTime!=null">{{schedule.endCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </td>
+                            <td>{{schedule.scheduleWindow}}&nbsp;天</td>
+                            <td>{{schedule.rollTime}}&nbsp;天</td>
                             <td>
                                 <span class="label label-success" ng-if="schedule.state == 0">下发APS</span>
-                                <span class="label label-primary" ng-if="schedule.state == 1">APS计算中</span>
-                                <span class="label label-success" ng-if="schedule.state == 2">APS计算成功</span>
-                                <span class="label label-danger" ng-if="schedule.state == 3">APS计算失败</span>
-                                <span class="label label-success" ng-if="schedule.state == 4">APS优化完成</span>
-                                <span class="label label-info" ng-if="schedule.state == 5">已下发MES</span>
+                                <span class="label label-primary" ng-if="schedule.state == 1"><i
+                                        class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
+                                <span class="label label-success" ng-if="schedule.state == 2">计算成功</span>
+                                <span class="label label-danger" ng-if="schedule.state == 3">计算失败</span>
+                                <span class="label label-success" ng-if="schedule.state == 4">优化完成</span>
+                                <span class="label label-info" ng-if="schedule.state == 5">下发MES</span>
+
+                                <span class="label label-success" ng-if="schedule.state == 10">应急计算成功</span>
+                                <span class="label label-success" ng-if="schedule.state == 11">应急优化完成</span>
+                                <span class="label label-danger" ng-if="schedule.state == 12">应急计算失败</span>
+                                <span class="label label-info" ng-if="schedule.state == 13">应急下发MES</span>
                             </td>
                         </tr>
                         </tbody>
@@ -141,16 +185,13 @@
                                 <div id="tipHover"></div>
                                 <ul id="MyUl">
                                     <li class="MyPageTip">基础信息</li>
-                                    <li class="MyPageTip">订单信息</li>
                                     <li class="MyPageTip">布局信息</li>
+                                    <li class="MyPageTip">订单信息</li>
                                 </ul>
                             </div>
                             <!--新增排程页面时，只需要新增div并且class='MyPage'即可-->
                             <div class="MyPage">
-
                                 <div class="" style="height: 100%;">
-
-                                    <!-- Main content -->
                                     <section class="content" style="height: 100%;">
                                         <div class="row" style="height: 100%;">
                                             <div class="col-md-4">
@@ -161,31 +202,64 @@
                                                                 <label class="col-sm-4 control-label">名称</label>
 
                                                                 <div class="col-sm-8">
-                                                                    <input class="form-control" name="add-name"
+                                                                    <input class="myInput form-control" name="add-name"
                                                                            title="请输入英文字符！"
                                                                            placeholder="">
                                                                 </div>
                                                             </div>
+
                                                             <div class="form-group" id="add-rollTime">
                                                                 <label class="col-sm-4 control-label">滚动周期</label>
 
                                                                 <div class="col-sm-8">
-                                                                    <input class="form-control" name="add-rollTime"
+                                                                    <input class="myInput form-control"
+                                                                           name="add-rollTime"
                                                                            title="请输入数字！"
                                                                            placeholder="">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" id="add-scheduleDays">
-                                                                <label class="col-sm-4 control-label">排程时间长度</label>
+                                                                <label class="col-sm-4 control-label">排程时间</label>
                                                                 <div class="col-sm-8">
-                                                                    <input class="form-control" name="add-scheduleDays"
+                                                                    <input class="myInput form-control"
+                                                                           name="add-scheduleDays"
                                                                            title="请输入数字！"
                                                                            placeholder="">
                                                                 </div>
                                                             </div>
+
+                                                            <div class="form-group" id="add-schedule">
+                                                                <label class="col-sm-4 control-label">排程模式</label>
+
+                                                                <div class="col-sm-8">
+                                                                    <select id="selectAdd" class="myInput form-control"
+                                                                            name="add-schedule" placeholder="正向" style="padding: 1px 8px;">
+                                                                        <option value="正向">正向</option>
+                                                                        <option value="反向">反向</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group"  id="add-start">
+                                                                <label class="col-sm-4 control-label">优化开始</label>
+                                                                <div class="col-sm-8 layui-inline">
+                                                                    <input class="myInput form-control" name="add-start"
+                                                                           placeholder="2017-07-18 00:00:00" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" id="add-end">
+                                                                <label class="col-sm-4 control-label">优化结束</label>
+                                                                <div class="col-sm-8">
+                                                                    <input class="myInput form-control" name="add-end"
+                                                                           placeholder="2017-07-18 00:00:00" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                                </div>
+                                                            </div>
+
                                                             <div>
-                                                                <button type="submit" class="btn btn-primary btn-flat pull-right"
-                                                                        style="width: 100%;"
+                                                                <button type="submit"
+                                                                        class="btn btn-primary btn-flat pull-right"
+                                                                        style="width: 96%;"
                                                                         ng-click="infoValidate();">确定
                                                                 </button>
                                                             </div>
@@ -215,8 +289,27 @@
                                 </div>
 
                             </div>
+
                             <div class="MyPage">
 
+                                <div class="table-responsive mailbox-messages">
+                                    <table class="table table-hover table-striped" id="layouts">
+                                        <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>布局</td>
+                                        </tr>
+                                        <tr ng-repeat="x in layout">
+                                            <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                                                       ng-click="updateSelection($event,x.id)"></td>
+                                            <td style="display:none">{{x.id}}</td>
+                                            <td>{{x.name}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="MyPage">
                                 <div class="table-responsive mailbox-messages">
                                     <table class="table table-hover table-striped" id="orders">
                                         <tbody>
@@ -230,7 +323,8 @@
                                             <td>最晚开工</td>
                                         </tr>
                                         <tr ng-repeat="x in ordinfo">
-                                            <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
+                                            <td><input id="check1" name="check1" type="checkbox"
+                                                       ng-checked="isSelected(x.id)"
                                                        ng-click="updateSelection($event,x.id)"></td>
                                             <td style="display:none">{{x.id}}</td>
                                             <td>{{x.name}}</td>
@@ -243,26 +337,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-                            </div>
-                            <div class="MyPage">
-
-                                <div class="table-responsive mailbox-messages">
-                                    <table class="table table-hover table-striped" id="layouts">
-                                        <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td>布局</td>
-                                        </tr>
-                                        <tr ng-repeat="x in layout">
-                                            <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                       ng-click="updateSelection($event,x.id)"></td>
-                                            <td>{{x.id}}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
                             </div>
                         </div>
                         <div class="box-footer" style="clear:both;height:15%">

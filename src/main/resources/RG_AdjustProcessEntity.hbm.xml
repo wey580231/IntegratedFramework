@@ -9,7 +9,10 @@
             <column name="id" sql-type="varchar(100)" length="100"/>
         </id>
         <property name="reportTime" type="java.util.Date">
-            <column name="reportTime" sql-type="date" not-null="false"/>
+            <column name="reportTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="processTime" type="java.util.Date">
+            <column name="processTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="idTask">
             <column name="idTask" sql-type="varchar(60)" length="60" not-null="false"/>
@@ -24,13 +27,13 @@
             <column name="originalResource" sql-type="varchar(100)" length="100" not-null="false"/>
         </property>
         <property name="originalStartTime" type="java.util.Date">
-            <column name="originalStartTime" sql-type="date" not-null="false"/>
+            <column name="originalStartTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="appointResource">
             <column name="appointResource" sql-type="varchar(100)" not-null="false"/>
         </property>
         <property name="appointStartTime" type="java.util.Date">
-            <column name="appointStartTime" sql-type="date" not-null="false"/>
+            <column name="appointStartTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="origin">
             <column name="origin" sql-type="varchar(50)" length="50" not-null="false"/>

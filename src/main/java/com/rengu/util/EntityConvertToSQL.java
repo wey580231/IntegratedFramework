@@ -10,15 +10,16 @@ import java.util.Iterator;
  */
 public class EntityConvertToSQL {
     public static String insertAPSConfigSQL(String name, String value) {
-        String SQLString = "UPDATE " + DatabaseInfo.APS_CONGIF + " SET value='" + value + "' WHERE name='" + name + "';";
+        String SQLString = "UPDATE " + DatabaseInfo.APS_CONGIF + " SET value='" + value + "' WHERE name='" + name + "'";
         return SQLString;
     }
 
     public static String updateSQLForAPS(RG_OrderEntity rg_orderEntity) {
-        String SQLString = "update " + DatabaseInfo.APS_ORDER + " set name = '" + rg_orderEntity.getName() + "',idclub = '" + rg_orderEntity.getClubByIdClub().getId() + "',priority = '" + rg_orderEntity.getPriority() + "',IDPRODUCT = '" + rg_orderEntity.getProductByIdProduct().getId() + "',quantity = '" + rg_orderEntity.getQuantity() + "', t0 = '" + Tools.dateConvertToString(rg_orderEntity.getT0()) + "',t1 = '" + Tools.dateConvertToString(rg_orderEntity.getT1()) + "',t2 = '" + Tools.dateConvertToString(rg_orderEntity.getT2()) + "',color = '" + rg_orderEntity.getColor() + "',state = '" + rg_orderEntity.getState() + "' where id = '" + rg_orderEntity.getId() + "'";
+        String SQLString = "update " + DatabaseInfo.APS_ORDER + " set name = '" + rg_orderEntity.getName() + "',idclub = '" + rg_orderEntity.getClubByIdClub().getId() + "',priority = '" + rg_orderEntity.getPriority() + "',IDPRODUCT = '" + rg_orderEntity.getProductByIdProduct().getId() + "',quantity = '" + rg_orderEntity.getQuantity() + "', t0 = '" + Tools.dateConvertToString(rg_orderEntity.getT0()) + "',t1 = '" + Tools.dateConvertToString(rg_orderEntity.getT1()) + "',t2 = '" + Tools.dateConvertToString(rg_orderEntity.getT2()) + "',color = '" + rg_orderEntity.getColor() + "',state = '" + "0" + "' where id = '" + rg_orderEntity.getId() + "'";
         return SQLString;
     }
 
+    //TODO 临时将插入aps的订单状态强制改成1
     public static String insertSQLForAPS(RG_OrderEntity rg_orderEntity) {
         String SQLString = "INSERT INTO " + DatabaseInfo.APS_ORDER + " (id,name,IDCLUB,priority,IDPRODUCT,quantity,t0,t1,t2,color,state) VALUES ('" + rg_orderEntity.getId()
                 + "','" + rg_orderEntity.getName()
@@ -30,7 +31,7 @@ public class EntityConvertToSQL {
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT1())
                 + "','" + Tools.dateConvertToString(rg_orderEntity.getT2())
                 + "','" + rg_orderEntity.getColor()
-                + "'," + rg_orderEntity.getState() + ")";
+                + "'," +  0 + ")";   //rg_orderEntity.getState()
         return SQLString;
     }
 

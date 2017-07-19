@@ -20,6 +20,7 @@ public class APSDatabaseSync {
             //读取目标数据库
             String SQLString = "select * from " + tableName + "";
             List list = Tools.executeSQLForList(databaseType, databaseName, SQLString);
+            System.out.println(tableName + "总计：" + list.size() + "条数据。");
             switch (tableName) {
                 case DatabaseInfo.APS_PRODUCT:
                     SyncProductTable(list);
@@ -49,7 +50,7 @@ public class APSDatabaseSync {
                     SyncShiftTable(list);
                     break;
                 case DatabaseInfo.APS_CLUB:
-                    SyncShiftTable(list);
+                    SyncClubTable(list);
                     break;
                 default:
                     System.out.println("无法同步：" + tableName + "表。");
@@ -394,7 +395,6 @@ public class APSDatabaseSync {
             return null;
         }
     }
-
 
     private static Byte getByteFromHashMap(Map map, String mapKay) {
         if (map.get(mapKay) != null) {

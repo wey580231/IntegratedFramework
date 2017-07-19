@@ -7,6 +7,7 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -16,22 +17,24 @@ import java.util.*;
 public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() {
-
+        try {
+            String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN};
+            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Session session = null;
         Transaction tx = null;
-
         //初始化数据库表
         try {
-            //清空APS数据库
-//            String[] tableList = {DatabaseInfo.APS_LOG};
-//            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableList);
-
             //更新数据库表内容
             String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
-            System.out.println(jsonString);
             JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
             RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
             rg_scheduleEntity.setId(Tools.getUUID());
+
             //解析排程名称
             JsonNode nameNodes = rootNode.get("name");
             rg_scheduleEntity.setName(nameNodes.asText());
@@ -47,7 +50,7 @@ public class ScheduleAction extends SuperAction {
             rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
             //解析rollTime
             JsonNode rollTimeNodes = rootNode.get("rollTime");
-            rg_scheduleEntity.setScheduleWindow(rollTimeNodes.asInt());
+            rg_scheduleEntity.setRollTime(rollTimeNodes.asInt());
             //解析APS_Config数据
             JsonNode APS_ConfigNode = rootNode.get("APSConfig");
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
@@ -55,24 +58,17 @@ public class ScheduleAction extends SuperAction {
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
 
                 if (APS_ConfigNodeKey.equals("t0")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//                    Date statTime = sdf.parse(APS_ConfigNodeValue);
-//                    rg_scheduleEntity.setApsStartTime(statTime);
-                    rg_scheduleEntity.setApsStartTime(new Date());
+                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
                 }
                 if (APS_ConfigNodeKey.equals("t2")) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//                    Date endTime = sdf.parse(APS_ConfigNodeValue);
-//                    rg_scheduleEntity.setApsEndTime(endTime);
-                    rg_scheduleEntity.setApsStartTime(new Date());
-                }
-                if (APS_ConfigNodeKey.equals("objective")) {
-                    rg_scheduleEntity.setApsObj(APS_ConfigNodeValue);
+                    rg_scheduleEntity.setApsEndTime(Tools.parseDate(APS_ConfigNodeValue));
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
                 }
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
                 }
-//                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
             }
 
             session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -150,11 +146,13 @@ public class ScheduleAction extends SuperAction {
             rootSnapshot.setId(Tools.getUUID());
             rootSnapshot.setName(rg_scheduleEntity.getName());
             rootSnapshot.setLevel(SnapshotLevel.TOP);
+            rootSnapshot.setNodeCreateTime(new Date());
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
             middleShot.setId(Tools.getUUID());
             middleShot.setName("APS排程结果");
             middleShot.setLevel(SnapshotLevel.MIDDLE);
+            middleShot.setNodeCreateTime(new Date());
 
             middleShot.setParent(rootSnapshot);
             middleShot.setRootParent(rootSnapshot);
@@ -173,8 +171,16 @@ public class ScheduleAction extends SuperAction {
 
                 //调用排程接口
                 int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
-
+                rg_scheduleEntity.setOrders(rg_orderEntitySet);
                 if (result == ApsTools.STARTED) {
+                    //更新订单状态
+                    for (JsonNode tempNode : orderNodes) {
+                        RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
+                        if (rg_orderEntity != null) {
+                            rg_orderEntity.setState(Byte.parseByte("2"));
+                            session.save(rg_orderEntity);
+                        }
+                    }
                     tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                 } else {
@@ -195,6 +201,7 @@ public class ScheduleAction extends SuperAction {
         }
     }
 
+    //获取所有的排程
     public void getAllSchedules() throws Exception {
         ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
         List list = scheduleDAO.findAll();
@@ -204,5 +211,12 @@ public class ScheduleAction extends SuperAction {
 
     private void printError() {
         Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+    }
+
+    public void delete() throws Exception {
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
+        String scheduleId = jsonNode.get("id").asText();
+        RG_ScheduleEntity rg_scheduleEntity = DAOFactory.getScheduleDAOImplInstance().findAllById(scheduleId);
+        DAOFactory.getScheduleDAOImplInstance().delete(rg_scheduleEntity);
     }
 }

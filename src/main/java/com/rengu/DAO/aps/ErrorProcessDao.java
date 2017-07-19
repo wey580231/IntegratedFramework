@@ -8,10 +8,8 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 用于aps进行异常的处理
@@ -47,9 +45,8 @@ public class ErrorProcessDao {
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
-
-                createSnapNode();
-
+                entity.setProcessTime(new Date());
+                createSnapNode("设备异常应急", "rg_adjustdevice", id);
                 session.update(entity);
             }
         }
@@ -81,7 +78,8 @@ public class ErrorProcessDao {
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
-                createSnapNode();
+                entity.setProcessTime(new Date());
+                createSnapNode("设备异常应急", "rg_adjustorder", id);
                 session.update(entity);
             }
         }
@@ -103,16 +101,19 @@ public class ErrorProcessDao {
         Query query = session.createQuery("from RG_AdjustProcessEntity entity where entity.id=:id");
         query.setParameter("id", id);
         List list = query.list();
-        if (list.size() == 1 && list.get(0) instanceof RG_AdjustProcessEntity) {
+        if (list.size() == 1) {
             RG_AdjustProcessEntity entity = (RG_AdjustProcessEntity) list.get(0);
+
+            entity.setState(ErrorState.ERROR_APS_PROCESS);
+            entity.setProcessTime(new Date());
+            createSnapNode("设备异常应急", "rg_adjustprocess", id);
+            session.update(entity);
 
             result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustProcessHandlingURL(entity));
 
             //更新故障的状态、创建
             if (result == ApsTools.STARTED) {
-                entity.setState(ErrorState.ERROR_APS_PROCESS);
-                createSnapNode();
-                session.update(entity);
+
             }
         }
 
@@ -121,7 +122,8 @@ public class ErrorProcessDao {
         return result;
     }
 
-    private void createSnapNode() {
+    //创建故障应急节点
+    private void createSnapNode(String name, String errorType, String errorId) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Query query = session.createQuery("from RG_SnapshotNodeEntity entity where entity.id=:id");
         query.setParameter("id", UserConfigTools.getRootSnapId("1"));
@@ -131,12 +133,15 @@ public class ErrorProcessDao {
 
             RG_SnapshotNodeEntity middleSnapshot = new RG_SnapshotNodeEntity();
             middleSnapshot.setId(Tools.getUUID());
-            middleSnapshot.setName("工序异常应急");
+            middleSnapshot.setName(name);
             middleSnapshot.setLevel(SnapshotLevel.MIDDLE);
+            middleSnapshot.setNodeCreateTime(new Date());
             middleSnapshot.setParent(rootSnapshot);
             middleSnapshot.setRootParent(rootSnapshot);
 
             UserConfigTools.updateMiddleSnapshotId("1", middleSnapshot.getId(), true);
+            UserConfigTools.updateApsReplyCount("1", 0);
+            UserConfigTools.updateErroInfo("1", errorType, errorId);
 
             rootSnapshot.getChilds().add(middleSnapshot);
             session.save(rootSnapshot);

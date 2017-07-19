@@ -77,11 +77,9 @@ angular.module("IntegratedFramework", [
             // Create an instance of Notyf
             var notyf = new Notyf();
             if (notificationType === "alert") {
-                // Display an alert notification
                 notyf.alert(message);
             }
             if (notificationType === "confirm") {
-                // Display a success notification
                 notyf.confirm(message);
             }
         };
@@ -145,26 +143,38 @@ angular.module("IntegratedFramework", [
         <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         service.ListSchedule = backUrl + "schedule/getAllSchedules.action";
+        service.DeleteSchedule = backUrl + "schedule/delete.action";
 
         service.getLastScheduleInfo = backUrl + "FullCalendar/getLastScheduleInfo.action";
         service.CurInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
         <!--工序信息接口-->
         service.isRootNode = backUrl + "process/getAllByIsRootNode.action";
-
         service.isChildNode = backUrl + "process/getAllById.action";
 
-        service.isRootLevel = backUrl + "snapshot/getAllByByLevel.action";
+        <!--快照信息-->
+        service.isRootLevel = backUrl + "snapshot/getAllByLevel.action";
+        service.getTree = backUrl + "snapshot/getAllById.action";
+        service.view3DEmulate = backUrl + "snapshot/view3DEmulate.action";
+        service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
 
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
         service.AdjustOrder = backUrl + "ExceptionList/getAllAdjustOrderException.action";
+
+        <!--异常状态-->
         service.AddAdjustOrder = backUrl + "ExceptionSimulat/creatOrderException.action";
+        service.AddAdjustProcess = backUrl + "ExceptionSimulat/creatProcessException.action";
 
-        service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+        <!--异常处理-->
+        service.deviceProcessHandling = backUrl + "exceptionHandling/deviceProcessHandling.action";
+        service.orderExceptionHandling = backUrl + "exceptionHandling/orderExceptionHandling.action";
+        service.processExceptionHandling = backUrl + "exceptionHandling/processExceptionHandling.action";
 
-        service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action"
+        service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action";
+        service.getAllLayout = backUrl + "layout/get3DLayout.action";
 
-        service.getAllLayout = backUrl + "3d/get3DLayout.action";
+        service.queryApsState = backUrl + "aps/apsState.action";
+        service.currSheduleInfo = backUrl + "aps/scheduleDetail.action";
 
         return service;
     })
@@ -238,4 +248,21 @@ angular.module("IntegratedFramework", [
         };
 
         return service;
-    });
+    })
+    .factory("dispatchApsService", ['notification', function (notification) {
+        var service = {};
+        service.dispatchAps = function (confirmDispatchAps, resetDispatchAps) {
+            if (hasCheckRows()) {
+                layer.confirm('将选中数据下发APS？', {
+                    btn: ['下发', '取消'] //按钮
+                }, function () {
+                    confirmDispatchAps();
+                }, function () {
+                    resetDispatchAps();
+                });
+            } else {
+                notification.sendNotification("alert", "请选择一条记录！");
+            }
+        }
+        return service;
+    }]);

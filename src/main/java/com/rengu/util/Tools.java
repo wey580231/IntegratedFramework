@@ -163,7 +163,8 @@ public class Tools {
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
         for (String tableName : tableList) {
-            String SQLCommed = "TRUNCATE table " + tableName + ";";
+//            String SQLCommed = "TRUNCATE table " + tableName + ";";
+            String SQLCommed = "delete from " + tableName + "";
             System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLCommed);
             statement.execute(SQLCommed);
         }
@@ -244,9 +245,14 @@ public class Tools {
     }
 
     public static Date parseDate(String text) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        if (text.equals("")) {
+            return null;
+        }
+        long timeStmp = Long.parseLong(text);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String time = simpleDateFormat.format(timeStmp);
         try {
-            return df.parse(text);
+            return simpleDateFormat.parse(time);
         } catch (ParseException e) {
             e.printStackTrace();
         }

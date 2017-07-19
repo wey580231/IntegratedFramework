@@ -13,6 +13,10 @@ public class RG_UserConfigEntity {
     private String bottomSnapshotId;                //快照树第三层节点ID
     private boolean errorSchedule;                  //是否为紧急排程
     private Integer apsReplyCount;                  //aps在当前MiddleSnapshotId节点下返回结果的次数(区分是否为优化结果)
+    private boolean resetApsTable;                  //是否要清空aps表,1为要清空，0为不清空。
+
+    private String errorType;                       //异常处理时的类型
+    private String errorId;                         //对应异常的id
 
     private RG_UserConfigEntity user;               //
 
@@ -88,38 +92,27 @@ public class RG_UserConfigEntity {
         this.user = user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_UserConfigEntity that = (RG_UserConfigEntity) o;
-
-        if (errorSchedule != that.errorSchedule) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (latestScheduleId != null ? !latestScheduleId.equals(that.latestScheduleId) : that.latestScheduleId != null)
-            return false;
-        if (currScheduleId != null ? !currScheduleId.equals(that.currScheduleId) : that.currScheduleId != null)
-            return false;
-        if (rootSnapshotId != null ? !rootSnapshotId.equals(that.rootSnapshotId) : that.rootSnapshotId != null)
-            return false;
-        if (middleSnapshotId != null ? !middleSnapshotId.equals(that.middleSnapshotId) : that.middleSnapshotId != null)
-            return false;
-        if (bottomSnapshotId != null ? !bottomSnapshotId.equals(that.bottomSnapshotId) : that.bottomSnapshotId != null)
-            return false;
-        return apsReplyCount != null ? apsReplyCount.equals(that.apsReplyCount) : that.apsReplyCount == null;
+    public boolean isResetApsTable() {
+        return resetApsTable;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (latestScheduleId != null ? latestScheduleId.hashCode() : 0);
-        result = 31 * result + (currScheduleId != null ? currScheduleId.hashCode() : 0);
-        result = 31 * result + (rootSnapshotId != null ? rootSnapshotId.hashCode() : 0);
-        result = 31 * result + (middleSnapshotId != null ? middleSnapshotId.hashCode() : 0);
-        result = 31 * result + (bottomSnapshotId != null ? bottomSnapshotId.hashCode() : 0);
-        result = 31 * result + (errorSchedule ? 1 : 0);
-        result = 31 * result + (apsReplyCount != null ? apsReplyCount.hashCode() : 0);
-        return result;
+    public void setResetApsTable(boolean resetApsTable) {
+        this.resetApsTable = resetApsTable;
+    }
+
+    public String getErrorType() {
+        return errorType;
+    }
+
+    public void setErrorType(String errorType) {
+        this.errorType = errorType;
+    }
+
+    public String getErrorId() {
+        return errorId;
+    }
+
+    public void setErrorId(String errorId) {
+        this.errorId = errorId;
     }
 }

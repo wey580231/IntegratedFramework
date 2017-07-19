@@ -10,12 +10,21 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         })
     }])
 
-    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList,validate,renderTableService) {
+    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList, validate, renderTableService, notification) {
+
+        layer.load(0);
 
         var addData = [];
+        var edit_params = {};//获取需改后的数据
+        var idVal;
+        var id_params = {}; //保存选中的记录的id信息
 
-        myHttpService.get(serviceList.AdjustOrder).then(function (response) {
-            $scope.adjustOrder = response.data;
+        $(function () {
+            myHttpService.get(serviceList.AdjustOrder).then(function (response) {
+                $scope.adjustOrder = response.data;
+
+                hideLoadingPage();
+            });
         });
 
         //渲染checkBox样式
@@ -83,13 +92,13 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             }
         };
 
-        //新增订单
+        //异常状态
         $scope.addAdjustOrder = function () {
             if (orderAddValidate()) {
                 $("#modal-add").modal('hide');
                 console.log(addData);
                 myHttpService.post(serviceList.AddAdjustOrder, addData).then(function successCallback() {
-                    //setTimeout('window.location.reload();', 0.1);
+                    setTimeout('window.location.reload();', 0.1);
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -98,6 +107,40 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             }
         };
 
+        //异常处理
+        $scope.exceptionHandling = function (event) {
+
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
+                if (response.data.result == "ok") {
+                    if (response.data.data.state == 0) {
+                        processError(event);
+                    } else {
+                        layer.msg('APS正在计算中，无法排程!', {icon: 2});
+                    }
+                } else {
+                    layer.msg('查询APS状态失败，请重试!', {icon: 2});
+                }
+            });
+        };
+
+        function processError(event) {
+            var idInfo;
+            var e = event || window.event;
+            var target = e.target || e.srcElement;
+            if (target.parentNode.tagName.toLowerCase() == "td") {
+                var rowIndex = target.parentNode.parentNode.rowIndex;
+                var id = document.getElementById("table_adjust").rows[rowIndex].cells[0].innerHTML;
+                myHttpService.get(serviceList.orderExceptionHandling + "?id=" + id, idInfo).then(function successCallback(response) {
+                    if (response.data.result == "ok") {
+                        notification.sendNotification("confirm", "紧急插单处理中...");
+                    } else {
+                        notification.sendNotification("alert", "请求失败");
+                    }
+                }, function errorCallback(response) {
+                    notification.sendNotification("alert", "请求失败");
+                })
+            }
+        }
 
         $scope.reset = function () {
             $("input").val('');

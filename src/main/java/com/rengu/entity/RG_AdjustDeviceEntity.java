@@ -2,6 +2,8 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
+
 /**设备资源调整
  * Created by wey580231 on 2017/6/15.
  */
@@ -10,10 +12,11 @@ public class RG_AdjustDeviceEntity {
 
     private String id;                  //UUID
     private String orderId;             //订单编码
-    private String reportTime;          //上报时间
+    private Date reportTime;            //上报时间
     private String resoureId;           //资源编码
     private String origin;              //异常来源，MES、手工模拟
     private Integer state;              //异常状态，参照ErrorState类
+    private Date processTime;           //处理时间
 
     private String cancelTime;          //撤销时间
     private String latestCancelTime;    //最晚撤销时间
@@ -42,11 +45,11 @@ public class RG_AdjustDeviceEntity {
         this.orderId = orderId;
     }
 
-    public String getReportTime() {
+    public Date getReportTime() {
         return reportTime;
     }
 
-    public void setReportTime(String reportTime) {
+    public void setReportTime(Date reportTime) {
         this.reportTime = reportTime;
     }
 
@@ -72,6 +75,14 @@ public class RG_AdjustDeviceEntity {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public Date getProcessTime() {
+        return processTime;
+    }
+
+    public void setProcessTime(Date processTime) {
+        this.processTime = processTime;
     }
 
     public String getCancelTime() {
@@ -136,52 +147,5 @@ public class RG_AdjustDeviceEntity {
 
     public void setResourceEntity(RG_ResourceEntity resourceEntity) {
         this.resourceEntity = resourceEntity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_AdjustDeviceEntity that = (RG_AdjustDeviceEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
-        if (reportTime != null ? !reportTime.equals(that.reportTime) : that.reportTime != null) return false;
-        if (resoureId != null ? !resoureId.equals(that.resoureId) : that.resoureId != null) return false;
-        if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
-        if (state != null ? !state.equals(that.state) : that.state != null) return false;
-        if (cancelTime != null ? !cancelTime.equals(that.cancelTime) : that.cancelTime != null) return false;
-        if (latestCancelTime != null ? !latestCancelTime.equals(that.latestCancelTime) : that.latestCancelTime != null)
-            return false;
-        if (unavailableStartTime != null ? !unavailableStartTime.equals(that.unavailableStartTime) : that.unavailableStartTime != null)
-            return false;
-        if (unavailableEndTime != null ? !unavailableEndTime.equals(that.unavailableEndTime) : that.unavailableEndTime != null)
-            return false;
-        if (unavailableStartDate != null ? !unavailableStartDate.equals(that.unavailableStartDate) : that.unavailableStartDate != null)
-            return false;
-        if (unavailableEndDate != null ? !unavailableEndDate.equals(that.unavailableEndDate) : that.unavailableEndDate != null)
-            return false;
-        if (orderEntity != null ? !orderEntity.equals(that.orderEntity) : that.orderEntity != null) return false;
-        return resourceEntity != null ? resourceEntity.equals(that.resourceEntity) : that.resourceEntity == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
-        result = 31 * result + (reportTime != null ? reportTime.hashCode() : 0);
-        result = 31 * result + (resoureId != null ? resoureId.hashCode() : 0);
-        result = 31 * result + (origin != null ? origin.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + (cancelTime != null ? cancelTime.hashCode() : 0);
-        result = 31 * result + (latestCancelTime != null ? latestCancelTime.hashCode() : 0);
-        result = 31 * result + (unavailableStartTime != null ? unavailableStartTime.hashCode() : 0);
-        result = 31 * result + (unavailableEndTime != null ? unavailableEndTime.hashCode() : 0);
-        result = 31 * result + (unavailableStartDate != null ? unavailableStartDate.hashCode() : 0);
-        result = 31 * result + (unavailableEndDate != null ? unavailableEndDate.hashCode() : 0);
-        result = 31 * result + (orderEntity != null ? orderEntity.hashCode() : 0);
-        result = 31 * result + (resourceEntity != null ? resourceEntity.hashCode() : 0);
-        return result;
     }
 }
