@@ -1,9 +1,7 @@
 /**
  * Created by Administrator on 2017/7/13.
  */
-/**
- * Created by hanchangming on 2017/5/16.
- */
+
 'use strict';
 angular.module("IntegratedFramework.AdjustDeviceController", ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
