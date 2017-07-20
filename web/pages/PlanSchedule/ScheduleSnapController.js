@@ -67,7 +67,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
 
-                layer.confirm('是否将结果下发MES？', {
+                layer.confirm('是否将结果下发MES?', {
                     btn: ['下发','取消'] //按钮
                 }, function(index){
                     layer.load();
@@ -246,4 +246,5 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             document.getElementById("treeDemo").style.display = "";
         }
+
     });

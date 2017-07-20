@@ -176,7 +176,7 @@
                     <div class="modal-header" style="height: 15%;">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">新建排程</h4>
+                        <h2 style="font-size:23px;margin-top: 15px;">新建排程</h2>
                     </div>
                     <div class="modal-body" style="height: 85%;">
                         <div id="MyContainer">
@@ -305,13 +305,22 @@
                                         <tbody>
                                         <tr>
                                             <td></td>
-                                            <td>布局</td>
+                                            <td>布局名称</td>
+                                            <td>布局描述</td>
+                                            <td>布局图</td>
                                         </tr>
                                         <tr ng-repeat="x in layout">
-                                            <td><input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                       ng-click="updateSelection($event,x.id)"></td>
+                                            <td style="line-height: 70px;height:70px"><input name="check1"
+                                                                                             type="checkbox"
+                                                                                             ng-checked="isSelected(x.id)"
+                                                                                             ng-click="updateSelection($event,x.id)">
+                                            </td>
                                             <td style="display:none">{{x.id}}</td>
-                                            <td>{{x.name}}</td>
+                                            <td style="line-height: 70px;height:70px">{{x.name}}</td>
+                                            <td style="line-height: 70px;height:70px">{{x.layoutDesc}}</td>
+                                            <td><img src="../../images/layout/{{x.path}}" title="查看大图"
+                                                     style="width:70px;height:70px;cursor:pointer"
+                                                     ng-click="showDetail($event)"></td>
                                         </tr>
                                         </tbody>
                                     </table>

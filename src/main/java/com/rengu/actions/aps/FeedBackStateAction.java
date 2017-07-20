@@ -28,8 +28,13 @@ public class FeedBackStateAction extends SuperAction {
 
     private ApsDao apsDao = new ApsDao();
 
+    //接收非aps结果回复，只用户信息等的提示
+    public void recvApsState() {
+
+    }
+
     //根据返回的id号更新对应schedule的状态
-    public void update() {
+    public void recvApsResult() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
 
@@ -48,7 +53,7 @@ public class FeedBackStateAction extends SuperAction {
                 switchResult(state[0]);
             }
         } else {
-            WebSocketNotification.broadcast("APS计算出错!");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算出错!", "alert"));
         }
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
@@ -93,21 +98,21 @@ public class FeedBackStateAction extends SuperAction {
                         if (apsReplyCount == 0) {
                             schedule.setState(RG_ScheduleEntity.APS_SUCCESS);
                             nodeName = "基础计算结果";
-                            WebSocketNotification.broadcast("APS计算完成!");
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算完成!", "confirm"));
                             setOrdersState("0", schedule);
                         } else {
                             schedule.setState(RG_ScheduleEntity.APS_ADJUST);
                             if (middleSnapshot != null) {
                                 nodeName = "优化调整" + middleSnapshot.getChilds().size();
                             }
-                            WebSocketNotification.broadcast("APS优化计算完成!");
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS优化计算完成!", "confirm"));
                             setOrdersState("0", schedule);
                         }
                     }
                     //计算失败
                     else if (!(replyState.equals(APS_RESULT_SUCCESS))) {
                         schedule.setState(RG_ScheduleEntity.APS_FAIL);
-                        WebSocketNotification.broadcast("APS计算失败!");
+                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算失败!", "alert"));
                         setOrdersState("0", schedule);
                     }
                 }
@@ -117,7 +122,7 @@ public class FeedBackStateAction extends SuperAction {
                         if (apsReplyCount == 0) {
                             schedule.setState(RG_ScheduleEntity.ERROR_SUCCESS);
                             nodeName = "基础计算结果";
-                            WebSocketNotification.broadcast("APS应急计算完成!");
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急计算完成!", "confirm"));
                             setOrdersState("0", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_APS_FINISH);
                         } else {
@@ -125,7 +130,7 @@ public class FeedBackStateAction extends SuperAction {
                             if (middleSnapshot != null) {
                                 nodeName = "应急优化调整" + middleSnapshot.getChilds().size();
                             }
-                            WebSocketNotification.broadcast("APS应急优化完成!");
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急优化完成!", "confirm"));
                             setOrdersState("0", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ADJUSTED);
                         }
@@ -133,7 +138,7 @@ public class FeedBackStateAction extends SuperAction {
                     //计算失败
                     else if (!(replyState.equals(APS_RESULT_SUCCESS))) {
                         schedule.setState(RG_ScheduleEntity.ERROR_FAIL);
-                        WebSocketNotification.broadcast("APS应急处理失败!");
+                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急处理失败!", "alert"));
                         setOrdersState("0", schedule);
                         setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ERROR);
                     }
@@ -150,15 +155,15 @@ public class FeedBackStateAction extends SuperAction {
                     bottomSnapshot.setLevel(SnapshotLevel.BOTTOM);
                     bottomSnapshot.setNodeCreateTime(new Date());
                     bottomSnapshot.setApply(false);
-                    if(userconfig.isErrorSchedule()){
+                    if (userconfig.isErrorSchedule()) {
                         bottomSnapshot.setErrorNode(true);
-                    }else{
+                    } else {
                         bottomSnapshot.setErrorNode(false);
                     }
 
-                    if(apsReplyCount ==0){
+                    if (apsReplyCount == 0) {
                         bottomSnapshot.setFirstNode(true);
-                    }else{
+                    } else {
                         bottomSnapshot.setFirstNode(false);
                     }
 
@@ -182,7 +187,7 @@ public class FeedBackStateAction extends SuperAction {
                     } catch (Exception e) {
                         e.printStackTrace();
                         session.getTransaction().rollback();
-                        WebSocketNotification.broadcast("APS计算结果转换出错!");
+                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算结果转换出错!", "alert"));
                         setOrdersState("0", schedule);
                     }
                 } else {
@@ -190,7 +195,7 @@ public class FeedBackStateAction extends SuperAction {
                     session.getTransaction().commit();
                 }
             } else {
-                WebSocketNotification.broadcast("无法获取快照节点!");
+                WebSocketNotification.broadcast(Tools.creatNotificationMessage("无法获取快照节点!", "alert"));
                 session.getTransaction().commit();
             }
         }
