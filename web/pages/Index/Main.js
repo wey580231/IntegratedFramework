@@ -16,7 +16,7 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
                 var y=response.data.length;//总数
                 var n=0;//未处理
                 for(var i=0;i<response.data.length;i++){
-                    if(response.data.state == 1){
+                    if(response.data[i].state == 1){
                         n++;
                     }
                 }
@@ -32,7 +32,7 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
                 var y=response.data.length;
                 var n=0;
                 for(var i=0;i<response.data.length;i++){
-                    if(response.data.state == 1){
+                    if(response.data[i].state == 1){
                         n++;
                     }
                 }
@@ -48,7 +48,7 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
                 var y=response.data.length;
                 var n=0;
                 for(var i=0;i<response.data.length;i++){
-                    if(response.data.state == 1){
+                    if(response.data[i].state == 1){
                         n++;
                     }
                 }
@@ -59,7 +59,5 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
                 device.push(params);
                 $scope.deviceArr = device;
             });
-
-
         });
     });
