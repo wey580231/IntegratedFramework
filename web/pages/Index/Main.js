@@ -14,7 +14,7 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
             //加载页面时数据显示
             myHttpService.get(serviceList.AdjustProcess).then(function (response) {
                 var y=response.data.length;//总数
-                var n=0;//未处理
+                var n=1;//未处理
                 for(var i=0;i<response.data.length;i++){
                     if(response.data.state == 1){
                         n++;
@@ -30,7 +30,7 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
 
             myHttpService.get(serviceList.AdjustOrder).then(function (response) {
                 var y=response.data.length;
-                var n=0;
+                var n=1;
                 for(var i=0;i<response.data.length;i++){
                     if(response.data.state == 1){
                         n++;
@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
 
             myHttpService.get(serviceList.getAllAdjustDeviceException).then(function (response) {
                 var y=response.data.length;
-                var n=0;
+                var n=1;
                 for(var i=0;i<response.data.length;i++){
                     if(response.data.state == 1){
                         n++;
@@ -59,7 +59,5 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
                 device.push(params);
                 $scope.deviceArr = device;
             });
-
-
         });
     });
