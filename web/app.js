@@ -74,9 +74,12 @@ angular.module("IntegratedFramework", [
 
     .factory("notification", function () {
         var service = {};
+        var notyf = null;
         service.sendNotification = function (notificationType, message) {
-            // Create an instance of Notyf
-            var notyf = new Notyf();
+            if(notyf == null){
+                notyf = new Notyf();
+            }
+
             if (notificationType === "alert") {
                 notyf.alert(message);
             }

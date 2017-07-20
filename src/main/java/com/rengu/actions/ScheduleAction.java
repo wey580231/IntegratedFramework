@@ -58,14 +58,14 @@ public class ScheduleAction extends SuperAction {
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
-                if (APS_ConfigNodeKey.equals("t0")) {
-                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
-                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
-                }
-                if (APS_ConfigNodeKey.equals("t2")) {
-                    rg_scheduleEntity.setApsEndTime(Tools.parseDate(APS_ConfigNodeValue));
-                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
-                }
+//                if (APS_ConfigNodeKey.equals("t0")) {
+//                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
+//                }
+//                if (APS_ConfigNodeKey.equals("t2")) {
+//                    rg_scheduleEntity.setApsEndTime(Tools.parseDate(APS_ConfigNodeValue));
+//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
+//                }
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));

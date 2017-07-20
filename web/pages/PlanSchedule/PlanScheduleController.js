@@ -74,19 +74,19 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             } else {
 
             }
-           /* layer.confirm('是否优化此次排程？', {
-                btn: ['确定', '取消']
-            }, function () {
-                notification.sendNotification("confirm", "页面跳转中...");
-                //layer.msg('页面跳转中...', {icon: 1});
-                setTimeout(function () {
-                    //TODO 待解决path不能直接跳转问题
-                    $location.path('/Interactive');
-                    window.location.href = $location.absUrl();
-                }, 1200);
-            }, function () {
+            /* layer.confirm('是否优化此次排程？', {
+             btn: ['确定', '取消']
+             }, function () {
+             notification.sendNotification("confirm", "页面跳转中...");
+             //layer.msg('页面跳转中...', {icon: 1});
+             setTimeout(function () {
+             //TODO 待解决path不能直接跳转问题
+             $location.path('/Interactive');
+             window.location.href = $location.absUrl();
+             }, 1200);
+             }, function () {
 
-            });*/
+             });*/
         };
 
         //渲染checkBox样式
@@ -110,8 +110,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
                         hideCalendar();
-                   } else {
-                        notification.sendNotification("alert", "APS正在计算中，无法排程");
+                    } else {
+                        notification.sendNotification("alert", "查询APS状态失败");
                         // layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
                 } else {
@@ -349,7 +349,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             if (validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) &&
                 validate.checkLength(params.scheduleDays) && validate.checkNumber(params.scheduleDays) && validate.checkLength(params.name)
-                &&validate.checkLength(params.apsStart) && validate.checkLength(params.apsEnd) && validate.checkLength(params.modeSchedule)) {
+                && validate.checkLength(params.apsStart) && validate.checkLength(params.apsEnd) && validate.checkLength(params.modeSchedule)) {
                 document.getElementById("nextStep").disabled = "";
                 showSchedule();
                 return true;
@@ -370,7 +370,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             apsStart = (new Date($("input[name='add-start']").val())).getTime();
             apsEnd = (new Date($("input[name='add-end']").val())).getTime();
-            modeSchedule=$("#selectAdd option:selected").val();
+            modeSchedule = $("#selectAdd option:selected").val();
 
             var startTime = moment().format("YYYY-MM-DD");
             var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
@@ -576,17 +576,43 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         //删除
         $scope.deleteSchedule = function () {
             if (getInfo()) {
-                var idInfo = JSON.stringify(id_params);
-                myHttpService.delete(serviceList.DeleteSchedule, idInfo).then(function successCallback() {
-                    myHttpService.get(serviceList.ListSchedule).then(function (response) {
-                        $scope.scheduleList = response.data;
-                        notification.sendNotification("confirm", "删除成功");
+                layer.confirm('是否删除选中的排程信息?', {
+                    btn: ['删除','取消'] //按钮
+                }, function(index){
+                    layer.load();
+
+                    var idInfo = JSON.stringify(id_params);
+                    myHttpService.delete(serviceList.DeleteSchedule, idInfo).then(function successCallback() {
+                        myHttpService.get(serviceList.ListSchedule).then(function (response) {
+                            $scope.scheduleList = response.data;
+                            notification.sendNotification("confirm", "删除成功");
+                        });
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
                     });
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                    notification.sendNotification("alert", "取消删除");
                 });
-            }else{
+            } else {
                 notification.sendNotification("alert", "请选择一条排程记录!");
             }
         };
+
+        //显示当前布局的放大图
+        $scope.showDetail = function (event) {
+            var e = event || window.event;
+            var target = e.target || e.srcElement;
+            var content = "<img src='" + target.src + "' style='width:100%;height:100%;'>";
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                area: ['830px', '730px'],
+                skin: 'layui-layer-nobg', //没有背景色
+                shadeClose: true,
+                content: content
+            });
+        }
     });

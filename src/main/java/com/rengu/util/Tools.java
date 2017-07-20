@@ -93,6 +93,7 @@ public class Tools {
         return properties;
     }
 
+    //创建普通通知消息
     public static String creatNotificationMessage(String message, String notificationType) {
         //生成根节点树
         JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
@@ -109,6 +110,7 @@ public class Tools {
         return jsonString;
     }
 
+    //向前端通知3D实时信息
     public static String creat3DMessage(String message) {
         //生成根节点树
         JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
