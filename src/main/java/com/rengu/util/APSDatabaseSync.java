@@ -68,6 +68,7 @@ public class APSDatabaseSync {
                 rg_userEntity.setClubByIdClub(DAOFactory.getClubDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDCLUB")));
                 rg_userEntity.setAuthority(getByteFromHashMap(tempMap, "AUTHORITY"));
                 rg_userEntity.setPassword(getStringFromHashMap(tempMap, "PASSWORD"));
+                DAOFactory.getUserDAOInstance().save(rg_userEntity);
             } else {
                 System.out.println("用户表同步失败");
                 return false;

@@ -67,16 +67,10 @@
         <div class="col-md-12">
             <!-- The time line -->
             <ul class="timeline">
-                <!-- timeline time label -->
-                <li class="time-label">
-                  <span class="bg-red">
-                    10 Feb. 2014
-                  </span>
-                </li>
-                <!-- /.timeline-label -->
                 <!-- timeline item -->
                 <li ng-repeat="eventLog in eventLogList track by $index">
-                    <i class="fa fa-comments bg-yellow"></i>
+                    <i class="fa fa-file bg-yellow" ng-if="eventLog.eventType == 0"></i>
+                    <i class="fa fa-cog bg-green fa-spin " ng-if="eventLog.eventType == 1"></i>
                     <div class="timeline-item">
                         <span class="time"><i class="fa fa-clock-o"></i>{{eventLog.creatTime | date:'yyyy-MM-dd hh:mm:ss' }}</span>
                         <h3 class="timeline-header"><a href="#">{{eventLog.title}}</a>Message</h3>
@@ -90,7 +84,7 @@
                 <!-- timeline time label -->
                 <li class="time-label">
                   <span class="bg-green">
-                    3 Jan. 2014
+                    2017年1月1日
                   </span>
                 </li>
                 <!-- END timeline item -->
