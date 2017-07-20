@@ -6,10 +6,7 @@ import com.rengu.entity.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hanch on 2017/7/4.
@@ -222,6 +219,18 @@ public class APSDatabaseSync {
                 rg_resourceEntity.setUnit(getStringFromHashMap(tempMap, "UNIT"));
                 rg_resourceEntity.setMakespan(getStringFromHashMap(tempMap, "MAKESPAN"));
                 rg_resourceEntity.setSameTypeSequence(getStringFromHashMap(tempMap, "SAMETYPESEQUENCE"));
+                List<String> listTypeResource = getListFromHashMap(tempMap, "IDTYPERESOURCE");
+                for (String id : listTypeResource) {
+                    RG_TyperescourceEntity rg_typerescourceEntity = DAOFactory.getTyperescourceInstance().findAllById(id);
+                    rg_resourceEntity.getTyperesourcesById().add(rg_typerescourceEntity);
+                }
+                List<String> listShift = getListFromHashMap(tempMap, "IDSHIFT");
+                for (String id : listShift) {
+                    RG_ShiftEntity rg_shiftEntity = DAOFactory.getShiftInstance().findAllById(id);
+                    rg_resourceEntity.getShiftsById().add(rg_shiftEntity);
+                }
+                rg_resourceEntity.setGroupresourceByIdGroupResource(DAOFactory.getGroupResourceInstance().findAllById(getStringFromHashMap(tempMap, "IDGROUPRESOURCE")));
+                rg_resourceEntity.setClubByIdClub(DAOFactory.getClubDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDCLUB")));
                 ResourceDAOImpl resourceDAO = DAOFactory.getResourceInstance();
                 resourceDAO.save(rg_resourceEntity);
             } else {
@@ -408,6 +417,23 @@ public class APSDatabaseSync {
         if (map.get(mapKay) != null) {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return simpleDateFormat.parse(map.get(mapKay).toString().trim());
+        } else {
+            return null;
+        }
+    }
+
+    private static List getListFromHashMap(Map map, String mapKay) {
+        if (map.get(mapKay) != null) {
+            List list = new ArrayList();
+            String listString = map.get(mapKay).toString();
+            listString = listString.replace("{", "");
+            listString = listString.replace("}", "");
+            String[] stringLists = listString.split(",");
+            for (String s : stringLists) {
+                s = s.replaceAll("\"", "");
+                list.add(s);
+            }
+            return list;
         } else {
             return null;
         }

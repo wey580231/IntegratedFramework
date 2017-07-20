@@ -9,4 +9,6 @@ public interface AdjustOrderDAO<T> {
     List<T> findAll();
 
     T findAllById(String id);
+
+    T findAllByOrderId(String id);
 }

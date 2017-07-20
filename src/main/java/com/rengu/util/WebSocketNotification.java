@@ -46,7 +46,7 @@ public class WebSocketNotification {
 
     //通知所有当前连接的客户端
     public static void broadcast(String message) {
-        System.out.println(message);
+        System.out.println("WebSocket发送消息广播：" + message);
         for (WebSocketNotification webSocketNotification : WebSocketNotification.webSocketSet) {
             try {
                 webSocketNotification.session.getBasicRemote().sendText(message);

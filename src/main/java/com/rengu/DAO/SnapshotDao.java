@@ -27,15 +27,17 @@ public class SnapshotDao {
         }
 
         RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-//        while (bottomSnapshot == null) {
-//            System.out.println("重新获取RG_SnapshotNodeEntity节点");
-//            MySessionFactory.getSessionFactory().getCurrentSession().close();
-//            session = MySessionFactory.getSessionFactory().getCurrentSession();
-//            if (!session.getTransaction().isActive()) {
-//                session.beginTransaction();
-//            }
-//            bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-//        }
+        int i = 0;
+        while (bottomSnapshot == null && i <= 5) {
+            i = i + 1;
+            System.out.println("重新获取RG_SnapshotNodeEntity节点" + i + "次");
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            session = MySessionFactory.getSessionFactory().getCurrentSession();
+            if (!session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+            bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
+        }
         if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息

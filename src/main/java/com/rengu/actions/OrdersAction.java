@@ -5,6 +5,7 @@ import com.rengu.DAO.OrdersDAO;
 import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.util.DAOFactory;
+import com.rengu.util.ExceptionCheck;
 import com.rengu.util.Tools;
 import com.rengu.util.WebSocketNotification;
 
@@ -49,7 +50,9 @@ public class OrdersAction extends SuperAction {
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         rg_orderEntity.setId(Tools.getUUID());
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
-        if (ordersDAOInstance.save(rg_orderEntity)) {
+        boolean isSaved = ordersDAOInstance.save(rg_orderEntity);
+        if (isSaved) {
+            ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
             System.out.println("保存失败");
             WebSocketNotification.broadcast("保存失败");
@@ -72,20 +75,10 @@ public class OrdersAction extends SuperAction {
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.update(rg_orderEntity)) {
+            ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
             System.out.println("更新失败");
             WebSocketNotification.broadcast("更新失败");
-        }
-    }
-
-    public void deleteById() {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        boolean result = false;
-        result = DAOFactory.getOrdersDAOInstance().deleteById(jsonString);
-        if (result) {
-            Tools.jsonPrint(Tools.resultCode("0", "Success"), this.httpServletResponse);
-        } else {
-            Tools.jsonPrint(Tools.resultCode("1", "Can't execute operation"), this.httpServletResponse);
         }
     }
 }
