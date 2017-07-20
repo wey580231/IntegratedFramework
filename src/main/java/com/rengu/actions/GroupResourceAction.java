@@ -41,7 +41,7 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         if (groupResourceDAOInstance.save(rg_groupresourceEntity)) {
             Tools.jsonPrint(Tools.resultCode("ok", "Operate success"), this.httpServletResponse);
         } else {
-            WebSocketNotification.broadcast("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Groupresource保存失败", "alert"));
         }
     }
 
@@ -51,8 +51,7 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.delete(rg_groupresourceEntity)) {
         } else {
-            System.out.println("删除失败");
-            WebSocketNotification.broadcast("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Groupresource删除失败", "alert"));
         }
     }
 
@@ -62,8 +61,7 @@ public class GroupResourceAction extends SuperAction implements ModelDriven<RG_G
         GroupResourceDAOImpl groupResourceDAOInstance = DAOFactory.getGroupResourceInstance();
         if (groupResourceDAOInstance.update(rg_groupresourceEntity)) {
         } else {
-            System.out.println("更新失败");
-            WebSocketNotification.broadcast("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Groupresource更新失败", "alert"));
         }
 
     }

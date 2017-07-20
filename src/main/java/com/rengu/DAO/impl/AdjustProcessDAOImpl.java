@@ -28,6 +28,26 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
     }
 
     @Override
+    public List<RG_AdjustProcessEntity> findAllByErrorState(Integer errorState) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            String hql = "from RG_AdjustProcessEntity rg_adjustProcessEntity where rg_adjustProcessEntity.state =:errorState";
+            Query query = session.createQuery(hql);
+            query.setParameter("errorState", errorState);
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public RG_AdjustProcessEntity findAllById(String id) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();

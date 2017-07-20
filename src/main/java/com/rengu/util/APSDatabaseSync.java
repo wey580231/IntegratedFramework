@@ -49,10 +49,32 @@ public class APSDatabaseSync {
                 case DatabaseInfo.APS_CLUB:
                     SyncClubTable(list);
                     break;
+                case DatabaseInfo.APS_USER:
+                    SyncUserTable(list);
+                    break;
                 default:
                     System.out.println("无法同步：" + tableName + "表。");
             }
         }
+    }
+
+    private static boolean SyncUserTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_UserEntity rg_userEntity = new RG_UserEntity();
+                rg_userEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_userEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                rg_userEntity.setClubByIdClub(DAOFactory.getClubDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDCLUB")));
+                rg_userEntity.setAuthority(getByteFromHashMap(tempMap, "AUTHORITY"));
+                rg_userEntity.setPassword(getStringFromHashMap(tempMap, "PASSWORD"));
+            } else {
+                System.out.println("用户表同步失败");
+                return false;
+            }
+        }
+        System.out.println("用户表同步成功");
+        return true;
     }
 
     //同步产品表
@@ -370,6 +392,8 @@ public class APSDatabaseSync {
                 rg_orderEntity.setIdSucc(getStringFromHashMap(tempMap, "IDSUCC"));
                 rg_orderEntity.setIdExclusive(getStringFromHashMap(tempMap, "IDEXCLUSIVE"));
                 rg_orderEntity.setNbTask(getShortFromHashMap(tempMap, "NBTASK"));
+                rg_orderEntity.setProductByIdProduct(DAOFactory.getProductDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDPRODUCT")));
+                rg_orderEntity.setClubByIdClub(DAOFactory.getClubDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDCLUB")));
                 OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
                 ordersDAO.save(rg_orderEntity);
             } else {

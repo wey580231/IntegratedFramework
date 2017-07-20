@@ -28,6 +28,26 @@ public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO
     }
 
     @Override
+    public List<RG_AdjustDeviceEntity> findAllByErrorState(Integer errorState) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            String hql = "from RG_AdjustDeviceEntity rg_adjustDeviceEntity where rg_adjustDeviceEntity.state =:errorState";
+            Query query = session.createQuery(hql);
+            query.setParameter("errorState", errorState);
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public RG_AdjustDeviceEntity findAllById(String id) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();

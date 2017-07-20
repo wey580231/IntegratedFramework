@@ -36,8 +36,7 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.save(rg_siteEntity)) {
         } else {
-            System.out.println("保存失败");
-            WebSocketNotification.broadcast("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Site保存失败", "alert"));
         }
     }
 
@@ -47,8 +46,7 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.delete(rg_siteEntity)) {
         } else {
-            System.out.println("删除失败");
-            WebSocketNotification.broadcast("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Site删除失败", "alert"));
         }
     }
 
@@ -58,8 +56,7 @@ public class SiteAction extends SuperAction implements ModelDriven<RG_SiteEntity
         SiteDAOImpl siteDAOInstance = DAOFactory.getSiteInstance();
         if (siteDAOInstance.update(rg_siteEntity)) {
         } else {
-            System.out.println("更新失败");
-            WebSocketNotification.broadcast("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Site更新失败", "alert"));
         }
 
     }

@@ -8,6 +8,8 @@ import java.util.List;
 public interface AdjustOrderDAO<T> {
     List<T> findAll();
 
+    List<T> findAllByErrorState(Integer errorState);
+
     T findAllById(String id);
 
     T findAllByOrderId(String id);

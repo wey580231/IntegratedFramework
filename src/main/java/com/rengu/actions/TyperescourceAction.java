@@ -40,8 +40,7 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.save(rg_typerescourceEntity)) {
         } else {
-            System.out.println("保存失败");
-            WebSocketNotification.broadcast("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Typerescource保存失败", "alert"));
         }
     }
 
@@ -51,8 +50,7 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.delete(rg_typerescourceEntity)) {
         } else {
-            System.out.println("删除失败");
-            WebSocketNotification.broadcast("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Typerescource更新失败", "alert"));
         }
     }
 
@@ -62,8 +60,7 @@ public class TyperescourceAction extends SuperAction implements ModelDriven<RG_T
         TyperescourceDAOImpl typerescourceDAOInstance = DAOFactory.getTyperescourceInstance();
         if (typerescourceDAOInstance.update(rg_typerescourceEntity)) {
         } else {
-            System.out.println("更新失败");
-            WebSocketNotification.broadcast("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Typerescource删除失败", "alert"));
         }
 
     }
