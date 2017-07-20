@@ -158,9 +158,17 @@ public class ScheduleAction extends SuperAction {
                             session.save(rg_orderEntity);
                         }
                     }
+                    //更新事件日直节点
+                    RG_EventLogEntity rg_eventLogEntity = new RG_EventLogEntity();
+                    rg_eventLogEntity.setId(Tools.getUUID());
+                    rg_eventLogEntity.setCreatTime(new Date());
+                    rg_eventLogEntity.setEventType(EventLogTools.ScheduleEvent);
+                    rg_eventLogEntity.setTitle(rg_scheduleEntity.getName() + "-APS计算启动");
+                    rg_eventLogEntity.setContent(EventLogTools.createScheduleStartEventContent(rg_scheduleEntity));
+                    rg_eventLogEntity.setObjectId(rg_scheduleEntity.getId());
+                    session.save(rg_eventLogEntity);
                     tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
-                    Tools.createEventLog(EventLogTools.ScheduleEvent, rg_scheduleEntity.getName() + "-APS计算启动", EventLogTools.createScheduleStartEventContent(rg_scheduleEntity), rg_scheduleEntity.getId());
                 } else {
                     tx.rollback();
                     printError();
