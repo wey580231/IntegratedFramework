@@ -5,7 +5,7 @@
             资源列表管理
         </h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard" ></i> Home</a></li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">资源列表管理</li>
         </ol>
     </section>
@@ -76,18 +76,8 @@
                             <td>{{resource.name}}</td>
                             <td>{{resource.nameShift}}</td>
                             <td>
-                                <span class="label label-success" ng-if="resource.state == 0">下发APS</span>
-                                <span class="label label-primary" ng-if="resource.state == 1"><i
-                                        class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
-                                <span class="label label-success" ng-if="resource.state == 2">计算成功</span>
-                                <span class="label label-danger" ng-if="resource.state == 3">计算失败</span>
-                                <span class="label label-success" ng-if="resource.state == 4">优化完成</span>
-                                <span class="label label-info" ng-if="resource.state == 5">下发MES</span>
-
-                                <span class="label label-success" ng-if="resource.state == 10">应急计算成功</span>
-                                <span class="label label-success" ng-if="resource.state == 11">应急优化完成</span>
-                                <span class="label label-danger" ng-if="resource.state == 12">应急计算失败</span>
-                                <span class="label label-info" ng-if="resource.state == 13">应急下发MES</span>
+                                <span class="label label-danger" ng-if="resource.state == 0">资源不可用</span>
+                                <span class="label label-success" ng-if="resource.state == 1">资源可用</span>
                             </td>
                         </tr>
                         </tbody>

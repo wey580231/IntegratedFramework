@@ -35,6 +35,7 @@ public class ApsTools {
     //aps部署的地址和端口号
     private static ApsTools apsTool = null;
     private final String replyApsAction = "/aps/updateProgress";
+    private final String stateReplyAction = "/aps/updateApsState";
     private String apsHost;
     private int apsPort;
 
@@ -63,7 +64,65 @@ public class ApsTools {
         return apsTool;
     }
 
-    //TODO 待将连接修改成APS提供的访问连接
+    //生成快照，在收到一次aps反馈结果时，自动在aps中创建一个快照
+    public static String getCreateSnapshot(String nodeId) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Backup/Snapshot.n" +
+                "&" +
+                "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
+                "&" +
+                "REPLY=" + ApsTools.instance().getStateReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000";
+        return result;
+    }
+
+    //交互/应急优化接口，交互优化后，查询aps订单的状态为0的数目，但个数大于0时，需要调用此接口进行优化
+    public static String getInterAdjust() {
+        String result = "/NCL:RUN?Program=./Model/Script/ScriptResumeScheduling.n" +
+                "&" +
+                "BUFFER=001" +
+                "&" +
+                "REPLY=" + ApsTools.instance().getStateReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000000";
+        return result;
+    }
+
+    //恢复指定快照，待确认下发mes后，将boottom节点的id号发给APS
+    public static String recoverSnapshot(String nodeId) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Backup/RestoreByInput.n" +
+                "&" +
+                "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
+                "&" +
+                "REPLY=" + ApsTools.instance().getStateReplyAddress() +
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000000";
+
+        return result;
+    }
+
+    //发布所有订单
+    public static String publishOrder(){
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
+                "&" +
+                "BUFFER=001" +
+                "&" +
+                "REPLY=" +ApsTools.instance().getStateReplyAddress()+
+                "&" +
+                "ID=001" +
+                "&" +
+                "DELAY=1000000";
+
+        return result;
+    }
+
+    //紧急插单
     public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
@@ -74,7 +133,7 @@ public class ApsTools {
                 + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT1())) + "\\n"
                 + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOrd().getT2())) +
                 "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -92,7 +151,7 @@ public class ApsTools {
                 entity.getIdJob() + "\\n" + entity.getIdOrder() + "\\n" + entity.getOriginalResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOriginalStartTime()))
                 + "\\n" + entity.getAppointResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getAppointStartTime())) +
                 "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -191,7 +250,7 @@ public class ApsTools {
                 "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n"
                 + convertSpaceWithTab(entity.getCancelTime()) + "\\n" + convertSpaceWithTab(entity.getLatestCancelTime()) +
                 "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -207,7 +266,7 @@ public class ApsTools {
                 "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n" + entity.getUnavailableStartTime()
                 + "\\n" + entity.getUnavailableEndTime() + "\\n1\\n2\\n" + convertSpaceWithTab(entity.getUnavailableStartDate()) + "\\n" + convertSpaceWithTab(entity.getUnavailableEndDate()) +
                 "&" +
-                "REPLY=" + ApsTools.instance().getReplyAddress() +
+                "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -329,10 +388,11 @@ public class ApsTools {
         return ApsTools.UNKNOWN;
     }
 
+    //开始排程
     public int startAPSSchedule(String middleId) {
         String cmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n" +
                 "&" +
-                "REPLY=" + getReplyAddress() +
+                "REPLY=" + getResultReplyAddress() +
                 "&" +
                 "ID=" + middleId + "" +
                 "&" +
@@ -344,8 +404,13 @@ public class ApsTools {
     }
 
     //获取aps计算完后返回结果地址
-    public String getReplyAddress() {
+    public String getResultReplyAddress() {
         return localAddress + ":" + localPort + localProjectName + replyApsAction;
+    }
+
+    //获取非数据接口返回地址
+    public String getStateReplyAddress(){
+        return localAddress + ":" + localPort + localProjectName + stateReplyAction;
     }
 
     //tomcat启动时根据当前排程信息来

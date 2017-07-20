@@ -33,8 +33,7 @@ public class AssisantprocessAction extends SuperAction {
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.save(rg_assisantprocessEntity)) {
         } else {
-            System.out.println("保存失败");
-            WebSocketNotification.broadcast("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Assisantprocess保存失败", "alert"));
         }
     }
 
@@ -44,8 +43,7 @@ public class AssisantprocessAction extends SuperAction {
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.delete(rg_assisantprocessEntity)) {
         } else {
-            System.out.println("删除失败");
-            WebSocketNotification.broadcast("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Assisantprocess删除失败", "alert"));
         }
     }
 
@@ -55,8 +53,7 @@ public class AssisantprocessAction extends SuperAction {
         AssisantprocessDAOImpl assisantprocessDAOInstance = DAOFactory.getAssisantprocessDAOInstance();
         if (assisantprocessDAOInstance.update(rg_assisantprocessEntity)) {
         } else {
-            System.out.println("更新失败");
-            WebSocketNotification.broadcast("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Assisantprocess更新失败", "alert"));
         }
     }
 

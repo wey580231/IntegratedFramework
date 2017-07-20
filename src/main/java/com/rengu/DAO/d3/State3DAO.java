@@ -317,6 +317,8 @@ public class State3DAO {
                 ObjectNode dataNode = mapper.createObjectNode();
                 dataNode.put("id", entity.getId());
                 dataNode.put("name", entity.getName());
+                dataNode.put("layoutDesc", entity.getLayoutDesc());
+                dataNode.put("path", entity.getImgPath());
 
                 arrayNode.add(dataNode);
             }

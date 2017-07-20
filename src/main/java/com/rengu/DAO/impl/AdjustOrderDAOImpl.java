@@ -29,6 +29,26 @@ public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<R
     }
 
     @Override
+    public List<RG_AdjustOrderEntity> findAllByErrorState(Integer errorState) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            String hql = "from RG_AdjustOrderEntity rg_adjustOrderEntity where rg_adjustOrderEntity.state =:errorState";
+            Query query = session.createQuery(hql);
+            query.setParameter("errorState", errorState);
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public RG_AdjustOrderEntity findAllById(String id) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();

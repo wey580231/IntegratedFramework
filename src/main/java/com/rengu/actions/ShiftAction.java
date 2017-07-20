@@ -36,8 +36,7 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.save(rg_shiftEntity)) {
         } else {
-            System.out.println("保存失败");
-            WebSocketNotification.broadcast("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Shift保存失败", "alert"));
         }
     }
 
@@ -47,8 +46,7 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.delete(rg_shiftEntity)) {
         } else {
-            System.out.println("删除失败");
-            WebSocketNotification.broadcast("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Shift删除失败", "alert"));
         }
     }
 
@@ -58,8 +56,7 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
         if (shiftDAOInstance.update(rg_shiftEntity)) {
         } else {
-            System.out.println("更新失败");
-            WebSocketNotification.broadcast("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Shift更新失败", "alert"));
         }
 
     }

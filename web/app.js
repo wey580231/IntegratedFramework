@@ -74,9 +74,12 @@ angular.module("IntegratedFramework", [
 
     .factory("notification", function () {
         var service = {};
+        var notyf = null;
         service.sendNotification = function (notificationType, message) {
-            // Create an instance of Notyf
-            var notyf = new Notyf();
+            if(notyf == null){
+                notyf = new Notyf();
+            }
+
             if (notificationType === "alert") {
                 notyf.alert(message);
             }
@@ -178,6 +181,10 @@ angular.module("IntegratedFramework", [
         service.queryApsState = backUrl + "aps/apsState.action";
         service.currSheduleInfo = backUrl + "aps/scheduleDetail.action";
         service.emulateApsInterResult = backUrl + "aps/emulateApsInterResult.action";
+        //获取异常数量接口
+        service.findAllExceptionUrl = backUrl + "mainpage/getAllExcepitonNumInfo.action";
+        //获取EvenLog接口
+        service.getAllEventLogUrl = backUrl + "eventlog/getAllEventLog.action";
 
         return service;
     })
@@ -273,15 +280,15 @@ angular.module("IntegratedFramework", [
     .factory("confirm", function () {
         var service = {};
         //确认修改
-      /*  service.confirmEdit = function () {
-            layer.confirm('确定要修改吗？', {
-                btn: ['确定', '取消']
-            }, function () {
-                return true;
-            }, function () {
-                return false;
-            });
-        };*/
+        /*  service.confirmEdit = function () {
+              layer.confirm('确定要修改吗？', {
+                  btn: ['确定', '取消']
+              }, function () {
+                  return true;
+              }, function () {
+                  return false;
+              });
+          };*/
         service.confirmEdit = function () {
             var msg = "确定要修改吗？";
             if (confirm(msg) == true) {

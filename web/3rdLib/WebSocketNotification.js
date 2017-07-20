@@ -4,6 +4,7 @@
 var webSocket;
 var username;
 var webSocketUrl;
+var notyf;
 
 function getUsername() {
     username = navigator.appName + new Date().getTime();
@@ -12,6 +13,9 @@ function getUsername() {
 }
 
 function webSocketInit() {
+
+    notyf = new Notyf();
+
     getUsername();
     if (typeof WebSocket !== 'undefined') {
         webSocket = new WebSocket(webSocketUrl);
@@ -25,7 +29,14 @@ function webSocketInit() {
         }
         //接收到消息的回调方法
         webSocket.onmessage = function (event) {
-            showNotification(event.data, "confirm");
+            var webSocketObject = JSON.parse(event.data);
+            if (webSocketObject.MessageType == "notification") {
+                showNotification(webSocketObject.Message, webSocketObject.NotificationType)
+            }
+            if (webSocketObject.MessageType == "3DMessage") {
+                //Todo 3D车间消T息发送函数需要补充，暂时用打印代替。
+                console.log(webSocketObject.Message);
+            }
         }
         //连接关闭的回调方法
         webSocket.onclose = function () {
@@ -40,14 +51,11 @@ function webSocketInit() {
 }
 
 function showNotification(message, status) {
-    // Create an instance of Notyf
-    var notyf = new Notyf();
+
     if (status === "alert") {
-        // Display an alert notification
         notyf.alert(message);
     }
     if (status === "confirm") {
-        // Display a success notification
         notyf.confirm(message);
     }
 }

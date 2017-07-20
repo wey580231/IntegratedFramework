@@ -25,6 +25,7 @@ public class DAOFactory {
     private static final SnapshotDaoImpl snapshotDaoImpl = new SnapshotDaoImpl();
     private static final PlanDAOImpl planDAOImpl = new PlanDAOImpl();
     private static final ProductDAOImpl productDAOImpl = new ProductDAOImpl();
+    private static final EventLogDAOImpl eventLogDAOImpl = new EventLogDAOImpl();
 
     public static UsersDAOImpl getUserDAOInstance() {
         return usersDAOImpl;
@@ -100,5 +101,9 @@ public class DAOFactory {
 
     public static ProductDAOImpl getProductDAOImplInstance() {
         return productDAOImpl;
+    }
+
+    public static EventLogDAOImpl getEventLogDAOImplInstance() {
+        return eventLogDAOImpl;
     }
 }

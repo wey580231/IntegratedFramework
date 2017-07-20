@@ -8,5 +8,7 @@ import java.util.List;
 public interface AdjustDeviceDAO<T> {
     List<T> findAll();
 
+    List<T> findAllByErrorState(Integer errorState);
+
     T findAllById(String id);
 }

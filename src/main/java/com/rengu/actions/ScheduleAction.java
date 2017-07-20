@@ -17,9 +17,11 @@ import java.util.*;
 public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() {
+        //初始化APS数据库
         try {
             String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN};
             Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '0'");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -56,7 +58,6 @@ public class ScheduleAction extends SuperAction {
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
-
 //                if (APS_ConfigNodeKey.equals("t0")) {
 //                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
 //                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
@@ -83,9 +84,10 @@ public class ScheduleAction extends SuperAction {
             if (layoutNodes.size() == 1) {
                 RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
                 Set<RG_LayoutDetailEntity> rg_layoutDetailEntitySet = layout.getDetails();
+                //更新资源可用情况
                 for (RG_LayoutDetailEntity rg_layoutDetailEntity : rg_layoutDetailEntitySet) {
-                    System.out.println(rg_layoutDetailEntity.getItem() + "----->LayoutDetail资源名称");
-//                    RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, rg_layoutDetailEntity.getItem());
+                    String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
                 }
                 rg_scheduleEntity.setLayout(layout);
             }
@@ -105,42 +107,6 @@ public class ScheduleAction extends SuperAction {
                 }
             }
             rg_scheduleEntity.setOrders(rg_orderEntitySet);
-
-            //解析resources数据
-            JsonNode resourcesNodes = rootNode.get("resources");
-            Set<RG_ResourceEntity> rg_resourceEntitySet = new HashSet<RG_ResourceEntity>();
-            for (JsonNode tempNode : resourcesNodes) {
-                RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, tempNode.get("id").asText());
-                if (rg_resourceEntity != null) {
-                    rg_resourceEntity.getSchedules().add(rg_scheduleEntity);
-                    rg_resourceEntitySet.add(rg_resourceEntity);
-                }
-            }
-            rg_scheduleEntity.setResources(rg_resourceEntitySet);
-
-            //解析groupResource数据
-            JsonNode groupResourceNodes = rootNode.get("groupResource");
-            Set<RG_GroupresourceEntity> rg_groupresourceEntitySet = new HashSet<RG_GroupresourceEntity>();
-            for (JsonNode tempNode : groupResourceNodes) {
-                RG_GroupresourceEntity rg_groupresourceEntity = session.get(RG_GroupresourceEntity.class, tempNode.get("id").asText());
-                if (rg_groupresourceEntity != null) {
-                    rg_groupresourceEntity.getSchedules().add(rg_scheduleEntity);
-                    rg_groupresourceEntitySet.add(rg_groupresourceEntity);
-                }
-            }
-            rg_scheduleEntity.setGroups(rg_groupresourceEntitySet);
-
-            //解析Site数据
-            JsonNode siteNodes = rootNode.get("site");
-            Set<RG_SiteEntity> rg_siteEntitySet = new HashSet<RG_SiteEntity>();
-            for (JsonNode tempNode : siteNodes) {
-                RG_SiteEntity rg_siteEntity = session.get(RG_SiteEntity.class, tempNode.get("id").asText());
-                if (rg_siteEntity != null) {
-                    rg_siteEntity.getSchedules().add(rg_scheduleEntity);
-                    rg_siteEntitySet.add(rg_siteEntity);
-                }
-            }
-            rg_scheduleEntity.setSites(rg_siteEntitySet);
 
             //APS ID计算标识
             String apsId = String.valueOf(date.getTime());
@@ -192,6 +158,15 @@ public class ScheduleAction extends SuperAction {
                             session.save(rg_orderEntity);
                         }
                     }
+                    //更新事件日直节点
+                    RG_EventLogEntity rg_eventLogEntity = new RG_EventLogEntity();
+                    rg_eventLogEntity.setId(Tools.getUUID());
+                    rg_eventLogEntity.setCreatTime(new Date());
+                    rg_eventLogEntity.setEventType(EventLogTools.ScheduleEvent);
+                    rg_eventLogEntity.setTitle(rg_scheduleEntity.getName() + "-APS计算启动");
+                    rg_eventLogEntity.setContent(EventLogTools.createScheduleStartEventContent(rg_scheduleEntity));
+                    rg_eventLogEntity.setObjectId(rg_scheduleEntity.getId());
+                    session.save(rg_eventLogEntity);
                     tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                 } else {
