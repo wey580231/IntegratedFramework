@@ -359,29 +359,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }
         };
 
-        //显示已选择订单的信息
-        function choosedOrder() {
-            var rows = document.getElementById("orders").rows;
-            var a = document.getElementsByName("check1");
-            var arrchoosed = [];
-
-            for (var i = 0; i < a.length; i++) {
-                if (a[i].checked) {
-                    var row = a[i].parentElement.parentElement.rowIndex;
-                    var params = {};
-                    params.index = rows[row].cells[1].innerHTML;
-                    params.id = rows[row].cells[2].innerHTML;
-                    params.name = rows[row].cells[3].innerHTML;
-                    params.origin = rows[row].cells[4].innerHTML;
-                    params.priority = rows[row].cells[5].innerHTML;
-                    params.t0 = rows[row].cells[6].innerHTML;
-                    params.t1 = rows[row].cells[7].innerHTML;
-                    params.t2 = rows[row].cells[8].innerHTML;
-                    arrchoosed.push(params);
-                }
-            }
-            $scope.form = arrchoosed;
-        }
 
         //日历部分
         var showSchedule = function () {
@@ -610,7 +587,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 });
             }else{
                 notification.sendNotification("alert", "请选择一条排程记录!");
-                // layer.msg('请选择一条排程记录!', {icon: 2});
             }
         };
     });
