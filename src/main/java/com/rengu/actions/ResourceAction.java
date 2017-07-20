@@ -29,8 +29,7 @@ public class ResourceAction extends SuperAction {
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.save(rg_resourceEntity)) {
         } else {
-            System.out.println("保存失败");
-            WebSocketNotification.broadcast("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Resource保存失败", "alert"));
         }
     }
 
@@ -41,8 +40,7 @@ public class ResourceAction extends SuperAction {
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.delete(rg_resourceEntity)) {
         } else {
-            System.out.println("删除失败");
-            WebSocketNotification.broadcast("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Resource删除失败", "alert"));
         }
     }
 
@@ -52,8 +50,7 @@ public class ResourceAction extends SuperAction {
         ResourceDAOImpl resourceDAOInstance = DAOFactory.getResourceInstance();
         if (resourceDAOInstance.update(rg_resourceEntity)) {
         } else {
-            System.out.println("更新失败");
-            WebSocketNotification.broadcast("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Resource更新失败", "alert"));
         }
     }
 

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_EventLogEntity" table="RG_EventLog" schema="testdatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(255)" length="255"/>
+        </id>
+        <property name="eventType">
+            <column name="eventType" sql-type="smallint(6)" not-null="false"/>
+        </property>
+        <property name="creatTime" type="java.util.Date">
+            <column name="creatTime" sql-type="datetime" length="20" not-null="false"/>
+        </property>
+        <property name="title">
+            <column name="title" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="content">
+            <column name="content" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="describeText">
+            <column name="describeText" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="objectId">
+            <column name="objectId" sql-type="varchar(255)" not-null="false"/>
+        </property>
+    </class>
+</hibernate-mapping>

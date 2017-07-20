@@ -17,7 +17,7 @@ public class ExceptionCheck {
         long scheduleEndTime = scheduleStartTime + rg_scheduleEntity.getRollTime().intValue() * 60 * 60 * 24 * 1000;
         if (t2TimeStamp >= scheduleStartTime && t2TimeStamp <= scheduleEndTime) {
             ExceptionCreator.creatOrderException(rg_orderEntity);
-            WebSocketNotification.broadcast("产生紧急插单");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("产生紧急插单异常", "confirm"));
             return true;
         } else {
             return false;

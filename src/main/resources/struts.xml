@@ -188,4 +188,17 @@
     <package name="Plan" namespace="/plan" extends="struts-default">
         <action name="getAllPlanBySnapshotId" class="com.rengu.actions.PlanAction" method="getAllPlanBySnapshotId"/>
     </package>
+    <!--测试接口-->
+    <package name="test" namespace="/test" extends="struts-default">
+        <action name="webSocketNotificationTest" class="com.rengu.actions.TestFunc" method="webSocketNotificationTest"/>
+    </package>
+    <!--MainPage接口-->
+    <package name="mainpage" namespace="/mainpage" extends="struts-default">
+        <action name="getAllExcepitonNumInfo" class="com.rengu.actions.MainPageAction" method="getAllExcepitonNumInfo"/>
+    </package>
+    <!--EventLog接口-->
+    <package name="eventlog" namespace="/eventlog" extends="struts-default">
+        <action name="getAllEventLog" class="com.rengu.actions.EventLogAction" method="getAllEventLog"/>
+        <action name="save" class="com.rengu.actions.EventLogAction" method="save"/>
+    </package>
 </struts>

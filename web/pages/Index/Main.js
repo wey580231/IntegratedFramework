@@ -11,55 +11,13 @@ angular.module("IntegratedFramework.MainPage", ['ngRoute'])
     }])
     .controller("MainPageController", function ($scope, $http, myHttpService, serviceList) {
         $(function () {
-            //加载页面时数据显示
-            myHttpService.get(serviceList.AdjustProcess).then(function (response) {
-                var y=response.data.length;//总数
-                var n=0;//未处理
-                for(var i=0;i<response.data.length;i++){
-                    if(response.data.state == 1){
-                        n++;
-                    }
-                }
-                var params={};
-                params.y=y;
-                params.n=n;
-                var process=[];
-                process.push(params);
-                $scope.processArr = process;
+            //获取异常状态
+            myHttpService.get(serviceList.findAllExceptionUrl).then(function (response) {
+                $scope.exceptionNum = response.data;
             });
-
-            myHttpService.get(serviceList.AdjustOrder).then(function (response) {
-                var y=response.data.length;
-                var n=0;
-                for(var i=0;i<response.data.length;i++){
-                    if(response.data.state == 1){
-                        n++;
-                    }
-                }
-                var params={};
-                params.y=y;
-                params.n=n;
-                var urgent=[];
-                urgent.push(params);
-                $scope.urgentArr = urgent;
+            //获取EventLog状态
+            myHttpService.get(serviceList.getAllEventLogUrl).then(function (response) {
+                $scope.eventLogList = response.data;
             });
-
-            myHttpService.get(serviceList.getAllAdjustDeviceException).then(function (response) {
-                var y=response.data.length;
-                var n=0;
-                for(var i=0;i<response.data.length;i++){
-                    if(response.data.state == 1){
-                        n++;
-                    }
-                }
-                var params={};
-                params.y=y;
-                params.n=n;
-                var device=[];
-                device.push(params);
-                $scope.deviceArr = device;
-            });
-
-
         });
     });

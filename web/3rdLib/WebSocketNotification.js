@@ -25,7 +25,14 @@ function webSocketInit() {
         }
         //接收到消息的回调方法
         webSocket.onmessage = function (event) {
-            showNotification(event.data, "confirm");
+            var webSocketObject = JSON.parse(event.data);
+            if (webSocketObject.MessageType == "notification") {
+                showNotification(webSocketObject.Message, webSocketObject.NotificationType)
+            }
+            if (webSocketObject.MessageType == "3DMessage") {
+                //todo 3D车间消息发送函数需要补充，暂时用打印代替。
+                console.log(webSocketObject.Message);
+            }
         }
         //连接关闭的回调方法
         webSocket.onclose = function () {

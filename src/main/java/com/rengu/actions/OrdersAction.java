@@ -54,8 +54,7 @@ public class OrdersAction extends SuperAction {
         if (isSaved) {
             ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
-            System.out.println("保存失败");
-            WebSocketNotification.broadcast("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order保存失败", "alert"));
         }
     }
 
@@ -65,8 +64,7 @@ public class OrdersAction extends SuperAction {
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.delete(rg_orderEntity)) {
         } else {
-            System.out.println("删除失败");
-            WebSocketNotification.broadcast("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order删除失败", "alert"));
         }
     }
 
@@ -77,8 +75,7 @@ public class OrdersAction extends SuperAction {
         if (ordersDAOInstance.update(rg_orderEntity)) {
             ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
-            System.out.println("更新失败");
-            WebSocketNotification.broadcast("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order更新失败", "alert"));
         }
     }
 }

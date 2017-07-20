@@ -6,6 +6,7 @@ import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ProcessEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.Tools;
+import com.rengu.util.WebSocketNotification;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ProcessAction extends SuperAction {
         ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
         if (processDAO.save(rg_processEntity)) {
         } else {
-            System.out.println("保存失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Process保存失败", "alert"));
         }
     }
 
@@ -48,7 +49,7 @@ public class ProcessAction extends SuperAction {
         ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
         if (processDAO.delete(rg_processEntity)) {
         } else {
-            System.out.println("删除失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Process删除失败", "alert"));
         }
     }
 
@@ -58,7 +59,7 @@ public class ProcessAction extends SuperAction {
         ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
         if (processDAO.update(rg_orderEntity)) {
         } else {
-            System.out.println("更新失败");
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Process更新失败", "alert"));
         }
     }
 }

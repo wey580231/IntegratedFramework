@@ -4,15 +4,14 @@
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
-                <div class="inner" >
-                    <h3 ng-repeat="process in processArr track by $index">{{process.n}}/{{process.y}}</h3>
-
+                <div class="inner">
+                    <h3>{{exceptionNum.processExcepitonHandledNum}}/{{exceptionNum.processExcepitonNum}}</h3>
                     <p>工序异常</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-ios-cog"></i>
                 </div>
-                <a href="#!/AdjustProcedure" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#!/AdjustProcedure" class="small-box-footer">详细信息<i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -20,14 +19,13 @@
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3 ng-repeat="urgent in urgentArr track by $index">{{urgent.n}}/{{urgent.y}}</h3>
-
+                    <h3>{{exceptionNum.orderExcepitonHandledNum}}/{{exceptionNum.orderExcepitonNum}}</h3>
                     <p>紧急插单</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-ios-bolt"></i>
                 </div>
-                <a href="#!/AdjustOrder" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#!/AdjustOrder" class="small-box-footer">详细信息<i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -35,14 +33,13 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3 ng-repeat="device in deviceArr track by $index">{{device.n}}/{{device.y}}</h3>
-
+                    <h3>{{exceptionNum.deviceExcepitonHandledNum}}/{{exceptionNum.deviceExcepitonNum}}</h3>
                     <p>调整资源</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-settings"></i>
                 </div>
-                <a href="#!/AdjustDevice" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#!/AdjustDevice" class="small-box-footer">详细信息<i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -51,13 +48,12 @@
             <div class="small-box bg-red">
                 <div class="inner">
                     <h3>0/3</h3>
-
                     <p>调整布局</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-social-buffer"></i>
                 </div>
-                <a href="#!/AdjustFactory" class="small-box-footer">详细 <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="#!/AdjustFactory" class="small-box-footer">详细信息<i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -129,6 +125,16 @@
                         <div class="timeline-footer">
                             <a class="btn btn-warning btn-flat btn-xs">View comment</a>
                         </div>
+                    </div>
+                </li>
+                <!-- END timeline item -->
+                <!-- timeline item -->
+                <li ng-repeat="eventLog in eventLogList track by $index">
+                    <i class="fa fa-user bg-aqua"></i>
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
+                        </h3>
                     </div>
                 </li>
                 <!-- END timeline item -->
