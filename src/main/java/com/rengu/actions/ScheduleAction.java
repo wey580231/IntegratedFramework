@@ -160,6 +160,7 @@ public class ScheduleAction extends SuperAction {
                     }
                     tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
+                    Tools.createEventLog(EventLogTools.ScheduleEvent, rg_scheduleEntity.getName() + "-APS计算启动", EventLogTools.createScheduleStartEventContent(rg_scheduleEntity), rg_scheduleEntity.getId());
                 } else {
                     tx.rollback();
                     printError();
