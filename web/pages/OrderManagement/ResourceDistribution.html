@@ -63,7 +63,7 @@
                         <tr>
                             <td></td>
                             <th>类型编号集合</th>
-                            <th>资源类型分组</th>
+                            <th>工位编码</th>
                             <th>最少资源数量</th>
                             <th>最多资源数量</th>
                         </tr>
@@ -71,7 +71,7 @@
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{resourcedis.id}}</td>
                             <td>{{resourcedis.grp}}</td>
-                            <td>{{resourcedis.typeSite}}</td>
+                            <td>{{resourcedis.idSite}}</td>
                             <td>{{resourcedis.minResource}}</td>
                             <td>{{resourcedis.maxResource}}</td>
                         </tr>
@@ -98,33 +98,25 @@
                         <form class="form-horizontal">
                             <div class="box-body">
                                 <div class="form-group" id="add-grp">
-                                    <label class="col-sm-3 control-label myLabel">类型编号集合</label>
+                                    <label class="col-sm-3 control-label myLabel">类型集合编号</label>
 
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="add-grp" title="请输入数字！！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="add-typeSite">
-                                    <label class="col-sm-3 control-label myLabel">资源类型分组</label>
-
-                                    <div class="col-sm-9">
-                                        <input class="form-control" name="add-typeSite" title="请输入数字！"
+                                        <input class="form-control" name="add-grp" title="请输入类型集合编号！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="add-idSite">
-                                    <label class="col-sm-3 control-label myLabel">地点编码</label>
+                                    <label class="col-sm-3 control-label myLabel">工位编码</label>
 
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="add-idSite" title="请输入数字！"
+                                        <input class="form-control" name="add-idSite" title="请输入工位编码！"
                                                placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="add-minResource">
                                     <label class="col-sm-3 control-label myLabel">最少资源数量</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="add-minResource" title="请输入数字！"
+                                        <input class="form-control" name="add-minResource" title="请输入最少资源数量(个)！"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -132,7 +124,7 @@
                                 <div class="form-group" id="add-maxResource">
                                     <label class="col-sm-3 control-label myLabel">最多资源数量</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="add-maxResource" title="请输入数字！！"
+                                        <input class="form-control" name="add-maxResource" title="请输入最多资源数量(个)！"
                                                placeholder="">
                                     </div>
                                     <!-- /.input group -->
@@ -140,7 +132,7 @@
                                 <div class="form-group" id="add-weightParallel">
                                     <label class="col-sm-3 control-label myLabel">工序串行权重</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="add-weightParallel" title="请输入数字！"
+                                        <input class="form-control" name="add-weightParallel" title="请输入工序串行权重！"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -173,25 +165,17 @@
                         <form class="form-horizontal">
                             <div class="box-body" ng-repeat="resourcedis in editList">
                                 <div class="form-group" id="edit-grp">
-                                    <label class="col-sm-3 control-label myLabel">类型编号集合</label>
+                                    <label class="col-sm-3 control-label myLabel">类型集合编号</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="edit-grp" title="请输入数字！"
+                                        <input class="form-control" name="edit-grp" title="请输入类型集合编号！"
                                                value="{{resourcedis.grp}}" placeholder="">
                                     </div>
                                 </div>
-
-                                <div class="form-group" id="edit-typeSite">
-                                    <label class="col-sm-3 control-label myLabel">资源类型分组</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control" name="edit-typeSite" title="请输入数字！"
-                                               value="{{resourcedis.typeSite}}" placeholder="">
-                                    </div>
-                                </div>
                                 <div class="form-group" id="edit-idSite">
-                                    <label class="col-sm-3 control-label myLabel">地点编码</label>
+                                    <label class="col-sm-3 control-label myLabel">工位编码</label>
 
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="edit-idSite" title="请输入数字！"
+                                        <input class="form-control" name="edit-idSite" title="请输入工位编码！"
                                                value="{{resourcedis.idSite}}" placeholder="">
                                     </div>
                                 </div>
@@ -199,7 +183,7 @@
                                     <label class="col-sm-3 control-label myLabel">最少资源数量</label>
 
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="edit-minResource" title="请输入数字！"
+                                        <input class="form-control" name="edit-minResource" title="请输入最少资源数量(个)！"
                                                value="{{resourcedis.minResource}}" placeholder="">
                                     </div>
                                 </div>
@@ -207,24 +191,24 @@
                                 <div class="form-group" id="edit-maxResource">
                                     <label class="col-sm-3 control-label myLabel">最多资源数量</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="edit-maxResource" title="请输入数字！"
+                                        <input class="form-control" name="edit-maxResource" title="请输入最多资源数量(个)！"
                                                value="{{resourcedis.maxResource}}" placeholder="">
                                     </div>
                                     <!-- /.input group -->
                                 </div>
-                                <div class="form-group" id="edit-weightParallel">
+                             <!--   <div class="form-group" id="edit-weightParallel">
                                     <label class="col-sm-3 control-label myLabel">工序串行权重</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control" name="edit-weightParallel" title="请输入数字！"
+                                        <input class="form-control" name="edit-weightParallel" title="请输入工序串行权重！"
                                                value="{{resourcedis.weightParallel}}" placeholder="">
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
                                 <button type="submit" class="btn btn-info pull-right" ng-click="editAssisantProcess()">
-                                    Edlt
+                                    Edit
                                 </button>
                             </div>
                             <!-- /.box-footer -->

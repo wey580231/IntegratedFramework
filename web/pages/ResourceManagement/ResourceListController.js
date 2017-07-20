@@ -90,7 +90,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#add-idSiteGroupResource").removeClass("has-error");
                 $("#add-idSiteGroupResource").addClass(" has-success");
             }
-
+/*
 
             if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
                 $("#add-state").removeClass("has-success");
@@ -98,11 +98,11 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             } else {
                 $("#add-state").removeClass("has-error");
                 $("#add-state").addClass(" has-success");
-            }
+            }*/
 
             if (validate.checkLength(params.name) &&
                 validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift)
-                && validate.checkLength(params.state) && validate.checkNumber(params.state)) {
+                /*&& validate.checkLength(params.state) && validate.checkNumber(params.state)*/) {
                 return true;
             } else {
                 return false;
@@ -136,7 +136,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#edit-idSiteGroupResource").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.nameShift) || !validate.checkLength(params.nameShift)) {
+            if (!validate.checkLength(params.nameShift)) {
                 $("#edit-nameShift").removeClass("has-success");
                 $("#edit-nameShift").addClass("has-error");
             } else {
@@ -144,17 +144,17 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#edit-nameShift").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
+          /*  if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
                 $("#edit-state").removeClass("has-success");
                 $("#edit-state").addClass("has-error");
             } else {
                 $("#edit-state").removeClass("has-error");
                 $("#edit-state").addClass(" has-success");
-            }
+            }*/
 
             if (validate.checkLength(params.name) &&
-                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift) && validate.checkNumber(params.nameShift) &&
-                validate.checkLength(params.state) && validate.checkNumber(params.state)) {
+                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift)
+               /* validate.checkLength(params.state) && validate.checkNumber(params.state)*/) {
                 return true;
             } else {
                 return false;

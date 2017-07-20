@@ -69,7 +69,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#add-name").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
+            if (!validate.checkLength(params.state)) {
                 $("#add-state").removeClass("has-success");
                 $("#add-state").addClass("has-error");
             } else {
@@ -77,7 +77,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#add-state").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.idSite0) || !validate.checkLength(params.idSite0)) {
+            if ( !validate.checkLength(params.idSite0)) {
                 $("#add-idSite0").removeClass("has-success");
                 $("#add-idSite0").addClass("has-error");
             } else {
@@ -85,8 +85,8 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#add-idSite0").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkLength(params.name) &&
-                validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)) {
+            if (validate.checkLength(params.state) && validate.checkLength(params.name) &&
+                validate.checkLength(params.idSite0)) {
                 return true;
             } else {
 
@@ -106,19 +106,19 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#edit-name").removeClass("has-success");
                 $("#edit-name").addClass("has-error");
             } else {
-                $("#add-name").removeClass("has-error");
-                $("#add-name").addClass(" has-success");
+                $("#edit-name").removeClass("has-error");
+                $("#edit-name").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
+            if ( !validate.checkLength(params.state)) {
                 $("#edit-state").removeClass("has-success");
                 $("#edit-state").addClass("has-error");
             } else {
-                $("#add-state").removeClass("has-error");
-                $("#add-state").addClass(" has-success");
+                $("#edit-state").removeClass("has-error");
+                $("#edit-state").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.idSite0) || !validate.checkLength(params.idSite0)) {
+            if (!validate.checkLength(params.idSite0)) {
                 $("#edit-idSite0").removeClass("has-success");
                 $("#edit-idSite0").addClass("has-error");
             } else {
@@ -126,8 +126,8 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#edit-idSite0").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.state) && validate.checkNumber(params.state) && validate.checkLength(params.name)&&
-             validate.checkLength(params.idSite0) && validate.checkNumber(params.idSite0)) {
+            if (validate.checkLength(params.state) && validate.checkLength(params.name)&&
+             validate.checkLength(params.idSite0)) {
                 return true;
             } else {
 

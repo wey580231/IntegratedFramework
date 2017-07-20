@@ -9,7 +9,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             controller: 'ScheduleSnapController'
         })
     }])
+
     .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList, notification) {
+
         layer.load(0);
 
         var zNodes = [];
@@ -32,7 +34,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         //3D车间查看转换结果
         $scope.viewIn3DFactory = function () {
-
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
                 layer.load();
@@ -63,7 +64,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         //将选中结果下发MES
         $scope.dispatchMes = function () {
-
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
 
@@ -247,4 +247,3 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             document.getElementById("treeDemo").style.display = "";
         }
     });
-

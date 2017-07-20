@@ -4,8 +4,8 @@
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3>3/4</h3>
+                <div class="inner" >
+                    <h3 ng-repeat="process in processArr track by $index">{{process.n}}/{{process.y}}</h3>
 
                     <p>工序异常</p>
                 </div>
@@ -20,7 +20,7 @@
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>4/7</h3>
+                    <h3 ng-repeat="urgent in urgentArr track by $index">{{urgent.n}}/{{urgent.y}}</h3>
 
                     <p>紧急插单</p>
                 </div>
@@ -35,7 +35,7 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>1/2</h3>
+                    <h3 ng-repeat="device in deviceArr track by $index">{{device.n}}/{{device.y}}</h3>
 
                     <p>调整资源</p>
                 </div>
