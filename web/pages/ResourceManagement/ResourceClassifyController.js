@@ -68,7 +68,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#add-name").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.attribute) || !validate.checkLength(params.attribute)) {
+            if (validate.checkNumber(params.attribute) || !validate.checkLength(params.attribute)) {
                 $("#add-attribute").removeClass("has-success");
                 $("#add-attribute").addClass("has-error");
             } else {
@@ -76,7 +76,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#add-attribute").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name)&& validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
+            if (validate.checkLength(params.name)&& validate.checkLength(params.attribute)) {
                 return true;
             } else {
 
@@ -99,7 +99,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#edit-name").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.attribute) || !validate.checkLength(params.attribute)) {
+            if (validate.checkNumber(params.attribute) || !validate.checkLength(params.attribute)) {
                 $("#edit-attribute").removeClass("has-success");
                 $("#edit-attribute").addClass("has-error");
             } else {
@@ -107,7 +107,7 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
                 $("#edit-attribute").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkLength(params.attribute) && validate.checkNumber(params.attribute)) {
+            if (validate.checkLength(params.name) && validate.checkLength(params.attribute)) {
                 return true;
             } else {
 

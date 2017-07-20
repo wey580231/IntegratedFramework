@@ -80,13 +80,12 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         var resourcedisAddValidate = function () {
             var params = {};
             params.grp = $("input[name='add-grp']").val();
-            params.typeSite = $("input[name='add-typeSite']").val();
             params.idSite = $("input[name='add-idSite']").val();
             params.minResource = $("input[name='add-minResource']").val();
             params.maxResource = $("input[name='add-maxResource']").val();
             params.weightParallel = $("input[name='add-weightParallel']").val();
             addData = JSON.stringify(params);
-            if (!validate.checkNumber(params.grp) || !validate.checkLength(params.grp)) {
+            if (!validate.checkLength(params.grp)) {
                 $("#add-grp").removeClass("has-success");
                 $("#add-grp").addClass("has-error");
             } else {
@@ -94,14 +93,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 $("#add-grp").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.typeSite) || !validate.checkLength(params.typeSite)) {
-                $("#add-typeSite").removeClass("has-success");
-                $("#add-typeSite").addClass("has-error");
-            } else {
-                $("#add-typeSite").removeClass("has-error");
-                $("#add-typeSite").addClass(" has-success");
-            }
-            if (!validate.checkNumber(params.idSite) || !validate.checkLength(params.idSite)) {
+            if ( !validate.checkLength(params.idSite)) {
                 $("#add-idSite").removeClass("has-success");
                 $("#add-idSite").addClass("has-error");
             } else {
@@ -131,8 +123,8 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             }
 
 
-            if (validate.checkLength(params.grp) && validate.checkNumber(params.grp) && validate.checkLength(params.typeSite) && validate.checkNumber(params.typeSite) &&
-                validate.checkLength(params.idSite) && validate.checkNumber(params.idSite) && validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
+            if (validate.checkLength(params.grp)&&
+                validate.checkLength(params.idSite) && validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
                 validate.checkLength(params.minResource) && validate.checkNumber(params.minResource) && validate.checkLength(params.weightParallel) && validate.checkNumber(params.weightParallel)) {
                 return true;
             } else {
@@ -146,13 +138,12 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         var resourcedisEditValidate = function () {
             var params = {};
             params.grp = $("input[name='edit-grp']").val();
-            params.typeSite = $("input[name='edit-typeSite']").val();
             params.idSite = $("input[name='edit-idSite']").val();
             params.minResource = $("input[name='edit-minResource']").val();
             params.maxResource = $("input[name='edit-maxResource']").val();
-            params.weightParallel = $("input[name='edit-weightParallel']").val();
+    /*        params.weightParallel = $("input[name='edit-weightParallel']").val();*/
             editData = params;
-            if (!validate.checkNumber(params.grp) || !validate.checkLength(params.grp)) {
+            if (!validate.checkLength(params.grp)) {
                 $("#edit-grp").removeClass("has-success");
                 $("#edit-grp").addClass("has-error");
             } else {
@@ -160,14 +151,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 $("#edit-grp").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.typeSite) || !validate.checkLength(params.typeSite)) {
-                $("#edit-typeSite").removeClass("has-success");
-                $("#edit-typeSite").addClass("has-error");
-            } else {
-                $("#edit-typeSite").removeClass("has-error");
-                $("#edit-typeSite").addClass(" has-success");
-            }
-            if (!validate.checkNumber(params.idSite) || !validate.checkLength(params.idSite)) {
+            if (!validate.checkLength(params.idSite)) {
                 $("#edit-idSite").removeClass("has-success");
                 $("#edit-idSite").addClass("has-error");
             } else {
@@ -188,18 +172,18 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 $("#edit-minResource").removeClass("has-error");
                 $("#edit-minResource").addClass(" has-success");
             }
-            if (!validate.checkNumber(params.weightParallel) || !validate.checkLength(params.weightParallel)) {
+        /*    if (!validate.checkNumber(params.weightParallel) || !validate.checkLength(params.weightParallel)) {
                 $("#edit-weightParallel").removeClass("has-success");
                 $("#edit-weightParallel").addClass("has-error");
             } else {
                 $("#edit-weightParallel").removeClass("has-error");
                 $("#edit-weightParallel").addClass(" has-success");
-            }
+            }*/
 
 
-            if (validate.checkLength(params.grp) && validate.checkNumber(params.grp) && validate.checkLength(params.typeSite) && validate.checkNumber(params.typeSite) &&
-                validate.checkLength(params.idSite) && validate.checkNumber(params.idSite) && validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
-                validate.checkLength(params.minResource) && validate.checkNumber(params.minResource) && validate.checkLength(params.weightParallel) && validate.checkNumber(params.weightParallel)) {
+            if (validate.checkLength(params.grp) &&
+                validate.checkLength(params.idSite)&& validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
+                validate.checkLength(params.minResource) && validate.checkNumber(params.minResource) /*&& validate.checkLength(params.weightParallel) && validate.checkNumber(params.weightParallel)*/) {
                 return true;
             } else {
 
