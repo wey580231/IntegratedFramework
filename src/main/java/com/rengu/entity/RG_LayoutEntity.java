@@ -14,7 +14,7 @@ public class RG_LayoutEntity {
     private String id;
     private String name;
 
-    private String desc;            //布局描述
+    private String layoutDesc;       //布局描述
     private String imgPath;         //文件路径
 
     @JsonIgnore
@@ -38,29 +38,12 @@ public class RG_LayoutEntity {
         this.name = name;
     }
 
-    public Set<RG_LayoutDetailEntity> getDetails() {
-        return details;
+    public String getLayoutDesc() {
+        return layoutDesc;
     }
 
-    public void setDetails(Set<RG_LayoutDetailEntity> details) {
-        this.details = details;
-    }
-
-
-    public Set<RG_ScheduleEntity> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
-        this.schedules = schedules;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setLayoutDesc(String layoutDesc) {
+        this.layoutDesc = layoutDesc;
     }
 
     public String getImgPath() {
@@ -69,5 +52,21 @@ public class RG_LayoutEntity {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public Set<RG_LayoutDetailEntity> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Set<RG_LayoutDetailEntity> details) {
+        this.details = details;
+    }
+
+    public Set<RG_ScheduleEntity> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<RG_ScheduleEntity> schedules) {
+        this.schedules = schedules;
     }
 }
