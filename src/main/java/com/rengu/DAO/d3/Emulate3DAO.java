@@ -145,7 +145,11 @@ public class Emulate3DAO {
                 RG_OrderEntity entity = iter.next();
 
                 RG_ProductEntity product = entity.getProductByIdProduct();
-                List<RG_EmulateResultEntity> emulateDatas = entity.getEmulateResults();
+
+                NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idOrder = ? and idSnapshort is null order by id asc",RG_EmulateResultEntity.class);
+                query.setParameter(1,entity.getId());
+
+                List<RG_EmulateResultEntity> emulateDatas = query.list();
                 Iterator<RG_EmulateResultEntity> emulateIter = emulateDatas.iterator();
 
                 ArrayNode arrayNode = mapper.createArrayNode();
@@ -160,7 +164,7 @@ public class Emulate3DAO {
                         node.put("good", emulateData.getGoods());
                         node.put("startTime", Integer.parseInt(emulateData.getStartTime()));
                         node.put("endTime", Integer.parseInt(emulateData.getEndTime()));
-                        if (emulateData.getSite() != null) {
+                        if (emulateData.getSite() != null && emulateData.getSite().length() > 0) {
                             node.put("site", emulateData.getSite());
                         } else {
                             node.put("site", "");

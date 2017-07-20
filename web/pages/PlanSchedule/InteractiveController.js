@@ -26,4 +26,16 @@ angular.module("IntegratedFramework.InteractiveController", ['ngRoute'])
                 hideLoadingPage();
             });
         });
+
+        $scope.emulateRecvApsInterResult = function () {
+            myHttpService.get(serviceList.emulateApsInterResult).then(function (response) {
+                if (response.data.result == "ok") {
+                    layer.msg('结果信息转换中!', {icon: 1});
+                } else {
+                    layer.msg('结果信息转换失败!', {icon: 2});
+                }
+            }, function (response) {
+
+            });
+        }
     });

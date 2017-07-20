@@ -156,6 +156,7 @@ angular.module("IntegratedFramework", [
         service.isRootLevel = backUrl + "snapshot/getAllByLevel.action";
         service.getTree = backUrl + "snapshot/getAllById.action";
         service.view3DEmulate = backUrl + "snapshot/view3DEmulate.action";
+        service.dispatchMes = backUrl + "snapshot/dispatcherResultToMess.action";
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
 
         <!--高级调整分析-->
@@ -176,6 +177,7 @@ angular.module("IntegratedFramework", [
 
         service.queryApsState = backUrl + "aps/apsState.action";
         service.currSheduleInfo = backUrl + "aps/scheduleDetail.action";
+        service.emulateApsInterResult = backUrl + "aps/emulateApsInterResult.action";
 
         return service;
     })
