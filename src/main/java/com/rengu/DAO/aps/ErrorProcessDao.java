@@ -46,7 +46,7 @@ public class ErrorProcessDao {
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
                 entity.setProcessTime(new Date());
-                createSnapNode("设备异常应急", "rg_adjustdevice", id);
+                createSnapNode("设备异常应急优化", "rg_adjustdevice", id);
                 session.update(entity);
             }
         }
@@ -79,7 +79,7 @@ public class ErrorProcessDao {
             if (result == ApsTools.STARTED) {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
                 entity.setProcessTime(new Date());
-                createSnapNode("设备异常应急", "rg_adjustorder", id);
+                createSnapNode("紧急插单应急优化", "rg_adjustorder", id);
                 session.update(entity);
             }
         }
@@ -106,7 +106,7 @@ public class ErrorProcessDao {
 
             entity.setState(ErrorState.ERROR_APS_PROCESS);
             entity.setProcessTime(new Date());
-            createSnapNode("设备异常应急", "rg_adjustprocess", id);
+            createSnapNode("工序异常应急优化", "rg_adjustprocess", id);
             session.update(entity);
 
             result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustProcessHandlingURL(entity));
@@ -136,8 +136,11 @@ public class ErrorProcessDao {
             middleSnapshot.setName(name);
             middleSnapshot.setLevel(SnapshotLevel.MIDDLE);
             middleSnapshot.setNodeCreateTime(new Date());
+            middleSnapshot.setApply(false);
             middleSnapshot.setParent(rootSnapshot);
             middleSnapshot.setRootParent(rootSnapshot);
+            middleSnapshot.setErrorNode(true);
+            middleSnapshot.setFirstNode(true);
 
             UserConfigTools.updateMiddleSnapshotId("1", middleSnapshot.getId(), true);
             UserConfigTools.updateApsReplyCount("1", 0);

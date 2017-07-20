@@ -20,7 +20,9 @@ public class ScheduleAction extends SuperAction {
         try {
             String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN};
             Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         Session session = null;
@@ -55,14 +57,14 @@ public class ScheduleAction extends SuperAction {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
 
-                if (APS_ConfigNodeKey.equals("t0")) {
-                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
-                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
-                }
-                if (APS_ConfigNodeKey.equals("t2")) {
-                    rg_scheduleEntity.setApsEndTime(Tools.parseDate(APS_ConfigNodeValue));
-                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
-                }
+//                if (APS_ConfigNodeKey.equals("t0")) {
+//                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
+//                }
+//                if (APS_ConfigNodeKey.equals("t2")) {
+//                    rg_scheduleEntity.setApsEndTime(Tools.parseDate(APS_ConfigNodeValue));
+//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
+//                }
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
@@ -149,13 +151,19 @@ public class ScheduleAction extends SuperAction {
             rootSnapshot.setId(Tools.getUUID());
             rootSnapshot.setName(rg_scheduleEntity.getName());
             rootSnapshot.setLevel(SnapshotLevel.TOP);
+            rootSnapshot.setApply(false);
+            rootSnapshot.setErrorNode(false);
+            rootSnapshot.setFirstNode(false);
             rootSnapshot.setNodeCreateTime(new Date());
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
             middleShot.setId(Tools.getUUID());
-            middleShot.setName("APS排程结果");
+            middleShot.setName("静态优化");
             middleShot.setLevel(SnapshotLevel.MIDDLE);
             middleShot.setNodeCreateTime(new Date());
+            middleShot.setApply(false);
+            middleShot.setErrorNode(false);
+            middleShot.setFirstNode(true);
 
             middleShot.setParent(rootSnapshot);
             middleShot.setRootParent(rootSnapshot);

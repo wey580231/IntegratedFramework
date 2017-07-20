@@ -102,6 +102,10 @@ public class SnapshotDao {
 
                     RG_ResourceEntity res = plan.getResourceByIdResource();
 
+                    if(plan.getProcessByIdProcess().getId().equals("Kqd-Kqd-CCJC-06")){
+                        System.out.println("Kqd-Kqd-CCJC-06");
+                    }
+
                     if (res.getCritical() != null && res.getCritical().equals("T")) {
                         String processId = plan.getProcessByIdProcess().getId();
 
@@ -212,23 +216,32 @@ public class SnapshotDao {
         if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
+        try {
+            RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, id);
 
-        RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, id);
+            if (snapshot != null && snapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
-        if (snapshot != null && snapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
+                RG_SnapshotNodeEntity parent = snapshot.getParent();
 
-            RG_SnapshotNodeEntity parent = snapshot.getParent();
+                if (!parent.getApply() && !snapshot.getApply()) {
 
-            if (!parent.getApply() && !snapshot.getApply()) {
+                    parent.setApply(true);
+                    snapshot.setApply(true);
 
-                parent.setApply(true);
-                snapshot.setApply(true);
-                session.update(snapshot);
-                session.update(parent);
+                    session.update(snapshot);
+                    session.update(parent);
+
+                    result = true;
+                }
+
             }
-        }
+            session.getTransaction().commit();
 
-        session.getTransaction().commit();
+        }catch (Exception e){
+            result = false;
+
+            session.getTransaction().rollback();
+        }
 
         return result;
     }

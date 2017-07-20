@@ -92,6 +92,7 @@ public class SnapshotAction extends SuperAction {
         }
     }
 
+    //获取某个节点下排程结果
     public void getAllById() throws Exception {
         JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
         String snapshotId = jsonNode.get("id").asText();

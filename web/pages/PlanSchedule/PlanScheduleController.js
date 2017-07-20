@@ -118,7 +118,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     notification.sendNotification("alert", "查询APS状态失败，请重试!");
                     // layer.msg('查询APS状态失败，请重试!', {icon: 2});
                 }
-            },function(response){
+            }, function (response) {
             });
 
             resetContent();
@@ -471,9 +471,28 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             return selectedCheckArray.indexOf(id) >= 0;
         };
 
+        //开始排程
+        $scope.submitForm = function () {
+
+            layer.load(0);
+
+            for (var i = 0; i < pageCount; i++) {
+                if (i == 1) {
+                    layouts.id = PageInfo.selectedIndex[i][0];
+                }
+                else if (i == 2) {
+                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
+                        var params = {};
+                        params.id = PageInfo.selectedIndex[i][j];
+                        orders.push(params);
+                    }
+                }
+            }
+            configAPS();
+        };
+
         //排程
         function configAPS() {
-            notification.sendNotification("confirm", "开始排程");
             var APSConfigs = {};
             APSConfigs.t0 = apsStart;
             APSConfigs.t2 = apsEnd;
@@ -515,8 +534,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 name = "";
                 scheduleDays = "";
                 rollTime = "";
-                apsStart="";
-                apsEnd="";
+                apsStart = "";
+                apsEnd = "";
                 if (data.result == "error") {
                     notification.sendNotification("alert", "排程失败");
                 } else {
@@ -526,8 +545,10 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     });
                     notification.sendNotification("confirm", "排程成功");
                 }
+                hideLoadingPage();
             }, function errorCallback() {
                 notification.sendNotification("alert", "请求失败");
+                hideLoadingPage();
             });
             document.getElementById("nextStep").disabled = true;
         }
