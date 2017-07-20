@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
-import com.rengu.util.DAOFactory;
-import com.rengu.util.ExceptionCheck;
-import com.rengu.util.Tools;
-import com.rengu.util.WebSocketNotification;
+import com.rengu.util.*;
 
 import java.util.Date;
 import java.util.List;
@@ -62,6 +59,7 @@ public class OrdersAction extends SuperAction {
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         boolean isSaved = ordersDAOInstance.save(rg_orderEntity);
         if (isSaved) {
+            Tools.createEventLog(EventLogTools.OrderEvent, rg_orderEntity.getName() + "订单生成", EventLogTools.createOrderEventContent(rg_orderEntity), rg_orderEntity.getId());
             ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order保存失败", "alert"));
