@@ -9,14 +9,12 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             controller: 'ScheduleSnapController'
         })
     }])
-    .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList) {
+    .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList, notification) {
         layer.load(0);
 
         var zNodes = [];
         var idVal;//所点击的节点id值
         var rootData = [];
-        var planList = [];
-        var currTreeSelectedId = null;
 
         $(function () {
             //初始化下拉数据
@@ -34,55 +32,84 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         //3D车间查看转换结果
         $scope.viewIn3DFactory = function () {
-            if (currTreeSelectedId == null) {
-                layer.msg('未选择节点信息!', {icon: 2});
-                return;
-            }
 
-            layer.load();
-            myHttpService.get(serviceList.view3DEmulate + "?id=" + currTreeSelectedId).then(function success(response) {
-                if (response.data.result == "ok") {
-                    layer.msg('数据转换成功,3D车间启动中...', {icon: 1});
-                    setTimeout(function () {
-                        layer.open({
-                            type: 2,
-                            title: '3D车间',
-                            maxmin: true,
-                            shadeClose: true,
-                            shade: false,
-                            offset: 'l',
-                            area: ['100%', '100%'],
-                            content: "http://localhost:8080/WebGL"
-                        });
-                    }, 1500);
-                } else {
-                    layer.msg('数据转换失败!', {icon: 2});
-                }
-                hideLoadingPage();
-            });
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
+                layer.load();
+                myHttpService.get(serviceList.view3DEmulate + "?id=" + zTree.getSelectedNodes()[0].id).then(function success(response) {
+                    if (response.data.result == "ok") {
+                        notification.sendNotification("confirm", "数据转换成功,3D车间启动中...");
+                        setTimeout(function () {
+                            layer.open({
+                                type: 2,
+                                title: '3D车间',
+                                maxmin: true,
+                                shadeClose: true,
+                                shade: false,
+                                offset: 'l',
+                                area: ['100%', '100%'],
+                                content: "http://localhost:8080/WebGL"
+                            });
+                        }, 1500);
+                    } else {
+                        notification.sendNotification("alert", "数据转换失败");
+                    }
+                    hideLoadingPage();
+                });
+            } else {
+                notification.sendNotification("alert", "未选择节点信息");
+            }
         };
 
         //将选中结果下发MES
         $scope.dispatchMes = function () {
-            layer.confirm('将结果下发MES？', {
-                btn: ['下发', '取消'] //按钮
-            }, function () {
-                layer.load();
-                setTimeout(function () {
-                    layer.msg('已下发', {icon: 1});
-                    hideLoadingPage();
-                }, 2000);
-            }, function () {
-                layer.msg('取消下发', {icon: 2});
-            });
+
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
+
+                layer.confirm('是否将结果下发MES？', {
+                    btn: ['下发','取消'] //按钮
+                }, function(index){
+                    layer.load();
+
+                    myHttpService.get(serviceList.dispatchMes + "?id=" + zTree.getSelectedNodes()[0].id).then(function success(response) {
+                        if (response.data.result == "ok") {
+                            notification.sendNotification("confirm", "下发成功");
+                        } else {
+                            notification.sendNotification("alert", "处理失败");
+                        }
+                        hideLoadingPage();
+                    }, function erorr() {
+                        notification.sendNotification("alert", "请求失败，稍后再试");
+                        hideLoadingPage();
+                    });
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                    notification.sendNotification("alert", "取消下发");
+                });
+            }else{
+                notification.sendNotification("alert", "未选择节点信息");
+            }
         };
+
+        //对快照节点排序
+        function sortSnapshot(childList) {
+            for (var i = 0; i < childList.length; i++) {
+                for (var j = i + 1; j < childList.length; j++) {
+                    if (childList[j].nodeCreateTime < childList[i].nodeCreateTime) {
+                        var tmp = childList[j];
+                        childList[j] = childList[i];
+                        childList[i] = tmp;
+                    }
+                }
+            }
+        }
 
         //下拉框事件改变
         $("#select").change(function () {
             zNodes.splice(0, zNodes.length);
-            planList.splice(0, planList.length);
             var idRoot;
-            currTreeSelectedId = null;
             var val = $(this).children('option:selected').val();
             if (val.length > 0) {
                 for (var i = 0; i < rootData.length; i++) {
@@ -96,32 +123,57 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 var id = JSON.stringify(params);
 
                 layer.load();
-                myHttpService.post(serviceList.getTree, id).then(function successCallback(response) {
-                    var datas = response.data;
-                    $scope.snapShotData = response.data;
-                    var count = 0;
-                    if (datas.hasOwnProperty("childs") == true) {
-                        count++;
-                        var two = datas.childs;
-                        for (var i = 0; i < two.length; i++) {
-                            if (two[i].hasOwnProperty("childs") == true) {
-                                count++;
-                                break;
-                            }
-                        }
-                    }
 
-                    if (datas.hasOwnProperty("childs") == true) {
-                        var childList = datas.childs;
-                        for (var j = 0; j < childList.length; j++) {
-                            var childLists = childList[j];
-                            if (childLists.hasOwnProperty("childs") == true) {
-                                var temps = childLists.childs;
-                                delete(childLists.childs);
-                                childLists.children = temps;
-                                childList[j] = childLists;
+                myHttpService.post(serviceList.getTree, id).then(function successCallback(response) {
+                    $scope.snapShotData = response.data;
+                    var datas = response.data;
+
+                    if (datas.hasOwnProperty("childs")) {
+                        var middleNodeList = datas.childs;
+                        sortSnapshot(middleNodeList);
+                        for (var j = 0; j < middleNodeList.length; j++) {
+
+                            var middleNode = middleNodeList[j];
+
+                            if (middleNode.hasOwnProperty("childs")) {
+
+                                sortSnapshot(middleNode.childs);
+
+                                for (var k = 0; k < middleNode.childs.length; k++) {
+                                    var bottomNode = middleNode.childs[k];
+                                    //默认排程节点
+                                    if (middleNode.firstNode) {
+                                        if (!bottomNode.apply  && !middleNode.firstNode) {
+                                            bottomNode.icon = "../../images/bom_img/interNode.png";
+                                        } else if (!bottomNode.apply && bottomNode.firstNode) {
+                                            bottomNode.icon = "../../images/bom_img/commonNode.png";
+                                        } else if(bottomNode.apply){
+                                            bottomNode.icon = "../../images/bom_img/dispatchNode.png";
+                                        }
+                                    }
+                                    //故障节点
+                                    else {
+                                        if (bottomNode.apply) {
+                                            bottomNode.icon = "../../images/bom_img/dispatchNode.png";
+                                        } else {
+                                            bottomNode.icon = "../../images/bom_img/commonNode.png";
+                                        }
+                                    }
+                                }
+                                var temps = middleNode.childs;
+                                delete(middleNode.childs);
+                                middleNode.children = temps;
+                                middleNode = middleNode;
+                            }
+
+                            if (middleNode.errorNode) {
+                                middleNode.icon = "../../images/bom_img/errorNode.png";
+                            } else {
+                                middleNode.icon = "../../images/bom_img/interactive.png";
                             }
                         }
+
+                        datas.icon = "../../images/bom_img/rootNode.png";
                         var temp = datas.childs;
                         delete(datas.childs);
                         datas.children = temp;
@@ -141,8 +193,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             var setting = {
                 view: {
                     dblClickExpand: false,
-                    showIcon: false,
-                    showLine: false
+                    showIcon: true,
+                    showLine: false,
+                    fontCss: setFontCss
                 },
                 callback: {
                     onClick: zTreeOnClick
@@ -162,178 +215,36 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 }
             };
 
-            //单击显示表格信息
+            //点击树形控件
             function zTreeOnClick(e, treeId, treeNode) {
-                var tree = [];
-                var params = {};
-                params.id = zNodes[0].id;
-                params.name = zNodes[0].name;
-                params.level = zNodes[0].level;
-                tree.push(params);
-
-                if (zNodes[0].hasOwnProperty("children") == true) {
-                    for (var i = 0; i < zNodes[0].children.length; i++) {
-                        var dataMiddle = zNodes[0].children[i];
-                        var params = {};
-                        params.id = dataMiddle.id;
-                        params.name = dataMiddle.name;
-                        params.level = dataMiddle.level;
-                        tree.push(params);
-                        if (dataMiddle.hasOwnProperty("children") == true) {
-                            for (var j = 0; j < dataMiddle.children.length; j++) {
-                                var dataBootum = dataMiddle.children[j];
-                                var params = {};
-                                params.id = dataBootum.id;
-                                params.name = dataBootum.name;
-                                params.level = dataBootum.level;
-                                params.schedule = zNodes[0].schedule;
-                                tree.push(params);
-                            }
-                        }
-                    }
-                }
-
-                for (var i = 0; i < tree.length; i++) {
-                    var state = tree[i].level;
-                    switch (state) {
-                        case "top":
-                            tree[i].level = "一级节点";
-                            break;
-                        case "middle":
-                            tree[i].level = "二级节点";
-                            break;
-                        case "bottom":
-                            tree[i].level = "三级节点";
-                            break;
-                    }
-                }
-
-            /*    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                zTree.expandNode(treeNode, null, null, null, true);*/
-
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                zTree.expandNode(treeNode);
 
-                var tmpId = zTree.getSelectedNodes()[0].id;
-                for (var i = 0; i < tree.length; i++) {
-                    if (tmpId == tree[i].id && tree[i].level == "三级节点") {
-                        var treeInfo = tree[i];
-                        var params = {};
-                        currTreeSelectedId = zTree.getSelectedNodes()[0].id;
-                        params.id = currTreeSelectedId;
-                        var data = JSON.stringify(params);
-                        layer.load();
-                        myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
-                            planList = response.data
-                            $scope.planList = planList;
-                            hideLoadingPage();
-                        });
-                        break;
-                    } else if (tmpId == tree[i].id) {
-                        $("#table_value  tr:not(:first)").html("");
-                        var treeInfo = tree[i];
-                        break;
-                    }
+                if (treeNode.level == 0 || treeNode.level == 1) {
+                    zTree.expandNode(treeNode);
+                } else if (treeNode.level == 2) {
+                    var params = {};
+                    params.id = treeNode.id;
+                    var data = JSON.stringify(params);
+                    layer.load();
+                    myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
+                        $scope.planList = response.data;
+                        hideLoadingPage();
+                    });
                 }
+            }   //onclick
 
-
+            //动态设置字体的颜色
+            function setFontCss(treeId, treeNode) {
+                var fs;
+                if (treeNode.apply && treeNode.level == 2) {
+                    fs = {color: "white", background: "#3C8DBC", border: "none"};
+                }
+                return fs;
             }
-
-
 
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
             document.getElementById("treeDemo").style.display = "";
-
-            // var curExpandNode = null;
-
-        /*    function beforeExpand(treeId, treeNode) {
-                var pNode = curExpandNode ? curExpandNode.getParentNode() : null;
-                var treeNodeP = treeNode.parentTId ? treeNode.getParentNode() : null;
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                for (var i = 0, l = !treeNodeP ? 0 : treeNodeP.children.length; i < l; i++) {
-                    if (treeNode !== treeNodeP.children[i]) {
-                        zTree.expandNode(treeNodeP.children[i], false);
-                    }
-                }
-                while (pNode) {
-                    if (pNode === treeNode) {
-                        break;
-                    }
-                    pNode = pNode.getParentNode();
-                }
-                if (!pNode) {
-                    singlePath(treeNode);
-                }
-
-            }
-
-            function singlePath(newNode) {
-                if (newNode === curExpandNode) return;
-
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-                    rootNodes, tmpRoot, tmpTId, i, j, n;
-
-                if (!curExpandNode) {
-                    tmpRoot = newNode;
-                    while (tmpRoot) {
-                        tmpTId = tmpRoot.tId;
-                        tmpRoot = tmpRoot.getParentNode();
-                    }
-                    rootNodes = zTree.getNodes();
-                    for (i = 0, j = rootNodes.length; i < j; i++) {
-                        n = rootNodes[i];
-                        if (n.tId != tmpTId) {
-                            zTree.expandNode(n, false);
-                        }
-                    }
-                } else if (curExpandNode && curExpandNode.open) {
-                    if (newNode.parentTId === curExpandNode.parentTId) {
-                        zTree.expandNode(curExpandNode, false);
-                    } else {
-                        var newParents = [];
-                        while (newNode) {
-                            newNode = newNode.getParentNode();
-                            if (newNode === curExpandNode) {
-                                newParents = null;
-                                break;
-                            } else if (newNode) {
-                                newParents.push(newNode);
-                            }
-                        }
-                        if (newParents != null) {
-                            var oldNode = curExpandNode;
-                            var oldParents = [];
-                            while (oldNode) {
-                                oldNode = oldNode.getParentNode();
-                                if (oldNode) {
-                                    oldParents.push(oldNode);
-                                }
-                            }
-                            if (newParents.length > 0) {
-                                zTree.expandNode(oldParents[Math.abs(oldParents.length - newParents.length) - 1], false);
-                            } else {
-                                zTree.expandNode(oldParents[oldParents.length - 1], false);
-                            }
-                        }
-                    }
-                }
-                curExpandNode = newNode;
-            }
-
-            function onExpand(event, treeId, treeNode) {
-                curExpandNode = treeNode;
-            }*/
-
-            $scope.sendMES = function () {
-                hideRMenu();
-                var url = "http://localhost:8080/snapshot/dispatcherResultToMess.action?" + "id=" + idVal;
-                $http({
-                    'method': 'get',
-                    'url': url
-                })
-            };
-
-
         }
     });
 

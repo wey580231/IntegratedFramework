@@ -31,18 +31,9 @@
                                 style="margin-right:5px;width:150px;float:right;height:30px;padding:2px;"
                                 id="activeSelector">
                             <option value="">选择交互控件</option>
-                            <option value="TableOrderTask.view">订单派工单</option>
-                            <option value="TableResourceTask.view">资源派工单</option>
-                            <option value="TableSiteTask.view">工位派工单</option>
-
                             <option value="GanttOrderTask.view">订单工序甘特图</option>
                             <option value="GanttResourceTask.view">资源工序甘特图</option>
-                            <option value="GanttJobTask.view">作业工序甘特图</option>
-
-                            <option value="TableOrder.view">订单一览表</option>
-                            <option value="DataTableGroupResource.view">工组信息表</option>
-                            <option value="TableResource.view">资源一览表</option>
-                            <option value="DataTableProcess.view">工艺信息表</option>
+                            <option value="SimulationResource.view">仿真模拟</option>
                         </select>
                         <div style="float: right;margin-right: 1%;height:30px;">
                             <span class="spanKey">排程名称:</span>
@@ -58,11 +49,11 @@
                             <span ng-if="schedule.data.state == 4">优化完成</span>
                             <span ng-if="schedule.data.state == 5">下发MES</span>
                         </div>
-                        <!--<div class="data-uk-button-radio" style="float: right;margin-right: 1%;">-->
-                        <!--<button id="loginInAPS" type="button" class="btn btn-default btn-sm" onclick="loginAps()"-->
-                        <!--class="btn btn-default" ng-click="reset()"><i class="fa fa-user-o"></i> APS登录-->
-                        <!--</button>-->
-                        <!--</div>-->
+                        <div class="data-uk-button-radio" style="float: right;margin-right: 1%;">
+                        <button id="loginInAPS" type="button" class="btn btn-default btn-sm" ng-click="emulateRecvApsInterResult()"
+                        class="btn btn-default" ng-click="reset()"><i class="fa fa-user-o"></i> APS结果转换
+                        </button>
+                        </div>
                     </div>
                 </div>
 

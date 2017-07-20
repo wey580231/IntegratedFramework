@@ -13,6 +13,10 @@ public class RG_LayoutEntity {
 
     private String id;
     private String name;
+
+    private String desc;            //布局描述
+    private String imgPath;         //文件路径
+
     @JsonIgnore
     private Set<RG_LayoutDetailEntity> details = new HashSet<RG_LayoutDetailEntity>();
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
@@ -51,23 +55,19 @@ public class RG_LayoutEntity {
         this.schedules = schedules;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_LayoutEntity that = (RG_LayoutEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
+    public String getDesc() {
+        return desc;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 }

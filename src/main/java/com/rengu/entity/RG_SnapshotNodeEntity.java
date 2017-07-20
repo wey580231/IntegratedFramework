@@ -20,6 +20,9 @@ public class RG_SnapshotNodeEntity {
 
     private Date nodeCreateTime;            //节点创建时的日期，用于查询时进行排序
 
+    private Boolean errorNode;              //是否为故障节点(只在level==middl时有效)
+    private Boolean firstNode;              //是否为第一个节点(每个节点的第一个子节点)
+
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "childsSnapshotId")
     private Set<RG_SnapshotNodeEntity> childs = new HashSet<RG_SnapshotNodeEntity>();      //子节点
     @JsonIgnore
@@ -70,6 +73,22 @@ public class RG_SnapshotNodeEntity {
 
     public void setNodeCreateTime(Date nodeCreateTime) {
         this.nodeCreateTime = nodeCreateTime;
+    }
+
+    public Boolean getErrorNode() {
+        return errorNode;
+    }
+
+    public void setErrorNode(Boolean errorNode) {
+        this.errorNode = errorNode;
+    }
+
+    public Boolean getFirstNode() {
+        return firstNode;
+    }
+
+    public void setFirstNode(Boolean firstNode) {
+        this.firstNode = firstNode;
     }
 
     public Set<RG_SnapshotNodeEntity> getChilds() {

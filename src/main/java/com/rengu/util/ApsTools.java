@@ -88,9 +88,9 @@ public class ApsTools {
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Task/MoveTask.n" +
                 "&" +
-                "BUFFER=1\\n2\\n" + entity.getIdTask() + "\\n001\\n2000-01-01\\t06:00\\n120\\n1\\n6\\n" +
-                entity.getIdJob() + "\\n" + entity.getIdOrder() + "\\n" + entity.getOriginalResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getOriginalStartTime()))
-                + "\\n" + entity.getAppointResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatDate(entity.getAppointStartTime())) +
+                "BUFFER=1\\n2\\n" + entity.getIdTask() + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n1\\n6\\n" +
+                entity.getIdJob() + "\\n" + entity.getIdOrder() + "\\n" + entity.getOriginalResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getOriginalStartTime()))
+                + "\\n" + entity.getAppointResource() + "\\n" + ApsTools.instance().convertSpaceWithTab(Tools.formatToStandardDate(entity.getAppointStartTime())) +
                 "&" +
                 "REPLY=" + ApsTools.instance().getReplyAddress() +
                 "&" +
@@ -188,7 +188,7 @@ public class ApsTools {
     public String getCancelDeviceURL(RG_AdjustDeviceEntity entity) {
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/RejectResource.n" +
                 "&" +
-                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00\\n120\\n"
+                "BUFFER=1\\n2\\n" + entity.getResoureId() + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n"
                 + convertSpaceWithTab(entity.getCancelTime()) + "\\n" + convertSpaceWithTab(entity.getLatestCancelTime()) +
                 "&" +
                 "REPLY=" + ApsTools.instance().getReplyAddress() +

@@ -138,6 +138,7 @@
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="update"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
         <action name="scheduleDetail" class="com.rengu.actions.aps.FeedBackStateAction" method="queryScheduleInfo"/>
+        <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction" method="emulateApsInterResult"/>
     </package>
 
     <!--异常处理-->
@@ -178,7 +179,7 @@
     <!--快照树-->
     <package name="SnapshotManager" namespace="/snapshot" extends="struts-default">
         <action name="view3DEmulate" class="com.rengu.actions.SnapshotAction" method="viewCurrentSnapshotEmulateData"/>
-        <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="applySnapshotToMes"/>
+        <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="dispatcherResultToMess"/>
         <action name="getAllByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByLevel"/>
         <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
     </package>
