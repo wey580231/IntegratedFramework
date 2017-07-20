@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             controller: 'ScheduleSnapController'
         })
     }])
-    .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList) {
+    .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList,notification) {
         layer.load(0);
 
         var zNodes = [];
@@ -35,14 +35,14 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         //3D车间查看转换结果
         $scope.viewIn3DFactory = function () {
             if (currTreeSelectedId == null) {
-                layer.msg('未选择节点信息!', {icon: 2});
+                notification.sendNotification("alert", "未选择节点信息");
                 return;
             }
 
             layer.load();
             myHttpService.get(serviceList.view3DEmulate + "?id=" + currTreeSelectedId).then(function success(response) {
                 if (response.data.result == "ok") {
-                    layer.msg('数据转换成功,3D车间启动中...', {icon: 1});
+                    notification.sendNotification("confirm", "数据转换成功,3D车间启动中...");
                     setTimeout(function () {
                         layer.open({
                             type: 2,
@@ -56,7 +56,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                         });
                     }, 1500);
                 } else {
-                    layer.msg('数据转换失败!', {icon: 2});
+                    notification.sendNotification("alert", "数据转换失败");
                 }
                 hideLoadingPage();
             });
@@ -69,11 +69,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             }, function () {
                 layer.load();
                 setTimeout(function () {
-                    layer.msg('已下发', {icon: 1});
+                    notification.sendNotification("confirm", "已下发");
                     hideLoadingPage();
                 }, 2000);
             }, function () {
-                layer.msg('取消下发', {icon: 2});
+                notification.sendNotification("alert", "取消下发");
             });
         };
 
@@ -208,8 +208,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     }
                 }
 
-            /*    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                zTree.expandNode(treeNode, null, null, null, true);*/
 
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 zTree.expandNode(treeNode);
@@ -236,93 +234,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     }
                 }
 
-
             }
-
-
 
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
             document.getElementById("treeDemo").style.display = "";
-
-            // var curExpandNode = null;
-
-        /*    function beforeExpand(treeId, treeNode) {
-                var pNode = curExpandNode ? curExpandNode.getParentNode() : null;
-                var treeNodeP = treeNode.parentTId ? treeNode.getParentNode() : null;
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                for (var i = 0, l = !treeNodeP ? 0 : treeNodeP.children.length; i < l; i++) {
-                    if (treeNode !== treeNodeP.children[i]) {
-                        zTree.expandNode(treeNodeP.children[i], false);
-                    }
-                }
-                while (pNode) {
-                    if (pNode === treeNode) {
-                        break;
-                    }
-                    pNode = pNode.getParentNode();
-                }
-                if (!pNode) {
-                    singlePath(treeNode);
-                }
-
-            }
-
-            function singlePath(newNode) {
-                if (newNode === curExpandNode) return;
-
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-                    rootNodes, tmpRoot, tmpTId, i, j, n;
-
-                if (!curExpandNode) {
-                    tmpRoot = newNode;
-                    while (tmpRoot) {
-                        tmpTId = tmpRoot.tId;
-                        tmpRoot = tmpRoot.getParentNode();
-                    }
-                    rootNodes = zTree.getNodes();
-                    for (i = 0, j = rootNodes.length; i < j; i++) {
-                        n = rootNodes[i];
-                        if (n.tId != tmpTId) {
-                            zTree.expandNode(n, false);
-                        }
-                    }
-                } else if (curExpandNode && curExpandNode.open) {
-                    if (newNode.parentTId === curExpandNode.parentTId) {
-                        zTree.expandNode(curExpandNode, false);
-                    } else {
-                        var newParents = [];
-                        while (newNode) {
-                            newNode = newNode.getParentNode();
-                            if (newNode === curExpandNode) {
-                                newParents = null;
-                                break;
-                            } else if (newNode) {
-                                newParents.push(newNode);
-                            }
-                        }
-                        if (newParents != null) {
-                            var oldNode = curExpandNode;
-                            var oldParents = [];
-                            while (oldNode) {
-                                oldNode = oldNode.getParentNode();
-                                if (oldNode) {
-                                    oldParents.push(oldNode);
-                                }
-                            }
-                            if (newParents.length > 0) {
-                                zTree.expandNode(oldParents[Math.abs(oldParents.length - newParents.length) - 1], false);
-                            } else {
-                                zTree.expandNode(oldParents[oldParents.length - 1], false);
-                            }
-                        }
-                    }
-                }
-                curExpandNode = newNode;
-            }
-
-            function onExpand(event, treeId, treeNode) {
-                curExpandNode = treeNode;
-            }*/
 
             $scope.sendMES = function () {
                 hideRMenu();
@@ -336,4 +251,3 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         }
     });
-

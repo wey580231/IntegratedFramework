@@ -75,7 +75,20 @@
                             <td style="display:none">{{resource.idR}}</td>
                             <td>{{resource.name}}</td>
                             <td>{{resource.nameShift}}</td>
-                            <td>{{resource.state}}</td>
+                            <td>
+                                <span class="label label-success" ng-if="resource.state == 0">下发APS</span>
+                                <span class="label label-primary" ng-if="resource.state == 1"><i
+                                        class="fa fa-spinner fa-spin fa-1x fa-fw"></i>&nbsp;计算中</span>
+                                <span class="label label-success" ng-if="resource.state == 2">计算成功</span>
+                                <span class="label label-danger" ng-if="resource.state == 3">计算失败</span>
+                                <span class="label label-success" ng-if="resource.state == 4">优化完成</span>
+                                <span class="label label-info" ng-if="resource.state == 5">下发MES</span>
+
+                                <span class="label label-success" ng-if="resource.state == 10">应急计算成功</span>
+                                <span class="label label-success" ng-if="resource.state == 11">应急优化完成</span>
+                                <span class="label label-danger" ng-if="resource.state == 12">应急计算失败</span>
+                                <span class="label label-info" ng-if="resource.state == 13">应急下发MES</span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -109,7 +122,7 @@
                                 <div class="form-group" id="add-idSiteGroupResource">
                                     <label class="col-sm-2 control-label">工组</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-siteGroupResource" title="请输入数字！"
+                                        <input class="form-control" name="add-siteGroupResource" title="请输入工组！"
                                                placeholder="">
                                     </div>
                                 </div>
@@ -118,11 +131,9 @@
                                     <label class="col-sm-2 control-label">正常班次</label>
                                     <div class="col-sm-10">
                                         <select id="selectAdd" class="form-control" name="add-nameShift">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
+                                            <option value="08:30:00至12:00:00">08:30:00至12:00:00</option>
+                                            <option value="13:30:00至17:00:00">13:30:00至17:00:00</option>
+                                            <option value="18:30:00至20:00:00">18:30:00至20:00:00</option>
                                         </select>
                                     </div>
 
@@ -131,7 +142,7 @@
                                 <div class="form-group" id="add-state">
                                     <label class="col-sm-2 control-label">状态信息</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="add-state" title="请输入数字！"
+                                        <input class="form-control" name="add-state" title="非必填！"
                                                placeholder="">
                                     </div>
                                     <!-- /.input group -->
@@ -166,7 +177,7 @@
                                 <div class="form-group" id="edit-name">
                                     <label class="col-sm-2 control-label">名称</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-name" title="请输入英文字符串！"
+                                        <input class="form-control" name="edit-name" title="请输入名称！"
                                                value="{{resource.name}}" placeholder="">
                                     </div>
                                 </div>
@@ -174,29 +185,17 @@
                                 <div class="form-group" id="edit-idSiteGroupResource">
                                     <label class="col-sm-2 control-label">工组</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-siteGroupResource" title="请输入数字！"
+                                        <input class="form-control" name="edit-siteGroupResource" title="请输入工组！"
                                                value="{{resource.idSiteGroupResource}}" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group" id="edit-nameShift">
-                                    <!--label class="col-sm-2 control-label">正常班次</label>
-                                    <div class="col-sm-10">
-                                    <select class="form-control select2" style="width: 100%;" id="select">
-                                        <option selected="selected"></option>
-                                        <option>8:00-12:00</option>
-                                        <option>1:00-5:00</option>
-                                    </select>
-                                    </div>-->
                                     <label class="col-sm-2 control-label">正常班次</label>
                                     <div class="col-sm-10">
-                                        <!--<input class="form-control" name="edit-nameShift" title="请输入数字！"
-                                               value="{{resource.nameShift}}" placeholder="">-->
                                         <select id="selectEdit" class="form-control" name="edit-nameShift">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
+                                            <option value="08:30:00至12:00:00">08:30:00至12:00:00</option>
+                                            <option value="13:30:00至17:00:00">13:30:00至17:00:00</option>
+                                            <option value="18:30:00至20:00:00">18:30:00至20:00:00</option>
                                         </select>
                                     </div>
                                 </div>
@@ -205,7 +204,7 @@
                                 <div class="form-group" id="edit-state">
                                     <label class="col-sm-2 control-label">状态信息</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-state" title="请输入数字！"
+                                        <input class="form-control" name="edit-state" title="非必填！"
                                                value="{{resource.state}}" placeholder="">
                                     </div>
                                     <!-- /.input group -->

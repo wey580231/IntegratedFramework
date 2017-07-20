@@ -28,23 +28,6 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
             renderTableService.renderTable($last);
         };
 
-        //Date picker
-        $('#modal-add-reportTime-datepicker').datepicker({
-            format: "yyyy/mm/dd",
-            todayHighlight: true,
-            autoclose: true
-        });
-        $('#modal-add-originalStartTime-datepicker').datepicker({
-            format: "yyyy/mm/dd",
-            todayHighlight: true,
-            autoclose: true
-        });
-        $('#modal-add-appointStartTime-datepicker').datepicker({
-            format: "yyyy/mm/dd",
-            todayHighlight: true,
-            autoclose: true
-        });
-
         //信息填写检验
         var processAddValidate = function () {
             var params = {};
@@ -56,9 +39,9 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
             var reportTime = $("input[id='modal-add-reportTime-datepicker']").val();
             var originalStartTime = $("input[id='modal-add-originalStartTime-datepicker']").val();
             var appointStartTime = $("input[id='modal-add-appointStartTime-datepicker']").val();
-            params.reportTime = Date.parse($("input[id='modal-add-reportTime-datepicker']").val());
-            params.originalStartTime = Date.parse($("input[id='modal-add-originalStartTime-datepicker']").val());
-            params.appointStartTime = Date.parse($("input[id='modal-add-appointStartTime-datepicker']").val());
+            params.reportTime = (new Date($("input[id='modal-add-reportTime-datepicker']").val())).getTime();
+            params.originalStartTime = (new Date($("input[id='modal-add-originalStartTime-datepicker']").val())).getTime();
+            params.appointStartTime = (new Date($("input[id='modal-add-appointStartTime-datepicker']").val())).getTime();
             addData = JSON.stringify(params);
 
             if (!validate.checkLength(params.idTask) || !validate.checkNumber(params.idTask)) {
@@ -164,7 +147,7 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
                     if (response.data.data.state == 0) {
                         processError(event);
                     } else {
-                        notification.sendNotification("alert", "APS正在计算中，无法排程");
+                        notification.sendNotification("alert", "APS正在计算中，无法操作");
                        /* layer.msg('APS正在计算中，无法排程!', {icon: 2});*/
                     }
                 } else {
@@ -175,13 +158,13 @@ angular.module("IntegratedFramework.AdjustProcedureController", ['ngRoute'])
         };
 
         function processError(event) {
-            var idInfo;
+            // var idInfo;
             var e = event || window.event;
             var target = e.target || e.srcElement;
             if (target.parentNode.tagName.toLowerCase() == "td") {
                 var rowIndex = target.parentNode.parentNode.rowIndex;
                 var id = document.getElementById("table_adjust").rows[rowIndex].cells[0].innerHTML;
-                myHttpService.get(serviceList.processExceptionHandling + "?id=" + id, idInfo).then(function successCallback(response) {
+                myHttpService.get(serviceList.processExceptionHandling + "?id=" + id).then(function successCallback(response) {
                     if (response.data.result == "ok") {
                         notification.sendNotification("confirm", "工序调整处理中...");
                     } else {
