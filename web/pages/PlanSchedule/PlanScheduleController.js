@@ -580,18 +580,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         max = formatDateTime(info[i].t2);
                     }
                 }
-
                 apsEnds = new Date(max);
+                apsEnds.setDate(apsEnds.getDate()+scheduleOption);
                 var seperator1 = "-";
                 var seperator2 = ":";
-                var month = apsEnds.getMonth() + 1;
-                var strDate=new Date(apsEnds.setDate(apsEnds.getDate() + scheduleOption)).getDate();
-                if (month >= 1 && month <= 9) {
-                    month = "0" + month;
-                }
-                if (strDate >= 0 && strDate <= 9) {
-                    strDate = "0" + strDate;
-                }
+                var month = (apsEnds.getMonth()+1)<10?"0"+(apsEnds.getMonth()+1):(apsEnds.getMonth()+1);//获取当前月份的日期，不足10补0
+                var strDate=apsEnds.getDate()<10?"0"+apsEnds.getDate():apsEnds.getDate();
                 apsEnds = apsEnds.getFullYear() + seperator1 + month + seperator1 + strDate
                     + " " + apsEnds.getHours() + seperator2 + apsEnds.getMinutes()
                     + seperator2 + apsEnds.getSeconds();
@@ -633,7 +627,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             params.resources = resourceArr;
             params.groupResource = groupResourcesArr;
             params.site = sitesArr;
-            console.log(params);
             var data = JSON.stringify(params);
             $("#modal-add").hide();
             $(".modal-backdrop").remove();
