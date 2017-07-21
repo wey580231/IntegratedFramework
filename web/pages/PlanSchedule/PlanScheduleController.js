@@ -691,9 +691,11 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         myHttpService.get(serviceList.ListSchedule).then(function (response) {
                             $scope.scheduleList = response.data;
                             notification.sendNotification("confirm", "删除成功");
+                            hideLoadingPage();
                         });
                     }, function errorCallback() {
                         notification.sendNotification("alert", "请求失败");
+                        hideLoadingPage();
                     });
                     layer.close(index);
                 }, function (index) {

@@ -8,7 +8,10 @@ import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import java.net.ConnectException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Logger;
 
 /**
  * ActiveMQ接收端
@@ -24,6 +27,10 @@ public class MesReceiver extends Thread {
 
     private boolean runningFlag = true;
     private BlockingQueue<Message> messages;
+
+    private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    private Logger logger = Logger.getLogger(MesReceiver.class.getName());
 
     public MesReceiver(BlockingQueue<Message> messages) throws JMSException, ConnectException {
 
@@ -49,6 +56,7 @@ public class MesReceiver extends Thread {
                 //设置接收者接收消息的时间，为了便于测试，这里谁定为100s
                 TextMessage message = (TextMessage) consumer.receive(100000);
                 if (null != message) {
+                    logger.info(sf.format(new Date())+"  Recv:" + message.getText());
                     messages.put(message);
                 }
             }

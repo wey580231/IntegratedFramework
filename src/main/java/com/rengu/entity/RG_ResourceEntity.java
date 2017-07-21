@@ -36,6 +36,8 @@ public class RG_ResourceEntity {
     private String idSite0;
     private String unit;
 
+    private String assisantResource;            //是否需要载具，在人机协作平台和智能装配平台上此字段有意义
+
     private RG_ClubEntity clubByIdClub;
     private RG_UserEntity userByIdUser;
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "GroupresourceId")
@@ -230,6 +232,14 @@ public class RG_ResourceEntity {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public String getAssisantResource() {
+        return assisantResource;
+    }
+
+    public void setAssisantResource(String assisantResource) {
+        this.assisantResource = assisantResource;
     }
 
     public RG_ClubEntity getClubByIdClub() {

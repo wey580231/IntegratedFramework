@@ -35,7 +35,10 @@ public class ApsTools {
     //aps部署的地址和端口号
     private static ApsTools apsTool = null;
     private final String replyApsAction = "/aps/updateProgress";
-    private final String stateReplyAction = "/aps/updateApsState";
+    private final String interAction = "/aps/interactiveAps";                   //交互/应急优化
+    private final String backupSnapshotAction = "/aps/backupSnapshot";          //备份aps快照
+    private final String recoverSnapshotAction = "/aps/recoverSnapshot";        //恢复aps快照
+    private final String dispatchOrderAction = "/aps/dispatchOrder";            //下发aps订单
     private String apsHost;
     private int apsPort;
 
@@ -65,12 +68,12 @@ public class ApsTools {
     }
 
     //生成快照，在收到一次aps反馈结果时，自动在aps中创建一个快照
-    public static String getCreateSnapshot(String nodeId) {
+    public static String createApsSnapshot(String nodeId) {
         String result = "/NCL:RUN?Program=./Model/Interaction/Backup/Snapshot.n" +
                 "&" +
                 "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
                 "&" +
-                "REPLY=" + ApsTools.instance().getStateReplyAddress() +
+                "REPLY=" + ApsTools.instance().getBackupSnapshotAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -84,7 +87,7 @@ public class ApsTools {
                 "&" +
                 "BUFFER=001" +
                 "&" +
-                "REPLY=" + ApsTools.instance().getStateReplyAddress() +
+                "REPLY=" + ApsTools.instance().getInterAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -98,7 +101,7 @@ public class ApsTools {
                 "&" +
                 "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
                 "&" +
-                "REPLY=" + ApsTools.instance().getStateReplyAddress() +
+                "REPLY=" + ApsTools.instance().getRecoverSnapshotAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -108,12 +111,12 @@ public class ApsTools {
     }
 
     //发布所有订单
-    public static String publishOrder(){
+    public static String publishOrder() {
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
                 "&" +
                 "BUFFER=001" +
                 "&" +
-                "REPLY=" +ApsTools.instance().getStateReplyAddress()+
+                "REPLY=" + ApsTools.instance().getDispatchOrderAddress() +
                 "&" +
                 "ID=001" +
                 "&" +
@@ -409,8 +412,23 @@ public class ApsTools {
     }
 
     //获取非数据接口返回地址
-    public String getStateReplyAddress(){
-        return localAddress + ":" + localPort + localProjectName + stateReplyAction;
+    public String getInterAddress() {
+        return localAddress + ":" + localPort + localProjectName + interAction;
+    }
+
+    //获取生成快照地址
+    public String getBackupSnapshotAddress() {
+        return localAddress + ":" + localPort + localProjectName + backupSnapshotAction;
+    }
+
+    //获取恢复快照地址
+    public String getRecoverSnapshotAddress() {
+        return localAddress + ":" + localPort + localProjectName + recoverSnapshotAction;
+    }
+
+    //获取发布订单地址
+    public String getDispatchOrderAddress() {
+        return localAddress + ":" + localPort + localProjectName + dispatchOrderAction;
     }
 
     //tomcat启动时根据当前排程信息来

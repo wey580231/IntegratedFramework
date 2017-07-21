@@ -21,7 +21,7 @@ public class ScheduleAction extends SuperAction {
         try {
             String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN};
             Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
-            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '0'");
+//            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '0'");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -120,6 +120,9 @@ public class ScheduleAction extends SuperAction {
             rootSnapshot.setApply(false);
             rootSnapshot.setErrorNode(false);
             rootSnapshot.setFirstNode(false);
+            rootSnapshot.setApsBackupSnaoshot(false);
+            rootSnapshot.setApsDispatchOrder(false);
+            rootSnapshot.setApsRecoverSnapshot(false);
             rootSnapshot.setNodeCreateTime(new Date());
 
             RG_SnapshotNodeEntity middleShot = new RG_SnapshotNodeEntity();
@@ -130,6 +133,9 @@ public class ScheduleAction extends SuperAction {
             middleShot.setApply(false);
             middleShot.setErrorNode(false);
             middleShot.setFirstNode(true);
+            middleShot.setApsBackupSnaoshot(false);
+            middleShot.setApsDispatchOrder(false);
+            middleShot.setApsRecoverSnapshot(false);
 
             middleShot.setParent(rootSnapshot);
             middleShot.setRootParent(rootSnapshot);

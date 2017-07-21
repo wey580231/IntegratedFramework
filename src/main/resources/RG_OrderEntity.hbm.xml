@@ -92,6 +92,7 @@
         <property name="finished">
             <column name="finished" sql-type="tinyint(1)" not-null="false"/>
         </property>
+
         <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
             <column name="idProduct" not-null="false"/>
         </many-to-one>

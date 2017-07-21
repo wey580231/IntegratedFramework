@@ -26,7 +26,18 @@
         <property name="firstNode">
             <column name="firstNode" sql-type="tinyint(1)" not-null="false"></column>
         </property>
-
+        <property name="apsBackupSnaoshot">
+            <column name="apsBackupSnaoshot" sql-type="tinyint(1)" not-null="false"></column>
+        </property>
+        <property name="apsDispatchOrder">
+            <column name="apsDispatchOrder" sql-type="tinyint(1)" not-null="false"></column>
+        </property>
+        <property name="apsRecoverSnapshot">
+            <column name="apsRecoverSnapshot" sql-type="tinyint(1)" not-null="false"></column>
+        </property>
+        <property name="apsInteractive">
+            <column name="apsInteractive" sql-type="tinyint(1)" not-null="false"></column>
+        </property>
 
         <many-to-one name="parent" column="s_id" class="com.rengu.entity.RG_SnapshotNodeEntity"/>
 
