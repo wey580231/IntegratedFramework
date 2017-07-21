@@ -28,12 +28,181 @@ public class FeedBackStateAction extends SuperAction {
 
     private ApsDao apsDao = new ApsDao();
 
-    //接收非aps结果回复，只用户信息等的提示
-    public void recvApsState() {
+    //接收aps应急优化回调接口
+    public void interactiveAps() {
+        ActionContext context = ActionContext.getContext();
+        Map<String, Object> parameterMap = context.getParameters();
 
+        boolean result = false;
+        StringBuilder jsonString = new StringBuilder();
+
+        if (parameterMap.size() == 3) {
+            String[] id = (String[]) parameterMap.get("id");
+            String[] state = (String[]) parameterMap.get("STATE");
+            String[] message = (String[]) parameterMap.get("MESSAGE");
+
+            System.out.println("=============收到回复消息啦============");
+
+            if (id.length > 0 && state.length > 0 && message.length > 0) {
+
+                Session session = MySessionFactory.getSessionFactory().openSession();
+                session.beginTransaction();
+
+                RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
+                String bottomId = userconfig.getBottomSnapshotId();
+                if (bottomId != null) {
+                    RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomId);
+
+                    if (bottomSnapshot != null) {
+                        if (state[0].equals(APS_RESULT_SUCCESS)) {
+                            bottomSnapshot.setApsInteractive(true);
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急滚动优化成功!", "confirm"));
+                        } else {
+                            bottomSnapshot.setApsInteractive(false);
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急滚动优化失败!", "alert"));
+                        }
+                    }
+                }
+
+                session.getTransaction().commit();
+                session.close();
+            }
+        } else {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS结果格式不符合要求，无法解析!", "alert"));
+        }
     }
 
-    //根据返回的id号更新对应schedule的状态
+    //接收备份快照的结果
+    public void backupSnapshot() {
+        ActionContext context = ActionContext.getContext();
+        Map<String, Object> parameterMap = context.getParameters();
+
+        boolean result = false;
+        StringBuilder jsonString = new StringBuilder();
+
+        if (parameterMap.size() == 3) {
+            String[] id = (String[]) parameterMap.get("id");
+            String[] state = (String[]) parameterMap.get("STATE");
+            String[] message = (String[]) parameterMap.get("MESSAGE");
+
+            System.out.println("=============收到回复消息啦============");
+
+            if (id.length > 0 && state.length > 0 && message.length > 0) {
+                Session session = MySessionFactory.getSessionFactory().openSession();
+                session.beginTransaction();
+
+                RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
+                String bottomId = userconfig.getBottomSnapshotId();
+                if (bottomId != null) {
+                    RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomId);
+
+                    if (bottomSnapshot != null) {
+                        if (state[0].equals(APS_RESULT_SUCCESS)) {
+                            bottomSnapshot.setApsBackupSnaoshot(true);
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS快照备份成功!", "confirm"));
+                        } else {
+                            bottomSnapshot.setApsBackupSnaoshot(false);
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS快照备份失败!", "alert"));
+                        }
+                    }
+                }
+                session.getTransaction().commit();
+                session.close();
+            }
+        } else {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算出错!", "alert"));
+        }
+        Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
+    }
+
+    //恢复快照
+    public void recoverSnapshot() {
+        ActionContext context = ActionContext.getContext();
+        Map<String, Object> parameterMap = context.getParameters();
+
+        boolean result = false;
+        StringBuilder jsonString = new StringBuilder();
+
+        if (parameterMap.size() == 3) {
+            String[] id = (String[]) parameterMap.get("id");
+            String[] state = (String[]) parameterMap.get("STATE");
+            String[] message = (String[]) parameterMap.get("MESSAGE");
+
+            System.out.println("=============收到回复消息啦============");
+
+            if (id.length > 0 && state.length > 0 && message.length > 0) {
+
+                Session session = MySessionFactory.getSessionFactory().openSession();
+                session.beginTransaction();
+
+                RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
+                String bottomId = userconfig.getBottomSnapshotId();
+                if (bottomId != null) {
+                    RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomId);
+
+                    if (bottomSnapshot != null) {
+                        if (state[0].equals(APS_RESULT_SUCCESS)) {
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复快照成功!", "confirm"));
+                        } else {
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复快照失败!", "alert"));
+                        }
+                    }
+                }
+                session.getTransaction().commit();
+                session.close();
+            }
+        } else {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算出错!", "alert"));
+        }
+        Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
+    }
+
+
+    //下发订单
+    public void dispatchOrdr() {
+        ActionContext context = ActionContext.getContext();
+        Map<String, Object> parameterMap = context.getParameters();
+
+        boolean result = false;
+        StringBuilder jsonString = new StringBuilder();
+
+        if (parameterMap.size() == 3) {
+            String[] id = (String[]) parameterMap.get("id");
+            String[] state = (String[]) parameterMap.get("STATE");
+            String[] message = (String[]) parameterMap.get("MESSAGE");
+
+            System.out.println("=============收到回复消息啦============");
+
+            if (id.length > 0 && state.length > 0 && message.length > 0) {
+
+                Session session = MySessionFactory.getSessionFactory().openSession();
+                session.beginTransaction();
+
+                RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
+                String bottomId = userconfig.getBottomSnapshotId();
+                if (bottomId != null) {
+                    RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomId);
+
+                    if (bottomSnapshot != null) {
+                        if (state[0].equals(APS_RESULT_SUCCESS)) {
+                            bottomSnapshot.setApsRecoverSnapshot(true);
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复订单成功!", "confirm"));
+                        } else {
+                            bottomSnapshot.setApsRecoverSnapshot(false);
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复订单失败!", "alert"));
+                        }
+                    }
+                }
+                session.getTransaction().commit();
+                session.close();
+            }
+        } else {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算出错!", "alert"));
+        }
+        Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
+    }
+
+    //接收APS返回结果
     public void recvApsResult() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
@@ -48,7 +217,6 @@ public class FeedBackStateAction extends SuperAction {
 
             System.out.println("=============收到回复消息啦============");
 
-
             if (id.length > 0 && state.length > 0 && message.length > 0) {
                 switchResult(state[0]);
             }
@@ -58,7 +226,7 @@ public class FeedBackStateAction extends SuperAction {
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
-    //处理aps回调
+    //处理aps转换结果
     private void switchResult(String replyState) {
 
         RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
@@ -155,6 +323,9 @@ public class FeedBackStateAction extends SuperAction {
                     bottomSnapshot.setLevel(SnapshotLevel.BOTTOM);
                     bottomSnapshot.setNodeCreateTime(new Date());
                     bottomSnapshot.setApply(false);
+                    bottomSnapshot.setApsBackupSnaoshot(false);
+                    bottomSnapshot.setApsDispatchOrder(false);
+                    bottomSnapshot.setApsRecoverSnapshot(false);
                     if (userconfig.isErrorSchedule()) {
                         bottomSnapshot.setErrorNode(true);
                     } else {
@@ -183,6 +354,11 @@ public class FeedBackStateAction extends SuperAction {
                         ApsTools.instance().getScheduleResult(bottomSnapshot);
 
                         session.getTransaction().commit();
+
+                        //在非应急排程下，接收到aps的接口信息后，通知APS创建快照
+                        if (replyState.equals(APS_RESULT_SUCCESS) && !userconfig.isErrorSchedule()) {
+                            ApsTools.createApsSnapshot(bottomSnapshot.getId());
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();

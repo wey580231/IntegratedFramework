@@ -102,11 +102,7 @@ public class SnapshotDao {
 
                     RG_ResourceEntity res = plan.getResourceByIdResource();
 
-                    if(plan.getProcessByIdProcess().getId().equals("Kqd-Kqd-CCJC-06")){
-                        System.out.println("Kqd-Kqd-CCJC-06");
-                    }
-
-                    if (res.getCritical() != null && res.getCritical().equals("T")) {
+                    if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
                         String processId = plan.getProcessByIdProcess().getId();
 
                         NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
@@ -162,7 +158,7 @@ public class SnapshotDao {
 
                         RG_ResourceEntity res = plan.getResourceByIdResource();
 
-                        if (res.getCritical() != null && res.getCritical().equals("T")) {
+                        if (res!=null &&res.getCritical() != null && res.getCritical().equals("T")) {
                             String processId = plan.getProcessByIdProcess().getId();
 
                             NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
@@ -237,7 +233,7 @@ public class SnapshotDao {
             }
             session.getTransaction().commit();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             result = false;
 
             session.getTransaction().rollback();

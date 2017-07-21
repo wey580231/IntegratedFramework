@@ -69,7 +69,7 @@ public class State3DAction extends SuperAction {
     }
 
     //根据layoutId和设备id更新设备状态
-    public void updateDeviceState(){
+    public void updateDeviceState() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
         boolean opresult = false;
@@ -78,7 +78,7 @@ public class State3DAction extends SuperAction {
             String[] data = (String[]) parameterMap.get("data");
 
             if (layoutId.length == 1 && data.length == 1) {
-                opresult = stateDao.updateDevice(layoutId[0],data[0]);
+                opresult = stateDao.updateDevice(layoutId[0], data[0]);
             }
         }
 
@@ -90,7 +90,7 @@ public class State3DAction extends SuperAction {
     }
 
     //【已调】查询所有布局信息
-    public void query3DLayout(){
+    public void query3DLayout() {
         Tools.jsonPrint(stateDao.queryAllLayout(), this.httpServletResponse);
     }
 

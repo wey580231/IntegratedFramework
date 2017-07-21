@@ -141,6 +141,9 @@ public class ErrorProcessDao {
             middleSnapshot.setRootParent(rootSnapshot);
             middleSnapshot.setErrorNode(true);
             middleSnapshot.setFirstNode(true);
+            middleSnapshot.setApsBackupSnaoshot(false);
+            middleSnapshot.setApsDispatchOrder(false);
+            middleSnapshot.setApsRecoverSnapshot(false);
 
             UserConfigTools.updateMiddleSnapshotId("1", middleSnapshot.getId(), true);
             UserConfigTools.updateApsReplyCount("1", 0);
