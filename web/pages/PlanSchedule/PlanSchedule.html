@@ -9,9 +9,13 @@
         padding: 0px;
     }
 
+    .col-sm-4 {
+        padding-left: 13px;
+    }
+
     #MyContainer {
         width: 100%;
-        height: 85%;
+        height: 95%;
         overflow: hidden;
         padding: 5px;
     }
@@ -196,7 +200,7 @@
                                             <div class="col-md-4">
                                                 <div class="modal-body">
                                                     <form class="form-horizontal">
-                                                        <div class="box-body">
+                                                        <div class="box-body" style="margin-top: -10px">
                                                             <div class="form-group" id="add-name">
                                                                 <label class="col-sm-4 control-label">排程名称</label>
 
@@ -208,22 +212,21 @@
                                                             </div>
 
                                                             <div class="form-group" id="add-rollTime">
-                                                                <label class="col-sm-4 control-label">滚动周期(天)</label>
+                                                                <label class="col-sm-4 control-label">滚动周期</label>
 
                                                                 <div class="col-sm-8">
                                                                     <input class="myInput form-control"
                                                                            name="add-rollTime"
-                                                                           title="请输入数字！"
+                                                                           title="请输入滚动周期(天)！"
                                                                            placeholder="7">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group" id="add-scheduleDays">
-                                                                <label class="col-sm-4 control-label">排程周期(天)</label>
+                                                                <label class="col-sm-4 control-label">排程周期</label>
                                                                 <div class="col-sm-8">
                                                                     <input class="myInput form-control"
-                                                                           name="add-scheduleDays"
+                                                                           name="add-scheduleDays" title="请输入排程周期(天)！"
                                                                            placeholder="30">
-
                                                                 </div>
                                                             </div>
 
@@ -241,20 +244,20 @@
                                                             </div>
 
                                                             <div class="form-group" id="scheduleOption">
-                                                                <label class="col-sm-4 control-label">可容忍时间(天)</label>
+                                                                <label class="col-sm-4 control-label">可容忍时间</label>
                                                                 <div class="col-sm-8">
                                                                     <input class="myInput form-control"
-                                                                           title="请输入数字！"
+                                                                           title="可容忍时间(天)！" name="scheduleOption"
                                                                            placeholder="3">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group" id="add-start">
+                                                            <div class="form-group" id="add-start" name="start">
                                                                 <label class="col-sm-4 control-label">优化开始</label>
-                                                                <div class="col-sm-8 layui-inline">
+                                                                <div class="col-sm-8">
                                                                     <input class="myInput form-control" name="add-start"
-                                                                           placeholder="2017-07-18 00:00:00"
-                                                                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                                           id="start" type="text" value="">
+                                                                    <!--onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"-->
                                                                 </div>
                                                             </div>
 
@@ -262,8 +265,8 @@
                                                                 <label class="col-sm-4 control-label">优化结束</label>
                                                                 <div class="col-sm-8">
                                                                     <input class="myInput form-control" name="add-end"
-                                                                           placeholder="2017-07-18 00:00:00"
-                                                                           onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                                                           id="end" type="text" value="">
+                                                                           <!--onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">-->
                                                                 </div>
                                                             </div>
 
