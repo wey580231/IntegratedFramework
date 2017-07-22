@@ -97,11 +97,11 @@
                     <i class="fa fa-cog bg-green fa-spin " ng-if="eventLog.eventType == 1"></i>
                     <div class="timeline-item">
                         <span class="time"><i class="fa fa-clock-o"></i>{{eventLog.creatTime | date:'yyyy-MM-dd hh:mm:ss' }}</span>
-                        <h3 class="timeline-header"><a href="#">{{eventLog.title}}</a>Message</h3>
-                        <div class="timeline-body">{{eventLog.content}}</div>
-                        <div class="timeline-footer">
-                            <!--<a class="btn btn-warning btn-flat btn-xs">View comment</a>-->
-                        </div>
+                        <h3 class="timeline-header no-border" ng-if="eventLog.logItemtype == 0"><a href="#">{{eventLog.title}}</a>Message
+                        </h3>
+                        <h3 class="timeline-header" ng-if="eventLog.logItemtype == 1"><a href="#">{{eventLog.title}}</a>Message
+                        </h3>
+                        <div class="timeline-body" ng-if="eventLog.logItemtype == 1">{{eventLog.content}}</div>
                     </div>
                 </li>
                 <!-- END timeline item -->

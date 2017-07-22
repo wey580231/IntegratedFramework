@@ -17,5 +17,6 @@ public class ExceptionCreator {
         rg_adjustOrderEntity.setReportTime(new Date());
         rg_adjustOrderEntity.setOrd(rg_orderEntity);
         DAOFactory.getAdjustOrderDAOImplInstance().save(rg_adjustOrderEntity);
+        Tools.createEventLog(EventLogTools.OrderExceptionStartEvent, EventLogTools.SimpleTimeLineItem, "产生紧急插单异常", EventLogTools.createExceptionEventContent(rg_adjustOrderEntity), rg_adjustOrderEntity.getId());
     }
 }

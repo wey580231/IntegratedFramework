@@ -130,11 +130,12 @@ public class Tools {
         return jsonString;
     }
 
-    public static boolean createEventLog(Short eventLogType, String title, String content, String objectId) {
+    public static boolean createEventLog(Short eventLogType, Short logItemType, String title, String content, String objectId) {
         RG_EventLogEntity rg_eventLogEntity = new RG_EventLogEntity();
         rg_eventLogEntity.setId(Tools.getUUID());
         rg_eventLogEntity.setCreatTime(new Date());
         rg_eventLogEntity.setEventType(eventLogType);
+        rg_eventLogEntity.setLogItemtype(logItemType);
         rg_eventLogEntity.setTitle(title);
         rg_eventLogEntity.setContent(content);
         rg_eventLogEntity.setObjectId(objectId);

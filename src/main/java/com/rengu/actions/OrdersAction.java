@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.DAO.impl.OrdersDAOImpl;
 import com.rengu.entity.RG_OrderEntity;
-import com.rengu.util.*;
+import com.rengu.util.DAOFactory;
+import com.rengu.util.ExceptionCheck;
+import com.rengu.util.Tools;
+import com.rengu.util.WebSocketNotification;
 
 import java.util.Date;
 import java.util.List;
@@ -59,7 +62,6 @@ public class OrdersAction extends SuperAction {
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         boolean isSaved = ordersDAOInstance.save(rg_orderEntity);
         if (isSaved) {
-            Tools.createEventLog(EventLogTools.OrderEvent, rg_orderEntity.getName() + "订单生成", EventLogTools.createOrderEventContent(rg_orderEntity), rg_orderEntity.getId());
             ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order保存失败", "alert"));
@@ -79,16 +81,6 @@ public class OrdersAction extends SuperAction {
     public void update() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
-
-        rg_orderEntity.setOrigin("0");//设置订单为手动输入
-        rg_orderEntity.setState(Byte.parseByte("0"));//设置订单状态为计划
-        rg_orderEntity.setEstimate(Short.parseShort("4246"));
-        rg_orderEntity.setDelay(Short.parseShort("0"));
-        rg_orderEntity.setColor("79 129 189");
-        rg_orderEntity.setFinished(false);
-        rg_orderEntity.setProductByIdProduct(DAOFactory.getProductDAOImplInstance().findAllById("Kqd"));
-        rg_orderEntity.setClubByIdClub(DAOFactory.getClubDAOImplInstance().findAllById("001"));
-
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.update(rg_orderEntity)) {
             ExceptionCheck.orderExceptionCheck(rg_orderEntity);

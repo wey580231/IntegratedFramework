@@ -11,6 +11,9 @@
         <property name="eventType">
             <column name="eventType" sql-type="smallint(6)" not-null="false"/>
         </property>
+        <property name="logItemtype">
+            <column name="logItemtype" sql-type="smallint(6)" not-null="false"/>
+        </property>
         <property name="creatTime" type="java.util.Date">
             <column name="creatTime" sql-type="datetime" length="20" not-null="false"/>
         </property>

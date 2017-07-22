@@ -77,8 +77,8 @@
                             <td style="display:none">{{order.id}}</td>
                             <td>{{order.name}}</td>
                             <td>
-                                <span class="label label-primary" ng-if="order.origin == 0">手动输入</span>
-                                <span class="label label-success" ng-if="order.origin == 1">云排产</span>
+                                <span ng-if="order.origin == 0">手动输入</span>
+                                <span ng-if="order.origin == 1">云排产</span>
                             </td>
                             <td>{{order.priority}}</td>
                             <td>{{order.quantity}}</td>

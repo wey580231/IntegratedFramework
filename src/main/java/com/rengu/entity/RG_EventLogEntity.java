@@ -8,6 +8,7 @@ import java.util.Date;
 public class RG_EventLogEntity {
     private String id;
     private Short eventType;
+    private Short logItemtype;
     private Date creatTime;
     private String title;
     private String content;
@@ -28,6 +29,14 @@ public class RG_EventLogEntity {
 
     public void setEventType(Short eventType) {
         this.eventType = eventType;
+    }
+
+    public Short getLogItemtype() {
+        return logItemtype;
+    }
+
+    public void setLogItemtype(Short logItemtype) {
+        this.logItemtype = logItemtype;
     }
 
     public Date getCreatTime() {
