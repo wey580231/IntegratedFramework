@@ -75,7 +75,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getBackupSnapshotAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000";
         return result;
@@ -89,7 +89,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getInterAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000000";
         return result;
@@ -103,7 +103,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getRecoverSnapshotAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000000";
 
@@ -118,7 +118,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getDispatchOrderAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000000";
 
@@ -138,7 +138,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000";
         System.out.println("APS链接地址：" + result);
@@ -156,7 +156,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000";
         System.out.println("APS链接地址：" + result);
@@ -255,7 +255,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000";
         System.out.println("APS链接地址：" + result);
@@ -271,7 +271,7 @@ public class ApsTools {
                 "&" +
                 "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
-                "ID=001" +
+                "ID=" + Tools.getUUID() +
                 "&" +
                 "DELAY=1000\n";
         System.out.println("APS链接地址：" + result);

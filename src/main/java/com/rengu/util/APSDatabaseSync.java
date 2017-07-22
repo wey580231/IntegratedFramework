@@ -328,8 +328,21 @@ public class APSDatabaseSync {
                 rg_processEntity.setModTimeDivision(getShortFromHashMap(tempMap, "MODTIMEDIVISION"));
                 rg_processEntity.setMinResourceDivision(getShortFromHashMap(tempMap, "MINRESOURCEDIVISION"));
                 rg_processEntity.setNbTask(getShortFromHashMap(tempMap, "NBTASK"));
+                rg_processEntity.setProductByIdProduct(DAOFactory.getProductDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDPRODUCT")));
                 ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
                 processDAO.save(rg_processEntity);
+            } else {
+                System.out.println("工艺表同步失败");
+                return false;
+            }
+        }
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_ProcessEntity rg_processEntity = DAOFactory.getProcessDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "ID"));
+                rg_processEntity.setProcessByIdProcess(DAOFactory.getProcessDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDPARENT")));
+                ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
+                processDAO.update(rg_processEntity);
             } else {
                 System.out.println("工艺表同步失败");
                 return false;

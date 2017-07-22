@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.RG_EventLogEntity;
+import org.hibernate.Session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -130,15 +131,28 @@ public class Tools {
         return jsonString;
     }
 
-    public static boolean createEventLog(Short eventLogType, String title, String content, String objectId) {
+    public static boolean createEventLog(Short eventLogType, Short logItemType, String title, String content, String objectId) {
         RG_EventLogEntity rg_eventLogEntity = new RG_EventLogEntity();
         rg_eventLogEntity.setId(Tools.getUUID());
         rg_eventLogEntity.setCreatTime(new Date());
         rg_eventLogEntity.setEventType(eventLogType);
+        rg_eventLogEntity.setLogItemtype(logItemType);
         rg_eventLogEntity.setTitle(title);
         rg_eventLogEntity.setContent(content);
         rg_eventLogEntity.setObjectId(objectId);
         return DAOFactory.getEventLogDAOImplInstance().save(rg_eventLogEntity);
+    }
+
+    public static void createEventLog(Session session, Short eventLogType, Short logItemType, String title, String content, String objectId) {
+        RG_EventLogEntity rg_eventLogEntity = new RG_EventLogEntity();
+        rg_eventLogEntity.setId(Tools.getUUID());
+        rg_eventLogEntity.setCreatTime(new Date());
+        rg_eventLogEntity.setEventType(eventLogType);
+        rg_eventLogEntity.setLogItemtype(logItemType);
+        rg_eventLogEntity.setTitle(title);
+        rg_eventLogEntity.setContent(content);
+        rg_eventLogEntity.setObjectId(objectId);
+        session.save(rg_eventLogEntity);
     }
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {

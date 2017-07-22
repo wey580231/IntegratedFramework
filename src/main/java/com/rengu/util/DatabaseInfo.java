@@ -27,4 +27,5 @@ public class DatabaseInfo {
     public static final String APS_PLAN = "APS_PLAN";
     public static final String APS_LOG = "APS_LOG";
     public static final String APS_USER = "APS_USER";
+    public static final String APS_RESOURCE_TYPERESOURCE = "APS_RESOURCE_TYPERESOURCE";
 }

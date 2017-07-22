@@ -127,7 +127,6 @@ public class UserConfigTools {
     //根据ID，更新
     public static int updateApsReplyCount(String userId, int count) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-
         NativeQuery query = session.createNativeQuery("update rg_userconfig set apsReplyCount = ? where idUser = ?");
         query.setParameter(1, count);
         query.setParameter(2, userId);

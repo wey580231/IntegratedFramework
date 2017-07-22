@@ -274,6 +274,7 @@ public class FeedBackStateAction extends SuperAction {
                             nodeName = "基础计算结果";
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算完成!", "confirm"));
                             setOrdersState("0", schedule);
+                            Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS计算完成!", schedule.getId());
                         } else {
                             schedule.setState(RG_ScheduleEntity.APS_ADJUST);
                             if (middleSnapshot != null) {
@@ -281,6 +282,7 @@ public class FeedBackStateAction extends SuperAction {
                             }
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS优化计算完成!", "confirm"));
                             setOrdersState("0", schedule);
+                            Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS优化计算完成!", schedule.getId());
                         }
                     }
                     //计算失败
@@ -288,6 +290,7 @@ public class FeedBackStateAction extends SuperAction {
                         schedule.setState(RG_ScheduleEntity.APS_FAIL);
                         WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算失败!", "alert"));
                         setOrdersState("0", schedule);
+                        Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS计算失败!", schedule.getId());
                     }
                 }
                 //故障应急排程
@@ -299,6 +302,8 @@ public class FeedBackStateAction extends SuperAction {
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急计算完成!", "confirm"));
                             setOrdersState("0", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_APS_FINISH);
+                            Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急计算完成!", schedule.getId());
+
                         } else {
                             schedule.setState(RG_ScheduleEntity.ERROR_ADJUST);
                             if (middleSnapshot != null) {
@@ -307,6 +312,7 @@ public class FeedBackStateAction extends SuperAction {
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急优化完成!", "confirm"));
                             setOrdersState("0", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ADJUSTED);
+                            Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急优化完成!", schedule.getId());
                         }
                     }
                     //计算失败
@@ -315,6 +321,7 @@ public class FeedBackStateAction extends SuperAction {
                         WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急处理失败!", "alert"));
                         setOrdersState("0", schedule);
                         setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ERROR);
+                        Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急处理失败!", schedule.getId());
                     }
                 }
 

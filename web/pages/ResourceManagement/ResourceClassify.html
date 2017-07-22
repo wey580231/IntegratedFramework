@@ -62,12 +62,14 @@
                             <td></td>
                             <th>资源类型名称</th>
                             <th>资源属性</th>
+                            <th>资源状态</th>
                         </tr>
                         <tr ng-repeat="type in typeList track by $index" ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{type.id}}</td>
                             <td>{{type.name}}</td>
                             <td>{{type.attribute}}</td>
+                            <td>可用</td>
                         </tr>
                         </tbody>
                     </table>

@@ -19,7 +19,7 @@ public class ScheduleAction extends SuperAction {
     public void beginSchedule() {
         //初始化APS数据库
         try {
-            String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN};
+            String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN, DatabaseInfo.APS_ORDER};
             Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
 //            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '0'");
         } catch (ClassNotFoundException e) {
@@ -84,11 +84,24 @@ public class ScheduleAction extends SuperAction {
             if (layoutNodes.size() == 1) {
                 RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
                 Set<RG_LayoutDetailEntity> rg_layoutDetailEntitySet = layout.getDetails();
+                //开启所有资源
+//                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1'");
                 //更新资源可用情况
-                for (RG_LayoutDetailEntity rg_layoutDetailEntity : rg_layoutDetailEntitySet) {
-                    String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
-                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
-                }
+//                for (RG_LayoutDetailEntity rg_layoutDetailEntity : rg_layoutDetailEntitySet) {
+//                    String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
+//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
+//                    RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, rg_layoutDetailEntity.getItem());
+//                    if (rg_resourceEntity != null) {
+//                        String assisantResource = rg_resourceEntity.getAssisantResource();
+//                        if (assisantResource != null) {
+//                            System.out.println("发现载具：" + assisantResource);
+//                            String SQlStringTemp = "update APS_RESOURCE set STATE = '1' where id = '" + assisantResource + "'";
+//                            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlStringTemp);
+//                        }
+//                    } else {
+//                        System.out.println("资源不存在：" + rg_layoutDetailEntity.getItem());
+//                    }
+//                }
                 rg_scheduleEntity.setLayout(layout);
             }
 
@@ -164,15 +177,8 @@ public class ScheduleAction extends SuperAction {
                             session.save(rg_orderEntity);
                         }
                     }
-                    //更新事件日直节点
-                    RG_EventLogEntity rg_eventLogEntity = new RG_EventLogEntity();
-                    rg_eventLogEntity.setId(Tools.getUUID());
-                    rg_eventLogEntity.setCreatTime(new Date());
-                    rg_eventLogEntity.setEventType(EventLogTools.ScheduleEvent);
-                    rg_eventLogEntity.setTitle(rg_scheduleEntity.getName() + "-APS计算启动");
-                    rg_eventLogEntity.setContent(EventLogTools.createScheduleStartEventContent(rg_scheduleEntity));
-                    rg_eventLogEntity.setObjectId(rg_scheduleEntity.getId());
-                    session.save(rg_eventLogEntity);
+                    //更新事件日志节点
+                    Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.StandardTimeLineItem, rg_scheduleEntity.getName() + "-APS计算启动", EventLogTools.createScheduleStartEventContent(rg_scheduleEntity), rg_scheduleEntity.getId());
                     tx.commit();
                     Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                 } else {
