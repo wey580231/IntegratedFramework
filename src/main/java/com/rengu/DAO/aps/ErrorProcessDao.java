@@ -1,9 +1,6 @@
 package com.rengu.DAO.aps;
 
-import com.rengu.entity.RG_AdjustDeviceEntity;
-import com.rengu.entity.RG_AdjustOrderEntity;
-import com.rengu.entity.RG_AdjustProcessEntity;
-import com.rengu.entity.RG_SnapshotNodeEntity;
+import com.rengu.entity.*;
 import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -80,6 +77,16 @@ public class ErrorProcessDao {
                 entity.setState(ErrorState.ERROR_APS_PROCESS);
                 entity.setProcessTime(new Date());
                 createSnapNode("紧急插单应急优化", "rg_adjustorder", id);
+
+                String lastesScheduleId = UserConfigTools.getLatestSchedule("1");
+                if (lastesScheduleId != null && lastesScheduleId.length() > 0) {
+                    RG_ScheduleEntity scheduleEntity = session.get(RG_ScheduleEntity.class, lastesScheduleId);
+                    if (scheduleEntity != null) {
+                        scheduleEntity.getOrders().add(entity.getOrd());
+                        session.update(scheduleEntity);
+                    }
+                }
+
                 session.update(entity);
             }
         }

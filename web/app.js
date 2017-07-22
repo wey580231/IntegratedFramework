@@ -76,7 +76,7 @@ angular.module("IntegratedFramework", [
         var service = {};
         var notyf = null;
         service.sendNotification = function (notificationType, message) {
-            if(notyf == null){
+            if (notyf == null) {
                 notyf = new Notyf();
             }
 
@@ -232,7 +232,7 @@ angular.module("IntegratedFramework", [
         };
 
         service.checkNumber = function (n) {
-            var NRegexp = /^[0-9]+.?[0-9]*$/;
+            var NRegexp = /^[0-9]*$/;
             if (!NRegexp.test(n)) {
 
                 return false;
@@ -276,7 +276,69 @@ angular.module("IntegratedFramework", [
         }
         return service;
     }])
+    .factory("dateService", function (notification) {
+        var service = {};
+        service.getCurrDate = function () {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes()
+                + seperator2 + date.getSeconds();
+            return currentdate;
+        };
 
+        service.formatDateTime = function (time) {
+            var date = new Date(time);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            var d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            var h = date.getHours();
+            h = h < 10 ? ('0' + h) : h;
+            var minute = date.getMinutes();
+            var second = date.getSeconds();
+            minute = minute < 10 ? ('0' + minute) : minute;
+            second = second < 10 ? ('0' + second) : second;
+            return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+        };
+
+        //比较时间
+        service.compareTime = function (startDate, endDate) {
+            if (startDate.length > 0 && endDate.length > 0) {
+                var startDateTemp = startDate.split(" ");
+                var endDateTemp = endDate.split(" ");
+
+                var arrStartDate = startDateTemp[0].split("-");
+                var arrEndDate = endDateTemp[0].split("-");
+
+                var arrStartTime = startDateTemp[1].split(":");
+                var arrEndTime = endDateTemp[1].split(":");
+                var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
+                var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
+
+                if (allStartDate.getTime() >= allEndDate.getTime()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+            return false;
+        };
+
+        return service;
+    })
     .factory("confirm", function () {
         var service = {};
         //确认修改
