@@ -25,7 +25,7 @@ public class RG_SnapshotNodeEntity {
 
     private Boolean apsBackupSnaoshot;      //aps快照是否产生成功(bottom节点意义)
     private Boolean apsDispatchOrder;       //aps订单是否发布(middle节点意义)
-    private Boolean apsRecoverSnapshot;     //aps的快照是否恢复成功(top节点有意义)
+    private Boolean apsRecoverSnapshot;     //aps的快照是否恢复成功(middle节点有意义)
     private Boolean apsInteractive;         //aps的交互
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "childsSnapshotId")

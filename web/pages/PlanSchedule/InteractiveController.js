@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.InteractiveController", ['ngRoute'])
             controller: 'InteractiveController'
         })
     }])
-    .controller("InteractiveController", function ($scope, myHttpService, serviceList) {
+    .controller("InteractiveController", function ($scope, myHttpService, serviceList, notification) {
 
         layer.load(0);
 

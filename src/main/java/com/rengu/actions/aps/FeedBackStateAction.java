@@ -54,12 +54,15 @@ public class FeedBackStateAction extends SuperAction {
                     if (bottomSnapshot != null) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
                             bottomSnapshot.setApsInteractive(true);
+                            //Yang 当APS交互优化后，如果需要在交互优化，则在优化成功后，自动返回结果
+                            switchResult("1");
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急滚动优化成功!", "confirm"));
                         } else {
                             bottomSnapshot.setApsInteractive(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急滚动优化失败!", "alert"));
                         }
                     }
+                    session.update(bottomSnapshot);
                 }
 
                 session.getTransaction().commit();
@@ -102,6 +105,7 @@ public class FeedBackStateAction extends SuperAction {
                             bottomSnapshot.setApsBackupSnaoshot(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS快照备份失败!", "alert"));
                         }
+                        session.update(bottomSnapshot);
                     }
                 }
                 session.getTransaction().commit();
@@ -134,16 +138,19 @@ public class FeedBackStateAction extends SuperAction {
                 session.beginTransaction();
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
-                String bottomId = userconfig.getBottomSnapshotId();
-                if (bottomId != null) {
-                    RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomId);
+                String middleId = userconfig.getMiddleSnapshotId();
+                if (middleId != null) {
+                    RG_SnapshotNodeEntity middleSnapshot = session.get(RG_SnapshotNodeEntity.class, middleId);
 
-                    if (bottomSnapshot != null) {
+                    if (middleSnapshot != null) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
+                            middleSnapshot.setApsRecoverSnapshot(true);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复快照成功!", "confirm"));
                         } else {
+                            middleSnapshot.setApsRecoverSnapshot(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复快照失败!", "alert"));
                         }
+                        session.update(middleSnapshot);
                     }
                 }
                 session.getTransaction().commit();
@@ -177,18 +184,19 @@ public class FeedBackStateAction extends SuperAction {
                 session.beginTransaction();
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
-                String bottomId = userconfig.getBottomSnapshotId();
-                if (bottomId != null) {
-                    RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomId);
+                String middleId = userconfig.getMiddleSnapshotId();
+                if (middleId != null) {
+                    RG_SnapshotNodeEntity middleSnapshot = session.get(RG_SnapshotNodeEntity.class, middleId);
 
-                    if (bottomSnapshot != null) {
+                    if (middleSnapshot != null) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
-                            bottomSnapshot.setApsRecoverSnapshot(true);
+                            middleSnapshot.setApsDispatchOrder(true);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复订单成功!", "confirm"));
                         } else {
-                            bottomSnapshot.setApsRecoverSnapshot(false);
+                            middleSnapshot.setApsDispatchOrder(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复订单失败!", "alert"));
                         }
+                        session.update(middleSnapshot);
                     }
                 }
                 session.getTransaction().commit();
@@ -200,7 +208,7 @@ public class FeedBackStateAction extends SuperAction {
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
-    //接收APS返回结果
+    //接收APS返回计算结果
     public void recvApsResult() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
@@ -422,24 +430,26 @@ public class FeedBackStateAction extends SuperAction {
     public void emulateApsInterResult() {
 
         System.out.println("=======APS 交互結果转换中======");
+
         //【1】查询APS的定单表是否含有state=0的订单，如果有，则先调用应急交互优化接口，重新计算
         List list = new ArrayList();
         try {
-            list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, "select * from APS_ORDER where STATE = 1 ");
+            list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, "select * from APS_ORDER where STATE = 0 ");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        //【2】若不包含，则进行结果转换
         if (list.size() == 0) {
-            //【2】若不包含，则进行结果转换
             Tools.jsonPrint(Tools.resultCode("ok", "start switch result!"), this.httpServletResponse);
-//        switchResult("1");
+            switchResult("1");
         } else {
             int result = ApsTools.instance().executeCommand(ApsTools.instance().getInterAdjust());
             if (result == ApsTools.STARTED) {
                 Tools.jsonPrint(Tools.resultCode("emergency_ok", "start emergency interactive!"), this.httpServletResponse);
-            }else{
+            } else {
                 Tools.jsonPrint(Tools.resultCode("emergency_error", "start emergency interactive!"), this.httpServletResponse);
             }
         }
