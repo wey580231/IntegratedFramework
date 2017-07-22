@@ -52,10 +52,12 @@ public class OrdersAction extends SuperAction {
 
         rg_orderEntity.setOrigin("0");//设置订单为手动输入
         rg_orderEntity.setState(Byte.parseByte("0"));//设置订单状态为计划
+        rg_orderEntity.setT1(rg_orderEntity.getT0());
         rg_orderEntity.setEstimate(Short.parseShort("4246"));
         rg_orderEntity.setDelay(Short.parseShort("0"));
         rg_orderEntity.setColor("79 129 189");
         rg_orderEntity.setFinished(false);
+        rg_orderEntity.setIdGroupResource("G01");
         rg_orderEntity.setProductByIdProduct(DAOFactory.getProductDAOImplInstance().findAllById("Kqd"));
         rg_orderEntity.setClubByIdClub(DAOFactory.getClubDAOImplInstance().findAllById("001"));
 

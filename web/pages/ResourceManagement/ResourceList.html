@@ -68,6 +68,8 @@
                             <td></td>
                             <th>名称</th>
                             <th>正常班次</th>
+                            <th>速率</th>
+                            <th>周末状态</th>
                             <th>状态信息</th>
                         </tr>
                         <tr ng-repeat="resource in resourceList track by $index" ng-init="renderTable($last)">
@@ -75,6 +77,8 @@
                             <td style="display:none">{{resource.idR}}</td>
                             <td>{{resource.name}}</td>
                             <td>{{resource.nameShift}}</td>
+                            <td>{{resource.rate}}</td>
+                            <td>{{resource.weekend}}</td>
                             <td>
                                 <span class="label label-danger" ng-if="resource.state == 0">资源不可用</span>
                                 <span class="label label-success" ng-if="resource.state == 1">资源可用</span>
