@@ -54,6 +54,7 @@ public class AdjustOrderAction extends SuperAction {
         DAOFactory.getAdjustOrderDAOImplInstance().save(rg_adjustOrderEntity);
     }
 
+    //紧急插单处理
     public void OrderExceptionHandling() throws Exception {
         JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(httpServletRequest));
         String adjustOrderId = jsonNode.get("id").asText();

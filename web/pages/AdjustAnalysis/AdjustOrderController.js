@@ -39,7 +39,6 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
                         processError(event);
                     } else {
                         notification.sendNotification("alert", "APS正在计算中，无法操作");
-                        // layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
                 } else {
                     notification.sendNotification("alert", "查询APS状态失败，请重试");
@@ -48,6 +47,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             });
         };
 
+        //处理一样
         function processError(event) {
             var e = event || window.event;
             var target = e.target || e.srcElement;

@@ -62,7 +62,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             layer.load();
             setTimeout(function () {
                 notification.sendNotification("confirm", "已下发");
-                // layer.msg('已下发', {icon: 1});
                 hideLoadingPage();
             }, 2000);
         }
@@ -70,7 +69,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         //取消下发APS
         function resetDispatchAps() {
             notification.sendNotification("confirm", "取消下发");
-            // layer.msg('取消下发', {icon: 2});
         }
 
         //将选中记录下发APS

@@ -12,10 +12,8 @@ import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.sql.SQLException;
+import java.util.*;
 
 /**
  * APS回调框架更新计算状态
@@ -422,8 +420,28 @@ public class FeedBackStateAction extends SuperAction {
 
     //模拟aps应急优化结果
     public void emulateApsInterResult() {
+
+        System.out.println("=======APS 交互結果转换中======");
+        //【1】查询APS的定单表是否含有state=0的订单，如果有，则先调用应急交互优化接口，重新计算
+        List list = new ArrayList();
+        try {
+            list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, "select * from APS_ORDER where STATE = 1 ");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (list.size() == 0) {
+            //【2】若不包含，则进行结果转换
+            Tools.jsonPrint(Tools.resultCode("ok", "start switch result!"), this.httpServletResponse);
 //        switchResult("1");
-        System.out.println("hah");
-        Tools.jsonPrint(Tools.resultCode("ok", "start switch result!"), this.httpServletResponse);
+        } else {
+            int result = ApsTools.instance().executeCommand(ApsTools.instance().getInterAdjust());
+            if (result == ApsTools.STARTED) {
+                Tools.jsonPrint(Tools.resultCode("emergency_ok", "start emergency interactive!"), this.httpServletResponse);
+            }else{
+                Tools.jsonPrint(Tools.resultCode("emergency_error", "start emergency interactive!"), this.httpServletResponse);
+            }
+        }
     }
 }
