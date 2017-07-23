@@ -29,9 +29,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 var rootdata = response.data;
                 $scope.rootdata = response.data;
                 $scope.processdata = response.data;
-
                 var rootLength = rootdata.length;
-
                 for (var i = 0; i < rootLength; i++) {
                     var params = {};
                     var id = rootdata[i].id;

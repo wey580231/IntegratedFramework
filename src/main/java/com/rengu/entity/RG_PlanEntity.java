@@ -1,5 +1,6 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -59,16 +60,25 @@ public class RG_PlanEntity {
     private String colorOrder;                                  //订单在View中显示的颜色
     private Byte state;                                         //状态
 
+    @JsonIgnore
     private RG_ClubEntity clubByIdClub;
+    @JsonIgnore
     private RG_ProcessEntity processByIdProcess;
+    @JsonIgnore
     private RG_OrderEntity orderByIdOrder;
+    @JsonIgnore
     private RG_ResourceEntity resourceByIdResource;
+    @JsonIgnore
     private RG_SiteEntity siteByIdSite;
+    @JsonIgnore
     private RG_GroupresourceEntity groupresourceByIdGroupResource;
+    @JsonIgnore
     private RG_TyperescourceEntity typerescourceByIdTypeResource;
+    @JsonIgnore
     private RG_ProviderEntity providerByIdProvider;
+    @JsonIgnore
     private RG_ProductEntity productByIdProduct;
-
+    @JsonIgnore
     private RG_SnapshotNodeEntity snapShort;
 
     public String getId() {
