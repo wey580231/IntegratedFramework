@@ -50,15 +50,30 @@ function resizeD3ViewSize() {
     $("#div_center").css("height", height);
 }
 
+//是否开启工具栏
+function enableToolBar(flag){
+    if(!flag){
+        $("#getInteractiveResult").attr("disabled", true);
+        $("#zoomin").attr("disabled", true);
+        $("#zoomout").attr("disabled", true);
+    }else{
+        $("#getInteractiveResult").removeAttr("disabled");
+        $("#zoomin").removeAttr("disabled");
+        $("#zoomout").removeAttr("disabled");
+    }
+}
+
 $(document).ready(function () {
     resizeD3ViewSize();
 
     $("#activeSelector").attr("disabled", true);
+    enableToolBar(false);
 
     $("#activeSelector").change(function () {
         var val = $(this).children('option:selected').val();
         if (val.length > 0) {
             LoadView(val);
+            enableToolBar(true);
         }
         else {
             CloseView('1');
@@ -81,14 +96,9 @@ function loginAps() {
         document.getElementById("Login").Initialize("");
         document.getElementById("Login").SetVariables(szMacros);
         document.getElementById("Login").SetVariableValue("IDUSER", "Login", idUser);
-        // document.getElementById("Login").Initialize("");
-        // document.getElementById("Login").LoadFile(Server + ViewPath + "ButtonLogin.view");
-        // successLogin = document.getElementById("Login").RunScript("Login");
-        // if (successLogin == 1) {
-        //     firstLog = 2;
-        $("#activeSelector").attr("disabled", false);
-        // $("#loginInAPS").attr("disabled", true);
-        // }
+
+        $("#activeSelector").removeAttr("disabled");
+        enableToolBar(false);
     }
 
     document.getElementById("AutoScheduling").Initialize("");
@@ -119,7 +129,6 @@ function loginAps() {
 $(window).resize(function () {
     resizeD3ViewSize();
 });
-
 
 
 if (typeUser == 0) {
@@ -557,6 +566,8 @@ function CloseView(id) {
         comviewselected = 0;
 
         $("#activeSelector").get(0).selectedIndex = 0;
+
+        enableToolBar(false);
     }
     else if (nbComView == 2) {
         document.getElementById("ComView1").style.display = "none";
@@ -619,6 +630,7 @@ function CloseView(id) {
         nbComView = 2;
     }
 }
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
@@ -672,21 +684,26 @@ function FuncAutoScheduling() {
     document.getElementById("AutoScheduling").RunScript("AutoScheduling");
     document.getElementById("ComView1").LoadFile(Server + ViewPath + comview1)
 }
+
 function FuncResumeScheduling() {
     document.getElementById("ResumeScheduling").RunScript("ResumeScheduling");
     document.getElementById("ComView1").LoadFile(Server + ViewPath + comview1)
 }
+
 function FuncRegenerateExcel() {
     document.getElementById("RegenerateExcel").RunScript("GenerateExel");
     document.getElementById("ComView1").LoadFile(Server + ViewPath + comview1)
 }
+
 function FuncRegenerateView() {
     document.getElementById("RegenerateView").RunScript("GenerateView");
     document.getElementById("ComView1").LoadFile(Server + ViewPath + comview1)
 }
+
 function change_language() {
     document.location.href = "../en/index.html";
 }
+
 function FuncLogout() {
     var successLogout = -1;
     successLogout = document.getElementById("Logout").RunScript("Logout");
@@ -707,9 +724,11 @@ function FuncLogout() {
         document.getElementById("ComView3").LoadFile(Server + ViewPath + comview3);
     }
 }
+
 function OpenNewWindow() {
     window.open("index.html");
 }
+
 function CloseWindow() {
     window.opener = null;
     window.open('', '_self');

@@ -30,27 +30,27 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
-      /*  //Date picker
-        $('#modal-add-t0-datepicker').datepicker({
-            format: "yyyy/mm/dd",
-            todayHighlight: true,
-            autoclose: true
-        });
-        $('#modal-add-t2-datepicker').datepicker({
-            format: "yyyy/mm/dd",
-            todayHighlight: true,
-            autoclose: true
-        });
-        $('#modal-edit-t0-datepicker').datepicker({
-            format: "yyyy/mm/dd",
-            todayHighlight: true,
-            autoclose: true
-        });
-        $('#modal-edit-t2-datepicker').datepicker({
-            format: "yyyy/mm/dd",
-            todayHighlight: true,
-            autoclose: true
-        });*/
+        /*  //Date picker
+          $('#modal-add-t0-datepicker').datepicker({
+              format: "yyyy/mm/dd",
+              todayHighlight: true,
+              autoclose: true
+          });
+          $('#modal-add-t2-datepicker').datepicker({
+              format: "yyyy/mm/dd",
+              todayHighlight: true,
+              autoclose: true
+          });
+          $('#modal-edit-t0-datepicker').datepicker({
+              format: "yyyy/mm/dd",
+              todayHighlight: true,
+              autoclose: true
+          });
+          $('#modal-edit-t2-datepicker').datepicker({
+              format: "yyyy/mm/dd",
+              todayHighlight: true,
+              autoclose: true
+          });*/
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
@@ -81,14 +81,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='add-name']").val();
             params.quantity = parseInt($("input[name='add-quantity']").val());
-            params.priority = parseInt($("input[name='add-priority']").val());
             var t0 = $("input[id='modal-add-t0-datepicker']").val();
             var t2 = $("input[id='modal-add-t2-datepicker']").val();
             params.t0 = (new Date($("input[id='modal-add-t0-datepicker']").val())).getTime();
             params.t2 = (new Date($("input[id='modal-add-t2-datepicker']").val())).getTime();
-            params.state = parseInt($("input[name='add-state']").val());
-            var state=$("input[name='add-state']").val();
-
             addData = JSON.stringify(params);
 
 
@@ -108,14 +104,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#add-quantity").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.priority) || !validate.checkLength(params.priority)) {
-                $("#add-priority").removeClass("has-success");
-                $("#add-priority").addClass("has-error");
-            } else {
-                $("#add-priority").removeClass("has-error");
-                $("#add-priority").addClass(" has-success");
-            }
-
             if (!validate.checkLength(t0)) {
                 $("#add-t0").removeClass("has-success");
                 $("#add-t0").addClass("has-error");
@@ -131,16 +119,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#add-t2").addClass(" has-success");
             }
 
-          /*  if (!validate.checkLength(state) || validate.checkNumber(state)) {
-                $("#add-state").removeClass("has-success");
-                $("#add-state").addClass("has-error");
-            } else {
-                $("#add-state").removeClass("has-error");
-                $("#add-state").addClass(" has-success");
-            }*/
-
-            if (validate.checkLength(params.priority) && validate.checkNumber(params.priority) /*&&validate.checkLength(state) && validate.checkNumber(state)*/&&
-                validate.checkLength(params.name) &&  validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
+            if (validate.checkLength(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
@@ -154,13 +133,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='edit-name']").val();
             params.quantity = parseInt($("input[name='edit-quantity']").val());
-            params.priority = parseInt($("input[name='edit-priority']").val());
             var t0 = $("input[id='modal-edit-t0-datepicker']").val();
             var t2 = $("input[id='modal-edit-t2-datepicker']").val();
             params.t0 = (new Date($("input[id='modal-edit-t0-datepicker']").val())).getTime();
             params.t2 = (new Date($("input[id='modal-edit-t2-datepicker']").val())).getTime();
             params.state = parseInt($("input[name='edit-state']").val());
-            var state=$("input[name='edit-state']").val();
+            var state = $("input[name='edit-state']").val();
             editData = params;
 
 
@@ -170,14 +148,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             } else {
                 $("#edit-name").removeClass("has-error");
                 $("#edit-name").addClass(" has-success");
-            }
-
-            if (!validate.checkNumber(params.priority) || !validate.checkLength(params.priority)) {
-                $("#edit-priority").removeClass("has-success");
-                $("#edit-priority").addClass("has-error");
-            } else {
-                $("#edit-priority").removeClass("has-error");
-                $("#edit-priority").addClass(" has-success");
             }
 
             if (!validate.checkNumber(params.quantity) || !validate.checkLength(params.quantity)) {
@@ -202,17 +172,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 $("#edit-t2").removeClass("has-error");
                 $("#edit-t2").addClass(" has-success");
             }
-
-         /*   if (!validate.checkLength(state) || validate.checkNumber(state)) {
-                $("#edit-state").removeClass("has-success");
-                $("#edit-state").addClass("has-error");
-            } else {
-                $("#edit-state").removeClass("has-error");
-                $("#edit-state").addClass(" has-success");
-            }*/
-
-            if (validate.checkLength(params.priority) && validate.checkNumber(params.priority) /*&&validate.checkLength(state) && validate.checkNumber(state)*/&&
-                validate.checkLength(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
+            if (validate.checkLength(params.name) && validate.checkLength(params.quantity) && validate.checkNumber(params.quantity) &&
                 validate.checkLength(params.t0) && validate.checkLength(params.t2) && validate.checkLength(params.t1)) {
                 return true;
             } else {
@@ -278,6 +238,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             }
         };
 
+        //编辑订单
         $scope.editOrder = function () {
             if (confirm.confirmEdit()) {
                 if (orderEditValidate()) {
@@ -285,7 +246,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     //用获取到的数据代替从数据库取到的数据
                     edit_params.name = editData.name;
                     edit_params.quantity = editData.quantity;
-                    edit_params.priority = editData.priority;
                     edit_params.t0 = editData.t0;
                     edit_params.t2 = editData.t2;
                     edit_params.state = editData.state;
