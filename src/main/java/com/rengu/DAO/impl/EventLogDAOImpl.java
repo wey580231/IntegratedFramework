@@ -21,7 +21,7 @@ public class EventLogDAOImpl extends SuperDAOImpl implements EventLogDAO<RG_Even
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_EventLogEntity rg_eventLogEntity";
+        String hql = "from RG_EventLogEntity rg_eventLogEntity order by rg_eventLogEntity.creatTime desc";
         Query query = session.createQuery(hql);
         List list = query.list();
         return list;

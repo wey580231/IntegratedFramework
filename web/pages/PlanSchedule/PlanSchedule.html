@@ -127,7 +127,7 @@
                         <tbody>
                         <tr>
                             <td></td>
-                            <th>排程名</th>
+                            <th style="overflow: hidden;min-width: 90px;">排程名</th>
                             <th>排程时间</th>
                             <th>计算开始时间</th>
                             <th>计算结束时间</th>
@@ -139,7 +139,7 @@
                             ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
                             <td style="display:none">{{schedule.id}}</td>
-                            <td style="position: absolute">{{schedule.name}}
+                            <td style="position: absolute;">{{schedule.name}}
                                 <span class="label label-success"
                                       style="position:relative;left:5px;top:0px;cursor: pointer;"
                                       ng-if="(schedule.state == 2 || schedule.state == 4) && $last"
@@ -206,27 +206,27 @@
 
                                                                 <div class="col-sm-8">
                                                                     <input class="myInput form-control" name="add-name"
-                                                                           title="请输入名称！"
-                                                                           placeholder="">
+                                                                           id="scheduleName"
+                                                                           title="请输入名称！">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group" id="add-scheduleDays">
+                                                                <label class="col-sm-4 control-label">排程周期(天)</label>
+                                                                <div class="col-sm-8">
+                                                                    <input id="scheduleTime"
+                                                                           class="myInput form-control"
+                                                                           name="add-scheduleDays" title="请输入排程周期(天)！">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group" id="add-rollTime">
-                                                                <label class="col-sm-4 control-label">滚动周期</label>
+                                                                <label class="col-sm-4 control-label">滚动周期(天)</label>
 
                                                                 <div class="col-sm-8">
-                                                                    <input class="myInput form-control"
+                                                                    <input id="rollTime" class="myInput form-control"
                                                                            name="add-rollTime"
-                                                                           title="请输入滚动周期(天)！"
-                                                                           placeholder="7">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" id="add-scheduleDays">
-                                                                <label class="col-sm-4 control-label">排程周期</label>
-                                                                <div class="col-sm-8">
-                                                                    <input class="myInput form-control"
-                                                                           name="add-scheduleDays" title="请输入排程周期(天)！"
-                                                                           placeholder="30">
+                                                                           title="请输入滚动周期(天)！">
                                                                 </div>
                                                             </div>
 
@@ -244,11 +244,10 @@
                                                             </div>
 
                                                             <div class="form-group" id="scheduleOption">
-                                                                <label class="col-sm-4 control-label">可容忍时间</label>
+                                                                <label class="col-sm-4 control-label">可容忍时间(天)</label>
                                                                 <div class="col-sm-8">
-                                                                    <input class="myInput form-control"
-                                                                           title="可容忍时间(天)！" name="scheduleOption"
-                                                                           placeholder="3">
+                                                                    <input class="myInput form-control" id="delayTime"
+                                                                           title="可容忍时间(天)！" name="scheduleOption">
                                                                 </div>
                                                             </div>
 
@@ -256,8 +255,7 @@
                                                                 <label class="col-sm-4 control-label">优化开始</label>
                                                                 <div class="col-sm-8">
                                                                     <input class="myInput form-control" name="add-start"
-                                                                           id="start" type="text" value="">
-                                                                    <!--onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"-->
+                                                                           id="apsStartTime" type="text" value="">
                                                                 </div>
                                                             </div>
 
@@ -265,8 +263,7 @@
                                                                 <label class="col-sm-4 control-label">优化结束</label>
                                                                 <div class="col-sm-8">
                                                                     <input class="myInput form-control" name="add-end"
-                                                                           id="end" type="text" value="">
-                                                                           <!--onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">-->
+                                                                           id="apsEndTime" type="text" value="">
                                                                 </div>
                                                             </div>
 
@@ -274,7 +271,7 @@
                                                                 <button type="submit"
                                                                         class="btn btn-primary btn-flat pull-right"
                                                                         style="width: 96%;"
-                                                                        ng-click="infoValidate();">确定
+                                                                        ng-click="infoValidate();">筛选订单
                                                                 </button>
                                                             </div>
                                                         </div>

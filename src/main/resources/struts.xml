@@ -135,11 +135,17 @@
     <!--APS接口-->
     <package name="APS" namespace="/aps" extends="struts-default">
         <!--状态查询-->
+        <action name="interactiveAps" class="com.rengu.actions.aps.FeedBackStateAction" method="interactiveAps"/>
+        <action name="backupSnapshot" class="com.rengu.actions.aps.FeedBackStateAction" method="backupSnapshot"/>
+        <action name="recoverSnapshot" class="com.rengu.actions.aps.FeedBackStateAction" method="recoverSnapshot"/>
+        <action name="dispatchOrder" class="com.rengu.actions.aps.FeedBackStateAction" method="dispatchOrdr"/>
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="recvApsResult"/>
-        <action name="updateApsState" class="com.rengu.actions.aps.FeedBackStateAction" method="recvApsState"/>
+
+        <action name="updateApsState" class="com.rengu.actions.aps.FeedBackStateAction" method="recvInterApsState"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
         <action name="scheduleDetail" class="com.rengu.actions.aps.FeedBackStateAction" method="queryScheduleInfo"/>
-        <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction" method="emulateApsInterResult"/>
+        <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction"
+                method="emulateApsInterResult"/>
     </package>
 
     <!--异常处理-->

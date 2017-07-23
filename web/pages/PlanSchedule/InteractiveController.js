@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.InteractiveController", ['ngRoute'])
             controller: 'InteractiveController'
         })
     }])
-    .controller("InteractiveController", function ($scope, myHttpService, serviceList) {
+    .controller("InteractiveController", function ($scope, myHttpService, serviceList, notification) {
 
         layer.load(0);
 
@@ -20,19 +20,23 @@ angular.module("IntegratedFramework.InteractiveController", ['ngRoute'])
                     hideLoadingPage();
                 } else {
                     notification.sendNotification("alert", "获取排程信息失败");
-                    // layer.msg('获取排程信息失败!', {icon: 2});
                 }
             }, function (response) {
                 hideLoadingPage();
             });
         });
 
+        //交互优化计算
         $scope.emulateRecvApsInterResult = function () {
             myHttpService.get(serviceList.emulateApsInterResult).then(function (response) {
                 if (response.data.result == "ok") {
-                    layer.msg('结果信息转换中!', {icon: 1});
+                    notification.sendNotification("confirm", "结果信息转换中...");
+                } else if ("emergency_ok") {
+                    notification.sendNotification("confirm", "交互优化计算中...");
+                } else if ("emergency_error") {
+                    notification.sendNotification("alert", "交互优化失败");
                 } else {
-                    layer.msg('结果信息转换失败!', {icon: 2});
+                    notification.sendNotification("alert", "结果信息转换失败");
                 }
             }, function (response) {
 

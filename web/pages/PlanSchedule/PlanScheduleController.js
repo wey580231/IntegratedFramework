@@ -9,22 +9,22 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             controller: 'PlanScheduleController'
         })
     }])
-    .controller('PlanScheduleController', function ($scope, $location, $http, myHttpService, serviceList, renderTableService, validate, notification) {
+    .controller('PlanScheduleController', function ($scope, $location, $http, myHttpService, serviceList, renderTableService, validate, notification, dateService) {
 
         layer.load(0);
 
         var selectedCheckArray = []; //选中的checkbox的id值集合
-        var scheduleDays;
-        var name;
-        var rollTime;
-        var apsStart;
-        var apsEnd;
-        var scheduleOption;
-        var modeSchedule;
+        var scheduleDays;            //排程周 期
+        var name;                    //排程名称
+        var rollTime;                //滚动周期
+        var apsStart;                //优化开始时间
+        var apsEnd;                  //优化结束时间
+        var scheduleOption;          //排程类型
+        var modeSchedule;            //排程模式
         var array = [];//未完成部分
 
         var idVal;
-        var id_params = {}; //保存选中的记录的id信息
+        var id_params = {};          //保存选中的记录的id信息
 
         var orders = [];
         var layouts = {};
@@ -55,20 +55,17 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             document.getElementById("nextStep").disabled = true;
             document.getElementById("startSchedule").disabled = true;
 
-
             myHttpService.get(serviceList.ListSchedule).then(function (response) {
                 $scope.scheduleList = response.data;
                 hideLoadingPage();
             });
         });
 
-
         //跳转至交互优化界面
         $scope.interactiveSchedule = function () {
             var msg = "是否优化此次排程？";
             if (confirm(msg) == true) {
                 notification.sendNotification("confirm", "页面跳转中...");
-                //layer.msg('页面跳转中...', {icon: 1});
                 setTimeout(function () {
                     //TODO 待解决path不能直接跳转问题
                     $location.path('/Interactive');
@@ -99,40 +96,23 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     if (response.data.data.state == 0) {
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
-                        document.getElementById("start").value = getCurDate();
                         hideCalendar();
+
+                        $("#scheduleName").val("排程-" + dateService.formatDateTime(new Date()));
+                        $("#rollTime").val(7);
+                        $("#rollTime").val(7);
+                        $("#scheduleTime").val(30);
+                        $("#delayTime").val(5);
                     } else {
                         notification.sendNotification("alert", "查询APS状态失败");
-
-                        // layer.msg('APS正在计算中，无法排程!', {icon: 2});
                     }
                 } else {
                     notification.sendNotification("alert", "查询APS状态失败，请重试!");
-                    // layer.msg('查询APS状态失败，请重试!', {icon: 2});
                 }
             }, function (response) {
             });
             resetContent();
         };
-        //当前时间显示
-        function getCurDate() {
-            var date = new Date();
-            var seperator1 = "-";
-            var seperator2 = ":";
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-                + " " + date.getHours() + seperator2 + date.getMinutes()
-                + seperator2 + date.getSeconds();
-            return currentdate;
-        }
-
 
         //重置页面内容信息
         function resetContent() {
@@ -152,7 +132,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             array.splice(0, array.length);
             orders.splice(0, orders.length);
 
-            document.getElementById("start").value = getCurDate();
             //清空页面信息
             for (var i = 0; i < pageCount; i++) {
                 PageInfo.selectedIndex[i].splice(0, PageInfo.selectedIndex[i].length);
@@ -207,6 +186,11 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //下一步
         $scope.next = function () {
+
+            if (currPage == 0 && !validateBaseInfo(true)) {
+                return;
+            }
+
             if (currPage < pageCount - 1) {
                 $("#previouseStep").show();
                 $(".MyPage").eq(currPage).hide();
@@ -281,36 +265,14 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             });
         }
 
-        //开始排程
-        $scope.submitForm = function () {
-
-            for (var i = 0; i < pageCount; i++) {
-                if (i == 1) {
-                    layouts.id = PageInfo.selectedIndex[i][0];
-                }
-                else if (i == 2) {
-                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
-                        var params = {};
-                        params.id = PageInfo.selectedIndex[i][j];
-                        orders.push(params);
-                    }
-                }
-            }
-            configAPS();
-        };
-
-        //基本信息检验
-        $scope.infoValidate = function () {
+        //验证基本信息输入，validateDate用于控制是否需要对日期进行验证
+        function validateBaseInfo(validateDate) {
             var params = {};
-            params.name = $("input[name='add-name']").val();
-            params.rollTime = $("input[name='add-rollTime']").val();
-            params.scheduleDays = $("input[name='add-scheduleDays']").val();
-            params.scheduleOption = $("input[name='scheduleOption']").val();
+            params.name = $("#scheduleName").val();
+            params.rollTime = $("#rollTime").val();
+            params.scheduleDays = $("#scheduleTime").val();
+            params.scheduleOption = $("#delayTime").val();
             params.modeSchedule = $("#selectAdd option:selected").val();
-            /*   var apsStart = $("input[name='add-start']").val();
-             var apsEnd = $("input[name='add-end']").val();
-             params.apsStart = (new Date($("input[name='add-start']").val())).getTime();
-             params.apsEnd = (new Date($("input[name='add-end']").val())).getTime();*/
 
             if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
@@ -319,7 +281,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $("#add-name").removeClass("has-error");
                 $("#add-name").addClass(" has-success");
             }
-            if (!validate.checkLength(params.scheduleOption)) {
+            if (!validate.checkLength(params.scheduleOption) || !validate.checkNumber(params.scheduleOption)) {
                 $("#scheduleOption").removeClass("has-success");
                 $("#scheduleOption").addClass("has-error");
             } else {
@@ -342,21 +304,23 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 $("#add-scheduleDays").addClass(" has-success");
             }
 
-            /* if (!validate.checkLength(apsStart)) {
-             $("#add-start").removeClass("has-success");
-             $("#add-start").addClass("has-error");
-             } else {
-             $("#add-start").removeClass("has-error");
-             $("#add-start").addClass(" has-success");
-             }
-             if (!validate.checkLength(apsEnd)) {
-             $("#add-end").removeClass("has-success");
-             $("#add-end").addClass("has-error");
+            if (validateDate) {
+                if (!validate.checkLength(apsStart)) {
+                    $("#add-start").removeClass("has-success");
+                    $("#add-start").addClass("has-error");
+                } else {
+                    $("#add-start").removeClass("has-error");
+                    $("#add-start").addClass(" has-success");
+                }
+                if (!validate.checkLength(apsEnd)) {
+                    $("#add-end").removeClass("has-success");
+                    $("#add-end").addClass("has-error");
 
-             } else {
-             $("#add-end").removeClass("has-error");
-             $("#add-end").addClass(" has-success");
-             }*/
+                } else {
+                    $("#add-end").removeClass("has-error");
+                    $("#add-end").addClass(" has-success");
+                }
+            }
             if (!validate.checkLength(params.modeSchedule)) {
                 $("#add-schedule").removeClass("has-success");
                 $("#add-schedule").addClass("has-error");
@@ -367,13 +331,26 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             if (validate.checkLength(params.rollTime) && validate.checkNumber(params.rollTime) && validate.checkLength(params.scheduleOption) &&
                 validate.checkLength(params.scheduleDays) && validate.checkNumber(params.scheduleDays) && validate.checkLength(params.name)
-                /* && validate.checkLength(params.apsStart) && validate.checkLength(params.apsEnd)*/ && validate.checkLength(params.modeSchedule)) {
-                document.getElementById("nextStep").disabled = "";
+                && validate.checkLength(params.modeSchedule)) {
+
+                if (validateDate) {
+                    if (validate.checkLength(params.apsStart) && validate.checkLength(params.apsEnd)) {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        //基本信息检验
+        $scope.infoValidate = function () {
+            if (validateBaseInfo(false)) {
                 showSchedule();
-                return true;
+                $("#nextStep").removeAttr('disabled');
             } else {
-                document.getElementById("nextStep").disabled = true;
-                return false;
+                $("#nextStep").attr("disabled", 'true');
             }
         };
 
@@ -382,18 +359,17 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var showSchedule = function () {
 
             //当前排程时间长度（b）
-            scheduleDays = $("input[name='add-scheduleDays']").val();
+            scheduleDays = $("#scheduleTime").val();
+            rollTime = $("#rollTime").val();
+            name = $("#scheduleName").val();
 
-            name = $("input[name='add-name']").val();
-            rollTime = $("input[name='add-rollTime']").val();
-
-            apsStart = (new Date($("input[name='add-start']").val())).getTime();
+            apsStart = (new Date($("#apsStartTime").val())).getTime();
 
             /*apsEnd = (new Date($("input[name='add-end']").val())).getTime();*/
 
             modeSchedule = $("#selectAdd option:selected").val();
 
-            scheduleOption = parseInt($("input[name='scheduleOption']").val());
+            scheduleOption = parseInt($("#delayTime").val());
             var startTime = moment().format("YYYY-MM-DD");
             var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
 
@@ -412,6 +388,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
                 eventSources: [
                     {
+                        //TODO 在部署时，因为工程名称问题，需要将路径改成含工程名
                         // url: 'http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action',
                         url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
                         type: 'POST',
@@ -420,7 +397,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                             endTime: endTime
                         },
                         error: function () {
-                            alert('there was an error while fetching events!');
+                            alert('日历渲染订单失败!');
                         }
                     }
                 ],
@@ -513,53 +490,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             configAPS();
         };
 
-
-        //比较日期，时间大小
-        function compareTime(startDate, endDate) {
-            if (startDate.length > 0 && endDate.length > 0) {
-                var startDateTemp = startDate.split(" ");
-                var endDateTemp = endDate.split(" ");
-
-                var arrStartDate = startDateTemp[0].split("-");
-                var arrEndDate = endDateTemp[0].split("-");
-
-                var arrStartTime = startDateTemp[1].split(":");
-                var arrEndTime = endDateTemp[1].split(":");
-                var allStartDate = new Date(arrStartDate[0], arrStartDate[1], arrStartDate[2], arrStartTime[0], arrStartTime[1], arrStartTime[2]);
-                var allEndDate = new Date(arrEndDate[0], arrEndDate[1], arrEndDate[2], arrEndTime[0], arrEndTime[1], arrEndTime[2]);
-
-                if (allStartDate.getTime() >= allEndDate.getTime()) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } else {
-                return false;
-            }
-        }
-
-
-        //时间戳转时间
-        function formatDateTime(time) {
-            var date = new Date(time);
-            var y = date.getFullYear();
-            var m = date.getMonth() + 1;
-            m = m < 10 ? ('0' + m) : m;
-            var d = date.getDate();
-            d = d < 10 ? ('0' + d) : d;
-            var h = date.getHours();
-            h = h < 10 ? ('0' + h) : h;
-            var minute = date.getMinutes();
-            var second = date.getSeconds();
-            minute = minute < 10 ? ('0' + minute) : minute;
-            second = second < 10 ? ('0' + second) : second;
-            return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
-        };
-
         //计算apsEnd结束时间
         function setEndTime() {
             var cur = {};
-            var apsEnds;
             var startTime = moment().format("YYYY-MM-DD");
             cur.startTime = (new Date(startTime)).getTime();
 
@@ -574,26 +507,40 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             myHttpService.post(serviceList.CurInfo, data).then(function (response) {
                 var info = response.data;
-                var max = formatDateTime(info[0].t2)//订单中t2最晚
+                var max = dateService.formatDateTime(info[0].t2)//订单中t2最晚
                 for (var i = 1; i < info.length; i++) {
-                    if (compareTime(max, formatDateTime(info[i].t2))) {
-                        max = formatDateTime(info[i].t2);
+                    if (dateService.compareTime(max, dateService.formatDateTime(info[i].t2))) {
+                        max = dateService.formatDateTime(info[i].t2);
                     }
                 }
-                apsEnds = new Date(max);
-                apsEnds.setDate(apsEnds.getDate()+scheduleOption);
-                var seperator1 = "-";
-                var seperator2 = ":";
-                var month = (apsEnds.getMonth()+1)<10?"0"+(apsEnds.getMonth()+1):(apsEnds.getMonth()+1);//获取当前月份的日期，不足10补0
-                var strDate=apsEnds.getDate()<10?"0"+apsEnds.getDate():apsEnds.getDate();
-                apsEnds = apsEnds.getFullYear() + seperator1 + month + seperator1 + strDate
-                    + " " + apsEnds.getHours() + seperator2 + apsEnds.getMinutes()
-                    + seperator2 + apsEnds.getSeconds();
-                document.getElementById("end").value = apsEnds;
+                var apsEnds = new Date(max);
+                apsEnds.setDate(apsEnds.getDate() + scheduleOption);
+
+                $("#apsStartTime").val(dateService.formatDateTime(new Date()));
+                $("#apsEndTime").val(dateService.formatDateTime(apsEnds));
+
                 //优化结束时间
                 apsEnd = (new Date(apsEnds)).getTime();
             });
         }
+
+        //开始排程
+        $scope.submitForm = function () {
+
+            for (var i = 0; i < pageCount; i++) {
+                if (i == 1) {
+                    layouts.id = PageInfo.selectedIndex[i][0];
+                }
+                else if (i == 2) {
+                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
+                        var params = {};
+                        params.id = PageInfo.selectedIndex[i][j];
+                        orders.push(params);
+                    }
+                }
+            }
+            configAPS();
+        };
 
         //排程
         function configAPS() {
@@ -691,9 +638,11 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         myHttpService.get(serviceList.ListSchedule).then(function (response) {
                             $scope.scheduleList = response.data;
                             notification.sendNotification("confirm", "删除成功");
+                            hideLoadingPage();
                         });
                     }, function errorCallback() {
                         notification.sendNotification("alert", "请求失败");
+                        hideLoadingPage();
                     });
                     layer.close(index);
                 }, function (index) {

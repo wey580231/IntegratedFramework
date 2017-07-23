@@ -23,6 +23,11 @@ public class RG_SnapshotNodeEntity {
     private Boolean errorNode;              //是否为故障节点(只在level==middl时有效)
     private Boolean firstNode;              //是否为第一个节点(每个节点的第一个子节点)
 
+    private Boolean apsBackupSnaoshot;      //aps快照是否产生成功(bottom节点意义)
+    private Boolean apsDispatchOrder;       //aps订单是否发布(middle节点意义)
+    private Boolean apsRecoverSnapshot;     //aps的快照是否恢复成功(middle节点有意义)
+    private Boolean apsInteractive;         //aps的交互
+
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "childsSnapshotId")
     private Set<RG_SnapshotNodeEntity> childs = new HashSet<RG_SnapshotNodeEntity>();      //子节点
     @JsonIgnore
@@ -89,6 +94,38 @@ public class RG_SnapshotNodeEntity {
 
     public void setFirstNode(Boolean firstNode) {
         this.firstNode = firstNode;
+    }
+
+    public Boolean getApsBackupSnaoshot() {
+        return apsBackupSnaoshot;
+    }
+
+    public void setApsBackupSnaoshot(Boolean apsBackupSnaoshot) {
+        this.apsBackupSnaoshot = apsBackupSnaoshot;
+    }
+
+    public Boolean getApsDispatchOrder() {
+        return apsDispatchOrder;
+    }
+
+    public void setApsDispatchOrder(Boolean apsDispatchOrder) {
+        this.apsDispatchOrder = apsDispatchOrder;
+    }
+
+    public Boolean getApsRecoverSnapshot() {
+        return apsRecoverSnapshot;
+    }
+
+    public void setApsRecoverSnapshot(Boolean apsRecoverSnapshot) {
+        this.apsRecoverSnapshot = apsRecoverSnapshot;
+    }
+
+    public Boolean getApsInteractive() {
+        return apsInteractive;
+    }
+
+    public void setApsInteractive(Boolean apsInteractive) {
+        this.apsInteractive = apsInteractive;
     }
 
     public Set<RG_SnapshotNodeEntity> getChilds() {

@@ -1,5 +1,7 @@
 package com.rengu.actions.mes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.util.Tools;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -20,11 +22,22 @@ public class MesSender {
 
     private static MesSender sender = null;
 
+    private ObjectMapper objMapper = null;
+    private ObjectNode rootNode = null;
+
+    private String messSender = null;
+    private String messReciver = null;
+
     private MesSender() {
         connectionFactory = new ActiveMQConnectionFactory(
                 ActiveMQConnection.DEFAULT_USER,
                 ActiveMQConnection.DEFAULT_PASSWORD,
                 Tools.getDatabaseProperties().getProperty("BrokerURL"));
+        objMapper = new ObjectMapper();
+
+        messSender = Tools.getDatabaseProperties().getProperty("SendQueue");
+        messReciver = Tools.getDatabaseProperties().getProperty("ReceiveQueue");
+
         try {
             connection = connectionFactory.createConnection();
             connection.start();
@@ -35,17 +48,45 @@ public class MesSender {
     }
 
     //发送消息
-    public void sendMessage(String message) throws JMSException {
-        session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
-        destination = session.createQueue(Tools.getDatabaseProperties().getProperty("ReceiveQueue"));
-        producer = session.createProducer(destination);
-        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+    private void sendMessage(String message) {
+        try {
+            session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
+            destination = session.createQueue(Tools.getDatabaseProperties().getProperty("SendQueue"));
+            producer = session.createProducer(destination);
+            producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
-        TextMessage tx = session.createTextMessage(message);
+            TextMessage tx = session.createTextMessage(message);
 
-        producer.send(tx);
+            producer.send(tx);
 
-        session.commit();
+            System.out.println("回复确认消息:" + message);
+
+            session.commit();
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //发送确认消息
+    public void sendReplyMessage(String messType, String uuid) {
+
+        rootNode = objMapper.createObjectNode();
+        rootNode.put("FC", messType);
+        rootNode.put("REVICER", messSender);
+        rootNode.put("SENDER", messReciver);
+        rootNode.put("UUID", uuid);
+
+        ObjectNode dataNode = objMapper.createObjectNode();
+        dataNode.put("result", "OK");
+        dataNode.put("type", "1");
+
+        rootNode.put("DATA", dataNode);
+
+        sendMessage(rootNode.toString());
+    }
+
+    public void emulateData(String message) {
+        sendMessage(message);
     }
 
     public static MesSender instance() {

@@ -34,14 +34,14 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         function confirmDispatchAps() {
             layer.load();
             setTimeout(function () {
-                layer.msg('已下发', {icon: 1});
+                notification.sendNotification("confirm", "已下发");
                 hideLoadingPage();
             }, 2000);
         }
 
         //取消下发APS
         function resetDispatchAps() {
-            layer.msg('取消下发', {icon: 2});
+            notification.sendNotification("alert", "取消下发");
         }
 
         //将选中记录下发APS

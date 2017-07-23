@@ -3,7 +3,9 @@ package com.rengu.util;
 import com.rengu.entity.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by hanchangming on 2017/5/27.
@@ -72,7 +74,7 @@ public class EntityConvertToSQL {
             }
         }
         IdShift = IdShift + "}";
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_RESOURCE + " (id,name,IdTypeResource,idGroupResource,IdSite,mobility,critical,IdShift,NameShift,DateForbidden,weekend) VALUES ('"
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_RESOURCE + " (id,name,IdTypeResource,idGroupResource,IdSite,mobility,critical,IdShift,NameShift,RATE,COLOR,STATE,CALENDAR,SLOT,IDICON,IDSITE0,QUANTITY0,SIZEICON,IDCLUB,WEEKEND,MAKESPAN) VALUES ('"
                 + rg_resourceEntity.getIdR() + "','"
                 + rg_resourceEntity.getName() + "','"
                 + IdTypeResource + "','"
@@ -80,9 +82,29 @@ public class EntityConvertToSQL {
                 + IdSite + "'," + rg_resourceEntity.getMobility() + ",'"
                 + rg_resourceEntity.getCritical() + "','"
                 + IdShift + "','"
-                + rg_resourceEntity.getNameShift() + "','"
-                + rg_resourceEntity.getDateForbidden() + "','"
-                + rg_resourceEntity.getWeekend() + "');";
+                + rg_resourceEntity.getNameShift() + "',"
+                + rg_resourceEntity.getRate() + ",'"
+                + rg_resourceEntity.getColor() + "',"
+                + rg_resourceEntity.getState() + ",'"
+                + rg_resourceEntity.getCalendar() + "','"
+                + rg_resourceEntity.getSlot() + "','"
+                + rg_resourceEntity.getIdIcon() + "','"
+                + rg_resourceEntity.getIdSite0() + "',"
+                + rg_resourceEntity.getQuantity0() + ",'"
+                + rg_resourceEntity.getSizeIcon() + "','"
+                + rg_resourceEntity.getClubByIdClub().getId() + "','"
+                + rg_resourceEntity.getWeekend() + "','"
+                + rg_resourceEntity.getMakespan() + "')";
+        return SQLString;
+    }
+
+    public static String insertSQLForAPS_APS_RESOURCE_TYPERESOURCE(String resourceId, String typeResourceId) {
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_RESOURCE_TYPERESOURCE +
+                " (idResource,idTypeResource,maxCapacityParallel,capacitySequence,delaySequence) VALUES ('" + resourceId
+                + "','" + typeResourceId
+                + "'," + 1
+                + "," + 1
+                + "," + 0 + ")";
         return SQLString;
     }
 
@@ -99,13 +121,16 @@ public class EntityConvertToSQL {
     }
 
     public static String insertSQLForAPS(RG_SiteEntity rg_siteEntity) {
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_SITE + " (id,name,color,idIcon,sizeIcon,capacity) VALUES ('"
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_SITE + " (id,name,type,x,y,color,idIcon,sizeIcon,capacity) VALUES ('"
                 + rg_siteEntity.getId() + "','"
                 + rg_siteEntity.getName() + "','"
+                + rg_siteEntity.getType() + "',"
+                + rg_siteEntity.getX() + ","
+                + rg_siteEntity.getY() + ",'"
                 + rg_siteEntity.getColor() + "','"
                 + rg_siteEntity.getIdIcon() + "',"
                 + rg_siteEntity.getSizeIcon() + ","
-                + rg_siteEntity.getCapacity() + ");";
+                + rg_siteEntity.getCapacity() + ")";
         return SQLString;
     }
 
@@ -117,5 +142,17 @@ public class EntityConvertToSQL {
     public static String insertSQLForAPS(RG_ShiftEntity rg_shiftEntity) {
         String SQLString = "INSERT INTO " + DatabaseInfo.APS_SHIFT + " (id,name,type,Slot) VALUES ('" + rg_shiftEntity.getId() + "','" + rg_shiftEntity.getName() + "','" + rg_shiftEntity.getType() + "','" + rg_shiftEntity.getSlot() + "');";
         return SQLString;
+    }
+
+    private static List getListFromHashMap(String stringList) {
+        List list = new ArrayList();
+        stringList = stringList.replace("{", "");
+        stringList = stringList.replace("}", "");
+        String[] stringLists = stringList.split(",");
+        for (String s : stringLists) {
+            s = s.replaceAll("\"", "");
+            list.add(s);
+        }
+        return list;
     }
 }

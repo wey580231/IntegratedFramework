@@ -16,11 +16,11 @@ import java.util.List;
 public class MainPageAction extends SuperAction {
     public void getAllExcepitonNumInfo() throws Exception {
         int deviceExcepitonNum = getListSize(DAOFactory.getAdjustDeviceDAOImplInstance().findAllByErrorState(ErrorState.ERROR_UNSOLVED));
-        int deviceExcepitonHandledNum = getListSize(DAOFactory.getAdjustDeviceDAOImplInstance().findAllByErrorState(ErrorState.ERROR_UNSOLVED));
+        int deviceExcepitonHandledNum = getListSize(DAOFactory.getAdjustDeviceDAOImplInstance().findAllByErrorState(ErrorState.ERROR_APS_FINISH));
         int orderExcepitonNum = getListSize(DAOFactory.getAdjustOrderDAOImplInstance().findAllByErrorState(ErrorState.ERROR_UNSOLVED));
-        int orderExcepitonHandledNum = getListSize(DAOFactory.getAdjustOrderDAOImplInstance().findAllByErrorState(ErrorState.ERROR_UNSOLVED));
+        int orderExcepitonHandledNum = getListSize(DAOFactory.getAdjustOrderDAOImplInstance().findAllByErrorState(ErrorState.ERROR_APS_FINISH));
         int processExcepitonNum = getListSize(DAOFactory.getAdjustProcessDAOImplInstance().findAllByErrorState(ErrorState.ERROR_UNSOLVED));
-        int processExcepitonHandledNum = getListSize(DAOFactory.getAdjustProcessDAOImplInstance().findAllByErrorState(ErrorState.ERROR_UNSOLVED));
+        int processExcepitonHandledNum = getListSize(DAOFactory.getAdjustProcessDAOImplInstance().findAllByErrorState(ErrorState.ERROR_APS_FINISH));
 
         //生成根节点树
         JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
