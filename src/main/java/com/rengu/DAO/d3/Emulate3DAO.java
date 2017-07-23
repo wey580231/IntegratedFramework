@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rengu.actions.mes.MesReceiver;
 import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by wey580231 on 2017/6/6.
@@ -98,7 +100,6 @@ public class Emulate3DAO {
                 flag = false;
             }
         }
-
         session.getTransaction().commit();
 
         return flag;
@@ -146,8 +147,8 @@ public class Emulate3DAO {
 
                 RG_ProductEntity product = entity.getProductByIdProduct();
 
-                NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idOrder = ? and idSnapshort is null order by id asc",RG_EmulateResultEntity.class);
-                query.setParameter(1,entity.getId());
+                NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idOrder = ? and idSnapshort is null order by id asc", RG_EmulateResultEntity.class);
+                query.setParameter(1, entity.getId());
 
                 List<RG_EmulateResultEntity> emulateDatas = query.list();
                 Iterator<RG_EmulateResultEntity> emulateIter = emulateDatas.iterator();
@@ -190,6 +191,10 @@ public class Emulate3DAO {
                 flag = false;
             }
         }
+
+        System.out.println("*************************按订单查询结果*******************************");
+        System.out.println(jsonString);
+        System.out.println("*********************************************************************");
 
         session.getTransaction().commit();
 
@@ -253,6 +258,10 @@ public class Emulate3DAO {
                 flag = false;
             }
         }
+
+        System.out.println("***********************所有订单单查询结果*****************************");
+        System.out.println(jsonString);
+        System.out.println("*********************************************************************");
 
         session.getTransaction().commit();
 

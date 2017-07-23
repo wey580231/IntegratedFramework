@@ -10,7 +10,9 @@ import org.hibernate.query.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/6/27.
@@ -158,7 +160,7 @@ public class SnapshotDao {
 
                         RG_ResourceEntity res = plan.getResourceByIdResource();
 
-                        if (res!=null &&res.getCritical() != null && res.getCritical().equals("T")) {
+                        if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
                             String processId = plan.getProcessByIdProcess().getId();
 
                             NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
@@ -204,7 +206,7 @@ public class SnapshotDao {
         return flag;
     }
 
-    //TODO 将结果下发给MES，下发之前取得MES的同意
+    //将结果下发给MES，添加对订单状态的修改
     public boolean switchResultToMess(String s, String id) {
         boolean result = false;
 
@@ -218,18 +220,26 @@ public class SnapshotDao {
             if (snapshot != null && snapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
                 RG_SnapshotNodeEntity parent = snapshot.getParent();
+                RG_SnapshotNodeEntity rootParent = snapshot.getRootParent();
 
                 if (!parent.getApply() && !snapshot.getApply()) {
 
                     parent.setApply(true);
                     snapshot.setApply(true);
 
+                    Set<RG_OrderEntity> orders = rootParent.getSchedule().getOrders();
+                    Iterator<RG_OrderEntity> iter = orders.iterator();
+                    while (iter.hasNext()) {
+                        RG_OrderEntity tmpOrder = iter.next();
+                        tmpOrder.setState(Byte.parseByte("2"));
+                        session.update(tmpOrder);
+                    }
+
                     session.update(snapshot);
                     session.update(parent);
 
                     result = true;
                 }
-
             }
             session.getTransaction().commit();
 
