@@ -21,7 +21,8 @@ public class MainPageAction extends SuperAction {
         int orderExcepitonHandledNum = getListSize(DAOFactory.getAdjustOrderDAOImplInstance().findAllByErrorState(ErrorState.ERROR_APS_FINISH)) + getListSize(DAOFactory.getAdjustOrderDAOImplInstance().findAllByErrorState(ErrorState.ERROR_ADJUSTED));
         int processExcepitonNum = getListSize(DAOFactory.getAdjustProcessDAOImplInstance().findAll());
         int processExcepitonHandledNum = getListSize(DAOFactory.getAdjustProcessDAOImplInstance().findAllByErrorState(ErrorState.ERROR_APS_FINISH)) + getListSize(DAOFactory.getAdjustProcessDAOImplInstance().findAllByErrorState(ErrorState.ERROR_ADJUSTED));
-
+        int layoutExcepitonNum = getListSize(DAOFactory.getAdjustLayoutDAOImplInstance().findAll());
+        int layoutExcepitonHandledNum = getListSize(DAOFactory.getAdjustLayoutDAOImplInstance().findAllByErrorState(ErrorState.ERROR_APS_FINISH)) + getListSize(DAOFactory.getAdjustLayoutDAOImplInstance().findAllByErrorState(ErrorState.ERROR_ADJUSTED));
         //生成根节点树
         JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
         ObjectNode objectNode = jsonNodeFactory.objectNode();
@@ -31,9 +32,10 @@ public class MainPageAction extends SuperAction {
         objectNode.put("orderExcepitonHandledNum", orderExcepitonHandledNum);
         objectNode.put("processExcepitonNum", processExcepitonNum);
         objectNode.put("processExcepitonHandledNum", processExcepitonHandledNum);
-        String jsonString = null;
+        objectNode.put("layoutExcepitonNum", layoutExcepitonNum);
+        objectNode.put("layoutExcepitonHandledNum", layoutExcepitonHandledNum);
         try {
-            jsonString = new ObjectMapper().writeValueAsString(objectNode);
+            String jsonString = new ObjectMapper().writeValueAsString(objectNode);
             Tools.jsonPrint(jsonString, httpServletResponse);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

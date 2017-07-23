@@ -29,14 +29,14 @@
                         </button>
                     </div>
 
-               <!--     <div class="pull-right">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                    data-target="#modal-simulate"
-                                    ng-click="reset()"><i class="fa fa-map-signs"></i>异常模拟
-                            </button>
-                        </div>
-                    </div>-->
+                    <!--     <div class="pull-right">
+                             <div class="btn-group">
+                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                         data-target="#modal-simulate"
+                                         ng-click="reset()"><i class="fa fa-map-signs"></i>异常模拟
+                                 </button>
+                             </div>
+                         </div>-->
                 </div>
 
                 <div class="row">
@@ -61,7 +61,7 @@
                                                 <th>处理时间</th>
                                                 <th>操作</th>
                                             </tr>
-                                            <tr  ng-repeat="x in adjustOrder" ng-init="renderTable($last)">
+                                            <tr ng-repeat="x in adjustOrder" ng-init="renderTable($last)">
                                                 <td style="display:none" id="id">{{x.id}}</td>
                                                 <td id="ord">{{x.ord.name}}</td>
                                                 <td>{{x.ord.priority}}</td>
@@ -80,7 +80,9 @@
                                                     <span ng-if="x.processTime !=null">{{x.processTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-block btn-sm btn-info" ng-click="exceptionHandling($event)">处理</button>
+                                                    <button type="button" class="btn btn-block btn-sm btn-info"
+                                                            ng-click="exceptionHandling($event)">处理
+                                                    </button>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -102,7 +104,8 @@
                                                 <th>状态</th>
                                                 <td>操作</td>
                                             </tr>
-                                            <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" onclick="a(this)">
+                                            <tr ng-repeat="order in orderList track by $index"
+                                                ng-init="renderTable($last)" onclick="a(this)">
                                             </tr>
                                             </tbody>
                                         </table>
@@ -123,53 +126,53 @@
             <!-- Horizontal Form -->
         </div>
         <!--异常模拟窗口-->
-      <!--  <div class="modal fade" id="modal-simulate">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">异常模拟</h4>
-                    </div>
-                    <div class="modal-body">
-                        &lt;!&ndash; form start &ndash;&gt;
-                        <form class="form-horizontal">
-                            <div class="box-body">
+        <!--  <div class="modal fade" id="modal-simulate">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
+                              <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">异常模拟</h4>
+                      </div>
+                      <div class="modal-body">
+                          &lt;!&ndash; form start &ndash;&gt;
+                          <form class="form-horizontal">
+                              <div class="box-body">
 
-                                &lt;!&ndash; Date and time range &ndash;&gt;
-                                <div class="form-group" id="add-t0">
-                                    <label class="col-sm-3 control-label">下单时间</label>
-                                    <div class="col-sm-8" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t0-datepicker">
-                                    </div>
-                                    &lt;!&ndash; /.input group &ndash;&gt;
-                                </div>
+                                  &lt;!&ndash; Date and time range &ndash;&gt;
+                                  <div class="form-group" id="add-t0">
+                                      <label class="col-sm-3 control-label">下单时间</label>
+                                      <div class="col-sm-8" style="z-index: 9999">
+                                          <input type="text" class="form-control pull-right" id="modal-add-t0-datepicker">
+                                      </div>
+                                      &lt;!&ndash; /.input group &ndash;&gt;
+                                  </div>
 
-                                <div class="form-group" id="add-t1">
-                                    <label class="col-sm-3 control-label">最早开工时间</label>
-                                    <div class="col-sm-8" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t1-datepicker">
-                                    </div>
-                                    &lt;!&ndash; /.input group &ndash;&gt;
-                                </div>
-                                <div class="form-group" id="add-t2">
-                                    <label class="col-sm-3 control-label">最晚交付时间</label>
-                                    <div class="col-sm-8" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t2-datepicker">
-                                    </div>
-                                </div>
-                            </div>
-                            &lt;!&ndash; /.box-body &ndash;&gt;
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="addAdjustOrder()">插入异常</button>
-                            </div>
-                            &lt;!&ndash; /.box-footer &ndash;&gt;
-                        </form>
+                                  <div class="form-group" id="add-t1">
+                                      <label class="col-sm-3 control-label">最早开工时间</label>
+                                      <div class="col-sm-8" style="z-index: 9999">
+                                          <input type="text" class="form-control pull-right" id="modal-add-t1-datepicker">
+                                      </div>
+                                      &lt;!&ndash; /.input group &ndash;&gt;
+                                  </div>
+                                  <div class="form-group" id="add-t2">
+                                      <label class="col-sm-3 control-label">最晚交付时间</label>
+                                      <div class="col-sm-8" style="z-index: 9999">
+                                          <input type="text" class="form-control pull-right" id="modal-add-t2-datepicker">
+                                      </div>
+                                  </div>
+                              </div>
+                              &lt;!&ndash; /.box-body &ndash;&gt;
+                              <div class="box-footer">
+                                  <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
+                                  <button type="submit" class="btn btn-info pull-right" ng-click="addAdjustOrder()">插入异常</button>
+                              </div>
+                              &lt;!&ndash; /.box-footer &ndash;&gt;
+                          </form>
 
-                    </div>
-                </div>
-            </div>
-        </div>-->
+                      </div>
+                  </div>
+              </div>
+          </div>-->
     </section>
 </div>

@@ -173,6 +173,8 @@
                 method="getAllAdjustProcessException"/>
         <action name="getAllAdjustDeviceException" class="com.rengu.actions.AdjustDeviceAction"
                 method="getAllAdjustDeviceException"/>
+        <action name="getAllAdjustLayoutException" class="com.rengu.actions.AdjustLayoutAction"
+                method="getAllAdjustLayoutException"/>
     </package>
 
     <!--FullCalendar事件源-->
