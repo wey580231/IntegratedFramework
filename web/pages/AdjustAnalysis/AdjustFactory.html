@@ -1,4 +1,3 @@
-
 <div>
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -31,37 +30,44 @@
 
             </div>
 
-                <div class="table-responsive mailbox-messages">
-                    <table class="table table-hover table-striped" id="table_value">
-                        <tbody>
-                        <tr>
-                            <th>车间名称</th>
-                            <th>布局名称</th>
-                            <th>调整备注</th>
-                            <th>调整时间</th>
-                            <th>处理状态</th>
-                            <th>异常状态</th>
-                            <th>操作</th>
-                        </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" id="value">
-                            <td style="display:none">{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- /.table -->
-                </div>
-                <!-- /.mail-box-messages -->
+            <div class="table-responsive mailbox-messages">
+                <table class="table table-hover table-striped" id="table_value">
+                    <tbody>
+                    <tr>
+                        <th>布局名称</th>
+                        <th>异常来源</th>
+                        <th>上报时间</th>
+                        <th>异常类型</th>
+                        <th>异常状态</th>
+                        <th>处理时间</th>
+                    </tr>
+                    <tr ng-repeat="layoutException in adjustLayoutExceptionList track by $index"
+                        ng-init="renderTable($last)" id="value">
+                        <td>{{layoutException.name}}</td>
+                        <td>{{layoutException.origin}}</td>
+                        <td>{{layoutException.reportTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                        <td>{{layoutException.type}}</td>
+                        <td>
+                            <span class="label label-danger" ng-if="layoutException.state == 1">异常未处理</span>
+                            <span class="label label-primary" ng-if="layoutException.state == 2">aps处理中</span>
+                            <span class="label label-success" ng-if="layoutException.state == 3">aps处理完成</span>
+                            <span class="label label-success" ng-if="layoutException.state == 4">调整完成</span>
+                            <span class="label label-warning" ng-if="layoutException.state == 5">处理完成</span>
+                            <span class="label label-danger" ng-if="layoutException.state == 6">应急失败</span>
+                        </td>
+                        <td>
+                            <span ng-if="layoutException.processTime ==null">--</span>
+                            <span ng-if="layoutException.processTime !=null">{{layoutException.processTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- /.table -->
+            </div>
+            <!-- /.mail-box-messages -->
         </div>
-            <!-- /.box-body -->
-            <!-- Horizontal Form -->
-
-
+        <!-- /.box-body -->
+        <!-- Horizontal Form -->
     </section>
 </div>
 

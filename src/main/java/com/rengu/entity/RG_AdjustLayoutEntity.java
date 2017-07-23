@@ -1,5 +1,8 @@
 package com.rengu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.Date;
 
 //布局调整
@@ -15,6 +18,7 @@ public class RG_AdjustLayoutEntity {
     private Integer state;               //异常状态，参照ErrorState类
     private Date processTime;            //处理时间
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "layoutId")
     private RG_LayoutEntity layout;      //对应的布局
 
     public String getId() {

@@ -8,17 +8,12 @@ import com.rengu.entity.RG_AdjustLayoutEntity;
 import com.rengu.entity.RG_LayoutDetailEntity;
 import com.rengu.entity.RG_LayoutEntity;
 import com.rengu.entity.RG_State3DEntity;
-import com.rengu.util.ErrorState;
-import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
-import com.rengu.util.WebSocketNotification;
+import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import javax.tools.Tool;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -161,6 +156,7 @@ public class State3DAO {
             }
 
             RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
+            adjustLayoutEntity.setId(Tools.getUUID());
             adjustLayoutEntity.setName(entity.getName());
             adjustLayoutEntity.setLayoutDesc(entity.getLayoutDesc());
             adjustLayoutEntity.setReportTime(new Date());
@@ -168,11 +164,9 @@ public class State3DAO {
             adjustLayoutEntity.setType("更新");
             adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
             adjustLayoutEntity.setLayout(entity);
-
             session.save(adjustLayoutEntity);
-
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("3D车间更新布局", "confirm"));
-
+            Tools.createEventLog(session, EventLogTools.AdjustLayoutExceptionCreatedEvent, EventLogTools.SimpleTimeLineItem, "工厂布局调整异常", "：通过3D车间更新工厂布局", adjustLayoutEntity.getId());
             flag = true;
         }
         session.getTransaction().commit();
@@ -211,19 +205,17 @@ public class State3DAO {
         }
 
         RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
+        adjustLayoutEntity.setId(Tools.getUUID());
         adjustLayoutEntity.setName(layoutName);
         adjustLayoutEntity.setLayoutDesc("");
         adjustLayoutEntity.setReportTime(new Date());
         adjustLayoutEntity.setOrigin("3D车间");
         adjustLayoutEntity.setType("新增");
         adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
-
         session.save(adjustLayoutEntity);
-
         WebSocketNotification.broadcast(Tools.creatNotificationMessage("3D车间插入新布局", "confirm"));
-
         session.save(layout);
-
+        Tools.createEventLog(session, EventLogTools.AdjustLayoutExceptionCreatedEvent, EventLogTools.SimpleTimeLineItem, "工厂布局调整异常", "：通过3D车间创建工厂布局", adjustLayoutEntity.getId());
         session.getTransaction().commit();
         return true;
     }

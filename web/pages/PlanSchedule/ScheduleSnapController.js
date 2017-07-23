@@ -41,16 +41,17 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     if (response.data.result == "ok") {
                         notification.sendNotification("confirm", "数据转换成功,3D车间启动中...");
                         setTimeout(function () {
-                            layer.open({
-                                type: 2,
-                                title: '3D车间',
-                                maxmin: true,
-                                shadeClose: true,
-                                shade: false,
-                                offset: 'l',
-                                area: ['100%', '100%'],
-                                content: "http://localhost:8080/WebGL"
-                            });
+                            window.open('www.techbrood.com', '_blank');
+                            // layer.open({
+                            //     type: 2,
+                            //     title: '3D车间',
+                            //     maxmin: true,
+                            //     shadeClose: true,
+                            //     shade: false,
+                            //     offset: 'l',
+                            //     area: ['100%', '100%'],
+                            //     content: "http://localhost:8080/WebGL"
+                            // });
                         }, 1500);
                     } else {
                         notification.sendNotification("alert", "数据转换失败");

@@ -176,7 +176,7 @@ angular.module("IntegratedFramework", [
         service.processExceptionHandling = backUrl + "exceptionHandling/processExceptionHandling.action";
 
         service.getAllAdjustDeviceException = backUrl + "ExceptionList/getAllAdjustDeviceException.action";
-        service.getAllLayout = backUrl + "layout/get3DLayout.action";
+        service.getAllAdjustLayoutException = backUrl + "ExceptionList/getAllAdjustLayoutException.action";
 
         service.queryApsState = backUrl + "aps/apsState.action";
         service.currSheduleInfo = backUrl + "aps/scheduleDetail.action";

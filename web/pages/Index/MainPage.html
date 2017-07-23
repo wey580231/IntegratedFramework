@@ -47,7 +47,7 @@
             <!-- small box -->
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>0/3</h3>
+                    <h3>{{exceptionNum.layoutExcepitonHandledNum}}/{{exceptionNum.layoutExcepitonNum}}</h3>
                     <p>调整布局</p>
                 </div>
                 <div class="icon">
@@ -96,6 +96,8 @@
                     <i class="fa fa-file bg-yellow" ng-if="eventLog.eventType == 0"></i>
                     <i class="fa fa-cog bg-green fa-spin " ng-if="eventLog.eventType == 1"></i>
                     <i class="fa fa-cog bg-red fa-spin " ng-if="eventLog.eventType == 2"></i>
+                    <!--产生工厂布局调整异常-->
+                    <i class="fa fa-map-o bg-yellow" ng-if="eventLog.eventType == 3"></i>
                     <div class="timeline-item">
                         <span class="time"><i class="fa fa-clock-o"></i>{{eventLog.creatTime | date:'yyyy-MM-dd hh:mm:ss' }}</span>
                         <h3 class="timeline-header no-border" ng-if="eventLog.logItemtype == 0"><a href="#">{{eventLog.title}}</a>{{eventLog.content}}
