@@ -189,7 +189,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                 myHttpService.post(serviceList.AddOrder, addData).then(function successCallback() {
                     myHttpService.get(serviceList.ListOrder).then(function (response) {
                         $scope.orderList = response.data;
-                        notification.sendNotification("confirm", "添加成功");
                     })
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
@@ -253,7 +252,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     myHttpService.post(serviceList.UpdateOrder, update_data).then(function successCallback() {
                         myHttpService.get(serviceList.ListOrder).then(function (response) {
                             $scope.orderList = response.data;
-                            notification.sendNotification("confirm", "修改成功");
                         })
                     }, function errorCallback() {
                         notification.sendNotification("alert", "请求失败");
@@ -274,7 +272,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                         // location.reload(true);
                         myHttpService.get(serviceList.ListOrder).then(function (response) {
                             $scope.orderList = response.data;
-                            notification.sendNotification("confirm", "删除成功");
                         })
                     }, function errorCallback() {
                         notification.sendNotification("alert", "请求失败");

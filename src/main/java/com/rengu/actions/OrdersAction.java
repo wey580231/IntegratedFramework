@@ -66,6 +66,7 @@ public class OrdersAction extends SuperAction {
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         boolean isSaved = ordersDAOInstance.save(rg_orderEntity);
         if (isSaved) {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("订单保存成功", "confirm"));
             ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order保存失败", "alert"));
@@ -77,6 +78,7 @@ public class OrdersAction extends SuperAction {
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.delete(rg_orderEntity)) {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("订单删除成功", "confirm"));
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order删除失败", "alert"));
         }
@@ -87,6 +89,7 @@ public class OrdersAction extends SuperAction {
         RG_OrderEntity rg_orderEntity = Tools.jsonConvertToEntity(jsonString, RG_OrderEntity.class);
         OrdersDAOImpl ordersDAOInstance = DAOFactory.getOrdersDAOInstance();
         if (ordersDAOInstance.update(rg_orderEntity)) {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("订单更新成功", "confirm"));
             ExceptionCheck.orderExceptionCheck(rg_orderEntity);
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("Order更新失败", "alert"));

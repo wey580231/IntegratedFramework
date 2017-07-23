@@ -4,22 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.rengu.entity.RG_AdjustLayoutEntity;
 import com.rengu.entity.RG_LayoutDetailEntity;
 import com.rengu.entity.RG_LayoutEntity;
 import com.rengu.entity.RG_State3DEntity;
-import com.rengu.util.ErrorState;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
 import com.rengu.util.WebSocketNotification;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import javax.tools.Tool;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 3D车间状态设置操作
@@ -160,16 +159,16 @@ public class State3DAO {
                 }
             }
 
-            RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
-            adjustLayoutEntity.setName(entity.getName());
-            adjustLayoutEntity.setLayoutDesc(entity.getLayoutDesc());
-            adjustLayoutEntity.setReportTime(new Date());
-            adjustLayoutEntity.setOrigin("3D车间");
-            adjustLayoutEntity.setType("更新");
-            adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
-            adjustLayoutEntity.setLayout(entity);
-
-            session.save(adjustLayoutEntity);
+//            RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
+//            adjustLayoutEntity.setName(entity.getName());
+//            adjustLayoutEntity.setLayoutDesc(entity.getLayoutDesc());
+//            adjustLayoutEntity.setReportTime(new Date());
+//            adjustLayoutEntity.setOrigin("3D车间");
+//            adjustLayoutEntity.setType("更新");
+//            adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
+//            adjustLayoutEntity.setLayout(entity);
+//
+//            session.save(adjustLayoutEntity);
 
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("3D车间更新布局", "confirm"));
 
@@ -210,15 +209,15 @@ public class State3DAO {
             layout.getDetails().add(arr[i]);
         }
 
-        RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
-        adjustLayoutEntity.setName(layoutName);
-        adjustLayoutEntity.setLayoutDesc("");
-        adjustLayoutEntity.setReportTime(new Date());
-        adjustLayoutEntity.setOrigin("3D车间");
-        adjustLayoutEntity.setType("新增");
-        adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
-
-        session.save(adjustLayoutEntity);
+//        RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
+//        adjustLayoutEntity.setName(layoutName);
+//        adjustLayoutEntity.setLayoutDesc("");
+//        adjustLayoutEntity.setReportTime(new Date());
+//        adjustLayoutEntity.setOrigin("3D车间");
+//        adjustLayoutEntity.setType("新增");
+//        adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
+//
+//        session.save(adjustLayoutEntity);
 
         WebSocketNotification.broadcast(Tools.creatNotificationMessage("3D车间插入新布局", "confirm"));
 
