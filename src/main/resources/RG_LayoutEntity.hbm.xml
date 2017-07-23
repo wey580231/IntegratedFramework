@@ -36,5 +36,12 @@
             <one-to-many not-found="ignore" class="com.rengu.entity.RG_ScheduleEntity"/>
         </set>
 
+        <set name="errorLayouts" inverse="true" lazy="true" cascade="all">
+            <key>
+                <column name="refLayout" not-null="false"/>
+            </key>
+            <one-to-many not-found="ignore" class="com.rengu.entity.RG_AdjustLayoutEntity"/>
+        </set>
+
     </class>
 </hibernate-mapping>

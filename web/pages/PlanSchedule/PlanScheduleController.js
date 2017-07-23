@@ -21,7 +21,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var apsEnd;                  //优化结束时间
         var scheduleOption;          //排程类型
         var modeSchedule;            //排程模式
-        var array = [];//未完成部分
+        var array = [];              //未完成部分
+        var validScheduleBaseInfo;   //是否为有效排程，为false时不可以排程
 
         var idVal;
         var id_params = {};          //保存选中的记录的id信息
@@ -33,10 +34,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         PageInfo.selectedIndex = new Array();     //每个页面中保存选择的索引
         PageInfo.data = new Array();              //每个页面对应的数据信息，只加载一次
 
-        var pageCount = 0;
+        var pageCount = 0;              //分页有关
         var currPage = 0;
         var pageTipCount = 0;
-
 
         $(function () {
             pageCount = $(".MyPage").size();
@@ -52,8 +52,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             });
             $("#tipHover").css("width", 1 / pageTipCount * 100 + "%");
 
-            document.getElementById("nextStep").disabled = true;
-            document.getElementById("startSchedule").disabled = true;
+            $("#nextStep").attr("disabled", true);
+            $("#startSchedule").attr("disabled", true);
 
             myHttpService.get(serviceList.ListSchedule).then(function (response) {
                 $scope.scheduleList = response.data;
@@ -98,11 +98,16 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $("#modal-add").show();
                         hideCalendar();
 
+                        $("#nextStep").attr("disabled", true);
+                        $("#startSchedule").attr("disabled", true);
+
                         $("#scheduleName").val("排程-" + dateService.formatDateTime(new Date()));
                         $("#rollTime").val(7);
                         $("#rollTime").val(7);
                         $("#scheduleTime").val(30);
                         $("#delayTime").val(5);
+
+                        initFullCalendar();
                     } else {
                         notification.sendNotification("alert", "查询APS状态失败");
                     }
@@ -122,6 +127,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             pageCount = $(".MyPage").size();
             pageTipCount = $(".MyPageTip").size();
+
+            validScheduleBaseInfo = false;
 
             $(".MyPage").eq(currPage).hide();
             currPage = 0;
@@ -165,29 +172,29 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             //布局查询
             if (currPage == 1) {
                 if (PageInfo.selectedIndex[currPage].length <= 0) {
-                    document.getElementById("nextStep").disabled = true;
+                    $("#nextStep").attr("disabled", true);
                 } else {
-                    document.getElementById("nextStep").disabled = false;
+                    $("#nextStep").removeAttr("disabled");
                 }
             }
             //订单查询
             else if (currPage == 2) {
                 if (PageInfo.selectedIndex[currPage].length <= 0) {
-                    document.getElementById("startSchedule").disabled = true;
+                    $("#startSchedule").attr("disabled", true);
                 } else {
-                    document.getElementById("startSchedule").disabled = false;
+                    $("#startSchedule").removeAttr("disabled");
                 }
             }
             //第一页
             else {
-                document.getElementById("nextStep").disabled = false;
+                $("#nextStep").removeAttr("disabled");
             }
         };
 
         //下一步
         $scope.next = function () {
 
-            if (currPage == 0 && !validateBaseInfo(true)) {
+            if (currPage == 0 && (!validateBaseInfo(true))) {
                 return;
             }
 
@@ -211,9 +218,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     showLayoutInfo();
                 }
                 if (PageInfo.selectedIndex[currPage].length <= 0) {
-                    document.getElementById("nextStep").disabled = true;
+                    $("#nextStep").attr("disabled", true);
                 } else {
-                    document.getElementById("nextStep").disabled = false;
+                    $("#nextStep").removeAttr("disabled");
                 }
             }
             //订单查询
@@ -222,9 +229,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     showOrderInfo();
                 }
                 if (PageInfo.selectedIndex[currPage].length <= 0) {
-                    document.getElementById("startSchedule").disabled = true;
+                    $("#startSchedule").attr("disabled", true);
                 } else {
-                    document.getElementById("startSchedule").disabled = false;
+                    $("#startSchedule").removeAttr("disabled");
                 }
             }
         };
@@ -315,7 +322,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 if (!validate.checkLength(apsEnd)) {
                     $("#add-end").removeClass("has-success");
                     $("#add-end").addClass("has-error");
-
                 } else {
                     $("#add-end").removeClass("has-error");
                     $("#add-end").addClass(" has-success");
@@ -333,14 +339,19 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 validate.checkLength(params.scheduleDays) && validate.checkNumber(params.scheduleDays) && validate.checkLength(params.name)
                 && validate.checkLength(params.modeSchedule)) {
 
+                validScheduleBaseInfo = true;
                 if (validateDate) {
                     if (validate.checkLength(params.apsStart) && validate.checkLength(params.apsEnd)) {
                         return true;
+                    } else {
+                        validScheduleBaseInfo = false;
+                        return false;
                     }
                 } else {
                     return true;
                 }
             }
+            validScheduleBaseInfo = false;
             return false;
         }
 
@@ -350,30 +361,14 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 showSchedule();
                 $("#nextStep").removeAttr('disabled');
             } else {
-                $("#nextStep").attr("disabled", 'true');
+                $("#nextStep").attr("disabled", true);
             }
         };
 
-
-        //日历部分
-        var showSchedule = function () {
-
-            //当前排程时间长度（b）
-            scheduleDays = $("#scheduleTime").val();
-            rollTime = $("#rollTime").val();
-            name = $("#scheduleName").val();
-
-            apsStart = (new Date($("#apsStartTime").val())).getTime();
-
-            /*apsEnd = (new Date($("input[name='add-end']").val())).getTime();*/
-
-            modeSchedule = $("#selectAdd option:selected").val();
-
-            scheduleOption = parseInt($("#delayTime").val());
-            var startTime = moment().format("YYYY-MM-DD");
-            var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");
-
+        //初始化日历
+        function initFullCalendar() {
             $("#calendar").show();
+            $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar({
                 buttonText: {
                     today: '今天',
@@ -386,38 +381,53 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                eventSources: [
-                    {
-                        //TODO 在部署时，因为工程名称问题，需要将路径改成含工程名
-                        // url: 'http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action',
-                        url: 'http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action',
-                        type: 'POST',
-                        data: {
-                            startTime: startTime,
-                            endTime: endTime
-                        },
-                        error: function () {
-                            alert('日历渲染订单失败!');
-                        }
+                //加载完成后回调,signal为false表示加载完成，为true表示正在加载中
+                loading: function (signal) {
+                    if (!signal) {
+                        setEndTime();
+                        hideLoadingPage();
+                    } else {
+                        layer.load(0);
                     }
-                ],
-                /*viewRender: function (view, element) {
-                 //已执行时间窗口染色
-                 for (var i = 1; i <= tempDays; i++) {
-                 $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
-                 }
-                 //时间窗口染色
-                 for (var i = 0; i < lastScheduleDays - tempDays; i++) {
-                 $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
-                 }
-                 //剩余窗口染色
-                 for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
-                 $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
-                 }
-                 }*/
-            });
+                }
 
-            setEndTime();
+                // viewRender: function (view, element) {
+                //     //已执行时间窗口染色
+                //     for (var i = 1; i <= tempDays; i++) {
+                //         $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
+                //     }
+                //     //时间窗口染色
+                //     for (var i = 0; i < lastScheduleDays - tempDays; i++) {
+                //         $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
+                //     }
+                //     //剩余窗口染色
+                //     for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
+                //         $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+                //     }
+                // }
+            });
+        }
+
+        //根据当前设置的时间范围，去筛选对应的日历信息
+        var showSchedule = function () {
+            scheduleDays = $("#scheduleTime").val();
+            rollTime = $("#rollTime").val();
+            name = $("#scheduleName").val();
+            modeSchedule = $("#selectAdd option:selected").val();
+
+            scheduleOption = parseInt($("#delayTime").val());
+            var startTime = moment().format("YYYY-MM-DD");                  //订单筛选开始时间
+            var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");   //订单筛选结束时间
+
+            $('#calendar').fullCalendar('removeEvents');
+
+            var source = "http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
+
+            //移除上一次数据源
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('removeEventSource', source);
+
+            $('#calendar').fullCalendar('addEventSource', source);
         };
 
         //表格信息重置
@@ -425,7 +435,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $("input").val('');
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
-
         };
 
         $scope.showCalendar = function () {
@@ -452,16 +461,16 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             if (action == 'add' & PageInfo.selectedIndex[currPage].indexOf(id) == -1) {
                 PageInfo.selectedIndex[currPage].push(id);
                 if (PageInfo.selectedIndex[currPage].length > 0) {
-                    document.getElementById("nextStep").disabled = "";
-                    document.getElementById("startSchedule").disabled = "";
+                    $("#nextStep").removeAttr("disabled");
+                    $("#startSchedule").removeAttr("disabled");
                 }
             }
 
             if (action == 'remove' && PageInfo.selectedIndex[currPage].indexOf(id) != -1) {
                 PageInfo.selectedIndex[currPage].splice(PageInfo.selectedIndex[currPage].indexOf(id), 1);
                 if (PageInfo.selectedIndex[currPage].length == 0) {
-                    document.getElementById("nextStep").disabled = true;
-                    document.getElementById("startSchedule").disabled = true;
+                    $("#nextStep").attr("disabled", true);
+                    $("#startSchedule").attr("disabled", true);
                 }
             }
         };
@@ -472,7 +481,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //开始排程
         $scope.submitForm = function () {
-
             layer.load(0);
 
             for (var i = 0; i < pageCount; i++) {
@@ -507,20 +515,31 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             myHttpService.post(serviceList.CurInfo, data).then(function (response) {
                 var info = response.data;
-                var max = dateService.formatDateTime(info[0].t2)//订单中t2最晚
-                for (var i = 1; i < info.length; i++) {
-                    if (dateService.compareTime(max, dateService.formatDateTime(info[i].t2))) {
-                        max = dateService.formatDateTime(info[i].t2);
+                if (info.length > 0) {
+                    var max = 0;
+                    var min = info[0].t0;
+                    for (var i = 0; i < info.length; i++) {
+                        if (info[i].t2 > max) {
+                            max = info[i].t2;
+                        }
+                        if (info[i].t0 < min) {
+                            min = info[i].t0;
+                        }
                     }
+
+                    apsStart = min - 2 * 60 * 60 * 24 * 1000;
+                    apsEnd = max + scheduleOption * 60 * 60 * 24 * 1000;
+
+                    $("#apsStartTime").val(dateService.formatDateTime(new Date(apsStart)));
+                    $("#apsEndTime").val(dateService.formatDateTime(new Date(apsEnd)));
+                    $("#nextStep").removeAttr("disabled");
+                    validScheduleBaseInfo = true;
+                } else {
+                    $("#apsStartTime").val(dateService.formatDateTime(new Date()));
+                    $("#apsEndTime").val("无符合时间范围内订单信息");
+                    $("#nextStep").attr("disabled", true);
+                    validScheduleBaseInfo = false;
                 }
-                var apsEnds = new Date(max);
-                apsEnds.setDate(apsEnds.getDate() + scheduleOption);
-
-                $("#apsStartTime").val(dateService.formatDateTime(new Date()));
-                $("#apsEndTime").val(dateService.formatDateTime(apsEnds));
-
-                //优化结束时间
-                apsEnd = (new Date(apsEnds)).getTime();
             });
         }
 
@@ -602,7 +621,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 notification.sendNotification("alert", "请求失败");
                 hideLoadingPage();
             });
-            document.getElementById("nextStep").disabled = true;
+            $("#nextStep").removeAttr("disabled");
         }
 
         //获取信息

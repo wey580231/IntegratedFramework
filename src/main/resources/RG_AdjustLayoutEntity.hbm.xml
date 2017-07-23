@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.RG_AdjustLayoutEntity" table="RG_AdjustLayout" schema="TestDatabase">
+        <id name="id">
+            <column name="id" sql-type="varchar(100)" length="100"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(100)" not-null="false"/>
+        </property>
+        <property name="layoutDesc">
+            <column name="layoutDesc" sql-type="varchar(100)" not-null="false"/>
+        </property>
+        <property name="reportTime" type="java.util.Date">
+            <column name="reportTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="origin">
+            <column name="origin" sql-type="varchar(100)"/>
+        </property>
+        <property name="type">
+            <column name="type" sql-type="varchar(100)"/>
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="state" sql-type="int" not-null="false"/>
+        </property>
+        <property name="processTime" type="java.util.Date">
+            <column name="processTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <many-to-one name="layout" class="com.rengu.entity.RG_LayoutEntity">
+            <column name="refLayout" not-null="false"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

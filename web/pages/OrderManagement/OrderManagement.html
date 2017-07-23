@@ -135,15 +135,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="add-priority">
-                                    <label class="col-sm-2 control-label">优先级</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-priority" title="请输入订单优先级！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-
                                 <div class="form-group" id="add-quantity">
                                     <label class="col-sm-2 control-label">数量(个)</label>
 
@@ -167,15 +158,6 @@
                                     <div class="col-sm-10" style="z-index: 9999">
                                         <input type="text" class="form-control pull-right" id="modal-add-t2-datepicker"
                                                onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="add-state">
-                                    <label class="col-sm-2 control-label">订单状态</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-state" title="非必填！"
-                                               placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -212,15 +194,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="edit-priority">
-                                    <label class="col-sm-2 control-label">优先级</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-priority" title="请输入订单优先级！"
-                                               value="{{order.priority}}" placeholder="">
-                                    </div>
-                                </div>
-
                                 <div class="form-group" id="edit-quantity">
                                     <label class="col-sm-2 control-label">数量(个)</label>
 
@@ -243,14 +216,6 @@
                                     <div class="col-sm-10" style="z-index: 9999">
                                         <input type="text" class="form-control pull-right" id="modal-edit-t2-datepicker"
                                                value="{{order.t2 | date:'yyyy-MM-dd hh:mm:ss'}}">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="edit-state">
-                                    <label class="col-sm-2 control-label">订单状态</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="edit-state" title="非必填！"
-                                               value="{{order.state}}">
                                     </div>
                                 </div>
                             </div>

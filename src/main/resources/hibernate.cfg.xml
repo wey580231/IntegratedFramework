@@ -10,8 +10,8 @@
         <property name="connection.password">root</property>
         <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-        <property name="show_sql">false</property>
-        <property name="format_sql">true</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">false</property>
 
         <property name="hbm2ddl.auto">update</property>
         <property name="connection.autocommit">true</property>
@@ -44,6 +44,7 @@
         <mapping resource="RG_AdjustDeviceEntity.hbm.xml"/>
         <mapping resource="RG_AdjustOrderEntity.hbm.xml"/>
         <mapping resource="RG_AdjustProcessEntity.hbm.xml"/>
+        <mapping resource="RG_AdjustLayoutEntity.hbm.xml"/>
 
         <!-- 3D车间接口 -->
         <mapping resource="RG_LayoutEntity.hbm.xml"/>
