@@ -3,6 +3,7 @@ package com.rengu.DAO.impl;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.entity.RG_AdjustOrderEntity;
 import com.rengu.entity.RG_OrderEntity;
+import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
@@ -11,6 +12,7 @@ import org.hibernate.query.Query;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by hanchangming on 2017/5/22.
@@ -99,6 +101,14 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         if (object instanceof RG_OrderEntity) {
             rg_orderEntity = (RG_OrderEntity) object;
             String orderId = rg_orderEntity.getId();
+            //从排程记录里面删除订单
+            Set<RG_ScheduleEntity> rg_scheduleEntitySet = rg_orderEntity.getSchedules();
+            if (rg_scheduleEntitySet != null) {
+                for (RG_ScheduleEntity rg_scheduleEntity : rg_scheduleEntitySet) {
+                    rg_scheduleEntity.getOrders().remove(rg_orderEntity);
+                }
+            }
+            //从订单异常里面删除订单。
             RG_AdjustOrderEntity rg_adjustOrderEntity = DAOFactory.getAdjustOrderDAOImplInstance().findAllByOrderId(orderId);
             if (rg_adjustOrderEntity != null) {
                 if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {

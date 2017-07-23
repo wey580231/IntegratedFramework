@@ -2,6 +2,7 @@ package com.rengu.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
  * Created by wey580231 on 2017/5/23.
  */
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RG_ProcessEntity {
     private String id;
     private String name;

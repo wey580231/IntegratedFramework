@@ -11,88 +11,121 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
     }])
     .controller('BOMManagementController', function ($scope, $http, myHttpService, serviceList) {
 
-        // layer.load(0);
+        layer.load(0);
 
-        var zTreeNodes = [];
         var zNodes = [];
-        var idVal;          //所右击的节点id值
-        var dataArr = [];
-        var dataTrue = {"isRootNode": true};
+        var rootData = [];
 
         $(function () {
             //初始化下拉数据
             $(".select2").select2();
 
-            loadRightFloatMenu();
-
+            var dataTrue = {"isRootNode": true};
             myHttpService.post(serviceList.isRootNode, dataTrue).then(function successCallback(response) {
-                var rootdata = response.data;
+                rootData = response.data;
                 $scope.rootdata = response.data;
                 $scope.processdata = response.data;
-
-                var rootLength = rootdata.length;
-
-                for (var i = 0; i < rootLength; i++) {
-                    var params = {};
-                    var id = rootdata[i].id;
-                    params.id = id;
-                    var dataId = JSON.stringify(params);
-                    myHttpService.post(serviceList.isChildNode, dataId).then(function successCallback(response) {
-                        var data = response.data;
-                        dataArr.push(data);
-                        if (dataArr.length > 0) {
-                            for (var i = 0; i < dataArr.length; i++) {
-                                var datas = dataArr[i];
-                                if (datas.hasOwnProperty("childProcess") == true) {
-                                    var childList = dataArr[i].childProcess;
-                                    for (var j = 0; j < childList.length; j++) {
-                                        var childLists = childList[j];
-                                        if (childLists.hasOwnProperty("childProcess") == true) {
-                                            var temps = childLists.childProcess;
-                                            delete(childLists.childProcess);
-                                            childLists.children = temps;
-                                            childList[j] = childLists;
-                                        }
-                                    }
-                                    var temp = datas.childProcess;
-                                    delete(datas.childProcess);
-                                    datas.children = temp;
-                                }
-                            }
-                            zNodes = dataArr;
-                        }
-                    })
-                }
+                loadRightFloatMenu();
+                hideLoadingPage();
             });
         });
 
+
+        //对快照节点排序
+        function sortSnapshot(childList) {
+            for (var i = 0; i < childList.length; i++) {
+                for (var j = i + 1; j < childList.length; j++) {
+                    if (childList[j].nodeCreateTime < childList[i].nodeCreateTime) {
+                        var tmp = childList[j];
+                        childList[j] = childList[i];
+                        childList[i] = tmp;
+                    }
+                }
+            }
+        }
+
+        //下拉框事件改变
         $("#select").change(function () {
+            zNodes.splice(0, zNodes.length);
+            var idRoot;
             var val = $(this).children('option:selected').val();
             if (val.length > 0) {
-                for (var i = 0; i < zNodes.length; i++) {
-                    if (zNodes[i].name == val) {
-                        zTreeNodes.push(zNodes[i]);
+                for (var i = 0; i < rootData.length; i++) {
+                    if (rootData[i].name == val) {
+                        idRoot = rootData[i].id;
                         break;
                     }
                 }
-                loadTree();
+                var params = {};
+                params.id = idRoot;
+                var id = JSON.stringify(params);
+
+                layer.load();
+
+                myHttpService.post(serviceList.isChildNode, id).then(function successCallback(response) {
+                    var datas = response.data;
+
+                    if (datas.hasOwnProperty("childProcess")) {
+                        var middleNodeList = datas.childProcess;
+                        sortSnapshot(middleNodeList);
+                        for (var j = 0; j < middleNodeList.length; j++) {
+
+                            var middleNode = middleNodeList[j];
+
+                            if (middleNode.hasOwnProperty("childProcess")) {
+
+                                sortSnapshot(middleNode.childProcess);
+
+                                for (var k = 0; k < middleNode.childProcess.length; k++) {
+                                    var bottomNode = middleNode.childProcess[k];
+                                    //默认排程节点
+                                    if (middleNode.firstNode) {
+                                        if (!middleNode.firstNode) {
+                                            bottomNode.icon = "../../images/bom_img/interNode.png";
+                                        } else if (bottomNode.firstNode) {
+                                            bottomNode.icon = "../../images/bom_img/commonNode.png";
+                                        }
+                                    }
+                                }
+                                var temps = middleNode.childProcess;
+                                delete(middleNode.childProcess);
+                                middleNode.children = temps;
+                                middleNode = middleNode;
+                            }
+
+                            if (middleNode.errorNode) {
+                                middleNode.icon = "../../images/bom_img/errorNode.png";
+                            } else {
+                                middleNode.icon = "../../images/bom_img/interactive.png";
+                            }
+                        }
+
+                        datas.icon = "../../images/bom_img/rootNode.png";
+                        var temp = datas.childProcess;
+                        delete(datas.childProcess);
+                        datas.children = temp;
+                    }
+                    zNodes.push(datas);
+                    loadTree();
+
+                    hideLoadingPage();
+                })
             } else {
                 document.getElementById("treeDemo").style.display = "none";
+                $("#table_value  tr:not(:first)").html("");
             }
-            zTreeNodes.splice(0, zTreeNodes.length);
         });
 
+
         function loadTree() {
-            var zTree, rMenu;
             var setting = {
                 view: {
                     dblClickExpand: false,
-                    showIcon: false,
+                    showIcon: true,
                     showLine: false
                 },
                 callback: {
-                    onRightClick: OnRightClick,
-                    onDblClick: zTreeOnClick
+                    onClick: zTreeOnClick
                 },
                 data: {
                     keep: {
@@ -104,112 +137,24 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                     showRenameBtn: false,
                     showRemoveBtn: false
                 },
-            };
-
-            //右击
-            function OnRightClick(event, treeNode) {
-                idVal = "";
-                idVal = zTree.getSelectedNodes()[0].id;
-                var e = event || window.event;
-                if (!treeNode && e.target.tagName.toLowerCase() != "button" && $(e.target).parents("a").length == 0) {
-                    zTree.cancelSelectedNode();
-                    showRMenu("root", e.clientX, e.clientY);
-                } else if (treeNode && !treeNode.noR) {
-                    zTree.selectNode(treeNode);
-                    showRMenu("node", e.clientX, e.clientY);
-                }
-            }
-
-            //右击菜单显示
-            function showRMenu(type, x, y) {
-                $("#rMenu ul").show();
-                if (type == "root") {
-                    $("#m_del").hide();
-                } else {
-                    $("#m_del").show();
-                }
-                rMenu.css({"top": (y - 110) + "px", "left": (x - 250) + "px", "visibility": "visible"});
-                $("body").bind("mousedown", onBodyMouseDown);
-            }
-
-            //右击菜单隐藏
-            function hideRMenu() {
-                if (rMenu) rMenu.css({"visibility": "hidden"});
-                $("body").unbind("mousedown", onBodyMouseDown);
-            }
-
-
-            function onBodyMouseDown(event) {
-                if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length > 0)) {
-                    rMenu.css({"visibility": "hidden"});
-                }
-            }
-
-            //双击显示表格信息
-            function zTreeOnClick(treeNode) {
-                if (treeNode.isParent) {
-                    return false;
-                } else {
-                    var id = zTree.getSelectedNodes()[0].id;
-                    var params = {};
-                    params.id = id;
-                    var data = JSON.stringify(params);
-                    myHttpService.post(serviceList.getAllPlan, data).then(function successCallback(response) {
-                        $scope.planList = response.data;
-                    });
-                    return true;
-                }
-            }
-
-            var addCount = 1;
-
-            //增加节点
-            $scope.addTreeNode = function () {
-                hideRMenu();
-                var newNode = {name: "增加" + (addCount++)};
-                if (zTree.getSelectedNodes()[0]) {
-                    newNode.checked = zTree.getSelectedNodes()[0].checked;
-                    zTree.addNodes(zTree.getSelectedNodes()[0], newNode);
-                } else {
-                    zTree.addNodes(null, newNode);
+                check: {
+                    enable: true
                 }
             };
 
+            //点击树形控件
+            function zTreeOnClick(e, treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
-            //删除节点
-            $scope.removeTreeNode = function () {
-                hideRMenu();
-                var nodes = zTree.getSelectedNodes();
-                if (nodes && nodes.length > 0) {
-                    if (nodes[0].children && nodes[0].children.length > 0) {
-                        var msg = "要删除的节点是父节点，如果删除将连同子节点一起删掉。\n\n请确认！";
-                        if (confirm(msg) == true) {
-                            zTree.removeNode(nodes[0]);
-                        }
-                    } else {
-                        zTree.removeNode(nodes[0]);
-                    }
-                }
-            };
+                zTree.expandNode(treeNode);
 
-            $scope.checkTreeNode = function (checked) {
-                var nodes = zTree.getSelectedNodes();
-                if (nodes && nodes.length > 0) {
-                    zTree.checkNode(nodes[0], checked, true);
-                }
-                hideRMenu();
-            };
+            }   //onclick
 
-            $scope.resetTree = function () {
-                hideRMenu();
-                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-            };
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
 
-            // $(document).ready(function () {
-            $.fn.zTree.init($("#treeDemo"), setting, zTreeNodes);
-            zTree = $.fn.zTree.getZTreeObj("treeDemo");
-            rMenu = $("#rMenu");
             document.getElementById("treeDemo").style.display = "";
-            // });
         }
+
     });
+
+
