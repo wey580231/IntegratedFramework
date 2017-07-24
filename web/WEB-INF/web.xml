@@ -6,6 +6,10 @@
     <servlet>
         <servlet-name>myStartUpServlet</servlet-name>
         <servlet-class>com.rengu.servlet.StartUpServlet</servlet-class>
+        <init-param>
+            <param-name>log4j-properties-location</param-name>
+            <param-value>/WEB-INF/classes/log4j.properties</param-value>
+        </init-param>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -32,14 +36,4 @@
     <welcome-file-list>
         <welcome-file>/MainPage.html</welcome-file>
     </welcome-file-list>
-    <!--404错误页面-->
-    <error-page>
-        <error-code>404</error-code>
-        <location>/404.html</location>
-    </error-page>
-    <!--500错误页面-->
-    <error-page>
-        <error-code>500</error-code>
-        <location>/500.html</location>
-    </error-page>
 </web-app>

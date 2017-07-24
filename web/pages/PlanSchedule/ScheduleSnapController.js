@@ -41,7 +41,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     if (response.data.result == "ok") {
                         notification.sendNotification("confirm", "数据转换成功,3D车间启动中...");
                         setTimeout(function () {
-                            window.open('www.techbrood.com', '_blank');
+                            window.open('http://localhost:8080/WebGL', '_blank');
                             // layer.open({
                             //     type: 2,
                             //     title: '3D车间',
@@ -69,7 +69,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
 
                 layer.confirm('是否将结果下发MES?', {
-                    btn: ['下发','取消'] //按钮
+                    btn: ['确定','取消'] //按钮
                 }, function(index){
                     layer.load();
 
