@@ -18,6 +18,8 @@ public class RG_UserConfigEntity {
     private String errorType;                       //异常处理时的类型
     private String errorId;                         //对应异常的id
 
+    private String dispatchMesSnapshotId;           //记录下发MES的snapshot的id信息
+
     private RG_UserConfigEntity user;               //
 
     public Integer getId() {
@@ -114,5 +116,13 @@ public class RG_UserConfigEntity {
 
     public void setErrorId(String errorId) {
         this.errorId = errorId;
+    }
+
+    public String getDispatchMesSnapshotId() {
+        return dispatchMesSnapshotId;
+    }
+
+    public void setDispatchMesSnapshotId(String dispatchMesSnapshotId) {
+        this.dispatchMesSnapshotId = dispatchMesSnapshotId;
     }
 }

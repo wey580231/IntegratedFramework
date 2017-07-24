@@ -162,4 +162,24 @@ public class UserConfigTools {
         query.setParameter(3, userId);
         return query.executeUpdate();
     }
+
+    //获取最新下发MES排程信息
+    public static String getLatestDispatchMesId(String userId) {
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        String result = "";
+
+        NativeQuery query = session.createNativeQuery("select dispatchMesSnapshotId from rg_userconfig where idUser = ?");
+        query.setParameter(1, userId);
+        List list = query.getResultList();
+        if (list.size() > 0) {
+            result = list.get(0).toString();
+        }
+        session.getTransaction().commit();
+        session.close();
+
+        return result;
+    }
+
 }
