@@ -10,6 +10,7 @@ import com.rengu.entity.RG_LayoutEntity;
 import com.rengu.entity.RG_State3DEntity;
 import com.rengu.util.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
@@ -26,11 +27,8 @@ public class State3DAO {
 
     //由3D车间定时查询当前的设置状态
     public String getCurrentState() {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
 
         Query query = session.createQuery("from RG_State3DEntity entity where entity.id =:id");
         query.setParameter("id", 1);
@@ -50,6 +48,9 @@ public class State3DAO {
 
             try {
                 jsonString = mapper.writeValueAsString(root);
+
+                System.out.println("*********Yang********" + jsonString);
+
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 jsonString = Tools.resultCode("1", "Can't execute operation");
@@ -58,7 +59,8 @@ public class State3DAO {
         } else {
             jsonString = Tools.resultCode("1", "Can't execute operation");
         }
-        session.getTransaction().commit();
+        tx.commit();
+        session.close();
         return jsonString;
     }
 
