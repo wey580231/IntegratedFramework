@@ -63,31 +63,6 @@ function enableToolBar(flag){
     }
 }
 
-$(document).ready(function () {
-    resizeD3ViewSize();
-
-    $("#activeSelector").attr("disabled", true);
-    enableToolBar(false);
-
-    $("#activeSelector").change(function () {
-        var val = $(this).children('option:selected').val();
-        if (val.length > 0) {
-            LoadView(val);
-            enableToolBar(true);
-        }
-        else {
-            CloseView('1');
-        }
-    });
-
-    document.getElementById("welcome_page").style.display = "block";
-    document.getElementById('ComView1').focus();
-
-    setTimeout(function () {
-        loginAps();
-    }, 500);
-});
-
 function loginAps() {
     document.getElementById("CheckData").Initialize("");
     document.getElementById("CheckData").LoadFile(Server + ViewPath + "ButtonCheckData.view");
@@ -317,6 +292,8 @@ function LoadView(file) {
     document.getElementById("CloseWindow2").style.display = "none";
     document.getElementById("CloseWindow3").style.display = "none";
     var path = Server + ViewPath + comview1;
+
+    alert(path);
     document.getElementById('ComView1').LoadFile(path);
     document.getElementById("ComView1").style.height = "100%";
     document.getElementById("ComView1").style.width = "100%";
