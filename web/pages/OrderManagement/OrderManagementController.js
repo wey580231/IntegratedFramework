@@ -11,9 +11,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
     }])
 
     .controller('OrderManagementController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
-
         layer.load(0);
-
         $(function () {
             loadRightFloatMenu();
 
@@ -83,8 +81,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.quantity = parseInt($("input[name='add-quantity']").val());
             var t0 = $("input[id='modal-add-t0-datepicker']").val();
             var t2 = $("input[id='modal-add-t2-datepicker']").val();
+            var orderType = $("select#orderSelect").val();
             params.t0 = (new Date($("input[id='modal-add-t0-datepicker']").val())).getTime();
             params.t2 = (new Date($("input[id='modal-add-t2-datepicker']").val())).getTime();
+            params.orderType = orderType;
             addData = JSON.stringify(params);
 
 

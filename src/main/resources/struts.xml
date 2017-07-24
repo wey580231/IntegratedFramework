@@ -112,6 +112,10 @@
     <package name="Layout" namespace="/layout" extends="struts-default">
         <action name="get3DLayout" class="com.rengu.actions.LayoutAction" method="query3DLayout"/>
     </package>
+    <!--产品信息-->
+    <package name="product" namespace="/product" extends="struts-default">
+        <action name="getAllProduct" class="com.rengu.actions.ProductAction" method="getAllProduct"/>
+    </package>
 
     <!--3D车间访问接口-->
     <package name="State3D" namespace="/3d" extends="struts-default">
