@@ -226,8 +226,15 @@ public class SnapshotDao {
                     session.update(snapshot);
                     session.update(parent);
 
-                    result = true;
-                    tx.commit();
+                    NativeQuery query = session.createNativeQuery("update rg_userconfig set dispatchMesSnapshotId = ? where idUser = ?");
+                    query.setParameter(1, id);
+                    query.setParameter(2, "1");
+                    if (query.executeUpdate() > 0) {
+                        result = true;
+                        tx.commit();
+                    } else {
+                        tx.rollback();
+                    }
                 }
             }
 

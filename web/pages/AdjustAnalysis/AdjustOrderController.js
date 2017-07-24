@@ -32,7 +32,6 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
 
         //异常处理
         $scope.exceptionHandling = function (event) {
-
             myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
                     if (response.data.data.state == 0) {

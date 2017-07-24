@@ -234,9 +234,7 @@ public class FeedBackStateAction extends SuperAction {
 
     //处理aps转换结果
     private void switchResult(String replyState) {
-
         RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
-
         if (userconfig != null && userconfig.getRootSnapshotId().length() > 0) {
             MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();

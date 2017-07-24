@@ -421,7 +421,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $('#calendar').fullCalendar('removeEvents');
 
             var source = "http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
-
+            // var source = "http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
             //移除上一次数据源
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('removeEventSource', source);
