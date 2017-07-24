@@ -204,6 +204,7 @@
     <!--MainPage接口-->
     <package name="mainpage" namespace="/mainpage" extends="struts-default">
         <action name="getAllExcepitonNumInfo" class="com.rengu.actions.MainPageAction" method="getAllExcepitonNumInfo"/>
+        <action name="getProjectName" class="com.rengu.actions.MainPageAction" method="getProjectName"></action>
     </package>
     <!--EventLog接口-->
     <package name="eventlog" namespace="/eventlog" extends="struts-default">

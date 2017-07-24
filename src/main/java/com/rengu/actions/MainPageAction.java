@@ -9,11 +9,13 @@ import com.rengu.util.ErrorState;
 import com.rengu.util.Tools;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by hanch on 2017/7/20.
  */
 public class MainPageAction extends SuperAction {
+
     public void getAllExcepitonNumInfo() throws Exception {
         int deviceExcepitonNum = getListSize(DAOFactory.getAdjustDeviceDAOImplInstance().findAll());
         int deviceExcepitonHandledNum = getListSize(DAOFactory.getAdjustDeviceDAOImplInstance().findAllByErrorState(ErrorState.ERROR_APS_FINISH)) + getListSize(DAOFactory.getAdjustDeviceDAOImplInstance().findAllByErrorState(ErrorState.ERROR_ADJUSTED));
@@ -48,6 +50,19 @@ public class MainPageAction extends SuperAction {
             return 0;
         } else {
             return list.size();
+        }
+    }
+
+    public void getProjectName() {
+        Properties properties = Tools.getDatabaseProperties();
+        String LocalProjectName = properties.getProperty("LocalProjectName");
+        JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+        ObjectNode objectNode = jsonNodeFactory.objectNode();
+        objectNode.put("LocalProjectName", LocalProjectName);
+        try {
+            Tools.jsonPrint(new ObjectMapper().writeValueAsString(objectNode), httpServletResponse);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
     }
 }
