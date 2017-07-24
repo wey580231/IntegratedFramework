@@ -4,6 +4,7 @@ import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.SnapshotLevel;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
@@ -22,24 +23,11 @@ public class SnapshotDao {
     //将所有订单一起转换
     public boolean switchToEmulateData(String userId, String id) {
         boolean result = false;
-        MySessionFactory.getSessionFactory().getCurrentSession().close();
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
 
         RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-        int i = 0;
-        while (bottomSnapshot == null && i <= 5) {
-            i = i + 1;
-            System.out.println("重新获取RG_SnapshotNodeEntity节点" + i + "次");
-            MySessionFactory.getSessionFactory().getCurrentSession().close();
-            session = MySessionFactory.getSessionFactory().getCurrentSession();
-            if (!session.getTransaction().isActive()) {
-                session.beginTransaction();
-            }
-            bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-        }
+        bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
         if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息
@@ -67,15 +55,16 @@ public class SnapshotDao {
                         if (nativeQuery.executeUpdate() > 0) {
                             result = true;
                         }
-
+                        tx.commit();
                     } catch (NullPointerException e) {
                         e.printStackTrace();
+                        tx.rollback();
                     }
                 }
             }
         }
 
-        session.getTransaction().commit();
+        session.close();
 
         return result;
     }
@@ -210,10 +199,9 @@ public class SnapshotDao {
     public boolean switchResultToMess(String s, String id) {
         boolean result = false;
 
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
         try {
             RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, id);
 
@@ -239,15 +227,15 @@ public class SnapshotDao {
                     session.update(parent);
 
                     result = true;
+                    tx.commit();
                 }
             }
-            session.getTransaction().commit();
 
         } catch (Exception e) {
             result = false;
-
-            session.getTransaction().rollback();
+            tx.rollback();
         }
+        session.close();
 
         return result;
     }
