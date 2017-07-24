@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rengu.actions.mes.MesReceiver;
 import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by wey580231 on 2017/6/6.
@@ -98,7 +101,6 @@ public class Emulate3DAO {
                 flag = false;
             }
         }
-
         session.getTransaction().commit();
 
         return flag;
@@ -107,11 +109,8 @@ public class Emulate3DAO {
     //获取新格式排程结果
     public boolean getEmulateResult(String snapshotId, StringBuilder jsonString) {
         boolean flag = false;
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
 
         RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, snapshotId);
 
@@ -146,8 +145,8 @@ public class Emulate3DAO {
 
                 RG_ProductEntity product = entity.getProductByIdProduct();
 
-                NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idOrder = ? and idSnapshort is null order by id asc",RG_EmulateResultEntity.class);
-                query.setParameter(1,entity.getId());
+                NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idOrder = ? and idSnapshort is null order by id asc", RG_EmulateResultEntity.class);
+                query.setParameter(1, entity.getId());
 
                 List<RG_EmulateResultEntity> emulateDatas = query.list();
                 Iterator<RG_EmulateResultEntity> emulateIter = emulateDatas.iterator();
@@ -185,13 +184,21 @@ public class Emulate3DAO {
             try {
                 jsonString.append(mapper.writeValueAsString(root));
                 flag = true;
+                tx.commit();
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 flag = false;
+                tx.rollback();
             }
+        }else{
+            tx.commit();
         }
 
-        session.getTransaction().commit();
+        System.out.println("*************************按订单查询结果*******************************");
+        System.out.println(jsonString);
+        System.out.println("*********************************************************************");
+
+        session.close();
 
         return flag;
     }
@@ -199,11 +206,8 @@ public class Emulate3DAO {
     //获取所有订单信息，利用在快招树节点转换后的结果，直接查询
     public boolean getAllOrderEmulateResult(String snapshotId, StringBuilder jsonString) {
         boolean flag = false;
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
 
         NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idSnapshort=:id ", RG_EmulateResultEntity.class);
         query.setParameter("id", snapshotId);
@@ -248,13 +252,21 @@ public class Emulate3DAO {
             try {
                 jsonString.append(mapper.writeValueAsString(root));
                 flag = true;
+                tx.commit();
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 flag = false;
+                tx.rollback();
             }
+        } else {
+            tx.commit();
         }
 
-        session.getTransaction().commit();
+        session.close();
+
+        System.out.println("***********************所有订单单查询结果*****************************");
+        System.out.println(jsonString);
+        System.out.println("*********************************************************************");
 
         return flag;
     }

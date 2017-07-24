@@ -102,9 +102,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $("#startSchedule").attr("disabled", true);
 
                         $("#scheduleName").val("排程-" + dateService.formatDateTime(new Date()));
-                        $("#rollTime").val(7);
-                        $("#rollTime").val(7);
-                        $("#scheduleTime").val(30);
+                        $("#rollTime").val(1);
+                        $("#scheduleTime").val(7);
                         $("#delayTime").val(5);
 
                         initFullCalendar();
@@ -614,7 +613,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     myHttpService.get(serviceList.ListSchedule).then(function (response) {
                         $scope.scheduleList = response.data;
                     });
-                    notification.sendNotification("confirm", "排程成功");
+                    notification.sendNotification("confirm", "已下发APS,计算中...");
                 }
                 hideLoadingPage();
             }, function errorCallback() {

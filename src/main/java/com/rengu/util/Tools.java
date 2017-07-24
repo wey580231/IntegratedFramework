@@ -28,10 +28,6 @@ import java.util.Date;
 public class Tools {
     static Properties properties = null;
 
-    static {
-
-    }
-
     public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -363,5 +359,9 @@ public class Tools {
         }
 
         return null;
+    }
+
+    public static void logMessage() {
+
     }
 }
