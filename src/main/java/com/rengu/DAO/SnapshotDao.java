@@ -125,6 +125,35 @@ public class SnapshotDao {
                             result.setSnapshotNodeEntity(plan.getSnapShort());
 
                             session.save(result);
+
+                            //Yang 20170725调整对3D车间的结果转换规则
+                            if (entity.getAutoCreateProcess() != null && entity.getAutoCreateProcess().equals("Y")) {
+                                RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+
+                                //任务名
+                                nextResult.setTask(entity.getNextTask());
+                                //货物名
+                                nextResult.setGoods(entity.getGoods());
+                                //地点名(若不存在为null)
+                                nextResult.setSite(entity.getSite());
+
+                                long stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
+                                long lastTime = 2;
+
+                                if (entity.getDistance() != null && res.getMobility() > 0) {
+                                    lastTime = entity.getDistance().intValue() / res.getMobility();
+                                }
+
+                                //开始时间
+                                nextResult.setStartTime(Long.toString(stime));
+                                //结束时间
+                                nextResult.setEndTime(Long.toString((stime + lastTime)));
+
+                                nextResult.setOrderEntity(plan.getOrderByIdOrder());
+
+                                nextResult.setSnapshotNodeEntity(plan.getSnapShort());
+                                session.save(nextResult);
+                            }
                         }
                     }
                 }

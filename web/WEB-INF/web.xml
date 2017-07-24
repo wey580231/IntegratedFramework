@@ -34,6 +34,6 @@
     </filter-mapping>
     <!--欢迎页面-->
     <welcome-file-list>
-        <welcome-file>/MainPage.html</welcome-file>
+        <welcome-file>/MainPage.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

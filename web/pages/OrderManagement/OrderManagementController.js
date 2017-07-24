@@ -74,19 +74,32 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             dispatchApsService.dispatchAps(confirmDispatchAps, resetDispatchAps);
         };
 
+        //将字符串转换成date
+        function convertDateFromString(dateString) {
+            if (dateString) {
+                var arr1 = dateString.split(" ");
+                var sdate = arr1[0].split('-');
+                var date = new Date(sdate[0], sdate[1] - 1, sdate[2]);
+                return date;
+            }
+        }
+
         //信息填写检验
         var orderAddValidate = function () {
             var params = {};
             params.name = $("input[name='add-name']").val();
             params.quantity = parseInt($("input[name='add-quantity']").val());
-            var t0 = $("input[id='modal-add-t0-datepicker']").val();
-            var t2 = $("input[id='modal-add-t2-datepicker']").val();
-            var orderType = $("select#orderSelect").val();
-            params.t0 = (new Date($("input[id='modal-add-t0-datepicker']").val())).getTime();
-            params.t2 = (new Date($("input[id='modal-add-t2-datepicker']").val())).getTime();
-            params.orderType = orderType;
-            addData = JSON.stringify(params);
 
+            //Yang 修复将日期字符串转换成日期对象
+            var t0 = convertDateFromString($("input[id='modal-add-t0-datepicker']").val());
+            var t2 = convertDateFromString($("input[id='modal-add-t2-datepicker']").val());
+            params.t0 = t0.getTime();
+            params.t2 = t2.getTime();
+
+            var orderType = $("select#orderSelect").val();
+            params.orderType = orderType;
+
+            addData = JSON.stringify(params);
 
             if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
@@ -135,12 +148,12 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             params.quantity = parseInt($("input[name='edit-quantity']").val());
             var t0 = $("input[id='modal-edit-t0-datepicker']").val();
             var t2 = $("input[id='modal-edit-t2-datepicker']").val();
+
             params.t0 = (new Date($("input[id='modal-edit-t0-datepicker']").val())).getTime();
             params.t2 = (new Date($("input[id='modal-edit-t2-datepicker']").val())).getTime();
             params.state = parseInt($("input[name='edit-state']").val());
             var state = $("input[name='edit-state']").val();
             editData = params;
-
 
             if (!validate.checkLength(params.name)) {
                 $("#edit-name").removeClass("has-success");

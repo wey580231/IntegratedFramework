@@ -1,6 +1,7 @@
 package com.rengu.entity;
 
-/**工艺表转换助手，结合工艺表将plan结果转换成3D车间需要的格式
+/**
+ * 工艺表转换助手，结合工艺表将plan结果转换成3D车间需要的格式
  * Created by wey580231 on 2017/7/7.
  */
 public class RG_ProcessAssisantEntity {
@@ -10,6 +11,10 @@ public class RG_ProcessAssisantEntity {
     private String site;                            //地点
     private String task;                            //任务信息
     private String goods;                           //货物
+
+    private String autoCreateProcess;               //是否需要紧接着当前工序自动产生吓一条工序，目前只对getRaw和get_product有效
+    private String nextTask;                        //工序转换的类型，为getRaw则自动转换movein，为get_product自动转换put_product
+    private Integer distance;                       //运动的距离
 
     public int getId() {
         return id;
@@ -51,27 +56,27 @@ public class RG_ProcessAssisantEntity {
         this.goods = goods;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_ProcessAssisantEntity that = (RG_ProcessAssisantEntity) o;
-
-        if (id != that.id) return false;
-        if (processId != null ? !processId.equals(that.processId) : that.processId != null) return false;
-        if (site != null ? !site.equals(that.site) : that.site != null) return false;
-        if (task != null ? !task.equals(that.task) : that.task != null) return false;
-        return goods != null ? goods.equals(that.goods) : that.goods == null;
+    public String getAutoCreateProcess() {
+        return autoCreateProcess;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (processId != null ? processId.hashCode() : 0);
-        result = 31 * result + (site != null ? site.hashCode() : 0);
-        result = 31 * result + (task != null ? task.hashCode() : 0);
-        result = 31 * result + (goods != null ? goods.hashCode() : 0);
-        return result;
+    public void setAutoCreateProcess(String autoCreateProcess) {
+        this.autoCreateProcess = autoCreateProcess;
+    }
+
+    public String getNextTask() {
+        return nextTask;
+    }
+
+    public void setNextTask(String nextTask) {
+        this.nextTask = nextTask;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 }
