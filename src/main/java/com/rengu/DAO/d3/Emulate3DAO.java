@@ -145,7 +145,7 @@ public class Emulate3DAO {
 
                 RG_ProductEntity product = entity.getProductByIdProduct();
 
-                NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idOrder = ? and idSnapshort is null order by id asc", RG_EmulateResultEntity.class);
+                NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idOrder = ? and idSnapshort is null order by startTime asc", RG_EmulateResultEntity.class);
                 query.setParameter(1, entity.getId());
 
                 List<RG_EmulateResultEntity> emulateDatas = query.list();
@@ -161,8 +161,8 @@ public class Emulate3DAO {
 
                         node.put("task", emulateData.getTask());
                         node.put("good", emulateData.getGoods());
-                        node.put("startTime", Integer.parseInt(emulateData.getStartTime()));
-                        node.put("endTime", Integer.parseInt(emulateData.getEndTime()));
+                        node.put("startTime",emulateData.getStartTime());
+                        node.put("endTime", emulateData.getEndTime());
                         if (emulateData.getSite() != null && emulateData.getSite().length() > 0) {
                             node.put("site", emulateData.getSite());
                         } else {
@@ -209,7 +209,7 @@ public class Emulate3DAO {
         Session session = MySessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
 
-        NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idSnapshort=:id ", RG_EmulateResultEntity.class);
+        NativeQuery query = session.createNativeQuery("select * from rg_emulateresult where idSnapshort=:id order by startTime asc", RG_EmulateResultEntity.class);
         query.setParameter("id", snapshotId);
 
         List<RG_EmulateResultEntity> results = query.list();
@@ -234,8 +234,8 @@ public class Emulate3DAO {
 
                 node.put("task", entity.getTask());
                 node.put("good", entity.getGoods());
-                node.put("startTime", Integer.parseInt(entity.getStartTime()));
-                node.put("endTime", Integer.parseInt(entity.getEndTime()));
+                node.put("startTime", entity.getStartTime());
+                node.put("endTime", entity.getEndTime());
                 if (entity.getSite() != null) {
                     node.put("site", entity.getSite());
                 } else {
