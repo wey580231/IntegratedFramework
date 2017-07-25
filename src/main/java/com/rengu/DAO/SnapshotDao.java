@@ -116,9 +116,9 @@ public class SnapshotDao {
                             Date endDate = sdf.parse(plan.getT2Task());
 
                             //开始时间
-                            result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                            result.setStartTime((int)(startDate.getTime() - initialDate.getTime()) / 1000);
                             //结束时间
-                            result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+                            result.setEndTime((int)((endDate.getTime() - initialDate.getTime()) / 1000));
 
                             result.setOrderEntity(plan.getOrderByIdOrder());
 
@@ -137,7 +137,7 @@ public class SnapshotDao {
                                 //地点名(若不存在为null)
                                 nextResult.setSite(entity.getSite());
 
-                                long stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
+                                long stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 2;
                                 long lastTime = 2;
 
                                 if (entity.getDistance() != null && res.getMobility() > 0) {
@@ -145,9 +145,9 @@ public class SnapshotDao {
                                 }
 
                                 //开始时间
-                                nextResult.setStartTime(Long.toString(stime));
+                                nextResult.setStartTime((int)stime);
                                 //结束时间
-                                nextResult.setEndTime(Long.toString((stime + lastTime)));
+                                nextResult.setEndTime((int)(stime + lastTime));
 
                                 nextResult.setOrderEntity(plan.getOrderByIdOrder());
 
@@ -201,13 +201,41 @@ public class SnapshotDao {
                                 Date endDate = sdf.parse(plan.getT2Task());
 
                                 //开始时间
-                                result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                                result.setStartTime((int)((startDate.getTime() - initialDate.getTime()) / 1000));
                                 //结束时间
-                                result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+                                result.setEndTime((int)((endDate.getTime() - initialDate.getTime()) / 1000));
 
                                 result.setOrderEntity(plan.getOrderByIdOrder());
 
                                 session.save(result);
+
+                                //Yang 20170725调整对3D车间的结果转换规则
+                                if (entity.getAutoCreateProcess() != null && entity.getAutoCreateProcess().equals("Y")) {
+                                    RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+
+                                    //任务名
+                                    nextResult.setTask(entity.getNextTask());
+                                    //货物名
+                                    nextResult.setGoods(entity.getGoods());
+                                    //地点名(若不存在为null)
+                                    nextResult.setSite(entity.getSite());
+
+                                    long stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 2;
+                                    long lastTime = 2;
+
+                                    if (entity.getDistance() != null && res.getMobility() > 0) {
+                                        lastTime = entity.getDistance().intValue() / res.getMobility();
+                                    }
+
+                                    //开始时间
+                                    nextResult.setStartTime((int)(stime));
+                                    //结束时间
+                                    nextResult.setEndTime((int)((stime + lastTime)));
+
+                                    nextResult.setOrderEntity(plan.getOrderByIdOrder());
+
+                                    session.save(nextResult);
+                                }
                             }
                         }
                     }

@@ -13,10 +13,10 @@
             <column name="task" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
         <property name="startTime">
-            <column name="startTime" sql-type="varchar(50)" length="50" not-null="false"/>
+            <column name="startTime" sql-type="int" not-null="false"/>
         </property>
         <property name="endTime">
-            <column name="endTime" sql-type="varchar(50)" length="50" not-null="false"/>
+            <column name="endTime" sql-type="int"  not-null="false"/>
         </property>
         <property name="goods">
             <column name="goods" sql-type="varchar(50)" length="50" not-null="false"/>

@@ -7,8 +7,8 @@ public class RG_EmulateResultEntity {
 
     private int id;
     private String task;                            //任务号
-    private String startTime;                       //开始时间
-    private String endTime;                         //结束时间
+    private int startTime;                          //开始时间
+    private int endTime;                            //结束时间
     private String goods;                           //货物
     private String site;                            //地点
 
@@ -31,19 +31,19 @@ public class RG_EmulateResultEntity {
         this.task = task;
     }
 
-    public String getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
