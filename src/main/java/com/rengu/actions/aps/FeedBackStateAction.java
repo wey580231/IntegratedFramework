@@ -415,8 +415,10 @@ public class FeedBackStateAction extends SuperAction {
         Set<RG_OrderEntity> rg_orderEntitySet = rg_scheduleEntity.getOrders();
         if (rg_orderEntitySet.size() >= 0) {
             for (RG_OrderEntity orderEntity : rg_orderEntitySet) {
-                orderEntity.setState(Byte.parseByte(state));
-                session.save(orderEntity);
+                if (orderEntity.getState() != Byte.parseByte("3")) {
+                    orderEntity.setState(Byte.parseByte(state));
+                    session.save(orderEntity);
+                }
             }
         }
     }
