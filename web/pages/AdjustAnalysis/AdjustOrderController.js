@@ -19,7 +19,6 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         $(function () {
             myHttpService.get(serviceList.AdjustOrder).then(function (response) {
                 $scope.adjustOrder = response.data;
-
                 hideLoadingPage();
             });
         });

@@ -28,6 +28,7 @@ public class DAOFactory {
     private static final EventLogDAOImpl eventLogDAOImpl = new EventLogDAOImpl();
     private static final AdjustLayoutDAOImpl adjustLayoutDAOImpl = new AdjustLayoutDAOImpl();
     private static final DistanceDAOImpl distanceDAOImpl = new DistanceDAOImpl();
+    private static final UserConfigDAOImpl userConfigDAOImpl = new UserConfigDAOImpl();
 
     public static UsersDAOImpl getUserDAOInstance() {
         return usersDAOImpl;
@@ -113,7 +114,11 @@ public class DAOFactory {
         return adjustLayoutDAOImpl;
     }
 
-    public static DistanceDAOImpl getDistanceDAOImpllInstance() {
+    public static DistanceDAOImpl getDistanceDAOImplInstance() {
         return distanceDAOImpl;
+    }
+
+    public static UserConfigDAOImpl getUserConfigDAOImplInstance() {
+        return userConfigDAOImpl;
     }
 }

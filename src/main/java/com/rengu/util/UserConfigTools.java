@@ -1,5 +1,6 @@
 package com.rengu.util;
 
+import com.rengu.entity.RG_LayoutEntity;
 import com.rengu.entity.RG_UserConfigEntity;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
@@ -155,7 +156,6 @@ public class UserConfigTools {
     //故障应急时，保存当前应急的故障信息，待结果返回时，根据此信息更新对应故障的状态信息
     public static int updateErroInfo(String userId, String errorType, String errorId) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-
         NativeQuery query = session.createNativeQuery("update rg_userconfig set errorType = ?, errorId = ? where idUser = ?");
         query.setParameter(1, errorType);
         query.setParameter(2, errorId);
@@ -182,4 +182,25 @@ public class UserConfigTools {
         return result;
     }
 
+    //设置当前的工厂布局
+    public static boolean setFactoryLayout(String layoutId, String userId) {
+        RG_LayoutEntity rg_layoutEntity = DAOFactory.getLayoutDAOImplInstance().findAllById(layoutId);
+        RG_UserConfigEntity rg_userConfigEntity = UserConfigTools.getUserConfig(userId);
+        if (rg_layoutEntity != null && rg_userConfigEntity != null) {
+            rg_userConfigEntity.setFactoryLayoutId(rg_layoutEntity.getId());
+            return DAOFactory.getUserConfigDAOImplInstance().update(rg_userConfigEntity);
+        } else {
+            return false;
+        }
+    }
+
+    //获取当前的工厂布局
+    public static String getFactoryLayout(String userId) {
+        RG_UserConfigEntity rg_userConfigEntity = UserConfigTools.getUserConfig(userId);
+        if (rg_userConfigEntity != null) {
+            return rg_userConfigEntity.getFactoryLayoutId();
+        } else {
+            return null;
+        }
+    }
 }

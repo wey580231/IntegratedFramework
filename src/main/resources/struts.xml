@@ -167,6 +167,8 @@
         <action name="creatOrderException" class="com.rengu.actions.AdjustOrderAction" method="creatOrderException"/>
         <action name="creatProcessException" class="com.rengu.actions.AdjustProcessAction"
                 method="creatProcessException"/>
+        <action name="getAllAdjustOrderByAdjustOrderType" class="com.rengu.actions.AdjustProcessAction"
+                method="getAllAdjustOrderByAdjustOrderType"/>
     </package>
 
     <!--高级调整分析-->
