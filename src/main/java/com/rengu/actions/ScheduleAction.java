@@ -85,23 +85,31 @@ public class ScheduleAction extends SuperAction {
                 RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
                 Set<RG_LayoutDetailEntity> rg_layoutDetailEntitySet = layout.getDetails();
                 //开启所有资源
-                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1'");
-                //更新资源可用情况
-//                for (RG_LayoutDetailEntity rg_layoutDetailEntity : rg_layoutDetailEntitySet) {
-//                    String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
-//                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
-//                    RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, rg_layoutDetailEntity.getItem());
-//                    if (rg_resourceEntity != null) {
-//                        String assisantResource = rg_resourceEntity.getAssisantResource();
-//                        if (assisantResource != null) {
-//                            System.out.println("发现载具：" + assisantResource);
-//                            String SQlStringTemp = "update APS_RESOURCE set STATE = '1' where id = '" + assisantResource + "'";
-//                            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlStringTemp);
-//                        }
-//                    } else {
-//                        System.out.println("资源不存在：" + rg_layoutDetailEntity.getItem());
-//                    }
-//                }
+//                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1'");
+//                更新资源可用情况
+                for (RG_LayoutDetailEntity rg_layoutDetailEntity : rg_layoutDetailEntitySet) {
+                    String resourceExist = rg_layoutDetailEntity.getExist();
+                    String resourceState = rg_layoutDetailEntity.getState();
+                    if (resourceExist.equals("true") && resourceState.equals("running")) {
+                        String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
+                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
+                        RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, rg_layoutDetailEntity.getItem());
+                        if (rg_resourceEntity != null) {
+                            String assisantResource = rg_resourceEntity.getAssisantResource();
+                            if (assisantResource != null) {
+                                System.out.println("发现载具：" + assisantResource);
+                                String SQlStringTemp = "update APS_RESOURCE set STATE = '1' where id = '" + assisantResource + "'";
+                                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlStringTemp);
+                            }
+                        } else {
+                            System.out.println("资源不存在：" + rg_layoutDetailEntity.getItem());
+                        }
+                    }
+                }
+                //将托盘资源职位可用状态
+                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XBC'");
+                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XZTP01_01'");
+                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XZTP02_02'");
                 rg_scheduleEntity.setLayout(layout);
             }
 

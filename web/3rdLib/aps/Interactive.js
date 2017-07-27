@@ -51,17 +51,38 @@ function resizeD3ViewSize() {
 }
 
 //是否开启工具栏
-function enableToolBar(flag){
-    if(!flag){
+function enableToolBar(flag) {
+    if (!flag) {
         $("#getInteractiveResult").attr("disabled", true);
         $("#zoomin").attr("disabled", true);
         $("#zoomout").attr("disabled", true);
-    }else{
+    } else {
         $("#getInteractiveResult").removeAttr("disabled");
         $("#zoomin").removeAttr("disabled");
         $("#zoomout").removeAttr("disabled");
     }
 }
+
+$(document).ready(function () {
+    resizeD3ViewSize();
+    $("#activeSelector").attr("disabled", true);
+    enableToolBar(false);
+    $("#activeSelector").change(function () {
+        var val = $(this).children('option:selected').val();
+        if (val.length > 0) {
+            LoadView(val);
+            enableToolBar(true);
+        }
+        else {
+            CloseView('1');
+        }
+    });
+    document.getElementById("welcome_page").style.display = "block";
+    document.getElementById('ComView1').focus();
+    setTimeout(function () {
+        loginAps();
+    }, 500);
+});
 
 function loginAps() {
     document.getElementById("CheckData").Initialize("");
