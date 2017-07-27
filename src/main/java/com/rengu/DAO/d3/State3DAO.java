@@ -4,18 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rengu.entity.RG_AdjustLayoutEntity;
 import com.rengu.entity.RG_LayoutDetailEntity;
 import com.rengu.entity.RG_LayoutEntity;
 import com.rengu.entity.RG_State3DEntity;
-import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
+import com.rengu.util.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import javax.tools.Tool;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -28,11 +27,8 @@ public class State3DAO {
 
     //由3D车间定时查询当前的设置状态
     public String getCurrentState() {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
 
         Query query = session.createQuery("from RG_State3DEntity entity where entity.id =:id");
         query.setParameter("id", 1);
@@ -52,6 +48,9 @@ public class State3DAO {
 
             try {
                 jsonString = mapper.writeValueAsString(root);
+
+                System.out.println("*********Yang********" + jsonString);
+
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 jsonString = Tools.resultCode("1", "Can't execute operation");
@@ -60,7 +59,8 @@ public class State3DAO {
         } else {
             jsonString = Tools.resultCode("1", "Can't execute operation");
         }
-        session.getTransaction().commit();
+        tx.commit();
+        session.close();
         return jsonString;
     }
 
@@ -156,6 +156,19 @@ public class State3DAO {
                     }
                 }
             }
+
+            RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
+            adjustLayoutEntity.setId(Tools.getUUID());
+            adjustLayoutEntity.setName(entity.getName());
+            adjustLayoutEntity.setLayoutDesc(entity.getLayoutDesc());
+            adjustLayoutEntity.setReportTime(new Date());
+            adjustLayoutEntity.setOrigin("3D车间");
+            adjustLayoutEntity.setType("更新");
+            adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
+            adjustLayoutEntity.setLayout(entity);
+            session.save(adjustLayoutEntity);
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("3D车间更新布局", "confirm"));
+            Tools.createEventLog(session, EventLogTools.AdjustLayoutExceptionCreatedEvent, EventLogTools.SimpleTimeLineItem, "工厂布局调整异常", "：通过3D车间更新工厂布局", adjustLayoutEntity.getId());
             flag = true;
         }
         session.getTransaction().commit();
@@ -193,8 +206,18 @@ public class State3DAO {
             layout.getDetails().add(arr[i]);
         }
 
+        RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
+        adjustLayoutEntity.setId(Tools.getUUID());
+        adjustLayoutEntity.setName(layoutName);
+        adjustLayoutEntity.setLayoutDesc("");
+        adjustLayoutEntity.setReportTime(new Date());
+        adjustLayoutEntity.setOrigin("3D车间");
+        adjustLayoutEntity.setType("新增");
+        adjustLayoutEntity.setState(ErrorState.ERROR_UNSOLVED);
+        session.save(adjustLayoutEntity);
+        WebSocketNotification.broadcast(Tools.creatNotificationMessage("3D车间插入新布局", "confirm"));
         session.save(layout);
-
+        Tools.createEventLog(session, EventLogTools.AdjustLayoutExceptionCreatedEvent, EventLogTools.SimpleTimeLineItem, "工厂布局调整异常", "：通过3D车间创建工厂布局", adjustLayoutEntity.getId());
         session.getTransaction().commit();
         return true;
     }

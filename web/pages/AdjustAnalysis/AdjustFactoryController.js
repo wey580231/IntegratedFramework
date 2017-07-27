@@ -9,7 +9,9 @@ angular.module("IntegratedFramework.AdjustFactoryController", ['ngRoute'])
             controller: 'AdjustFactoryController'
         })
     }])
-    .controller("AdjustFactoryController", function ($scope) {
-
-
+    .controller("AdjustFactoryController", function ($scope, $http, myHttpService, serviceList) {
+        myHttpService.get(serviceList.getAllAdjustLayoutException).then(function (response) {
+            $scope.adjustLayoutExceptionList = response.data;
+            hideLoadingPage();
+        });
     });

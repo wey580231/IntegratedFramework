@@ -20,7 +20,9 @@ public class RG_LayoutEntity {
     @JsonIgnore
     private Set<RG_LayoutDetailEntity> details = new HashSet<RG_LayoutDetailEntity>();
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
-    private Set<RG_ScheduleEntity> schedules;
+    private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
+
+    private Set<RG_AdjustLayoutEntity>  errorLayouts = new HashSet<RG_AdjustLayoutEntity>();
 
     public String getId() {
         return id;
@@ -68,5 +70,13 @@ public class RG_LayoutEntity {
 
     public void setSchedules(Set<RG_ScheduleEntity> schedules) {
         this.schedules = schedules;
+    }
+
+    public Set<RG_AdjustLayoutEntity> getErrorLayouts() {
+        return errorLayouts;
+    }
+
+    public void setErrorLayouts(Set<RG_AdjustLayoutEntity> errorLayouts) {
+        this.errorLayouts = errorLayouts;
     }
 }

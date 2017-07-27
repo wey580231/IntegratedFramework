@@ -11,6 +11,7 @@ public class EventLogTools {
     public static final Short ExceptionCreateEvent = 0;//订单事件
     public static final Short ScheduleCreateEvent = 1;//排程事件
     public static final Short ScheduleFailedEvent = 2;//排程失败
+    public static final Short AdjustLayoutExceptionCreatedEvent = 3;//布局调整异常事件
 
     //时间线节点样式。
     public static final Short SimpleTimeLineItem = 0;

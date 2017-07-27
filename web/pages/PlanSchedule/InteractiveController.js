@@ -18,8 +18,13 @@ angular.module("IntegratedFramework.InteractiveController", ['ngRoute'])
                 if (response.data.result == "ok") {
                     $scope.schedule = response.data;
                     hideLoadingPage();
+
                 } else {
                     notification.sendNotification("alert", "获取排程信息失败");
+                    hideLoadingPage();
+                    $("#getInteractiveResult").attr("disabled", true);
+                    $("#zoomin").attr("disabled", true);
+                    $("#zoomout").attr("disabled", true);
                 }
             }, function (response) {
                 hideLoadingPage();

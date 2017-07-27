@@ -21,5 +21,15 @@
         <property name="goods">
             <column name="goods" sql-type="varchar(255)" not-null="false"/>
         </property>
+        <property name="autoCreateProcess">
+            <column name="autoCreateProcess" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="nextTask">
+            <column name="nextTask" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="distance">
+            <column name="distance" sql-type="int" not-null="false"/>
+        </property>
+
     </class>
 </hibernate-mapping>

@@ -1,7 +1,7 @@
 package com.rengu.DAO.impl;
 
-import com.rengu.DAO.ProductDAO;
-import com.rengu.entity.RG_ProductEntity;
+import com.rengu.DAO.AdjustLayoutDAO;
+import com.rengu.entity.RG_AdjustLayoutEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,28 +9,23 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-/**
- * Created by hanchangming on 2017/7/5.
- */
-public class ProductDAOImpl extends SuperDAOImpl implements ProductDAO<RG_ProductEntity> {
-
+public class AdjustLayoutDAOImpl extends SuperDAOImpl implements AdjustLayoutDAO<RG_AdjustLayoutEntity> {
     @Override
-    public List<RG_ProductEntity> findAll() {
+    public List<RG_AdjustLayoutEntity> findAll() {
         MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
-
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_ProductEntity rg_productEntity";
+        String hql = "from RG_AdjustLayoutEntity rg_adjustLayoutEntity ";
         Query query = session.createQuery(hql);
         List list = query.list();
         return list;
     }
 
     @Override
-    public RG_ProductEntity findAllById(String id) {
+    public List<RG_AdjustLayoutEntity> findAllByErrorState(Integer errorState) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -38,15 +33,11 @@ public class ProductDAOImpl extends SuperDAOImpl implements ProductDAO<RG_Produc
             if (!transaction.isActive()) {
                 session.beginTransaction();
             }
-            String hql = "from RG_ProductEntity rg_productEntity where rg_productEntity.id =:id";
+            String hql = "from RG_AdjustLayoutEntity rg_adjustLayoutEntity where rg_adjustLayoutEntity.state =:errorState";
             Query query = session.createQuery(hql);
-            query.setParameter("id", id);
-            if (!query.list().isEmpty()) {
-                RG_ProductEntity rg_productEntity = (RG_ProductEntity) query.list().get(0);
-                return rg_productEntity;
-            } else {
-                return null;
-            }
+            query.setParameter("errorState", errorState);
+            List list = query.list();
+            return list;
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

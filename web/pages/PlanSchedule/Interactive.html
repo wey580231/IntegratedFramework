@@ -1,6 +1,6 @@
-<script src="../../3rdLib/aps/ipServer.js"></script>
-<script src="../../3rdLib/aps/Interactive.js"></script>
-<script src="../../3rdLib/bootstrap/js/bootstrap-select.js"></script>
+<script src="3rdLib/aps/ipServer.js"></script>
+<script src="3rdLib/aps/Interactive.js"></script>
+<script src="3rdLib/bootstrap/js/bootstrap-select.js"></script>
 
 <style>
     .spanKey {
@@ -35,7 +35,24 @@
                             <option value="GanttResourceTask.view">资源工序甘特图</option>
                             <option value="SimulationResource.view">仿真模拟</option>
                         </select>
-                        <div style="float: right;margin-right: 1%;height:30px;">
+                        <div class="data-uk-button-radio" style="float: right;margin-right: 1%;">
+                            <button id="getInteractiveResult" type="button" class="btn btn-default btn-sm"
+                                    ng-click="emulateRecvApsInterResult()" class="btn btn-default"><i
+                                    class="fa fa-user-o"></i> 结果转换
+                            </button>
+                        </div>
+                        <div class="data-uk-button-radio" style="float: right;margin-right: 1%;">
+                            <button type="button" id="zoomin" class="btn btn-default btn-sm"
+                                    onclick="ZoomIn()" class="btn btn-default"><i class="fa fa-search-plus"
+                                                                                  aria-hidden="true"></i>放大
+                            </button>
+                            <button type="button" id="zoomout" class="btn btn-default btn-sm"
+                                    onclick="ZoomOut()" class="btn btn-default"><i class="fa fa-search-minus"
+                                                                                   aria-hidden="true"></i>缩小
+                            </button>
+                        </div>
+
+                        <div style="float: left;margin-left: 1%;height:30px;">
                             <span class="spanKey">排程名称:</span>
                             <span class="spanKey">{{schedule.data.name}}</span>
 
@@ -48,12 +65,6 @@
                             <span ng-if="schedule.data.state == 3">计算失败</span>
                             <span ng-if="schedule.data.state == 4">优化完成</span>
                             <span ng-if="schedule.data.state == 5">下发MES</span>
-                        </div>
-                        <div class="data-uk-button-radio" style="float: right;margin-right: 1%;">
-                            <button id="loginInAPS" type="button" class="btn btn-default btn-sm"
-                                    ng-click="emulateRecvApsInterResult()" class="btn btn-default"><i
-                                    class="fa fa-user-o"></i> APS结果转换
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -115,7 +126,7 @@
     </section>
 </div>
 
-<script src="../../3rdLib/jquery_resize.js"/>
+<script src="3rdLib/jquery_resize.js"/>
 
 <script>
     function resizeD3ViewSize() {

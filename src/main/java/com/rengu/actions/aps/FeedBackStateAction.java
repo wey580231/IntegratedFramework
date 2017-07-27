@@ -234,9 +234,7 @@ public class FeedBackStateAction extends SuperAction {
 
     //处理aps转换结果
     private void switchResult(String replyState) {
-
         RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
-
         if (userconfig != null && userconfig.getRootSnapshotId().length() > 0) {
             MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -302,7 +300,7 @@ public class FeedBackStateAction extends SuperAction {
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急计算完成!", "confirm"));
                             setOrdersState("0", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_APS_FINISH);
-                            Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急计算完成!", schedule.getId());
+                            Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急计算完成!", schedule.getId());
 
                         } else {
                             schedule.setState(RG_ScheduleEntity.ERROR_ADJUST);
@@ -312,7 +310,7 @@ public class FeedBackStateAction extends SuperAction {
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急优化完成!", "confirm"));
                             setOrdersState("0", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ADJUSTED);
-                            Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急优化完成!", schedule.getId());
+                            Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急优化完成!", schedule.getId());
                         }
                     }
                     //计算失败
@@ -417,8 +415,10 @@ public class FeedBackStateAction extends SuperAction {
         Set<RG_OrderEntity> rg_orderEntitySet = rg_scheduleEntity.getOrders();
         if (rg_orderEntitySet.size() >= 0) {
             for (RG_OrderEntity orderEntity : rg_orderEntitySet) {
-                orderEntity.setState(Byte.parseByte(state));
-                session.save(orderEntity);
+                if (orderEntity.getState() != Byte.parseByte("3")) {
+                    orderEntity.setState(Byte.parseByte(state));
+                    session.save(orderEntity);
+                }
             }
         }
     }

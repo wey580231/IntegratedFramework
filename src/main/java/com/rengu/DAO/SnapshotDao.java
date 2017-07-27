@@ -4,13 +4,16 @@ import com.rengu.entity.*;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.SnapshotLevel;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wey580231 on 2017/6/27.
@@ -20,24 +23,11 @@ public class SnapshotDao {
     //将所有订单一起转换
     public boolean switchToEmulateData(String userId, String id) {
         boolean result = false;
-        MySessionFactory.getSessionFactory().getCurrentSession().close();
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
 
         RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-        int i = 0;
-        while (bottomSnapshot == null && i <= 5) {
-            i = i + 1;
-            System.out.println("重新获取RG_SnapshotNodeEntity节点" + i + "次");
-            MySessionFactory.getSessionFactory().getCurrentSession().close();
-            session = MySessionFactory.getSessionFactory().getCurrentSession();
-            if (!session.getTransaction().isActive()) {
-                session.beginTransaction();
-            }
-            bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
-        }
+        bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, id);
         if (bottomSnapshot != null && bottomSnapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
             //【1】查找此次排程对应的所有订单结果信息
@@ -65,15 +55,16 @@ public class SnapshotDao {
                         if (nativeQuery.executeUpdate() > 0) {
                             result = true;
                         }
-
+                        tx.commit();
                     } catch (NullPointerException e) {
                         e.printStackTrace();
+                        tx.rollback();
                     }
                 }
             }
         }
 
-        session.getTransaction().commit();
+        session.close();
 
         return result;
     }
@@ -125,15 +116,44 @@ public class SnapshotDao {
                             Date endDate = sdf.parse(plan.getT2Task());
 
                             //开始时间
-                            result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                            result.setStartTime((int)(startDate.getTime() - initialDate.getTime()) / 1000);
                             //结束时间
-                            result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+                            result.setEndTime((int)((endDate.getTime() - initialDate.getTime()) / 1000));
 
                             result.setOrderEntity(plan.getOrderByIdOrder());
 
                             result.setSnapshotNodeEntity(plan.getSnapShort());
 
                             session.save(result);
+
+                            //Yang 20170725调整对3D车间的结果转换规则
+                            if (entity.getAutoCreateProcess() != null && entity.getAutoCreateProcess().equals("Y")) {
+                                RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+
+                                //任务名
+                                nextResult.setTask(entity.getNextTask());
+                                //货物名
+                                nextResult.setGoods(entity.getGoods());
+                                //地点名(若不存在为null)
+                                nextResult.setSite(entity.getSite());
+
+                                long stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 2;
+                                long lastTime = 2;
+
+                                if (entity.getDistance() != null && res.getMobility() > 0) {
+                                    lastTime = entity.getDistance().intValue() / res.getMobility();
+                                }
+
+                                //开始时间
+                                nextResult.setStartTime((int)stime);
+                                //结束时间
+                                nextResult.setEndTime((int)(stime + lastTime));
+
+                                nextResult.setOrderEntity(plan.getOrderByIdOrder());
+
+                                nextResult.setSnapshotNodeEntity(plan.getSnapShort());
+                                session.save(nextResult);
+                            }
                         }
                     }
                 }
@@ -158,7 +178,7 @@ public class SnapshotDao {
 
                         RG_ResourceEntity res = plan.getResourceByIdResource();
 
-                        if (res!=null &&res.getCritical() != null && res.getCritical().equals("T")) {
+                        if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
                             String processId = plan.getProcessByIdProcess().getId();
 
                             NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
@@ -181,13 +201,41 @@ public class SnapshotDao {
                                 Date endDate = sdf.parse(plan.getT2Task());
 
                                 //开始时间
-                                result.setStartTime(Long.toString((startDate.getTime() - initialDate.getTime()) / 1000));
+                                result.setStartTime((int)((startDate.getTime() - initialDate.getTime()) / 1000));
                                 //结束时间
-                                result.setEndTime(Long.toString((endDate.getTime() - initialDate.getTime()) / 1000));
+                                result.setEndTime((int)((endDate.getTime() - initialDate.getTime()) / 1000));
 
                                 result.setOrderEntity(plan.getOrderByIdOrder());
 
                                 session.save(result);
+
+                                //Yang 20170725调整对3D车间的结果转换规则
+                                if (entity.getAutoCreateProcess() != null && entity.getAutoCreateProcess().equals("Y")) {
+                                    RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+
+                                    //任务名
+                                    nextResult.setTask(entity.getNextTask());
+                                    //货物名
+                                    nextResult.setGoods(entity.getGoods());
+                                    //地点名(若不存在为null)
+                                    nextResult.setSite(entity.getSite());
+
+                                    long stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 2;
+                                    long lastTime = 2;
+
+                                    if (entity.getDistance() != null && res.getMobility() > 0) {
+                                        lastTime = entity.getDistance().intValue() / res.getMobility();
+                                    }
+
+                                    //开始时间
+                                    nextResult.setStartTime((int)(stime));
+                                    //结束时间
+                                    nextResult.setEndTime((int)((stime + lastTime)));
+
+                                    nextResult.setOrderEntity(plan.getOrderByIdOrder());
+
+                                    session.save(nextResult);
+                                }
                             }
                         }
                     }
@@ -204,40 +252,54 @@ public class SnapshotDao {
         return flag;
     }
 
-    //TODO 将结果下发给MES，下发之前取得MES的同意
+    //将结果下发给MES，添加对订单状态的修改
     public boolean switchResultToMess(String s, String id) {
         boolean result = false;
 
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
         try {
             RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, id);
 
             if (snapshot != null && snapshot.getLevel().equals(SnapshotLevel.BOTTOM)) {
 
                 RG_SnapshotNodeEntity parent = snapshot.getParent();
+                RG_SnapshotNodeEntity rootParent = snapshot.getRootParent();
 
                 if (!parent.getApply() && !snapshot.getApply()) {
 
                     parent.setApply(true);
                     snapshot.setApply(true);
 
+                    Set<RG_OrderEntity> orders = rootParent.getSchedule().getOrders();
+                    Iterator<RG_OrderEntity> iter = orders.iterator();
+                    while (iter.hasNext()) {
+                        RG_OrderEntity tmpOrder = iter.next();
+                        tmpOrder.setState(Byte.parseByte("2"));
+                        session.update(tmpOrder);
+                    }
+
                     session.update(snapshot);
                     session.update(parent);
 
-                    result = true;
+                    NativeQuery query = session.createNativeQuery("update rg_userconfig set dispatchMesSnapshotId = ? where idUser = ?");
+                    query.setParameter(1, id);
+                    query.setParameter(2, "1");
+                    if (query.executeUpdate() > 0) {
+                        result = true;
+                        tx.commit();
+                    } else {
+                        tx.rollback();
+                    }
                 }
-
             }
-            session.getTransaction().commit();
 
         } catch (Exception e) {
             result = false;
-
-            session.getTransaction().rollback();
+            tx.rollback();
         }
+        session.close();
 
         return result;
     }

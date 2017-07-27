@@ -90,17 +90,6 @@ public class AdjustOrderDAOImpl extends SuperDAOImpl implements AdjustOrderDAO<R
                 return list.get(0);
             }
             return null;
-
-            //HQL删除
-//            String hql = "from RG_AdjustOrderEntity rg_adjustOrderEntity where rg_adjustOrderEntity.ord =:id";
-//            Query query = session.createQuery(hql);
-//            query.setParameter("id", id);
-//            if (!query.list().isEmpty()) {
-//                RG_AdjustOrderEntity rg_adjustOrderEntity = (RG_AdjustOrderEntity) query.list().get(0);
-//                return rg_adjustOrderEntity;
-//            } else {
-//                return null;
-//            }
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;

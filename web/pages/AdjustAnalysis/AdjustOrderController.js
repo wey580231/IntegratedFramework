@@ -32,7 +32,6 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
 
         //异常处理
         $scope.exceptionHandling = function (event) {
-
             myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
                     if (response.data.data.state == 0) {
@@ -42,7 +41,6 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
                     }
                 } else {
                     notification.sendNotification("alert", "查询APS状态失败，请重试");
-                    // layer.msg('查询APS状态失败，请重试!', {icon: 2});
                 }
             });
         };
