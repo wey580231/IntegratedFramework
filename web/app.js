@@ -22,7 +22,9 @@ angular.module("IntegratedFramework", [
     'IntegratedFramework.AdjustProcedureController',
     'IntegratedFramework.AdjustOrderController',
     'IntegratedFramework.AdjustFactoryController',
-    'IntegratedFramework.AdjustDeviceController'
+    'IntegratedFramework.AdjustDeviceController',
+    'IntegratedFramework.FactoryLayoutController',
+    'IntegratedFramework.OnlineOrderController'
 ])
     .config(['$routeProvider', function ($routeProvider, $locationProvider) {
         //     // $locationProvider.hashPrefix('!');
@@ -144,6 +146,8 @@ angular.module("IntegratedFramework", [
         service.config3D = backUrl + "3d/config3D.action";
         service.set3DLayout = backUrl + "3d/set3DLayout.action";
         service.get3DReport = backUrl + "3d/get3DReport.action";
+        <!--工厂布局-->
+        service.ListFactoryLayout = backUrl + "3d/getAllFactoryLayouts.action";
         <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         service.ListSchedule = backUrl + "schedule/getAllSchedules.action";
