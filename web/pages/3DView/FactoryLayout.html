@@ -4,6 +4,12 @@
         margin: 40px auto;
     }
 
+    .btn-block {
+        display: block;
+        width: 60%;
+        padding: 0px 10px;
+    }
+
 </style>
 <div>
     <!-- Content Header (Page header) -->
@@ -40,38 +46,43 @@
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
                         </button>
                     </div>
-                    <!-- /.btn-group -->
-                    <div class="pull-right">
+
+                    <!--增删改-->
+                    <!--<div class="pull-right">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                    data-target="#modal-add"
-                                    class="btn btn-default" ng-click="reset()"><i class="fa fa-plus"></i> 新增
+                                    data-target="#modal-add" ng-click="reset()"><i class="fa fa-plus"></i> 新增
                             </button>
                             <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                    class="btn btn-default" ng-click="update()"><i class="fa fa-wrench"></i> 修改
+                                    ng-click="update()"><i class="fa fa-wrench"></i> 修改
                             </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
+                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteLayout()"><i
                                     class="fa fa-trash-o"></i> 删除
                             </button>
                         </div>
-                        <!-- /.btn-group -->
-                    </div>
+                        &lt;!&ndash; /.btn-group &ndash;&gt;
+                    </div>-->
                     <!-- /.pull-right -->
                 </div>
                 <div class="table-responsive mailbox-messages">
-                    <table class="table table-hover table-striped" id="table_value">
+                    <table class="table table-hover table-striped" id="table_layout">
                         <tbody>
                         <tr>
                             <td></td>
                             <th>名称</th>
                             <th>布局详情</th>
+                            <th>详情</th>
                         </tr>
-                        <tr ng-repeat="layout in factoryLayoutList track by $index" ng-init="renderTable($last)" id="value">
+                        <tr ng-repeat="layout in factoryLayoutList track by $index" ng-init="renderTable($last)">
                             <td><input id="check" name="check" type="checkbox"></td>
                             <td style="display:none">{{layout.id}}</td>
                             <td>{{layout.name}}</td>
-
                             <td>{{layout.layoutDesc}}</td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-sm btn-info" data-toggle="modal"
+                                        data-target="#modal-add"  ng-click="Detail($event)">详情
+                                </button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -84,15 +95,7 @@
             <!-- Horizontal Form -->
         </div>
 
-        <!--<div class="myPages">
-            <a href="?curPage=1">首页</a>
 
-            <a href="?curPage=<%curPage-1%>">上一页</a>
-
-            <a href="?curPage=<%curPage+1%>">下一页</a>
-
-            <a href="?curPage=<%pageCount%>">尾页</a>
-        </div>-->
 
         <!--新增窗口-->
         <div class="modal fade" id="modal-add">
@@ -101,62 +104,28 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">新增订单信息</h4>
+                        <h4 class="modal-title">布局详细信息</h4>
                     </div>
                     <div class="modal-body">
-                        <!-- form start -->
-                        <form class="form-horizontal">
-                            <div class="box-body">
-                                <div class="form-group" id="add-name">
-                                    <label class="col-sm-2 control-label">名称</label>
-
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-name" title="请输入订单名称！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="add-quantity">
-                                    <label class="col-sm-2 control-label">数量(个)</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" name="add-quantity" title="请输入订单数量！"
-                                               placeholder="">
-                                    </div>
-                                </div>
-
-                                <!-- Date and time range -->
-                                <div class="form-group" id="add-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t0-datepicker"
-                                               onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                                <div class="form-group" id="add-t2">
-                                    <label class="col-sm-2 control-label">最晚完工</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-add-t2-datepicker"
-                                               onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">订单类型</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control select2" style="width: 100%;" id="orderSelect">
-                                            <option>空气舵产品装配</option>
-                                            <option>仪器舱产品装配</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="addOrder()">Add</button>
-                            </div>
-                            <!-- /.box-footer -->
-                        </form>
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>资源名称</th>
+                                    <th>位置</th>
+                                    <th>状态</th>
+                                    <th>是否存在</th>
+                                </tr>
+                                <tr ng-repeat="layoutDetail in layoutDetailList track by $index" ng-init="renderTable($last)">
+                                    <td>{{layoutDetail.item}}</td>
+                                    <td>{{layoutDetail.pos}}</td>
+                                    <td>{{layoutDetail.state}}</td>
+                                    <td>{{layoutDetail.exist}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
 
                     </div>
                 </div>
@@ -169,7 +138,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
                             <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">修改订单信息</h4>
+                        <h4 class="modal-title">修改布局信息</h4>
                     </div>
                     <div class="modal-body">
                         <!-- form start -->
@@ -179,39 +148,23 @@
                                     <label class="col-sm-2 control-label">名称</label>
                                     <div class="col-sm-10">
                                         <input class="form-control" name="edit-name" title="请输入订单名称！"
-                                               value="{{order.name}}" placeholder="">
+                                               value="{{layout.name}}" placeholder="">
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="edit-quantity">
-                                    <label class="col-sm-2 control-label">数量(个)</label>
-
+                                <div class="form-group" id="edit-layoutDesc">
+                                    <label class="col-sm-2 control-label">布局信息</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" name="edit-quantity" title="请输入订单数量！"
-                                               value="{{order.quantity}}" placeholder="">
+                                        <input class="form-control" name="edit-layoutDesc" title="请输入布局信息！"
+                                               value="{{layout.layoutDesc}}" placeholder="">
                                     </div>
                                 </div>
-                                <!-- Date and time range -->
-                                <div class="form-group" id="edit-t0">
-                                    <label class="col-sm-2 control-label">下单时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t0-datepicker"
-                                               value="{{order.t0 | date:'yyyy-MM-dd hh:mm:ss' }}">
-                                    </div>
-                                    <!-- /.input group -->
-                                </div>
-                                <div class="form-group" id="edit-t2">
-                                    <label class="col-sm-2 control-label">完工时间</label>
-                                    <div class="col-sm-10" style="z-index: 9999">
-                                        <input type="text" class="form-control pull-right" id="modal-edit-t2-datepicker"
-                                               value="{{order.t2 | date:'yyyy-MM-dd hh:mm:ss'}}">
-                                    </div>
-                                </div>
+
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
-                                <button type="submit" class="btn btn-info pull-right" ng-click="editOrder()">Edlt
+                                <button type="submit" class="btn btn-info pull-right" ng-click="editLayout()">Edit
                                 </button>
                             </div>
                             <!-- /.box-footer -->
