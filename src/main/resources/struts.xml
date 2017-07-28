@@ -126,6 +126,9 @@
         <action name="get3DLayout" class="com.rengu.actions.d3.State3DAction" method="query3DLayout"/>
         <action name="updateDevice" class="com.rengu.actions.d3.State3DAction" method="updateDeviceState"/>
 
+        <!--工厂布局-->
+        <action name="getAllFactoryLayouts" class="com.rengu.actions.LayoutAction" method="getAllFactoryLayouts"/>
+
         <!--设备报表-->
         <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>
 
@@ -179,6 +182,8 @@
                 method="getAllAdjustDeviceException"/>
         <action name="getAllAdjustLayoutException" class="com.rengu.actions.AdjustLayoutAction"
                 method="getAllAdjustLayoutException"/>
+        <action name="getAllAdjustOrderByAdjustOrderType" class="com.rengu.actions.AdjustOrderAction"
+                method="getAllAdjustOrderByAdjustOrderType"/>
     </package>
 
     <!--FullCalendar事件源-->

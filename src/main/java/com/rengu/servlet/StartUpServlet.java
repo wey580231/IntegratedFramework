@@ -5,17 +5,13 @@ import com.rengu.actions.mes.MesReceiver;
 import com.rengu.util.ApsTools;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.PropertyConfigurator;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import java.io.File;
 import java.net.ConnectException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -38,24 +34,24 @@ public class StartUpServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        String log4jLocation = config.getInitParameter("log4j-properties-location");
-        String webAppPath = config.getServletContext().getRealPath("/");
-        String log4jProp = webAppPath + log4jLocation;
-
-        File props = new File(log4jProp);
-        if (props.exists()) {
-            System.out.println("使用: " + log4jProp + "初始化日志设置信息");
-            PropertyConfigurator.configure(log4jProp);
-        } else {
-            System.err.println("*** " + log4jProp + " 文件没有找到， 所以使用 BasicConfigurator初始化");
-            BasicConfigurator.configure();
-        }
-
-        logger = Logger.getLogger(StartUpServlet.class.getName());
-
-        logger.info(" debug ");
-
-        logger.warning("yayaayayayy");
+//        String log4jLocation = config.getInitParameter("log4j-properties-location");
+//        String webAppPath = config.getServletContext().getRealPath("/");
+//        String log4jProp = webAppPath + log4jLocation;
+//
+//        File props = new File(log4jProp);
+//        if (props.exists()) {
+//            System.out.println("使用: " + log4jProp + "初始化日志设置信息");
+//            PropertyConfigurator.configure(log4jProp);
+//        } else {
+//            System.err.println("*** " + log4jProp + " 文件没有找到， 所以使用 BasicConfigurator初始化");
+//            BasicConfigurator.configure();
+//        }
+//
+//        logger = Logger.getLogger(StartUpServlet.class.getName());
+//
+//        logger.info(" debug ");
+//
+//        logger.warning("yayaayayayy");
 
         //【1】初始化Hibernate
         MySessionFactory.getSessionFactory();

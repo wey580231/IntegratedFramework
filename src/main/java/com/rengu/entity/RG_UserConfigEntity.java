@@ -19,6 +19,7 @@ public class RG_UserConfigEntity {
     private String errorId;                         //对应异常的id
 
     private String dispatchMesSnapshotId;           //记录下发MES的snapshot的id信息
+    private String factoryLayoutId;           //工厂所采用的实际布局
 
     private RG_UserConfigEntity user;               //
 
@@ -124,5 +125,13 @@ public class RG_UserConfigEntity {
 
     public void setDispatchMesSnapshotId(String dispatchMesSnapshotId) {
         this.dispatchMesSnapshotId = dispatchMesSnapshotId;
+    }
+
+    public String getFactoryLayoutId() {
+        return factoryLayoutId;
+    }
+
+    public void setFactoryLayoutId(String factoryLayoutId) {
+        this.factoryLayoutId = factoryLayoutId;
     }
 }
