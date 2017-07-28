@@ -15,9 +15,11 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         layer.load(0);
 
         var addData = [];
-
+        var adjustOrderByType = {};
+        adjustOrderByType.adjustOrderType = "紧急插单";
+        var jsonString = JSON.stringify(adjustOrderByType);
         $(function () {
-            myHttpService.get(serviceList.AdjustOrder).then(function (response) {
+            myHttpService.post(serviceList.getALLAdjustOrderByType, jsonString).then(function (response) {
                 $scope.adjustOrder = response.data;
                 hideLoadingPage();
             });
