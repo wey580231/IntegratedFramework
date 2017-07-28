@@ -17,6 +17,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var zNodes = [];
         var idVal;//所点击的节点id值
         var rootData = [];
+        var treeInfo = [];
+
 
         $(function () {
             //初始化下拉数据
@@ -30,6 +32,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
+
         });
 
         //3D车间查看转换结果
@@ -69,8 +72,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
 
                 layer.confirm('是否将结果下发MES?', {
-                    btn: ['确定','取消'] //按钮
-                }, function(index){
+                    btn: ['确定', '取消'] //按钮
+                }, function (index) {
                     layer.load();
 
                     myHttpService.get(serviceList.dispatchMes + "?id=" + zTree.getSelectedNodes()[0].id).then(function success(response) {
@@ -85,11 +88,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                         hideLoadingPage();
                     });
                     layer.close(index);
-                }, function(index){
+                }, function (index) {
                     layer.close(index);
                     notification.sendNotification("alert", "取消下发");
                 });
-            }else{
+            } else {
                 notification.sendNotification("alert", "未选择节点信息");
             }
         };
@@ -109,6 +112,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         //下拉框事件改变
         $("#select").change(function () {
+            document.getElementById("table_info").rows[2].cells[1].innerHTML = null;
+            document.getElementById("table_info").rows[2].cells[3].innerHTML = null;
             zNodes.splice(0, zNodes.length);
             var idRoot;
             var val = $(this).children('option:selected').val();
@@ -127,6 +132,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
                 myHttpService.post(serviceList.getTree, id).then(function successCallback(response) {
                     $scope.snapShotData = response.data;
+                    console.log(response.data);
                     var datas = response.data;
 
                     if (datas.hasOwnProperty("childs")) {
@@ -144,11 +150,11 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                     var bottomNode = middleNode.childs[k];
                                     //默认排程节点
                                     if (middleNode.firstNode) {
-                                        if (!bottomNode.apply  && !middleNode.firstNode) {
+                                        if (!bottomNode.apply && !middleNode.firstNode) {
                                             bottomNode.icon = "../../images/bom_img/interNode.png";
                                         } else if (!bottomNode.apply && bottomNode.firstNode) {
                                             bottomNode.icon = "../../images/bom_img/commonNode.png";
-                                        } else if(bottomNode.apply){
+                                        } else if (bottomNode.apply) {
                                             bottomNode.icon = "../../images/bom_img/dispatchNode.png";
                                         }
                                     }
@@ -160,11 +166,14 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                             bottomNode.icon = "../../images/bom_img/commonNode.png";
                                         }
                                     }
+                                    treeInfo.push(bottomNode);
                                 }
                                 var temps = middleNode.childs;
                                 delete(middleNode.childs);
                                 middleNode.children = temps;
                                 middleNode = middleNode;
+                                middleNode.schedule = response.data.schedule;
+                                treeInfo.push(middleNode);
                             }
 
                             if (middleNode.errorNode) {
@@ -173,21 +182,22 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                 middleNode.icon = "../../images/bom_img/interactive.png";
                             }
                         }
-
                         datas.icon = "../../images/bom_img/rootNode.png";
                         var temp = datas.childs;
                         delete(datas.childs);
                         datas.children = temp;
+                        treeInfo.push(datas);
                     }
                     zNodes.push(datas);
                     loadTree();
-
                     hideLoadingPage();
+                    console.log(treeInfo);
                 })
             } else {
                 document.getElementById("treeDemo").style.display = "none";
                 $("#table_value  tr:not(:first)").html("");
             }
+            $("#table_value  tr:not(:first)").html("");
         });
 
         function loadTree() {
@@ -218,6 +228,16 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             //点击树形控件
             function zTreeOnClick(e, treeId, treeNode) {
+
+                // $scope.snapShotData=response.data;
+
+                if (treeNode.level == 1) {
+                    layer.load();
+                    document.getElementById("table_info").rows[2].cells[1].innerHTML = 9;
+                    document.getElementById("table_info").rows[2].cells[3].innerHTML = "下发";
+                    hideLoadingPage();
+                }
+
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
                 if (treeNode.level == 0 || treeNode.level == 1) {
