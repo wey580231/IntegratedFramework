@@ -20,6 +20,9 @@
         <property name="processTime" type="java.util.Date">
             <column name="processTime" sql-type="datetime" not-null="false"/>
         </property>
+        <property name="adjustOrderType">
+            <column name="adjustOrderType" sql-type="varchar(255)"/>
+        </property>
 
         <many-to-one name="ord" class="com.rengu.entity.RG_OrderEntity" unique="true" column="idOrder"/>
 

@@ -182,6 +182,8 @@
                 method="getAllAdjustDeviceException"/>
         <action name="getAllAdjustLayoutException" class="com.rengu.actions.AdjustLayoutAction"
                 method="getAllAdjustLayoutException"/>
+        <action name="getAllAdjustOrderByAdjustOrderType" class="com.rengu.actions.AdjustOrderAction"
+                method="getAllAdjustOrderByAdjustOrderType"/>
     </package>
 
     <!--FullCalendar事件源-->
