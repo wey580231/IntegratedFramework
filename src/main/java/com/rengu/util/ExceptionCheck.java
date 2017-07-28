@@ -18,7 +18,7 @@ public class ExceptionCheck {
         if (t2TimeStamp >= scheduleStartTime && t2TimeStamp <= scheduleEndTime) {
             if (rg_orderEntity.getState() == Byte.parseByte("2")) {
                 //紧急插单
-                ExceptionCreator.creatOrderException(rg_orderEntity, "紧急插单");
+                ExceptionCreator.creatOrderException(rg_orderEntity, "紧急插单分析");
                 WebSocketNotification.broadcast(Tools.creatNotificationMessage("产生紧急插单异常", "alert"));
                 Tools.createEventLog(EventLogTools.ExceptionCreateEvent, EventLogTools.StandardTimeLineItem, "紧急插单异常", EventLogTools.createOrderEventContent(rg_orderEntity), rg_orderEntity.getId());
             } else {

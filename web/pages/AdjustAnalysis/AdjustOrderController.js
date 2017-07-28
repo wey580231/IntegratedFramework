@@ -11,16 +11,26 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
     }])
 
     .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList, validate, renderTableService, notification) {
-
         layer.load(0);
-
-        var addData = [];
-        var adjustOrderByType = {};
-        adjustOrderByType.adjustOrderType = "紧急插单";
-        var jsonString = JSON.stringify(adjustOrderByType);
+        //页面初始化是加载的请求
         $(function () {
+            var adjustOrderByType = {};
+            adjustOrderByType.adjustOrderType = "紧急插单分析";
+            var jsonString = JSON.stringify(adjustOrderByType);
             myHttpService.post(serviceList.getALLAdjustOrderByType, jsonString).then(function (response) {
                 $scope.adjustOrder = response.data;
+                hideLoadingPage();
+            });
+        });
+        //根据Tab页来进行切换请求。
+        $('#myUl').find('a').click(function (e) {
+            layer.load(0);
+            var adjustOrderByType = {};
+            adjustOrderByType.adjustOrderType = $(this).text();
+            var jsonString = JSON.stringify(adjustOrderByType);
+            myHttpService.post(serviceList.getALLAdjustOrderByType, jsonString).then(function (response) {
+                $scope.adjustOrder = response.data;
+                console.log(response.data);
                 hideLoadingPage();
             });
         });
