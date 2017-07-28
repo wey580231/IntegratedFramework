@@ -16,9 +16,11 @@ public class DAOFactory {
     private static final SiteDAOImpl siteDAOImpl = new SiteDAOImpl();
     private static final TyperescourceDAOImpl typerescourceDAOImpl = new TyperescourceDAOImpl();
     private static final ScheduleDAOImpl scheduleDAOImpl = new ScheduleDAOImpl();
+
     private static final LayoutDAOImpl layoutDAOImpl = new LayoutDAOImpl();
     private static final ClubDAOImpl clubDAOImpl = new ClubDAOImpl();
     private static final ProcessDAOImpl processDAOImpl = new ProcessDAOImpl();
+
     private static final ProviderDAOImpl providerDAOImpl = new ProviderDAOImpl();
     private static final AdjustOrderDAOImpl adjustOrderDAOImpl = new AdjustOrderDAOImpl();
     private static final AdjustProcessDAOImpl adjustProcessDAOImpl = new AdjustProcessDAOImpl();
@@ -118,7 +120,5 @@ public class DAOFactory {
         return distanceDAOImpl;
     }
 
-    public static UserConfigDAOImpl getUserConfigDAOImplInstance() {
-        return userConfigDAOImpl;
-    }
+
 }
