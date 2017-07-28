@@ -120,5 +120,7 @@ public class DAOFactory {
         return distanceDAOImpl;
     }
 
-
+    public static UserConfigDAOImpl getUserConfigDAOImplInstance() {
+        return userConfigDAOImpl;
+    }
 }
