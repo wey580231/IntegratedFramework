@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_LayoutDetailEntity {
     private String id;
-    private String item;
-    private String pos;
+    private String item; //resource的id
+    private String pos;  //位置
     private String state;
     private String exist;
-    private RG_LayoutEntity layout;
+    private RG_LayoutEntity layout; //属于哪个layout
 
     public String getId() {
         return id;
