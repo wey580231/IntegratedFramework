@@ -104,10 +104,11 @@ public class ScheduleAction extends SuperAction {
                         } else {
                             System.out.println("资源不存在：" + rg_layoutDetailEntity.getItem());
                         }
+                    }else {
+                        System.out.println(rg_layoutDetailEntity.getItem()+"资源不可用");
                     }
                 }
                 //将托盘资源职位可用状态
-                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XBC'");
                 Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XZTP01_01'");
                 Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XZTP02_02'");
                 rg_scheduleEntity.setLayout(layout);

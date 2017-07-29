@@ -436,6 +436,7 @@ public class FeedBackStateAction extends SuperAction {
     //模拟aps应急优化结果
     public void emulateApsInterResult() {
 
+        System.out.println("测试APS的自动交互结果");
         System.out.println("=======APS 交互結果转换中======");
 
         //【1】查询APS的定单表是否含有state=0的订单，如果有，则先调用应急交互优化接口，重新计算
