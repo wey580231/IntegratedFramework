@@ -18,6 +18,8 @@ public class DAOFactory {
     private static final ScheduleDAOImpl scheduleDAOImpl = new ScheduleDAOImpl();
 
     private static final LayoutDAOImpl layoutDAOImpl = new LayoutDAOImpl();
+    private static final LayoutDetailDAOImpl layoutDetailDAOImpl = new LayoutDetailDAOImpl();
+
     private static final ClubDAOImpl clubDAOImpl = new ClubDAOImpl();
     private static final ProcessDAOImpl processDAOImpl = new ProcessDAOImpl();
 
@@ -70,6 +72,10 @@ public class DAOFactory {
 
     public static LayoutDAOImpl getLayoutDAOImplInstance() {
         return layoutDAOImpl;
+    }
+
+    public static LayoutDetailDAOImpl getLayoutDetailDAOImplInstance() {
+        return layoutDetailDAOImpl;
     }
 
     public static ClubDAOImpl getClubDAOImplInstance() {
