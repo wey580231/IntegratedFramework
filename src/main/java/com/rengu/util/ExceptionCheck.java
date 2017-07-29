@@ -2,6 +2,9 @@ package com.rengu.util;
 
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.entity.RG_SnapshotNodeEntity;
+
+import java.util.Set;
 
 /**
  * Created by hanch on 2017/7/19.
@@ -13,10 +16,17 @@ public class ExceptionCheck {
         if (rg_scheduleEntity == null) {
             return false;
         }
+        Set<RG_SnapshotNodeEntity> rg_snapshotNodeEntitySet = rg_scheduleEntity.getSnapshot().getChilds();
+        boolean isSendToMES = false;
+        for (RG_SnapshotNodeEntity rg_snapshotNodeEntity : rg_snapshotNodeEntitySet) {
+            if (rg_snapshotNodeEntity.getApply() == true) {
+                isSendToMES = true;
+            }
+        }
         long scheduleStartTime = rg_scheduleEntity.getScheduleTime().getTime();
         long scheduleEndTime = scheduleStartTime + rg_scheduleEntity.getRollTime().intValue() * 60 * 60 * 24 * 1000;
         if (t2TimeStamp >= scheduleStartTime && t2TimeStamp <= scheduleEndTime) {
-            if (rg_orderEntity.getState() == Byte.parseByte("2")) {
+            if (isSendToMES) {
                 //紧急插单
                 ExceptionCreator.creatOrderException(rg_orderEntity, "紧急插单");
                 WebSocketNotification.broadcast(Tools.creatNotificationMessage("产生紧急插单异常", "alert"));
