@@ -23,6 +23,14 @@ public class AdjustOrderAction extends SuperAction {
         Tools.jsonPrint(jsonString, httpServletResponse);
     }
 
+    public void getAllAdjustOrderByAdjustOrderType() throws Exception {
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(httpServletRequest));
+        String adjustOrderType = jsonNode.get("adjustOrderType").asText();
+        List<RG_AdjustOrderEntity> rg_adjustOrderEntityList = DAOFactory.getAdjustOrderDAOImplInstance().findAllByAdjustOrderType(adjustOrderType);
+        String jsonString = Tools.entityConvertToJsonString(rg_adjustOrderEntityList);
+        Tools.jsonPrint(jsonString, httpServletResponse);
+    }
+
     public void creatOrderException() throws Exception {
         JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(httpServletRequest));
         RG_AdjustOrderEntity rg_adjustOrderEntity = new RG_AdjustOrderEntity();

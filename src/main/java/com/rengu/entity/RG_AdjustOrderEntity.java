@@ -10,13 +10,12 @@ import java.util.Date;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class RG_AdjustOrderEntity {
     private String id;
-
     private RG_OrderEntity ord;         //紧急插单信息
-
     private String origin;              //异常来源，MES、手工模拟
     private Integer state;              //异常状态，参照ErrorState类
     private Date reportTime;            //故障上报时间
     private Date processTime;           //处理时间
+    private String adjustOrderType;     //紧急插单类型（紧急插单、交期承诺分析）
 
     public String getId() {
         return id;
@@ -64,5 +63,13 @@ public class RG_AdjustOrderEntity {
 
     public void setProcessTime(Date processTime) {
         this.processTime = processTime;
+    }
+
+    public String getAdjustOrderType() {
+        return adjustOrderType;
+    }
+
+    public void setAdjustOrderType(String adjustOrderType) {
+        this.adjustOrderType = adjustOrderType;
     }
 }
