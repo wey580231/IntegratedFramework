@@ -22,7 +22,7 @@ public class RG_LayoutEntity {
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
 
-    private Set<RG_AdjustLayoutEntity>  errorLayouts = new HashSet<RG_AdjustLayoutEntity>();
+    private Set<RG_AdjustLayoutEntity> errorLayouts = new HashSet<RG_AdjustLayoutEntity>();
 
     public String getId() {
         return id;

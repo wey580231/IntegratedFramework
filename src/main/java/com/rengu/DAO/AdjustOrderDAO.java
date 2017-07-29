@@ -13,4 +13,6 @@ public interface AdjustOrderDAO<T> {
     T findAllById(String id);
 
     T findAllByOrderId(String id);
+
+    List<T> findAllByAdjustOrderType(String adjustOrderType);
 }

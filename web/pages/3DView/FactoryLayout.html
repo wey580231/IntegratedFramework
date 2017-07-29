@@ -1,0 +1,178 @@
+<style>
+    .myPages {
+        display: table;
+        margin: 40px auto;
+    }
+
+    .btn-block {
+        display: block;
+        width: 60%;
+        padding: 0px 10px;
+    }
+
+</style>
+<div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            工厂布局
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">工厂布局</li>
+        </ol>
+    </section>
+
+    <div id="floatRightMenu">
+        <ul id="navigationMenu">
+            <li>
+                <a class="home" href="" ng-click="dispatchRecord()"><i class="fa fa-paper-plane"></i>
+                    <span>下发APS</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <section class="content">
+        <div class="box box-primary">
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+                <div class="mailbox-controls">
+                    <!-- Check all button -->
+                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <!--增删改-->
+                    <!--<div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                    data-target="#modal-add" ng-click="reset()"><i class="fa fa-plus"></i> 新增
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                    ng-click="update()"><i class="fa fa-wrench"></i> 修改
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteLayout()"><i
+                                    class="fa fa-trash-o"></i> 删除
+                            </button>
+                        </div>
+                        &lt;!&ndash; /.btn-group &ndash;&gt;
+                    </div>-->
+                    <!-- /.pull-right -->
+                </div>
+                <div class="table-responsive mailbox-messages">
+                    <table class="table table-hover table-striped" id="table_layout">
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <th>名称</th>
+                            <th>布局详情</th>
+                            <th>详情</th>
+                        </tr>
+                        <tr ng-repeat="layout in factoryLayoutList track by $index" ng-init="renderTable($last)">
+                            <td><input id="check" name="check" type="checkbox"></td>
+                            <td style="display:none">{{layout.id}}</td>
+                            <td>{{layout.name}}</td>
+                            <td>{{layout.layoutDesc}}</td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-sm btn-info" data-toggle="modal"
+                                        data-target="#modal-add"  ng-click="Detail($event)">详情
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- /.table -->
+                </div>
+                <!-- /.mail-box-messages -->
+            </div>
+
+            <!-- /.box-body -->
+            <!-- Horizontal Form -->
+        </div>
+
+
+
+        <!--新增窗口-->
+        <div class="modal fade" id="modal-add">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">布局详细信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>资源名称</th>
+                                    <th>位置</th>
+                                    <th>状态</th>
+                                    <th>是否存在</th>
+                                </tr>
+                                <tr ng-repeat="layoutDetail in layoutDetailList track by $index" ng-init="renderTable($last)">
+                                    <td>{{layoutDetail.item}}</td>
+                                    <td>{{layoutDetail.pos}}</td>
+                                    <td>{{layoutDetail.state}}</td>
+                                    <td>{{layoutDetail.exist}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--修改窗口-->
+        <div class="modal fade" id="modal-edit">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">修改布局信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- form start -->
+                        <form class="form-horizontal">
+                            <div class="box-body" ng-repeat="order in editList">
+                                <div class="form-group" id="edit-name">
+                                    <label class="col-sm-2 control-label">名称</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="edit-name" title="请输入订单名称！"
+                                               value="{{layout.name}}" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="edit-layoutDesc">
+                                    <label class="col-sm-2 control-label">布局信息</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" name="edit-layoutDesc" title="请输入布局信息！"
+                                               value="{{layout.layoutDesc}}" placeholder="">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-default" ng-click="reset()">Reset</button>
+                                <button type="submit" class="btn btn-info pull-right" ng-click="editLayout()">Edit
+                                </button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
