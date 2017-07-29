@@ -27,7 +27,8 @@ public class AdjustOrderAction extends SuperAction {
         JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(httpServletRequest));
         String adjustOrderType = jsonNode.get("adjustOrderType").asText();
         List<RG_AdjustOrderEntity> rg_adjustOrderEntityList = DAOFactory.getAdjustOrderDAOImplInstance().findAllByAdjustOrderType(adjustOrderType);
-        Tools.jsonPrint(Tools.entityConvertToJsonString(rg_adjustOrderEntityList), httpServletResponse);
+        String jsonString = Tools.entityConvertToJsonString(rg_adjustOrderEntityList);
+        Tools.jsonPrint(jsonString, httpServletResponse);
     }
 
     public void creatOrderException() throws Exception {
