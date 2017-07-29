@@ -128,6 +128,7 @@
 
         <!--工厂布局-->
         <action name="getAllFactoryLayouts" class="com.rengu.actions.LayoutAction" method="getAllFactoryLayouts"/>
+        <action name="findAllById" class="com.rengu.actions.LayoutDetailAction" method="findAllById"/>
 
         <!--设备报表-->
         <action name="get3DReport" class="com.rengu.actions.d3.Report3DAction" method="resport3d"/>

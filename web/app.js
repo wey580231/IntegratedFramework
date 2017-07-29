@@ -148,6 +148,7 @@ angular.module("IntegratedFramework", [
         service.get3DReport = backUrl + "3d/get3DReport.action";
         <!--工厂布局-->
         service.ListFactoryLayout = backUrl + "3d/getAllFactoryLayouts.action";
+        service.LayoutDetail = backUrl + "3d/findAllById.action";
         <!--排程信息-->
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         service.ListSchedule = backUrl + "schedule/getAllSchedules.action";
