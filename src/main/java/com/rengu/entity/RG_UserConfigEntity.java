@@ -1,6 +1,7 @@
 package com.rengu.entity;
 
-/**每个用户的配置信息
+/**
+ * 每个用户的配置信息
  * Created by wey580231 on 2017/6/22.
  */
 public class RG_UserConfigEntity {
@@ -19,7 +20,9 @@ public class RG_UserConfigEntity {
     private String errorId;                         //对应异常的id
 
     private String dispatchMesSnapshotId;           //记录下发MES的snapshot的id信息
-    private String factoryLayoutId;           //工厂所采用的实际布局
+    private String factoryLayoutId;                 //工厂所采用的实际布局
+
+    private String apsCurrSnapshotId;               //aps当前的快照对应bottomId，如果为null或者size=0，则用最新一次排程的bottomId
 
     private RG_UserConfigEntity user;               //
 
@@ -87,14 +90,6 @@ public class RG_UserConfigEntity {
         this.apsReplyCount = apsReplyCount;
     }
 
-    public RG_UserConfigEntity getUser() {
-        return user;
-    }
-
-    public void setUser(RG_UserConfigEntity user) {
-        this.user = user;
-    }
-
     public boolean isResetApsTable() {
         return resetApsTable;
     }
@@ -133,5 +128,21 @@ public class RG_UserConfigEntity {
 
     public void setFactoryLayoutId(String factoryLayoutId) {
         this.factoryLayoutId = factoryLayoutId;
+    }
+
+    public String getApsCurrSnapshotId() {
+        return apsCurrSnapshotId;
+    }
+
+    public void setApsCurrSnapshotId(String apsCurrSnapshotId) {
+        this.apsCurrSnapshotId = apsCurrSnapshotId;
+    }
+
+    public RG_UserConfigEntity getUser() {
+        return user;
+    }
+
+    public void setUser(RG_UserConfigEntity user) {
+        this.user = user;
     }
 }

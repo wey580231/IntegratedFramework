@@ -152,8 +152,9 @@
         <action name="updateApsState" class="com.rengu.actions.aps.FeedBackStateAction" method="recvInterApsState"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
         <action name="scheduleDetail" class="com.rengu.actions.aps.FeedBackStateAction" method="queryScheduleInfo"/>
-        <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction"
-                method="emulateApsInterResult"/>
+        <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction" method="emulateApsInterResult"/>
+        <action name="recoverInterX" class="com.rengu.actions.aps.FeedBackStateAction" method="recoverInterX"/>
+
     </package>
 
     <!--异常处理-->
@@ -201,6 +202,8 @@
         <action name="dispatcherResultToMess" class="com.rengu.actions.SnapshotAction" method="dispatcherResultToMess"/>
         <action name="getAllByLevel" class="com.rengu.actions.SnapshotAction" method="getAllByLevel"/>
         <action name="getAllById" class="com.rengu.actions.SnapshotAction" method="getAllById"/>
+        <action name="recoverSnapshot" class="com.rengu.actions.SnapshotAction" method="recoverSnapshot"/>
+        <action name="queryRecoverSnapshot" class="com.rengu.actions.SnapshotAction" method="queryRecoverSnapshot"/>
     </package>
 
     <!--plan表-->

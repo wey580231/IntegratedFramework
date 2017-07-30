@@ -1,10 +1,12 @@
 package com.rengu.DAO;
 
 import com.rengu.entity.*;
+import com.rengu.util.ApsTools;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.SnapshotLevel;
 import com.sun.org.apache.xerces.internal.xs.StringList;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
@@ -328,7 +330,9 @@ public class SnapshotDao {
                 if (!parent.getApply() && !snapshot.getApply()) {
 
                     parent.setApply(true);
+                    parent.setDispatchMesTime(new Date());
                     snapshot.setApply(true);
+                    snapshot.setDispatchMesTime(new Date());
 
                     Set<RG_OrderEntity> orders = rootParent.getSchedule().getOrders();
                     Iterator<RG_OrderEntity> iter = orders.iterator();
@@ -357,6 +361,45 @@ public class SnapshotDao {
             result = false;
             tx.rollback();
         }
+        session.close();
+
+        return result;
+    }
+
+    //恢复aps快照
+    public boolean recoverSnapshot(String s, String id) {
+        boolean result = false;
+
+        if (ApsTools.instance().recoverSnapshot(id) == ApsTools.STARTED) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    //恢复aps的订单
+    public boolean recoverOrder(String s, String id) {
+        boolean result = false;
+
+        if (ApsTools.instance().publishOrder() == ApsTools.STARTED) {
+            result = true;
+        }
+
+        return result;
+    }
+
+    //查询对应节点的快照是否恢复
+    public boolean queryRecoverSnapshot(String s, String id) {
+        boolean result = false;
+
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        session.beginTransaction();
+        RG_SnapshotNodeEntity entity = session.get(RG_SnapshotNodeEntity.class, id);
+        result = entity.getApsRecoverSnapshot();
+
+        session.flush();
+
+        session.getTransaction().commit();
         session.close();
 
         return result;

@@ -72,8 +72,20 @@ public class UserConfigTools {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         String result = "";
 
-        NativeQuery query = session.createNativeQuery("update rg_userconfig set bottomSnapshotId = ? where idUser = ?");
+        NativeQuery query = session.createNativeQuery("update rg_userconfig set bottomSnapshotId = ?  where idUser = ?");
         query.setParameter(1, bottomId);
+        query.setParameter(2, userId);
+
+        return query.executeUpdate();
+    }
+
+    //更新APS快照信息
+    public static int updateApsSnapshotId(String userId, String snapShotId) {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        String result = "";
+
+        NativeQuery query = session.createNativeQuery("update rg_userconfig set apsCurrSnapshotId = ? where idUser = ?");
+        query.setParameter(1, snapShotId);
         query.setParameter(2, userId);
 
         return query.executeUpdate();

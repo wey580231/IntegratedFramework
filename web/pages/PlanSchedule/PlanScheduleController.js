@@ -92,9 +92,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //新建排程
         $scope.prepareNewSchedule = function () {
-           /* myHttpService.get(serviceList.queryApsState).then(function (response) {
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {*/
+                    if (response.data.data.state == 0) {
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
                         hideCalendar();
@@ -107,17 +107,17 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $("#scheduleTime").val(7);
                         $("#delayTime").val(5);
 
-                        $('#calendar').fullCalendar('destroy');
+                        // $('#calendar').fullCalendar('destroy');
 
                         initFullCalendar();
-       /*             } else {
+                   } else {
                         notification.sendNotification("alert", "查询APS状态失败");
                     }
                 } else {
                     notification.sendNotification("alert", "查询APS状态失败，请重试!");
                 }
             }, function (response) {
-            });*/
+            });
             resetContent();
         };
 
@@ -430,12 +430,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             $('#calendar').fullCalendar('addEventSource', source);
 
-            for (var i = 0; i < scheduleDays; i++) {
-                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue  ', 'height', '5px');
-            }
-            for (var i = 0; i < rollTime; i++) {
-                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink  ', 'height', '5px');
-            }
+            // for (var i = 0; i < scheduleDays; i++) {
+            //     $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue  ', 'height', '5px');
+            // }
+            // for (var i = 0; i < rollTime; i++) {
+            //     $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink  ', 'height', '5px');
+            // }
 
         };
 
@@ -551,25 +551,6 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 }
             });
         }
-
-        //开始排程
-        $scope.submitForm = function () {
-
-            for (var i = 0; i < pageCount; i++) {
-                if (i == 1) {
-                    layouts.id = PageInfo.selectedIndex[i][0];
-                }
-                else if (i == 2) {
-                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
-                        var params = {};
-                        params.id = PageInfo.selectedIndex[i][j];
-                        orders.push(params);
-                    }
-                }
-            }
-            configAPS();
-        };
-
         //排程
         function configAPS() {
             var APSConfigs = {};

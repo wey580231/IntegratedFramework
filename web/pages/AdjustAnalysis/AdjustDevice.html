@@ -51,12 +51,12 @@
                             onclick="a(this)">
                             <td>{{device.orderId}}</td>
                             <td>{{device.resoureId}}</td>
-                            <td>{{device.cancelTime | date:'yyyy-MM-dd hh:mm:ss' }}</td>
-                            <td>{{device.reportTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                            <td>{{device.cancelTime | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                            <td>{{device.reportTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                             <td>{{device.origin}}</td>
                             <td>
                                 <span ng-if="device.processTime ==null">--</span>
-                                <span ng-if="device.processTime !=null">{{device.processTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                                <span ng-if="device.processTime !=null">{{device.processTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
                             <td></td>
                         </tr>

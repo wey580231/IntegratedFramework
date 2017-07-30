@@ -45,6 +45,9 @@
         <property name="factoryLayoutId">
             <column name="factoryLayoutId" sql-type="varchar(255)" length="20" not-null="false"/>
         </property>
+        <property name="apsCurrSnapshotId">
+            <column name="apsCurrSnapshotId" sql-type="varchar(255)" length="20" not-null="false"/>
+        </property>
 
         <many-to-one name="user" class="com.rengu.entity.RG_UserEntity">
             <column name="idUser" not-null="false"/>

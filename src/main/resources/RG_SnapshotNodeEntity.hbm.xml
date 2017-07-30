@@ -20,6 +20,9 @@
         <property name="nodeCreateTime" type="java.util.Date">
             <column name="nodeCreateTime" sql-type="datetime" not-null="false"/>
         </property>
+        <property name="dispatchMesTime" type="java.util.Date">
+            <column name="dispatchMesTime" sql-type="datetime" not-null="false"/>
+        </property>
         <property name="errorNode">
             <column name="errorNode" sql-type="tinyint(1)" not-null="false"></column>
         </property>
