@@ -33,6 +33,16 @@ public class OrdersAction extends SuperAction {
         Tools.jsonPrint(resultString, this.httpServletResponse);
     }
 
+    public void findByState() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
+        String orderState = jsonNode.get("state").toString();
+        OrdersDAOImpl ordersDAO = DAOFactory.getOrdersDAOInstance();
+        List<RG_OrderEntity> rg_orderEntityList = ordersDAO.findByState(Byte.parseByte(orderState));
+        String resultString = Tools.entityConvertToJsonString(rg_orderEntityList);
+        Tools.jsonPrint(resultString, this.httpServletResponse);
+    }
+
     public void findAllByisFinishedAndDate() throws Exception {
         String jsonString = Tools.getHttpRequestBody(httpServletRequest);
         JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
