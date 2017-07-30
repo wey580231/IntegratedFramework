@@ -97,11 +97,17 @@ angular.module("IntegratedFramework", [
         var backUrl = "";
         <!--订单信息-->
         service.ListOrder = backUrl + "orders/getAllOrders.action";
+
         service.DeleteOrder = backUrl + "orders/delete.action";
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
 
         service.GetOrderById = backUrl + "orders/findAllById.action";
+
+
+        <!--订单监控-->
+        service.ComListOrder = backUrl + "online/findByState.action";
+
 
         <!--工序信息-->
         service.ListProcess = backUrl + "process/getAllByIsRootNode.action";

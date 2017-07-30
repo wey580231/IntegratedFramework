@@ -77,6 +77,25 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         }
     }
 
+    public List<RG_OrderEntity> findByState(Byte state) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.state =:state";
+            Query query = session.createQuery(hql);
+            query.setParameter("state", state);
+            List list = query.list();
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
     @Override
     public List<RG_OrderEntity> findAllByisFinishedAndDate(Date startDate, Date endDate, boolean isFinished) {
         MySessionFactory.getSessionFactory().getCurrentSession().close();
