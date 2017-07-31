@@ -92,9 +92,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //新建排程
         $scope.prepareNewSchedule = function () {
-            myHttpService.get(serviceList.queryApsState).then(function (response) {
+           /* myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {
+                    if (response.data.data.state == 0) {*/
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
                         hideCalendar();
@@ -110,14 +110,14 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         // $('#calendar').fullCalendar('destroy');
 
                         initFullCalendar();
-                   } else {
+       /*             } else {
                         notification.sendNotification("alert", "查询APS状态失败");
                     }
                 } else {
                     notification.sendNotification("alert", "查询APS状态失败，请重试!");
                 }
             }, function (response) {
-            });
+            });*/
             resetContent();
         };
 
@@ -411,6 +411,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //根据当前设置的时间范围，去筛选对应的日历信息
         var showSchedule = function () {
+            initFullCalendar();
             scheduleDays = $("#scheduleTime").val();
             rollTime = $("#rollTime").val();
             name = $("#scheduleName").val();
@@ -419,6 +420,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             scheduleOption = parseInt($("#delayTime").val());
             var startTime = moment().format("YYYY-MM-DD");                  //订单筛选开始时间
             var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");   //订单筛选结束时间
+
+            for (var i = 0; i < scheduleDays; i++) {
+                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue');
+            }
+            for (var i = 0; i < rollTime; i++) {
+                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink');
+            }
 
             var source = "http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
             // var source = "http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
@@ -430,12 +438,36 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             $('#calendar').fullCalendar('addEventSource', source);
 
-            // for (var i = 0; i < scheduleDays; i++) {
-            //     $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue  ', 'height', '5px');
-            // }
-            // for (var i = 0; i < rollTime; i++) {
-            //     $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink  ', 'height', '5px');
-            // }
+            //解决上下页日历染色消失
+            $('#calendar').fullCalendar('destroy');
+
+            $('#calendar').fullCalendar({
+                header: {
+                    right: 'today,prev,next',
+                },
+                buttonText: {
+                    today: '今天',
+                    month: '月',
+                    week: '周',
+                    day: '天',
+                },
+                allDayText: '全天',
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+                dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                viewRender: function (view, element) {
+                    //已执行时间窗口染色
+                    for (var i = 0; i < scheduleDays; i++) {
+                        $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue');
+                    }
+                    for (var i = 0; i < rollTime; i++) {
+                        $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink  ');
+                    }
+                },
+                //加载完成后回调,signal为false表示加载完成，为true表示正在加载中
+            });
+            $('#calendar').fullCalendar('addEventSource', source);
 
         };
 

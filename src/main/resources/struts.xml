@@ -224,4 +224,9 @@
         <action name="getAllEventLog" class="com.rengu.actions.EventLogAction" method="getAllEventLog"/>
         <action name="save" class="com.rengu.actions.EventLogAction" method="save"/>
     </package>
+
+    <!--订单监控-->
+    <package name="Online" namespace="/online" extends="struts-default">
+        <action name="findByState" class="com.rengu.actions.OrdersAction" method="findByState"/>
+    </package>
 </struts>
