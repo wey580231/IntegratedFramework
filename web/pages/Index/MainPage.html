@@ -99,7 +99,7 @@
                     <!--产生工厂布局调整异常-->
                     <i class="fa fa-map-o bg-yellow" ng-if="eventLog.eventType == 3"></i>
                     <div class="timeline-item">
-                        <span class="time"><i class="fa fa-clock-o"></i>{{eventLog.creatTime | date:'yyyy-MM-dd hh:mm:ss' }}</span>
+                        <span class="time"><i class="fa fa-clock-o"></i>{{eventLog.creatTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
                         <h3 class="timeline-header no-border" ng-if="eventLog.logItemtype == 0"><a href="#">{{eventLog.title}}</a>{{eventLog.content}}
                         </h3>
                         <h3 class="timeline-header" ng-if="eventLog.logItemtype == 1"><a href="#">{{eventLog.title}}</a>

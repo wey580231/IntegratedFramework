@@ -39,6 +39,7 @@ public class ApsTools {
     private final String backupSnapshotAction = "/aps/backupSnapshot";          //备份aps快照
     private final String recoverSnapshotAction = "/aps/recoverSnapshot";        //恢复aps快照
     private final String dispatchOrderAction = "/aps/dispatchOrder";            //下发aps订单
+    private final String interActiveXAction = "/aps/recoverInterX";             //恢复交互控件
     private String apsHost;
     private int apsPort;
 
@@ -68,21 +69,21 @@ public class ApsTools {
     }
 
     //生成快照，在收到一次aps反馈结果时，自动在aps中创建一个快照
-    public static String createApsSnapshot(String nodeId) {
+    public int createApsSnapshot(String nodeId) {
         String result = "/NCL:RUN?Program=./Model/Interaction/Backup/Snapshot.n" +
                 "&" +
                 "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
                 "&" +
                 "REPLY=" + ApsTools.instance().getBackupSnapshotAddress() +
                 "&" +
-                "ID=" + Tools.getUUID() +
+                "ID=" + nodeId +
                 "&" +
                 "DELAY=1000";
-        return result;
+        return executeCommand(result);
     }
 
     //交互/应急优化接口，交互优化后，查询aps订单的状态为0的数目，但个数大于0时，需要调用此接口进行优化
-    public static String getInterAdjust() {
+    public int getInterAdjust() {
         String result = "/NCL:RUN?Program=./Model/Script/ScriptResumeScheduling.n" +
                 "&" +
                 "BUFFER=001" +
@@ -91,12 +92,12 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
-                "DELAY=1000000";
-        return result;
+                "DELAY=1000";
+        return executeCommand(result);
     }
 
     //恢复指定快照，待确认下发mes后，将boottom节点的id号发给APS
-    public static String recoverSnapshot(String nodeId) {
+    public int recoverSnapshot(String nodeId) {
         String result = "/NCL:RUN?Program=./Model/Interaction/Backup/RestoreByInput.n" +
                 "&" +
                 "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
@@ -105,13 +106,13 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
-                "DELAY=1000000";
+                "DELAY=1000";
 
-        return result;
+        return executeCommand(result);
     }
 
     //发布所有订单
-    public static String publishOrder() {
+    public int publishOrder() {
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
                 "&" +
                 "BUFFER=001" +
@@ -120,9 +121,9 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
-                "DELAY=1000000";
+                "DELAY=1000";
 
-        return result;
+        return executeCommand(result);
     }
 
     //紧急插单
@@ -170,9 +171,7 @@ public class ApsTools {
         System.out.println("APS_PLAN总计：" + list.size() + "个条目。");
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         for (Object object : list) {
-//        for (int i = 0; i < 5; i++) {
             if (object instanceof HashMap) {
-//            if (true) {
                 RG_PlanEntity rg_planEntity = new RG_PlanEntity();
                 Map tempMap = (HashMap) object;
                 rg_planEntity.setId(Tools.getUUID());
@@ -399,7 +398,7 @@ public class ApsTools {
                 "&" +
                 "ID=" + middleId + "" +
                 "&" +
-                "DELAY=1000000" +
+                "DELAY=1000" +
                 "&" +
                 "buffer=001";
 
@@ -431,6 +430,12 @@ public class ApsTools {
         return localAddress + ":" + localPort + localProjectName + dispatchOrderAction;
     }
 
+    //获取恢复APS的可视化接口进行交互控件的
+    private String getInterActiveXAddress() {
+        return localAddress + ":" + localPort + localProjectName + interActiveXAction;
+    }
+
+
     //tomcat启动时根据当前排程信息来
     public void resetApsDatabase() {
         Session session = MySessionFactory.getSessionFactory().openSession();
@@ -459,5 +464,19 @@ public class ApsTools {
         }
         tx.commit();
         session.close();
+    }
+
+    //恢复快照成功后，调用APS的可视化接口进行交互控件的恢复
+    public int resetInteActivex() {
+        String cmd = "/NCL:RUN?Program=./Model/Script/ScriptGenerateView.n" +
+                "&" +
+                "REPLY=" + getInterActiveXAddress() +
+                "&" +
+                "ID=" + Tools.getUUID() + "" +
+                "&" +
+                "DELAY=1000" +
+                "&" +
+                "buffer=001";
+        return executeCommand(cmd);
     }
 }

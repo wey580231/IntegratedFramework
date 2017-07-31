@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         })
     }])
 
-    .controller('ScheduleSnapController', function ($scope, $http, myHttpService, serviceList, notification) {
+    .controller('ScheduleSnapController', function ($scope, $location, $http, myHttpService, serviceList, notification) {
 
         layer.load(0);
 
@@ -18,7 +18,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var idVal;//所点击的节点id值
         var rootData = [];
         var treeInfo = [];
-
+        var queryApsRecoverBackupTime = 0;          //定时查询aps恢复快照的状态
+        var hasReciveSnapshotFlag = false;
 
         $(function () {
             //初始化下拉数据
@@ -32,7 +33,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-
+            $scope.hasDispatchMes = false;
+            // resetRightMenSate(true);
         });
 
         //3D车间查看转换结果
@@ -69,15 +71,31 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         //将选中结果下发MES
         $scope.dispatchMes = function () {
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+
             if (zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
+
+                var selectedNode = zTree.getSelectedNodes()[0];
 
                 layer.confirm('是否将结果下发MES?', {
                     btn: ['确定', '取消'] //按钮
                 }, function (index) {
                     layer.load();
-
-                    myHttpService.get(serviceList.dispatchMes + "?id=" + zTree.getSelectedNodes()[0].id).then(function success(response) {
+                    myHttpService.get(serviceList.dispatchMes + "?id=" + selectedNode.id).then(function success(response) {
                         if (response.data.result == "ok") {
+                            $scope.hasDispatchMes = true;
+                            $scope.messStatus = "已下发";
+
+                            var pnode = selectedNode.getParentNode();
+                            pnode.dispatchMesTime = new Date().getTime();
+                            pnode.apply = true;
+                            selectedNode.dispatchMesTime = new Date().getTime();
+                            selectedNode.apply = true;
+                            selectedNode.icon = "../../images/bom_img/dispatchNode.png";
+                            $scope.dispatchMesTime = pnode.dispatchMesTime;
+
+                            zTree.refresh();
+
+                            //TODO 待增加对当前树节点数据的重新加载，以刷新显示
                             notification.sendNotification("confirm", "下发成功");
                         } else {
                             notification.sendNotification("alert", "处理失败");
@@ -93,7 +111,80 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     notification.sendNotification("alert", "取消下发");
                 });
             } else {
-                notification.sendNotification("alert", "未选择节点信息");
+                notification.sendNotification("alert", "请选择正确的节点");
+            }
+        };
+
+        //对当前节点进行交互优化，先查询APS的状态是否空闲
+        $scope.interactiveNode = function () {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            if (zTree != null && zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
+                layer.confirm('是否优化当前节点?', {
+                    btn: ['确定', '取消'] //按钮
+                }, function (index) {
+                    layer.load();
+                    //查询APS的state
+                    myHttpService.get(serviceList.queryApsState).then(function (response) {
+                        if (response.data.result == "ok") {
+                            if (response.data.data.state == 0) {
+                                var selectedNode = zTree.getSelectedNodes()[0];
+                                //恢复指定快照
+                                myHttpService.get(serviceList.recoverSnapshot + "?id=" + selectedNode.id).then(function (response) {
+                                    notification.sendNotification("confirm", "恢复APS快照中...");
+                                    queryApsRecoverBackupTime = 0;
+                                    hasReciveSnapshotFlag = false;
+
+                                    //定时查询当前节点快照是否恢复，最多查询6次
+                                    var interFlag = setInterval(function () {
+
+                                        //查询对应节点的恢复状态
+                                        myHttpService.get(serviceList.queryRecoverSnapshot + "?id=" + selectedNode.id).then(function (response) {
+                                            if (response.data.result == "ok") {
+                                                hasReciveSnapshotFlag = true;
+                                                notification.sendNotification("confirm", "交互优化页面跳转中...");
+                                                hideLoadingPage();
+                                                clearInterval(interFlag);
+                                                setTimeout(function () {
+                                                    //TODO 待解决path不能直接跳转问题
+                                                    $location.path('/Interactive');
+                                                    window.location.href = $location.absUrl();
+                                                }, 1200);
+                                            }
+                                        }, function (response) {
+
+                                        });
+
+                                        if (queryApsRecoverBackupTime >= 6 && !hasReciveSnapshotFlag) {
+                                            notification.sendNotification("alert", "APS快照恢复失败...");
+                                            hideLoadingPage();
+                                            clearInterval(interFlag);
+                                        }
+                                        queryApsRecoverBackupTime++;
+
+                                    }, 1000);
+                                }, function (response) {
+                                    notification.sendNotification("alert", "快照请求恢复失败...");
+                                    hideLoadingPage();
+                                });
+                            } else {
+                                notification.sendNotification("alert", "查询APS状态失败");
+                                hideLoadingPage();
+                            }
+                        } else {
+                            notification.sendNotification("alert", "查询APS状态失败，请重试!");
+                            hideLoadingPage();
+                        }
+                    }, function (response) {
+                        hideLoadingPage();
+                    });
+                    layer.close(index);
+                }, function (index) {
+                    layer.close(index);
+                    notification.sendNotification("alert", "取消下发");
+                });
+
+            } else {
+                notification.sendNotification("alert", "请选择正确的节点");
             }
         };
 
@@ -112,8 +203,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         //下拉框事件改变
         $("#select").change(function () {
-            document.getElementById("table_info").rows[2].cells[1].innerHTML = null;
-            document.getElementById("table_info").rows[2].cells[3].innerHTML = null;
+
+            $scope.hasDispatchMes = false;
+            $scope.messStatus = "--";
+
             zNodes.splice(0, zNodes.length);
             var idRoot;
             var val = $(this).children('option:selected').val();
@@ -132,7 +225,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
                 myHttpService.post(serviceList.getTree, id).then(function successCallback(response) {
                     $scope.snapShotData = response.data;
-                    console.log(response.data);
                     var datas = response.data;
 
                     if (datas.hasOwnProperty("childs")) {
@@ -191,7 +283,6 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     zNodes.push(datas);
                     loadTree();
                     hideLoadingPage();
-                    console.log(treeInfo);
                 })
             } else {
                 document.getElementById("treeDemo").style.display = "none";
@@ -228,15 +319,20 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             //点击树形控件
             function zTreeOnClick(e, treeId, treeNode) {
-
-                // $scope.snapShotData=response.data;
-
-                if (treeNode.level == 1) {
-                    layer.load();
-                    document.getElementById("table_info").rows[2].cells[1].innerHTML = 9;
-                    document.getElementById("table_info").rows[2].cells[3].innerHTML = "下发";
-                    hideLoadingPage();
+                $scope.hasDispatchMes = treeNode.apply;
+                if (treeNode.level == 0) {
+                    $scope.messStatus = "--";
+                } else if (treeNode.level == 1) {
+                    $scope.messStatus = treeNode.apply ? "已下发" : "未下发";
+                    $scope.dispatchMesTime = treeNode.dispatchMesTime;
+                } else if (treeNode.level == 2) {
+                    var pNode = treeNode.getParentNode();
+                    if (pNode != null) {
+                        $scope.messStatus = pNode.apply ? "已下发" : "未下发";
+                        $scope.dispatchMesTime = pNode.dispatchMesTime;
+                    }
                 }
+                $scope.$apply();
 
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
@@ -268,4 +364,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             document.getElementById("treeDemo").style.display = "";
         }
 
+        //对右键菜单的状态进行设置
+        function resetRightMenSate(buttState) {
+            $("#navigationMenu li").each(function () {
+                $(this).attr('disabled', buttState);
+            });
+        }
     });

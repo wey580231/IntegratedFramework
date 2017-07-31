@@ -19,13 +19,14 @@ public class RG_SnapshotNodeEntity {
     private String level;                   //节点层级(top、middle、bottom)
 
     private Date nodeCreateTime;            //节点创建时的日期，用于查询时进行排序
+    private Date dispatchMesTime;           //下发mes的时间
 
     private Boolean errorNode;              //是否为故障节点(只在level==middl时有效)
     private Boolean firstNode;              //是否为第一个节点(每个节点的第一个子节点)
 
     private Boolean apsBackupSnaoshot;      //aps快照是否产生成功(bottom节点意义)
-    private Boolean apsDispatchOrder;       //aps订单是否发布(middle节点意义)
-    private Boolean apsRecoverSnapshot;     //aps的快照是否恢复成功(middle节点有意义)
+    private Boolean apsDispatchOrder;       //aps订单是否发布(middle、bottom节点意义)
+    private Boolean apsRecoverSnapshot;     //aps的快照是否恢复成功(bottom节点有意义)
     private Boolean apsInteractive;         //aps的交互
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "childsSnapshotId")
@@ -78,6 +79,14 @@ public class RG_SnapshotNodeEntity {
 
     public void setNodeCreateTime(Date nodeCreateTime) {
         this.nodeCreateTime = nodeCreateTime;
+    }
+
+    public Date getDispatchMesTime() {
+        return dispatchMesTime;
+    }
+
+    public void setDispatchMesTime(Date dispatchMesTime) {
+        this.dispatchMesTime = dispatchMesTime;
     }
 
     public Boolean getErrorNode() {
