@@ -1,7 +1,7 @@
 <style>
-    .myclass{
+    /*.myclass{
         height:210px;
-    }
+    }*/
 
 </style>
 <div>
@@ -44,17 +44,15 @@
                         </div>
                     </div>
                     <div class="box-body  myclass">
-                        <div class="chart">
-                            <canvas id="areaChart" style="height:190px"></canvas>
+                        <div class="chart" style="height: 100%;">
+                            <canvas id="areaChart" style="height: 100%;"></canvas>
                         </div>
                     </div>
-                    <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
             </div>
 
 
-            <!-- BAR CHART -->
+            <!--  BAR CHART -->
             <div class="col-md-4 ">
                 <div class="box box-danger ">
                     <div class="box-header with-border">
@@ -67,20 +65,19 @@
                             </button>
                         </div>
                     </div>
-                    <div class="box-body myclass" style=" height: 210px;">
-                        <canvas id="pieChart" style="height: 130px;width: 332px;margin-top: 37px;"></canvas>
+                    <div class="box-body myclass" style=" /*height: 210px;*/">
+                        <div class="chart" style="height: 100%;">
+                            <canvas id="pieChart" style="/*margin-top: 37px;*/"></canvas>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
                 </div>
 
-                <!-- /.box -->
 
             </div>
-            <!-- /.col (RIGHT) -->
 
-            <!-- /.col (LEFT) -->
+            <!--  /.col (LEFT) -->
             <div class="col-md-4 ">
-                <!-- LINE CHART -->
+                <!--  LINE CHART -->
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">折线图</h3>
@@ -95,14 +92,12 @@
                         </div>
                     </div>
                     <div class="box-body myclass">
-                        <div class="chart">
-                            <canvas id="lineChart" style="height:190px"></canvas>
+                        <div class="chart" style="height: 100%;">
+                            <canvas id="lineChart" style="height: 100%;"></canvas>
                         </div>
                     </div>
-                    <!-- /.box-body -->
                 </div>
             </div>
-            <!-- /.box -->
         </div>
         <!-- /.row -->
 
@@ -141,34 +136,20 @@
                         <tbody>
                         <tr>
                             <td></td>
-                            <th>名称</th>
-                            <th>订单来源</th>
-                            <th>优先级</th>
                             <th>数量</th>
-                            <th>完成数量</th>
-                            <th>下单时间</th>
-                            <th>完工时间</th>
-                            <th>状态</th>
+                            <th>完工数量</th>
+                            <th>提前天数</th>
+                            <th>拖期天数</th>
+                            <th>合格率</th>
                         </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" id="value">
+                        <tr ng-repeat="order in ComOrderList track by $index" ng-init="renderTable($last)" id="value">
                             <td><input id="check" name="check" type="checkbox"></td>
                             <td style="display:none">{{order.id}}</td>
-                            <td>{{order.name}}</td>
-                            <td>
-                                <span ng-if="order.origin == 0">手动输入</span>
-                                <span ng-if="order.origin == 1">云排产</span>
-                            </td>
-                            <td>{{order.priority}}</td>
                             <td>{{order.quantity}}</td>
                             <td>{{order.finishQuantity}}</td>
-                            <td>{{order.t0 | date:'yyyy-MM-dd hh:mm:ss' }}</td>
-                            <td>{{order.t2 | date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                            <td>
-                                <span class="label label-primary" ng-if="order.state == 0">计划</span>
-                                <span class="label label-danger" ng-if="order.state == 1">排程中</span>
-                                <span class="label label-warning" ng-if="order.state == 2">已下发</span>
-                                <span class="label label-success" ng-if="order.state == 3">已完工</span>
-                            </td>
+                            <td>{{order.advance}}</td>
+                            <td>{{order.delay}}</td>
+                            <td>99%</td>
                         </tr>
                         </tbody>
                     </table>

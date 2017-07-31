@@ -92,9 +92,9 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //新建排程
         $scope.prepareNewSchedule = function () {
-           /* myHttpService.get(serviceList.queryApsState).then(function (response) {
+            myHttpService.get(serviceList.queryApsState).then(function (response) {
                 if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {*/
+                    if (response.data.data.state == 0) {
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
                         hideCalendar();
@@ -107,17 +107,15 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $("#scheduleTime").val(7);
                         $("#delayTime").val(5);
 
-                        $('#calendar').fullCalendar('destroy');
-
                         initFullCalendar();
-       /*             } else {
+                    } else {
                         notification.sendNotification("alert", "查询APS状态失败");
                     }
                 } else {
                     notification.sendNotification("alert", "查询APS状态失败，请重试!");
                 }
             }, function (response) {
-            });*/
+            });
             resetContent();
         };
 
@@ -369,8 +367,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //初始化日历
         function initFullCalendar() {
+
+            $('#calendar').fullCalendar('destroy');
+
             $("#calendar").show();
             $('#calendar').fullCalendar('removeEvents');
+
             $('#calendar').fullCalendar({
                 buttonText: {
                     today: '今天',
@@ -383,18 +385,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                /*   viewRender: function (view, element) {
+                /*    viewRender: function (view, element) {
                  //已执行时间窗口染色
-                 for (var i = 1; i <= tempDays; i++) {
-                 $("td[data-date='" + moment().add(-i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'red');
+                 for (var i = 0; i < scheduleDays; i++) {
+                 $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue');
                  }
-                 //时间窗口染色
-                 for (var i = 0; i < lastScheduleDays - tempDays; i++) {
-                 $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'blue');
-                 }
-                 //剩余窗口染色
-                 for (var i = 0; i < scheduleDays - (lastScheduleDays - tempDays); i++) {
-                 $("td[data-date='" + moment().add((lastScheduleDays - tempDays) + i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'green');
+                 for (var i = 0; i < rollTime; i++) {
+                 $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink  ');
                  }
                  },*/
                 //加载完成后回调,signal为false表示加载完成，为true表示正在加载中
@@ -411,6 +408,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
         //根据当前设置的时间范围，去筛选对应的日历信息
         var showSchedule = function () {
+            initFullCalendar();
             scheduleDays = $("#scheduleTime").val();
             rollTime = $("#rollTime").val();
             name = $("#scheduleName").val();
@@ -419,6 +417,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             scheduleOption = parseInt($("#delayTime").val());
             var startTime = moment().format("YYYY-MM-DD");                  //订单筛选开始时间
             var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");   //订单筛选结束时间
+
+            for (var i = 0; i < scheduleDays; i++) {
+                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue');
+            }
+            for (var i = 0; i < rollTime; i++) {
+                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink');
+            }
 
             var source = "http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
             // var source = "http://localhost:8080/IntegratedFramework/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
@@ -430,14 +435,39 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             $('#calendar').fullCalendar('addEventSource', source);
 
-            for (var i = 0; i < scheduleDays; i++) {
-                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue  ', 'height', '5px');
-            }
-            for (var i = 0; i < rollTime; i++) {
-                $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink  ', 'height', '5px');
-            }
+            //解决上下页日历染色消失
+            $('#calendar').fullCalendar('destroy');
+
+            $('#calendar').fullCalendar({
+                header: {
+                    right: 'today,prev,next',
+                },
+                buttonText: {
+                    today: '今天',
+                    month: '月',
+                    week: '周',
+                    day: '天',
+                },
+                allDayText: '全天',
+                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+                dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+                dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                viewRender: function (view, element) {
+                    //已执行时间窗口染色
+                    for (var i = 0; i < scheduleDays; i++) {
+                        $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightSkyBlue');
+                    }
+                    for (var i = 0; i < rollTime; i++) {
+                        $("td[data-date='" + moment().add(i, "day").format('YYYY-MM-DD') + "']").css('backgroundColor', 'LightPink  ');
+                    }
+                },
+                //加载完成后回调,signal为false表示加载完成，为true表示正在加载中
+            });
+            $('#calendar').fullCalendar('addEventSource', source);
 
         };
+
 
         //表格信息重置
         $scope.reset = function () {
@@ -450,7 +480,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $("#calendar").show();
         };
 
-        //用于监控点击事件，checkbox选择了就更新
+//用于监控点击事件，checkbox选择了就更新
         $scope.updateSelection = function ($event, id) {
             var checkbox = $event.target;
             var action = (checkbox.checked ? 'add' : 'remove');
@@ -464,7 +494,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             updateSelected(action, id);
         };
 
-        //添加或取消勾选时更新对应页面的列表
+//添加或取消勾选时更新对应页面的列表
         var updateSelected = function (action, id) {
 
             if (action == 'add' & PageInfo.selectedIndex[currPage].indexOf(id) == -1) {
@@ -488,7 +518,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             return selectedCheckArray.indexOf(id) >= 0;
         };
 
-        //开始排程
+//开始排程
         $scope.submitForm = function () {
             layer.load(0);
 
@@ -507,7 +537,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             configAPS();
         };
 
-        //计算apsEnd结束时间
+//计算apsEnd结束时间
         function setEndTime() {
             var cur = {};
             var startTime = moment().format("YYYY-MM-DD");
@@ -552,7 +582,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             });
         }
 
-        //开始排程
+//开始排程
         $scope.submitForm = function () {
 
             for (var i = 0; i < pageCount; i++) {
@@ -570,7 +600,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             configAPS();
         };
 
-        //排程
+//排程
         function configAPS() {
             var APSConfigs = {};
             APSConfigs.t0 = apsStart;
@@ -632,7 +662,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $("#nextStep").removeAttr("disabled");
         }
 
-        //获取信息
+//获取信息
         var getInfo = function () {
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
@@ -652,7 +682,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }
         };
 
-        //删除
+//删除
         $scope.deleteSchedule = function () {
             if (getInfo()) {
                 layer.confirm('是否删除选中的排程信息?', {
@@ -681,7 +711,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             }
         };
 
-        //显示当前布局的放大图
+//显示当前布局的放大图
         $scope.showDetail = function (event) {
             var e = event || window.event;
             var target = e.target || e.srcElement;
@@ -696,4 +726,5 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 content: content
             });
         }
-    });
+    })
+;
