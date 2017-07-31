@@ -247,7 +247,7 @@ public class Tools {
     }
 
     public static String dateConvertToString(Date date) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = simpleDateFormat.format(date);
         return dateString;
     }
@@ -290,7 +290,7 @@ public class Tools {
             return "";
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return df.format(date);
     }
 
@@ -299,7 +299,7 @@ public class Tools {
             return "";
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return df.format(date);
     }
 
@@ -308,7 +308,7 @@ public class Tools {
             return null;
         }
         long timeStmp = Long.parseLong(text);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = simpleDateFormat.format(timeStmp);
         try {
             return simpleDateFormat.parse(time);

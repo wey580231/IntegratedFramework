@@ -24,11 +24,20 @@
         <property name="autoCreateProcess">
             <column name="autoCreateProcess" sql-type="varchar(255)" not-null="false"/>
         </property>
-        <property name="nextTask">
-            <column name="nextTask" sql-type="varchar(255)" not-null="false"/>
+        <property name="nextProcessTask">
+            <column name="nextProcessTask" sql-type="varchar(255)" not-null="false"/>
         </property>
-        <property name="distance">
-            <column name="distance" sql-type="int" not-null="false"/>
+        <property name="nextProcessDistnces">
+            <column name="nextProcessDistnces" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="nextProcessSites">
+            <column name="nextProcessSites" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="nextProcessMobility">
+            <column name="nextProcessMobility" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="nextProcessRefetTime">
+            <column name="nextProcessRefetTime" sql-type="varchar(255)" not-null="false"/>
         </property>
 
     </class>

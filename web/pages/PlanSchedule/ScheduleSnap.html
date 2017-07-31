@@ -73,6 +73,11 @@
                 </a>
             </li>
             <li>
+                <a class="home" href="" ng-click="interactiveNode()"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+                    <span>交互优化</span>
+                </a>
+            </li>
+            <li>
                 <a class="home" href=""><i class="fa fa-usb" aria-hidden="true"></i>
                     <span>快照对比</span>
                 </a>
@@ -154,26 +159,28 @@
                         <tr>
                             <td><span class="spanKey">排程时间</span></td>
                             <td><span class="spanVal" ng-if="snapShotData.schedule.scheduleTime==null"></span>
-                                <span class="spanVal" ng-if="snapShotData.schedule.scheduleTime!=null">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.scheduleTime!=null">{{snapShotData.schedule.scheduleTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
                             <td><span class="spanKey">计算开始时间</span></td>
                             <td><span class="spanVal" ng-if="snapShotData.schedule.startCalcTime==null"></span>
-                                <span class="spanVal" ng-if="snapShotData.schedule.startCalcTime!=null">{{snapShotData.schedule.startCalcTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.startCalcTime!=null">{{snapShotData.schedule.startCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
                             <td><span class="spanKey">计算结束时间</span></td>
                             <td><span class="spanVal" ng-if="snapShotData.schedule.endCalcTime==null"></span>
-                                <span class="spanVal" ng-if="snapShotData.schedule.endCalcTime!=null">{{snapShotData.schedule.endCalcTime | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                                <span class="spanVal" ng-if="snapShotData.schedule.endCalcTime!=null">{{snapShotData.schedule.endCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
                             <td><span class="spanKey">优化次数</span></td>
                             <td><span class="spanVal"></span></td>
-                            <td><span class="spanKey">下发MES</span></td>
-                            <td><span class="spanVal">{{snapData.mes}}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="spanKey">是否下发MES</span></td>
+                            <td><span class="spanVal"><span class="fa fa-cloud-download label label-success" aria-hidden="true"
+                                                            ng-if="hasDispatchMes">{{messStatus}}</span>
+                                                      <span class="fa fa-bars label label-info" aria-hidden="true"
+                                                            ng-if="!hasDispatchMes">{{messStatus}}</span></span></td>
+                            <td><span class="spanKey" ng-if="hasDispatchMes">下发MES时间</span></td>
+                            <td><span class="spanVal" ng-if="hasDispatchMes">{{dispatchMesTime  | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            </td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -207,13 +214,13 @@
                                     <th>任务开始时间</th>
                                     <th>任务结束时间</th>
                                 </tr>
-                                <tr ng-repeat="plan in planList track by $index" ng-init="renderTable($last)">
+                                <tr ng-repeat="plan in planList" ng-init="renderTable($last)"><!-- track by $index-->
                                     <td style="display:none">{{plan.id}}</td>
                                     <td>{{plan.nameTask}}</td>
                                     <td>{{plan.nameJob}}</td>
                                     <td>{{plan.nameResource}}</td>
-                                    <td>{{plan.t1Task| date:'yyyy-MM-dd hh:mm:ss' }}</td>
-                                    <td>{{plan.t2Task| date:'yyyy-MM-dd hh:mm:ss' }}</td>
+                                    <td>{{plan.t1Task| date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                    <td>{{plan.t2Task| date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                 </tr>
                                 </tbody>
                             </table>

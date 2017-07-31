@@ -97,11 +97,17 @@ angular.module("IntegratedFramework", [
         var backUrl = "";
         <!--订单信息-->
         service.ListOrder = backUrl + "orders/getAllOrders.action";
+
         service.DeleteOrder = backUrl + "orders/delete.action";
         service.UpdateOrder = backUrl + "orders/update.action";
         service.AddOrder = backUrl + "orders/save.action";
 
         service.GetOrderById = backUrl + "orders/findAllById.action";
+
+
+        <!--订单监控-->
+        service.ComListOrder = backUrl + "online/findByState.action";
+
 
         <!--工序信息-->
         service.ListProcess = backUrl + "process/getAllByIsRootNode.action";
@@ -192,6 +198,10 @@ angular.module("IntegratedFramework", [
         service.findAllExceptionUrl = backUrl + "mainpage/getAllExcepitonNumInfo.action";
         //获取EvenLog接口
         service.getAllEventLogUrl = backUrl + "eventlog/getAllEventLog.action";
+
+        <!--恢复快照-->
+        service.recoverSnapshot = backUrl + "snapshot/recoverSnapshot.action";
+        service.queryRecoverSnapshot = backUrl + "snapshot/queryRecoverSnapshot.action";
 
         return service;
     })

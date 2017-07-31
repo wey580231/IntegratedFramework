@@ -13,8 +13,11 @@ public class RG_ProcessAssisantEntity {
     private String goods;                           //货物
 
     private String autoCreateProcess;               //是否需要紧接着当前工序自动产生吓一条工序，目前只对getRaw和get_product有效
-    private String nextTask;                        //工序转换的类型，为getRaw则自动转换movein，为get_product自动转换put_product
-    private Integer distance;                       //运动的距离
+    private String nextProcessTask;                 //工序转换的类型，为getRaw则自动转换movein，为get_product自动转换put_product
+    private String nextProcessDistnces;             //运动的距离
+    private String nextProcessSites;                //下一步工序的位置集合
+    private String nextProcessMobility;             //下一步工序的速度信息
+    private String nextProcessRefetTime;            //下一步工序的开始时间是参照当前工序的开始或者结束时间
 
     public int getId() {
         return id;
@@ -64,19 +67,43 @@ public class RG_ProcessAssisantEntity {
         this.autoCreateProcess = autoCreateProcess;
     }
 
-    public String getNextTask() {
-        return nextTask;
+    public String getNextProcessTask() {
+        return nextProcessTask;
     }
 
-    public void setNextTask(String nextTask) {
-        this.nextTask = nextTask;
+    public void setNextProcessTask(String nextProcessTask) {
+        this.nextProcessTask = nextProcessTask;
     }
 
-    public Integer getDistance() {
-        return distance;
+    public String getNextProcessDistnces() {
+        return nextProcessDistnces;
     }
 
-    public void setDistance(Integer distance) {
-        this.distance = distance;
+    public void setNextProcessDistnces(String nextProcessDistnces) {
+        this.nextProcessDistnces = nextProcessDistnces;
+    }
+
+    public String getNextProcessSites() {
+        return nextProcessSites;
+    }
+
+    public void setNextProcessSites(String nextProcessSites) {
+        this.nextProcessSites = nextProcessSites;
+    }
+
+    public String getNextProcessMobility() {
+        return nextProcessMobility;
+    }
+
+    public void setNextProcessMobility(String nextProcessMobility) {
+        this.nextProcessMobility = nextProcessMobility;
+    }
+
+    public String getNextProcessRefetTime() {
+        return nextProcessRefetTime;
+    }
+
+    public void setNextProcessRefetTime(String nextProcessRefetTime) {
+        this.nextProcessRefetTime = nextProcessRefetTime;
     }
 }

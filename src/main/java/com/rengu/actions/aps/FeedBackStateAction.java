@@ -39,7 +39,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到回复消息啦============");
+            System.out.println("=============收到应急优化回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
@@ -86,7 +86,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到回复消息啦============");
+            System.out.println("=============收到备份快照回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
                 Session session = MySessionFactory.getSessionFactory().openSession();
@@ -100,6 +100,7 @@ public class FeedBackStateAction extends SuperAction {
                     if (bottomSnapshot != null) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
                             bottomSnapshot.setApsBackupSnaoshot(true);
+                            UserConfigTools.updateApsSnapshotId("1", bottomSnapshot.getId());
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS快照备份成功!", "confirm"));
                         } else {
                             bottomSnapshot.setApsBackupSnaoshot(false);
@@ -117,7 +118,7 @@ public class FeedBackStateAction extends SuperAction {
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
-    //恢复快照
+    //APS回调恢复快照
     public void recoverSnapshot() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
@@ -130,7 +131,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到回复消息啦============");
+            System.out.println("=============收到恢复快照回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
@@ -138,19 +139,24 @@ public class FeedBackStateAction extends SuperAction {
                 session.beginTransaction();
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
-                String middleId = userconfig.getMiddleSnapshotId();
-                if (middleId != null) {
-                    RG_SnapshotNodeEntity middleSnapshot = session.get(RG_SnapshotNodeEntity.class, middleId);
+                String bottomSnapshotId = userconfig.getBottomSnapshotId();
+                if (bottomSnapshotId != null) {
+                    RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomSnapshotId);
 
-                    if (middleSnapshot != null) {
+                    if (bottomSnapshot != null) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
-                            middleSnapshot.setApsRecoverSnapshot(true);
+                            bottomSnapshot.setApsRecoverSnapshot(true);
+
+                            BackupThread queryThrad = new BackupThread(BackupThread.Reset_Activex);
+                            Thread thread = new Thread(queryThrad);
+                            thread.start();
+
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复快照成功!", "confirm"));
                         } else {
-                            middleSnapshot.setApsRecoverSnapshot(false);
+                            bottomSnapshot.setApsRecoverSnapshot(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复快照失败!", "alert"));
                         }
-                        session.update(middleSnapshot);
+                        session.update(bottomSnapshot);
                     }
                 }
                 session.getTransaction().commit();
@@ -159,6 +165,12 @@ public class FeedBackStateAction extends SuperAction {
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算出错!", "alert"));
         }
+        Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
+    }
+
+    //接收恢复交互控件结果
+    public void recoverInterX(){
+        System.out.println("接受aps恢复交互控件结果===========");
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
@@ -176,7 +188,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到回复消息啦============");
+            System.out.println("=============收到订单下发回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
@@ -208,7 +220,7 @@ public class FeedBackStateAction extends SuperAction {
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
-    //接收APS返回计算结果
+    //【1】接收APS运行状态;【2】同步APS结果;【3】创建APS快照
     public void recvApsResult() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
@@ -221,7 +233,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到回复消息啦============");
+            System.out.println("=============收到计算结果回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
                 switchResult(state[0]);
@@ -353,6 +365,7 @@ public class FeedBackStateAction extends SuperAction {
                     bottomSnapshot.setRootParent(rootSnapshot);
 
                     UserConfigTools.updateBottomSnapshotId("1", bottomSnapshot.getId());
+                    UserConfigTools.updateApsSnapshotId("1", bottomSnapshot.getId());
 
                     middleSnapshot.getChilds().add(bottomSnapshot);
 
@@ -368,7 +381,11 @@ public class FeedBackStateAction extends SuperAction {
 
                         //在非应急排程下，接收到aps的接口信息后，通知APS创建快照
                         if (replyState.equals(APS_RESULT_SUCCESS) && !userconfig.isErrorSchedule()) {
-                            ApsTools.createApsSnapshot(bottomSnapshot.getId());
+                            int tmpState = ApsTools.instance().queryExecuteState();
+                            System.out.println("启动线程前：" + tmpState);
+                            BackupThread queryThrad = new BackupThread(BackupThread.Recover_Snapshot,bottomSnapshot.getId());
+                            Thread thread = new Thread(queryThrad);
+                            thread.start();
                         }
 
                     } catch (Exception e) {
@@ -435,7 +452,7 @@ public class FeedBackStateAction extends SuperAction {
 
     //模拟aps应急优化结果
     public void emulateApsInterResult() {
-
+        System.out.println("测试APS的自动交互结果");
         System.out.println("=======APS 交互結果转换中======");
 
         //【1】查询APS的定单表是否含有state=0的订单，如果有，则先调用应急交互优化接口，重新计算
@@ -453,7 +470,7 @@ public class FeedBackStateAction extends SuperAction {
             Tools.jsonPrint(Tools.resultCode("ok", "start switch result!"), this.httpServletResponse);
             switchResult("1");
         } else {
-            int result = ApsTools.instance().executeCommand(ApsTools.instance().getInterAdjust());
+            int result = ApsTools.instance().getInterAdjust();
             if (result == ApsTools.STARTED) {
                 Tools.jsonPrint(Tools.resultCode("emergency_ok", "start emergency interactive!"), this.httpServletResponse);
             } else {
