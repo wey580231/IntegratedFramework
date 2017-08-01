@@ -284,10 +284,8 @@ public class State3DAO {
 
         boolean flag = false;
 
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        if (!session.getTransaction().isActive()) {
-            session.beginTransaction();
-        }
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        session.beginTransaction();
 
         Query query = session.createQuery("from RG_LayoutEntity entity where entity.name=:name");
         query.setParameter("name", layoutName);
@@ -298,6 +296,7 @@ public class State3DAO {
             Iterator<RG_LayoutDetailEntity> iter = details.iterator();
             while (iter.hasNext()) {
                 RG_LayoutDetailEntity detail = iter.next();
+                System.out.println(detail.getId() + "++++" + arr.getId());
                 if (detail.getId().equals(arr.getId())) {
                     detail.setPos(arr.getPos());
                     detail.setState(arr.getState());
@@ -310,6 +309,7 @@ public class State3DAO {
             flag = true;
         }
         session.getTransaction().commit();
+        session.close();
         return flag;
     }
 

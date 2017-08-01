@@ -79,7 +79,8 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
             if (dateString) {
                 var arr1 = dateString.split(" ");
                 var sdate = arr1[0].split('-');
-                var date = new Date(sdate[0], sdate[1] - 1, sdate[2]);
+                var stime = arr1[1].split(':');
+                var date = new Date(sdate[0], sdate[1] - 1, sdate[2], stime[0], stime[1], stime[2]);
                 return date;
             }
         }
@@ -198,7 +199,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         $scope.addOrder = function () {
             if (orderAddValidate()) {
                 $("#modal-add").modal('hide');
-                console.log(addData);
                 myHttpService.post(serviceList.AddOrder, addData).then(function successCallback() {
                     myHttpService.get(serviceList.ListOrder).then(function (response) {
                         $scope.orderList = response.data;

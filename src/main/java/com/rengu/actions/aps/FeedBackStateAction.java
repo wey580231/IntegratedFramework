@@ -139,7 +139,7 @@ public class FeedBackStateAction extends SuperAction {
                 session.beginTransaction();
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
-                String bottomSnapshotId = userconfig.getBottomSnapshotId();
+                String bottomSnapshotId = userconfig.getApsCurrSnapshotId();
                 if (bottomSnapshotId != null) {
                     RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, bottomSnapshotId);
 
@@ -169,14 +169,14 @@ public class FeedBackStateAction extends SuperAction {
     }
 
     //接收恢复交互控件结果
-    public void recoverInterX(){
+    public void recoverInterX() {
         System.out.println("接受aps恢复交互控件结果===========");
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
 
     //下发订单
-    public void dispatchOrdr() {
+    public void dispatchOrder() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
 
@@ -196,19 +196,23 @@ public class FeedBackStateAction extends SuperAction {
                 session.beginTransaction();
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
-                String middleId = userconfig.getMiddleSnapshotId();
-                if (middleId != null) {
-                    RG_SnapshotNodeEntity middleSnapshot = session.get(RG_SnapshotNodeEntity.class, middleId);
+                String dispatchMesId = userconfig.getDispatchMesSnapshotId();
+                if (dispatchMesId != null) {
+                    RG_SnapshotNodeEntity bottomSnapShot = session.get(RG_SnapshotNodeEntity.class, dispatchMesId);
+                    RG_SnapshotNodeEntity middleSnapShot = bottomSnapShot.getParent();
 
-                    if (middleSnapshot != null) {
+                    if (bottomSnapShot != null && middleSnapShot != null) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
-                            middleSnapshot.setApsDispatchOrder(true);
+                            bottomSnapShot.setApsDispatchOrder(true);
+                            middleSnapShot.setApsDispatchOrder(true);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复订单成功!", "confirm"));
                         } else {
-                            middleSnapshot.setApsDispatchOrder(false);
+                            bottomSnapShot.setApsDispatchOrder(false);
+                            middleSnapShot.setApsDispatchOrder(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS恢复订单失败!", "alert"));
                         }
-                        session.update(middleSnapshot);
+                        session.update(middleSnapShot);
+                        session.update(bottomSnapShot);
                     }
                 }
                 session.getTransaction().commit();
@@ -383,7 +387,7 @@ public class FeedBackStateAction extends SuperAction {
                         if (replyState.equals(APS_RESULT_SUCCESS) && !userconfig.isErrorSchedule()) {
                             int tmpState = ApsTools.instance().queryExecuteState();
                             System.out.println("启动线程前：" + tmpState);
-                            BackupThread queryThrad = new BackupThread(BackupThread.Recover_Snapshot,bottomSnapshot.getId());
+                            BackupThread queryThrad = new BackupThread(BackupThread.Recover_Snapshot, bottomSnapshot.getId());
                             Thread thread = new Thread(queryThrad);
                             thread.start();
                         }

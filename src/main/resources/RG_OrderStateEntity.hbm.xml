@@ -25,10 +25,16 @@
             <column name="planStartTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="planFinishTime" type="java.util.Date">
-            <column name="planFinishTime" sql-type="datetime" not-null="false"/>
+        <column name="planFinishTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="actualDispatchDevice">
             <column name="actualDispatchDevice" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
+        <property name="actualDispatchTime" type="java.util.Date">
+            <column name="actualDispatchTime" sql-type="datetime" not-null="false"/>
+        </property>
+        <property name="actualFinsihTime" type="java.util.Date">
+            <column name="actualFinsihTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="actualFinishCount">
             <column name="actualFinishCount" sql-type="tinyint(4)" not-null="false"/>

@@ -34,7 +34,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 hideLoadingPage();
             });
             $scope.hasDispatchMes = false;
-            // resetRightMenSate(true);
+            $scope.interactiveCount = "";
         });
 
         //3D车间查看转换结果
@@ -80,31 +80,47 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     btn: ['确定', '取消'] //按钮
                 }, function (index) {
                     layer.load();
-                    myHttpService.get(serviceList.dispatchMes + "?id=" + selectedNode.id).then(function success(response) {
+
+                    myHttpService.get(serviceList.queryApsState).then(function (response) {
                         if (response.data.result == "ok") {
-                            $scope.hasDispatchMes = true;
-                            $scope.messStatus = "已下发";
+                            if (response.data.data.state == 0) {
+                                myHttpService.get(serviceList.dispatchMes + "?id=" + selectedNode.id).then(function success(response) {
+                                    if (response.data.result == "ok") {
+                                        $scope.hasDispatchMes = true;
+                                        $scope.messStatus = "已下发";
 
-                            var pnode = selectedNode.getParentNode();
-                            pnode.dispatchMesTime = new Date().getTime();
-                            pnode.apply = true;
-                            selectedNode.dispatchMesTime = new Date().getTime();
-                            selectedNode.apply = true;
-                            selectedNode.icon = "../../images/bom_img/dispatchNode.png";
-                            $scope.dispatchMesTime = pnode.dispatchMesTime;
+                                        var pnode = selectedNode.getParentNode();
+                                        pnode.dispatchMesTime = new Date().getTime();
+                                        pnode.apply = true;
+                                        selectedNode.dispatchMesTime = new Date().getTime();
+                                        selectedNode.apply = true;
+                                        selectedNode.icon = "../../images/bom_img/dispatchNode.png";
+                                        $scope.dispatchMesTime = pnode.dispatchMesTime;
 
-                            zTree.refresh();
+                                        zTree.refresh();
 
-                            //TODO 待增加对当前树节点数据的重新加载，以刷新显示
-                            notification.sendNotification("confirm", "下发成功");
+                                        //TODO 待增加对当前树节点数据的重新加载，以刷新显示
+                                        notification.sendNotification("confirm", "下发MES成功");
+                                    } else {
+                                        notification.sendNotification("alert", "下发MES失败");
+                                    }
+                                    hideLoadingPage();
+                                }, function error() {
+                                    notification.sendNotification("alert", "请求失败，稍后再试");
+                                    hideLoadingPage();
+                                });
+                            } else {
+                                notification.sendNotification("alert", "查询APS状态失败");
+                                hideLoadingPage();
+                            }
                         } else {
-                            notification.sendNotification("alert", "处理失败");
+                            notification.sendNotification("alert", "查询APS状态失败");
+                            hideLoadingPage();
                         }
-                        hideLoadingPage();
-                    }, function erorr() {
-                        notification.sendNotification("alert", "请求失败，稍后再试");
+                    }, function () {
                         hideLoadingPage();
                     });
+
                     layer.close(index);
                 }, function (index) {
                     layer.close(index);
@@ -134,7 +150,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                     queryApsRecoverBackupTime = 0;
                                     hasReciveSnapshotFlag = false;
 
-                                    //定时查询当前节点快照是否恢复，最多查询6次
+                                    //定时查询当前节点快照是否恢复，最多查询10次
                                     var interFlag = setInterval(function () {
 
                                         //查询对应节点的恢复状态
@@ -145,7 +161,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                                 hideLoadingPage();
                                                 clearInterval(interFlag);
                                                 setTimeout(function () {
-                                                    //TODO 待解决path不能直接跳转问题
+                                                    //TODO 待解决path不能直接用$location跳转问题
                                                     $location.path('/Interactive');
                                                     window.location.href = $location.absUrl();
                                                 }, 1200);
@@ -154,7 +170,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
                                         });
 
-                                        if (queryApsRecoverBackupTime >= 6 && !hasReciveSnapshotFlag) {
+                                        if (queryApsRecoverBackupTime >= 10 && !hasReciveSnapshotFlag) {
                                             notification.sendNotification("alert", "APS快照恢复失败...");
                                             hideLoadingPage();
                                             clearInterval(interFlag);
@@ -325,6 +341,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 } else if (treeNode.level == 1) {
                     $scope.messStatus = treeNode.apply ? "已下发" : "未下发";
                     $scope.dispatchMesTime = treeNode.dispatchMesTime;
+                    $scope.interactiveCount = (treeNode.children.length - 1) + "次";
                 } else if (treeNode.level == 2) {
                     var pNode = treeNode.getParentNode();
                     if (pNode != null) {

@@ -75,7 +75,7 @@ public class Device3DAO {
         return returnRes;
     }
 
-    //获取订单最新信息
+    //获取订单最新信息，
     public boolean getOrderReport(String requestOrder, String code, StringBuilder result) {
 
         boolean returnRes = false;
