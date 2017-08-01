@@ -41,11 +41,7 @@ angular.module("IntegratedFramework.FactoryLayoutController", ['ngRoute'])
                 var info=JSON.stringify(parm);
                 myHttpService.post(serviceList.LayoutDetail,info).then(function successCallback(response) {
                     $scope.layoutDetailList = response.data;
-                    if (response.data.result == "ok") {
-                        notification.sendNotification("confirm", "详情请求中...");
-                    } else {
-                        notification.sendNotification("alert", "请求失败");
-                    }
+
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -53,7 +49,20 @@ angular.module("IntegratedFramework.FactoryLayoutController", ['ngRoute'])
             }
         };
 
-
-
+        //显示当前布局的放大图
+        $scope.showDetail = function (event) {
+            var e = event || window.event;
+            var target = e.target || e.srcElement;
+            var content = "<img src='" + target.src + "' style='width:100%;height:100%;'>";
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                area: ['830px', '730px'],
+                skin: 'layui-layer-nobg', //没有背景色
+                shadeClose: true,
+                content: content
+            });
+        }
 
     });

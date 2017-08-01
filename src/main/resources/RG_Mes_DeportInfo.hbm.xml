@@ -18,6 +18,9 @@
         <property name="stock">
             <column name="stock" sql-type="int" not-null="false"/>
         </property>
+        <property name="totalPlace">
+            <column name="totalPlace" sql-type="int" not-null="false"/>
+        </property>
         <property name="freePlace">
             <column name="freePlace" sql-type="int" not-null="false"/>
         </property>

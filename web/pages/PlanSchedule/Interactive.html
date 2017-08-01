@@ -1,6 +1,6 @@
-<script src= "../../3rdLib/aps/ipServer.js"></script>
-<script src="../../3rdLib/aps/Interactive.js"></script>
-<script src="../../3rdLib/bootstrap/js/bootstrap-select.js"></script>
+<script src="3rdLib/aps/ipServer.js"></script>
+<script src="3rdLib/aps/Interactive.js"></script>
+<script src="3rdLib/bootstrap/js/bootstrap-select.js"></script>
 
 <style>
     .spanKey {
@@ -54,7 +54,7 @@
 
                         <div style="float: left;margin-left: 1%;height:30px;">
                             <span class="spanKey">排程名称:</span>
-                            <span class="spanKey">{{schedule.data.name}}</span>
+                            <span class="spanKey">{{schedule.data.name}} > {{ schedule.data.middleNodeName}} > {{schedule.data.bottomNodeName}}</span>
 
                             <span class="spanKey">状态:</span>
 
@@ -126,7 +126,7 @@
     </section>
 </div>
 
-<script src="../../3rdLib/jquery_resize.js"/>
+<script src="3rdLib/jquery_resize.js"/>
 
 <script>
     function resizeD3ViewSize() {

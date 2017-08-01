@@ -15,6 +15,8 @@ public class RG_OrderStateEntity {
     private Date planStartTime;                     //计划开工时间
     private Date planFinishTime;                    //计划完工时间
     private String actualDispatchDevice;            //实际派工设备
+    private Date actualDispatchTime;                //实际派工时间
+    private Date actualFinsihTime;                  //实际完工时间
     private short actualFinishCount;                //实际完工量
     private Date currTime;                          //当前时间
     private boolean finished;                       //是否已经完工
@@ -126,44 +128,19 @@ public class RG_OrderStateEntity {
         this.orderEntity = orderEntity;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_OrderStateEntity that = (RG_OrderStateEntity) o;
-
-        if (id != that.id) return false;
-        if (planCount != that.planCount) return false;
-        if (actualFinishCount != that.actualFinishCount) return false;
-        if (finished != that.finished) return false;
-        if (Float.compare(that.finishPercent, finishPercent) != 0) return false;
-        if (idTask != null ? !idTask.equals(that.idTask) : that.idTask != null) return false;
-        if (nameTask != null ? !nameTask.equals(that.nameTask) : that.nameTask != null) return false;
-        if (planDevice != null ? !planDevice.equals(that.planDevice) : that.planDevice != null) return false;
-        if (planStartTime != null ? !planStartTime.equals(that.planStartTime) : that.planStartTime != null)
-            return false;
-        if (planFinishTime != null ? !planFinishTime.equals(that.planFinishTime) : that.planFinishTime != null)
-            return false;
-        if (actualDispatchDevice != null ? !actualDispatchDevice.equals(that.actualDispatchDevice) : that.actualDispatchDevice != null)
-            return false;
-        return currTime != null ? currTime.equals(that.currTime) : that.currTime == null;
+    public Date getActualDispatchTime() {
+        return actualDispatchTime;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (idTask != null ? idTask.hashCode() : 0);
-        result = 31 * result + (nameTask != null ? nameTask.hashCode() : 0);
-        result = 31 * result + (planDevice != null ? planDevice.hashCode() : 0);
-        result = 31 * result + (int) planCount;
-        result = 31 * result + (planStartTime != null ? planStartTime.hashCode() : 0);
-        result = 31 * result + (planFinishTime != null ? planFinishTime.hashCode() : 0);
-        result = 31 * result + (actualDispatchDevice != null ? actualDispatchDevice.hashCode() : 0);
-        result = 31 * result + (int) actualFinishCount;
-        result = 31 * result + (currTime != null ? currTime.hashCode() : 0);
-        result = 31 * result + (finished ? 1 : 0);
-        result = 31 * result + (finishPercent != +0.0f ? Float.floatToIntBits(finishPercent) : 0);
-        return result;
+    public void setActualDispatchTime(Date actualDispatchTime) {
+        this.actualDispatchTime = actualDispatchTime;
+    }
+
+    public Date getActualFinsihTime() {
+        return actualFinsihTime;
+    }
+
+    public void setActualFinsihTime(Date actualFinsihTime) {
+        this.actualFinsihTime = actualFinsihTime;
     }
 }

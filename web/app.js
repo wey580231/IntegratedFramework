@@ -203,6 +203,7 @@ angular.module("IntegratedFramework", [
         service.recoverSnapshot = backUrl + "snapshot/recoverSnapshot.action";
         service.queryRecoverSnapshot = backUrl + "snapshot/queryRecoverSnapshot.action";
 
+
         return service;
     })
     .factory("renderTableService", function () {
@@ -387,4 +388,4 @@ angular.module("IntegratedFramework", [
         };
 
         return service;
-    })
+    });
