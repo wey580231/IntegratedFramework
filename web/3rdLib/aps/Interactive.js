@@ -314,7 +314,6 @@ function LoadView(file) {
     document.getElementById("CloseWindow3").style.display = "none";
     var path = Server + ViewPath + comview1;
 
-    alert(path);
     document.getElementById('ComView1').LoadFile(path);
     document.getElementById("ComView1").style.height = "100%";
     document.getElementById("ComView1").style.width = "100%";

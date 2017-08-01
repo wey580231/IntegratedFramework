@@ -112,10 +112,21 @@ public class ApsTools {
     }
 
     //发布所有订单
-    public int publishOrder() {
+    public int publishOrder(List<String> orderList) {
+
+        StringBuffer buff = new StringBuffer();
+        buff.append("1\n2");
+
+        for (int i = 0; i < orderList.size(); i++) {
+            buff.append("\n");
+            buff.append(orderList.get(i));
+            buff.append("\n");
+            buff.append("001");
+        }
+
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
                 "&" +
-                "BUFFER=001" +
+                "BUFFER=" + buff.toString() +
                 "&" +
                 "REPLY=" + ApsTools.instance().getDispatchOrderAddress() +
                 "&" +

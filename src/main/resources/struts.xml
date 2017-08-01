@@ -146,7 +146,7 @@
         <action name="interactiveAps" class="com.rengu.actions.aps.FeedBackStateAction" method="interactiveAps"/>
         <action name="backupSnapshot" class="com.rengu.actions.aps.FeedBackStateAction" method="backupSnapshot"/>
         <action name="recoverSnapshot" class="com.rengu.actions.aps.FeedBackStateAction" method="recoverSnapshot"/>
-        <action name="dispatchOrder" class="com.rengu.actions.aps.FeedBackStateAction" method="dispatchOrdr"/>
+        <action name="dispatchOrder" class="com.rengu.actions.aps.FeedBackStateAction" method="dispatchOrder"/>
         <action name="updateProgress" class="com.rengu.actions.aps.FeedBackStateAction" method="recvApsResult"/>
 
         <action name="updateApsState" class="com.rengu.actions.aps.FeedBackStateAction" method="recvInterApsState"/>

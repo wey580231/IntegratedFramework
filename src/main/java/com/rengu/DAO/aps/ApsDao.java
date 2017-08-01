@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.entity.RG_SnapshotNodeEntity;
 import com.rengu.util.ApsTools;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
+import com.rengu.util.UserConfigTools;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
@@ -50,6 +52,23 @@ public class ApsDao {
 
         List<RG_ScheduleEntity> list = query.list();
 
+        String currApsSnapshotId = UserConfigTools.getUserConfig("1").getApsCurrSnapshotId();
+
+        String bottomNodeName = "";
+        String middleNodeName = "";
+
+        if (currApsSnapshotId != null && currApsSnapshotId.length() > 0) {
+            RG_SnapshotNodeEntity bottomSnapshot = session.get(RG_SnapshotNodeEntity.class, currApsSnapshotId);
+            if (bottomSnapshot != null) {
+                bottomNodeName = bottomSnapshot.getName();
+
+                RG_SnapshotNodeEntity middleSnapshot = bottomSnapshot.getParent();
+                if (middleSnapshot != null) {
+                    middleNodeName = middleSnapshot.getName();
+                }
+            }
+        }
+
         if (list.size() > 0) {
 
             RG_ScheduleEntity entity = list.get(0);
@@ -66,6 +85,9 @@ public class ApsDao {
             data.put("endCalcTime", Tools.formatToStandardDate(entity.getEndCalcTime()));
             data.put("scheduleWindow", entity.getScheduleWindow());
             data.put("rollTime", entity.getRollTime());
+            data.put("bottomNodeName", bottomNodeName);
+            data.put("middleNodeName", middleNodeName);
+
 
             root.put("data", data);
 
