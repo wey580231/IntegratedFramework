@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         })
     }])
 
-    .controller('AdjustOrderController', function ($scope, $http, myHttpService, serviceList, validate, renderTableService, notification) {
+    .controller('AdjustOrderController', function ($scope, $http,$location, myHttpService, serviceList, validate, renderTableService, notification) {
         layer.load(0);
         //页面初始化是加载的请求
         $(function () {
@@ -39,6 +39,22 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         $scope.renderTable = function ($last) {
             renderTableService.renderTable($last);
         };
+
+        //跳转至交互优化界面
+        $scope.interactiveSchedule = function () {
+            var msg = "是否优化此次排程？";
+            if (confirm(msg) == true) {
+                notification.sendNotification("confirm", "页面跳转中...");
+                setTimeout(function () {
+                    //TODO 待解决path不能直接跳转问题
+                    $location.path('/Interactive');
+                    window.location.href = $location.absUrl();
+                }, 1200);
+            } else {
+
+            }
+        };
+
 
 
         //异常处理
