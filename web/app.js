@@ -199,10 +199,6 @@ angular.module("IntegratedFramework", [
         //获取EvenLog接口
         service.getAllEventLogUrl = backUrl + "eventlog/getAllEventLog.action";
 
-        <!--恢复快照-->
-        service.recoverSnapshot = backUrl + "snapshot/recoverSnapshot.action";
-        service.queryRecoverSnapshot = backUrl + "snapshot/queryRecoverSnapshot.action";
-
         return service;
     })
     .factory("renderTableService", function () {
@@ -387,4 +383,4 @@ angular.module("IntegratedFramework", [
         };
 
         return service;
-    })
+    });

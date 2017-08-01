@@ -24,10 +24,45 @@ angular.module("IntegratedFramework.OnlineOrderController", ['ngRoute'])
             notification.sendNotification("alert", "请求失败");
         });
 
+        //渲染checkBox样式
+        $scope.renderTable = function ($last) {
+            renderTableService.renderTable($last);
+        };
+
+
+        //详情
+        $scope.Detail = function (event) {
+            var e = event || window.event;
+            var target = e.target || e.srcElement;
+            if (target.parentNode.tagName.toLowerCase() == "td") {
+                var rowIndex = target.parentNode.parentNode.rowIndex;
+                //alert(rowIndex);
+                var id = document.getElementById("table_layout").rows[rowIndex].cells[1].innerHTML;
+                //alert(id);
+                var params={};
+                params.id=id;
+                var info=JSON.stringify(params);
+                myHttpService.post(serviceList.getAllPlan,info).then(function successCallback(response) {
+                    $scope.planList = response.data;
+
+                    console.log($scope.planList);
+
+                    if (response.data.result == "ok") {
+                        notification.sendNotification("confirm", "详情请求中...");
+                    } else {
+                        notification.sendNotification("alert", "请求失败");
+                    }
+                }, function errorCallback() {
+                    notification.sendNotification("alert", "请求失败");
+                })
+
+            }
+        };
+
 
         <!--图-->
         // Get context with jQuery - using jQuery's .get() method.
-        var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+        /*var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
         // This will get the first returned node in the jQuery collection.
         var areaChart = new Chart(areaChartCanvas);
 
@@ -157,10 +192,10 @@ angular.module("IntegratedFramework.OnlineOrderController", ['ngRoute'])
         pieChart.Doughnut(PieData, pieOptions);
 
 
-        /*
+        /!*
          * Flot Interactive Chart
          * -----------------------
-         */
+         *!/
         // We use an inline data source in the example, usually data would
         // be fetched from a server
         var data = [], totalPoints = 100;
@@ -244,15 +279,15 @@ angular.module("IntegratedFramework.OnlineOrderController", ['ngRoute'])
             }
             update();
         });
-        /*
+        /!*
          * END INTERACTIVE CHART
-         */
+         *!/
 
 
-        /*
+        /!*
          * LINE CHART
          * ----------
-         */
+         *!/
         //LINE randomly generated data
 
         var sin = [], cos = [];
@@ -315,12 +350,12 @@ angular.module("IntegratedFramework.OnlineOrderController", ['ngRoute'])
             }
 
         });
-        /* END LINE CHART */
+        /!* END LINE CHART *!/
 
-        /*
+        /!*
          * FULL WIDTH STATIC AREA CHART
          * -----------------
-         */
+         *!/
         var areaData = [[2, 88.0], [3, 93.3], [4, 102.0], [5, 108.5], [6, 115.7], [7, 115.6],
             [8, 124.6], [9, 130.3], [10, 134.3], [11, 141.4], [12, 146.5], [13, 151.7], [14, 159.9],
             [15, 165.4], [16, 167.8], [17, 168.7], [18, 169.5], [19, 168.0]];
@@ -343,41 +378,13 @@ angular.module("IntegratedFramework.OnlineOrderController", ['ngRoute'])
             }
         });
 
-        /* END AREA CHART */
+        /!* END AREA CHART *!/
 
-        /*
-         * BAR CHART
-         * ---------
-         */
 
-        var bar_data = {
-            data: [["January", 10], ["February", 8], ["March", 4], ["April", 13], ["May", 17], ["June", 9]],
-            color: "#3c8dbc"
-        };
-        $.plot("#bar-chart", [bar_data], {
-            grid: {
-                borderWidth: 1,
-                borderColor: "#f3f3f3",
-                tickColor: "#f3f3f3"
-            },
-            series: {
-                bars: {
-                    show: true,
-                    barWidth: 0.5,
-                    align: "center"
-                }
-            },
-            xaxis: {
-                mode: "categories",
-                tickLength: 0
-            }
-        });
-        /* END BAR CHART */
-
-        /*
+        /!*
          * DONUT CHART
          * -----------
-         */
+         *!/
 
         var donutData = [
             {label: "Series2", data: 30, color: "#3c8dbc"},
@@ -403,18 +410,18 @@ angular.module("IntegratedFramework.OnlineOrderController", ['ngRoute'])
                 show: false
             }
         });
-        /*
+        /!*
          * END DONUT CHART
-         */
+         *!/
 
-        /*
+        /!*
          * Custom Label formatter
          * ----------------------
-         */
+         *!/
         function labelFormatter(label, series) {
             return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
                 + label
                 + "<br>"
                 + Math.round(series.percent) + "%</div>";
-        }
+        }*/
     });

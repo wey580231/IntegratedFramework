@@ -41,11 +41,7 @@ angular.module("IntegratedFramework.FactoryLayoutController", ['ngRoute'])
                 var info=JSON.stringify(parm);
                 myHttpService.post(serviceList.LayoutDetail,info).then(function successCallback(response) {
                     $scope.layoutDetailList = response.data;
-                    if (response.data.result == "ok") {
-                        notification.sendNotification("confirm", "详情请求中...");
-                    } else {
-                        notification.sendNotification("alert", "请求失败");
-                    }
+
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
