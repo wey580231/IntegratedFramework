@@ -51,6 +51,7 @@
                             <td></td>
                             <th>名称</th>
                             <th>布局详情</th>
+                            <th>图片</th>
                             <th>详情</th>
                         </tr>
                         <tr ng-repeat="layout in factoryLayoutList track by $index" ng-init="renderTable($last)">
@@ -58,6 +59,11 @@
                             <td style="display:none">{{layout.id}}</td>
                             <td>{{layout.name}}</td>
                             <td>{{layout.layoutDesc}}</td>
+                            <td>
+                                <img src="images/layout/{{layout.imgPath}}" title="查看大图"
+                                     style="width:70px;height:70px;cursor:pointer"
+                                     ng-click="showDetail($event)">
+                            </td>
                             <td>
                                 <button type="button" class="btn btn-block btn-sm btn-info" data-toggle="modal"
                                         data-target="#modal-add"  ng-click="Detail($event)">详情
