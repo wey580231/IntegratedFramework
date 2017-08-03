@@ -44,7 +44,7 @@ public class ScheduleAction extends SuperAction {
 
             //获取当前时间
             Date date = new Date();
-            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             rg_scheduleEntity.setScheduleTime(new java.sql.Date(date.getTime()));
             rg_scheduleEntity.setStartCalcTime(date);
             //解析scheduleWindow

@@ -30,7 +30,6 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
             var jsonString = JSON.stringify(adjustOrderByType);
             myHttpService.post(serviceList.getALLAdjustOrderByType, jsonString).then(function (response) {
                 $scope.adjustOrder = response.data;
-                console.log(response.data);
                 hideLoadingPage();
             });
         });

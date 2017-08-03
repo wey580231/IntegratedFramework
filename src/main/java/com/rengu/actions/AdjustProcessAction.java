@@ -40,7 +40,7 @@ public class AdjustProcessAction extends SuperAction {
         rg_adjustProcessEntity.setOriginalResource(rg_planEntity.getResourceByIdResource().getIdR());
         rg_adjustProcessEntity.setAppointResource(rg_planEntity.getResourceByIdResource().getIdR());
         long steam = Tools.stringConvertToDate(rg_planEntity.getT1Task()).getTime() + 60 * 60 * 1000 * 4;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateTime = simpleDateFormat.parse(simpleDateFormat.format(steam));
         rg_adjustProcessEntity.setAppointStartTime(dateTime);
         rg_adjustProcessEntity.setOriginalStartTime(Tools.stringConvertToDate(rg_planEntity.getT1Task()));

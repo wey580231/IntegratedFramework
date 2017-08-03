@@ -328,6 +328,7 @@ public class APSDatabaseSync {
                 rg_processEntity.setModTimeDivision(getShortFromHashMap(tempMap, "MODTIMEDIVISION"));
                 rg_processEntity.setMinResourceDivision(getShortFromHashMap(tempMap, "MINRESOURCEDIVISION"));
                 rg_processEntity.setNbTask(getShortFromHashMap(tempMap, "NBTASK"));
+                rg_processEntity.setTransport(true);
                 rg_processEntity.setProductByIdProduct(DAOFactory.getProductDAOImplInstance().findAllById(getStringFromHashMap(tempMap, "IDPRODUCT")));
                 ProcessDAOImpl processDAO = DAOFactory.getProcessDAOImplInstance();
                 processDAO.save(rg_processEntity);

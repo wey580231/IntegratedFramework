@@ -13,10 +13,7 @@ import org.hibernate.query.Query;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by wey580231 on 2017/6/27.
@@ -329,30 +326,37 @@ public class SnapshotDao {
 
                 if (!parent.getApply() && !snapshot.getApply()) {
 
-                    parent.setApply(true);
-                    parent.setDispatchMesTime(new Date());
-                    snapshot.setApply(true);
-                    snapshot.setDispatchMesTime(new Date());
+                    List<String> orderList = new ArrayList<String>();
 
                     Set<RG_OrderEntity> orders = rootParent.getSchedule().getOrders();
                     Iterator<RG_OrderEntity> iter = orders.iterator();
                     while (iter.hasNext()) {
                         RG_OrderEntity tmpOrder = iter.next();
                         tmpOrder.setState(Byte.parseByte("2"));
+                        orderList.add(tmpOrder.getId());
                         session.update(tmpOrder);
                     }
 
-                    session.update(snapshot);
-                    session.update(parent);
+                    //aps接口
+                    if (ApsTools.instance().publishOrder(orderList) == ApsTools.STARTED) {
+                        parent.setApply(true);
+                        parent.setDispatchMesTime(new Date());
+                        snapshot.setApply(true);
+                        snapshot.setDispatchMesTime(new Date());
 
-                    NativeQuery query = session.createNativeQuery("update rg_userconfig set dispatchMesSnapshotId = ? where idUser = ?");
-                    query.setParameter(1, id);
-                    query.setParameter(2, "1");
-                    if (query.executeUpdate() > 0) {
-                        result = true;
-                        tx.commit();
-                    } else {
-                        tx.rollback();
+                        session.update(snapshot);
+                        session.update(parent);
+
+                        NativeQuery query = session.createNativeQuery("update rg_userconfig set dispatchMesSnapshotId = ? where idUser = ?");
+                        query.setParameter(1, id);
+                        query.setParameter(2, "1");
+                        if (query.executeUpdate() > 0) {
+                            result = true;
+                            tx.commit();
+                        } else {
+                            result = false;
+                            tx.rollback();
+                        }
                     }
                 }
             }
@@ -372,17 +376,17 @@ public class SnapshotDao {
 
         if (ApsTools.instance().recoverSnapshot(id) == ApsTools.STARTED) {
             result = true;
-        }
 
-        return result;
-    }
+            Session session = MySessionFactory.getSessionFactory().openSession();
+            session.beginTransaction();
 
-    //恢复aps的订单
-    public boolean recoverOrder(String s, String id) {
-        boolean result = false;
+            NativeQuery query = session.createNativeQuery("update rg_userconfig set apsCurrSnapshotId = ? where idUser = ?");
+            query.setParameter(1, id);
+            query.setParameter(2, "1");
+            query.executeUpdate();
 
-        if (ApsTools.instance().publishOrder() == ApsTools.STARTED) {
-            result = true;
+            session.getTransaction().commit();
+            session.close();
         }
 
         return result;

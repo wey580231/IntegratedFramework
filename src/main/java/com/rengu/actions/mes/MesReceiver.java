@@ -28,7 +28,7 @@ public class MesReceiver extends Thread {
     private boolean runningFlag = true;
     private BlockingQueue<Message> messages;
 
-    private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private Logger logger = Logger.getLogger(MesReceiver.class.getName());
 

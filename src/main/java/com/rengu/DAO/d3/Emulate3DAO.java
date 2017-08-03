@@ -172,7 +172,7 @@ public class Emulate3DAO {
                     }
                 }
 
-                dataNode.put("id", entity.getId());
+                dataNode.put("id", entity.getName());
                 dataNode.put("name", product.getName());
                 dataNode.put("info", arrayNode);
 
