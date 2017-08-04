@@ -39,6 +39,12 @@
         <property name="actualFinishCount">
             <column name="actualFinishCount" sql-type="tinyint(4)" not-null="false"/>
         </property>
+        <property name="unqualifiedCount">
+            <column name="unqualifiedCount" sql-type="tinyint(4)" not-null="false"/>
+        </property>
+        <property name="qualifiedCount">
+            <column name="qualifiedCount" sql-type="tinyint(4)" not-null="false"/>
+        </property>
         <property name="currTime" type="java.util.Date">
             <column name="currTime" sql-type="datetime" not-null="false"/>
         </property>

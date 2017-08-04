@@ -58,20 +58,29 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
 
         //异常处理
         $scope.exceptionHandling = function (event) {
-            myHttpService.get(serviceList.queryApsState).then(function (response) {
-                if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {
-                        processError(event);
+            layer.confirm('是否处理当前异常?', {
+                btn: ['确定', '取消'] //按钮
+            }, function (index) {
+                layer.load();
+                myHttpService.get(serviceList.queryApsState).then(function (response) {
+                    if (response.data.result == "ok") {
+                        if (response.data.data.state == 0) {
+                            processError(event);
+                        } else {
+                            notification.sendNotification("alert", "APS正在计算中，无法操作");
+                        }
                     } else {
-                        notification.sendNotification("alert", "APS正在计算中，无法操作");
+                        notification.sendNotification("alert", "查询APS状态失败，请重试");
                     }
-                } else {
-                    notification.sendNotification("alert", "查询APS状态失败，请重试");
-                }
+                    hideLoadingPage();
+                });
+                layer.close(index);
+            }, function (index) {
+                layer.close(index);
+                notification.sendNotification("alert", "取消异常处理");
             });
         };
 
-        //处理一样
         function processError(event) {
             var e = event || window.event;
             var target = e.target || e.srcElement;

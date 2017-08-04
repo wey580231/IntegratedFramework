@@ -85,6 +85,21 @@ public class MesSender {
         sendMessage(rootNode.toString());
     }
 
+    //发送计划、订单等消息
+    public void sendData(String messType, ObjectNode dataNode) {
+        rootNode = objMapper.createObjectNode();
+        rootNode.put("FC", messType);
+        rootNode.put("REVICER", messSender);
+        rootNode.put("SENDER", messReciver);
+        rootNode.put("UUID", Tools.getUUID());
+
+        rootNode.put("DATA", dataNode);
+
+        System.out.println(rootNode.toString());
+
+        sendMessage(rootNode.toString());
+    }
+
     public void emulateData(String message) {
         sendMessage(message);
     }

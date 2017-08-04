@@ -303,6 +303,19 @@ public class Tools {
         return df.format(date);
     }
 
+    public static Date parseStandTextDate(String text) {
+        if (text.equals("")) {
+            return null;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            return simpleDateFormat.parse(text);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static Date parseDate(String text) {
         if (text.equals("")) {
             return null;

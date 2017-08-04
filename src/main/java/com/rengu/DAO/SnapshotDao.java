@@ -337,7 +337,7 @@ public class SnapshotDao {
                         session.update(tmpOrder);
                     }
 
-                    //aps接口
+                    //TODO 加入对aps发布订单接口
                     if (ApsTools.instance().publishOrder(orderList) == ApsTools.STARTED) {
                         parent.setApply(true);
                         parent.setDispatchMesTime(new Date());
