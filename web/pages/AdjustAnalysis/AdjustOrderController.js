@@ -75,17 +75,17 @@ angular.module("IntegratedFramework.AdjustOrderController", ['ngRoute'])
         function processError(event) {
             var e = event || window.event;
             var target = e.target || e.srcElement;
-            if (target.parentNode.tagName.toLowerCase() == "td") {
-                var rowIndex = target.parentNode.parentNode.rowIndex;
+            if (target.parentNode.parentNode.tagName.toLowerCase() == "td") {
+                var rowIndex = target.parentNode.parentNode.parentNode.rowIndex;
                 var id = document.getElementById("table_adjust").rows[rowIndex].cells[0].innerHTML;
                 myHttpService.get(serviceList.orderExceptionHandling + "?id=" + id).then(function successCallback(response) {
                     if (response.data.result == "ok") {
                         notification.sendNotification("confirm", "紧急插单处理中...");
                     } else {
-                        notification.sendNotification("alert", "请求失败");
+                        notification.sendNotification("alert", "请求失败！");
                     }
                 }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
+                    notification.sendNotification("alert", "请求失败。。");
                 })
             }
         }

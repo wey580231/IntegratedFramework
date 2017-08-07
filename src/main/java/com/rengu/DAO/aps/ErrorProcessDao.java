@@ -79,6 +79,7 @@ public class ErrorProcessDao {
                 createSnapNode("紧急插单应急优化", "rg_adjustorder", id);
 
                 String lastesScheduleId = UserConfigTools.getLatestSchedule("1");
+                System.out.println(lastesScheduleId + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 if (lastesScheduleId != null && lastesScheduleId.length() > 0) {
                     RG_ScheduleEntity scheduleEntity = session.get(RG_ScheduleEntity.class, lastesScheduleId);
                     if (scheduleEntity != null) {
