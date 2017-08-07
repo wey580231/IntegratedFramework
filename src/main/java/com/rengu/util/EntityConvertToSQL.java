@@ -38,50 +38,56 @@ public class EntityConvertToSQL {
 
     public static String insertSQLForAPS(RG_ResourceEntity rg_resourceEntity) throws SQLException, ClassNotFoundException {
         //拼接IdTypeResource集合
-        String IdTypeResource = "{";
+        StringBuffer idTypeResourceBuff = new StringBuffer();
+
+        idTypeResourceBuff.append("{");
         Iterator<RG_TyperescourceEntity> rg_typerescourceEntityIterator = rg_resourceEntity.getTyperesourcesById().iterator();
         while (rg_typerescourceEntityIterator.hasNext()) {
             RG_TyperescourceEntity rg_typerescourceEntity = rg_typerescourceEntityIterator.next();
             if (rg_typerescourceEntityIterator.hasNext()) {
-                IdTypeResource = IdTypeResource + "\"" + rg_typerescourceEntity.getId() + "\",\"";
+                idTypeResourceBuff.append("\"" + rg_typerescourceEntity.getId() + "\",\"");
             } else {
-                IdTypeResource = IdTypeResource + "\"" + rg_typerescourceEntity.getId() + "\"";
+                idTypeResourceBuff.append("\"" + rg_typerescourceEntity.getId() + "\"");
             }
         }
-        IdTypeResource = IdTypeResource + "}";
+        idTypeResourceBuff.append("}");
         //拼接IdSite集合
-        String IdSite = "{";
+
+        StringBuffer IdSiteBuff = new StringBuffer();
+        IdSiteBuff.append("{");
         Iterator<RG_SiteEntity> rg_siteEntityIterator = rg_resourceEntity.getSitesById().iterator();
         while (rg_siteEntityIterator.hasNext()) {
             RG_SiteEntity rg_siteEntity = rg_siteEntityIterator.next();
             if (rg_siteEntityIterator.hasNext()) {
-                IdSite = IdSite + "\"" + rg_siteEntity.getId() + "\",\"";
+                IdSiteBuff.append("\"" + rg_siteEntity.getId() + "\",\"");
             } else {
-                IdSite = IdSite + "\"" + rg_siteEntity.getId() + "\"";
+                IdSiteBuff.append("\"" + rg_siteEntity.getId() + "\"");
             }
         }
-        IdSite = IdSite + "}";
+        IdSiteBuff.append("}");
 
         //拼接IdShift集合
-        String IdShift = "{";
+        StringBuffer IdShiftBuff = new StringBuffer();
+
+        IdShiftBuff.append("{");
         Iterator<RG_ShiftEntity> rg_shiftEntityIterator = rg_resourceEntity.getShiftsById().iterator();
         while (rg_shiftEntityIterator.hasNext()) {
             RG_ShiftEntity rg_shiftEntity = rg_shiftEntityIterator.next();
             if (rg_shiftEntityIterator.hasNext()) {
-                IdShift = IdShift + "\"" + rg_shiftEntity.getId() + "\",\"";
+                IdShiftBuff.append("\"" + rg_shiftEntity.getId() + "\",\"");
             } else {
-                IdShift = IdShift + "\"" + rg_shiftEntity.getId() + "\"";
+                IdShiftBuff.append("\"" + rg_shiftEntity.getId() + "\"");
             }
         }
-        IdShift = IdShift + "}";
+        IdShiftBuff.append("}");
         String SQLString = "INSERT INTO " + DatabaseInfo.APS_RESOURCE + " (id,name,IdTypeResource,idGroupResource,IdSite,mobility,critical,IdShift,NameShift,RATE,COLOR,STATE,CALENDAR,SLOT,IDICON,IDSITE0,QUANTITY0,SIZEICON,IDCLUB,WEEKEND,MAKESPAN) VALUES ('"
                 + rg_resourceEntity.getIdR() + "','"
                 + rg_resourceEntity.getName() + "','"
-                + IdTypeResource + "','"
+                + idTypeResourceBuff.toString() + "','"
                 + rg_resourceEntity.getGroupresourceByIdGroupResource().getId() + "','"
-                + IdSite + "'," + rg_resourceEntity.getMobility() + ",'"
+                + IdSiteBuff.toString() + "'," + rg_resourceEntity.getMobility() + ",'"
                 + rg_resourceEntity.getCritical() + "','"
-                + IdShift + "','"
+                + IdShiftBuff.toString() + "','"
                 + rg_resourceEntity.getNameShift() + "',"
                 + rg_resourceEntity.getRate() + ",'"
                 + rg_resourceEntity.getColor() + "',"
