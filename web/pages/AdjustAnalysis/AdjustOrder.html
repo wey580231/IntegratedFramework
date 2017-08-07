@@ -64,9 +64,9 @@
                                             <tr ng-repeat="x in adjustOrder" ng-init="renderTable($last)">
                                                 <td style="display:none" id="id">{{x.id}}</td>
                                                 <td id="ord">{{x.ord.name}}</td>
+                                                <td id="origin">{{x.origin}}</td>
                                                 <td>{{x.ord.priority}}</td>
                                                 <td>{{x.ord.quantity}}</td>
-                                                <td id="origin">{{x.origin}}</td>
                                                 <td>
                                                     <span class="label label-danger" ng-if="x.state == 1">未处理</span>
                                                     <span class="label label-primary" ng-if="x.state == 2">APS处理</span>
@@ -137,9 +137,9 @@
                                             <tr ng-repeat="x in adjustOrder" ng-init="renderTable($last)">
                                                 <td style="display:none">{{x.id}}</td>
                                                 <td>{{x.ord.name}}</td>
+                                                <td>{{x.origin}}</td>
                                                 <td>{{x.ord.priority}}</td>
                                                 <td>{{x.ord.quantity}}</td>
-                                                <td>{{x.origin}}</td>
                                                 <td>
                                                     <span class="label label-danger" ng-if="x.state == 1">异常未处理</span>
                                                     <span class="label label-primary" ng-if="x.state == 2">aps处理中</span>

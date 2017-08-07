@@ -17,7 +17,9 @@ public class RG_OrderStateEntity {
     private String actualDispatchDevice;            //实际派工设备
     private Date actualDispatchTime;                //实际派工时间
     private Date actualFinsihTime;                  //实际完工时间
-    private short actualFinishCount;                //实际完工量
+    private short actualFinishCount;                //实际完工量        //(合格+不合格)/计划数  框架计算
+    private short unqualifiedCount;                 //不合格品数量
+    private short qualifiedCount;                   //合格品数量
     private Date currTime;                          //当前时间
     private boolean finished;                       //是否已经完工
     private float finishPercent;                    //计划达成率
@@ -142,5 +144,21 @@ public class RG_OrderStateEntity {
 
     public void setActualFinsihTime(Date actualFinsihTime) {
         this.actualFinsihTime = actualFinsihTime;
+    }
+
+    public short getUnqualifiedCount() {
+        return unqualifiedCount;
+    }
+
+    public void setUnqualifiedCount(short unqualifiedCount) {
+        this.unqualifiedCount = unqualifiedCount;
+    }
+
+    public short getQualifiedCount() {
+        return qualifiedCount;
+    }
+
+    public void setQualifiedCount(short qualifiedCount) {
+        this.qualifiedCount = qualifiedCount;
     }
 }

@@ -303,7 +303,7 @@ public class APSDatabaseSync {
                 rg_processEntity.setIdExclusive(getStringFromHashMap(tempMap, "IDEXCLUSIVE"));
                 rg_processEntity.setIdCoupledResouce(getStringFromHashMap(tempMap, "IDCOUPLEDRESOURCE"));
                 rg_processEntity.setTypeShift(getByteFromHashMap(tempMap, "TYPESHIFT"));
-                rg_processEntity.setIdSwitch(getStringFromHashMap(tempMap, "IDSWITCH"));
+                rg_processEntity.setIdSwitch(getStringFromHashMap(tempMap, "IDPRECSWITCH"));
                 rg_processEntity.setMaxQtyDivision(getShortFromHashMap(tempMap, "MAXQTYDIVISION"));
                 rg_processEntity.setMaxTimeDivision(getShortFromHashMap(tempMap, "MAXTIMEDIVISION"));
                 rg_processEntity.setMaxQtyBatch(getShortFromHashMap(tempMap, "MAXQTYBATCH"));
