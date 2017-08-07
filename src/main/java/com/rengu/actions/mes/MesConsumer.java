@@ -34,7 +34,6 @@ public class MesConsumer extends Thread {
     }
 
     public void run() {
-        ObjectMapper objectMapper = new ObjectMapper();
         while (runningFlag) {
             try {
                 Message mess = messages.take();
@@ -61,8 +60,6 @@ public class MesConsumer extends Thread {
             JsonNode root = Tools.jsonTreeModelParse(message);
 
             String mesType = root.get("FC").asText();               //功能编码
-            String REVICER = root.get("REVICER").asText();          //接收者
-            String SENDER = root.get("SENDER").asText();            //发送者
             String UUID = root.get("UUID").asText();              //接收消息UUID，用于在回复时加入
 
             JsonNode dataNode = root.get("DATA");

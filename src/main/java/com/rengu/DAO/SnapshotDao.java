@@ -87,6 +87,8 @@ public class SnapshotDao {
 
                 Date initialDate = sdf.parse(startPlan.getT1Task());
 
+                int perPlanDelayMinuteTime = 0;         //总体上每道计划偏移时间
+
                 for (int i = 0; i < plans.size(); i++) {
 
                     RG_PlanEntity plan = plans.get(i);
@@ -105,6 +107,13 @@ public class SnapshotDao {
 
                             RG_ProcessAssisantEntity entity = list.get(0);
 
+                            //第一道结果来决定以后的结果时间偏移量
+                            if (i == 0 && entity.getAutoCreatePreviouseProcess() != null && entity.getPreProcessMobility() != null && entity.getAutoCreatePreviouseProcess().equals("Y")) {
+                                int pDelayTime = Integer.parseInt(entity.getpDelayStartTime());
+
+                                perPlanDelayMinuteTime = Integer.parseInt(entity.getPreProcessDistances()) / Integer.parseInt(entity.getPreProcessMobility()) - pDelayTime;
+                            }
+
                             //任务名
                             result.setTask(entity.getTask());
                             //货物名
@@ -115,20 +124,71 @@ public class SnapshotDao {
                             Date startDate = sdf.parse(plan.getT1Task());
                             Date endDate = sdf.parse(plan.getT2Task());
 
+                            int currPlanStartTime = (int) (startDate.getTime() - initialDate.getTime()) / 1000;
+                            int currPlanEndTime = (int) ((endDate.getTime() - initialDate.getTime()) / 1000);
+
                             //开始时间
-                            result.setStartTime((int) (startDate.getTime() - initialDate.getTime()) / 1000);
+                            result.setStartTime(currPlanStartTime + perPlanDelayMinuteTime);
                             //结束时间
-                            result.setEndTime((int) ((endDate.getTime() - initialDate.getTime()) / 1000));
-
+                            result.setEndTime(currPlanEndTime + perPlanDelayMinuteTime);
+                            //设置订单
                             result.setOrderEntity(plan.getOrderByIdOrder());
-
+                            //设置所属快照
                             result.setSnapshotNodeEntity(plan.getSnapShort());
 
                             session.save(result);
 
+                            //Yang 20170804根据APS提供的策略，调整3d车间碰撞问题
+                            if (entity.getAutoCreatePreviouseProcess() != null && entity.getAutoCreatePreviouseProcess().equals("Y")) {
+
+                                String[] taskList = entity.getPreviousProcessTasks().split(",");
+                                String[] distances = entity.getPreProcessDistances().split(",");
+                                String[] mobility = entity.getPreProcessMobility().split(",");
+
+                                if (taskList.length == distances.length) {
+                                    for (int m = 0; m < taskList.length; m++) {
+                                        RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+                                        //任务名
+                                        nextResult.setTask(taskList[m]);
+                                        //货物名
+                                        nextResult.setGoods(entity.getGoods());
+                                        //地点名(若不存在为null)
+                                        if (entity.getPreProcessDistances() != null) {
+                                            String[] sites = entity.getPreProcessDistances().split(",");
+                                            nextResult.setSite(sites[m]);
+                                        } else {
+                                            nextResult.setSite(null);
+                                        }
+
+                                        long lastTime = 2;
+
+                                        int currDis = Integer.parseInt(distances[m]);
+                                        int currPeed = Integer.parseInt(mobility[m]);
+
+                                        if (currDis > 0 && currPeed > 0) {
+                                            lastTime = currDis / currPeed;
+                                        }
+
+                                        int pDelayStartTime = Integer.parseInt(entity.getpDelayStartTime());
+                                        int pAdvanceStartTime = Integer.parseInt(entity.getpAdvanceStartTime());
+
+                                        long stime = currPlanStartTime + pDelayStartTime - lastTime + perPlanDelayMinuteTime;
+
+                                        //开始时间
+                                        nextResult.setStartTime((int) stime);
+                                        //结束时间
+                                        nextResult.setEndTime((int) (stime + lastTime));
+                                        nextResult.setOrderEntity(plan.getOrderByIdOrder());
+
+                                        nextResult.setSnapshotNodeEntity(plan.getSnapShort());
+                                        session.save(nextResult);
+                                    }
+                                }
+                            }
+
                             //Yang 20170725调整对3D车间的结果转换规则
-                            if (entity.getAutoCreateProcess() != null && entity.getNextProcessTask() != null
-                                    && entity.getNextProcessDistnces() != null && entity.getNextProcessMobility() != null && entity.getAutoCreateProcess().equals("Y")) {
+                            if (entity.getAutoCreateNextProcess() != null && entity.getNextProcessTask() != null
+                                    && entity.getNextProcessDistnces() != null && entity.getNextProcessMobility() != null && entity.getAutoCreateNextProcess().equals("Y")) {
 
                                 String[] taskList = entity.getNextProcessTask().split(",");
                                 String[] distances = entity.getNextProcessDistnces().split(",");
@@ -154,12 +214,12 @@ public class SnapshotDao {
                                         if (entity.getNextProcessRefetTime() != null) {
                                             String[] referTime = entity.getNextProcessRefetTime().split(",");
                                             if (referTime[m].toLowerCase().equals("e")) {
-                                                stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
+                                                stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
                                             } else if (referTime[m].toLowerCase().equals("s")) {
-                                                stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1;
+                                                stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
                                             }
                                         } else {
-                                            stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
+                                            stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
                                         }
 
                                         long lastTime = 2;
@@ -238,8 +298,8 @@ public class SnapshotDao {
                                 session.save(result);
 
                                 //Yang 20170725调整对3D车间的结果转换规则
-                                if (entity.getAutoCreateProcess() != null && entity.getNextProcessTask() != null
-                                        && entity.getNextProcessDistnces() != null && entity.getNextProcessMobility() != null && entity.getAutoCreateProcess().equals("Y")) {
+                                if (entity.getAutoCreateNextProcess() != null && entity.getNextProcessTask() != null
+                                        && entity.getNextProcessDistnces() != null && entity.getNextProcessMobility() != null && entity.getAutoCreateNextProcess().equals("Y")) {
 
                                     String[] taskList = entity.getNextProcessTask().split(",");
                                     String[] distances = entity.getNextProcessDistnces().split(",");

@@ -197,8 +197,6 @@ public class State3DAO {
         layout.setId(Tools.getUUID());
         layout.setName(layoutName);
 
-        Set<RG_LayoutDetailEntity> sets = new HashSet<RG_LayoutDetailEntity>();
-
         for (int i = 0; i < arr.length; i++) {
             arr[i].setId(Tools.getUUID());
             arr[i].setLayout(layout);

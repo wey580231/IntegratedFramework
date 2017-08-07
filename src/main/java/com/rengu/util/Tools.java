@@ -28,6 +28,8 @@ import java.util.Date;
 public class Tools {
     static Properties properties = null;
 
+    private static String flag = "hha";
+
     public static <T> T jsonConvertToEntity(String jsonString, Class<T> classType) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -58,12 +60,12 @@ public class Tools {
         PrintWriter printWriter = null;
         try {
             printWriter = httpServletResponse.getWriter();
+            printWriter.println(string);
+            printWriter.flush();
+            printWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        printWriter.println(string);
-        printWriter.flush();
-        printWriter.close();
     }
 
     public static String getHttpRequestBody(HttpServletRequest httpServletRequest) {
@@ -72,9 +74,11 @@ public class Tools {
             httpServletRequest.setCharacterEncoding("UTF-8");
             BufferedReader bufferedReader = httpServletRequest.getReader();
             String tempString;
+            StringBuffer buf = new StringBuffer();
             while ((tempString = bufferedReader.readLine()) != null) {
-                httpRequestBodyString = httpRequestBodyString + tempString;
+                buf.append(tempString);
             }
+            httpRequestBodyString = buf.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,15 +86,27 @@ public class Tools {
     }
 
     public static Properties getDatabaseProperties() {
-        if (properties == null) {
-            properties = new Properties();
-            try {
-                InputStream inputStream = Tools.class.getResourceAsStream("/Database.properties");
-                properties.load(inputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
+        synchronized (flag) {
+            if (properties == null) {
+                InputStream inputStream = null;
+                properties = new Properties();
+                try {
+                    inputStream = Tools.class.getResourceAsStream("/Database.properties");
+                    properties.load(inputStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (inputStream != null) {
+                        try {
+                            inputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         }
+
         return properties;
     }
 
