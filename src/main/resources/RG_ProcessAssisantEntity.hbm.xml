@@ -22,13 +22,6 @@
             <column name="goods" sql-type="varchar(255)" not-null="false"/>
         </property>
 
-        <property name="multiNextProcessPlan">
-            <column name="multiNextProcessPlan" sql-type="varchar(255)" not-null="false"/>
-        </property>
-        <property name="mutiPlanFlag">
-            <column name="mutiPlanFlag" sql-type="varchar(255)" not-null="false"/>
-        </property>
-
         <property name="autoCreatePreviouseProcess">
             <column name="autoCreatePreviouseProcess" sql-type="varchar(255)" not-null="false"/>
         </property>

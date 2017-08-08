@@ -12,9 +12,6 @@ public class RG_ProcessAssisantEntity {
     private String task;                            //任务信息
     private String goods;                           //货物
 
-    private String multiNextProcessPlan;            //下一步工序是否存在多种方案，当存在多种方案时，需要根据方案的标识来判断，
-    private String mutiPlanFlag;                    //多种方案的标识
-
     private String autoCreatePreviouseProcess;      //是否需要创建前道工序
     private String previousProcessTasks;            //前道工序
     private String preProcessDistances;             //前道工序的距离集合
@@ -71,22 +68,6 @@ public class RG_ProcessAssisantEntity {
 
     public void setGoods(String goods) {
         this.goods = goods;
-    }
-
-    public String getMultiNextProcessPlan() {
-        return multiNextProcessPlan;
-    }
-
-    public void setMultiNextProcessPlan(String multiNextProcessPlan) {
-        this.multiNextProcessPlan = multiNextProcessPlan;
-    }
-
-    public String getMutiPlanFlag() {
-        return mutiPlanFlag;
-    }
-
-    public void setMutiPlanFlag(String mutiPlanFlag) {
-        this.mutiPlanFlag = mutiPlanFlag;
     }
 
     public String getAutoCreatePreviouseProcess() {
