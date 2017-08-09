@@ -1,6 +1,5 @@
 package com.rengu.actions;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -30,7 +29,6 @@ public class SnapshotAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean opresult = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 1) {
             String[] ids = (String[]) parameterMap.get("id");
@@ -52,7 +50,6 @@ public class SnapshotAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean opresult = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 1) {
             String[] ids = (String[]) parameterMap.get("id");
@@ -74,7 +71,6 @@ public class SnapshotAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean opresult = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 1) {
             String[] ids = (String[]) parameterMap.get("id");
@@ -96,7 +92,6 @@ public class SnapshotAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean opresult = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 1) {
             String[] ids = (String[]) parameterMap.get("id");
@@ -120,7 +115,6 @@ public class SnapshotAction extends SuperAction {
         if (rg_snapshotNodeEntityList.size() > 0) {
             //生成根节点树
             JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
-            JsonFactory jsonFactory = new JsonFactory();
             //根节点
             ArrayNode arrayNode = jsonNodeFactory.arrayNode();
             for (RG_SnapshotNodeEntity rg_snapshotNodeEntity : rg_snapshotNodeEntityList) {

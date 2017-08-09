@@ -33,7 +33,7 @@ public class MesReceiver extends Thread {
     private Logger logger = Logger.getLogger(MesReceiver.class.getName());
 
     public MesReceiver(BlockingQueue<Message> messages) throws JMSException, ConnectException {
-
+        this.setName("MesReceiver");
         this.messages = messages;
 
         connectionFactory = new ActiveMQConnectionFactory(
@@ -54,7 +54,7 @@ public class MesReceiver extends Thread {
             Tools.showLog();
             while (runningFlag) {
                 //设置接收者接收消息的时间，为了便于测试，这里谁定为100s
-                TextMessage message = (TextMessage) consumer.receive(100000);
+                TextMessage message = (TextMessage) consumer.receive();
                 if (null != message) {
                     logger.info(sf.format(new Date())+"  Recv:" + message.getText());
                     messages.put(message);

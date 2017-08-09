@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
+import javax.tools.Tool;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -29,11 +30,11 @@ public class MesConsumer extends Thread {
     private boolean runningFlag = false;
 
     public MesConsumer(BlockingQueue<Message> messages) {
+        this.setName("MesConsumer");
         this.messages = messages;
     }
 
     public void run() {
-        ObjectMapper objectMapper = new ObjectMapper();
         while (runningFlag) {
             try {
                 Message mess = messages.take();
@@ -55,13 +56,11 @@ public class MesConsumer extends Thread {
     //信息解析
     private void parseMessage(String message) {
         try {
-            JsonNode root = Tools.jsonTreeModelParse(message);
-
             System.out.println("接受到消息+:" + message);
 
+            JsonNode root = Tools.jsonTreeModelParse(message);
+
             String mesType = root.get("FC").asText();               //功能编码
-            String REVICER = root.get("REVICER").asText();          //接收者
-            String SENDER = root.get("SENDER").asText();            //发送者
             String UUID = root.get("UUID").asText();              //接收消息UUID，用于在回复时加入
 
             JsonNode dataNode = root.get("DATA");
@@ -69,7 +68,7 @@ public class MesConsumer extends Thread {
             Session session = MySessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
 
-            //产品
+            //【已调】产品
             if (mesType.equals(MessTable.MES_PRODUCT)) {
 
                 RG_ProductEntity product = null;
@@ -88,7 +87,7 @@ public class MesConsumer extends Thread {
 
                 session.saveOrUpdate(product);
             }
-            //资源
+            //【已调】资源
             else if (mesType.equals(MessTable.MES_RESOURCE)) {
                 RG_ResourceEntity resource = null;
 
@@ -104,130 +103,161 @@ public class MesConsumer extends Thread {
 
                 session.saveOrUpdate(resource);
             }
-            //地点
+            //【已调】地点
             else if (mesType.equals(MessTable.MES_SITE)) {
-                RG_SiteEntity site = null;
+                if (dataNode.isArray()) {
+                    for (int i = 0; i < dataNode.size(); i++) {
+                        JsonNode subNode = dataNode.get(i);
+                        RG_SiteEntity site = null;
 
-                site = session.get(RG_SiteEntity.class, dataNode.get("id").asText());
+                        site = session.get(RG_SiteEntity.class, subNode.get("id").asText());
 
-                if (site == null) {
-                    site = new RG_SiteEntity();
+                        if (site == null) {
+                            site = new RG_SiteEntity();
+                        }
+
+                        site.setId(subNode.get("id").asText());
+                        site.setName(subNode.get("name").asText());
+                        site.setX((short) subNode.get("x").asInt());
+                        site.setY((short) subNode.get("y").asInt());
+                        site.setCapacity((short) subNode.get("capacity").asInt());
+
+                        session.saveOrUpdate(site);
+                    }
                 }
-
-                site.setId(dataNode.get("id").asText());
-                site.setName(dataNode.get("name").asText());
-                site.setX((short) dataNode.get("x").asInt());
-                site.setY((short) dataNode.get("y").asInt());
-                site.setCapacity((short) dataNode.get("capacity").asInt());
-
-                session.saveOrUpdate(site);
             }
-            //地点距离
+            //【已调】地点距离
             else if (mesType.equals(MessTable.MES_SITE_DISTANCE)) {
-                RG_SiteEntity site1 = (RG_SiteEntity) session.get(dataNode.get("idSite1").asText(), RG_SiteEntity.class);
-                RG_SiteEntity site2 = (RG_SiteEntity) session.get(dataNode.get("idSite2").asText(), RG_SiteEntity.class);
+                if (dataNode.isArray()) {
+                    for (int i = 0; i < dataNode.size(); i++) {
+                        JsonNode subNode = dataNode.get(i);
 
-                if (site1 != null && site2 != null) {
-                    RG_DistanceEntity distance = new RG_DistanceEntity();
-                    distance.setStartSite(site1);
-                    distance.setEndSite(site2);
-                    distance.setDistance(dataNode.get("distance").asInt());
+                        System.out.println(subNode.get("idSite1").asText() + "__" + subNode.get("idSite2").asText() + "__" + subNode.get("distance").asInt());
 
-                    session.save(distance);
+                        RG_SiteEntity site1 = (RG_SiteEntity) session.get(RG_SiteEntity.class, subNode.get("idSite1").asText());
+                        RG_SiteEntity site2 = (RG_SiteEntity) session.get(RG_SiteEntity.class, subNode.get("idSite2").asText());
+
+                        if (site1 != null && site2 != null) {
+                            RG_DistanceEntity distance = new RG_DistanceEntity();
+                            distance.setId(Tools.getUUID());
+                            distance.setStartSite(site1);
+                            distance.setEndSite(site2);
+                            distance.setDistance(subNode.get("distance").asInt());
+
+                            session.saveOrUpdate(distance);
+                        }
+                    }
                 }
             }
             //监控信息
-            else if (mesType.equals("")) {
+            else if (mesType.equals(MessTable.MES_REAL_INFO)) {
                 String type = dataNode.get("type").asText();
 
-                String id = dataNode.get("id").asText();
-                String name = dataNode.get("name").asText();
-                String stock = dataNode.get("stock").asText();
-                String totalPlace = dataNode.get("totalPlace").asText();
-                String freePlace = dataNode.get("freePlace").asText();
-                String state = dataNode.get("state").asText();
-                String jobDesc = dataNode.get("jobDesc").asText();
-                String idOrder = dataNode.get("idOrder").asText();
-                String remainPower = dataNode.get("remainPower").asText();
-
-                //立体仓库信息
+                //【已调】立体仓库信息
+                //TODO 仓库信息中含有多个货物，修改保存的方式
                 if (type.equals(MessTable.MES_DEPORT_INFO)) {
-                    RG_Mes_DeportInfo deportInfo = new RG_Mes_DeportInfo();
+                    JsonNode subDataNode = dataNode.get("data");
+                    if (subDataNode.isArray()) {
+                        for (int i = 0; i < subDataNode.size(); i++) {
+                            JsonNode realData = subDataNode.get(i);
 
-                    deportInfo.setDeportId(id);
-                    deportInfo.setDeportName(name);
-                    deportInfo.setStock(Integer.parseInt(stock));
-                    deportInfo.setTotalPlace(Integer.parseInt(totalPlace));
-                    deportInfo.setFreePlace(Integer.parseInt(freePlace));
-                    deportInfo.setReportTime(new Date());
+                            RG_Mes_DeportInfo deportInfo = new RG_Mes_DeportInfo();
 
-                    session.save(deportInfo);
+                            if (realData.get("name") != null && realData.get("name").isArray()) {
+                                JsonNode nameNode = realData.get("name");
+                                for (int j = 0; j < nameNode.size(); j++) {
+                                    System.out.println("name___" + nameNode.get(j));
+                                }
+                            }
+
+                            if (realData.get("productId") != null && realData.get("productId").isArray()) {
+                                JsonNode product = realData.get("productId");
+                                for (int j = 0; j < product.size(); j++) {
+                                    System.out.println("product____" + product.get(j));
+                                }
+                            }
+
+                            deportInfo.setDeportId(realData.get("id").asText());
+//                            deportInfo.setDeportName(subDataNode.get("name").asText());
+//                            deportInfo.setStock(Integer.parseInt(subDataNode.get("stock").asText()));
+//                            deportInfo.setTotalPlace(Integer.parseInt(subDataNode.get("totalPlace").asText()));
+//                            deportInfo.setFreePlace(Integer.parseInt(subDataNode.get("freePlace").asText()));
+                            deportInfo.setReportTime(new Date());
+//
+//                            session.save(deportInfo);
+                        }
+                    }
                 }
                 //仓库搬运机器人信息
                 else if (type.equals(MessTable.MES_CARRY_INFO)) {
                     RG_Mes_CarryInfo carryInfo = new RG_Mes_CarryInfo();
 
-                    carryInfo.setAgvId(id);
-                    carryInfo.setState(Boolean.parseBoolean(state));
-                    carryInfo.setJobDesc(jobDesc);
-                    carryInfo.setIdOrder(idOrder);
+                    carryInfo.setAgvId(dataNode.get("id").asText());
+                    carryInfo.setState(dataNode.get("state").asBoolean());
+                    carryInfo.setJobDesc(dataNode.get("jobDesc").asText());
+                    carryInfo.setIdOrder(dataNode.get("idOrder").asText());
                     carryInfo.setReportTime(new Date());
 
                     session.save(carryInfo);
                 }
-                //AGV信息
+                //【已调】AGV信息
                 else if (type.equals(MessTable.MES_AGV_INFO)) {
+                    JsonNode subDataNode = dataNode.get("data");
+
                     RG_Mes_AgvInfo agvInfo = new RG_Mes_AgvInfo();
 
-                    agvInfo.setAgvId(id);
-                    agvInfo.setState(Boolean.parseBoolean(state));
-                    agvInfo.setGoodsDesc(jobDesc);
-                    agvInfo.setIdOrder(idOrder);
-                    agvInfo.setRemainPower(Float.parseFloat(remainPower));
+                    agvInfo.setAgvId(subDataNode.get("id").asText());
+                    agvInfo.setState(subDataNode.get("state").asBoolean());
+                    agvInfo.setGoodsDesc(subDataNode.get("jobDesc").asText());
+                    agvInfo.setIdOrder(subDataNode.get("idOrder").asText());
+                    agvInfo.setRemainPower(Float.parseFloat(subDataNode.get("remainPower").asText()));
                     agvInfo.setReportTime(new Date());
+                    agvInfo.setSite(subDataNode.get("site").asText());
 
                     session.save(agvInfo);
                 }
-                //装配线搬运机器人信息
+                //【已调】装配线搬运机器人信息
                 else if (type.equals(MessTable.MES_ASSEMBLYCARRY_INFO)) {
                     RG_Mes_AssemblyCarryInfo carryInfo = new RG_Mes_AssemblyCarryInfo();
 
-                    carryInfo.setCarryId(id);
-                    carryInfo.setState(Boolean.parseBoolean(state));
-                    carryInfo.setJobDesc(jobDesc);
-                    carryInfo.setIdOrder(idOrder);
+                    carryInfo.setCarryId(dataNode.get("id").asText());
+                    carryInfo.setState(Boolean.parseBoolean(dataNode.get("state").asText()));
+                    carryInfo.setJobDesc(dataNode.get("jobDesc").asText());
+                    carryInfo.setIdOrder(dataNode.get("idOrder").asText());
                     carryInfo.setReportTime(new Date());
 
                     session.save(carryInfo);
                 }
-                //智能装配中心信息
+                //【已调】智能装配中心信息
                 else if (type.equals(MessTable.MES_ASSEMBLYCENTER_INFO)) {
                     RG_Mes_AssemblyCenterInfo centerInfo = new RG_Mes_AssemblyCenterInfo();
 
-                    centerInfo.setCarryId(id);
-                    centerInfo.setState(Boolean.parseBoolean(state));
-                    centerInfo.setJobDesc(jobDesc);
-                    centerInfo.setIdOrder(idOrder);
+                    centerInfo.setCarryId(dataNode.get("id").asText());
+                    centerInfo.setState(Boolean.parseBoolean(dataNode.get("state").asText()));
+                    centerInfo.setJobDesc(dataNode.get("jobDesc").asText());
+                    centerInfo.setIdOrder(dataNode.get("idOrder").asText());
                     centerInfo.setReportTime(new Date());
 
                     session.save(centerInfo);
                 }
             }
-            //设备状态信息
+            //【已调】设备状态信息
             else if (mesType.equals(MessTable.MES_DEVICESTATE_INFO)) {
+
                 RG_ResourceStateEntity stateEntity = new RG_ResourceStateEntity();
+                stateEntity.setId(Tools.getUUID());
                 stateEntity.setResourceName(dataNode.get("resourceName").asText());
                 stateEntity.setManufacturer(dataNode.get("manufacturer").asText());
                 stateEntity.setIdTask(dataNode.get("idTask").asText());
-                stateEntity.setIdProcess((short) dataNode.get("idProces").asInt());
+                stateEntity.setIdProcess(Short.parseShort(dataNode.get("idProcess").asText()));
                 stateEntity.setIdProduct(dataNode.get("idProduct").asText());
                 stateEntity.setProductName(dataNode.get("productName").asText());
-                stateEntity.setT1Task(Tools.parseDate(dataNode.get("t1PlanTask").asText()));
-                stateEntity.setT2Task(Tools.parseDate(dataNode.get("t2PlanTask").asText()));
+                stateEntity.setT1Task(Tools.parseStandTextDate(dataNode.get("t1PlanTask").asText()));
+                stateEntity.setT2Task(Tools.parseStandTextDate(dataNode.get("t2PlanTask").asText()));
                 stateEntity.setCurrTime(new Date());
-                stateEntity.setT1RealTask(Tools.parseDate(dataNode.get("t1RealTask").asText()));
-                stateEntity.setT2RealTask(Tools.parseDate(dataNode.get("t2RealTask").asText()));
-                stateEntity.setState((short) dataNode.get("state").asInt());
+                stateEntity.setT1RealTask(Tools.parseStandTextDate(dataNode.get("t1RealTask").asText()));
+                stateEntity.setT2RealTask(Tools.parseStandTextDate(dataNode.get("t2RealTask").asText()));
+                stateEntity.setState(Short.parseShort(dataNode.get("state").asText()));
 
                 session.save(stateEntity);
             }
@@ -236,36 +266,53 @@ public class MesConsumer extends Thread {
 
                 String idOrder = dataNode.get("idOrder").asText();
 
-                RG_OrderEntity orderEntity = session.get(RG_OrderEntity.class, idOrder);
+//                RG_OrderEntity orderEntity = session.get(RG_OrderEntity.class, idOrder);
 
-                if (orderEntity != null) {
-                    String completeNum = dataNode.get("completeNum").asText();
+//                if (orderEntity != null) {
+                String completeNum = dataNode.get("completeNum").asText();
 
-                    RG_OrderStateEntity orderState = new RG_OrderStateEntity();
-                    orderState.setIdTask(dataNode.get("idTask").asText());
-                    orderState.setNameTask(dataNode.get("nameTask").asText());
-                    orderState.setPlanDevice(dataNode.get("planDevice").asText());
-                    orderState.setPlanCount(Short.parseShort(dataNode.get("planCount").asText()));
+                RG_OrderStateEntity orderState = new RG_OrderStateEntity();
+                orderState.setIdTask(dataNode.get("idTask").asText());
+                orderState.setNameTask(dataNode.get("nameTask").asText());
+                orderState.setPlanDevice(dataNode.get("planDevice").asText());
+                orderState.setPlanCount(Short.parseShort(dataNode.get("planCount").asText()));
 
-                    orderState.setActualDispatchTime(Tools.parseDate((dataNode.get("realExcuteTime").asText())));
-                    orderState.setActualFinsihTime(Tools.parseDate((dataNode.get("realFinishTime").asText())));
-                    orderState.setActualDispatchDevice((dataNode.get("realDispatchDevice").asText()));
-                    //TODO 计划完工量格式不对
-                    orderState.setActualFinishCount((short) 1);
-                    orderState.setCurrTime(new Date());
-                    orderState.setFinished(Boolean.parseBoolean(dataNode.get("isCompleted").asText()));
-                    orderState.setFinishPercent(Float.parseFloat(dataNode.get("planCompletionRate").asText()));
+                orderState.setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
+                orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
+                orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").asText());
 
-                    session.save(orderState);
-                }
+                //TODO 计划完工量格式不对，框架需要转换((合格+不合格)/计划数)
+                orderState.setActualFinishCount((short) 1);
+                orderState.setUnqualifiedCount(Short.parseShort(dataNode.get("unqualifiedCount").asText()));
+                orderState.setQualifiedCount(Short.parseShort(dataNode.get("qualifiedCount").asText()));
+                orderState.setCurrTime(new Date());
+                orderState.setFinished(Boolean.parseBoolean(dataNode.get("isCompleted").asText()));
+                orderState.setFinishPercent(Float.parseFloat(dataNode.get("planCompletionRate").asText()));
+
+                session.save(orderState);
+//                }
             }
-            //工序指令信息
+            //【已调】工序指令信息
             else if (mesType.equals(MessTable.MES_INSTRUCT_INFO)) {
-
+                RG_RealDataEntity data = new RG_RealDataEntity();
+                data.setIdResource(dataNode.get("idResource").asText());
+                data.setState(dataNode.get("state").asText());
+                data.setGood(dataNode.get("good").asText());
+                data.setStartLocation(dataNode.get("startLocation").asText());
+                data.setEndLocation(dataNode.get("endLocation").asText());
+                data.setValueType(dataNode.get("valueType").asText());
+                data.setValue(dataNode.get("value").asText());
+                session.save(data);
             }
-            //设备调整
+            //【已调】设备调整
             else if (mesType.equals(MessTable.MES_ADJUSTDEVICE_INFO)) {
+                String idOrder = dataNode.get("idOrder").asText();
+                Date reportTime = Tools.parseStandTextDate(dataNode.get("reportTime").asText());
+                String idResource = dataNode.get("idResource").asText();
+                Boolean enable = dataNode.get("enable").asBoolean();
 
+                //TODO 待记录并产生异常信息
+                System.out.println(idOrder + "__" + reportTime + "__" + idResource + "__" + enable);
             }
 
             //接收MES确认消息后，发送确认消息

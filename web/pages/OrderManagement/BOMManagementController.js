@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             controller: 'BOMManagementController'
         })
     }])
-    .controller('BOMManagementController', function ($scope, $http, myHttpService, serviceList) {
+    .controller('BOMManagementController', function ($scope, $http, myHttpService, serviceList, notification) {
 
         layer.load(0);
 
@@ -97,7 +97,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                                     } else {
                                         middleNode.icon = "../../images/bom_img/errorNode.png";
                                     }
-                                }else{
+                                } else {
                                     if (middleNode.transport == 0) {
                                         middleNode.icon = "../../images/bom_img/transport.png";
                                     } else if (middleNode.transport == 1) {
@@ -163,6 +163,29 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
 
             document.getElementById("treeDemo").style.display = "";
         }
+
+        //更新BOM
+        $scope.updateBOM = function () {
+            layer.confirm('是否更新当前BOM信息?', {
+                btn: ['确定', '取消'] //按钮
+            }, function (index) {
+                layer.close(index);
+                notification.sendNotification("confirm", "已更新");
+            }, function (index) {
+                layer.close(index);
+                notification.sendNotification("alert", "已取消更新");
+            });
+        };
+
+        //属性设置
+        $scope.propertySetting = function () {
+
+        };
+
+        //辅助工艺
+        $scope.assisantProcess = function () {
+
+        };
 
         /*        //DAG图
          var workers = {

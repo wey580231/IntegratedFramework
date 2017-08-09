@@ -68,7 +68,7 @@ public class ErrorProcessDao {
         if (list.size() == 1 && list.get(0) instanceof RG_AdjustOrderEntity) {
             RG_AdjustOrderEntity entity = (RG_AdjustOrderEntity) list.get(0);
 
-            entity.getOrd().getProductByIdProduct();
+            RG_ProductEntity product = entity.getOrd().getProductByIdProduct();
 
             result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustOrderHandlingURL(entity));
 
@@ -87,7 +87,6 @@ public class ErrorProcessDao {
                         session.update(scheduleEntity);
                     }
                 }
-
                 session.update(entity);
             }
         }

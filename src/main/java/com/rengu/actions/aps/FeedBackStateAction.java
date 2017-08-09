@@ -21,8 +21,7 @@ import java.util.*;
  */
 public class FeedBackStateAction extends SuperAction {
 
-    private final String APS_RESULT_SUCCESS = "1";         //APS计算成功结果标识
-    private final String APS_RESULT_FAIL = "0";            //APS计算失败结果标识
+    private static final String APS_RESULT_SUCCESS = "1";         //APS计算成功结果标识
 
     private ApsDao apsDao = new ApsDao();
 
@@ -32,7 +31,6 @@ public class FeedBackStateAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean result = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 3) {
             String[] id = (String[]) parameterMap.get("id");
@@ -79,7 +77,6 @@ public class FeedBackStateAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean result = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 3) {
             String[] id = (String[]) parameterMap.get("id");
@@ -89,8 +86,12 @@ public class FeedBackStateAction extends SuperAction {
             System.out.println("=============收到备份快照回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
-                Session session = MySessionFactory.getSessionFactory().openSession();
-                session.beginTransaction();
+                Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+
+                if (!session.getTransaction().isActive()) {
+                    session.beginTransaction();
+                }
+
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
                 String bottomId = userconfig.getBottomSnapshotId();
@@ -110,7 +111,6 @@ public class FeedBackStateAction extends SuperAction {
                     }
                 }
                 session.getTransaction().commit();
-                session.close();
             }
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算出错!", "alert"));
@@ -124,7 +124,6 @@ public class FeedBackStateAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean result = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 3) {
             String[] id = (String[]) parameterMap.get("id");
@@ -135,8 +134,10 @@ public class FeedBackStateAction extends SuperAction {
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
-                Session session = MySessionFactory.getSessionFactory().openSession();
-                session.beginTransaction();
+                Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+                if(!session.getTransaction().isActive()){
+                    session.beginTransaction();
+                }
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
                 String bottomSnapshotId = userconfig.getApsCurrSnapshotId();
@@ -160,7 +161,6 @@ public class FeedBackStateAction extends SuperAction {
                     }
                 }
                 session.getTransaction().commit();
-                session.close();
             }
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算出错!", "alert"));
@@ -181,7 +181,6 @@ public class FeedBackStateAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean result = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 3) {
             String[] id = (String[]) parameterMap.get("id");
@@ -199,7 +198,10 @@ public class FeedBackStateAction extends SuperAction {
                 String dispatchMesId = userconfig.getDispatchMesSnapshotId();
                 if (dispatchMesId != null) {
                     RG_SnapshotNodeEntity bottomSnapShot = session.get(RG_SnapshotNodeEntity.class, dispatchMesId);
-                    RG_SnapshotNodeEntity middleSnapShot = bottomSnapShot.getParent();
+                    RG_SnapshotNodeEntity middleSnapShot = null;
+                    if (bottomSnapShot != null) {
+                        middleSnapShot = bottomSnapShot.getParent();
+                    }
 
                     if (bottomSnapShot != null && middleSnapShot != null) {
                         if (state[0].equals(APS_RESULT_SUCCESS)) {
@@ -230,7 +232,6 @@ public class FeedBackStateAction extends SuperAction {
         Map<String, Object> parameterMap = context.getParameters();
 
         boolean result = false;
-        StringBuilder jsonString = new StringBuilder();
 
         if (parameterMap.size() == 3) {
             String[] id = (String[]) parameterMap.get("id");
@@ -434,7 +435,7 @@ public class FeedBackStateAction extends SuperAction {
     private void setOrdersState(String state, RG_ScheduleEntity rg_scheduleEntity) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Set<RG_OrderEntity> rg_orderEntitySet = rg_scheduleEntity.getOrders();
-        if (rg_orderEntitySet.size() >= 0) {
+        if (rg_orderEntitySet.size() > 0) {
             for (RG_OrderEntity orderEntity : rg_orderEntitySet) {
                 if (orderEntity.getState() != Byte.parseByte("2")) {
                     orderEntity.setState(Byte.parseByte(state));
