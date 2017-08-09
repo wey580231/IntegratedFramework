@@ -3,10 +3,7 @@ package com.rengu.actions.mes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rengu.entity.*;
-import com.rengu.util.ApsTools;
-import com.rengu.util.MessTable;
-import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
+import com.rengu.util.*;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.Session;
 
@@ -294,15 +291,17 @@ public class MesConsumer extends Thread {
             }
             //【已调】工序指令信息
             else if (mesType.equals(MessTable.MES_INSTRUCT_INFO)) {
-                RG_RealDataEntity data = new RG_RealDataEntity();
-                data.setIdResource(dataNode.get("idResource").asText());
-                data.setState(dataNode.get("state").asText());
-                data.setGood(dataNode.get("good").asText());
-                data.setStartLocation(dataNode.get("startLocation").asText());
-                data.setEndLocation(dataNode.get("endLocation").asText());
-                data.setValueType(dataNode.get("valueType").asText());
-                data.setValue(dataNode.get("value").asText());
-                session.save(data);
+//                RG_RealDataEntity data = new RG_RealDataEntity();
+//                data.setIdResource(dataNode.get("idResource").asText());
+//                data.setState(dataNode.get("state").asText());
+//                data.setGood(dataNode.get("good").asText());
+//                data.setStartLocation(dataNode.get("startLocation").asText());
+//                data.setEndLocation(dataNode.get("endLocation").asText());
+//                data.setValueType(dataNode.get("valueType").asText());
+//                data.setValue(dataNode.get("value").asText());
+//                session.save(data);
+
+                WebSocketNotification.broadcast(Tools.creat3DMessage("接收到新的控制指令!"));
             }
             //【已调】设备调整
             else if (mesType.equals(MessTable.MES_ADJUSTDEVICE_INFO)) {

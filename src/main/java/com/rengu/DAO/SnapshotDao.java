@@ -9,8 +9,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
-import java.lang.annotation.Native;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -19,6 +17,19 @@ import java.util.*;
  * Created by wey580231 on 2017/6/27.
  */
 public class SnapshotDao {
+
+    //Yang 20170809 aps地点与3d车间机器人停靠点转换关系
+    private static Map<String,String> distanceMap = new HashMap<String,String>();
+    static{
+        distanceMap.put("ZNZP","ZNZPPT_01");
+        distanceMap.put("RJXZ","RJXZPT_01");
+        distanceMap.put("TKD-L","AGV_L");
+        distanceMap.put("TKD-R","AGV_R");
+        distanceMap.put("CCJDJC","AGV_R");
+        distanceMap.put("XBC","XBC");
+        distanceMap.put("MTJDJC","OnlineTest");
+        distanceMap.put("ZHDXNJC","AssembleAccuracyTest");
+    }
 
     //将所有订单一起转换
     public boolean switchToEmulateData(String userId, String id) {
@@ -317,7 +328,7 @@ public class SnapshotDao {
                     //货物名
                     nextResult.setGoods("");
                     //地点名
-                    nextResult.setSite(endSite);
+                    nextResult.setSite(distanceMap.get(endSite));
 
                     Date startDate = sdf.parse(robotPlan.get(i).getT2Task());
                     Date endDate = sdf.parse(robotPlan.get(i + 1).getT1Task());
