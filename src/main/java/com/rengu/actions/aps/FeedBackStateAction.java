@@ -87,7 +87,11 @@ public class FeedBackStateAction extends SuperAction {
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-                session.beginTransaction();
+
+                if (!session.getTransaction().isActive()) {
+                    session.beginTransaction();
+                }
+
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
                 String bottomId = userconfig.getBottomSnapshotId();
@@ -131,7 +135,9 @@ public class FeedBackStateAction extends SuperAction {
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-                session.beginTransaction();
+                if(!session.getTransaction().isActive()){
+                    session.beginTransaction();
+                }
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
                 String bottomSnapshotId = userconfig.getApsCurrSnapshotId();

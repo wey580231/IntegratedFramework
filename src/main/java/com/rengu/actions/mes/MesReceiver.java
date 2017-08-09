@@ -33,7 +33,7 @@ public class MesReceiver extends Thread {
     private Logger logger = Logger.getLogger(MesReceiver.class.getName());
 
     public MesReceiver(BlockingQueue<Message> messages) throws JMSException, ConnectException {
-
+        this.setName("MesReceiver");
         this.messages = messages;
 
         connectionFactory = new ActiveMQConnectionFactory(
