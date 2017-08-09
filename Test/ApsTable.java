@@ -15,7 +15,7 @@ public class ApsTable {
     @Test
     public void tongbu() throws ParseException, SQLException, ClassNotFoundException {
 //        String[] tableName = {DatabaseInfo.APS_PRODUCT, DatabaseInfo.APS_PROCESS_TYPERESOURCE_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_SHIFT, DatabaseInfo.APS_PROCESS, DatabaseInfo.APS_CLUB, DatabaseInfo.APS_USER, DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE};
-        String[] tableName = {DatabaseInfo.APS_SITE_SITE};
+        String[] tableName = { DatabaseInfo.APS_SITE,DatabaseInfo.APS_SITE_SITE};
         APSDatabaseSync.SyncAPSTable(tableName, DatabaseInfo.ORACLE, DatabaseInfo.APS);
     }
 

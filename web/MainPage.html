@@ -48,6 +48,8 @@
         //右侧快捷工具栏距离底部的距离
         var naviBottomValue = 200;
 
+        GlobalYang = 2;
+
         function loadRightFloatMenu() {
             setTimeout(function () {
                 $("#navigationMenu").animate({bottom: naviBottomValue + 'px'}, 400);
@@ -467,8 +469,8 @@
 <script src="pages/3DView/ShowController.js"></script>
 <script src="pages/3DView/FactoryLayoutController.js"></script>
 
+<script src="MainPage.js"></script>
 <script src="3rdLib/WebSocketNotification.js"></script>
-
 
 <!--弹出框-->
 <link rel="stylesheet" href="3rdLib/layer/css/layui.css">

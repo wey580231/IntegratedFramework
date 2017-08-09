@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     if (response.data.result == "ok") {
                         notification.sendNotification("confirm", "数据转换成功,3D车间启动中...");
                         setTimeout(function () {
-                            window.open('http://localhost:8080/WebGL', '_blank');
+                            window.open('WebGL/index.html', '_blank');
                             // layer.open({
                             //     type: 2,
                             //     title: '3D车间',
