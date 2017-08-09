@@ -43,6 +43,9 @@ public class APSDatabaseSync {
                 case DatabaseInfo.APS_SITE:
                     SyncSiteTable(list);
                     break;
+                case DatabaseInfo.APS_SITE_SITE:
+                    SyncDistanceTable(list);
+                    break;
                 case DatabaseInfo.APS_SHIFT:
                     SyncShiftTable(list);
                     break;
@@ -166,6 +169,29 @@ public class APSDatabaseSync {
             }
         }
         System.out.println("资源工位表同步成功");
+        return true;
+    }
+
+    //同步地点-地点距离表
+    private static boolean SyncDistanceTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_DistanceEntity distanceEntity = new RG_DistanceEntity();
+                distanceEntity.setId(Tools.getUUID());
+                distanceEntity.setDistance(Integer.parseInt(getStringFromHashMap(tempMap, "DISTANCE")));
+                distanceEntity.setStartSite(DAOFactory.getSiteInstance().findAllById(getStringFromHashMap(tempMap, "IDSITE1")));
+                distanceEntity.setEndSite(DAOFactory.getSiteInstance().findAllById(getStringFromHashMap(tempMap, "IDSITE2")));
+                distanceEntity.setTime(0);
+
+                DistanceDAOImpl disDao = DAOFactory.getDistanceDAOImplInstance();
+                disDao.save(distanceEntity);
+            } else {
+                System.out.println("距离表同步失败");
+                return false;
+            }
+        }
+        System.out.println("距离表同步成功");
         return true;
     }
 

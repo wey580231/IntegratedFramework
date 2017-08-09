@@ -30,6 +30,7 @@ public class MesConsumer extends Thread {
     private boolean runningFlag = false;
 
     public MesConsumer(BlockingQueue<Message> messages) {
+        this.setName("MesConsumer");
         this.messages = messages;
     }
 

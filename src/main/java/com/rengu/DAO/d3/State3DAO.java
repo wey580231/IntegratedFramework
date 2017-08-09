@@ -294,8 +294,9 @@ public class State3DAO {
             Iterator<RG_LayoutDetailEntity> iter = details.iterator();
             while (iter.hasNext()) {
                 RG_LayoutDetailEntity detail = iter.next();
-                System.out.println(detail.getId() + "++++" + arr.getId());
-                if (detail.getId().equals(arr.getId())) {
+
+                //Yang 20170808 用设备的名称取代设备的ID，避免出现布局名称和设备id不一致问题
+                if (detail.getItem().equals(arr.getItem())) {
                     detail.setPos(arr.getPos());
                     detail.setState(arr.getState());
                     detail.setItem(arr.getItem());
