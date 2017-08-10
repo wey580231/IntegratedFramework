@@ -10,7 +10,7 @@
         <property name="connection.password">root</property>
         <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
         <property name="format_sql">false</property>
 
         <property name="hbm2ddl.auto">update</property>
@@ -70,6 +70,9 @@
         <mapping resource="RG_Mes_AssemblyCenterInfo.hbm.xml"/>
         <!--事件日志-->
         <mapping resource="RG_EventLogEntity.hbm.xml"/>
+
+        <mapping resource="RG_TaskEntity.hbm.xml"/>
+
 
     </session-factory>
 </hibernate-configuration>
