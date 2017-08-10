@@ -3,6 +3,7 @@ package com.rengu.actions.d3;
 import com.opensymphony.xwork2.ActionContext;
 import com.rengu.DAO.d3.Device3DAO;
 import com.rengu.actions.SuperAction;
+import com.rengu.util.MyLog;
 import com.rengu.util.Tools;
 
 import java.util.Map;
@@ -33,10 +34,11 @@ public class Report3DAction extends SuperAction {
             if (types.length == 1 && codes.length == 1) {
                 String requestType = types[0];
                 String requestCode = codes[0];
+                MyLog.getLogger().info("3D车间查询状态请求类型:" + requestType + " 请求码为：" + requestCode);
                 if (requestType.toLowerCase().equals(requestDevice) && codes[0].length() > 0) {
-                    opresult = deviceDao.getDeviceReport(requestDevice, requestCode,jsonString);
+                    opresult = deviceDao.getDeviceReport(requestDevice, requestCode, jsonString);
                 } else if (requestType.toLowerCase().equals(requestOrder) && codes[0].length() > 0) {
-                    opresult = deviceDao.getOrderReport(requestOrder,requestCode, jsonString);
+                    opresult = deviceDao.getOrderReport(requestOrder, requestCode, jsonString);
                 }
             }
         }

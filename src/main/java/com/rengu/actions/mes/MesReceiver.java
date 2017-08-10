@@ -3,6 +3,7 @@ package com.rengu.actions.mes;
 import javax.jms.*;
 import javax.tools.Tool;
 
+import com.rengu.util.MyLog;
 import com.rengu.util.Tools;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -51,6 +52,7 @@ public class MesReceiver extends Thread {
     @Override
     public void run() {
         try {
+            MyLog.getLogger().info("yang");
             Tools.showLog();
             while (runningFlag) {
                 //设置接收者接收消息的时间，为了便于测试，这里谁定为100s

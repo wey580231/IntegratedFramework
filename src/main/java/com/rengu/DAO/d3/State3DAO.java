@@ -49,10 +49,10 @@ public class State3DAO {
             try {
                 jsonString = mapper.writeValueAsString(root);
 
-                System.out.println("*********Yang********" + jsonString);
-
+                MyLog.getLogger().info("状态查询结果:" + jsonString);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
+                MyLog.getLogger().error("状态查询出错*******:" + e.getMessage());
                 jsonString = Tools.resultCode("1", "Can't execute operation");
             }
 
@@ -105,8 +105,10 @@ public class State3DAO {
 
             try {
                 jsonString = mapper.writeValueAsString(root);
+                MyLog.getLogger().info("布局" + s + " 的布局详情:" + jsonString);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
+
             }
         }
 
@@ -134,6 +136,8 @@ public class State3DAO {
         if (!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
+
+        MyLog.getLogger().info("待更新布局:" + layoutName + " 更新设备内容详情:" + arr);
 
         Query query = session.createQuery("from RG_LayoutEntity entity where entity.name=:name");
         query.setParameter("name", layoutName);
@@ -200,9 +204,10 @@ public class State3DAO {
         for (int i = 0; i < arr.length; i++) {
             arr[i].setId(Tools.getUUID());
             arr[i].setLayout(layout);
-
             layout.getDetails().add(arr[i]);
         }
+
+        MyLog.getLogger().info("插入新布局" + layoutName + " 对应的布局详情:" + arr);
 
         RG_AdjustLayoutEntity adjustLayoutEntity = new RG_AdjustLayoutEntity();
         adjustLayoutEntity.setId(Tools.getUUID());
@@ -254,9 +259,11 @@ public class State3DAO {
 
             try {
                 jsonString = mapper.writeValueAsString(root);
+                MyLog.getLogger().info("查询所有布局信息:" + jsonString);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 jsonString = Tools.resultCode("1", "Can't execute operation");
+                MyLog.getLogger().error("查询所有布局失败:" + e.getMessage());
             }
 
         } else {
@@ -273,7 +280,6 @@ public class State3DAO {
         RG_LayoutDetailEntity arr = new RG_LayoutDetailEntity();
         try {
             String newData = URLDecoder.decode(data);
-            System.out.println(newData);
             arr = objectMapper.readValue(newData, RG_LayoutDetailEntity.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -288,6 +294,9 @@ public class State3DAO {
         Query query = session.createQuery("from RG_LayoutEntity entity where entity.name=:name");
         query.setParameter("name", layoutName);
         List<RG_LayoutEntity> layout = query.list();
+
+        MyLog.getLogger().info("更新布局:"+layoutName +" 更新内容为:"+ arr);
+
         if (layout.size() == 1 && layout.get(0) instanceof RG_LayoutEntity) {
             RG_LayoutEntity entity = (RG_LayoutEntity) layout.get(0);
             Set<RG_LayoutDetailEntity> details = entity.getDetails();

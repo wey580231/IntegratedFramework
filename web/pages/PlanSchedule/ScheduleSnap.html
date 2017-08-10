@@ -73,7 +73,8 @@
                 </a>
             </li>
             <li>
-                <a class="home" href="" ng-click="interactiveNode(true)"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+                <a class="home" href="" ng-click="interactiveNode(true)"><i class="fa fa-bar-chart"
+                                                                            aria-hidden="true"></i>
                     <span>交互优化</span>
                 </a>
             </li>
@@ -169,20 +170,21 @@
                             <td><span class="spanVal" ng-if="snapShotData.schedule.endCalcTime==null"></span>
                                 <span class="spanVal" ng-if="snapShotData.schedule.endCalcTime!=null">{{snapShotData.schedule.endCalcTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
-                            <td><span class="spanKey">优化次数</span></td>
-                            <td><span class="spanVal">{{interactiveCount}}</span></td>
+                            <td><span class="spanKey">订单数量</span></td>
+                            <td><span class="spanVal">{{snapShotData.schedule.orders.length}}</span></td>
                         </tr>
                         <tr>
+                            <td><span class="spanKey">优化次数</span></td>
+                            <td><span class="spanVal">{{interactiveCount}}</span></td>
                             <td><span class="spanKey">是否下发MES</span></td>
-                            <td><span class="spanVal"><span class="fa fa-cloud-download label label-success" aria-hidden="true"
+                            <td><span class="spanVal"><span class="fa fa-cloud-download label label-success"
+                                                            aria-hidden="true"
                                                             ng-if="hasDispatchMes">{{messStatus}}</span>
                                                       <span class="fa fa-bars label label-info" aria-hidden="true"
                                                             ng-if="!hasDispatchMes">{{messStatus}}</span></span></td>
                             <td><span class="spanKey" ng-if="hasDispatchMes">下发MES时间</span></td>
                             <td><span class="spanVal" ng-if="hasDispatchMes">{{dispatchMesTime  | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                             </td>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>

@@ -135,7 +135,7 @@ public class FeedBackStateAction extends SuperAction {
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-                if(!session.getTransaction().isActive()){
+                if (!session.getTransaction().isActive()) {
                     session.beginTransaction();
                 }
 

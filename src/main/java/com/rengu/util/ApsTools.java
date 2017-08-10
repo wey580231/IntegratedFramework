@@ -126,7 +126,7 @@ public class ApsTools {
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
                 "&" +
-                "BUFFER=" + buff.toString() +
+                "BUFFER=001"+
                 "&" +
                 "REPLY=" + ApsTools.instance().getDispatchOrderAddress() +
                 "&" +

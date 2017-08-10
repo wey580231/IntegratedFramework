@@ -358,6 +358,7 @@ public class Tools {
                 "                                                               | |                    __/ |\n" +
                 "                                                               |_|                   |___/ \n";
         System.out.println(ss);
+        MyLog.getLogger().info(ss);
     }
 
     public static String getSha(String str) {
