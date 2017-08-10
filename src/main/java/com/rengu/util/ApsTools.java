@@ -233,7 +233,7 @@ public class ApsTools {
                 rg_planEntity.setT2Order(tempMap.get("T2ORDER").toString());
                 rg_planEntity.setQuantityOrder(Short.parseShort(tempMap.get("QUANTITYORDER").toString()));
                 rg_planEntity.setPriorityOrder(Short.parseShort(tempMap.get("PRIORITYORDER").toString()));
-//                rg_planEntity.setColorOrder(tempMap.get("COLORORDER").toString());
+//                rg_planEntity.setColorOrder(tempMap.get("COLOR").toString());
                 rg_planEntity.setState(Byte.parseByte(tempMap.get("STATE").toString()));
                 rg_planEntity.setProcessByIdProcess(session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString()));
                 rg_planEntity.setOrderByIdOrder(session.get(RG_OrderEntity.class, tempMap.get("IDORDER").toString()));

@@ -46,7 +46,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     if (response.data.result == "ok") {
                         notification.sendNotification("confirm", "数据转换成功,3D车间启动中...");
                         setTimeout(function () {
-                            window.open('http://localhost:8080/WebGL', '_blank');
+                            window.open('WebGL/index.html', '_blank');
                             // layer.open({
                             //     type: 2,
                             //     title: '3D车间',
@@ -131,11 +131,12 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             }
         };
 
-        //对当前节点进行交互优化，先查询APS的状态是否空闲
-        $scope.interactiveNode = function () {
+        //对当前节点进行交互优化，先查询APS的状态是否空闲,interactiveFlag用于表示是否需要页面跳转至交互页面
+        $scope.interactiveNode = function (interactiveFlag) {
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             if (zTree != null && zTree.getSelectedNodes().length == 1 && zTree.getSelectedNodes()[0].level == 2) {
-                layer.confirm('是否优化当前节点?', {
+
+                layer.confirm(interactiveFlag ? '是否优化当前节点?' : '是否恢复此快照?', {
                     btn: ['确定', '取消'] //按钮
                 }, function (index) {
                     layer.load();
@@ -157,14 +158,16 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                         myHttpService.get(serviceList.queryRecoverSnapshot + "?id=" + selectedNode.id).then(function (response) {
                                             if (response.data.result == "ok") {
                                                 hasReciveSnapshotFlag = true;
-                                                notification.sendNotification("confirm", "交互优化页面跳转中...");
                                                 hideLoadingPage();
                                                 clearInterval(interFlag);
-                                                setTimeout(function () {
-                                                    //TODO 待解决path不能直接用$location跳转问题
-                                                    $location.path('/Interactive');
-                                                    window.location.href = $location.absUrl();
-                                                }, 1200);
+                                                if (interactiveFlag) {
+                                                    notification.sendNotification("confirm", "交互优化页面跳转中...");
+                                                    setTimeout(function () {
+                                                        //TODO 待解决path不能直接用$location跳转问题
+                                                        $location.path('/Interactive');
+                                                        window.location.href = $location.absUrl();
+                                                    }, 1200);
+                                                }
                                             }
                                         }, function (response) {
 
@@ -340,8 +343,18 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     $scope.messStatus = "--";
                 } else if (treeNode.level == 1) {
                     $scope.messStatus = treeNode.apply ? "已下发" : "未下发";
-                    $scope.dispatchMesTime = treeNode.dispatchMesTime;
-                    $scope.interactiveCount = (treeNode.children.length - 1) + "次";
+                    if (treeNode.apply) {
+                        $scope.dispatchMesTime = treeNode.dispatchMesTime;
+                    } else {
+                        $scope.dispatchMesTime = "";
+                    }
+
+                    if (treeNode.children) {
+                        $scope.interactiveCount = (treeNode.children.length - 1) + "次";
+                    } else {
+                        $scope.interactiveCount = "0次";
+                    }
+
                 } else if (treeNode.level == 2) {
                     var pNode = treeNode.getParentNode();
                     if (pNode != null) {

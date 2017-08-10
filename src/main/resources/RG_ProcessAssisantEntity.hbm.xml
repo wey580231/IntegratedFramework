@@ -21,8 +21,31 @@
         <property name="goods">
             <column name="goods" sql-type="varchar(255)" not-null="false"/>
         </property>
-        <property name="autoCreateProcess">
-            <column name="autoCreateProcess" sql-type="varchar(255)" not-null="false"/>
+
+        <property name="autoCreatePreviouseProcess">
+            <column name="autoCreatePreviouseProcess" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="previousProcessTasks">
+            <column name="previousProcessTasks" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="preProcessDistances">
+            <column name="preProcessDistances" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="preProcessSites">
+            <column name="preProcessSites" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="preProcessMobility">
+            <column name="preProcessMobility" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="pDelayStartTime">
+            <column name="pDelayStartTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="pAdvanceStartTime">
+            <column name="pAdvanceStartTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+
+        <property name="autoCreateNextProcess">
+            <column name="autoCreateNextProcess" sql-type="varchar(255)" not-null="false"/>
         </property>
         <property name="nextProcessTask">
             <column name="nextProcessTask" sql-type="varchar(255)" not-null="false"/>
@@ -38,6 +61,13 @@
         </property>
         <property name="nextProcessRefetTime">
             <column name="nextProcessRefetTime" sql-type="varchar(255)" not-null="false"/>
+        </property>
+
+        <property name="divisibleSite">
+            <column name="divisibleSite" sql-type="varchar(255)" not-null="false"/>
+        </property>
+        <property name="divisibleTask">
+            <column name="divisibleTask" sql-type="varchar(255)" not-null="false"/>
         </property>
 
     </class>

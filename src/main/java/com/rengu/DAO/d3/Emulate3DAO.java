@@ -161,7 +161,7 @@ public class Emulate3DAO {
 
                         node.put("task", emulateData.getTask());
                         node.put("good", emulateData.getGoods());
-                        node.put("startTime",emulateData.getStartTime());
+                        node.put("startTime", emulateData.getStartTime());
                         node.put("endTime", emulateData.getEndTime());
                         if (emulateData.getSite() != null && emulateData.getSite().length() > 0) {
                             node.put("site", emulateData.getSite());
@@ -172,9 +172,22 @@ public class Emulate3DAO {
                     }
                 }
 
+                ArrayNode deviceNode = mapper.createArrayNode();
+
+                //Yang 20170808 获取参与此次订单的所有设备
+                query = session.createNativeQuery("select distinct idResource from rg_plan where idOrder=:idOrder and idSnapshort =:idSnapshort");
+                query.setParameter("idOrder", entity.getId());
+                query.setParameter("idSnapshort", snapshotId);
+                List<String> deviceList = query.list();
+                for (String dev : deviceList) {
+                    deviceNode.add(dev);
+                }
+
                 dataNode.put("id", entity.getName());
                 dataNode.put("name", product.getName());
                 dataNode.put("info", arrayNode);
+                dataNode.put("device", deviceNode);
+
 
                 array.add(dataNode);
             }
@@ -190,7 +203,7 @@ public class Emulate3DAO {
                 flag = false;
                 tx.rollback();
             }
-        }else{
+        } else {
             tx.commit();
         }
 

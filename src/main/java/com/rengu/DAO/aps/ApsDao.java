@@ -46,7 +46,6 @@ public class ApsDao {
         boolean flag = false;
 
         Session session = MySessionFactory.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
 
         NativeQuery query = session.createNativeQuery("select * from rg_scheduleentity order by scheduleTime desc limit 0,1", RG_ScheduleEntity.class);
 

@@ -43,6 +43,9 @@ public class APSDatabaseSync {
                 case DatabaseInfo.APS_SITE:
                     SyncSiteTable(list);
                     break;
+                case DatabaseInfo.APS_SITE_SITE:
+                    SyncDistanceTable(list);
+                    break;
                 case DatabaseInfo.APS_SHIFT:
                     SyncShiftTable(list);
                     break;
@@ -52,10 +55,30 @@ public class APSDatabaseSync {
                 case DatabaseInfo.APS_USER:
                     SyncUserTable(list);
                     break;
+                case DatabaseInfo.APS_TASK:
+                    SyncTaskTable(list);
+                    break;
                 default:
                     System.out.println("无法同步：" + tableName + "表。");
             }
         }
+    }
+
+    private static boolean SyncTaskTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_TaskEntity rg_taskEntity = new RG_TaskEntity();
+                rg_taskEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_taskEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                DAOFactory.getTaskDAOImplInstance().save(rg_taskEntity);
+            } else {
+                System.out.println("任务表同步失败");
+                return false;
+            }
+        }
+        System.out.println("任务表同步成功");
+        return true;
     }
 
     private static boolean SyncUserTable(List list) {
@@ -166,6 +189,29 @@ public class APSDatabaseSync {
             }
         }
         System.out.println("资源工位表同步成功");
+        return true;
+    }
+
+    //同步地点-地点距离表
+    private static boolean SyncDistanceTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_DistanceEntity distanceEntity = new RG_DistanceEntity();
+                distanceEntity.setId(Tools.getUUID());
+                distanceEntity.setDistance(Integer.parseInt(getStringFromHashMap(tempMap, "DISTANCE")));
+                distanceEntity.setStartSite(DAOFactory.getSiteInstance().findAllById(getStringFromHashMap(tempMap, "IDSITE1")));
+                distanceEntity.setEndSite(DAOFactory.getSiteInstance().findAllById(getStringFromHashMap(tempMap, "IDSITE2")));
+                distanceEntity.setTime(0);
+
+                DistanceDAOImpl disDao = DAOFactory.getDistanceDAOImplInstance();
+                disDao.save(distanceEntity);
+            } else {
+                System.out.println("距离表同步失败");
+                return false;
+            }
+        }
+        System.out.println("距离表同步成功");
         return true;
     }
 
@@ -303,7 +349,7 @@ public class APSDatabaseSync {
                 rg_processEntity.setIdExclusive(getStringFromHashMap(tempMap, "IDEXCLUSIVE"));
                 rg_processEntity.setIdCoupledResouce(getStringFromHashMap(tempMap, "IDCOUPLEDRESOURCE"));
                 rg_processEntity.setTypeShift(getByteFromHashMap(tempMap, "TYPESHIFT"));
-                rg_processEntity.setIdSwitch(getStringFromHashMap(tempMap, "IDSWITCH"));
+                rg_processEntity.setIdSwitch(getStringFromHashMap(tempMap, "IDPRECSWITCH"));
                 rg_processEntity.setMaxQtyDivision(getShortFromHashMap(tempMap, "MAXQTYDIVISION"));
                 rg_processEntity.setMaxTimeDivision(getShortFromHashMap(tempMap, "MAXTIMEDIVISION"));
                 rg_processEntity.setMaxQtyBatch(getShortFromHashMap(tempMap, "MAXQTYBATCH"));

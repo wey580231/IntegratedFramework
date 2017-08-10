@@ -24,7 +24,7 @@ public class ExceptionCheck {
             }
         }
         long scheduleStartTime = rg_scheduleEntity.getScheduleTime().getTime();
-        long scheduleEndTime = scheduleStartTime + rg_scheduleEntity.getRollTime().intValue() * 60 * 60 * 24 * 1000;
+        long scheduleEndTime = scheduleStartTime + rg_scheduleEntity.getRollTime().longValue() * 60 * 60 * 24 * 1000;
         if (t2TimeStamp >= scheduleStartTime && t2TimeStamp <= scheduleEndTime) {
             if (isSendToMES) {
                 //紧急插单

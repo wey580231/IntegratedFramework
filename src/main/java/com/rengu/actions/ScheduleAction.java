@@ -44,7 +44,6 @@ public class ScheduleAction extends SuperAction {
 
             //获取当前时间
             Date date = new Date();
-            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             rg_scheduleEntity.setScheduleTime(new java.sql.Date(date.getTime()));
             rg_scheduleEntity.setStartCalcTime(date);
             //解析scheduleWindow
@@ -94,18 +93,18 @@ public class ScheduleAction extends SuperAction {
                         String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
                         Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
                         RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, rg_layoutDetailEntity.getItem());
-                        if (rg_resourceEntity != null) {
-                            String assisantResource = rg_resourceEntity.getAssisantResource();
-                            if (assisantResource != null) {
-                                System.out.println("发现载具：" + assisantResource);
-                                String SQlStringTemp = "update APS_RESOURCE set STATE = '1' where id = '" + assisantResource + "'";
-                                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlStringTemp);
-                            }
-                        } else {
-                            System.out.println("资源不存在：" + rg_layoutDetailEntity.getItem());
-                        }
-                    }else {
-                        System.out.println(rg_layoutDetailEntity.getItem()+"资源不可用");
+//                        if (rg_resourceEntity != null) {
+//                            String assisantResource = rg_resourceEntity.getAssisantResource();
+//                            if (assisantResource != null) {
+//                                System.out.println("发现载具：" + assisantResource);
+//                                String SQlStringTemp = "update APS_RESOURCE set STATE = '1' where id = '" + assisantResource + "'";
+//                                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlStringTemp);
+//                            }
+//                        } else {
+//                            System.out.println("资源不存在：" + rg_layoutDetailEntity.getItem());
+//                        }
+                    } else {
+                        System.out.println(rg_layoutDetailEntity.getItem() + "资源不可用");
                     }
                 }
                 //将托盘资源职位可用状态
@@ -121,7 +120,8 @@ public class ScheduleAction extends SuperAction {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
-                    if (Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, "select * from " + DatabaseInfo.APS_ORDER + " where id='" + rg_orderEntity.getId() + "'").size() == 0) {
+                    String sql = "select * from " + DatabaseInfo.APS_ORDER + " where id='" + rg_orderEntity.getId() + "'";
+                    if (Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, sql).size() == 0) {
                         Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
                     } else {
                         Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateSQLForAPS(rg_orderEntity));

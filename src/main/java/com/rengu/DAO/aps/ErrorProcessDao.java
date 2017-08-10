@@ -68,7 +68,7 @@ public class ErrorProcessDao {
         if (list.size() == 1 && list.get(0) instanceof RG_AdjustOrderEntity) {
             RG_AdjustOrderEntity entity = (RG_AdjustOrderEntity) list.get(0);
 
-            entity.getOrd().getProductByIdProduct();
+            RG_ProductEntity product = entity.getOrd().getProductByIdProduct();
 
             result = ApsTools.instance().executeCommand(ApsTools.instance().getAdjustOrderHandlingURL(entity));
 
@@ -79,6 +79,7 @@ public class ErrorProcessDao {
                 createSnapNode("紧急插单应急优化", "rg_adjustorder", id);
 
                 String lastesScheduleId = UserConfigTools.getLatestSchedule("1");
+                System.out.println(lastesScheduleId + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 if (lastesScheduleId != null && lastesScheduleId.length() > 0) {
                     RG_ScheduleEntity scheduleEntity = session.get(RG_ScheduleEntity.class, lastesScheduleId);
                     if (scheduleEntity != null) {
@@ -86,7 +87,6 @@ public class ErrorProcessDao {
                         session.update(scheduleEntity);
                     }
                 }
-
                 session.update(entity);
             }
         }

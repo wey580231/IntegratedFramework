@@ -71,5 +71,8 @@
         <!--事件日志-->
         <mapping resource="RG_EventLogEntity.hbm.xml"/>
 
+        <mapping resource="RG_TaskEntity.hbm.xml"/>
+
+
     </session-factory>
 </hibernate-configuration>

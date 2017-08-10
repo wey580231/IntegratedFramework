@@ -4,9 +4,7 @@ import com.rengu.entity.*;
 import com.rengu.util.ApsTools;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.SnapshotLevel;
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
@@ -19,6 +17,19 @@ import java.util.*;
  * Created by wey580231 on 2017/6/27.
  */
 public class SnapshotDao {
+
+    //Yang 20170809 aps地点与3d车间机器人停靠点转换关系
+    private static Map<String,String> distanceMap = new HashMap<String,String>();
+    static{
+        distanceMap.put("ZNZP","ZNZPPT_01");
+        distanceMap.put("RJXZ","RJXZPT_01");
+        distanceMap.put("TKD-L","AGV_L");
+        distanceMap.put("TKD-R","AGV_R");
+        distanceMap.put("CCJDJC","AGV_R");
+        distanceMap.put("XBC","XBC");
+        distanceMap.put("MTJDJC","OnlineTest");
+        distanceMap.put("ZHDXNJC","AssembleAccuracyTest");
+    }
 
     //将所有订单一起转换
     public boolean switchToEmulateData(String userId, String id) {
@@ -81,221 +92,21 @@ public class SnapshotDao {
         if (queryObject.executeUpdate() >= 0) {
 
             try {
-                //【1】将当前快照对应的所有订单按照时间升序转换
-                RG_PlanEntity startPlan = plans.get(0);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-                Date initialDate = sdf.parse(startPlan.getT1Task());
-
-                for (int i = 0; i < plans.size(); i++) {
-
-                    RG_PlanEntity plan = plans.get(i);
-
-                    RG_ResourceEntity res = plan.getResourceByIdResource();
-
-                    if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
-                        String processId = plan.getProcessByIdProcess().getId();
-
-                        NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
-                        nquery.setParameter(1, processId);
-                        List<RG_ProcessAssisantEntity> list = nquery.list();
-
-                        if (list.size() > 0) {
-                            RG_EmulateResultEntity result = new RG_EmulateResultEntity();
-
-                            RG_ProcessAssisantEntity entity = list.get(0);
-
-                            //任务名
-                            result.setTask(entity.getTask());
-                            //货物名
-                            result.setGoods(entity.getGoods());
-                            //地点名(若不存在为null)
-                            result.setSite(entity.getSite());
-
-                            Date startDate = sdf.parse(plan.getT1Task());
-                            Date endDate = sdf.parse(plan.getT2Task());
-
-                            //开始时间
-                            result.setStartTime((int) (startDate.getTime() - initialDate.getTime()) / 1000);
-                            //结束时间
-                            result.setEndTime((int) ((endDate.getTime() - initialDate.getTime()) / 1000));
-
-                            result.setOrderEntity(plan.getOrderByIdOrder());
-
-                            result.setSnapshotNodeEntity(plan.getSnapShort());
-
-                            session.save(result);
-
-                            //Yang 20170725调整对3D车间的结果转换规则
-                            if (entity.getAutoCreateProcess() != null && entity.getNextProcessTask() != null
-                                    && entity.getNextProcessDistnces() != null && entity.getNextProcessMobility() != null && entity.getAutoCreateProcess().equals("Y")) {
-
-                                String[] taskList = entity.getNextProcessTask().split(",");
-                                String[] distances = entity.getNextProcessDistnces().split(",");
-                                String[] mobility = entity.getNextProcessMobility().split(",");
-
-                                if (taskList.length == distances.length) {
-                                    for (int m = 0; m < taskList.length; m++) {
-                                        RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
-                                        //任务名
-                                        nextResult.setTask(taskList[m]);
-                                        //货物名
-                                        nextResult.setGoods(entity.getGoods());
-                                        //地点名(若不存在为null)
-                                        if (entity.getNextProcessSites() != null) {
-                                            String[] sites = entity.getNextProcessSites().split(",");
-                                            nextResult.setSite(sites[m]);
-                                        } else {
-                                            nextResult.setSite(null);
-                                        }
-
-                                        long stime = 0;
-
-                                        if (entity.getNextProcessRefetTime() != null) {
-                                            String[] referTime = entity.getNextProcessRefetTime().split(",");
-                                            if (referTime[m].toLowerCase().equals("e")) {
-                                                stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
-                                            } else if (referTime[m].toLowerCase().equals("s")) {
-                                                stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1;
-                                            }
-                                        } else {
-                                            stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
-                                        }
-
-                                        long lastTime = 2;
-
-                                        int currDis = Integer.parseInt(distances[m]);
-                                        int currPeed = Integer.parseInt(mobility[m]);
-
-                                        if (currDis > 0 && currPeed > 0) {
-                                            lastTime = currDis / currPeed;
-                                        }
-
-                                        //开始时间
-                                        nextResult.setStartTime((int) stime);
-                                        //结束时间
-                                        nextResult.setEndTime((int) (stime + lastTime));
-                                        nextResult.setOrderEntity(plan.getOrderByIdOrder());
-
-                                        nextResult.setSnapshotNodeEntity(plan.getSnapShort());
-                                        session.save(nextResult);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                //【1】將快照對應的所有订单一并转换
+                switchPlanToEmulateResult(false, plans, session);
 
                 //【2】将快照对应的所有订单，按照订单逐个转换
                 NativeQuery nativeQuery = session.createNativeQuery("select idOrder from rg_plan where idSnapshort =:id group by idOrder");
                 nativeQuery.setParameter("id", snapShotId);
                 List<String> orders = nativeQuery.list();
+
                 for (int i = 0; i < orders.size(); i++) {
                     NativeQuery nQuery = session.createNativeQuery("select * from rg_plan where idOrder = ? and idSnapshort = ? order by t1Task asc", RG_PlanEntity.class);
                     nQuery.setParameter(1, orders.get(i));
                     nQuery.setParameter(2, snapShotId);
                     List<RG_PlanEntity> orderPlans = nQuery.list();
 
-                    startPlan = orderPlans.get(0);
-
-                    initialDate = sdf.parse(startPlan.getT1Task());
-
-                    for (int j = 0; j < orderPlans.size(); j++) {
-
-                        RG_PlanEntity plan = orderPlans.get(j);
-
-                        RG_ResourceEntity res = plan.getResourceByIdResource();
-
-                        if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
-                            String processId = plan.getProcessByIdProcess().getId();
-
-                            NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
-                            nquery.setParameter(1, processId);
-                            List<RG_ProcessAssisantEntity> list = nquery.list();
-
-                            if (list.size() > 0) {
-                                RG_EmulateResultEntity result = new RG_EmulateResultEntity();
-
-                                RG_ProcessAssisantEntity entity = list.get(0);
-
-                                //任务名
-                                result.setTask(entity.getTask());
-                                //货物名
-                                result.setGoods(entity.getGoods());
-                                //地点名(若不存在为null)
-                                result.setSite(entity.getSite());
-
-                                Date startDate = sdf.parse(plan.getT1Task());
-                                Date endDate = sdf.parse(plan.getT2Task());
-
-                                //开始时间
-                                result.setStartTime((int) ((startDate.getTime() - initialDate.getTime()) / 1000));
-                                //结束时间
-                                result.setEndTime((int) ((endDate.getTime() - initialDate.getTime()) / 1000));
-
-                                result.setOrderEntity(plan.getOrderByIdOrder());
-
-                                session.save(result);
-
-                                //Yang 20170725调整对3D车间的结果转换规则
-                                if (entity.getAutoCreateProcess() != null && entity.getNextProcessTask() != null
-                                        && entity.getNextProcessDistnces() != null && entity.getNextProcessMobility() != null && entity.getAutoCreateProcess().equals("Y")) {
-
-                                    String[] taskList = entity.getNextProcessTask().split(",");
-                                    String[] distances = entity.getNextProcessDistnces().split(",");
-                                    String[] mobility = entity.getNextProcessMobility().split(",");
-
-                                    if (taskList.length == distances.length) {
-                                        for (int m = 0; m < taskList.length; m++) {
-                                            RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
-                                            //任务名
-                                            nextResult.setTask(taskList[m]);
-                                            //货物名
-                                            nextResult.setGoods(entity.getGoods());
-
-                                            //地点名(若不存在为null)
-                                            if (entity.getNextProcessSites() != null) {
-                                                String[] sites = entity.getNextProcessSites().split(",");
-                                                nextResult.setSite(sites[m]);
-                                            } else {
-                                                nextResult.setSite(null);
-                                            }
-
-                                            long stime = 0;
-
-                                            if (entity.getNextProcessRefetTime() != null) {
-                                                String[] referTime = entity.getNextProcessRefetTime().split(",");
-                                                if (referTime[m].toLowerCase().equals("e")) {
-                                                    stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
-                                                } else if (referTime[m].toLowerCase().equals("s")) {
-                                                    stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1;
-                                                }
-                                            } else {
-                                                stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1;
-                                            }
-
-                                            long lastTime = 2;
-
-                                            int currDis = Integer.parseInt(distances[m]);
-                                            int currPeed = Integer.parseInt(mobility[m]);
-
-                                            if (currDis > 0 && currPeed > 0) {
-                                                lastTime = currDis / currPeed;
-                                            }
-                                            //开始时间
-                                            nextResult.setStartTime((int) stime);
-                                            //结束时间
-                                            nextResult.setEndTime((int) (stime + lastTime));
-                                            nextResult.setOrderEntity(plan.getOrderByIdOrder());
-
-                                            nextResult.setOrderEntity(plan.getOrderByIdOrder());
-                                            session.save(nextResult);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    switchPlanToEmulateResult(true, nQuery.list(), session);
                 }
 
                 flag = true;
@@ -307,6 +118,255 @@ public class SnapshotDao {
         session.close();
 
         return flag;
+    }
+
+    /**
+     * 将计划按照订单或按快照转换成结果信息，保存至数据表
+     *
+     * @param isSignal 为true表示按订单转换，为false表示按照快照转换
+     * @param plans    结果信息集合
+     * @param session  数据库连接
+     * @throws ParseException 日期类型转换出错
+     */
+    private void switchPlanToEmulateResult(boolean isSignal, List<RG_PlanEntity> plans, Session session) throws ParseException {
+        //【1】将当前快照对应的所有订单按照时间升序转换
+        RG_PlanEntity startPlan = plans.get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+        Date initialDate = sdf.parse(startPlan.getT1Task());
+
+        int perPlanDelayMinuteTime = 0;         //总体上每道计划偏移时间
+        int currMultiPlan = -1;                 //对应APS中的第几种策略
+
+        List<String> switchedProcessList = new ArrayList<String>();
+
+        List<RG_PlanEntity> robotPlan = new ArrayList<RG_PlanEntity>();
+
+        //转换AGV、生产工艺
+        for (int i = 0; i < plans.size(); i++) {
+
+            RG_PlanEntity plan = plans.get(i);
+
+            if (plan.getResourceByIdResource().getIdR().equals("KR16_MG")) {
+                robotPlan.add(plan);
+            }
+
+            RG_ResourceEntity res = plan.getResourceByIdResource();
+
+            if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
+                String processId = plan.getProcessByIdProcess().getId();
+
+                if (switchedProcessList.contains(processId)) {
+                    continue;
+                }
+                switchedProcessList.add(processId);
+
+                NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
+                nquery.setParameter(1, processId);
+                List<RG_ProcessAssisantEntity> list = nquery.list();
+
+                if (list.size() > 0) {
+                    RG_EmulateResultEntity result = new RG_EmulateResultEntity();
+
+                    RG_ProcessAssisantEntity entity = list.get(0);
+
+                    //第一道结果来决定以后的结果时间偏移量
+                    if (i == 0 && entity.getAutoCreatePreviouseProcess() != null && entity.getPreProcessMobility() != null && entity.getAutoCreatePreviouseProcess().equals("Y")) {
+                        int pDelayTime = Integer.parseInt(entity.getpDelayStartTime());
+
+                        perPlanDelayMinuteTime = Integer.parseInt(entity.getPreProcessDistances()) / Integer.parseInt(entity.getPreProcessMobility()) - pDelayTime;
+                    }
+
+                    //任务名
+                    result.setTask(entity.getTask());
+                    //货物名
+                    result.setGoods(entity.getGoods());
+                    //地点名(若不存在为null)
+                    result.setSite(entity.getSite());
+
+                    Date startDate = sdf.parse(plan.getT1Task());
+                    Date endDate = sdf.parse(plan.getT2Task());
+
+                    int currPlanStartTime = (int) (startDate.getTime() - initialDate.getTime()) / 1000;
+                    int currPlanEndTime = (int) ((endDate.getTime() - initialDate.getTime()) / 1000);
+
+                    //开始时间
+                    result.setStartTime(currPlanStartTime + perPlanDelayMinuteTime);
+                    //结束时间
+                    result.setEndTime(currPlanEndTime + perPlanDelayMinuteTime);
+                    //设置订单
+                    result.setOrderEntity(plan.getOrderByIdOrder());
+                    //设置所属快照
+                    if (!isSignal) {
+                        result.setSnapshotNodeEntity(plan.getSnapShort());
+                    }
+
+                    session.save(result);
+
+                    //Yang 转换当前工序之前的步骤
+                    if (entity.getAutoCreatePreviouseProcess() != null && entity.getAutoCreatePreviouseProcess().equals("Y")) {
+                        String[] taskList = entity.getPreviousProcessTasks().split(",");
+                        String[] distances = entity.getPreProcessDistances().split(",");
+                        String[] mobility = entity.getPreProcessMobility().split(",");
+
+                        if (taskList.length == distances.length) {
+                            for (int m = 0; m < taskList.length; m++) {
+
+                                RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+                                //任务名
+                                nextResult.setTask(taskList[m]);
+                                //货物名
+                                nextResult.setGoods(entity.getGoods());
+                                //地点名(若不存在为null)
+                                if (entity.getPreProcessSites() != null) {
+                                    String[] sites = entity.getPreProcessSites().split(",");
+                                    nextResult.setSite(sites[m]);
+                                } else {
+                                    nextResult.setSite(null);
+                                }
+
+                                long lastTime = 2;
+
+                                int currDis = Integer.parseInt(distances[m]);
+                                int currPeed = Integer.parseInt(mobility[m]);
+
+                                if (currDis > 0 && currPeed > 0) {
+                                    lastTime = currDis / currPeed;
+                                }
+
+                                int pDelayStartTime = Integer.parseInt(entity.getpDelayStartTime());
+                                int pAdvanceStartTime = Integer.parseInt(entity.getpAdvanceStartTime());
+
+                                long stime = currPlanStartTime + pDelayStartTime - lastTime + perPlanDelayMinuteTime;
+
+                                //开始时间
+                                nextResult.setStartTime((int) stime);
+                                //结束时间
+                                nextResult.setEndTime((int) (stime + lastTime));
+                                nextResult.setOrderEntity(plan.getOrderByIdOrder());
+
+                                if (!isSignal) {
+                                    nextResult.setSnapshotNodeEntity(plan.getSnapShort());
+                                }
+                                session.save(nextResult);
+                            }
+                        }
+                    }
+
+                    //Yang 转换当前工序之后的步骤
+                    if (entity.getAutoCreateNextProcess() != null && entity.getNextProcessTask() != null
+                            && entity.getNextProcessDistnces() != null && entity.getNextProcessMobility() != null && entity.getAutoCreateNextProcess().equals("Y")) {
+
+                        String[] taskList = entity.getNextProcessTask().split(",");
+                        String[] distances = entity.getNextProcessDistnces().split(",");
+                        String[] mobility = entity.getNextProcessMobility().split(",");
+
+                        if (taskList.length == distances.length) {
+                            for (int m = 0; m < taskList.length; m++) {
+                                RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+                                //任务名
+                                nextResult.setTask(taskList[m]);
+                                //货物名
+                                nextResult.setGoods(entity.getGoods());
+                                //地点名(若不存在为null)
+                                if (entity.getNextProcessSites() != null) {
+                                    String[] sites = entity.getNextProcessSites().split(",");
+                                    nextResult.setSite(sites[m]);
+                                } else {
+                                    nextResult.setSite(null);
+                                }
+
+                                long stime = 0;
+
+                                if (entity.getNextProcessRefetTime() != null) {
+                                    String[] referTime = entity.getNextProcessRefetTime().split(",");
+                                    if (referTime[m].toLowerCase().equals("e")) {
+                                        stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
+                                    } else if (referTime[m].toLowerCase().equals("s")) {
+                                        stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
+                                    }
+                                } else {
+                                    stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
+                                }
+
+                                long lastTime = 2;
+
+                                int currDis = Integer.parseInt(distances[m]);
+                                int currPeed = Integer.parseInt(mobility[m]);
+
+                                if (currDis > 0 && currPeed > 0) {
+                                    lastTime = currDis / currPeed;
+                                }
+
+                                //开始时间
+                                nextResult.setStartTime((int) stime);
+                                //结束时间
+                                nextResult.setEndTime((int) (stime + lastTime));
+                                nextResult.setOrderEntity(plan.getOrderByIdOrder());
+
+                                if (!isSignal) {
+                                    nextResult.setSnapshotNodeEntity(plan.getSnapShort());
+                                }
+                                session.save(nextResult);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //Yang 20170808转换运输工艺
+        for (int i = 0; i < robotPlan.size(); i++) {
+            if (i < robotPlan.size() - 1) {
+                String startSite = robotPlan.get(i).getSiteByIdSite().getId();
+                String endSite = robotPlan.get(i + 1).getSiteByIdSite().getId();
+
+                if (!startSite.equals(endSite)) {
+                    RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+                    //任务名
+                    nextResult.setTask("KR16_MG_Move");
+                    //货物名
+                    nextResult.setGoods("");
+                    //地点名
+                    nextResult.setSite(distanceMap.get(endSite));
+
+                    Date startDate = sdf.parse(robotPlan.get(i).getT2Task());
+                    Date endDate = sdf.parse(robotPlan.get(i + 1).getT1Task());
+
+                    long stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
+
+                    long lastTime = 2;
+
+                    Short currPeed = robotPlan.get(i).getResourceByIdResource().getMobility();
+
+                    NativeQuery nquery = session.createNativeQuery("select * from rg_distance where idSite1 =:site1 and idSite2 =:site2").addEntity(RG_DistanceEntity.class);
+                    nquery.setParameter("site1", startSite);
+                    nquery.setParameter("site2", endSite);
+
+                    List list = nquery.list();
+
+                    if (list.size() > 0) {
+                        RG_DistanceEntity distanceEntity = (RG_DistanceEntity) list.get(0);
+                        System.out.println(startSite + "__" + endSite);
+                        if (distanceEntity != null && currPeed != null && distanceEntity.getDistance() > 0 && currPeed > 0) {
+                            lastTime = distanceEntity.getDistance() / currPeed;
+                        }
+                    }
+
+                    //开始时间
+                    nextResult.setStartTime((int) stime);
+                    //结束时间
+                    nextResult.setEndTime((int) (stime + lastTime));
+                    nextResult.setOrderEntity(robotPlan.get(i).getOrderByIdOrder());
+
+                    if (!isSignal) {
+                        nextResult.setSnapshotNodeEntity(robotPlan.get(i).getSnapShort());
+                    }
+                    session.save(nextResult);
+                }
+            }
+        }
+
     }
 
     //将结果下发给MES，添加对订单状态的修改
@@ -337,7 +397,7 @@ public class SnapshotDao {
                         session.update(tmpOrder);
                     }
 
-                    //aps接口
+                    //TODO 加入对aps发布订单接口
                     if (ApsTools.instance().publishOrder(orderList) == ApsTools.STARTED) {
                         parent.setApply(true);
                         parent.setDispatchMesTime(new Date());

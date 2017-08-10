@@ -18,24 +18,24 @@
                     <div class="pull-right">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm"
-                                    class="btn btn-default" onclick="realModel()"><i class="fa fa-plus"></i> 实时模式
+                                    class="btn btn-default" ng-click="realModel()"><i class="fa fa-plus"></i> 实时模式
                             </button>
                             <button type="button" class="btn btn-default btn-sm"
-                                    class="btn btn-default" onclick="emulateModel()"><i class="fa fa-plus"></i> 仿真模式
+                                    class="btn btn-default" ng-click="emulateModel()"><i class="fa fa-plus"></i> 仿真模式
                             </button>
+                            <!--<button type="button" class="btn btn-default btn-sm"-->
+                                    <!--class="btn btn-default" onclick="fullView()"><i class="fa fa-arrows-alt"></i> 全屏-->
+                            <!--</button>-->
                             <button type="button" class="btn btn-default btn-sm"
-                                    class="btn btn-default" onclick="fullView()"><i class="fa fa-arrows-alt"></i> 全屏
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm"
-                                    onclick="doubleView()"><i
+                                    ng-click="doubleView()"><i
                                     class="fa fa-angle-double-down"></i> 双屏
                             </button>
                         </div>
                     </div>
                 </div>
                 <!--src="-->
-                <iframe id="frame" src="WebGL" style="width:100%;border:none;margin-top:5px;">
-                </iframe>
+                <!--<iframe id="frame" src="WebGL/index.html" style="width:100%;border:none;margin-top:5px;">
+                </iframe>-->
             </div>
         </div>
     </div>
@@ -62,17 +62,6 @@
     $(window).resize(function () {
         resizeD3ViewSize();
     });
-
-
-    //实时
-    function realModel() {
-
-    }
-
-    //模拟
-    function emulateModel() {
-
-    }
 
     var fullOuterH, fullMainContentH, fullFrameH;
 
@@ -148,30 +137,4 @@
             $("#OuterDiv").css("height", fullOuterH + "px");
         }
     });
-
-    //双屏
-    function doubleView() {
-        layer.open({
-            type: 2,
-            title: '左侧',
-            maxmin: true,
-            shadeClose: true,
-            shade: false,
-            offset: 'l',
-            area: ['50%', '100%'],
-            content: "http://localhost:8080/WebGL"
-        });
-
-        layer.open({
-            type: 2,
-            title: '右屏',
-            maxmin: true,
-            shadeClose: true,
-            shade: false,
-            offset: 'r',
-            area: ['50%', '100%'],
-            content: "http://localhost:8080/WebGL"
-        });
-    }
-
 </script>

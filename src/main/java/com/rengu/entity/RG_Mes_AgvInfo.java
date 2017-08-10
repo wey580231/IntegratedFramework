@@ -13,6 +13,7 @@ public class RG_Mes_AgvInfo {
     private String idOrder;                         //订单编号
     private float remainPower;                      //剩余电量
     private Date reportTime;                        //上报时间
+    private String site;                            //当前地点编码，对应site表中的字段
 
     public int getId() {
         return id;
@@ -70,31 +71,11 @@ public class RG_Mes_AgvInfo {
         this.reportTime = reportTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_Mes_AgvInfo that = (RG_Mes_AgvInfo) o;
-
-        if (id != that.id) return false;
-        if (state != that.state) return false;
-        if (Float.compare(that.remainPower, remainPower) != 0) return false;
-        if (agvId != null ? !agvId.equals(that.agvId) : that.agvId != null) return false;
-        if (goodsDesc != null ? !goodsDesc.equals(that.goodsDesc) : that.goodsDesc != null) return false;
-        if (idOrder != null ? !idOrder.equals(that.idOrder) : that.idOrder != null) return false;
-        return reportTime != null ? reportTime.equals(that.reportTime) : that.reportTime == null;
+    public String getSite() {
+        return site;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (agvId != null ? agvId.hashCode() : 0);
-        result = 31 * result + (state ? 1 : 0);
-        result = 31 * result + (goodsDesc != null ? goodsDesc.hashCode() : 0);
-        result = 31 * result + (idOrder != null ? idOrder.hashCode() : 0);
-        result = 31 * result + (remainPower != +0.0f ? Float.floatToIntBits(remainPower) : 0);
-        result = 31 * result + (reportTime != null ? reportTime.hashCode() : 0);
-        return result;
+    public void setSite(String site) {
+        this.site = site;
     }
 }
