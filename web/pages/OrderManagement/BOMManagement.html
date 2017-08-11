@@ -25,7 +25,6 @@
 
     .ztree li {
         padding: 5px;
-
     }
 
     /*第一个图标*/
@@ -91,6 +90,13 @@
     .box {
         position: unset;
     }
+
+    body {
+        font: 300 14px ‘Helvetica Neue‘,
+        Helvetica;
+    }
+
+
 </style>
 
 <div>
@@ -118,7 +124,8 @@
                 </a>
             </li>
             <li>
-                <a class="home" href="" ng-click="assisantProcess()"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <a class="home" href="" ng-click="assisantProcess()"><i class="fa fa-shopping-cart"
+                                                                        aria-hidden="true"></i>
                     <span>辅助工艺</span>
                 </a>
             </li>
@@ -176,48 +183,113 @@
 
                     <!-- /.box-header -->
                     <div class="box-body no-padding">
-                        <div class="mailbox-controls">
-                            <!-- Check all button -->
-                            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                    class="fa fa-square-o"></i></button>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i>
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
-                                </button>
-                            </div>
+                        <!--tab-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Custom Tabs -->
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a href="/AdjustOrder/#tab_1" data-toggle="tab">工序</a></li>
+                                        <li><a href="/AdjustOrder/#tab_2" data-toggle="tab">DAG图</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_1">
+                                            <div class="mailbox-controls">
+                                                <!-- Check all button -->
+                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
+                                                        class="fa fa-square-o"></i>
+                                                </button>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default btn-sm"><i
+                                                            class="fa fa-chevron-left"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-default btn-sm"><i
+                                                            class="fa fa-chevron-right"></i>
+                                                    </button>
+                                                </div>
 
-                            <!-- /.pull-right -->
+                                                <!-- /.pull-right -->
+                                            </div>
+                                            <div class="table-responsive mailbox-messages">
+                                                <table class="table table-hover table-striped" id="table_value">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <th>名称</th>
+                                                        <th>冷却时间</th>
+                                                        <th>校验时间</th>
+                                                        <th>数量</th>
+                                                    </tr>
+                                                    <tr ng-repeat="process in processdata" ng-init="renderTable($last)">
+                                                        <td><input name="check" type="checkbox"></td>
+                                                        <td>{{process.name}}</td>
+                                                        <td>{{process.postTime}}</td>
+                                                        <td>{{process.checkTime}}</td>
+                                                        <td>{{process.quantity}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- /.table -->
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab_2">
+                                            <!--DAG-->
+                                            <!--  <div class="live map">
+                                                  <svg></g></svg>
+                                              </div>-->
+                                            <div style="height: auto;margin-bottom: 3px;">
+
+                                                <table class="table table-striped" id="table_info">
+                                                    <tr>
+                                                        <td><span class="spanKey">节点名称</span></td>
+                                                        <td><span class="spanVal" ng-if="processData.name==null"></span>
+                                                            <span class="spanVal" ng-if="processData.name!=null">{{processData.name}}</span>
+                                                        </td>
+                                                        <td><span class="spanKey"></span></td>
+                                                        <td><span class="spanVal"></span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div id="dag" style="width: 800px;height:400px;"></div>
+                                        </div><!--/.well -->
+                                    </div>
+                                </div>
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- nav-tabs-custom -->
                         </div>
-                        <div class="table-responsive mailbox-messages">
-                            <table class="table table-hover table-striped" id="table_value">
-                                <tbody>
-                                <tr>
-                                    <td></td>
-                                    <th>名称</th>
-                                    <th>冷却时间</th>
-                                    <th>校验时间</th>
-                                    <th>数量</th>
-                                </tr>
-                                <tr ng-repeat="process in processdata" ng-init="renderTable($last)">
-                                    <td><input name="check" type="checkbox"></td>
-                                    <td>{{process.name}}</td>
-                                    <td>{{process.postTime}}</td>
-                                    <td>{{process.checkTime}}</td>
-                                    <td>{{process.quantity}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!-- /.table -->
-                        </div>
-                        <!-- /.mail-box-messages -->
                     </div>
-                    <!-- /.box-body -->
+
+                    <!--原表格-->
+                    <!-- <div class="table-responsive mailbox-messages">
+                         <table class="table table-hover table-striped" id="table_value">
+                             <tbody>
+                             <tr>
+                                 <td></td>
+                                 <th>名称</th>
+                                 <th>冷却时间</th>
+                                 <th>校验时间</th>
+                                 <th>数量</th>
+                             </tr>
+                             <tr ng-repeat="process in processdata" ng-init="renderTable($last)">
+                                 <td><input name="check" type="checkbox"></td>
+                                 <td>{{process.name}}</td>
+                                 <td>{{process.postTime}}</td>
+                                 <td>{{process.checkTime}}</td>
+                                 <td>{{process.quantity}}</td>
+                             </tr>
+                             </tbody>
+                         </table>
+                         &lt;!&ndash; /.table &ndash;&gt;
+                     </div>-->
+                    <!-- /.mail-box-messages -->
                 </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.col -->
         </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
+        <!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+<!-- /.content -->
 </div>
