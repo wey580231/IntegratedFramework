@@ -55,10 +55,30 @@ public class APSDatabaseSync {
                 case DatabaseInfo.APS_USER:
                     SyncUserTable(list);
                     break;
+                case DatabaseInfo.APS_TASK:
+                    SyncTaskTable(list);
+                    break;
                 default:
                     System.out.println("无法同步：" + tableName + "表。");
             }
         }
+    }
+
+    private static boolean SyncTaskTable(List list) {
+        for (Object object : list) {
+            if (object instanceof HashMap) {
+                Map tempMap = (HashMap) object;
+                RG_TaskEntity rg_taskEntity = new RG_TaskEntity();
+                rg_taskEntity.setId(getStringFromHashMap(tempMap, "ID"));
+                rg_taskEntity.setName(getStringFromHashMap(tempMap, "NAME"));
+                DAOFactory.getTaskDAOImplInstance().save(rg_taskEntity);
+            } else {
+                System.out.println("任务表同步失败");
+                return false;
+            }
+        }
+        System.out.println("任务表同步成功");
+        return true;
     }
 
     private static boolean SyncUserTable(List list) {

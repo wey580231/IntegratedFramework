@@ -25,7 +25,8 @@ function webSocketInit() {
         //连接成功建立的回调方法
         webSocket.onopen = function () {
             showNotification("通知系统开启。", "confirm");
-        }
+        };
+
         //接收到消息的回调方法
         webSocket.onmessage = function (event) {
             var webSocketObject = JSON.parse(event.data);
@@ -39,11 +40,11 @@ function webSocketInit() {
                 }
                 console.log("Recv 3d real control info====")
             }
-        }
+        };
         //连接关闭的回调方法
         webSocket.onclose = function () {
             showNotification("通知系统关闭。", "alert");
-        }
+        };
         window.onbeforeunload = function () {
             webSocket.close();
         }

@@ -33,6 +33,7 @@ public class DAOFactory {
     private static final AdjustLayoutDAOImpl adjustLayoutDAOImpl = new AdjustLayoutDAOImpl();
     private static final DistanceDAOImpl distanceDAOImpl = new DistanceDAOImpl();
     private static final UserConfigDAOImpl userConfigDAOImpl = new UserConfigDAOImpl();
+    private static final TaskDAOImpl taskDAOImpl = new TaskDAOImpl();
 
     public static UsersDAOImpl getUserDAOInstance() {
         return usersDAOImpl;
@@ -128,5 +129,9 @@ public class DAOFactory {
 
     public static UserConfigDAOImpl getUserConfigDAOImplInstance() {
         return userConfigDAOImpl;
+    }
+
+    public static TaskDAOImpl getTaskDAOImplInstance() {
+        return taskDAOImpl;
     }
 }
