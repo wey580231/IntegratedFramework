@@ -29,6 +29,14 @@ public class RG_AdjustDeviceEntity {
     private RG_OrderEntity orderEntity;
     private RG_ResourceEntity resourceEntity;
 
+    /*public String getIdA() {
+        return idA;
+    }
+
+    public void setIdA(String idA) {
+        this.idA = idA;
+    }*/
+
     public String getId() {
         return id;
     }

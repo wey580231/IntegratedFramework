@@ -3,7 +3,10 @@ package com.rengu.actions.mes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rengu.entity.*;
-import com.rengu.util.*;
+import com.rengu.util.ApsTools;
+import com.rengu.util.MessTable;
+import com.rengu.util.MySessionFactory;
+import com.rengu.util.Tools;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.Session;
 
@@ -13,7 +16,9 @@ import javax.jms.TextMessage;
 import javax.tools.Tool;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -77,10 +82,10 @@ public class MesConsumer extends Thread {
                 }
 
                 product.setId(dataNode.get("id").asText());
-                product.setName(dataNode.get("name").asText());
+                //product.setName(dataNode.get("name").asText());
                 product.setStock((short) dataNode.get("stock").asInt());
-                product.setUnit(dataNode.get("unit").asText());
-                product.setModel(dataNode.get("model").asText());
+                /*product.setUnit(dataNode.get("unit").asText());
+                product.setModel(dataNode.get("model").asText());*/
 
                 session.saveOrUpdate(product);
             }
@@ -97,14 +102,15 @@ public class MesConsumer extends Thread {
                 resource.setIdR(dataNode.get("id").asText());
                 resource.setName(dataNode.get("name").asText());
                 resource.setMobility((short) dataNode.get("mobility").asInt());
+                resource.setIdSite0(dataNode.get("IdSite").asText());
 
                 session.saveOrUpdate(resource);
             }
             //【已调】地点
             else if (mesType.equals(MessTable.MES_SITE)) {
-                if (dataNode.isArray()) {
-                    for (int i = 0; i < dataNode.size(); i++) {
-                        JsonNode subNode = dataNode.get(i);
+                if (dataNode.get("data").isArray()) {
+                    for (int i = 0; i < dataNode.get("data").size(); i++) {
+                        JsonNode subNode = dataNode.get("data").get(i);
                         RG_SiteEntity site = null;
 
                         site = session.get(RG_SiteEntity.class, subNode.get("id").asText());
@@ -181,7 +187,7 @@ public class MesConsumer extends Thread {
 //                            deportInfo.setFreePlace(Integer.parseInt(subDataNode.get("freePlace").asText()));
                             deportInfo.setReportTime(new Date());
 //
-//                            session.save(deportInfo);
+                            session.save(deportInfo);
                         }
                     }
                 }
@@ -261,47 +267,104 @@ public class MesConsumer extends Thread {
             //订单执行信息
             else if (mesType.equals(MessTable.MES_ORDERSTATE_INFO)) {
 
-                String idOrder = dataNode.get("idOrder").asText();
+
+
 
 //                RG_OrderEntity orderEntity = session.get(RG_OrderEntity.class, idOrder);
 
 //                if (orderEntity != null) {
-                String completeNum = dataNode.get("completeNum").asText();
+
+                //TODO 完工数量待以后确定
+                //String completeNum = dataNode.get("completeNum").asText();
 
                 RG_OrderStateEntity orderState = new RG_OrderStateEntity();
+                //x  order表的id
+                //orderState.getOrderEntity().setId(dataNode.get("idOrder").asText());
+
                 orderState.setIdTask(dataNode.get("idTask").asText());
-                orderState.setNameTask(dataNode.get("nameTask").asText());
-                orderState.setPlanDevice(dataNode.get("planDevice").asText());
-                orderState.setPlanCount(Short.parseShort(dataNode.get("planCount").asText()));
+
+                //x无
+                //orderState.setNameTask(dataNode.get("nameTask").asText());
+                String idTask = dataNode.get("idTask").asText();
+
+                RG_TaskEntity taskEntity = (RG_TaskEntity) session.get(RG_TaskEntity.class, idTask);
+                orderState.setNameTask(taskEntity.getName());
+
+                orderState.setPlanDevice(dataNode.get("planDevice").toString());
+
+                //x
+                short planCount = Short.parseShort(dataNode.get("planCount").asText());
+                orderState.setPlanCount(planCount);
+                //orderState.setPlanCount(Short.parseShort(dataNode.get("planCount").asText()));
 
                 orderState.setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
                 orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
-                orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").asText());
+                orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").toString());
 
-                //TODO 计划完工量格式不对，框架需要转换((合格+不合格)/计划数)
-                orderState.setActualFinishCount((short) 1);
+                //TODO x已完成  计划完工量格式不对，框架需要转换((合格+不合格)/计划数)
+                short unqulifiedCount = Short.parseShort(dataNode.get("unqualifiedCount").asText());
+                short qualifiedCount = Short.parseShort(dataNode.get("qualifiedCount").asText());
+
+                float actualFinishCount = (float) (unqulifiedCount + qualifiedCount) / planCount;
+                /*orderState.setActualFinishCount((short) 1);
                 orderState.setUnqualifiedCount(Short.parseShort(dataNode.get("unqualifiedCount").asText()));
-                orderState.setQualifiedCount(Short.parseShort(dataNode.get("qualifiedCount").asText()));
+                orderState.setQualifiedCount(Short.parseShort(dataNode.get("qualifiedCount").asText()));*/
+
+                //x
+                orderState.setUnqualifiedCount(unqulifiedCount);
+                orderState.setQualifiedCount(qualifiedCount);
+                orderState.setActualFinishCount(actualFinishCount);//实际完工量
+
                 orderState.setCurrTime(new Date());
                 orderState.setFinished(Boolean.parseBoolean(dataNode.get("isCompleted").asText()));
-                orderState.setFinishPercent(Float.parseFloat(dataNode.get("planCompletionRate").asText()));
+
+                //x无
+                String idOrder = dataNode.get("idOrder").asText();
+                int completeNum = Integer.parseInt(dataNode.get("completeNum").asText());
+
+
+                RG_OrderEntity orderEntity = (RG_OrderEntity) session.get(RG_OrderEntity.class, idOrder);
+                Set<RG_ScheduleEntity> schedules = orderEntity.getSchedules();
+                for (RG_ScheduleEntity sc : schedules) {
+                    for (RG_SnapshotNodeEntity rg_snapshotNodeEntity : sc.getSnapshot().getChilds()) {
+                        if (rg_snapshotNodeEntity.getApply()) {
+                            for (RG_SnapshotNodeEntity temp : rg_snapshotNodeEntity.getChilds()) {
+                                if (temp.getApply()){
+                                    int total = temp.getPlans().size();
+                                    //System.out.println("total=" + total);
+                                    float finishPercent = (float) completeNum/total;
+                                    orderState.setFinishPercent(finishPercent);
+                                }
+                            }
+                        }
+                    }
+
+                }
+                //orderState.setFinishPercent(Float.parseFloat(dataNode.get("planCompletionRate").asText()));
 
                 session.save(orderState);
 //                }
             }
             //【已调】工序指令信息
             else if (mesType.equals(MessTable.MES_INSTRUCT_INFO)) {
-//                RG_RealDataEntity data = new RG_RealDataEntity();
-//                data.setIdResource(dataNode.get("idResource").asText());
-//                data.setState(dataNode.get("state").asText());
-//                data.setGood(dataNode.get("good").asText());
-//                data.setStartLocation(dataNode.get("startLocation").asText());
-//                data.setEndLocation(dataNode.get("endLocation").asText());
-//                data.setValueType(dataNode.get("valueType").asText());
-//                data.setValue(dataNode.get("value").asText());
-//                session.save(data);
-
-                WebSocketNotification.broadcast(Tools.creat3DMessage("接收到新的控制指令!"));
+                RG_RealDataEntity data = new RG_RealDataEntity();
+                //data.setId(Tools.getUUID());
+                data.setIdResource(dataNode.get("idResource").asText());
+                data.setState(dataNode.get("state").asText());
+                data.setGood(dataNode.get("good").asText());
+                /*data.setStartLocation(dataNode.get("startLocation").asText());
+                data.setEndLocation(dataNode.get("endLocation").asText());*/
+                String valueType = dataNode.get("valueType").asText();
+                data.setValueType(valueType);
+                //TODO value待处理
+                if (valueType.equals("time")) {
+                    data.setValue(dataNode.get("startTime").asText());
+                }
+                if (valueType.equals("pos")) {
+                    data.setValue(dataNode.get("startLocation").asText());
+                }
+                //data.setValue(dataNode.get("value").asText());
+                session.save(data);
             }
             //【已调】设备调整
             else if (mesType.equals(MessTable.MES_ADJUSTDEVICE_INFO)) {
@@ -309,6 +372,14 @@ public class MesConsumer extends Thread {
                 Date reportTime = Tools.parseStandTextDate(dataNode.get("reportTime").asText());
                 String idResource = dataNode.get("idResource").asText();
                 Boolean enable = dataNode.get("enable").asBoolean();
+
+                RG_AdjustDeviceEntity data = new RG_AdjustDeviceEntity();
+                data.setId(Tools.getUUID());
+                data.setOrderId(idOrder);
+                data.setReportTime(reportTime);
+                data.setResoureId(idResource);
+                data.setCancelTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                session.save(data);
 
                 //TODO 待记录并产生异常信息
                 System.out.println(idOrder + "__" + reportTime + "__" + idResource + "__" + enable);

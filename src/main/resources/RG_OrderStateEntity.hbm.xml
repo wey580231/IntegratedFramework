@@ -37,7 +37,7 @@
             <column name="actualFinsihTime" sql-type="datetime" not-null="false"/>
         </property>
         <property name="actualFinishCount">
-            <column name="actualFinishCount" sql-type="tinyint(4)" not-null="false"/>
+            <column name="actualFinishCount" sql-type="float" not-null="false"/>
         </property>
         <property name="unqualifiedCount">
             <column name="unqualifiedCount" sql-type="tinyint(4)" not-null="false"/>
