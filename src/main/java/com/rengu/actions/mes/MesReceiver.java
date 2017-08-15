@@ -3,6 +3,7 @@ package com.rengu.actions.mes;
 import javax.jms.*;
 import javax.tools.Tool;
 
+import com.rengu.util.MyLog;
 import com.rengu.util.Tools;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;

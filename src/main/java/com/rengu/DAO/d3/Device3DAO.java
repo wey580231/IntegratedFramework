@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.*;
-import com.rengu.util.D3Tools;
-import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
-import com.rengu.util.UserConfigTools;
+import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
@@ -66,11 +63,14 @@ public class Device3DAO {
 
             root.put("data", deviceData);
 
+
             try {
                 result.append(mapper.writeValueAsString(root));
+                MyLog.getLogger().info("3D车间设备状态查询结果:" + mapper.writeValueAsString(root));
                 returnRes = true;
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
+                MyLog.getLogger().error("XXXXXXXXXX设备状态查询失败XXXXXXXXXXXXX" + e.getMessage());
             }
         }
 
@@ -105,7 +105,6 @@ public class Device3DAO {
                 mainData.put("idProduct", entity.getProductByIdProduct().getId());
                 mainData.put("productName", entity.getProductByIdProduct().getName());
                 mainData.put("quantity", entity.getQuantity());
-                //TODO 需要向MES发送activeMQ发送订单表请求
                 mainData.put("completeNum", entity.getFinishQuantity());
                 mainData.put("completeCent", (float) entity.getFinishQuantity() / entity.getQuantity());
                 mainData.put("t0", Tools.formatDate(entity.getT0()));
@@ -132,7 +131,6 @@ public class Device3DAO {
 
                         ObjectNode dataNode = mapper.createObjectNode();
 
-                        //TODO 需要向MES发送activeMQ发送订单子表请求，将下列字段值更新
                         dataNode.put("idTask", plan.getIdTask());
                         dataNode.put("nameTask", plan.getNameTask());
                         dataNode.put("planDevice", plan.getNameResource());
@@ -164,8 +162,10 @@ public class Device3DAO {
                 try {
                     result.append(mapper.writeValueAsString(root));
                     returnRes = true;
+                    MyLog.getLogger().info("3D车间订单状态查询结果:"+mapper.writeValueAsString(root));
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
+                    MyLog.getLogger().error("XXXXXXXXXX订单状态查询失败XXXXXXXXXXXXX" + e.getMessage());
                 }
             }
         }

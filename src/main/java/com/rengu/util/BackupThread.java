@@ -35,7 +35,7 @@ public class BackupThread implements Runnable {
                 }
             }
 
-            System.out.println("======线程====" + apsState);
+            MyLog.getLogger().info("======线程====" + apsState);
 
             queryCount++;
 

@@ -3,20 +3,25 @@ package com.rengu.servlet;
 import com.rengu.actions.mes.MesConsumer;
 import com.rengu.actions.mes.MesReceiver;
 import com.rengu.util.ApsTools;
+import com.rengu.util.MyLog;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import java.io.File;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Logger;
+import java.util.logging.Level;
 
 /**
  * Created by wey580231 on 2017/7/3.
@@ -29,29 +34,21 @@ public class StartUpServlet extends HttpServlet {
 
     private List<MesConsumer> threadList = new ArrayList<MesConsumer>();
 
-    private Logger logger = null;
-
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-//        String log4jLocation = config.getInitParameter("log4j-properties-location");
-//        String webAppPath = config.getServletContext().getRealPath("/");
-//        String log4jProp = webAppPath + log4jLocation;
-//
-//        File props = new File(log4jProp);
-//        if (props.exists()) {
-//            System.out.println("使用: " + log4jProp + "初始化日志设置信息");
-//            PropertyConfigurator.configure(log4jProp);
-//        } else {
-//            System.err.println("*** " + log4jProp + " 文件没有找到， 所以使用 BasicConfigurator初始化");
-//            BasicConfigurator.configure();
-//        }
-//
-//        logger = Logger.getLogger(StartUpServlet.class.getName());
-//
-//        logger.info(" debug ");
-//
-//        logger.warning("yayaayayayy");
+        String log4jLocation = config.getInitParameter("log4j-properties-location");
+        String webAppPath = config.getServletContext().getRealPath("/");
+        String log4jProp = webAppPath + log4jLocation;
+
+        File props = new File(log4jProp);
+        if (props.exists()) {
+            PropertyConfigurator.configure(log4jProp);
+            MyLog.getLogger().info("使用: " + log4jProp + "初始化日志设置信息");
+        } else {
+            BasicConfigurator.configure();
+            MyLog.getLogger().info("*** " + log4jProp + " 文件没有找到， 所以使用 BasicConfigurator初始化");
+        }
 
         //【1】初始化Hibernate
         MySessionFactory.getSessionFactory();
@@ -77,7 +74,6 @@ public class StartUpServlet extends HttpServlet {
 
         //【4】第一次排程時将job、task、plan、log、order清空
         ApsTools.instance().resetApsDatabase();
-
     }
 
     @Override
