@@ -150,7 +150,6 @@ public class State3DAO {
                 RG_LayoutDetailEntity detail = iter.next();
                 for (int i = 0; i < arr.length; i++) {
                     if (detail.getId().equals(arr[i].getId())) {
-                        System.out.println(detail.getId() + "__" + arr[i].getId() + "__" + arr[i].getExist());
                         detail.setPos(arr[i].getPos());
                         detail.setState(arr[i].getState());
                         detail.setItem(arr[i].getItem());

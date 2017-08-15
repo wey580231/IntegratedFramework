@@ -52,7 +52,6 @@ public class MesReceiver extends Thread {
     @Override
     public void run() {
         try {
-            MyLog.getLogger().info("yang");
             Tools.showLog();
             while (runningFlag) {
                 //设置接收者接收消息的时间，为了便于测试，这里谁定为100s

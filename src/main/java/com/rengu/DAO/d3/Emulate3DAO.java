@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 
+import java.lang.annotation.Native;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -176,16 +177,17 @@ public class Emulate3DAO {
                 ArrayNode deviceNode = mapper.createArrayNode();
 
                 //Yang 20170808 获取参与此次订单的所有设备
-                query = session.createNativeQuery("select distinct idResource from rg_plan where idOrder=:idOrder and idSnapshort =:idSnapshort");
+                query = session.createNativeQuery("select distinct idResource from rg_plan rp left join rg_resource rr on rp.idResource = rr.id where rr.critical='T'and rp.idResource !='UR5' and rp.idOrder=:idOrder and rp.idSnapshort =:idSnapshort");
                 query.setParameter("idOrder", entity.getId());
                 query.setParameter("idSnapshort", snapshotId);
                 List<String> deviceList = query.list();
                 for (String dev : deviceList) {
                     deviceNode.add(dev);
                 }
+                deviceNode.add("KR16_CQ");
 
-                dataNode.put("id", entity.getName());
-                dataNode.put("name", product.getName());
+                dataNode.put("id", entity.getId());
+                dataNode.put("name", entity.getName());
                 dataNode.put("info", arrayNode);
                 dataNode.put("device", deviceNode);
                 array.add(dataNode);
@@ -255,7 +257,19 @@ public class Emulate3DAO {
                 }
                 arrayNode.add(node);
             }
+            ArrayNode deviceNode = mapper.createArrayNode();
+
+            //Yang 20170808 获取参与此次订单的所有设备
+            query = session.createNativeQuery("select distinct idResource from rg_plan rp left join rg_resource rr on rp.idResource = rr.id where rr.critical='T'and rp.idResource !='UR5' and rp.idSnapshort =:idSnapshort");
+            query.setParameter("idSnapshort", snapshotId);
+            List<String> deviceList = query.list();
+            for (String dev : deviceList) {
+                deviceNode.add(dev);
+            }
+            deviceNode.add("KR16_CQ");
+
             dataNode.put("info", arrayNode);
+            dataNode.put("device", deviceNode);
 
             array.add(dataNode);
 

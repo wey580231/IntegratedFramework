@@ -126,7 +126,7 @@ public class ApsTools {
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
                 "&" +
-                "BUFFER=001"+
+                "BUFFER=001" +
                 "&" +
                 "REPLY=" + ApsTools.instance().getDispatchOrderAddress() +
                 "&" +
@@ -179,7 +179,7 @@ public class ApsTools {
     public static void getScheduleResult(RG_SnapshotNodeEntity bottomSnapshot) throws SQLException, ClassNotFoundException {
         String SQLString = "select * from APS_PLAN";
         List<?> list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
-        System.out.println("APS_PLAN总计：" + list.size() + "个条目。");
+        MyLog.getLogger().info("APS_PLAN总计：" + list.size() + "个条目。");
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         for (Object object : list) {
             if (object instanceof HashMap) {
@@ -235,7 +235,6 @@ public class ApsTools {
                 rg_planEntity.setPriorityOrder(Short.parseShort(tempMap.get("PRIORITYORDER").toString()));
 //                rg_planEntity.setColorOrder(tempMap.get("COLOR").toString());
                 rg_planEntity.setState(Byte.parseByte(tempMap.get("STATE").toString()));
-                rg_planEntity.setProcessByIdProcess(session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString()));
                 rg_planEntity.setOrderByIdOrder(session.get(RG_OrderEntity.class, tempMap.get("IDORDER").toString()));
                 rg_planEntity.setResourceByIdResource(session.get(RG_ResourceEntity.class, tempMap.get("IDRESOURCE").toString()));
                 rg_planEntity.setClubByIdClub(session.get(RG_ClubEntity.class, tempMap.get("IDCLUB").toString()));
@@ -243,7 +242,18 @@ public class ApsTools {
                 rg_planEntity.setTyperescourceByIdTypeResource(session.get(RG_TyperescourceEntity.class, tempMap.get("IDGROUPRESOURCE").toString()));
                 rg_planEntity.setGroupresourceByIdGroupResource(session.get(RG_GroupresourceEntity.class, tempMap.get("IDTYPERESOURCE").toString()));
                 rg_planEntity.setProviderByIdProvider(session.get(RG_ProviderEntity.class, tempMap.get("IDPROVIDER").toString()));
-                //Snapshot
+
+                RG_ProcessEntity processEntity = session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString());
+                if(processEntity != null){
+                    rg_planEntity.setProcessByIdProcess(processEntity);
+
+                    RG_ProcessEntity parentProcess = processEntity.getProcessByIdProcess();
+
+                    if(parentProcess!=null){
+                        rg_planEntity.setProductByIdProduct(parentProcess.getProductByIdProduct());
+                    }
+                }
+
                 if (bottomSnapshot != null) {
                     bottomSnapshot.getPlans().add(rg_planEntity);
 
@@ -253,7 +263,7 @@ public class ApsTools {
                 session.save(rg_planEntity);
             }
         }
-        System.out.println("APS_PLAN 表同步完成");
+        MyLog.getLogger().info("APS_PLAN 表同步完成");
     }
 
     //设备资源取消

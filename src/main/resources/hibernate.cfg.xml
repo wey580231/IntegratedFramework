@@ -49,6 +49,7 @@
         <!-- 3D车间接口 -->
         <mapping resource="RG_LayoutEntity.hbm.xml"/>
         <mapping resource="RG_LayoutDetailEntity.hbm.xml"/>
+        <mapping resource="RG_LayoutDistanceEntity.hbm.xml"/>
         <mapping resource="RG_EmulateDataEntity.hbm.xml"/>
         <mapping resource="RG_EmulateResultEntity.hbm.xml"/>
         <mapping resource="RG_RealDataEntity.hbm.xml"/>

@@ -16,11 +16,9 @@ public class AssisantprocessDAOImpl extends SuperDAOImpl implements Assisantproc
     @Override
     public List<RG_AssisantprocessEntity> findAll() {
         Session st = MySessionFactory.getSessionFactory().getCurrentSession();
-        System.out.println(st.hashCode()+"=====");
         st.close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
 
-        System.out.println(session.hashCode()+"==*****===");
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
             session.beginTransaction();
