@@ -49,10 +49,10 @@
                         <tbody>
                         <tr>
                             <td></td>
-                            <th>名称</th>
-                            <th>布局详情</th>
-                            <th>场景</th>
-                            <th>详情</th>
+                            <th>布局名称</th>
+                            <th>概述</th>
+                            <th>场景图</th>
+                            <th>设备详情</th>
                         </tr>
                         <tr ng-repeat="layout in factoryLayoutList track by $index" ng-init="renderTable($last)">
                             <td style="line-height: 70px;height:70px"><input id="check" name="check" type="checkbox"></td>
@@ -77,11 +77,7 @@
                 <!-- /.mail-box-messages -->
             </div>
 
-            <!-- /.box-body -->
-            <!-- Horizontal Form -->
         </div>
-
-
 
         <!--详情窗口-->
         <div class="modal fade" id="modal-add">
@@ -117,13 +113,10 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <!-- /.table -->
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
 </div>

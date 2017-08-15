@@ -37,7 +37,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到应急优化回复消息啦============");
+            MyLog.getLogger().info("=============收到应急优化回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
@@ -83,7 +83,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到备份快照回复消息啦============");
+            MyLog.getLogger().info("=============收到备份快照回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -130,12 +130,12 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到恢复快照回复消息啦============");
+            MyLog.getLogger().info("=============收到恢复快照回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
                 Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-                if(!session.getTransaction().isActive()){
+                if (!session.getTransaction().isActive()) {
                     session.beginTransaction();
                 }
 
@@ -170,7 +170,7 @@ public class FeedBackStateAction extends SuperAction {
 
     //接收恢复交互控件结果
     public void recoverInterX() {
-        System.out.println("接受aps恢复交互控件结果===========");
+        MyLog.getLogger().info("接受aps恢复交互控件结果===========");
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
@@ -187,7 +187,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到订单下发回复消息啦============");
+            MyLog.getLogger().info("=============收到订单下发回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
 
@@ -238,7 +238,7 @@ public class FeedBackStateAction extends SuperAction {
             String[] state = (String[]) parameterMap.get("STATE");
             String[] message = (String[]) parameterMap.get("MESSAGE");
 
-            System.out.println("=============收到计算结果回复消息啦============");
+            MyLog.getLogger().info("=============收到计算结果回复消息啦============");
 
             if (id.length > 0 && state.length > 0 && message.length > 0) {
                 switchResult(state[0]);
@@ -387,7 +387,6 @@ public class FeedBackStateAction extends SuperAction {
                         //在非应急排程下，接收到aps的接口信息后，通知APS创建快照
                         if (replyState.equals(APS_RESULT_SUCCESS) && !userconfig.isErrorSchedule()) {
                             int tmpState = ApsTools.instance().queryExecuteState();
-                            System.out.println("启动线程前：" + tmpState);
                             BackupThread queryThrad = new BackupThread(BackupThread.Recover_Snapshot, bottomSnapshot.getId());
                             Thread thread = new Thread(queryThrad);
                             thread.start();
@@ -457,8 +456,7 @@ public class FeedBackStateAction extends SuperAction {
 
     //模拟aps应急优化结果
     public void emulateApsInterResult() {
-        System.out.println("测试APS的自动交互结果");
-        System.out.println("=======APS 交互結果转换中======");
+        MyLog.getLogger().info("=======APS 交互結果转换中======");
 
         //【1】查询APS的定单表是否含有state=0的订单，如果有，则先调用应急交互优化接口，重新计算
         List list = new ArrayList();

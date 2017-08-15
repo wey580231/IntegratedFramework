@@ -19,6 +19,7 @@ public class RG_LayoutEntity {
 
     @JsonIgnore
     private Set<RG_LayoutDetailEntity> details = new HashSet<RG_LayoutDetailEntity>();
+
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ScheduleId")
     private Set<RG_ScheduleEntity> schedules = new HashSet<RG_ScheduleEntity>();
 

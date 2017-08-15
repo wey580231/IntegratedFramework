@@ -112,7 +112,6 @@ public class Tools {
 
     //创建普通通知消息
     public static String creatNotificationMessage(String message, String notificationType) {
-        //生成根节点树
         JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
         ObjectNode objectNode = jsonNodeFactory.objectNode();
         objectNode.put("MessageType", "notification");
@@ -129,7 +128,6 @@ public class Tools {
 
     //向前端通知3D实时信息
     public static String creat3DMessage(String message) {
-        //生成根节点树
         JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
         ObjectNode objectNode = jsonNodeFactory.objectNode();
         objectNode.put("MessageType", "3DMessage");
@@ -357,7 +355,7 @@ public class Tools {
                 " |_|  \\_\\\\___||_| |_| \\_____| \\__,_|(_)\\_____|\\___/ |_| |_| |_|| .__/  \\__,_||_| |_| \\__, |\n" +
                 "                                                               | |                    __/ |\n" +
                 "                                                               |_|                   |___/ \n";
-        System.out.println(ss);
+        MyLog.getLogger().info(ss);
     }
 
     public static String getSha(String str) {
@@ -388,9 +386,5 @@ public class Tools {
         }
 
         return null;
-    }
-
-    public static void logMessage() {
-
     }
 }

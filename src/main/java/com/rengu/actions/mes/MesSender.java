@@ -2,6 +2,7 @@ package com.rengu.actions.mes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rengu.util.MyLog;
 import com.rengu.util.Tools;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -59,7 +60,7 @@ public class MesSender {
 
             producer.send(tx);
 
-            System.out.println("回复确认消息:" + message);
+            MyLog.getLogger().info("回复确认消息:" + message);
 
             session.commit();
         } catch (JMSException e) {
@@ -95,7 +96,7 @@ public class MesSender {
 
         rootNode.put("DATA", dataNode);
 
-        System.out.println(rootNode.toString());
+        MyLog.getLogger().info(rootNode.toString());
 
         sendMessage(rootNode.toString());
     }

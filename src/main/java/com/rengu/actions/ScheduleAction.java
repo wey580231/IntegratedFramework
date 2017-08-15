@@ -83,6 +83,9 @@ public class ScheduleAction extends SuperAction {
             if (layoutNodes.size() == 1) {
                 RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
                 Set<RG_LayoutDetailEntity> rg_layoutDetailEntitySet = layout.getDetails();
+
+                //TODO 根据选择的布局中包含znzppt、rjxzpt的数量来更新aps的site、site-site数据库表
+
                 //开启所有资源
 //                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1'");
 //                更新资源可用情况
@@ -92,19 +95,8 @@ public class ScheduleAction extends SuperAction {
                     if (resourceExist.equals("true") && resourceState.equals("running")) {
                         String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
                         Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
-                        RG_ResourceEntity rg_resourceEntity = session.get(RG_ResourceEntity.class, rg_layoutDetailEntity.getItem());
-//                        if (rg_resourceEntity != null) {
-//                            String assisantResource = rg_resourceEntity.getAssisantResource();
-//                            if (assisantResource != null) {
-//                                System.out.println("发现载具：" + assisantResource);
-//                                String SQlStringTemp = "update APS_RESOURCE set STATE = '1' where id = '" + assisantResource + "'";
-//                                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlStringTemp);
-//                            }
-//                        } else {
-//                            System.out.println("资源不存在：" + rg_layoutDetailEntity.getItem());
-//                        }
                     } else {
-                        System.out.println(rg_layoutDetailEntity.getItem() + "资源不可用");
+                        MyLog.getLogger().info(rg_layoutDetailEntity.getItem() + "资源不可用");
                     }
                 }
                 //将托盘资源职位可用状态
