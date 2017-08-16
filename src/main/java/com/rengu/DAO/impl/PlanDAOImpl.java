@@ -61,7 +61,7 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.snapShort.id =:id";
+        String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.snapShort.id =:id order by rg_planEntity.t1Task asc";
         Query query = session.createQuery(hql);
         query.setParameter("id", id);
         List list = query.list();
