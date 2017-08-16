@@ -15,9 +15,12 @@ import java.util.List;
 public class EventLogAction extends SuperAction {
     public void getAllEventLog() throws Exception {
         EventLogDAO eventLogDAO = DAOFactory.getEventLogDAOImplInstance();
-        List list = eventLogDAO.findAll();
-        String jsonString = Tools.entityConvertToJsonString(list);
-        Tools.jsonPrint(jsonString, this.httpServletResponse);
+        String jsonString = eventLogDAO.getLatestEventEventDialog();
+        if (jsonString.length() > 0) {
+            Tools.jsonPrint(jsonString, this.httpServletResponse);
+        } else {
+            Tools.jsonPrint(Tools.resultCode("error", "Can't find layout info"), this.httpServletResponse);
+        }
     }
 
     public void save() throws Exception {

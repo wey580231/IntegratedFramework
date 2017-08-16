@@ -240,7 +240,6 @@ public class SnapshotDao {
                                 }
 
                                 int pDelayStartTime = Integer.parseInt(entity.getpDelayStartTime());
-                                int pAdvanceStartTime = Integer.parseInt(entity.getpAdvanceStartTime());
 
                                 long stime = currPlanStartTime + pDelayStartTime - lastTime + perPlanDelayMinuteTime;
 
@@ -281,18 +280,8 @@ public class SnapshotDao {
                                     nextResult.setSite(null);
                                 }
 
-                                long stime = 0;
-
-                                if (entity.getNextProcessRefetTime() != null) {
-                                    String[] referTime = entity.getNextProcessRefetTime().split(",");
-                                    if (referTime[m].toLowerCase().equals("e")) {
-                                        stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
-                                    } else if (referTime[m].toLowerCase().equals("s")) {
-                                        stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
-                                    }
-                                } else {
-                                    stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
-                                }
+                                int pAdvanceStartTime = Integer.parseInt(entity.getpAdvanceStartTime());
+                                long stime = currPlanEndTime  - pAdvanceStartTime + perPlanDelayMinuteTime;
 
                                 long lastTime = 2;
 
