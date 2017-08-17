@@ -203,6 +203,9 @@ angular.module("IntegratedFramework", [
         service.recoverSnapshot = backUrl + "snapshot/recoverSnapshot.action";
         service.queryRecoverSnapshot = backUrl + "snapshot/queryRecoverSnapshot.action";
 
+        <!-- MES接口 -->
+        service.CarryInfoList = backUrl + "mes/getAllCarrys.action";
+
 
         return service;
     })
