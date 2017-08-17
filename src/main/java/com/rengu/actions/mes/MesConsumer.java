@@ -185,9 +185,9 @@ public class MesConsumer extends Thread {
 
                             deportInfo.setDeportId(realData.get("id").asText());
 //                            deportInfo.setDeportName(subDataNode.get("name").asText());
-//                            deportInfo.setStock(Integer.parseInt(subDataNode.get("stock").asText()));
+                            deportInfo.setStock(Integer.parseInt(realData.get("stock").asText()));
 //                            deportInfo.setTotalPlace(Integer.parseInt(subDataNode.get("totalPlace").asText()));
-//                            deportInfo.setFreePlace(Integer.parseInt(subDataNode.get("freePlace").asText()));
+                            deportInfo.setFreePlace(Integer.parseInt(realData.get("freePlace").asText()));
                             deportInfo.setReportTime(new Date());
 //
                             session.save(deportInfo);
@@ -196,12 +196,14 @@ public class MesConsumer extends Thread {
                 }
                 //仓库搬运机器人信息
                 else if (type.equals(MessTable.MES_CARRY_INFO)) {
+                    JsonNode subDataNode = dataNode.get("data");
+
                     RG_Mes_CarryInfo carryInfo = new RG_Mes_CarryInfo();
 
-                    carryInfo.setAgvId(dataNode.get("id").asText());
-                    carryInfo.setState(dataNode.get("state").asBoolean());
-                    carryInfo.setJobDesc(dataNode.get("jobDesc").asText());
-                    carryInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    carryInfo.setAgvId(subDataNode.get("id").asText());
+                    carryInfo.setState(Boolean.parseBoolean(subDataNode.get("state").asText()));
+                    carryInfo.setJobDesc(subDataNode.get("jobDesc").asText());
+                    carryInfo.setIdOrder(subDataNode.get("idOrder").asText());
                     carryInfo.setReportTime(new Date());
 
                     session.save(carryInfo);
