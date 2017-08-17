@@ -229,4 +229,9 @@
     <package name="Online" namespace="/online" extends="struts-default">
         <action name="findByState" class="com.rengu.actions.OrdersAction" method="findByState"/>
     </package>
+
+    <!-- MES接口 -->
+    <package name="mes" namespace="/mes" extends="struts-default">
+        <action name="getAllCarrys" class="com.rengu.actions.CarryAction" method="getAllCarrys"/>
+    </package>
 </struts>
