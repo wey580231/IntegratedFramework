@@ -22,6 +22,12 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
                 hideLoadingPage();
             });
+
+            myHttpService.get(serviceList.AssemblyCarryInfoList).then(function (response) {
+                $scope.AssemblyCarryList = response.data;
+
+                hideLoadingPage();
+            });
         });
 
 

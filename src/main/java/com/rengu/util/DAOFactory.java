@@ -36,6 +36,7 @@ public class DAOFactory {
     private static final TaskDAOImpl taskDAOImpl = new TaskDAOImpl();
 
     private static final CarryDAOImpl carryDAOImpl = new CarryDAOImpl();
+    private static final AssemblyCarryInfoDAOImpl assemblyCarryInfoDAOImpl = new AssemblyCarryInfoDAOImpl();
 
     public static UsersDAOImpl getUserDAOInstance() {
         return usersDAOImpl;
@@ -139,5 +140,9 @@ public class DAOFactory {
 
     public static CarryDAOImpl getCarryDAOImplInstance() {
         return carryDAOImpl;
+    }
+
+    public static AssemblyCarryInfoDAOImpl getAssemblyCarryInfoDAOImplInstance() {
+        return assemblyCarryInfoDAOImpl;
     }
 }
