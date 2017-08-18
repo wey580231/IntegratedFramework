@@ -7,4 +7,6 @@ import java.util.List;
  */
 public interface EventLogDAO<T> extends SuperDAO {
     List<T> findAll();
+
+    String getLatestEventEventDialog();
 }
