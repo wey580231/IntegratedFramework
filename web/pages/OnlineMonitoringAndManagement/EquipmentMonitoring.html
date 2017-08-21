@@ -7,26 +7,51 @@
     .tableInfo{
         margin-top: 5px;
     }
+
+    #div > div > .zr-element{
+        width: 100%;
+    }
+
 </style>
 <section class="content">
-    <div class="box-primary">
+    <!--<div class="box-primary">-->
     <!-- DONUT CHART -->
-        <div class="box box-danger">
-        <div class="box-header with-border">
-            <h3 class="box-title">Donut Chart</h3>
+        <div class="box box-danger box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">DeportInfo</h3>
 
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
             </div>
+            <div class="box-body">
+                <div class="col-md-3">
+                    <div>
+                            <h2>请选择货架:</h2>
+                    </div>
+                    <br/>
+                    <div class="form-group">
+                        <select class="form-control select2" style="width: 100%;" id="select">
+                            <option selected="selected"></option>
+                            <!--<option ng-repeat="data in rootdata">{{data.name}}</option>-->
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="pieChart" style="height:300px;width: 100%;"></div>
+                    <!--<canvas id="pieChart" style="height:200px; width: 500px;"></canvas>-->
+                </div>
+                <div class="col-md-1">
+                    <div style="width: 100%;">
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
         </div>
-        <div class="box-body">
-            <canvas id="pieChart" style="height:250px"></canvas>
-        </div>
-        <!-- /.box-body -->
-    </div>
-    </div>
+    <!--</div>-->
     <!--<div class="row">
         <div class="col-xs-12">
             &lt;!&ndash; interactive chart &ndash;&gt;
@@ -55,7 +80,8 @@
         &lt;!&ndash; /.col &ndash;&gt;
     </div>-->
 
-
+</section>
+<section class="content">
     <div class="box box-primary">
         <!-- /.box-header -->
         <div class="box-body no-padding">

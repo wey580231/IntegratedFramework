@@ -15,7 +15,12 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
         layer.load(0);
         $(function () {
+            //初始化下拉数据
+            $(".select2").select2();
+
             loadRightFloatMenu();
+
+            loadPieChart();
 
             myHttpService.get(serviceList.CarryInfoList).then(function (response) {
                 $scope.CarryList = response.data;
@@ -52,7 +57,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         //- PIE CHART -
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
-        var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+        /*var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
         var pieChart = new Chart(pieChartCanvas);
         var PieData = [
             {
@@ -118,8 +123,62 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         };
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
-        pieChart.Doughnut(PieData, pieOptions);
+        pieChart.Doughnut(PieData, pieOptions);*/
 
+
+        function loadPieChart() {
+            var myChart = echarts.init(document.getElementById('pieChart'));
+
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'right',
+                    data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                },
+
+                calculable: true,
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    position: 'center',
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            }
+                        },
+                        data: [
+                            {value: 335, name: '直接访问'},
+                            {value: 310, name: '邮件营销'},
+                            {value: 234, name: '联盟广告'},
+                            {value: 135, name: '视频广告'},
+                            {value: 1548, name: '搜索引擎'}
+                        ]
+                    }
+                ]
+            };
+
+            myChart.setOption(option);
+        }
 
         /*
          * 温度
