@@ -48,7 +48,7 @@ public class ApsTable {
 
     @Test
     public void sendOrder() {
-        ObjectMapper mapper = new ObjectMapper();               //定义转换类
+        ObjectMapper mapper = new ObjectMapper();                   //定义转换类
         ObjectNode dataNode = mapper.createObjectNode();            //创建根节点
 
         dataNode.put("id", "a");

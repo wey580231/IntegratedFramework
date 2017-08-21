@@ -8,7 +8,10 @@ import com.rengu.util.MessTable;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 
@@ -68,6 +72,8 @@ public class MesConsumer extends Thread {
             JsonNode dataNode = root.get("DATA");
 
             Session session = MySessionFactory.getSessionFactory().openSession();
+            Transaction tx = null;
+
             session.beginTransaction();
 
             //【已调】产品
@@ -82,10 +88,10 @@ public class MesConsumer extends Thread {
                 }
 
                 product.setId(dataNode.get("id").asText());
-                //product.setName(dataNode.get("name").asText());
+                product.setName(dataNode.get("name").asText());
                 product.setStock((short) dataNode.get("stock").asInt());
-                /*product.setUnit(dataNode.get("unit").asText());
-                product.setModel(dataNode.get("model").asText());*/
+                product.setUnit(dataNode.get("unit").asText());
+                product.setModel(dataNode.get("model").asText());
 
                 session.saveOrUpdate(product);
             }
@@ -102,7 +108,6 @@ public class MesConsumer extends Thread {
                 resource.setIdR(dataNode.get("id").asText());
                 resource.setName(dataNode.get("name").asText());
                 resource.setMobility((short) dataNode.get("mobility").asInt());
-                resource.setIdSite0(dataNode.get("IdSite").asText());
 
                 session.saveOrUpdate(resource);
             }
@@ -134,8 +139,6 @@ public class MesConsumer extends Thread {
                 if (dataNode.isArray()) {
                     for (int i = 0; i < dataNode.size(); i++) {
                         JsonNode subNode = dataNode.get(i);
-
-                        System.out.println(subNode.get("idSite1").asText() + "__" + subNode.get("idSite2").asText() + "__" + subNode.get("distance").asInt());
 
                         RG_SiteEntity site1 = (RG_SiteEntity) session.get(RG_SiteEntity.class, subNode.get("idSite1").asText());
                         RG_SiteEntity site2 = (RG_SiteEntity) session.get(RG_SiteEntity.class, subNode.get("idSite2").asText());
@@ -182,9 +185,9 @@ public class MesConsumer extends Thread {
 
                             deportInfo.setDeportId(realData.get("id").asText());
 //                            deportInfo.setDeportName(subDataNode.get("name").asText());
-//                            deportInfo.setStock(Integer.parseInt(subDataNode.get("stock").asText()));
+                            deportInfo.setStock(Integer.parseInt(realData.get("stock").asText()));
 //                            deportInfo.setTotalPlace(Integer.parseInt(subDataNode.get("totalPlace").asText()));
-//                            deportInfo.setFreePlace(Integer.parseInt(subDataNode.get("freePlace").asText()));
+                            deportInfo.setFreePlace(Integer.parseInt(realData.get("freePlace").asText()));
                             deportInfo.setReportTime(new Date());
 //
                             session.save(deportInfo);
@@ -193,12 +196,14 @@ public class MesConsumer extends Thread {
                 }
                 //仓库搬运机器人信息
                 else if (type.equals(MessTable.MES_CARRY_INFO)) {
+                    JsonNode subDataNode = dataNode.get("data");
+
                     RG_Mes_CarryInfo carryInfo = new RG_Mes_CarryInfo();
 
-                    carryInfo.setAgvId(dataNode.get("id").asText());
-                    carryInfo.setState(dataNode.get("state").asBoolean());
-                    carryInfo.setJobDesc(dataNode.get("jobDesc").asText());
-                    carryInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    carryInfo.setAgvId(subDataNode.get("id").asText());
+                    carryInfo.setState(Boolean.parseBoolean(subDataNode.get("state").asText()));
+                    carryInfo.setJobDesc(subDataNode.get("jobDesc").asText());
+                    carryInfo.setIdOrder(subDataNode.get("idOrder").asText());
                     carryInfo.setReportTime(new Date());
 
                     session.save(carryInfo);
@@ -267,26 +272,21 @@ public class MesConsumer extends Thread {
             //订单执行信息
             else if (mesType.equals(MessTable.MES_ORDERSTATE_INFO)) {
 
-
-
-
-//                RG_OrderEntity orderEntity = session.get(RG_OrderEntity.class, idOrder);
-
-//                if (orderEntity != null) {
+                //获取订单id
+                String idOrder = dataNode.get("idOrder").asText();
 
                 //TODO 完工数量待以后确定
                 //String completeNum = dataNode.get("completeNum").asText();
 
+                //订单状态
                 RG_OrderStateEntity orderState = new RG_OrderStateEntity();
-                //x  order表的id
-                //orderState.getOrderEntity().setId(dataNode.get("idOrder").asText());
+
+
 
                 orderState.setIdTask(dataNode.get("idTask").asText());
 
-                //x无
-                //orderState.setNameTask(dataNode.get("nameTask").asText());
+                //获取task表中的nameTask字段
                 String idTask = dataNode.get("idTask").asText();
-
                 RG_TaskEntity taskEntity = (RG_TaskEntity) session.get(RG_TaskEntity.class, idTask);
                 orderState.setNameTask(taskEntity.getName());
 
@@ -297,7 +297,26 @@ public class MesConsumer extends Thread {
                 orderState.setPlanCount(planCount);
                 //orderState.setPlanCount(Short.parseShort(dataNode.get("planCount").asText()));
 
-                orderState.setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
+
+
+                //获取plan表中的数据
+                /*List<RG_PlanEntity> planEntity=  (List<RG_PlanEntity>)session.createQuery("select plan from RG_PlanEntity plan where plan.orderByIdOrder.id =: idOrder and plan.idTask =: idTask").setParameter("idOrder",idOrder).setParameter("idTask",idTask).list();
+                for (RG_PlanEntity plan: planEntity) {
+                    String t1Task = plan.getT1Task();
+                    String t2Task = plan.getT2Task();
+                }*/
+
+
+                String actualDispatchTime = dataNode.get("realExcuteTime").toString();
+                /*System.out.println("actualDispatchTime=" + actualDispatchTime);
+                System.out.println("开始时间（==）：" + actualDispatchTime == t1Task);
+                System.out.println("开始时间（equals）：" + actualDispatchTime.equals(t1Task));*/
+                String actualFinsihTime = dataNode.get("realFinishTime").toString();
+                /*System.out.println("actualFinsihTime=" + actualFinsihTime);
+                System.out.println("结束时间（==）：" + actualFinsihTime == t2Task);
+                System.out.println("结束时间（equals）：" + actualFinsihTime.equals(t2Task));*/
+
+                orderState .setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
                 orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
                 orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").toString());
 
@@ -305,10 +324,10 @@ public class MesConsumer extends Thread {
                 short unqulifiedCount = Short.parseShort(dataNode.get("unqualifiedCount").asText());
                 short qualifiedCount = Short.parseShort(dataNode.get("qualifiedCount").asText());
 
-                float actualFinishCount = (float) (unqulifiedCount + qualifiedCount) / planCount;
-                /*orderState.setActualFinishCount((short) 1);
-                orderState.setUnqualifiedCount(Short.parseShort(dataNode.get("unqualifiedCount").asText()));
-                orderState.setQualifiedCount(Short.parseShort(dataNode.get("qualifiedCount").asText()));*/
+                float actualFinishCount = 0;
+                if(planCount != 0){
+                    actualFinishCount = (float) (unqulifiedCount + qualifiedCount) / planCount;
+                }
 
                 //x
                 orderState.setUnqualifiedCount(unqulifiedCount);
@@ -318,13 +337,66 @@ public class MesConsumer extends Thread {
                 orderState.setCurrTime(new Date());
                 orderState.setFinished(Boolean.parseBoolean(dataNode.get("isCompleted").asText()));
 
-                //x无
-                String idOrder = dataNode.get("idOrder").asText();
-                int completeNum = Integer.parseInt(dataNode.get("completeNum").asText());
-
-
+                //x获取订单拥有的排程数
                 RG_OrderEntity orderEntity = (RG_OrderEntity) session.get(RG_OrderEntity.class, idOrder);
-                Set<RG_ScheduleEntity> schedules = orderEntity.getSchedules();
+                String idProduct = orderEntity.getProductByIdProduct().getId();
+
+                List<RG_ProcessEntity> processEntity=  (List<RG_ProcessEntity>)session.createQuery("select process from RG_ProcessEntity process where process.productByIdProduct.id =:idProduct").setParameter("idProduct",idProduct).list();
+                int count = 0;
+                for (RG_ProcessEntity process : processEntity) {
+                    List<RG_ProcessEntity> processEntity2=  (List<RG_ProcessEntity>)session.createQuery("select process from RG_ProcessEntity process").list();
+                    for (RG_ProcessEntity process2 : processEntity2) {
+                        if(process2.getIdRoot().equals(process.getId()) && !process2.isTransport()){
+                            count++;  //订单拥有的排程数
+
+                            //向工序页面插入异常
+                            List<RG_PlanEntity> planEntity=  (List<RG_PlanEntity>)session.createQuery("select plan from RG_PlanEntity plan where processByIdProcess.id =:idProcess").setParameter("idProcess",process2.getId()).list();
+
+                            for (RG_PlanEntity plan : planEntity) {
+                                String t1Task = plan.getT1Task();
+                                String t2Task = plan.getT2Task();
+
+
+
+                                /*try {
+                                    tx = session.beginTransaction();*/
+                                    if(!t1Task.equals(actualDispatchTime) || !t2Task.equals(actualFinsihTime)) {
+                                        //调整工序异常
+                                        RG_AdjustProcessEntity adjustProcess = new RG_AdjustProcessEntity();
+
+                                        adjustProcess.setId(Tools.getUUID());
+                                        adjustProcess.setIdOrder(idOrder);
+                                        adjustProcess.setIdTask(idTask);
+                                        adjustProcess.setState(1);
+
+                                        session.save(adjustProcess);
+                                    }
+                                        /*session.flush();
+                                        session.refresh(adjustProcess);
+
+                                    }
+                                    tx.commit();
+                                }catch (HibernateException he){
+                                    tx.rollback();
+                                    throw he;
+                                }finally {
+                                    session.close();
+                                }*/
+
+                            }
+                        }
+                    }
+
+                }
+                System.out.println("count....:" + count);
+                float finishPercent = 0;
+                if(count != 0){
+                    finishPercent = actualFinishCount / count;
+                    orderState.setFinishPercent(finishPercent);
+                }
+
+
+                /*Set<RG_ScheduleEntity> schedules = orderEntity.getSchedules();
                 for (RG_ScheduleEntity sc : schedules) {
                     for (RG_SnapshotNodeEntity rg_snapshotNodeEntity : sc.getSnapshot().getChilds()) {
                         if (rg_snapshotNodeEntity.getApply()) {
@@ -339,8 +411,7 @@ public class MesConsumer extends Thread {
                         }
                     }
 
-                }
-                //orderState.setFinishPercent(Float.parseFloat(dataNode.get("planCompletionRate").asText()));
+                }*/
 
                 session.save(orderState);
 //                }

@@ -3,6 +3,7 @@ package com.rengu.actions.d3;
 import com.opensymphony.xwork2.ActionContext;
 import com.rengu.DAO.d3.Emulate3DAO;
 import com.rengu.actions.SuperAction;
+import com.rengu.util.MyLog;
 import com.rengu.util.Tools;
 
 import java.util.Map;
@@ -25,6 +26,7 @@ public class Emulate3DAction extends SuperAction {
 
         if (parameterMap.size() == 1) {
             String[] types = (String[]) parameterMap.get("snapshotId");
+            MyLog.getLogger().info("3D车间查询快照下订单的模拟信息:" + types);
             if (types.length > 0) {
                 result = emulateDao.getEmulateResult(types[0], jsonString);
             }
@@ -47,6 +49,7 @@ public class Emulate3DAction extends SuperAction {
 
         if (parameterMap.size() == 1) {
             String[] types = (String[]) parameterMap.get("snapshotId");
+            MyLog.getLogger().info("3D车间查询快照对应的模拟信息:" + types);
             if (types.length > 0) {
                 result = emulateDao.getAllOrderEmulateResult(types[0], jsonString);
             }
@@ -57,11 +60,5 @@ public class Emulate3DAction extends SuperAction {
         } else {
             Tools.jsonPrint(Tools.resultCode("1", "Can't execute operation"), this.httpServletResponse);
         }
-    }
-
-    //TODO 获取实时数据流，等MES具备后再调整，预计到6月底
-    public void getRealFlow() {
-
-
     }
 }

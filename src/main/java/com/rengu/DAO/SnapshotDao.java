@@ -1,9 +1,13 @@
 package com.rengu.DAO;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rengu.actions.mes.MesSender;
 import com.rengu.entity.*;
 import com.rengu.util.ApsTools;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.SnapshotLevel;
+import com.rengu.util.Tools;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
@@ -19,16 +23,17 @@ import java.util.*;
 public class SnapshotDao {
 
     //Yang 20170809 aps地点与3d车间机器人停靠点转换关系
-    private static Map<String,String> distanceMap = new HashMap<String,String>();
-    static{
-        distanceMap.put("ZNZP","ZNZPPT_01");
-        distanceMap.put("RJXZ","RJXZPT_01");
-        distanceMap.put("TKD-L","AGV_L");
-        distanceMap.put("TKD-R","AGV_R");
-        distanceMap.put("CCJDJC","AGV_R");
-        distanceMap.put("XBC","XBC");
-        distanceMap.put("MTJDJC","OnlineTest");
-        distanceMap.put("ZHDXNJC","AssembleAccuracyTest");
+    private static Map<String, String> distanceMap = new HashMap<String, String>();
+
+    static {
+        distanceMap.put("ZNZP", "ZNZPPT_01");
+        distanceMap.put("RJXZ", "RJXZPT_01");
+        distanceMap.put("TKD-L", "AGV_L");
+        distanceMap.put("TKD-R", "AGV_R");
+        distanceMap.put("CCJDJC", "AGV_R");
+        distanceMap.put("XBC", "XBC");
+        distanceMap.put("MTJDJC", "OnlineTest");
+        distanceMap.put("ZHDXNJC", "AssembleAccuracyTest");
     }
 
     //将所有订单一起转换
@@ -235,7 +240,6 @@ public class SnapshotDao {
                                 }
 
                                 int pDelayStartTime = Integer.parseInt(entity.getpDelayStartTime());
-                                int pAdvanceStartTime = Integer.parseInt(entity.getpAdvanceStartTime());
 
                                 long stime = currPlanStartTime + pDelayStartTime - lastTime + perPlanDelayMinuteTime;
 
@@ -276,18 +280,8 @@ public class SnapshotDao {
                                     nextResult.setSite(null);
                                 }
 
-                                long stime = 0;
-
-                                if (entity.getNextProcessRefetTime() != null) {
-                                    String[] referTime = entity.getNextProcessRefetTime().split(",");
-                                    if (referTime[m].toLowerCase().equals("e")) {
-                                        stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
-                                    } else if (referTime[m].toLowerCase().equals("s")) {
-                                        stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
-                                    }
-                                } else {
-                                    stime = (endDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
-                                }
+                                int pAdvanceStartTime = Integer.parseInt(entity.getpAdvanceStartTime());
+                                long stime = currPlanEndTime  - pAdvanceStartTime + perPlanDelayMinuteTime;
 
                                 long lastTime = 2;
 
@@ -347,7 +341,6 @@ public class SnapshotDao {
 
                     if (list.size() > 0) {
                         RG_DistanceEntity distanceEntity = (RG_DistanceEntity) list.get(0);
-                        System.out.println(startSite + "__" + endSite);
                         if (distanceEntity != null && currPeed != null && distanceEntity.getDistance() > 0 && currPeed > 0) {
                             lastTime = distanceEntity.getDistance() / currPeed;
                         }
@@ -390,6 +383,8 @@ public class SnapshotDao {
 
                     Set<RG_OrderEntity> orders = rootParent.getSchedule().getOrders();
                     Iterator<RG_OrderEntity> iter = orders.iterator();
+
+                    //【1】更新订单状态
                     while (iter.hasNext()) {
                         RG_OrderEntity tmpOrder = iter.next();
                         tmpOrder.setState(Byte.parseByte("2"));
@@ -397,8 +392,60 @@ public class SnapshotDao {
                         session.update(tmpOrder);
                     }
 
-                    //TODO 加入对aps发布订单接口
                     if (ApsTools.instance().publishOrder(orderList) == ApsTools.STARTED) {
+
+                        //【2】将计划和订单下发给MES
+                        iter = orders.iterator();
+                        while (iter.hasNext()) {
+                            RG_OrderEntity tmpOrder = iter.next();
+                            ObjectMapper mapper = new ObjectMapper();
+                            ObjectNode dataNode = mapper.createObjectNode();
+
+                            dataNode.put("id", tmpOrder.getId());
+                            dataNode.put("name", tmpOrder.getName());
+                            dataNode.put("idProduct", tmpOrder.getProductByIdProduct().getId());
+                            dataNode.put("quantity", tmpOrder.getQuantity());
+                            dataNode.put("priority", tmpOrder.getPriority());
+                            dataNode.put("t0", Tools.formatToStandardDate(tmpOrder.getT0()));
+                            dataNode.put("t1", Tools.formatToStandardDate(tmpOrder.getT1()));
+                            dataNode.put("t2", Tools.formatToStandardDate(tmpOrder.getT2()));
+                            dataNode.put("ord", tmpOrder.getOrd());
+                            dataNode.put("t1Interaction", tmpOrder.getT1Interaction());
+                            dataNode.put("t2Interaction", tmpOrder.getT2Interaction());
+                            dataNode.put("t1Plan", Tools.formatToStandardDate(tmpOrder.getT1Plan()));
+                            dataNode.put("t2Plan", Tools.formatToStandardDate(tmpOrder.getT2Plan()));
+                            dataNode.put("advance", tmpOrder.getAdvance());
+                            dataNode.put("delay", tmpOrder.getDelay());
+                            dataNode.put("nbTask", tmpOrder.getNbTask());
+
+                            MesSender.instance().sendData("orderInfo", dataNode);
+                        }
+
+                        //生产工艺信息
+                        NativeQuery query = session.createNativeQuery("select idTask,idOrder,nameTask,rplan.idProduct,quantityTask,t1Task,t2Task " +
+                                "from rg_plan rplan left join rg_process rprocess on rplan.idProcess=rprocess.id where rprocess.transport = 0 and idSnapshort=:snapShot ");
+                        query.setParameter("snapShot", id);
+                        List plans = query.list();
+                        for (int i = 0; i < plans.size(); i++) {
+                            Object[] planResult = (Object[]) plans.get(i);
+
+                            ObjectMapper mapper = new ObjectMapper();
+                            ObjectNode dataNode = mapper.createObjectNode();
+
+                            dataNode.put("id", planResult[0].toString());
+                            dataNode.put("idOrder", planResult[1].toString());
+                            dataNode.put("nameTask", planResult[2].toString());
+                            dataNode.put("idProductOrder", planResult[3].toString());
+                            dataNode.put("quantityTask", Integer.parseInt(planResult[4].toString()));
+                            dataNode.put("t1Task", planResult[5].toString());
+                            dataNode.put("t2Task", planResult[6].toString());
+                            dataNode.put("nameUser", "1");
+                            dataNode.put("scheduleTime", "2017-08-02 17:00:00");
+
+                            MesSender.instance().sendData("planInfo", dataNode);
+                        }
+
+                        //【3】更新快照节点的状态
                         parent.setApply(true);
                         parent.setDispatchMesTime(new Date());
                         snapshot.setApply(true);
@@ -407,9 +454,10 @@ public class SnapshotDao {
                         session.update(snapshot);
                         session.update(parent);
 
-                        NativeQuery query = session.createNativeQuery("update rg_userconfig set dispatchMesSnapshotId = ? where idUser = ?");
+                        query = session.createNativeQuery("update rg_userconfig set dispatchMesSnapshotId = ? where idUser = ?");
                         query.setParameter(1, id);
                         query.setParameter(2, "1");
+
                         if (query.executeUpdate() > 0) {
                             result = true;
                             tx.commit();

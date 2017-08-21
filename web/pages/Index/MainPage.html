@@ -92,31 +92,36 @@
             <!-- The time line -->
             <ul class="timeline">
                 <!-- timeline item -->
-                <li ng-repeat="eventLog in eventLogList track by $index">
-                    <i class="fa fa-file bg-yellow" ng-if="eventLog.eventType == 0"></i>
-                    <i class="fa fa-cog bg-green fa-spin " ng-if="eventLog.eventType == 1"></i>
-                    <i class="fa fa-cog bg-red fa-spin " ng-if="eventLog.eventType == 2"></i>
+                <li class="time-label" ng-repeat="record in dateArray" ng-if="dateArray.length > 0">
+                    <span class="bg-green" ng-if="record.type=='date'">
+                        {{record.currDate | date :'yyyy年MM月dd日'}}
+                   </span>
+
+                    <i class="fa fa-file bg-yellow" ng-if="record.data.eventType == 0"></i>
+                    <i class="fa fa-cog bg-green fa-spin " ng-if="record.data.eventType == 1"></i>
+                    <i class="fa fa-cog bg-red fa-spin " ng-if="record.data.eventType == 2"></i>
                     <!--产生工厂布局调整异常-->
-                    <i class="fa fa-map-o bg-yellow" ng-if="eventLog.eventType == 3"></i>
-                    <div class="timeline-item">
-                        <span class="time"><i class="fa fa-clock-o"></i>{{eventLog.creatTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
-                        <h3 class="timeline-header no-border" ng-if="eventLog.logItemtype == 0"><a href="#">{{eventLog.title}}</a>{{eventLog.content}}
+                    <i class="fa fa-map-o bg-yellow" ng-if="record.data.eventType == 3"></i>
+                    <div class="timeline-item" ng-if="record.type=='log'">
+                        <span class="time"><i class="fa fa-clock-o"></i>{{record.data.creatTime | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+                        <h3 class="timeline-header no-border" ng-if="record.data.logItemtype == 0"><a href="#">{{record.data.title}}</a>{{record.data.content}}
                         </h3>
-                        <h3 class="timeline-header" ng-if="eventLog.logItemtype == 1"><a href="#">{{eventLog.title}}</a>
+                        <h3 class="timeline-header" ng-if="record.data.logItemtype == 1"><a href="#">{{record.data.title}}</a>
                         </h3>
-                        <div class="timeline-body" ng-if="eventLog.logItemtype == 1">{{eventLog.content}}</div>
+                        <div class="timeline-body" ng-if="record.data.logItemtype == 1">{{record.data.content}}</div>
                     </div>
                 </li>
-                <!-- END timeline item -->
-                <!-- timeline time label -->
-                <li class="time-label">
-                  <span class="bg-green">
-                    2017年1月1日
-                  </span>
+                <li class="time-label" ng-if="dateArray.length > 0">
+                    <span class="bg-gray">
+                        最近7天记录
+                   </span>
                 </li>
-                <!-- END timeline item -->
-                <li>
+
+                <li ng-if="dateArray.length == 0">
                     <i class="fa fa-clock-o bg-gray"></i>
+                    <div class="timeline-item">
+                        <div class="timeline-body">最近7天无操作记录</div>
+                    </div>
                 </li>
             </ul>
         </div>

@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.rengu.DAO.d3.State3DAO;
 import com.rengu.actions.SuperAction;
 import com.rengu.entity.RG_State3DEntity;
+import com.rengu.util.MyLog;
 import com.rengu.util.Tools;
 
 import java.util.Map;
@@ -20,6 +21,7 @@ public class State3DAction extends SuperAction {
 
     //【已调】查询3D总体状态
     public void queryState() {
+        MyLog.getLogger().info("处理3D车间的状态查询请求...");
         Tools.jsonPrint(stateDao.getCurrentState(), this.httpServletResponse);
     }
 
@@ -31,6 +33,7 @@ public class State3DAction extends SuperAction {
         if (parameterMap.size() > 0) {
             String[] layOutId = (String[]) parameterMap.get("id");
             if (layOutId.length == 1) {
+                MyLog.getLogger().info("处理3D车间的布局查询请求，所查询布局ID：" + layOutId);
                 String result = stateDao.getLayoutById(layOutId[0]);
                 if (result.length() > 0) {
                     Tools.jsonPrint(result, this.httpServletResponse);
@@ -54,8 +57,10 @@ public class State3DAction extends SuperAction {
 
             if (operateState.length == 1 && layoutId.length == 1 && data.length == 1) {
                 if (operateState[0].equals("update")) {
+                    MyLog.getLogger().info("处理3D车间的布局更新请求...");
                     opresult = stateDao.updateLayout(layoutId[0], data[0]);
                 } else if (operateState[0].equals("new")) {
+                    MyLog.getLogger().info("处理3D车间的布局插入请求...");
                     opresult = stateDao.insertLayout(layoutId[0], data[0]);
                 }
             }
@@ -78,6 +83,7 @@ public class State3DAction extends SuperAction {
             String[] data = (String[]) parameterMap.get("data");
 
             if (layoutId.length == 1 && data.length == 1) {
+                MyLog.getLogger().info("处理3D车间的设备状态更新请求...");
                 opresult = stateDao.updateDevice(layoutId[0], data[0]);
             }
         }
@@ -91,6 +97,7 @@ public class State3DAction extends SuperAction {
 
     //【已调】查询所有布局信息
     public void query3DLayout() {
+        MyLog.getLogger().info("处理3D车间的查询所有布局请求...");
         Tools.jsonPrint(stateDao.queryAllLayout(), this.httpServletResponse);
     }
 

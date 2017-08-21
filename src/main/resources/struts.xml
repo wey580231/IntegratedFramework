@@ -152,9 +152,9 @@
         <action name="updateApsState" class="com.rengu.actions.aps.FeedBackStateAction" method="recvInterApsState"/>
         <action name="apsState" class="com.rengu.actions.aps.FeedBackStateAction" method="queryApsState"/>
         <action name="scheduleDetail" class="com.rengu.actions.aps.FeedBackStateAction" method="queryScheduleInfo"/>
-        <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction" method="emulateApsInterResult"/>
+        <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction"
+                method="emulateApsInterResult"/>
         <action name="recoverInterX" class="com.rengu.actions.aps.FeedBackStateAction" method="recoverInterX"/>
-
     </package>
 
     <!--异常处理-->
@@ -228,5 +228,10 @@
     <!--订单监控-->
     <package name="Online" namespace="/online" extends="struts-default">
         <action name="findByState" class="com.rengu.actions.OrdersAction" method="findByState"/>
+    </package>
+
+    <!-- MES接口 -->
+    <package name="mes" namespace="/mes" extends="struts-default">
+        <action name="getAllCarrys" class="com.rengu.actions.CarryAction" method="getAllCarrys"/>
     </package>
 </struts>
