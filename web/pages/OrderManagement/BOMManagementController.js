@@ -11,347 +11,537 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
     }])
     .controller('BOMManagementController', function ($scope, $http, myHttpService, serviceList, notification) {
 
-            layer.load(0);
+        layer.load(0);
 
-            var zNodes = [];
-            var rootData = [];
+        var zNodes = [];
+        var rootData = [];
+        var option;//Dag的option
+        var map = {};//根节点用于折叠展开
+        var mapMiddle = {};
+        var myDag;
 
-            $(function () {
-                //初始化下拉数据
-                $(".select2").select2();
+        var oldMiddle = [];//存放选择查看方式时被删除的节点，用于恢复dag原形
+        var oldBottom = [];
 
-                //显示暂无数据
-                view();
+        $(function () {
+            //初始化下拉数据
+            $(".select2").select2();
 
-                var dataTrue = {"isRootNode": true};
-                myHttpService.post(serviceList.isRootNode, dataTrue).then(function successCallback(response) {
-                    rootData = response.data;
-                    $scope.rootdata = response.data;
-                    $scope.processdata = response.data;
-                    loadRightFloatMenu();
-                    hideLoadingPage();
-                });
+            //显示暂无数据
+            view();
+
+            var dataTrue = {"isRootNode": true};
+            myHttpService.post(serviceList.isRootNode, dataTrue).then(function successCallback(response) {
+                rootData = response.data;
+                $scope.rootdata = response.data;
+                $scope.processdata = response.data;
+                loadRightFloatMenu();
+                hideLoadingPage();
             });
+        });
 
-            //对快照节点排序
-            function sortSnapshot(childList) {
-                for (var i = 0; i < childList.length; i++) {
-                    for (var j = i + 1; j < childList.length; j++) {
-                        if (childList[j].nodeCreateTime < childList[i].nodeCreateTime) {
-                            var tmp = childList[j];
-                            childList[j] = childList[i];
-                            childList[i] = tmp;
-                        }
+        //对快照节点排序
+        function sortSnapshot(childList) {
+            for (var i = 0; i < childList.length; i++) {
+                for (var j = i + 1; j < childList.length; j++) {
+                    if (childList[j].nodeCreateTime < childList[i].nodeCreateTime) {
+                        var tmp = childList[j];
+                        childList[j] = childList[i];
+                        childList[i] = tmp;
                     }
                 }
             }
+        }
 
-            //下拉框事件改变
-            $("#select").change(function () {
-                zNodes.splice(0, zNodes.length);
-                var idRoot;
-                var val = $(this).children('option:selected').val();
-                if (val.length > 0) {
-                    for (var i = 0; i < rootData.length; i++) {
-                        if (rootData[i].name == val) {
-                            idRoot = rootData[i].id;
+        //下拉框事件改变
+        $("#select").change(function () {
+
+            zNodes.splice(0, zNodes.length);
+            var idRoot;
+            var val = $(this).children('option:selected').val();
+
+
+            if (val.length > 0) {
+                for (var i = 0; i < rootData.length; i++) {
+                    if (rootData[i].name == val) {
+                        idRoot = rootData[i].id;
+                        break;
+                    }
+                }
+                var params = {};
+                params.id = idRoot;
+                var id = JSON.stringify(params);
+
+                layer.load();
+
+                myHttpService.post(serviceList.isChildNode, id).then(function successCallback(response) {
+                    var datas = response.data;
+
+                    if (datas.hasOwnProperty("childProcess")) {
+                        var middleNodeList = datas.childProcess;
+                        sortSnapshot(middleNodeList);
+                        for (var j = 0; j < middleNodeList.length; j++) {
+
+                            var middleNode = middleNodeList[j];
+
+                            if (middleNode.hasOwnProperty("childProcess")) {
+
+                                sortSnapshot(middleNode.childProcess);
+
+                                for (var k = 0; k < middleNode.childProcess.length; k++) {
+                                    var bottomNode = middleNode.childProcess[k];
+                                    if (bottomNode.transport == 0) {
+                                        bottomNode.icon = "../../images/bom_img/transport.png";
+                                        bottomNode.symbol = "../../images/bom_img/transport.png";
+                                    } else if (bottomNode.transport == 1) {
+                                        bottomNode.icon = "../../images/bom_img/fit.png";
+                                        bottomNode.symbol = "../../images/bom_img/fit.png";
+                                    } else {
+                                        bottomNode.icon = "../../images/bom_img/errorNode.png";
+                                        bottomNode.symbol = "../../images/bom_img/errorNode.png";
+                                    }
+                                }
+                                var temps = middleNode.childProcess;
+                                delete(middleNode.childProcess);
+                                middleNode.children = temps;
+                                middleNode = middleNode;
+                                if (middleNode.children.length > 0) {
+                                    if (middleNode.transport == 0) {
+                                        middleNode.icon = "../../images/bom_img/interactive.png";
+                                        middleNode.symbol = "../../images/bom_img/interactive.png";
+                                    } else if (middleNode.transport == 1) {
+                                        middleNode.icon = "../../images/bom_img/fit.png";
+                                        middleNode.symbol = "../../images/bom_img/fit.png";
+                                    } else {
+                                        middleNode.icon = "../../images/bom_img/errorNode.png";
+                                        middleNode.symbol = "../../images/bom_img/errorNode.png";
+                                    }
+                                } else {
+                                    if (middleNode.transport == 0) {
+                                        middleNode.icon = "../../images/bom_img/transport.png";
+                                        middleNode.symbol = "../../images/bom_img/transport.png";
+                                    } else if (middleNode.transport == 1) {
+                                        middleNode.icon = "../../images/bom_img/fit.png";
+                                        middleNode.symbol = "../../images/bom_img/fit.png";
+                                    } else {
+                                        middleNode.icon = "../../images/bom_img/errorNode.png";
+                                        middleNode.symbol = "../../images/bom_img/errorNode.png";
+                                    }
+                                }
+
+                            }
+                        }
+                        datas.icon = "../../images/bom_img/rootNode.png";
+                        datas.symbol = "../../images/bom_img/rootNode.png";
+                        var temp = datas.childProcess;
+                        delete(datas.childProcess);
+                        datas.children = temp;
+                    }
+                    zNodes.push(datas);
+                    loadTree();
+                    loadDAG();
+                    hideLoadingPage();
+                });
+                $scope.processData = "";
+                $scope.$apply();
+            } else {
+                document.getElementById("treeDemo").style.display = "none";
+                // $("#table_value  tr:not(:first)").html("");
+                $scope.processData = "";
+                $scope.$apply();
+                //显示暂无数据
+                view();
+            }
+
+        });
+
+
+        function loadTree() {
+            var setting = {
+                view: {
+                    dblClickExpand: false,
+                    showIcon: true,
+                    showLine: false
+                },
+                callback: {
+                    onClick: zTreeOnClick
+                },
+                data: {
+                    keep: {
+                        parent: true
+                    }
+                },
+                edit: {
+                    enable: true,
+                    showRenameBtn: false,
+                    showRemoveBtn: false
+                },
+                check: {
+                    enable: true
+                }
+            };
+
+            //点击树形控件
+            function zTreeOnClick(e, treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                zTree.expandNode(treeNode);
+
+                //节点点击显示具体信息
+                $scope.processData = treeNode;
+                $scope.$apply();
+
+                for (var j = 0; j < option.series[0].data.length; j++) {
+                    //根节点的折叠展开
+                    if (option.series[0].data[j].name == treeNode.name) {
+                        //展开
+                        if (map.hasOwnProperty(treeNode.name) && map[treeNode.name] != null) {
+                            // oldMiddle = treeNode;
+                            option.series[0].data[j].children = map[treeNode.name];
+                            map[treeNode.name] = null;
+                            //名称位置
+                            option.series[0].itemStyle.normal.label.position = null;
+                            //点击根节点展开，不显示二级的子节点
+                            if (option.series[0].data[j].children.length > 0) {
+                                for (var k = 0; k < option.series[0].data[j].children.length; k++) {
+                                    if (option.series[0].data[j].children[k].hasOwnProperty("children")) {
+                                        mapMiddle[option.series[0].data[j].children[k].name] = option.series[0].data[j].children[k].children;
+                                        //将子节点删除
+                                        delete option.series[0].data[j].children[k].children;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        //折叠
+                        if (option.series[0].data[j].children) {
+                            //将子节点信息存入map，形式【当前点击节点的name为key，子节点数据为value】
+                            map[option.series[0].data[j].name] = option.series[0].data[j].children;
+                            //然后将option中的当前子节点删除
+                            delete option.series[0].data[j].children;
+                            //如果option的data结构只有根节点名称，没有children，则无法正确显示
+                            option.series[0].data[j].children = "";
+                            option.series[0].itemStyle.normal.label.position = "right";
+                            //点击根节点收缩，完全折叠
+                            $.fn.zTree.getZTreeObj("treeDemo").expandAll(false);
+                            //跳出循环
                             break;
                         }
                     }
-                    var params = {};
-                    params.id = idRoot;
-                    var id = JSON.stringify(params);
 
-                    layer.load();
-
-                    myHttpService.post(serviceList.isChildNode, id).then(function successCallback(response) {
-                        var datas = response.data;
-
-                        if (datas.hasOwnProperty("childProcess")) {
-                            var middleNodeList = datas.childProcess;
-                            sortSnapshot(middleNodeList);
-                            for (var j = 0; j < middleNodeList.length; j++) {
-
-                                var middleNode = middleNodeList[j];
-
-                                if (middleNode.hasOwnProperty("childProcess")) {
-
-                                    sortSnapshot(middleNode.childProcess);
-
-                                    for (var k = 0; k < middleNode.childProcess.length; k++) {
-                                        var bottomNode = middleNode.childProcess[k];
-                                        if (bottomNode.transport == 0) {
-                                            bottomNode.icon = "../../images/bom_img/transport.png";
-                                            bottomNode.symbol = "../../images/bom_img/transport.png";
-                                        } else if (bottomNode.transport == 1) {
-                                            bottomNode.icon = "../../images/bom_img/fit.png";
-                                            bottomNode.symbol = "../../images/bom_img/fit.png";
-                                        } else {
-                                            bottomNode.icon = "../../images/bom_img/errorNode.png";
-                                            bottomNode.symbol = "../../images/bom_img/errorNode.png";
-                                        }
-                                    }
-                                    var temps = middleNode.childProcess;
-                                    delete(middleNode.childProcess);
-                                    middleNode.children = temps;
-                                    middleNode = middleNode;
-                                    if (middleNode.children.length > 0) {
-                                        if (middleNode.transport == 0) {
-                                            middleNode.icon = "../../images/bom_img/interactive.png";
-                                            middleNode.symbol = "../../images/bom_img/interactive.png";
-                                        } else if (middleNode.transport == 1) {
-                                            middleNode.icon = "../../images/bom_img/fit.png";
-                                            middleNode.symbol = "../../images/bom_img/fit.png";
-                                        } else {
-                                            middleNode.icon = "../../images/bom_img/errorNode.png";
-                                            middleNode.symbol = "../../images/bom_img/errorNode.png";
-                                        }
-                                    } else {
-                                        if (middleNode.transport == 0) {
-                                            middleNode.icon = "../../images/bom_img/transport.png";
-                                            middleNode.symbol = "../../images/bom_img/transport.png";
-                                        } else if (middleNode.transport == 1) {
-                                            middleNode.icon = "../../images/bom_img/fit.png";
-                                            middleNode.symbol = "../../images/bom_img/fit.png";
-                                        } else {
-                                            middleNode.icon = "../../images/bom_img/errorNode.png";
-                                            middleNode.symbol = "../../images/bom_img/errorNode.png";
-                                        }
-                                    }
-
-                                }
-                            }
-                            datas.icon = "../../images/bom_img/rootNode.png";
-                            datas.symbol = "../../images/bom_img/rootNode.png";
-                            var temp = datas.childProcess;
-                            delete(datas.childProcess);
-                            datas.children = temp;
-                        }
-                        zNodes.push(datas);
-                        loadTree();
-                        loadDAG();
-                        hideLoadingPage();
-                    })
-                } else {
-                    document.getElementById("treeDemo").style.display = "none";
-                    // $("#table_value  tr:not(:first)").html("");
-                    $scope.processData = "";
-                    $scope.$apply();
-                    //显示暂无数据
-                    view();
-                }
-            });
-
-            function loadTree() {
-                var setting = {
-                    view: {
-                        dblClickExpand: false,
-                        showIcon: true,
-                        showLine: false
-                    },
-                    callback: {
-                        onClick: zTreeOnClick
-                    },
-                    data: {
-                        keep: {
-                            parent: true
-                        }
-                    },
-                    edit: {
-                        enable: true,
-                        showRenameBtn: false,
-                        showRemoveBtn: false
-                    },
-                    check: {
-                        enable: true
-                    }
-                };
-
-                //点击树形控件
-                function zTreeOnClick(e, treeId, treeNode) {
-                    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-
-                    zTree.expandNode(treeNode);
-
-                }   //onclick
-
-                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-
-                document.getElementById("treeDemo").style.display = "";
-            }
-
-            function loadDAG() {
-                // 基于准备好的dom，初始化echarts实例
-                var myChart = echarts.init(document.getElementById('dag'));
-
-                // 指定图表的配置项和数据
-                var option = {
-                    series: [
-                        {
-                            name: '树图',
-                            type: 'tree',
-                            orient: 'horizontal',  // vertical horizontal
-                            rootLocation: {x: 100, y: 230}, // 根节点位置  {x: 100, y: 'center'}
-                            nodePadding: 8,
-                            layerPadding: 200,
-                            roam: true,
-                            symbolSize: 6,
-                            legendHoverLink:true,
-                            itemStyle: {
-                                normal: {
-                                    color: '#4883b4',
-                                    label: {
-                                        show: true,
-                                        position: 'right',
-                                        formatter: "{b}",
-                                        textStyle: {
-                                            color: '#000',
-                                            fontSize: 5
-                                        }
-                                    },
-                                    lineStyle: {
-                                        color: '#ccc',
-                                        type: 'curve' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
-                                    }
-                                },
-                                emphasis: {
-                                    label: {
-                                        show: true,
-                                        textStyle: {
-                                            color: '#991096',
-                                        }
-                                    },
-                                    borderWidth: 2
-                                }
-                            },
-                        }
-                    ]
-                };
-
-
-                //图结构数据
-                option.series[0].data = zNodes;
-
-
-                //用来存储子节点（供收缩，打开节点使用）
-                var clickMap = {};
-                myChart.on('click', function (params) {
-
-                    //节点点击显示具体信息
-                    $scope.processData = params;
-                    $scope.$apply();
-
-                    //当前点击节点的名称
-                    var _name = params.name;
-                    var _option = option;
-                    var len1 = _option.series[0].data.length;
-                    var f = false;//是否找到对应节点
-
-                    //循环_option中的信息
-                    for (var j = 0; j < len1; j++) {
-                        //根节点的折叠展开
-                        if (_option.series[0].data[j].children.length >= 0) {
-                            if (_option.series[0].data[j].name == _name) {
-                                //判断该节点是否已关闭，若clickMap中存在当前节点名称的数据，并且不为空。则说明已关闭，要打开。
-                                if (clickMap.hasOwnProperty(_name) && clickMap[_name] != null) {
-                                    //将clickMap中该节点的信息重新赋值给当前节点
-                                    _option.series[0].data[j].children = clickMap[_name];
-                                    clickMap[_name] = null;//成功打开后，将clickMap中的数据赋null
-                                    f = true;
-                                    //跳出所有循环。
-                                    break;
-                                }
-                                //执行到这里，说明未关闭
-                                f = true;
-                                //若所点击的节点存在子节点，则
-                                if (_option.series[0].data[j].children) {
-                                    //将子节点信息存入clickMap，形式【当前点击节点的name为key，子节点数据为value】
-                                    clickMap[_option.series[0].data[j].name] = _option.series[0].data[j].children;
-                                    //然后将_option中的当前子节点删除
-                                    delete _option.series[0].data[j].children;
-                                    //如果option的data结构只有根节点名称，没有children，则无法正确显示
-                                    _option.series[0].data[j].children = "";
-                                }
-                                //跳出所有循环
+                    //二级节点的操作
+                    for (var l = 0; l < option.series[0].data[j].children.length; l++) {
+                        if (option.series[0].data[j].children[l].name == treeNode.name) {
+                            if (mapMiddle.hasOwnProperty(treeNode.name) && mapMiddle[treeNode.name] != null) {
+                                // oldBottom = treeNode;
+                                option.series[0].data[j].children[l].children = mapMiddle[treeNode.name];
+                                mapMiddle[treeNode.name] = null;
+                                option.series[0].itemStyle.normal.label.position = null;
                                 break;
                             }
 
-                            //二级节点折叠展开
-                            var len2 = _option.series[0].data[j].children.length;
-                            for (var k = 0; k < len2; k++) {
-                                if (_option.series[0].data[j].children[k].name == _name) {
-                                    //判断该节点是否已关闭，若clickMap中存在k为当前节点名称的数据，并且不为空。则说明已关闭，要打开。
-                                    if (clickMap.hasOwnProperty(_name) && clickMap[_name] != null) {
-                                        //将clickMap中的该节点的子节点信息重新赋值给当前节点
-                                        _option.series[0].data[j].children[k].children = clickMap[_name];
-                                        clickMap[_name] = null;//成功打开后，将clickMap中的数据赋null
-                                        f = true;
-                                        //跳出所有循环。
-                                        break;
-                                    }
-                                    //执行到这里，说明未关闭
-                                    f = true;
-                                    //若所点击的节点存在子节点
-                                    if (_option.series[0].data[j].children[k].children) {
-                                        //将子节点信息存入clickMap，形式【当前点击节点的name为key，子节点数据为value】
-                                        clickMap[_option.series[0].data[j].children[k].name] = _option.series[0].data[j].children[k].children;
-                                        //然后将_option中的当前子节点删除。
-                                        delete _option.series[0].data[j].children[k].children;
-                                    }
-                                    //跳出所有循环
-                                    break;
-                                }
-                                if (f)break;
+                            if (option.series[0].data[j].children[l].children) {
+                                //将子节点信息存入clickMap，形式【当前点击节点的name为key，子节点数据为value】
+                                mapMiddle[option.series[0].data[j].children[l].name] = option.series[0].data[j].children[l].children;
+                                //然后将_option中的当前子节点删除
+                                delete option.series[0].data[j].children[l].children;
+                                option.series[0].itemStyle.normal.label.position = null;
+                                break;
                             }
                         }
-                        if (f)break;
                     }
-                    myChart.clear();
-                    //重新赋值，渲染图表
-                    myChart.setOption(_option);
-                });
-                // 使用刚指定的配置项和数据显示图表
-                myChart.setOption(option);
-                document.getElementById("dag").style.display = "";
-            }
+                }
+                myDag.clear();
+                //重新赋值，渲染图表
+                myDag.setOption(option);
 
-            //显示暂无数据
-            function view() {
-                document.getElementById("dag").style.display = "";
-                var myChart = echarts.init(document.getElementById('dag'));
-                var option = {
-                    series: [
-                        {
-                            roam: true,
-                        }
-                    ]
-                };
-                myChart.setOption(option);
-            }
+            }   //onclick
 
-            //更新BOM
-            $scope.updateBOM = function () {
-                layer.confirm('是否更新当前BOM信息?', {
-                    btn: ['确定', '取消'] //按钮
-                }, function (index) {
-                    layer.close(index);
-                    notification.sendNotification("confirm", "已更新");
-                }, function (index) {
-                    layer.close(index);
-                    notification.sendNotification("alert", "已取消更新");
-                });
-            };
 
-            //属性设置
-            $scope.propertySetting = function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
 
-            };
-
-            //辅助工艺
-            $scope.assisantProcess = function () {
-
-            };
-
+            document.getElementById("treeDemo").style.display = "";
 
         }
-    );
+
+        function loadDAG() {
+            // 基于准备好的dom，初始化echarts实例
+            myDag = echarts.init(document.getElementById('dag'));
+
+            // 指定图表的配置项和数据
+            option = {
+                series: [
+                    {
+                        name: '树图',
+                        type: 'tree',
+                        orient: 'horizontal',  // vertical horizontal
+                        rootLocation: {x: 100, y: 230}, // 根节点位置  {x: 100, y: 'center'}
+                        nodePadding: 25,
+                        layerPadding: 150,
+                        roam: true,
+                        symbolSize: 6,
+                        legendHoverLink: true,
+                        itemStyle: {
+                            normal: {
+                                color: '#4883b4',
+                                label: {
+                                    show: true,
+                                    position: 'right',
+                                    formatter: "{b}",
+                                    textStyle: {
+                                        color: '#000',
+                                        fontSize: 5
+                                    }
+                                },
+                                lineStyle: {
+                                    color: '#ccc',
+                                    type: 'curve' // 'curve'|'broken'|'solid'|'dotted'|'dashed'
+                                }
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    textStyle: {
+                                        color: '#991096',
+                                    }
+                                },
+                                borderWidth: 2
+                            }
+                        },
+                    }
+                ]
+            };
+
+            //图结构数据
+            option.series[0].data = zNodes;
+
+            //只显示根节点
+            for (var j = 0; j < option.series[0].data.length; j++) {
+                map[option.series[0].data[j].name] = option.series[0].data[j].children;
+                //然后将option中的当前子节点删除
+                delete option.series[0].data[j].children;
+                //如果option的data结构只有根节点名称，没有children，则无法正确显示
+                option.series[0].data[j].children = "";
+            }
+
+            // 使用刚指定的配置项和数据显示图表
+            myDag.setOption(option);
+            document.getElementById("dag").style.display = "";
+
+        }
+
+
+        //查看方式
+        //下拉框事件改变
+        $("#selects").change(function () {
+
+            var val = $(this).children('option:selected').val();
+
+            if (val == "运输工艺") {
+                oldMiddle.splice(0, oldMiddle.length);
+                oldBottom.splice(0, oldBottom.length);
+                for (var i = 0; i < option.series[0].data.length; i++) {
+
+                    if (option.series[0].data[i].children.length > 0) {
+
+                        for (var j = option.series[0].data[i].children.length - 1; j >= 0; j--) {
+                            if (option.series[0].data[i].children[j].transport == 1) {
+                                oldMiddle.push(option.series[0].data[i].children[j]);
+                                //移除“生产工艺的”
+                                option.series[0].data[i].children.removeByValue(option.series[0].data[i].children[j]);
+                            } else {
+                                if (option.series[0].data[i].children[j].children) {
+                                    for (var l = option.series[0].data[i].children[j].children.length - 1; l >= 0; l--) {
+                                        if (option.series[0].data[i].children[j].children[l].transport == 1) {
+                                            option.series[0].data[i].children[j].children[l].parentId = option.series[0].data[i].children[j].id;
+                                            oldBottom.push(option.series[0].data[i].children[j].children[l]);
+                                            option.series[0].data[i].children[j].children.removeByValue(option.series[0].data[i].children[j].children[l]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (val == "生产工艺") {
+                oldMiddle.splice(0, oldMiddle.length);
+                oldBottom.splice(0, oldBottom.length);
+                for (var i = 0; i < option.series[0].data.length; i++) {
+                    if (option.series[0].data[i].children.length > 0) {
+                        for (var j = option.series[0].data[i].children.length - 1; j >= 0; j--) {
+                            if (option.series[0].data[i].children[j].transport == 0) {
+                                oldMiddle.push(option.series[0].data[i].children[j]);
+                                //移除运输工艺的
+                                option.series[0].data[i].children.removeByValue(option.series[0].data[i].children[j]);
+                            } else {
+                                if (option.series[0].data[i].children[j].children) {
+                                    for (var l = option.series[0].data[i].children[j].children.length - 1; l >= 0; l--) {
+                                        if (option.series[0].data[i].children[j].children[l].transport == 0) {
+                                            option.series[0].data[i].children[j].children[l].parentId = option.series[0].data[i].children[j].id;
+                                            oldBottom.push(option.series[0].data[i].children[j].children[l]);
+                                            option.series[0].data[i].children[j].children.removeByValue(option.series[0].data[i].children[j].children[l]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                //恢复原形
+                for (var j = 0; j < option.series[0].data.length; j++) {
+                    if (oldMiddle.length > 0) {
+                        for (var i = 0; i < oldMiddle.length; i++) {
+                            option.series[0].data[j].children.push(oldMiddle[i]);
+                            for (var k = 0; k < option.series[0].data[j].children.length; k++) {
+                                if (oldBottom.length > 0) {
+                                    for (var l = 0; l < oldBottom.length; l++) {
+                                        if (option.series[0].data[j].children[k].id == oldBottom[l].parentId) {
+                                            option.series[0].data[j].children[k].children.push(oldBottom[l]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        for (var m = 0; m < option.series[0].data[j].children.length; m++) {
+                            if (oldBottom.length > 0) {
+                                for (var l = 0; l < oldBottom.length; l++) {
+                                    if (option.series[0].data[j].children[m].id == oldBottom[l].parentId) {
+                                        option.series[0].data[j].children[m].children.push(oldBottom[l]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                oldMiddle.splice(0, oldMiddle.length);
+                oldBottom.splice(0, oldBottom.length);
+            }
+
+            //解决只剩根节点时的显示问题
+            for (var i = 0; i < option.series[0].data.length; i++) {
+                if (!option.series[0].data[i].hasOwnProperty("children")) {
+                    option.series[0].data[i].children = "";
+                }
+            }
+
+            $("#select").attr("disabled","disabled").css("background-color","#EEEEEE;");
+            $("#selects").attr("disabled","disabled").css("background-color","#EEEEEE;");
+
+            myDag.clear();
+            //重新赋值，渲染图表
+            myDag.setOption(option);
+        });
+
+
+        //移除数组中对应的对象数组
+        Array.prototype.removeByValue = function (obj) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i].id == obj.id) {
+                    this.splice(i, 1);
+                    break;
+                }
+            }
+        };
+
+        //恢复DAG原形
+        $scope.refresh = function () {
+            for (var j = 0; j < option.series[0].data.length; j++) {
+                if (oldMiddle.length > 0) {
+                    for (var i = 0; i < oldMiddle.length; i++) {
+                        option.series[0].data[j].children.push(oldMiddle[i]);
+                        for (var k = 0; k < option.series[0].data[j].children.length; k++) {
+                            if (oldBottom.length > 0) {
+                                for (var l = 0; l < oldBottom.length; l++) {
+                                    if (option.series[0].data[j].children[k].id == oldBottom[l].parentId) {
+                                        option.series[0].data[j].children[k].children.push(oldBottom[l]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (var m = 0; m < option.series[0].data[j].children.length; m++) {
+                        if (oldBottom.length > 0) {
+                            for (var l = 0; l < oldBottom.length; l++) {
+                                if (option.series[0].data[j].children[m].id == oldBottom[l].parentId) {
+                                    option.series[0].data[j].children[m].children.push(oldBottom[l]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            oldMiddle.splice(0, oldMiddle.length);
+            oldBottom.splice(0, oldBottom.length);
+            notification.sendNotification("confirm", "显示为原图");
+
+            $("#select").removeAttr("disabled");
+            $("#selects").removeAttr("disabled");
+            myDag.clear();
+            //重新赋值，渲染图表
+            myDag.setOption(option);
+        };
+
+
+        //显示暂无数据
+        function view() {
+            document.getElementById("dag").style.display = "";
+            var myDag = echarts.init(document.getElementById('dag'));
+            var option = {
+                series: [
+                    {
+                        roam: true,
+                    }
+                ]
+            };
+            myDag.setOption(option);
+        }
+
+        //全屏
+        $("#dag").dblclick(function () {
+
+            fullView();
+
+        });
+
+        //全屏
+        function fullView() {
+            var el = document.getElementById("dag");
+            var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
+
+            if (typeof rfs != "undefined" && rfs) {
+                rfs.call(el);
+            } else if (typeof window.ActiveXObject != "undefined") {
+                var wscript = new ActiveXObject("WScript.Shell");
+                if (wscript != null) {
+                    wscript.SendKeys("{F11}");
+                }
+            }
+        }
+
+        //更新BOM
+        $scope.updateBOM = function () {
+            layer.confirm('是否更新当前BOM信息?', {
+                btn: ['确定', '取消'] //按钮
+            }, function (index) {
+                layer.close(index);
+                notification.sendNotification("confirm", "已更新");
+            }, function (index) {
+                layer.close(index);
+                notification.sendNotification("alert", "已取消更新");
+            });
+        };
+
+        //属性设置
+        $scope.propertySetting = function () {
+
+        };
+
+        //辅助工艺
+        $scope.assisantProcess = function () {
+
+        };
+
+
+    });
