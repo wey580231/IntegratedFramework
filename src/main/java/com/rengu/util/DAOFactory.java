@@ -35,6 +35,8 @@ public class DAOFactory {
     private static final UserConfigDAOImpl userConfigDAOImpl = new UserConfigDAOImpl();
     private static final TaskDAOImpl taskDAOImpl = new TaskDAOImpl();
 
+    private static final CarryDAOImpl carryDAOImpl = new CarryDAOImpl();
+
     public static UsersDAOImpl getUserDAOInstance() {
         return usersDAOImpl;
     }
@@ -133,5 +135,9 @@ public class DAOFactory {
 
     public static TaskDAOImpl getTaskDAOImplInstance() {
         return taskDAOImpl;
+    }
+
+    public static CarryDAOImpl getCarryDAOImplInstance() {
+        return carryDAOImpl;
     }
 }
