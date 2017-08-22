@@ -12,18 +12,95 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
     .controller('EquipmentMonitoringController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
 
+        var deportData = [];  //下拉框数据
+        var pieNodes = [];  //饼图的数据
+        var option;    //饼图的元素
+        var myChart;   //饼图
+        var freePlace;  //剩余存储位
+        var totalPlace;  //总存储位
+        var value = new Array();  //饼图的数据
+        var name = ['剩余存储位','已用存储位'];  //饼图数据name
+        var pieData = new Array();
 
         layer.load(0);
         $(function () {
+            //初始化下拉数据
+            $(".select2").select2();
+
             loadRightFloatMenu();
+
+            view();
+
+            //loadPieChart();
+
+            myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
+                deportData = response.data;
+                $scope.deportData = response.data;
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
 
             myHttpService.get(serviceList.CarryInfoList).then(function (response) {
                 $scope.CarryList = response.data;
 
                 hideLoadingPage();
             });
+
+            myHttpService.get(serviceList.AssemblyCarryInfoList).then(function (response) {
+                $scope.AssemblyCarryList = response.data;
+
+                hideLoadingPage();
+            });
+
+            myHttpService.get(serviceList.AssemblyCenterInfoList).then(function (response) {
+                $scope.AssemblyCenterList = response.data;
+
+                hideLoadingPage();
+            });
         });
 
+
+        //下拉框事件改变
+        $("#select").change(function () {
+
+            pieNodes.splice(0, pieNodes.length);
+            var DeportId;
+            var val = $(this).children('option:selected').val();
+
+
+            if (val.length > 0) {
+                for (var i = 0; i < deportData.length; i++) {
+                    if (deportData[i].deportName == val) {
+                        DeportId = deportData[i].id;
+                        break;
+                    }
+                }
+                var params = {};
+                params.id = DeportId;
+                var id = JSON.stringify(params);
+                console.log(id);
+
+                layer.load();
+
+                myHttpService.post(serviceList.DeportInfoList, id).then(function successCallback(response) {
+                    var datas = response.data;
+                    console.log(datas);
+
+                    pieNodes.push(datas);
+
+                    console.log(pieNodes);
+
+                    loadPieChart();
+                    hideLoadingPage();
+                });
+                $scope.$apply();
+            } else {
+                $scope.$apply();
+                //显示暂无数据
+                view();
+            }
+
+        });
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
@@ -31,8 +108,95 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         };
 
 
+        /*
+         * 饼图
+         * */
+        //- PIE CHART -
 
+        function loadPieChart() {
+            myChart = echarts.init(document.getElementById('pieChart'));
 
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'right'
+
+                },
+
+                calculable: true,
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['65%', '85%'],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: false
+                                },
+                                labelLine: {
+                                    show: false
+                                }
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    position: 'center',
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                ]
+            };
+
+            value[0] = pieNodes[0].freePlace;
+            value[1] = pieNodes[0].totalPlace - pieNodes[0].freePlace;
+
+            for (var i = 0; i < 2; i++) {
+
+                pieData[i] = {value: value[i],name:name[i]};
+            }
+
+            //图结构数据
+            option.series[0].data = pieData;
+
+            option.legend.data = name;
+
+            console.log(name);
+
+            console.log(option.series[0].data.length);
+            for (i = 0; i < option.series[0].data.length; i++) {
+
+                option.series[0].data[i].value = value[i];
+                option.series[0].data[i].name = name[i];
+
+            }
+
+            myChart.setOption(option);
+            document.getElementById("pieChart").style.display = "";
+        }
+
+        function view() {
+            document.getElementById("pieChart").style.display = "";
+            var myChart = echarts.init(document.getElementById('pieChart'));
+            var option = {
+                series: [
+                    {
+                        roam: true,
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        }
 
         /*
          * 温度
