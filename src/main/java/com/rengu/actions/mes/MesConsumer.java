@@ -183,6 +183,7 @@ public class MesConsumer extends Thread {
                                 }
                             }
 
+                            deportInfo.setId(Tools.getUUID());
                             deportInfo.setDeportId(realData.get("id").asText());
 //                            deportInfo.setDeportName(subDataNode.get("name").asText());
                             deportInfo.setStock(Integer.parseInt(realData.get("stock").asText()));

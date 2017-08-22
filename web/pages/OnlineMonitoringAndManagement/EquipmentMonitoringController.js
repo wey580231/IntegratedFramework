@@ -12,6 +12,9 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
     .controller('EquipmentMonitoringController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
 
+        var deportData = [];  //下拉框数据
+        var pieNodes = [];  //饼图的数据
+        var value = [234,222];  //饼图的颜色
 
         layer.load(0);
         $(function () {
@@ -20,7 +23,14 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
             loadRightFloatMenu();
 
-            loadPieChart();
+            //loadPieChart();
+
+            myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
+                deportData = response.data;
+                $scope.deportData = response.data;
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
 
             myHttpService.get(serviceList.CarryInfoList).then(function (response) {
                 $scope.CarryList = response.data;
@@ -42,89 +52,58 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         });
 
 
+        //下拉框事件改变
+        $("#select").change(function () {
+
+            pieNodes.splice(0, pieNodes.length);
+            var DeportId;
+            var val = $(this).children('option:selected').val();
+
+
+            if (val.length > 0) {
+                for (var i = 0; i < deportData.length; i++) {
+                    if (deportData[i].deportName == val) {
+                        DeportId = deportData[i].id;
+                        break;
+                    }
+                }
+                var params = {};
+                params.id = DeportId;
+                var id = JSON.stringify(params);
+                console.log(id);
+
+                layer.load();
+
+                myHttpService.post(serviceList.DeportInfoList, id).then(function successCallback(response) {
+                    var datas = response.data;
+                    console.log(datas);
+
+                    pieNodes.push(datas);
+
+                    console.log(pieNodes);
+
+                    loadPieChart();
+                    hideLoadingPage();
+                });
+                $scope.$apply();
+            } else {
+                $scope.$apply();
+                //显示暂无数据
+                view();
+            }
+
+        });
+
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
             renderTableService.renderTable($last);
         };
 
 
-
-
-
         /*
          * 饼图
          * */
         //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        /*var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-        var pieChart = new Chart(pieChartCanvas);
-        var PieData = [
-            {
-                value: 700,
-                color: "#f56954",
-                highlight: "#f56954",
-                label: "Chrome"
-            },
-            {
-                value: 500,
-                color: "#00a65a",
-                highlight: "#00a65a",
-                label: "IE"
-            },
-            {
-                value: 400,
-                color: "#f39c12",
-                highlight: "#f39c12",
-                label: "FireFox"
-            },
-            {
-                value: 600,
-                color: "#00c0ef",
-                highlight: "#00c0ef",
-                label: "Safari"
-            },
-            {
-                value: 300,
-                color: "#3c8dbc",
-                highlight: "#3c8dbc",
-                label: "Opera"
-            },
-            {
-                value: 100,
-                color: "#d2d6de",
-                highlight: "#d2d6de",
-                label: "Navigator"
-            }
-        ];
-        var pieOptions = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke: true,
-            //String - The colour of each segment stroke
-            segmentStrokeColor: "#fff",
-            //Number - The width of each segment stroke
-            segmentStrokeWidth: 2,
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            //Number - Amount of animation steps
-            animationSteps: 100,
-            //String - Animation easing effect
-            animationEasing: "easeOutBounce",
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate: true,
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale: false,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive: true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: true,
-            //String - A legend template
-            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-        };
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        pieChart.Doughnut(PieData, pieOptions);*/
-
 
         function loadPieChart() {
             var myChart = echarts.init(document.getElementById('pieChart'));
@@ -137,7 +116,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 legend: {
                     orient: 'vertical',
                     x: 'right',
-                    data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                    data: ['已用存储位', '剩余存储位']
                 },
 
                 calculable: true,
@@ -165,18 +144,29 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                                     }
                                 }
                             }
-                        },
-                        data: [
-                            {value: 335, name: '直接访问'},
-                            {value: 310, name: '邮件营销'},
-                            {value: 234, name: '联盟广告'},
-                            {value: 135, name: '视频广告'},
-                            {value: 1548, name: '搜索引擎'}
-                        ]
+                        }
+
                     }
                 ]
             };
 
+            //图结构数据
+            option.series[0].data = pieNodes;
+
+
+            myChart.setOption(option);
+        }
+
+        function view() {
+            document.getElementById("pieChart").style.display = "";
+            var myChart = echarts.init(document.getElementById('pieChart'));
+            var option = {
+                series: [
+                    {
+                        roam: true,
+                    }
+                ]
+            };
             myChart.setOption(option);
         }
 
