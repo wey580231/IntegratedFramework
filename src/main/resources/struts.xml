@@ -235,5 +235,7 @@
         <action name="getAllCarrys" class="com.rengu.actions.CarryAction" method="getAllCarrys"/>
         <action name="getAllAssemblyCarrys" class="com.rengu.actions.AssemblyCarryInfoAction" method="getAllAssemblyCarrys"/>
         <action name="getAllAssemblyCenters" class="com.rengu.actions.AssemblyCenterInfoAction" method="getAllAssemblyCenters"/>
+        <action name="getAllById" class="com.rengu.actions.DeportInfoAction" method="getAllById"/>
+        <action name="getAllDeportInfo" class="com.rengu.actions.DeportInfoAction" method="getAllDeportInfo"/>
     </package>
 </struts>
