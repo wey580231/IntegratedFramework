@@ -316,6 +316,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 ]
             };
 
+            console.log(zNodes);
             //图结构数据
             option.series[0].data = zNodes;
 
