@@ -22,6 +22,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         var name = ['剩余存储位','已用存储位'];  //饼图数据name
         var pieData = new Array();
         var dynamicChart;  //动图
+        var dynamicData = [];  //动图的数据
 
         var timeTicket;  //定时器
 
@@ -57,6 +58,18 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
             myHttpService.get(serviceList.AssemblyCenterInfoList).then(function (response) {
                 $scope.AssemblyCenterList = response.data;
+
+                hideLoadingPage();
+            });
+
+            myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
+                var datas = response.data;
+
+                console.log(datas);
+
+                dynamicData.push(datas);
+
+                console.log(dynamicData);
 
                 hideLoadingPage();
             });

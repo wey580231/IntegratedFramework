@@ -209,6 +209,7 @@ angular.module("IntegratedFramework", [
         service.AssemblyCenterInfoList = backUrl + "mes/getAllAssemblyCenters.action";
         service.DeportInfoList = backUrl + "mes/getAllById.action";
         service.AllDeportInfoList = backUrl + "mes/getAllDeportInfo.action";
+        service.AllAGVInfoList = backUrl + "mes/getAllAGVInfo.action";
 
 
         return service;
