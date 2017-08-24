@@ -19,12 +19,145 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         var freePlace;  //剩余存储位
         var totalPlace;  //总存储位
         var value = new Array();  //饼图的数据
-        var name = ['剩余存储位','已用存储位'];  //饼图数据name
+        var name = ['剩余存储位', '已用存储位'];  //饼图数据name
         var pieData = new Array();
         var dynamicChart;  //动图
         var dynamicData = [];  //动图的数据
 
         var timeTicket;  //定时器
+
+
+        //每个表格最大显示行数
+        var maxTableLineNum = 3;
+        var defualtCarryListPageNum = 0;
+        var defualtAssemblyCarryListPageNum = 0;
+        var defualtAssemblyCenterListPageNum = 0;
+
+        $scope.carryListPagePrvButton = function () {
+            defualtCarryListPageNum = defualtCarryListPageNum - 1;
+            var carryBody = {};
+            carryBody.maxResults = maxTableLineNum;
+            carryBody.firstResult = defualtCarryListPageNum * carryBody.maxResults;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        }
+
+        $scope.carryListPageNextButton = function () {
+            defualtCarryListPageNum = defualtCarryListPageNum + 1;
+            var carryBody = {};
+            carryBody.maxResults = maxTableLineNum;
+            carryBody.firstResult = defualtCarryListPageNum * carryBody.maxResults;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        }
+
+        $scope.AssemblyCarryListPagePrvButton = function () {
+            defualtAssemblyCarryListPageNum = defualtAssemblyCarryListPageNum - 1;
+            var assemblyCarryInfoBody = {};
+            assemblyCarryInfoBody.maxResults = maxTableLineNum;
+            assemblyCarryInfoBody.firstResult = defualtAssemblyCarryListPageNum * assemblyCarryInfoBody.maxResults;
+            myHttpService.post(serviceList.getAllAssemblyCarrysByFirstResultAndMaxResults, assemblyCarryInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.AssemblyCarryList = responseBody.tableList;
+                $('#assemblyCarryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#assemblyCarryTableNextButton').attr('disabled', "true");
+                }
+                $('#assemblyCarryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCarryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        }
+
+        $scope.AssemblyCarryListPageNextButton = function () {
+            defualtAssemblyCarryListPageNum = defualtAssemblyCarryListPageNum + 1;
+            var assemblyCarryInfoBody = {};
+            assemblyCarryInfoBody.maxResults = maxTableLineNum;
+            assemblyCarryInfoBody.firstResult = defualtAssemblyCarryListPageNum * assemblyCarryInfoBody.maxResults;
+            myHttpService.post(serviceList.getAllAssemblyCarrysByFirstResultAndMaxResults, assemblyCarryInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.AssemblyCarryList = responseBody.tableList;
+                $('#assemblyCarryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#assemblyCarryTableNextButton').attr('disabled', "true");
+                }
+                $('#assemblyCarryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCarryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        }
+
+        $scope.AssemblyCenterTablePrvButton = function () {
+            defualtAssemblyCenterListPageNum = defualtAssemblyCenterListPageNum - 1;
+            var AssemblyCenterInfoBody = {};
+            AssemblyCenterInfoBody.maxResults = maxTableLineNum;
+            AssemblyCenterInfoBody.firstResult = defualtAssemblyCenterListPageNum * assemblyCarryInfoBody.maxResults;
+            myHttpService.post(serviceList.getAllAssemblyCentersByFirstResultAndMaxResults, AssemblyCenterInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.AssemblyCenterList = responseBody.tableList;
+                $('#assemblyCenterTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#assemblyCenterTableNextButton').attr('disabled', "true");
+                }
+                $('#assemblyCenterTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCenterTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        }
+
+        $scope.AssemblyCenterTableNextButton = function () {
+            defualtAssemblyCenterListPageNum = defualtAssemblyCenterListPageNum + 1;
+            var AssemblyCenterInfoBody = {};
+            AssemblyCenterInfoBody.maxResults = maxTableLineNum;
+            AssemblyCenterInfoBody.firstResult = defualtAssemblyCenterListPageNum * assemblyCarryInfoBody.maxResults;
+            myHttpService.post(serviceList.getAllAssemblyCentersByFirstResultAndMaxResults, AssemblyCenterInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.AssemblyCenterList = responseBody.tableList;
+                $('#assemblyCenterTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#assemblyCenterTableNextButton').attr('disabled', "true");
+                }
+                $('#assemblyCenterTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCenterTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        }
 
         layer.load(0);
         $(function () {
@@ -44,15 +177,57 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 hideLoadingPage();
             });
 
-            myHttpService.get(serviceList.CarryInfoList).then(function (response) {
-                $scope.CarryList = response.data;
-
+            var carryBody = {};
+            carryBody.maxResults = maxTableLineNum;
+            carryBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
                 hideLoadingPage();
             });
 
-            myHttpService.get(serviceList.AssemblyCarryInfoList).then(function (response) {
-                $scope.AssemblyCarryList = response.data;
+            var assemblyCarryInfoBody = {};
+            assemblyCarryInfoBody.maxResults = maxTableLineNum;
+            assemblyCarryInfoBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllAssemblyCarrysByFirstResultAndMaxResults, assemblyCarryInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.AssemblyCarryList = responseBody.tableList;
+                $('#assemblyCenterTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#assemblyCenterTableNextButton').attr('disabled', "true");
+                }
+                $('#assemblyCenterTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCenterTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
 
+            var AssemblyCenterInfoBody = {};
+            AssemblyCenterInfoBody.maxResults = maxTableLineNum;
+            AssemblyCenterInfoBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllAssemblyCentersByFirstResultAndMaxResults, AssemblyCenterInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.AssemblyCenterList = responseBody.tableList;
+                $('#assemblyCenterTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#assemblyCenterTableNextButton').attr('disabled', "true");
+                }
+                $('#assemblyCenterTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCenterTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
                 hideLoadingPage();
             });
 
@@ -127,6 +302,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         /*
          * 饼图
          * */
+
         //- PIE CHART -
 
         function loadPieChart() {
@@ -179,7 +355,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
             for (var i = 0; i < 2; i++) {
 
-                pieData[i] = {value: value[i],name:name[i]};
+                pieData[i] = {value: value[i], name: name[i]};
             }
 
             //图结构数据
@@ -205,58 +381,58 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         /*
         * 动图(AGVInfo)
         * */
-        function loadAGVInfo(){
+        function loadAGVInfo() {
             //基于准备好的dom，初始化echarts图表
             dynamicChart = echarts.init(document.getElementById('dynamicChart'));
 
             option = {
-                title : {
+                title: {
                     text: '动态数据'
                 },
-                tooltip : {
+                tooltip: {
                     trigger: 'axis'   //鼠标悬浮的时候出现数据
                 },
                 legend: {
-                    data:['电量']     //最上面的标签
+                    data: ['电量']     //最上面的标签
                 },
 
-                dataZoom : {       //下面的手动调整时间（此处隐藏掉）
-                    show : false,
-                    start : 0,
-                    end : 100
+                dataZoom: {       //下面的手动调整时间（此处隐藏掉）
+                    show: false,
+                    start: 0,
+                    end: 100
                 },
-                xAxis : [     //x轴
+                xAxis: [     //x轴
                     {
-                        type : 'category',
-                        boundaryGap : true,
-                        data : (function (){
+                        type: 'category',
+                        boundaryGap: true,
+                        data: (function () {
                             var now = new Date();
                             var res = [];
                             var len = 10;  //x轴长度为10
                             while (len--) {
-                                res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                                res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
                                 now = new Date(now - 4000);   //横坐标隔多少秒，x轴加载以4秒为单位
                             }
                             return res;
                         })()
                     }
                 ],
-                yAxis : [
+                yAxis: [
                     {
-                        type : 'value',
-                        name : '电量'
+                        type: 'value',
+                        name: '电量'
                     }
                 ],
-                series : [
+                series: [
 
                     {
-                        name:'电量',
-                        type:'line',
-                        data:(function (){         //从后台获取电量放这儿
+                        name: '电量',
+                        type: 'line',
+                        data: (function () {         //从后台获取电量放这儿
                             var res = [];
                             var len = 10;
                             while (len--) {
-                                res.push((Math.random()*10 + 5).toFixed(1) - 0);
+                                res.push((Math.random() * 10 + 5).toFixed(1) - 0);
                             }
                             return res;
                         })()
@@ -269,8 +445,8 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             var lastData = 100;
             var axisData;
             clearInterval(timeTicket);
-            timeTicket = setInterval(function (){
-                axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+            timeTicket = setInterval(function () {
+                axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
 
                 // 动态数据接口 addData
                 dynamicChart.addData([
