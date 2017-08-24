@@ -201,13 +201,13 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             myHttpService.post(serviceList.getAllAssemblyCarrysByFirstResultAndMaxResults, assemblyCarryInfoBody).then(function successCallback(response) {
                 var responseBody = response.data;
                 $scope.AssemblyCarryList = responseBody.tableList;
-                $('#assemblyCenterTableNextButton').removeAttr("disabled");
+                $('#assemblyCarryTableNextButton').removeAttr("disabled");
                 if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
-                    $('#assemblyCenterTableNextButton').attr('disabled', "true");
+                    $('#assemblyCarryTableNextButton').attr('disabled', "true");
                 }
-                $('#assemblyCenterTablePrvButton').removeAttr("disabled");
+                $('#assemblyCarryTablePrvButton').removeAttr("disabled");
                 if (responseBody.firstIndexNum - 1 <= 0) {
-                    $('#assemblyCenterTablePrvButton').attr('disabled', "true");
+                    $('#assemblyCarryTablePrvButton').attr('disabled', "true");
                 }
                 loadRightFloatMenu();
                 hideLoadingPage();
@@ -228,12 +228,6 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                     $('#assemblyCenterTablePrvButton').attr('disabled', "true");
                 }
                 loadRightFloatMenu();
-                hideLoadingPage();
-            });
-
-            myHttpService.get(serviceList.AssemblyCenterInfoList).then(function (response) {
-                $scope.AssemblyCenterList = response.data;
-
                 hideLoadingPage();
             });
 
