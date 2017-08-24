@@ -27,4 +27,33 @@ public class AssemblyCenterInfoDAOImpl extends SuperDAOImpl implements AssemblyC
         List list = query.list();
         return list;
     }
+
+    public List findAllByFirstResultAndMaxResults(int firstResult, int maxResults) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_Mes_AssemblyCenterInfo rg_assemblyCenterInfo";
+        Query query = session.createQuery(hql);
+        query.setFirstResult(firstResult);
+        query.setMaxResults(maxResults);
+        List list = query.list();
+        return list;
+    }
+
+    public int getTotalNum() {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_Mes_AssemblyCenterInfo rg_assemblyCenterInfo";
+        Query query = session.createQuery(hql);
+        return query.list().size();
+    }
 }
