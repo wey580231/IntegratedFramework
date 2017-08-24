@@ -21,6 +21,10 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         var value = new Array();  //饼图的数据
         var name = ['剩余存储位','已用存储位'];  //饼图数据name
         var pieData = new Array();
+        var dynamicChart;  //动图
+        var dynamicData = [];  //动图的数据
+
+        var timeTicket;  //定时器
 
         layer.load(0);
         $(function () {
@@ -31,7 +35,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
             view();
 
-            //loadPieChart();
+            loadAGVInfo();
 
             myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
                 deportData = response.data;
@@ -54,6 +58,18 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
             myHttpService.get(serviceList.AssemblyCenterInfoList).then(function (response) {
                 $scope.AssemblyCenterList = response.data;
+
+                hideLoadingPage();
+            });
+
+            myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
+                var datas = response.data;
+
+                console.log(datas);
+
+                dynamicData.push(datas);
+
+                console.log(dynamicData);
 
                 hideLoadingPage();
             });
@@ -184,6 +200,95 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             myChart.setOption(option);
             document.getElementById("pieChart").style.display = "";
         }
+
+
+        /*
+        * 动图(AGVInfo)
+        * */
+        function loadAGVInfo(){
+            //基于准备好的dom，初始化echarts图表
+            dynamicChart = echarts.init(document.getElementById('dynamicChart'));
+
+            option = {
+                title : {
+                    text: '动态数据'
+                },
+                tooltip : {
+                    trigger: 'axis'   //鼠标悬浮的时候出现数据
+                },
+                legend: {
+                    data:['电量']     //最上面的标签
+                },
+
+                dataZoom : {       //下面的手动调整时间（此处隐藏掉）
+                    show : false,
+                    start : 0,
+                    end : 100
+                },
+                xAxis : [     //x轴
+                    {
+                        type : 'category',
+                        boundaryGap : true,
+                        data : (function (){
+                            var now = new Date();
+                            var res = [];
+                            var len = 10;  //x轴长度为10
+                            while (len--) {
+                                res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                                now = new Date(now - 4000);   //横坐标隔多少秒，x轴加载以4秒为单位
+                            }
+                            return res;
+                        })()
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        name : '电量'
+                    }
+                ],
+                series : [
+
+                    {
+                        name:'电量',
+                        type:'line',
+                        data:(function (){         //从后台获取电量放这儿
+                            var res = [];
+                            var len = 10;
+                            while (len--) {
+                                res.push((Math.random()*10 + 5).toFixed(1) - 0);
+                            }
+                            return res;
+                        })()
+                    }
+                ]
+            };
+
+            dynamicChart.setOption(option);
+
+            var lastData = 100;
+            var axisData;
+            clearInterval(timeTicket);
+            timeTicket = setInterval(function (){
+                axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+
+                // 动态数据接口 addData
+                dynamicChart.addData([
+
+                    [
+                        0,        // 系列索引
+                        lastData, // 新增数据
+                        false,    // 新增数据是否从队列头部插入
+                        false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                        axisData  // 坐标轴标签
+                    ]
+                ]);
+            }, 2100);
+
+
+            document.getElementById("dynamicChart").style.display = "";
+        }
+
 
         function view() {
             document.getElementById("pieChart").style.display = "";

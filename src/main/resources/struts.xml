@@ -237,5 +237,6 @@
         <action name="getAllAssemblyCenters" class="com.rengu.actions.AssemblyCenterInfoAction" method="getAllAssemblyCenters"/>
         <action name="getAllById" class="com.rengu.actions.DeportInfoAction" method="getAllById"/>
         <action name="getAllDeportInfo" class="com.rengu.actions.DeportInfoAction" method="getAllDeportInfo"/>
+        <action name="getAllAGVInfo" class="com.rengu.actions.AGVInfoAction" method="getAllAGVInfo"/>
     </package>
 </struts>
