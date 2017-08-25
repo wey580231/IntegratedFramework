@@ -205,6 +205,14 @@ angular.module("IntegratedFramework", [
 
         <!-- MES接口 -->
         service.CarryInfoList = backUrl + "mes/getAllCarrys.action";
+        service.getAllCarrysByFirstResultAndMaxResults = backUrl + "mes/getAllCarrysByFirstResultAndMaxResults.action";
+        service.AssemblyCarryInfoList = backUrl + "mes/getAllAssemblyCarrys.action";
+        service.getAllAssemblyCarrysByFirstResultAndMaxResults = backUrl + "mes/getAllAssemblyCarrysByFirstResultAndMaxResults.action";
+        service.AssemblyCenterInfoList = backUrl + "mes/getAllAssemblyCenters.action";
+        service.getAllAssemblyCentersByFirstResultAndMaxResults = backUrl + "mes/getAllAssemblyCentersByFirstResultAndMaxResults.action";
+        service.DeportInfoList = backUrl + "mes/getAllById.action";
+        service.AllDeportInfoList = backUrl + "mes/getAllDeportInfo.action";
+        service.AllAGVInfoList = backUrl + "mes/getAllAGVInfo.action";
 
 
         return service;

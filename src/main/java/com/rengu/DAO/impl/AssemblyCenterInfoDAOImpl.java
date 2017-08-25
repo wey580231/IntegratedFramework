@@ -1,7 +1,7 @@
 package com.rengu.DAO.impl;
 
-import com.rengu.DAO.CarryDAO;
-import com.rengu.entity.RG_Mes_CarryInfo;
+import com.rengu.DAO.AssemblyCenterInfoDAO;
+import com.rengu.entity.RG_Mes_AssemblyCenterInfo;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,11 +10,11 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 /**
- * Created by XY on 2017/8/17.
+ * Created by XY on 2017/8/18.
  */
-public class CarryDAOImpl extends SuperDAOImpl implements CarryDAO<RG_Mes_CarryInfo> {
+public class AssemblyCenterInfoDAOImpl extends SuperDAOImpl implements AssemblyCenterInfoDAO<RG_Mes_AssemblyCenterInfo> {
     @Override
-    public List<RG_Mes_CarryInfo> findAll() {
+    public List<RG_Mes_AssemblyCenterInfo> findAll() {
         MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
@@ -22,13 +22,13 @@ public class CarryDAOImpl extends SuperDAOImpl implements CarryDAO<RG_Mes_CarryI
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_Mes_CarryInfo rg_carryInfo";
+        String hql = "from RG_Mes_AssemblyCenterInfo rg_assemblyCenterInfo";
         Query query = session.createQuery(hql);
         List list = query.list();
         return list;
     }
 
-    public List<RG_Mes_CarryInfo> findAllByFirstResultAndMaxResults(int firstResult, int maxResults) {
+    public List findAllByFirstResultAndMaxResults(int firstResult, int maxResults) {
         MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
@@ -36,7 +36,7 @@ public class CarryDAOImpl extends SuperDAOImpl implements CarryDAO<RG_Mes_CarryI
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_Mes_CarryInfo rg_carryInfo";
+        String hql = "from RG_Mes_AssemblyCenterInfo rg_assemblyCenterInfo";
         Query query = session.createQuery(hql);
         query.setFirstResult(firstResult);
         query.setMaxResults(maxResults);
@@ -52,9 +52,8 @@ public class CarryDAOImpl extends SuperDAOImpl implements CarryDAO<RG_Mes_CarryI
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_Mes_CarryInfo rg_carryInfo";
+        String hql = "from RG_Mes_AssemblyCenterInfo rg_assemblyCenterInfo";
         Query query = session.createQuery(hql);
-        int totalNum = query.list().size();
-        return totalNum;
+        return query.list().size();
     }
 }

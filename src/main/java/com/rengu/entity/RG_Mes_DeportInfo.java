@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class RG_Mes_DeportInfo {
 
-    private int id;
+    private String id;
     private String deportId;                        //货架编号
     private String deportName;                      //货架中存储货物名称
     private Integer stock;                          //数量
@@ -15,11 +15,11 @@ public class RG_Mes_DeportInfo {
     private Integer freePlace;                      //剩余存储位
     private Date reportTime;                        //上报时间
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

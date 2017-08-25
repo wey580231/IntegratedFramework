@@ -77,6 +77,8 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 myHttpService.post(serviceList.isChildNode, id).then(function successCallback(response) {
                     var datas = response.data;
 
+                    console.log(datas);
+
                     if (datas.hasOwnProperty("childProcess")) {
                         var middleNodeList = datas.childProcess;
                         sortSnapshot(middleNodeList);
@@ -138,6 +140,9 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                         datas.children = temp;
                     }
                     zNodes.push(datas);
+
+                    console.log(zNodes);
+
                     loadTree();
                     loadDAG();
                     hideLoadingPage();
@@ -311,6 +316,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 ]
             };
 
+            console.log(zNodes);
             //图结构数据
             option.series[0].data = zNodes;
 

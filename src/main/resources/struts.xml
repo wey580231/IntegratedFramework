@@ -233,5 +233,17 @@
     <!-- MES接口 -->
     <package name="mes" namespace="/mes" extends="struts-default">
         <action name="getAllCarrys" class="com.rengu.actions.CarryAction" method="getAllCarrys"/>
+        <action name="getAllCarrysByFirstResultAndMaxResults" class="com.rengu.actions.CarryAction"
+                method="getAllCarrysByFirstResultAndMaxResults"/>
+        <action name="getAllAssemblyCarrys" class="com.rengu.actions.AssemblyCarryInfoAction" method="getAllAssemblyCarrys"/>
+        <action name="getAllAssemblyCarrysByFirstResultAndMaxResults" class="com.rengu.actions.AssemblyCarryInfoAction"
+                method="getAllAssemblyCarrysByFirstResultAndMaxResults"/>
+        <action name="getAllAssemblyCenters" class="com.rengu.actions.AssemblyCenterInfoAction" method="getAllAssemblyCenters"/>
+        <action name="getAllAssemblyCentersByFirstResultAndMaxResults"
+                class="com.rengu.actions.AssemblyCenterInfoAction"
+                method="getAllAssemblyCentersByFirstResultAndMaxResults"/>
+        <action name="getAllById" class="com.rengu.actions.DeportInfoAction" method="getAllById"/>
+        <action name="getAllDeportInfo" class="com.rengu.actions.DeportInfoAction" method="getAllDeportInfo"/>
+        <action name="getAllAGVInfo" class="com.rengu.actions.AGVInfoAction" method="getAllAGVInfo"/>
     </package>
 </struts>
