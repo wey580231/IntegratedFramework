@@ -1,14 +1,14 @@
 <!-- Main content -->
 <style>
-    .tableInfoDiv{
+    .tableInfoDiv {
         float: right;
     }
 
-    .tableInfo{
+    .tableInfo {
         margin-top: 5px;
     }
 
-    #div > div > .zr-element{
+    #div > div > .zr-element {
         width: 100%;
     }
 
@@ -16,69 +16,64 @@
 <section class="content">
     <!--<div class="box-primary">-->
     <!-- DONUT CHART -->
-        <div class="box box-danger box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">DeportInfo</h3>
+    <div class="box box-danger box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">DeportInfo</h3>
 
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
-            <div class="box-body">
-                <div class="col-md-3">
-                    <div>
-                            <h2>请选择货架:</h2>
-                    </div>
-                    <br/>
-                    <div class="form-group">
-                        <select class="form-control select2" style="width: 100%;" id="select">
-                            <option selected="selected"></option>
-                            <option ng-repeat="data in deportData">{{data.deportName}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div id="pieChart" style="height:300px;width: 100%;"></div>
-                    <!--<canvas id="pieChart" style="height:200px; width: 500px;"></canvas>-->
-                </div>
-                <div class="col-md-1">
-                    <div style="width: 100%;">
-                    </div>
-                </div>
-
-            </div>
-            <!-- /.box-body -->
         </div>
+        <div class="box-body">
+            <div class="col-md-3">
+                <div>
+                    <h2>请选择货架:</h2>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <select class="form-control select2" style="width: 100%;" id="select">
+                        <option selected="selected"></option>
+                        <option ng-repeat="data in deportData">{{data.deportName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="pieChart" style="height:300px;width: 100%;"></div>
+                <!--<canvas id="pieChart" style="height:200px; width: 500px;"></canvas>-->
+            </div>
+            <div class="col-md-1">
+                <div style="width: 100%;">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.box-body -->
+    </div>
     <!--</div>-->
-    <!--<div class="row">
-        <div class="col-xs-12">
-            &lt;!&ndash; interactive chart &ndash;&gt;
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <i class="fa fa-bar-chart-o"></i>
 
-                    <h3 class="box-title">温度变化情况</h3>
+    <!-- DYNAMIC CHART -->
+    <div class="box box-info box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">AGVInfo</h3>
 
-                    <div class="box-tools pull-right">
-                        实时数据
-                        <div class="btn-group" id="realtime" data-toggle="btn-toggle">
-                            <button type="button" class="btn btn-default btn-xs active" data-toggle="on">开</button>
-                            <button type="button" class="btn btn-default btn-xs" data-toggle="off">关</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div id="interactive" style="height: 300px;"></div>
-                </div>
-                &lt;!&ndash; /.box-body&ndash;&gt;
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
-            &lt;!&ndash; /.box &ndash;&gt;
+        </div>
+        <div class="box-body">
+
+            <div id="dynamicChart" style="height:300px;width: 100%;"></div>
+
 
         </div>
-        &lt;!&ndash; /.col &ndash;&gt;
-    </div>-->
+        <!-- /.box-body -->
+    </div>
+    <!--</div>-->
+
 
 </section>
 <section class="content">
@@ -90,9 +85,10 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
-                    </button>
+                    <button type="button" class="btn btn-default btn-sm" id="carryTablePrvButton"
+                            ng-click="carryListPagePrvButton()"><i class="fa fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" id="carryTableNextButton"
+                            ng-click="carryListPageNextButton()"><i class="fa fa-chevron-right"></i></button>
                 </div>
                 <div class="tableInfoDiv">
                     <h3 class="tableInfo">立体仓库信息</h3>
@@ -141,8 +137,10 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
+                    <button type="button" class="btn btn-default btn-sm" id="assemblyCarryTablePrvButton"
+                            ng-click="AssemblyCarryListPagePrvButton()"><i class="fa fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" id="assemblyCarryTableNextButton"
+                            ng-click="AssemblyCarryListPageNextButton()"><i class="fa fa-chevron-right"></i>
                     </button>
                 </div>
 
@@ -193,8 +191,10 @@
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                 </button>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
+                    <button type="button" class="btn btn-default btn-sm" id="assemblyCenterTablePrvButton"
+                            ng-click="AssemblyCenterTablePrvButton()"><i class="fa fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-default btn-sm" id="assemblyCenterTableNextButton"
+                            ng-click="AssemblyCenterTableNextButton()"><i class="fa fa-chevron-right"></i>
                     </button>
                 </div>
 
