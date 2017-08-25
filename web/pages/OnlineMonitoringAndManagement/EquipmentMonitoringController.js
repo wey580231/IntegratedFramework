@@ -168,7 +168,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
             view();
 
-            loadAGVInfo();
+            //loadAGVInfo();
 
             myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
                 deportData = response.data;
@@ -375,7 +375,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         /*
         * 动图(AGVInfo)
         * */
-        function loadAGVInfo() {
+        /*function loadAGVInfo() {
             //基于准备好的dom，初始化echarts图表
             dynamicChart = echarts.init(document.getElementById('dynamicChart'));
 
@@ -404,7 +404,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                             var res = [];
                             var len = 10;  //x轴长度为10
                             while (len--) {
-                                res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+                                res.unshift(now.toLocaleTimeString().replace(/^\D*!/, ''));
                                 now = new Date(now - 4000);   //横坐标隔多少秒，x轴加载以4秒为单位
                             }
                             return res;
@@ -440,7 +440,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             var axisData;
             clearInterval(timeTicket);
             timeTicket = setInterval(function () {
-                axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+                axisData = (new Date()).toLocaleTimeString().replace(/^\D*!/, '');
 
                 // 动态数据接口 addData
                 dynamicChart.addData([
@@ -457,7 +457,108 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
 
             document.getElementById("dynamicChart").style.display = "";
+        }*/
+
+
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+        function activeLastPointToolip(chart) {
+            var points = chart.series[0].points;
+            chart.tooltip.refresh(points[points.length -1]);
         }
+        $('#dynamicChart').highcharts({
+            chart: {
+                type: 'spline',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series[0],
+                            chart = this;
+                        setInterval(function () {
+                            var x = (new Date()).getTime(),
+                            y = Math.random();
+                            series.addPoint([x, y], true, true);
+                            activeLastPointToolip(chart)
+                        }, 10*1000);  //隔多长时间加载一次数据
+                    }
+                }
+            },
+            title: {
+                text: '动态模拟实时数据'
+            },
+            xAxis: {
+                type: 'datetime',
+                maxZoom: 48 * 60 * 1000,  //x轴两点相隔10min
+                tickPixelInterval: 100  //x轴两点之间的间距（像素）
+            },
+            yAxis: {
+                title: {
+                    text: '电量'
+                },
+                minRange: 20,
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [{  //显示的数据，框中
+                name: '电量',
+                data: (function () {
+                    // generate an array of random data
+                    var data = [],
+                        now = (new Date()).getTime(),
+                        i;
+                    for (i = 0; i <= dynamicData.length; i ++) {
+                        if(now < dynamicData[0].reportTime){
+                            data.push({
+                                x: now + i * 1000,
+                                y: 100
+                            })
+                        }else if(i > 0 && now >= dynamicData[i-1].reportTime && now <dynamicData[i+1].reportTime){
+                            data.push({
+                                x: now + i * 1000,
+                                y: dynamicData[i-1].remainPower
+                            })
+                        }else if(now >= dynamicData[dynamicData.length-1]){
+                            data.push({
+                                x: now + i * 1000,
+                                y: dynamicData[dynamicData.length-1].remainPower
+                            })
+                        }else if(now = dynamicData[i].reportTime){
+                            data.push({
+                                x: dynamicData[i].reportTime,   //数据的时间
+                                y: dynamicData[i].remainPower  //数据值
+                            });
+                        }
+
+                    }
+                    return data;
+                }())
+            }]
+        }, function(c) {
+            activeLastPointToolip(c)
+        });
+
+
 
 
         function view() {
