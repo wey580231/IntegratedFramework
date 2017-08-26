@@ -18,10 +18,13 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         var option;//Dag的option
         var map = {};//根节点用于折叠展开
         var mapMiddle = {};
+
         var myDag;
 
         var oldMiddle = [];//存放选择查看方式时被删除的节点，用于恢复dag原形
         var oldBottom = [];
+
+        var vals;//右侧下拉框选中的值
 
         $(function () {
             //初始化下拉数据
@@ -57,9 +60,12 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         $("#select").change(function () {
 
             zNodes.splice(0, zNodes.length);
+            oldMiddle.splice(0, oldMiddle.length);
+            oldBottom.splice(0, oldBottom.length);
             var idRoot;
             var val = $(this).children('option:selected').val();
 
+            refreshSelects();
 
             if (val.length > 0) {
                 for (var i = 0; i < rootData.length; i++) {
@@ -77,8 +83,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 myHttpService.post(serviceList.isChildNode, id).then(function successCallback(response) {
                     var datas = response.data;
 
-                    console.log(datas);
-
                     if (datas.hasOwnProperty("childProcess")) {
                         var middleNodeList = datas.childProcess;
                         sortSnapshot(middleNodeList);
@@ -93,11 +97,12 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                                 for (var k = 0; k < middleNode.childProcess.length; k++) {
                                     var bottomNode = middleNode.childProcess[k];
                                     if (bottomNode.transport == 0) {
-                                        bottomNode.icon = "../../images/bom_img/transport.png";
-                                        bottomNode.symbol = "../../images/bom_img/transport.png";
-                                    } else if (bottomNode.transport == 1) {
                                         bottomNode.icon = "../../images/bom_img/fit.png";
                                         bottomNode.symbol = "../../images/bom_img/fit.png";
+                                    } else if (bottomNode.transport == 1) {
+
+                                        bottomNode.icon = "../../images/bom_img/transport.png";
+                                        bottomNode.symbol = "../../images/bom_img/transport.png";
                                     } else {
                                         bottomNode.icon = "../../images/bom_img/errorNode.png";
                                         bottomNode.symbol = "../../images/bom_img/errorNode.png";
@@ -109,22 +114,24 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                                 middleNode = middleNode;
                                 if (middleNode.children.length > 0) {
                                     if (middleNode.transport == 0) {
-                                        middleNode.icon = "../../images/bom_img/interactive.png";
-                                        middleNode.symbol = "../../images/bom_img/interactive.png";
-                                    } else if (middleNode.transport == 1) {
+
                                         middleNode.icon = "../../images/bom_img/fit.png";
                                         middleNode.symbol = "../../images/bom_img/fit.png";
+                                    } else if (middleNode.transport == 1) {
+                                        middleNode.icon = "../../images/bom_img/interactive.png";
+                                        middleNode.symbol = "../../images/bom_img/interactive.png";
                                     } else {
                                         middleNode.icon = "../../images/bom_img/errorNode.png";
                                         middleNode.symbol = "../../images/bom_img/errorNode.png";
                                     }
                                 } else {
                                     if (middleNode.transport == 0) {
-                                        middleNode.icon = "../../images/bom_img/transport.png";
-                                        middleNode.symbol = "../../images/bom_img/transport.png";
-                                    } else if (middleNode.transport == 1) {
+
                                         middleNode.icon = "../../images/bom_img/fit.png";
                                         middleNode.symbol = "../../images/bom_img/fit.png";
+                                    } else if (middleNode.transport == 1) {
+                                        middleNode.icon = "../../images/bom_img/transport.png";
+                                        middleNode.symbol = "../../images/bom_img/transport.png";
                                     } else {
                                         middleNode.icon = "../../images/bom_img/errorNode.png";
                                         middleNode.symbol = "../../images/bom_img/errorNode.png";
@@ -140,8 +147,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                         datas.children = temp;
                     }
                     zNodes.push(datas);
-
-                    console.log(zNodes);
 
                     loadTree();
                     loadDAG();
@@ -186,8 +191,11 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 }
             };
 
+
             //点击树形控件
             function zTreeOnClick(e, treeId, treeNode) {
+                refresh();
+
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 zTree.expandNode(treeNode);
 
@@ -200,7 +208,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                     if (option.series[0].data[j].name == treeNode.name) {
                         //展开
                         if (map.hasOwnProperty(treeNode.name) && map[treeNode.name] != null) {
-                            // oldMiddle = treeNode;
                             option.series[0].data[j].children = map[treeNode.name];
                             map[treeNode.name] = null;
                             //名称位置
@@ -237,7 +244,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                     for (var l = 0; l < option.series[0].data[j].children.length; l++) {
                         if (option.series[0].data[j].children[l].name == treeNode.name) {
                             if (mapMiddle.hasOwnProperty(treeNode.name) && mapMiddle[treeNode.name] != null) {
-                                // oldBottom = treeNode;
                                 option.series[0].data[j].children[l].children = mapMiddle[treeNode.name];
                                 mapMiddle[treeNode.name] = null;
                                 option.series[0].itemStyle.normal.label.position = null;
@@ -255,17 +261,32 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                         }
                     }
                 }
+
                 myDag.clear();
                 //重新赋值，渲染图表
                 myDag.setOption(option);
 
-            }   //onclick
+                refreshSelects();
 
+            }
 
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
 
             document.getElementById("treeDemo").style.display = "";
 
+        }
+
+        function refreshSelects(){
+            //右侧下拉框刷新
+            $("#selects").empty();
+            //根据select查找对象，
+            var obj=document.getElementById('selects'); //获取到id为'mySelect'的select元素
+
+            //添加选项
+            obj.options.add(new Option(""));
+            obj.options.add(new Option("运输工艺"));
+            obj.options.add(new Option("生产工艺"));
+            obj.options.add(new Option("显示全部"));
         }
 
         function loadDAG() {
@@ -316,7 +337,6 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 ]
             };
 
-            console.log(zNodes);
             //图结构数据
             option.series[0].data = zNodes;
 
@@ -335,20 +355,40 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
 
         }
 
+        var myChart = document.getElementById('dag');
+
+        //自适应宽高
+        var myChartContainer = function () {
+            myChart.style.width = window.screen.availWidth +'px';
+            myChart.style.height = window.screen.availHeight+'px';
+        };
+        myChartContainer();
+        //浏览器大小改变时重置大小
+        window.onresize = function () {
+            myChartContainer();
+            myChart.resize();
+        };
+
 
         //查看方式
         //下拉框事件改变
         $("#selects").change(function () {
 
-            var val = $(this).children('option:selected').val();
+            vals = $(this).children('option:selected').val();
 
-            if (val == "运输工艺") {
-                oldMiddle.splice(0, oldMiddle.length);
-                oldBottom.splice(0, oldBottom.length);
+            changeDAG();
+
+            myDag.clear();
+            //重新赋值，渲染图表
+            myDag.setOption(option);
+        });
+
+        function changeDAG(){
+
+            refresh();
+            if (vals == "生产工艺") {
                 for (var i = 0; i < option.series[0].data.length; i++) {
-
                     if (option.series[0].data[i].children.length > 0) {
-
                         for (var j = option.series[0].data[i].children.length - 1; j >= 0; j--) {
                             if (option.series[0].data[i].children[j].transport == 1) {
                                 oldMiddle.push(option.series[0].data[i].children[j]);
@@ -368,9 +408,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                         }
                     }
                 }
-            } else if (val == "生产工艺") {
-                oldMiddle.splice(0, oldMiddle.length);
-                oldBottom.splice(0, oldBottom.length);
+            } else if (vals == "运输工艺") {
                 for (var i = 0; i < option.series[0].data.length; i++) {
                     if (option.series[0].data[i].children.length > 0) {
                         for (var j = option.series[0].data[i].children.length - 1; j >= 0; j--) {
@@ -392,36 +430,19 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                         }
                     }
                 }
-            } else {
-                //恢复原形
-                for (var j = 0; j < option.series[0].data.length; j++) {
-                    if (oldMiddle.length > 0) {
-                        for (var i = 0; i < oldMiddle.length; i++) {
-                            option.series[0].data[j].children.push(oldMiddle[i]);
-                            for (var k = 0; k < option.series[0].data[j].children.length; k++) {
-                                if (oldBottom.length > 0) {
-                                    for (var l = 0; l < oldBottom.length; l++) {
-                                        if (option.series[0].data[j].children[k].id == oldBottom[l].parentId) {
-                                            option.series[0].data[j].children[k].children.push(oldBottom[l]);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        for (var m = 0; m < option.series[0].data[j].children.length; m++) {
-                            if (oldBottom.length > 0) {
-                                for (var l = 0; l < oldBottom.length; l++) {
-                                    if (option.series[0].data[j].children[m].id == oldBottom[l].parentId) {
-                                        option.series[0].data[j].children[m].children.push(oldBottom[l]);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                oldMiddle.splice(0, oldMiddle.length);
-                oldBottom.splice(0, oldBottom.length);
+            } else if (vals == "显示全部") {
+                /*   for (var i = 0; i < option.series[0].data.length; i++) {
+                 if (option.series[0].data[i].children.length > 0) {
+                 for (var j = option.series[0].data[i].children.length - 1; j >= 0; j--) {
+                 oldDag.push(option.series[0].data[i].children[j]);
+                 option.series[0].data[i].children.removeByValue(option.series[0].data[i].children[j]);
+                 }
+                 option.series[0].data[i].children = treeNodes.children;
+                 myDag.clear();
+                 //重新赋值，渲染图表
+                 myDag.setOption(option);
+                 }
+                 }*/
             }
 
             //解决只剩根节点时的显示问题
@@ -430,15 +451,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                     option.series[0].data[i].children = "";
                 }
             }
-
-            $("#select").attr("disabled","disabled").css("background-color","#EEEEEE;");
-            $("#selects").attr("disabled","disabled").css("background-color","#EEEEEE;");
-
-            myDag.clear();
-            //重新赋值，渲染图表
-            myDag.setOption(option);
-        });
-
+        }
 
         //移除数组中对应的对象数组
         Array.prototype.removeByValue = function (obj) {
@@ -450,12 +463,13 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             }
         };
 
+
         //恢复DAG原形
-        $scope.refresh = function () {
+        function refresh() {
             for (var j = 0; j < option.series[0].data.length; j++) {
                 if (oldMiddle.length > 0) {
                     for (var i = 0; i < oldMiddle.length; i++) {
-                        option.series[0].data[j].children.push(oldMiddle[i]);
+                        (option.series[0].data[j].children).push(oldMiddle[i]);
                         for (var k = 0; k < option.series[0].data[j].children.length; k++) {
                             if (oldBottom.length > 0) {
                                 for (var l = 0; l < oldBottom.length; l++) {
@@ -466,30 +480,31 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                             }
                         }
                     }
+                    oldMiddle.splice(0, oldMiddle.length);
+               /* } else if (oldDag.length > 0) {
+                    if (option.series[0].data[j].children.length > 0) {
+                        for (var k = option.series[0].data[j].children.length - 1; k >= 0; k--) {
+                            option.series[0].data[j].children.removeByValue(option.series[0].data[j].children[k]);
+                        }
+                    }
+                    for (var l = 0; l < oldDag.length; l++) {
+                        (option.series[0].data[j].children).push(oldDag[l]);
+                    }
+                    oldDag.splice(0, oldDag.length);*/
                 } else {
                     for (var m = 0; m < option.series[0].data[j].children.length; m++) {
                         if (oldBottom.length > 0) {
                             for (var l = 0; l < oldBottom.length; l++) {
                                 if (option.series[0].data[j].children[m].id == oldBottom[l].parentId) {
-                                    option.series[0].data[j].children[m].children.push(oldBottom[l]);
+                                    (option.series[0].data[j].children[m].children).push(oldBottom[l]);
                                 }
                             }
                         }
                     }
+                    oldBottom.splice(0, oldBottom.length);
                 }
             }
-            oldMiddle.splice(0, oldMiddle.length);
-            oldBottom.splice(0, oldBottom.length);
-            notification.sendNotification("confirm", "显示为原图");
-
-            $("#select").removeAttr("disabled");
-            $("#selects").removeAttr("disabled");
-            myDag.clear();
-            //重新赋值，渲染图表
-            myDag.setOption(option);
-        };
-
-
+        }
         //显示暂无数据
         function view() {
             document.getElementById("dag").style.display = "";
@@ -504,21 +519,38 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             myDag.setOption(option);
         }
 
-        //全屏
-        $("#dag").dblclick(function () {
 
-            fullView();
-
+        $("#dag").dblclick(function(){
+            //全屏
+            fullScreen();
+            //退出全屏
+            exitFullScreen();
         });
 
+
         //全屏
-        function fullView() {
+        function fullScreen() {
             var el = document.getElementById("dag");
             var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
-
             if (typeof rfs != "undefined" && rfs) {
                 rfs.call(el);
             } else if (typeof window.ActiveXObject != "undefined") {
+                var wscript = new ActiveXObject("WScript.Shell");
+                if (wscript != null) {
+                    wscript.SendKeys("{F11}");
+                }
+            }
+        }
+
+        //退出全屏
+        function exitFullScreen() {
+            var el = document;
+            var cfs = el.cancelFullScreen || el.webkitCancelFullScreen || el.mozCancelFullScreen || el.exitFullScreen;
+
+            if (typeof cfs != "undefined" && cfs) {
+                cfs.call(el);
+            } else if (typeof window.ActiveXObject != "undefined") {
+                //for IE，这里和fullScreen相同，模拟按下F11键退出全屏
                 var wscript = new ActiveXObject("WScript.Shell");
                 if (wscript != null) {
                     wscript.SendKeys("{F11}");

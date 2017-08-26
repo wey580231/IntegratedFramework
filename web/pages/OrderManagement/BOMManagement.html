@@ -96,6 +96,11 @@
         Helvetica;
     }
 
+    /* styling the backdrop*/
+    ::backdrop {
+        /* properties */
+        background-color: white;
+    }
 
 </style>
 
@@ -199,10 +204,11 @@
                                                     <option selected="selected"></option>
                                                     <option>运输工艺</option>
                                                     <option>生产工艺</option>
+                                                    <option>显示全部</option>
                                                 </select>
                                             </div>
                                         </li>
-                                        <li style="left: 22%;top: 7px;" class="fa fa-refresh" title="恢复dag原图" ng-click="refresh()"></li>
+                                        <!--<li style="left: 22%;top: 7px;" class="fa fa-refresh" title="恢复dag原图" ng-click="refresh()"></li>-->
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="tab_1">
@@ -245,20 +251,7 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane" id="tab_2">
-                                            <!--DAG-->
-                                            <!--  <div class="live map">
-                                                  <svg></g></svg>
-                                              </div>-->
                                             <div style="height: auto;margin-bottom: 3px;">
-
-                                                <!--  <div class="form-group">
-                                                      <select class="form-control select2" style="width: 100%;"
-                                                              id="select2">
-                                                          <option selected="selected"></option>
-                                                          <option>运输工艺</option>
-                                                          <option>非运输工艺</option>
-                                                      </select>
-                                                  </div>-->
                                                 <table class="table table-striped" id="table_info">
                                                     <tr>
                                                         <td><span class="spanKey">节点名称</span></td>
@@ -271,9 +264,8 @@
                                                 </table>
                                             </div>
                                             <div id="dagView">
-                                                <div id="dag" style="width: 800px;height:400px;"></div>
+                                                <div id="dag" style="width: 780px;height:640px;"></div>
                                             </div>
-
                                         </div><!--/.well -->
                                     </div>
                                 </div>
