@@ -31,6 +31,7 @@ public class SnapshotDao {
         distanceMap.put("TKD-L", "AGV_L");
         distanceMap.put("TKD-R", "AGV_R");
         distanceMap.put("CCJDJC", "AGV_R");
+//        distanceMap.put("CCJDJC", "CCJDJC");
         distanceMap.put("XBC", "XBC");
         distanceMap.put("MTJDJC", "OnlineTest");
         distanceMap.put("ZHDXNJC", "AssembleAccuracyTest");
@@ -205,6 +206,8 @@ public class SnapshotDao {
                     if (!isSignal) {
                         result.setSnapshotNodeEntity(plan.getSnapShort());
                     }
+                    //设置task
+                    result.setIdTask(plan.getIdTask());
 
                     session.save(result);
 
@@ -252,6 +255,7 @@ public class SnapshotDao {
                                 if (!isSignal) {
                                     nextResult.setSnapshotNodeEntity(plan.getSnapShort());
                                 }
+
                                 session.save(nextResult);
                             }
                         }
@@ -281,7 +285,7 @@ public class SnapshotDao {
                                 }
 
                                 int pAdvanceStartTime = Integer.parseInt(entity.getpAdvanceStartTime());
-                                long stime = currPlanEndTime  - pAdvanceStartTime + perPlanDelayMinuteTime;
+                                long stime = currPlanEndTime - pAdvanceStartTime + perPlanDelayMinuteTime;
 
                                 long lastTime = 2;
 
@@ -325,7 +329,6 @@ public class SnapshotDao {
                     nextResult.setSite(distanceMap.get(endSite));
 
                     Date startDate = sdf.parse(robotPlan.get(i).getT2Task());
-                    Date endDate = sdf.parse(robotPlan.get(i + 1).getT1Task());
 
                     long stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
 
@@ -359,7 +362,6 @@ public class SnapshotDao {
                 }
             }
         }
-
     }
 
     //将结果下发给MES，添加对订单状态的修改
@@ -422,7 +424,7 @@ public class SnapshotDao {
                         }
 
                         //生产工艺信息
-                        NativeQuery query = session.createNativeQuery("select idTask,idOrder,nameTask,rplan.idProduct,quantityTask,t1Task,t2Task " +
+                        NativeQuery query = session.createNativeQuery("select id,idTask,idOrder,nameTask,rplan.idProduct,quantityTask,t1Task,t2Task " +
                                 "from rg_plan rplan left join rg_process rprocess on rplan.idProcess=rprocess.id where rprocess.transport = 0 and idSnapshort=:snapShot ");
                         query.setParameter("snapShot", id);
                         List plans = query.list();
@@ -433,14 +435,16 @@ public class SnapshotDao {
                             ObjectNode dataNode = mapper.createObjectNode();
 
                             dataNode.put("id", planResult[0].toString());
-                            dataNode.put("idOrder", planResult[1].toString());
-                            dataNode.put("nameTask", planResult[2].toString());
-                            dataNode.put("idProductOrder", planResult[3].toString());
-                            dataNode.put("quantityTask", Integer.parseInt(planResult[4].toString()));
-                            dataNode.put("t1Task", planResult[5].toString());
-                            dataNode.put("t2Task", planResult[6].toString());
+                            //YANG 20170825新增idTask
+                            dataNode.put("idTask", planResult[1].toString());
+                            dataNode.put("idOrder", planResult[2].toString());
+                            dataNode.put("nameTask", planResult[3].toString());
+                            dataNode.put("idProductOrder", planResult[4].toString());
+                            dataNode.put("quantityTask", Integer.parseInt(planResult[5].toString()));
+                            dataNode.put("t1Task", planResult[6].toString());
+                            dataNode.put("t2Task", planResult[7].toString());
                             dataNode.put("nameUser", "1");
-                            dataNode.put("scheduleTime", "2017-08-02 17:00:00");
+                            dataNode.put("scheduleTime", Tools.formatToStandardDate(rootParent.getSchedule().getScheduleTime()));
 
                             MesSender.instance().sendData("planInfo", dataNode);
                         }

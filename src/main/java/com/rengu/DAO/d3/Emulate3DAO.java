@@ -170,6 +170,11 @@ public class Emulate3DAO {
                         } else {
                             node.put("site", "");
                         }
+                        if (emulateData.getIdTask() != null && emulateData.getIdTask().length() > 0) {
+                            node.put("idTask", emulateData.getIdTask());
+                        } else {
+                            node.put("idTask", "");
+                        }
                         arrayNode.add(node);
                     }
                 }
@@ -254,6 +259,11 @@ public class Emulate3DAO {
                     node.put("site", entity.getSite());
                 } else {
                     node.put("site", "");
+                }
+                if (entity.getIdTask() != null) {
+                    node.put("idTask", entity.getIdTask());
+                } else {
+                    node.put("idTask", "");
                 }
                 arrayNode.add(node);
             }
