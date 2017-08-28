@@ -468,17 +468,17 @@ public class FeedBackStateAction extends SuperAction {
             e.printStackTrace();
         }
 
+        MyLog.getLogger().info("===查询的订数量为:"+list.size()+"=====");
+
         //【2】若不包含，则进行结果转换
         if (list.size() == 0) {
-            Tools.jsonPrint(Tools.resultCode("ok", "start switch result!"), this.httpServletResponse);
             switchResult("1");
         } else {
-            int result = ApsTools.instance().getInterAdjust();
-            if (result == ApsTools.STARTED) {
-                Tools.jsonPrint(Tools.resultCode("emergency_ok", "start emergency interactive!"), this.httpServletResponse);
-            } else {
-                Tools.jsonPrint(Tools.resultCode("emergency_error", "start emergency interactive!"), this.httpServletResponse);
-            }
+            BackupThread queryThrad = new BackupThread(BackupThread.Query_Order_State);
+            Thread thread = new Thread(queryThrad);
+            thread.start();
         }
+
+        Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 }

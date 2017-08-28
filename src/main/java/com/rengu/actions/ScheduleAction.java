@@ -6,6 +6,8 @@ import com.rengu.entity.*;
 import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -84,21 +86,108 @@ public class ScheduleAction extends SuperAction {
                 RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
                 Set<RG_LayoutDetailEntity> rg_layoutDetailEntitySet = layout.getDetails();
 
-                //TODO 根据选择的布局中包含znzppt、rjxzpt的数量来更新aps的site、site-site数据库表
-
                 //开启所有资源
 //                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1'");
-//                更新资源可用情况
+
+                int znzpNum = 0, rjxzNum = 0;
+
+                //更新资源可用情况
                 for (RG_LayoutDetailEntity rg_layoutDetailEntity : rg_layoutDetailEntitySet) {
                     String resourceExist = rg_layoutDetailEntity.getExist();
                     String resourceState = rg_layoutDetailEntity.getState();
                     if (resourceExist.equals("true") && resourceState.equals("running")) {
+
+                        if (rg_layoutDetailEntity.getItem().contains("ZNZPPT")) {
+                            znzpNum++;
+                        } else if (rg_layoutDetailEntity.getItem().contains("RJXZPT")) {
+                            rjxzNum++;
+                        }
+
                         String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
                         Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
                     } else {
                         MyLog.getLogger().info(rg_layoutDetailEntity.getItem() + "资源不可用");
                     }
                 }
+
+                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "truncate table APS_SITE");
+                Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "truncate table APS_SITE_SITE");
+
+                int selectedLayoutId = 1;
+
+                //基础布局【1】
+                if (znzpNum == 1 && rjxzNum == 1) {
+                    selectedLayoutId = 1;
+                }
+                //2个智能装配，1个人机协作【2】
+                else if (znzpNum == 2 && rjxzNum == 1) {
+                    selectedLayoutId = 2;
+                }
+                //1个/2个智能装配，2个人机协作【3】
+                else if ((znzpNum == 2 || znzpNum == 1) && rjxzNum == 2) {
+                    selectedLayoutId = 3;
+                }
+
+                //【1】更新APS的site表
+                Query query = session.createQuery("From RG_SiteTypeEntity where layoutType = '" + selectedLayoutId + "'", RG_SiteTypeEntity.class);
+                List<RG_SiteTypeEntity> siteTypes = query.list();
+                if (siteTypes.size() > 0) {
+                    Iterator<RG_SiteTypeEntity> iter = siteTypes.iterator();
+                    while (iter.hasNext()) {
+                        RG_SiteTypeEntity siteType = iter.next();
+
+                        String sql = "INSERT INTO APS_SITE VALUES ('%s','%s',%d,%d,'%s','%s',%d,%d,'%s')";
+                        sql = String.format(sql, siteType.getResource(), siteType.getName(), siteType.getX(), siteType.getY(), siteType.getType(), siteType.getIdIcon(), siteType.getSizeIcon(), siteType.getCapacity(), siteType.getColor());
+                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, sql);
+                    }
+                }
+
+                //【2】更新APS的site-site表
+                query = session.createQuery("From RG_LayoutDistanceEntity where type = '" + selectedLayoutId + "' ", RG_LayoutDistanceEntity.class);
+                List<RG_LayoutDistanceEntity> layoutDetails = query.list();
+                if (layoutDetails.size() > 0) {
+                    Iterator<RG_LayoutDistanceEntity> iter = layoutDetails.iterator();
+                    while (iter.hasNext()) {
+                        RG_LayoutDistanceEntity siteType = iter.next();
+
+                        String sql = "INSERT INTO APS_SITE_SITE VALUES ('%s','%s',%d,%d )";
+
+                        if (siteType.getTime().length() == 0) {
+                            sql = String.format(sql, siteType.getSite1(), siteType.getSite2(), 0, Integer.parseInt(siteType.getDistance()));
+                        } else {
+                            sql = String.format(sql, siteType.getSite1(), siteType.getSite2(), Integer.parseInt(siteType.getTime()), Integer.parseInt(siteType.getDistance()));
+                        }
+
+                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, sql);
+                    }
+                }
+
+                //【3】更新框架的distance表
+                NativeQuery nq = session.createNativeQuery("truncate table rg_distance");
+                if (nq.executeUpdate() >= 0) {
+                    Iterator<RG_LayoutDistanceEntity> iter = layoutDetails.iterator();
+                    while (iter.hasNext()) {
+                        RG_LayoutDistanceEntity siteType = iter.next();
+
+                        RG_DistanceEntity distanceEntity = new RG_DistanceEntity();
+                        distanceEntity.setId(Tools.getUUID());
+                        distanceEntity.setStartSite(session.get(RG_SiteEntity.class, siteType.getSite1()));
+                        distanceEntity.setEndSite(session.get(RG_SiteEntity.class, siteType.getSite2()));
+                        try {
+                            distanceEntity.setTime(Integer.parseInt(siteType.getTime()));
+                        } catch (NumberFormatException e) {
+                            distanceEntity.setTime(0);
+                        }
+
+                        try {
+                            distanceEntity.setDistance(Integer.parseInt(siteType.getDistance()));
+                        } catch (NumberFormatException e) {
+                            distanceEntity.setDistance(0);
+                        }
+                        session.save(distanceEntity);
+                    }
+                }
+
                 //将托盘资源职位可用状态
                 Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XZTP01_01'");
                 Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '1' where id = 'XZTP02_02'");

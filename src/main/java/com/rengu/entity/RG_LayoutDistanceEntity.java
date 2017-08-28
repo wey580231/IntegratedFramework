@@ -9,7 +9,7 @@ public class RG_LayoutDistanceEntity {
     private String distance;
     private String time;
 
-    private String type;           //不同布局的类型，1:1个智能装配，1个人机协作；2：2个只能装配，1个人机协作；3：1个/2个智能装配，2个人机协作
+    private String type;           //不同布局的类型，1:1个智能装配，1个人机协作；2：2个智能装配，1个人机协作；3：1个/2个智能装配，2个人机协作
 
     public int getId() {
         return id;

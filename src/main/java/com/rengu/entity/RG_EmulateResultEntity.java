@@ -11,6 +11,7 @@ public class RG_EmulateResultEntity {
     private int endTime;                            //结束时间
     private String goods;                           //货物
     private String site;                            //地点
+    private String idTask;                          //对应的task
 
     private RG_OrderEntity orderEntity;
     private RG_SnapshotNodeEntity snapshotNodeEntity;
@@ -61,6 +62,14 @@ public class RG_EmulateResultEntity {
 
     public void setSite(String site) {
         this.site = site;
+    }
+
+    public String getIdTask() {
+        return idTask;
+    }
+
+    public void setIdTask(String idTask) {
+        this.idTask = idTask;
     }
 
     public RG_OrderEntity getOrderEntity() {

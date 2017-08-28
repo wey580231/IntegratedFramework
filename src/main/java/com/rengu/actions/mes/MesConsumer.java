@@ -66,8 +66,8 @@ public class MesConsumer extends Thread {
 
             JsonNode root = Tools.jsonTreeModelParse(message);
 
-            String mesType = root.get("FC").asText();               //功能编码
-            String UUID = root.get("UUID").asText();              //接收消息UUID，用于在回复时加入
+            String mesType = root.get("FC").asText();                //功能编码
+            String UUID = root.get("UUID").asText();                 //接收消息UUID，用于在回复时加入
 
             JsonNode dataNode = root.get("DATA");
 
@@ -282,8 +282,6 @@ public class MesConsumer extends Thread {
                 //订单状态
                 RG_OrderStateEntity orderState = new RG_OrderStateEntity();
 
-
-
                 orderState.setIdTask(dataNode.get("idTask").asText());
 
                 //获取task表中的nameTask字段
@@ -411,7 +409,6 @@ public class MesConsumer extends Thread {
                             }
                         }
                     }
-
                 }*/
 
                 session.save(orderState);
@@ -420,22 +417,22 @@ public class MesConsumer extends Thread {
             //【已调】工序指令信息
             else if (mesType.equals(MessTable.MES_INSTRUCT_INFO)) {
                 RG_RealDataEntity data = new RG_RealDataEntity();
-                //data.setId(Tools.getUUID());
                 data.setIdResource(dataNode.get("idResource").asText());
                 data.setState(dataNode.get("state").asText());
                 data.setGood(dataNode.get("good").asText());
-                /*data.setStartLocation(dataNode.get("startLocation").asText());
-                data.setEndLocation(dataNode.get("endLocation").asText());*/
+                data.setStartLocation(dataNode.get("startLocation").asText());
+                data.setEndLocation(dataNode.get("endLocation").asText());
                 String valueType = dataNode.get("valueType").asText();
                 data.setValueType(valueType);
                 //TODO value待处理
                 if (valueType.equals("time")) {
-                    data.setValue(dataNode.get("startTime").asText());
+                    data.setValue(dataNode.get("value").asText());
                 }
                 if (valueType.equals("pos")) {
-                    data.setValue(dataNode.get("startLocation").asText());
+                    data.setValue(dataNode.get("value").asText());
                 }
-                //data.setValue(dataNode.get("value").asText());
+                //Yang 20170825新增idTask
+                data.setIdTask(dataNode.get("idTask").asText());
                 session.save(data);
             }
             //【已调】设备调整
