@@ -12,7 +12,7 @@ public class RG_RealDataEntity {
     private String endLocation;
     private String valueType;
     private String value;
-
+    private String idTask;                  //20170825 新增
 
     public int getId() {
         return id;
@@ -78,34 +78,11 @@ public class RG_RealDataEntity {
         this.value = value;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_RealDataEntity that = (RG_RealDataEntity) o;
-
-        if (id != that.id) return false;
-        if (idResource != null ? !idResource.equals(that.idResource) : that.idResource != null) return false;
-        if (state != null ? !state.equals(that.state) : that.state != null) return false;
-        if (good != null ? !good.equals(that.good) : that.good != null) return false;
-        if (startLocation != null ? !startLocation.equals(that.startLocation) : that.startLocation != null)
-            return false;
-        if (endLocation != null ? !endLocation.equals(that.endLocation) : that.endLocation != null) return false;
-        if (valueType != null ? !valueType.equals(that.valueType) : that.valueType != null) return false;
-        return value != null ? value.equals(that.value) : that.value == null;
+    public String getIdTask() {
+        return idTask;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (idResource != null ? idResource.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + (good != null ? good.hashCode() : 0);
-        result = 31 * result + (startLocation != null ? startLocation.hashCode() : 0);
-        result = 31 * result + (endLocation != null ? endLocation.hashCode() : 0);
-        result = 31 * result + (valueType != null ? valueType.hashCode() : 0);
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
+    public void setIdTask(String idTask) {
+        this.idTask = idTask;
     }
 }

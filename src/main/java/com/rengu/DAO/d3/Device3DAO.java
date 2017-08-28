@@ -63,7 +63,6 @@ public class Device3DAO {
 
             root.put("data", deviceData);
 
-
             try {
                 result.append(mapper.writeValueAsString(root));
                 MyLog.getLogger().info("3D车间设备状态查询结果:" + mapper.writeValueAsString(root));
@@ -116,9 +115,9 @@ public class Device3DAO {
 
                 ArrayNode subData = mapper.createArrayNode();
 
-                //Yang 20170808 获取对应订单的所有计划信息
+                //Yang 20170821 获取对应订单的所有的生产信息
                 if (snapshotId != null) {
-                    query = session.createNativeQuery("select * from rg_plan where idOrder=:orderId and idSnapshort=:snapshotId order by t1Task asc", RG_PlanEntity.class);
+                    query = session.createNativeQuery("select * from rg_plan rp LEFT JOIN rg_process procc on rp.idProcess = procc.id where procc.transport = 0 and rp.idOrder=:orderId and rp.idSnapshort=:snapshotId order by t1Task asc", RG_PlanEntity.class);
                     query.setParameter("orderId", code);
                     query.setParameter("snapshotId", snapshotId);
                     List<RG_PlanEntity> plans = query.list();

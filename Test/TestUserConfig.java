@@ -23,4 +23,11 @@ public class TestUserConfig {
         System.out.println(dateString);
     }
 
+    @Test
+    public void testFormat(){
+
+        String sql = "inser tint '%s',%d";
+        System.out.println(String.format(sql,"abc",12));
+
+    }
 }

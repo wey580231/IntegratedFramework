@@ -30,5 +30,8 @@
         <property name="value">
             <column name="value" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
+        <property name="idTask">
+            <column name="idTask" sql-type="varchar(50)" length="50" not-null="false"/>
+        </property>
     </class>
 </hibernate-mapping>
