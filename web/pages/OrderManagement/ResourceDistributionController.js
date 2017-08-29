@@ -85,7 +85,6 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             params.idSite = $("input[name='add-idSite']").val();
             params.minResource = $("input[name='add-minResource']").val();
             params.maxResource = $("input[name='add-maxResource']").val();
-            params.weightParallel = $("input[name='add-weightParallel']").val();
             addData = JSON.stringify(params);
             if (!validate.checkLength(params.grp)) {
                 $("#add-grp").removeClass("has-success");
@@ -102,37 +101,36 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 $("#add-idSite").removeClass("has-error");
                 $("#add-idSite").addClass(" has-success");
             }
-            if (!validate.checkNumber(params.maxResource) || !validate.checkLength(params.maxResource)) {
+            if (!validate.checkNumber(params.maxResource) || !validate.checkLength(params.maxResource) || params.maxResource<params.minResource) {
                 $("#add-maxResource").removeClass("has-success");
                 $("#add-maxResource").addClass("has-error");
             } else {
                 $("#add-maxResource").removeClass("has-error");
                 $("#add-maxResource").addClass(" has-success");
             }
-            if (!validate.checkNumber(params.minResource) || !validate.checkLength(params.minResource)) {
+            if (!validate.checkNumber(params.minResource) || !validate.checkLength(params.minResource) || params.maxResource<params.minResource) {
                 $("#add-minResource").removeClass("has-success");
                 $("#add-minResource").addClass("has-error");
             } else {
                 $("#add-minResource").removeClass("has-error");
                 $("#add-minResource").addClass(" has-success");
             }
-            if (!validate.checkNumber(params.weightParallel) || !validate.checkLength(params.weightParallel)) {
-                $("#add-weightParallel").removeClass("has-success");
-                $("#add-weightParallel").addClass("has-error");
-            } else {
-                $("#add-weightParallel").removeClass("has-error");
-                $("#add-weightParallel").addClass(" has-success");
-            }
 
 
-            if (validate.checkLength(params.grp)&&
-                validate.checkLength(params.idSite) && validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
-                validate.checkLength(params.minResource) && validate.checkNumber(params.minResource) && validate.checkLength(params.weightParallel) && validate.checkNumber(params.weightParallel)) {
-                return true;
-            } else {
 
+            if(params.minResource <= params.maxResource){
+                if (validate.checkLength(params.grp)&&
+                    validate.checkLength(params.idSite) && validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
+                    validate.checkLength(params.minResource) && validate.checkNumber(params.minResource) ) {
+                    return true;
+                } else {
+
+                    return false;
+                }
+            }else{
                 return false;
             }
+
         };
 
 
@@ -143,7 +141,6 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
             params.idSite = $("input[name='edit-idSite']").val();
             params.minResource = $("input[name='edit-minResource']").val();
             params.maxResource = $("input[name='edit-maxResource']").val();
-    /*        params.weightParallel = $("input[name='edit-weightParallel']").val();*/
             editData = params;
             if (!validate.checkLength(params.grp)) {
                 $("#edit-grp").removeClass("has-success");
@@ -160,37 +157,35 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                 $("#edit-idSite").removeClass("has-error");
                 $("#edit-idSite").addClass(" has-success");
             }
-            if (!validate.checkNumber(params.maxResource) || !validate.checkLength(params.maxResource)) {
+            if (!validate.checkNumber(params.maxResource) || !validate.checkLength(params.maxResource) || params.maxResource<params.minResource) {
                 $("#edit-maxResource").removeClass("has-success");
                 $("#edit-maxResource").addClass("has-error");
             } else {
                 $("#edit-maxResource").removeClass("has-error");
                 $("#edit-maxResource").addClass(" has-success");
             }
-            if (!validate.checkNumber(params.minResource) || !validate.checkLength(params.minResource)) {
+            if (!validate.checkNumber(params.minResource) || !validate.checkLength(params.minResource) || params.maxResource<params.minResource) {
                 $("#edit-minResource").removeClass("has-success");
                 $("#edit-minResource").addClass("has-error");
             } else {
                 $("#edit-minResource").removeClass("has-error");
                 $("#edit-minResource").addClass(" has-success");
             }
-        /*    if (!validate.checkNumber(params.weightParallel) || !validate.checkLength(params.weightParallel)) {
-                $("#edit-weightParallel").removeClass("has-success");
-                $("#edit-weightParallel").addClass("has-error");
-            } else {
-                $("#edit-weightParallel").removeClass("has-error");
-                $("#edit-weightParallel").addClass(" has-success");
-            }*/
 
 
-            if (validate.checkLength(params.grp) &&
-                validate.checkLength(params.idSite)&& validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
-                validate.checkLength(params.minResource) && validate.checkNumber(params.minResource) /*&& validate.checkLength(params.weightParallel) && validate.checkNumber(params.weightParallel)*/) {
-                return true;
-            } else {
+            if(params.minResource <= params.maxResource){
+                if (validate.checkLength(params.grp) &&
+                    validate.checkLength(params.idSite)&& validate.checkLength(params.maxResource) && validate.checkNumber(params.maxResource) &&
+                    validate.checkLength(params.minResource) && validate.checkNumber(params.minResource) ) {
+                    return true;
+                } else {
 
+                    return false;
+                }
+            }else{
                 return false;
             }
+
         };
 
         //新增订单
@@ -263,7 +258,6 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
                     edit_params.idSite = editData.idSite;
                     edit_params.maxResource = editData.maxResource;
                     edit_params.minResource = editData.minResource;
-                    edit_params.weightParallel = editData.weightParallel;
                     var update_data = angular.toJson(edit_params);
                     myHttpService.post(serviceList.UpdateAssisantProcess, update_data).then(function successCallback() {
                         myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {
@@ -283,7 +277,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         //删除订单
         $scope.deleteAssisantProcess = function () {
             if (getInfo()) {
-                if (confirm.confirmEdit()) {
+                if (confirm.confirmDel()) {
                     var params = {};
                     params.id = idVal;
                     var idInfo = JSON.stringify(params);

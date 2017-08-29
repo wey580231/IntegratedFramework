@@ -371,15 +371,7 @@ angular.module("IntegratedFramework", [
     .factory("confirm", function () {
         var service = {};
         //确认修改
-        /*  service.confirmEdit = function () {
-         layer.confirm('确定要修改吗？', {
-         btn: ['确定', '取消']
-         }, function () {
-         return true;
-         }, function () {
-         return false;
-         });
-         };*/
+
         service.confirmEdit = function () {
             var msg = "确定要修改吗？";
             if (confirm(msg) == true) {
