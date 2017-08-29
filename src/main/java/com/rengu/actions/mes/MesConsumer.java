@@ -72,7 +72,6 @@ public class MesConsumer extends Thread {
             JsonNode dataNode = root.get("DATA");
 
             Session session = MySessionFactory.getSessionFactory().openSession();
-            Transaction tx = null;
 
             session.beginTransaction();
 
@@ -294,26 +293,9 @@ public class MesConsumer extends Thread {
                 //x
                 short planCount = Short.parseShort(dataNode.get("planCount").asText());
                 orderState.setPlanCount(planCount);
-                //orderState.setPlanCount(Short.parseShort(dataNode.get("planCount").asText()));
-
-
-
-                //获取plan表中的数据
-                /*List<RG_PlanEntity> planEntity=  (List<RG_PlanEntity>)session.createQuery("select plan from RG_PlanEntity plan where plan.orderByIdOrder.id =: idOrder and plan.idTask =: idTask").setParameter("idOrder",idOrder).setParameter("idTask",idTask).list();
-                for (RG_PlanEntity plan: planEntity) {
-                    String t1Task = plan.getT1Task();
-                    String t2Task = plan.getT2Task();
-                }*/
-
 
                 String actualDispatchTime = dataNode.get("realExcuteTime").toString();
-                /*System.out.println("actualDispatchTime=" + actualDispatchTime);
-                System.out.println("开始时间（==）：" + actualDispatchTime == t1Task);
-                System.out.println("开始时间（equals）：" + actualDispatchTime.equals(t1Task));*/
                 String actualFinsihTime = dataNode.get("realFinishTime").toString();
-                /*System.out.println("actualFinsihTime=" + actualFinsihTime);
-                System.out.println("结束时间（==）：" + actualFinsihTime == t2Task);
-                System.out.println("结束时间（equals）：" + actualFinsihTime.equals(t2Task));*/
 
                 orderState .setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
                 orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
@@ -355,10 +337,6 @@ public class MesConsumer extends Thread {
                                 String t1Task = plan.getT1Task();
                                 String t2Task = plan.getT2Task();
 
-
-
-                                /*try {
-                                    tx = session.beginTransaction();*/
                                     if(!t1Task.equals(actualDispatchTime) || !t2Task.equals(actualFinsihTime)) {
                                         //调整工序异常
                                         RG_AdjustProcessEntity adjustProcess = new RG_AdjustProcessEntity();
@@ -370,17 +348,6 @@ public class MesConsumer extends Thread {
 
                                         session.save(adjustProcess);
                                     }
-                                        /*session.flush();
-                                        session.refresh(adjustProcess);
-
-                                    }
-                                    tx.commit();
-                                }catch (HibernateException he){
-                                    tx.rollback();
-                                    throw he;
-                                }finally {
-                                    session.close();
-                                }*/
 
                             }
                         }
@@ -393,23 +360,6 @@ public class MesConsumer extends Thread {
                     finishPercent = actualFinishCount / count;
                     orderState.setFinishPercent(finishPercent);
                 }
-
-
-                /*Set<RG_ScheduleEntity> schedules = orderEntity.getSchedules();
-                for (RG_ScheduleEntity sc : schedules) {
-                    for (RG_SnapshotNodeEntity rg_snapshotNodeEntity : sc.getSnapshot().getChilds()) {
-                        if (rg_snapshotNodeEntity.getApply()) {
-                            for (RG_SnapshotNodeEntity temp : rg_snapshotNodeEntity.getChilds()) {
-                                if (temp.getApply()){
-                                    int total = temp.getPlans().size();
-                                    //System.out.println("total=" + total);
-                                    float finishPercent = (float) completeNum/total;
-                                    orderState.setFinishPercent(finishPercent);
-                                }
-                            }
-                        }
-                    }
-                }*/
 
                 session.save(orderState);
 //                }
