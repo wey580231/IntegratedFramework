@@ -10,9 +10,11 @@ angular.module("IntegratedFramework.ResourceClassifyController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceClassifyController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
+    .controller('ResourceClassifyController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm,enter) {
 
         layer.load(0);
+
+        enter.enterDown();
 
         var editData = {};//保存新增和修改的信息
         var addData = [];

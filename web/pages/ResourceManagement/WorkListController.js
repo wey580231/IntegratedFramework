@@ -10,9 +10,10 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         })
     }])
 
-    .controller('WorkListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService) {
+    .controller('WorkListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService,enter) {
 
         layer.load(0);
+        enter.enterDown();
 
         var editData = {};//保存新增和修改的信息
         var addData = [];
@@ -67,17 +68,17 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
          });*/
 
         function StringBuffer() {
-            this.__strings__ = new Array();
+            this.__strings__ = [];
         }
 
         StringBuffer.prototype.append = function (str) {
             this.__strings__.push(str);
             return this;    //方便链式操作
-        }
+        };
 
         StringBuffer.prototype.toString = function () {
             return this.__strings__.join("");
-        }
+        };
 
         //信息填写检验
         var workAddValidate;
