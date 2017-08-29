@@ -28,27 +28,6 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
-        /*  //Date picker
-          $('#modal-add-t0-datepicker').datepicker({
-              format: "yyyy/mm/dd",
-              todayHighlight: true,
-              autoclose: true
-          });
-          $('#modal-add-t2-datepicker').datepicker({
-              format: "yyyy/mm/dd",
-              todayHighlight: true,
-              autoclose: true
-          });
-          $('#modal-edit-t0-datepicker').datepicker({
-              format: "yyyy/mm/dd",
-              todayHighlight: true,
-              autoclose: true
-          });
-          $('#modal-edit-t2-datepicker').datepicker({
-              format: "yyyy/mm/dd",
-              todayHighlight: true,
-              autoclose: true
-          });*/
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
