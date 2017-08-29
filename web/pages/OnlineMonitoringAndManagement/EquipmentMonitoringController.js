@@ -16,16 +16,11 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         var pieNodes = [];  //饼图的数据
         var option;    //饼图的元素
         var myChart;   //饼图
-        var freePlace;  //剩余存储位
-        var totalPlace;  //总存储位
         var value = new Array();  //饼图的数据
         var name = ['剩余存储位', '已用存储位'];  //饼图数据name
         var pieData = new Array();
         var dynamicChart;  //动图
         var dynamicData = {};  //动图的数据
-
-        var timeTicket;  //定时器
-
 
         //每个表格最大显示行数
         var maxTableLineNum = 3;
@@ -169,7 +164,25 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             view();
 
             //loadAGVInfo();
-
+            var interFlag = setInterval(function () {
+                var carryBody = {};
+                carryBody.maxResults = maxTableLineNum;
+                carryBody.firstResult = 0;
+                myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                    var responseBody = response.data;
+                    $scope.CarryList = responseBody.tableList;
+                    $('#carryTableNextButton').removeAttr("disabled");
+                    if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                        $('#carryTableNextButton').attr('disabled', "true");
+                    }
+                    $('#carryTablePrvButton').removeAttr("disabled");
+                    if (responseBody.firstIndexNum - 1 <= 0) {
+                        $('#carryTablePrvButton').attr('disabled', "true");
+                    }
+                    loadRightFloatMenu();
+                    hideLoadingPage();
+                });
+            },3000);
             myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
                 deportData = response.data;
                 $scope.deportData = response.data;
@@ -177,23 +190,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 hideLoadingPage();
             });
 
-            var carryBody = {};
-            carryBody.maxResults = maxTableLineNum;
-            carryBody.firstResult = 0;
-            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
-                var responseBody = response.data;
-                $scope.CarryList = responseBody.tableList;
-                $('#carryTableNextButton').removeAttr("disabled");
-                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
-                    $('#carryTableNextButton').attr('disabled', "true");
-                }
-                $('#carryTablePrvButton').removeAttr("disabled");
-                if (responseBody.firstIndexNum - 1 <= 0) {
-                    $('#carryTablePrvButton').attr('disabled', "true");
-                }
-                loadRightFloatMenu();
-                hideLoadingPage();
-            });
+
 
             var assemblyCarryInfoBody = {};
             assemblyCarryInfoBody.maxResults = maxTableLineNum;
@@ -233,7 +230,6 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
 
         });
-
 
         //下拉框事件改变
         $("#select").change(function () {
@@ -353,6 +349,9 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         }
 
 
+        /*
+        * 动图
+        * */
         myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
             dynamicData = response.data;
             hideLoadingPage();
@@ -422,9 +421,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                     name: '随机数据',
                     data: (function () {
                         // generate an array of random data
-                        var data = [],
-                            time = (new Date()).getTime(),
-                            i;
+                        var data = [];
                         dynamicData.forEach(
                             function handleFunction(value) {
                                 data.push({
@@ -447,103 +444,12 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             var option = {
                 series: [
                     {
-                        roam: true,
+                        roam: true
                     }
                 ]
             };
             myChart.setOption(option);
         }
-
-        /*
-         * 温度
-         * -----------------------
-         */
-        // We use an inline data source in the example, usually data would
-        // be fetched from a server
-        /*var data = [], totalPoints = 100;
-
-        function getRandomData() {
-
-            if (data.length > 0)
-                data = data.slice(1);
-
-            // Do a random walk
-            while (data.length < totalPoints) {
-
-                var prev = data.length > 0 ? data[data.length - 1] : 50,
-                    y = prev + Math.random() * 10 - 5;
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > 100) {
-                    y = 100;
-                }
-
-                data.push(y);
-            }
-
-            // Zip the generated y values with the x values
-            var res = [];
-            for (var i = 0; i < data.length; ++i) {
-                res.push([i, data[i]]);
-            }
-
-            return res;
-        }
-
-        var interactive_plot = $.plot("#interactive", [getRandomData()], {
-            grid: {
-                borderColor: "#f3f3f3",
-                borderWidth: 1,
-                tickColor: "#f3f3f3"
-            },
-            series: {
-                shadowSize: 0, // Drawing is faster without shadows
-                color: "#3c8dbc"
-            },
-            lines: {
-                fill: true, //Converts the line chart to area chart
-                color: "#3c8dbc"
-            },
-            yaxis: {
-                min: 0,
-                max: 100,
-                show: true
-            },
-            xaxis: {
-                show: true
-            }
-        });
-
-        var updateInterval = 500; //Fetch data ever x milliseconds
-        var realtime = "on"; //If == to on then fetch data every x seconds. else stop fetching
-        function update() {
-
-            interactive_plot.setData([getRandomData()]);
-
-            // Since the axes don't change, we don't need to call plot.setupGrid()
-            interactive_plot.draw();
-            if (realtime === "on")
-                setTimeout(update, updateInterval);
-        }
-
-        //INITIALIZE REALTIME DATA FETCHING
-        if (realtime === "on") {
-            update();
-        }
-        //REALTIME TOGGLE
-        $("#realtime .btn").click(function () {
-            if ($(this).data("toggle") === "on") {
-                realtime = "on";
-            }
-            else {
-                realtime = "off";
-            }
-            update();
-        });*/
-        /*
-         * END INTERACTIVE CHART
-         */
 
 
     });
