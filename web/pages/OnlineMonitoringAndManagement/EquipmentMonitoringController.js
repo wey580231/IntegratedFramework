@@ -380,7 +380,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                                 chart = this;
                             setInterval(function () {
                                 var x = (new Date()).getTime(), y = dynamicData[dynamicData.length - 1].remainPower;
-                                series.addPoint([x, y], true, true);
+                                series.addPoint([x, y]);
                                 activeLastPointToolip(chart)
                             }, 10 * 1000);  //隔多长时间加载一次数据
                         }
