@@ -16,9 +16,9 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         var pieNodes = [];  //饼图的数据
         var option;    //饼图的元素
         var myChart;   //饼图
-        var value = new Array();  //饼图的数据
+        var value = [];  //饼图的数据
         var name = ['剩余存储位', '已用存储位'];  //饼图数据name
-        var pieData = new Array();
+        var pieData = [];
         var dynamicChart;  //动图
         var dynamicData = {};  //动图的数据
 
@@ -47,7 +47,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        }
+        };
 
         $scope.carryListPageNextButton = function () {
             defualtCarryListPageNum = defualtCarryListPageNum + 1;
@@ -68,7 +68,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        }
+        };
 
         $scope.AssemblyCarryListPagePrvButton = function () {
             defualtAssemblyCarryListPageNum = defualtAssemblyCarryListPageNum - 1;
@@ -89,7 +89,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        }
+        };
 
         $scope.AssemblyCarryListPageNextButton = function () {
             defualtAssemblyCarryListPageNum = defualtAssemblyCarryListPageNum + 1;
@@ -110,7 +110,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        }
+        };
 
         $scope.AssemblyCenterTablePrvButton = function () {
             defualtAssemblyCenterListPageNum = defualtAssemblyCenterListPageNum - 1;
@@ -131,7 +131,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        }
+        };
 
         $scope.AssemblyCenterTableNextButton = function () {
             defualtAssemblyCenterListPageNum = defualtAssemblyCenterListPageNum + 1;
@@ -152,6 +152,26 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
+        };
+
+        function getFirst(){
+            var carryBody = {};
+            carryBody.maxResults = maxTableLineNum;
+            carryBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
         }
 
         layer.load(0);
@@ -164,32 +184,32 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             view();
 
             //loadAGVInfo();
-            var interFlag = setInterval(function () {
-                var carryBody = {};
-                carryBody.maxResults = maxTableLineNum;
-                carryBody.firstResult = 0;
-                myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
-                    var responseBody = response.data;
-                    $scope.CarryList = responseBody.tableList;
-                    $('#carryTableNextButton').removeAttr("disabled");
-                    if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
-                        $('#carryTableNextButton').attr('disabled', "true");
-                    }
-                    $('#carryTablePrvButton').removeAttr("disabled");
-                    if (responseBody.firstIndexNum - 1 <= 0) {
-                        $('#carryTablePrvButton').attr('disabled', "true");
-                    }
-                    loadRightFloatMenu();
-                    hideLoadingPage();
-                });
-            },3000);
+            setInterval(getFirst,3000);
+
+           /* var carryBody = {};
+            carryBody.maxResults = maxTableLineNum;
+            carryBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });*/
+
             myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
                 deportData = response.data;
                 $scope.deportData = response.data;
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-
 
 
             var assemblyCarryInfoBody = {};
@@ -350,8 +370,8 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
 
         /*
-        * 动图
-        * */
+         * 动图
+         * */
         myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
             dynamicData = response.data;
             hideLoadingPage();
