@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         })
     }])
 
-    .controller('ResourceDistributionController', function ($scope, $http, myHttpService, serviceList, validate, notification, dispatchApsService, confirm) {
+    .controller('ResourceDistributionController', function ($scope, $http, myHttpService, serviceList, validate, notification, dispatchApsService, confirm,enter) {
 
         var editData = {};//保存新增和修改的信息
         var addData = [];
@@ -19,6 +19,8 @@ angular.module("IntegratedFramework.ResourceDistributionController", ['ngRoute']
         var id_params = {}; //保存选中的记录的id信息
 
         layer.load(0);
+
+        enter.enterDown();
 
         $(function () {
             myHttpService.get(serviceList.ListAssisantProcess).then(function (response) {

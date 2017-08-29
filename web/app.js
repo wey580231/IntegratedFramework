@@ -302,7 +302,7 @@ angular.module("IntegratedFramework", [
             } else {
                 notification.sendNotification("alert", "请选择一条记录！");
             }
-        }
+        };
         return service;
     }])
     .factory("dateService", function (notification) {
@@ -372,14 +372,14 @@ angular.module("IntegratedFramework", [
         var service = {};
         //确认修改
         /*  service.confirmEdit = function () {
-              layer.confirm('确定要修改吗？', {
-                  btn: ['确定', '取消']
-              }, function () {
-                  return true;
-              }, function () {
-                  return false;
-              });
-          };*/
+         layer.confirm('确定要修改吗？', {
+         btn: ['确定', '取消']
+         }, function () {
+         return true;
+         }, function () {
+         return false;
+         });
+         };*/
         service.confirmEdit = function () {
             var msg = "确定要修改吗？";
             if (confirm(msg) == true) {
@@ -399,4 +399,24 @@ angular.module("IntegratedFramework", [
         };
 
         return service;
+    })
+
+    .factory("enter", function () {
+        var service = {};
+        service.enterDown = function () {
+            document.onkeydown=keyDownSearch;
+
+            function keyDownSearch(e) {
+                // 兼容FF和IE和Opera
+                var theEvent = e || window.event;
+                var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+                if (code == 13) {
+
+                    return false;
+                }
+                return true;
+            }
+        };
+        return service;
     });
+

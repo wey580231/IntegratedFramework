@@ -9,9 +9,10 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             controller: 'PlanScheduleController'
         })
     }])
-    .controller('PlanScheduleController', function ($scope, $location, $http, myHttpService, serviceList, renderTableService, validate, notification, dateService) {
+    .controller('PlanScheduleController', function ($scope, $location, $http, myHttpService, serviceList, renderTableService, validate, notification, dateService,enter) {
 
         layer.load(0);
+        enter.enterDown();
 
         var selectedCheckArray = []; //选中的checkbox的id值集合
         var scheduleDays;            //排程周 期
@@ -31,8 +32,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var layouts = {};
 
         var PageInfo = {};
-        PageInfo.selectedIndex = new Array();     //每个页面中保存选择的索引
-        PageInfo.data = new Array();              //每个页面对应的数据信息，只加载一次
+        PageInfo.selectedIndex = [];     //每个页面中保存选择的索引
+        PageInfo.data = [];              //每个页面对应的数据信息，只加载一次
 
         var pageCount = 0;              //分页有关
         var currPage = 0;
@@ -41,8 +42,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         $(function () {
             pageCount = $(".MyPage").size();
             for (var i = 0; i < pageCount; i++) {
-                PageInfo.selectedIndex[i] = new Array();
-                PageInfo.data[i] = new Array();
+                PageInfo.selectedIndex[i] = [];
+                PageInfo.data[i] = [];
             }
 
             resetContent();
@@ -88,8 +89,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
 
-        };
-
+        }
         //新建排程
         $scope.prepareNewSchedule = function () {
             myHttpService.get(serviceList.queryApsState).then(function (response) {
