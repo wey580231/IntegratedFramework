@@ -94,7 +94,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                         pnode.apply = true;
                                         selectedNode.dispatchMesTime = new Date().getTime();
                                         selectedNode.apply = true;
-                                        selectedNode.icon = "../../images/bom_img/dispatchNode.png";
+                                        selectedNode.icon = "images/bom_img/dispatchNode.png";
                                         $scope.dispatchMesTime = pnode.dispatchMesTime;
 
                                         zTree.refresh();
@@ -262,19 +262,19 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                                     //默认排程节点
                                     if (middleNode.firstNode) {
                                         if (!bottomNode.apply && !middleNode.firstNode) {
-                                            bottomNode.icon = "../../images/bom_img/interNode.png";
+                                            bottomNode.icon = "images/bom_img/interNode.png";
                                         } else if (!bottomNode.apply && bottomNode.firstNode) {
-                                            bottomNode.icon = "../../images/bom_img/commonNode.png";
+                                            bottomNode.icon = "images/bom_img/commonNode.png";
                                         } else if (bottomNode.apply) {
-                                            bottomNode.icon = "../../images/bom_img/dispatchNode.png";
+                                            bottomNode.icon = "images/bom_img/dispatchNode.png";
                                         }
                                     }
                                     //故障节点
                                     else {
                                         if (bottomNode.apply) {
-                                            bottomNode.icon = "../../images/bom_img/dispatchNode.png";
+                                            bottomNode.icon = "images/bom_img/dispatchNode.png";
                                         } else {
-                                            bottomNode.icon = "../../images/bom_img/commonNode.png";
+                                            bottomNode.icon = "images/bom_img/commonNode.png";
                                         }
                                     }
                                     treeInfo.push(bottomNode);
@@ -288,12 +288,12 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                             }
 
                             if (middleNode.errorNode) {
-                                middleNode.icon = "../../images/bom_img/errorNode.png";
+                                middleNode.icon = "images/bom_img/errorNode.png";
                             } else {
-                                middleNode.icon = "../../images/bom_img/interactive.png";
+                                middleNode.icon = "images/bom_img/interactive.png";
                             }
                         }
-                        datas.icon = "../../images/bom_img/rootNode.png";
+                        datas.icon = "images/bom_img/rootNode.png";
                         var temp = datas.childs;
                         delete(datas.childs);
                         datas.children = temp;

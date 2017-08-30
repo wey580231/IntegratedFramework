@@ -97,15 +97,15 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                                 for (var k = 0; k < middleNode.childProcess.length; k++) {
                                     var bottomNode = middleNode.childProcess[k];
                                     if (bottomNode.transport == 0) {
-                                        bottomNode.icon = "../../images/bom_img/fit.png";
-                                        bottomNode.symbol = "../../images/bom_img/fit.png";
+                                        bottomNode.icon = "images/bom_img/fit.png";
+                                        bottomNode.symbol = "images/bom_img/fit.png";
                                     } else if (bottomNode.transport == 1) {
 
-                                        bottomNode.icon = "../../images/bom_img/transport.png";
-                                        bottomNode.symbol = "../../images/bom_img/transport.png";
+                                        bottomNode.icon = "images/bom_img/transport.png";
+                                        bottomNode.symbol = "images/bom_img/transport.png";
                                     } else {
-                                        bottomNode.icon = "../../images/bom_img/errorNode.png";
-                                        bottomNode.symbol = "../../images/bom_img/errorNode.png";
+                                        bottomNode.icon = "images/bom_img/errorNode.png";
+                                        bottomNode.symbol = "images/bom_img/errorNode.png";
                                     }
                                 }
                                 var temps = middleNode.childProcess;
@@ -115,33 +115,33 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                                 if (middleNode.children.length > 0) {
                                     if (middleNode.transport == 0) {
 
-                                        middleNode.icon = "../../images/bom_img/fit.png";
-                                        middleNode.symbol = "../../images/bom_img/fit.png";
+                                        middleNode.icon = "images/bom_img/fit.png";
+                                        middleNode.symbol = "images/bom_img/fit.png";
                                     } else if (middleNode.transport == 1) {
-                                        middleNode.icon = "../../images/bom_img/interactive.png";
-                                        middleNode.symbol = "../../images/bom_img/interactive.png";
+                                        middleNode.icon = "images/bom_img/interactive.png";
+                                        middleNode.symbol = "images/bom_img/interactive.png";
                                     } else {
-                                        middleNode.icon = "../../images/bom_img/errorNode.png";
-                                        middleNode.symbol = "../../images/bom_img/errorNode.png";
+                                        middleNode.icon = "images/bom_img/errorNode.png";
+                                        middleNode.symbol = "images/bom_img/errorNode.png";
                                     }
                                 } else {
                                     if (middleNode.transport == 0) {
 
-                                        middleNode.icon = "../../images/bom_img/fit.png";
-                                        middleNode.symbol = "../../images/bom_img/fit.png";
+                                        middleNode.icon = "images/bom_img/fit.png";
+                                        middleNode.symbol = "images/bom_img/fit.png";
                                     } else if (middleNode.transport == 1) {
-                                        middleNode.icon = "../../images/bom_img/transport.png";
-                                        middleNode.symbol = "../../images/bom_img/transport.png";
+                                        middleNode.icon = "images/bom_img/transport.png";
+                                        middleNode.symbol = "images/bom_img/transport.png";
                                     } else {
-                                        middleNode.icon = "../../images/bom_img/errorNode.png";
-                                        middleNode.symbol = "../../images/bom_img/errorNode.png";
+                                        middleNode.icon = "images/bom_img/errorNode.png";
+                                        middleNode.symbol = "images/bom_img/errorNode.png";
                                     }
                                 }
 
                             }
                         }
-                        datas.icon = "../../images/bom_img/rootNode.png";
-                        datas.symbol = "../../images/bom_img/rootNode.png";
+                        datas.icon = "images/bom_img/rootNode.png";
+                        datas.symbol = "images/bom_img/rootNode.png";
                         var temp = datas.childProcess;
                         delete(datas.childProcess);
                         datas.children = temp;
