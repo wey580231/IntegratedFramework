@@ -1,10 +1,7 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.OrdersDAO;
-import com.rengu.entity.RG_AdjustOrderEntity;
-import com.rengu.entity.RG_OrderEntity;
-import com.rengu.entity.RG_PlanEntity;
-import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.entity.*;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
@@ -130,8 +127,12 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                 }
             }
 
+            //订单异常
             RG_AdjustOrderEntity rg_adjustOrderEntity = DAOFactory.getAdjustOrderDAOImplInstance().findAllByOrderId(orderId);
+            //plan
             RG_PlanEntity rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(orderId);
+            //订单设备
+            RG_AdjustDeviceEntity rg_adjustDeviceEntity = DAOFactory.getAdjustDeviceDAOImplInstance().findAllByOrderId(orderId);
 
             //从订单异常里面删除订单。
             /*if (rg_adjustOrderEntity != null) {
@@ -145,20 +146,25 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                 return super.delete(rg_orderEntity);
             }*/
 
-            if (rg_adjustOrderEntity != null || rg_PlanEntity != null) {
+            if (rg_adjustOrderEntity != null || rg_PlanEntity != null || rg_adjustDeviceEntity != null) {
                 //从订单异常删除订单
                 if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
                     return true;
                 } else if (DAOFactory.getPlanDAOImplInstance().delete(rg_PlanEntity) && super.delete(rg_orderEntity)) {
                     //从plan删除订单
                     return true;
+                } else if (DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity) && super.delete(rg_orderEntity)) {
+                    //从订单设备删除订单
+                    return true;
                 } else {
                     return false;
                 }
+
             } else {
                 //直接删除
                 return super.delete(rg_orderEntity);
             }
+
 
         } else {
             //参数错误

@@ -11,4 +11,6 @@ public interface AdjustDeviceDAO<T> {
     List<T> findAllByErrorState(Integer errorState);
 
     T findAllById(String id);
+
+    T findAllByOrderId(String id);
 }
