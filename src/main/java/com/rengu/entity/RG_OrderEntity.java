@@ -35,10 +35,10 @@ public class RG_OrderEntity {
     private Short advance;                          //提前天数(系统生成)
     private Short delay;                            //拖期天数(系统生成)
     private String color;                           //订单显示颜色
-    private Byte state;                             //状态(0：计划 1：排程中 2：已下发 3：已完工 -1：删除)
+    private Byte state;                             //状态 0：计划 1：排程中 2：已下发 3：已计算 -1：删除)
     private Byte selected;                          //是否被选中
     private Short nbTask;                           //订单工序数(系统生成)
-    private boolean finished;
+    private boolean finished;                       //是否完工
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
     @JsonIgnore

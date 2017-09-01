@@ -67,4 +67,20 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
         List list = query.list();
         return list;
     }
+
+    @Override
+    public List<RG_PlanEntity> findAllByOrderId(String id) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.orderByIdOrder.id =:id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List list = query.list();
+        return list;
+    }
 }

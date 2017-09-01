@@ -16,4 +16,6 @@ public interface OrdersDAO<T> extends SuperDAO {
     T findAllById(String id);
 
     List<T> findAllByisFinishedAndDate(Date startDate, Date endDate, boolean isFinished);
+
+    List<T> findAllByStateAndIsFinished(Byte state, boolean isFinished);
 }

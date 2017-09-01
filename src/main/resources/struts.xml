@@ -97,6 +97,8 @@
         <action name="beginSchedule" class="com.rengu.actions.ScheduleAction" method="beginSchedule"/>
         <action name="getAllSchedules" class="com.rengu.actions.ScheduleAction" method="getAllSchedules"/>
         <action name="delete" class="com.rengu.actions.ScheduleAction" method="delete"/>
+        <action name="autoRollingScheduling" class="com.rengu.actions.AutoRollingSchedulingAction"
+                method="autoRollingScheduling"/>
     </package>
 
     <!--工序信息接口-->
@@ -235,10 +237,12 @@
         <action name="getAllCarrys" class="com.rengu.actions.CarryAction" method="getAllCarrys"/>
         <action name="getAllCarrysByFirstResultAndMaxResults" class="com.rengu.actions.CarryAction"
                 method="getAllCarrysByFirstResultAndMaxResults"/>
-        <action name="getAllAssemblyCarrys" class="com.rengu.actions.AssemblyCarryInfoAction" method="getAllAssemblyCarrys"/>
+        <action name="getAllAssemblyCarrys" class="com.rengu.actions.AssemblyCarryInfoAction"
+                method="getAllAssemblyCarrys"/>
         <action name="getAllAssemblyCarrysByFirstResultAndMaxResults" class="com.rengu.actions.AssemblyCarryInfoAction"
                 method="getAllAssemblyCarrysByFirstResultAndMaxResults"/>
-        <action name="getAllAssemblyCenters" class="com.rengu.actions.AssemblyCenterInfoAction" method="getAllAssemblyCenters"/>
+        <action name="getAllAssemblyCenters" class="com.rengu.actions.AssemblyCenterInfoAction"
+                method="getAllAssemblyCenters"/>
         <action name="getAllAssemblyCentersByFirstResultAndMaxResults"
                 class="com.rengu.actions.AssemblyCenterInfoAction"
                 method="getAllAssemblyCentersByFirstResultAndMaxResults"/>
