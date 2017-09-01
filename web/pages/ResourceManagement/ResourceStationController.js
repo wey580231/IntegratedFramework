@@ -10,9 +10,10 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceStationController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
+    .controller('ResourceStationController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm,enter) {
 
         layer.load(0);
+        enter.enterDown();
 
         var editData = {};//保存新增和修改的信息
         var addData = [];
@@ -60,7 +61,6 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             params.name = $("input[name='add-name']").val();
             params.x = parseInt($("input[name='add-x']").val());
             params.y = parseInt($("input[name='add-y']").val());
-            params.capacity = parseInt($("input[name='add-capacity']").val());
             addData = JSON.stringify(params);
 
             if (!validate.checkLength(params.name)) {
@@ -87,16 +87,8 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
                 $("#add-y").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.capacity) || !validate.checkLength(params.capacity)) {
-                $("#add-capacity").removeClass("has-success");
-                $("#add-capacity").addClass("has-error");
-            } else {
-                $("#add-capacity").removeClass("has-error");
-                $("#add-capacity").addClass(" has-success");
-            }
-
             if (validate.checkNumber(params.x) && validate.checkLength(params.x) && validate.checkNumber(params.y) && validate.checkLength(params.y) &&
-                validate.checkLength(params.name)&& validate.checkLength(params.capacity) && validate.checkNumber(params.capacity)) {
+                validate.checkLength(params.name)) {
                 return true;
             } else {
 
@@ -111,7 +103,6 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
             params.name = $("input[name='edit-name']").val();
             params.x = parseInt($("input[name='edit-x']").val());
             params.y = parseInt($("input[name='edit-y']").val());
-            params.capacity = parseInt($("input[name='edit-capacity']").val());
             editData = params;
             if (!validate.checkLength(params.name)) {
                 $("#edit-name").removeClass("has-success");
@@ -137,16 +128,9 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
                 $("#edit-y").addClass(" has-success");
             }
 
-            if (!validate.checkNumber(params.capacity) || !validate.checkLength(params.capacity)) {
-                $("#edit-capacity").removeClass("has-success");
-                $("#edit-capacity").addClass("has-error");
-            } else {
-                $("#edit-capacity").removeClass("has-error");
-                $("#edit-capacity").addClass(" has-success");
-            }
 
             if (validate.checkNumber(params.x) && validate.checkLength(params.x) && validate.checkNumber(params.y) && validate.checkLength(params.y) &&
-                validate.checkLength(params.name) && validate.checkLength(params.capacity) && validate.checkNumber(params.capacity)) {
+                validate.checkLength(params.name) ) {
                 return true;
             } else {
 
@@ -219,7 +203,6 @@ angular.module("IntegratedFramework.ResourceStationController", ['ngRoute'])
                     edit_params.name = editData.name;
                     edit_params.x = editData.x;
                     edit_params.y = editData.y;
-                    edit_params.capacity = editData.capacity;
                     var update_data = angular.toJson(edit_params);
                     myHttpService.post(serviceList.UpdateSite, update_data).then(function successCallback() {
                         myHttpService.get(serviceList.ListSite).then(function (response) {

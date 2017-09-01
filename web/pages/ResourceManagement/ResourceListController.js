@@ -10,9 +10,10 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
+    .controller('ResourceListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm,enter) {
 
         layer.load(0);
+        enter.enterDown();
 
         var editData = {};//保存新增和修改的信息
         var addData = [];
@@ -57,11 +58,10 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         //信息填写检验
         var resourceAddValidate = function () {
             var params = {};
-            var myselect = document.getElementById("selectAdd");
-            var index = myselect.selectedIndex;
             params.name = $("input[name='add-name']").val();
-            params.idSiteGroupResource = $("input[name='add-siteGroupResource']").val();
             params.nameShift = $("#selectAdd option:selected").val();
+            params.weekend = $("#selectAdd2 option:selected").val();
+            params.rate = parseInt($("input[name='add-rate']").val());
             params.state = $("input[name='add-state']").val();
             addData = JSON.stringify(params);
 
@@ -82,27 +82,24 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#add-nameShift").addClass(" has-success");
             }
 
-
-            if (!validate.checkNumber(params.idSiteGroupResource) || !validate.checkLength(params.idSiteGroupResource)) {
-                $("#add-idSiteGroupResource").removeClass("has-success");
-                $("#add-idSiteGroupResource").addClass("has-error");
+            if (!validate.checkNumber(params.rate) || !validate.checkLength(params.rate)) {
+                $("#add-rate").removeClass("has-success");
+                $("#add-rate").addClass("has-error");
             } else {
-                $("#add-idSiteGroupResource").removeClass("has-error");
-                $("#add-idSiteGroupResource").addClass(" has-success");
+                $("#add-rate").removeClass("has-error");
+                $("#add-rate").addClass(" has-success");
             }
-/*
 
-            if (!validate.checkNumber(params.state) || !validate.checkLength(params.state)) {
-                $("#add-state").removeClass("has-success");
-                $("#add-state").addClass("has-error");
+            if (!validate.checkLength(params.weekend)) {
+                $("#add-weekend").removeClass("has-success");
+                $("#add-weekend").addClass("has-error");
             } else {
-                $("#add-state").removeClass("has-error");
-                $("#add-state").addClass(" has-success");
-            }*/
+                $("#add-weekend").removeClass("has-error");
+                $("#add-weekend").addClass(" has-success");
+            }
 
-            if (validate.checkLength(params.name) &&
-                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift)
-                /*&& validate.checkLength(params.state) && validate.checkNumber(params.state)*/) {
+            if (validate.checkLength(params.name) && validate.checkLength(params.rate) && validate.checkNumber(params.rate) &&
+                validate.checkLength(params.nameShift) && validate.checkLength(params.weekend)) {
                 return true;
             } else {
                 return false;
@@ -114,7 +111,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
         var resourceEditValidate = function () {
             var params = {};
             params.name = $("input[name='edit-name']").val();
-            params.idSiteGroupResource = $("input[name='edit-siteGroupResource']").val();
             params.nameShift = $("#selectEdit option:selected").val();
             params.state = $("input[name='edit-state']").val();
             editData = params;
@@ -127,14 +123,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                 $("#edit-name").addClass(" has-success");
             }
 
-
-            if (!validate.checkNumber(params.idSiteGroupResource) || !validate.checkLength(params.idSiteGroupResource)) {
-                $("#edit-idSiteGroupResource").removeClass("has-success");
-                $("#edit-idSiteGroupResource").addClass("has-error");
-            } else {
-                $("#edit-idSiteGroupResource").removeClass("has-error");
-                $("#edit-idSiteGroupResource").addClass(" has-success");
-            }
 
             if (!validate.checkLength(params.nameShift)) {
                 $("#edit-nameShift").removeClass("has-success");
@@ -153,8 +141,7 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
             }*/
 
             if (validate.checkLength(params.name) &&
-                validate.checkLength(params.idSiteGroupResource) && validate.checkNumber(params.idSiteGroupResource) && validate.checkLength(params.nameShift)
-               /* validate.checkLength(params.state) && validate.checkNumber(params.state)*/) {
+                validate.checkLength(params.nameShift)) {
                 return true;
             } else {
                 return false;
@@ -228,7 +215,6 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
                     $("#modal-edit").modal('hide');
                     //用获取到的数据代替从数据库取到的数据
                     edit_params.name = editData.name;
-                    edit_params.idSiteGroupResource = editData.idSiteGroupResource;
                     edit_params.nameShift = editData.nameShift;
                     edit_params.state = editData.state;
                     var update_data = angular.toJson(edit_params);

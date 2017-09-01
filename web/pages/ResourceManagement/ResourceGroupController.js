@@ -10,9 +10,10 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
         })
     }])
 
-    .controller('ResourceGroupController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm) {
+    .controller('ResourceGroupController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService, confirm,enter) {
 
         layer.load(0);
+        enter.enterDown();
 
         var editData = {};//保存新增和修改的信息
         var addData = [];
@@ -59,7 +60,6 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='add-name']").val();
             params.state = parseInt($("input[name='add-state']").val());
-            params.idSite0 = $("input[name='add-idSite0']").val();
             addData = JSON.stringify(params);
             if (!validate.checkLength(params.name)) {
                 $("#add-name").removeClass("has-success");
@@ -77,16 +77,8 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#add-state").addClass(" has-success");
             }
 
-            if ( !validate.checkLength(params.idSite0)) {
-                $("#add-idSite0").removeClass("has-success");
-                $("#add-idSite0").addClass("has-error");
-            } else {
-                $("#add-idSite0").removeClass("has-error");
-                $("#add-idSite0").addClass(" has-success");
-            }
 
-            if (validate.checkLength(params.state) && validate.checkLength(params.name) &&
-                validate.checkLength(params.idSite0)) {
+            if (validate.checkLength(params.state) && validate.checkLength(params.name) ) {
                 return true;
             } else {
 
@@ -100,7 +92,6 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
             var params = {};
             params.name = $("input[name='edit-name']").val();
             params.state = parseInt($("input[name='edit-state']").val());
-            params.idSite0 = $("input[name='edit-idSite0']").val();
             editData = params;
             if (!validate.checkLength(params.name)) {
                 $("#edit-name").removeClass("has-success");
@@ -118,16 +109,7 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                 $("#edit-state").addClass(" has-success");
             }
 
-            if (!validate.checkLength(params.idSite0)) {
-                $("#edit-idSite0").removeClass("has-success");
-                $("#edit-idSite0").addClass("has-error");
-            } else {
-                $("#edit-idSite0").removeClass("has-error");
-                $("#edit-idSite0").addClass(" has-success");
-            }
-
-            if (validate.checkLength(params.state) && validate.checkLength(params.name)&&
-             validate.checkLength(params.idSite0)) {
+            if (validate.checkLength(params.state) && validate.checkLength(params.name)) {
                 return true;
             } else {
 
@@ -200,7 +182,6 @@ angular.module("IntegratedFramework.ResourceGroupController", ['ngRoute'])
                     //用获取到的数据代替从数据库取到的数据
                     edit_params.name = editData.name;
                     edit_params.state = editData.state;
-                    edit_params.idSite0 = editData.idSite0;
                     var update_data = angular.toJson(edit_params);
                     myHttpService.post(serviceList.UpdateGroupResource, update_data).then(function successCallback() {
                         myHttpService.get(serviceList.ListGroupResource).then(function (response) {

@@ -6,11 +6,24 @@ var username;
 var webSocketUrl;
 var notyf;
 
+function getPath(){
+    var pathName = window.location.pathname.substring(1);
+    var webName = pathName == '' ? '': pathName.substring(0, pathName.indexOf('/'));
+    return window.location.host + '/' + webName + '/';
+
+}
+
 function getUsername() {
+    username = navigator.appName + new Date().getTime();
+    var txt = getPath();
+    webSocketUrl = "ws://" + txt + "notification/" + username;
+}
+
+/*function getUsername() {
     username = navigator.appName + new Date().getTime();
     // webSocketUrl = "ws://localhost:8080/IntegratedFramework/notification/" + username;
     webSocketUrl = "ws://localhost:8080/notification/" + username;
-}
+}*/
 
 function webSocketInit() {
     notyf = new Notyf();
