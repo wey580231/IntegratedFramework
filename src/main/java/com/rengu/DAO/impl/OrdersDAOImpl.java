@@ -3,6 +3,7 @@ package com.rengu.DAO.impl;
 import com.rengu.DAO.OrdersDAO;
 import com.rengu.entity.RG_AdjustOrderEntity;
 import com.rengu.entity.RG_OrderEntity;
+import com.rengu.entity.RG_PlanEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
@@ -117,6 +118,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
 
     public boolean delete(Object object) {
         RG_OrderEntity rg_orderEntity;
+
         if (object instanceof RG_OrderEntity) {
             rg_orderEntity = (RG_OrderEntity) object;
             String orderId = rg_orderEntity.getId();
@@ -127,9 +129,12 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                     rg_scheduleEntity.getOrders().remove(rg_orderEntity);
                 }
             }
-            //从订单异常里面删除订单。
+
             RG_AdjustOrderEntity rg_adjustOrderEntity = DAOFactory.getAdjustOrderDAOImplInstance().findAllByOrderId(orderId);
-            if (rg_adjustOrderEntity != null) {
+            RG_PlanEntity rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(orderId);
+
+            //从订单异常里面删除订单。
+            /*if (rg_adjustOrderEntity != null) {
                 if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
                     return true;
                 } else {
@@ -138,7 +143,23 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             } else {
                 //直接删除
                 return super.delete(rg_orderEntity);
+            }*/
+
+            if (rg_adjustOrderEntity != null || rg_PlanEntity != null) {
+                //从订单异常删除订单
+                if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
+                    return true;
+                } else if (DAOFactory.getPlanDAOImplInstance().delete(rg_PlanEntity) && super.delete(rg_orderEntity)) {
+                    //从plan删除订单
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                //直接删除
+                return super.delete(rg_orderEntity);
             }
+
         } else {
             //参数错误
             return false;
