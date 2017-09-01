@@ -286,7 +286,6 @@ public class Tools {
                 "\"code\":" + "\"" + code + "\"" + "," +
                 "\"description\":" + "\"" + description + "\"" +
                 "}";
-
         return tmp;
     }
 

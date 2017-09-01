@@ -59,6 +59,9 @@ public class FeedBackStateAction extends SuperAction {
                             bottomSnapshot.setApsInteractive(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急滚动优化失败!", "alert"));
                         }
+                        BackupThread queryThrad = new BackupThread(BackupThread.Query_Resuming_State);
+                        Thread thread = new Thread(queryThrad);
+                        thread.start();
                     }
                     session.update(bottomSnapshot);
                 }
@@ -69,6 +72,7 @@ public class FeedBackStateAction extends SuperAction {
         } else {
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS结果格式不符合要求，无法解析!", "alert"));
         }
+        Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 
     //接收备份快照的结果
@@ -288,7 +292,7 @@ public class FeedBackStateAction extends SuperAction {
                             schedule.setState(RG_ScheduleEntity.APS_SUCCESS);
                             nodeName = "基础计算结果";
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算完成!", "confirm"));
-                            setOrdersState("0", schedule);
+                            setOrdersState("3", schedule);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS计算完成!", schedule.getId());
                         } else {
                             schedule.setState(RG_ScheduleEntity.APS_ADJUST);
@@ -296,7 +300,7 @@ public class FeedBackStateAction extends SuperAction {
                                 nodeName = "优化调整" + middleSnapshot.getChilds().size();
                             }
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS优化计算完成!", "confirm"));
-                            setOrdersState("0", schedule);
+                            setOrdersState("3", schedule);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS优化计算完成!", schedule.getId());
                         }
                     }
@@ -315,7 +319,7 @@ public class FeedBackStateAction extends SuperAction {
                             schedule.setState(RG_ScheduleEntity.ERROR_SUCCESS);
                             nodeName = "基础计算结果";
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急计算完成!", "confirm"));
-                            setOrdersState("0", schedule);
+                            setOrdersState("3", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_APS_FINISH);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急计算完成!", schedule.getId());
 
@@ -325,7 +329,7 @@ public class FeedBackStateAction extends SuperAction {
                                 nodeName = "应急优化调整" + middleSnapshot.getChilds().size();
                             }
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急优化完成!", "confirm"));
-                            setOrdersState("0", schedule);
+                            setOrdersState("3", schedule);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ADJUSTED);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急优化完成!", schedule.getId());
                         }
@@ -450,7 +454,6 @@ public class FeedBackStateAction extends SuperAction {
         NativeQuery tquery = session.createNativeQuery("update " + errorType + " set state = ? where id = ?");
         tquery.setParameter(1, state);
         tquery.setParameter(2, errorId);
-
         return tquery.executeUpdate();
     }
 

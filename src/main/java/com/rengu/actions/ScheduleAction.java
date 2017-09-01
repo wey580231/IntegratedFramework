@@ -10,7 +10,6 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
