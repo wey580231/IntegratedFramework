@@ -78,7 +78,9 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     }
                 }
             }
-            //2、
+            //【2】将订单下发给MES
+
+            //【3】自动进行下一次排程，参见ApsTable的createPostBody方法
         }
     }
 }

@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 public class ApsTools {
 
     public static boolean isRunning = false;
+    public static boolean isOrderDeleted = false;       //排程时，订单是否被删除
 
     public static final int UNKNOWN = -1;
     public static final int IDLE = 0;
@@ -42,6 +43,8 @@ public class ApsTools {
     private final String recoverSnapshotAction = "/aps/recoverSnapshot";        //恢复aps快照
     private final String dispatchOrderAction = "/aps/dispatchOrder";            //下发aps订单
     private final String interActiveXAction = "/aps/recoverInterX";             //恢复交互控件
+    private final String deleteOrderAction = "/aps/deleteOrder";                //删除订单
+
     private String apsHost;
     private int apsPort;
 
@@ -300,6 +303,36 @@ public class ApsTools {
         return result;
     }
 
+    //删除订单
+    public int deleteOrder(List<RG_OrderEntity> orders) {
+
+        StringBuffer buff = new StringBuffer();
+        buff.append("1\n2");
+
+        for (int i = 0; i < orders.size(); i++) {
+            buff.append("\n");
+            buff.append(orders.get(i).getId());
+            buff.append("\n");
+            buff.append("001");
+        }
+
+        buff.append("\\n2000-01-01\\t06:00\\n120");
+
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/DeleteOrder.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + buff.toString() +
+                "&" +
+                "REPLY=" + ApsTools.instance().getDeleteOrderAddress() +
+                "&" +
+                "ID=" + Tools.getUUID() +
+                "&" +
+                "DELAY=100\n";
+
+        System.out.println("APS链接地址：" + result);
+
+        return executeCommand(result);
+    }
+
     //将字符转中包含的\s替换成\t
     private String convertSpaceWithTab(String source) {
         source = source.trim();
@@ -458,6 +491,9 @@ public class ApsTools {
         return localAddress + ":" + localPort + localProjectName + interActiveXAction;
     }
 
+    private String getDeleteOrderAddress(){
+        return localAddress + ":" + localPort + localProjectName + deleteOrderAction;
+    }
 
     //tomcat启动时根据当前排程信息来
     public void resetApsDatabase() {

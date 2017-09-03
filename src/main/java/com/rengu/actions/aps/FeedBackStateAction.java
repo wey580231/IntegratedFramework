@@ -25,6 +25,31 @@ public class FeedBackStateAction extends SuperAction {
 
     private ApsDao apsDao = new ApsDao();
 
+    //Yang 20170901 删除订单回调接口
+    public void deleteOrder(){
+        ActionContext context = ActionContext.getContext();
+        Map<String, Object> parameterMap = context.getParameters();
+
+        boolean result = false;
+
+        if (parameterMap.size() == 3) {
+            String[] id = (String[]) parameterMap.get("id");
+            String[] state = (String[]) parameterMap.get("STATE");
+            String[] message = (String[]) parameterMap.get("MESSAGE");
+
+            MyLog.getLogger().info("=============收到删除订单回复消息啦============");
+
+            if (id.length > 0 && state.length > 0 && message.length > 0) {
+                BackupThread queryThrad = new BackupThread(BackupThread.Query_Order_State);
+                Thread thread = new Thread(queryThrad);
+                thread.start();
+            }
+        } else {
+            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS结果格式不符合要求，无法解析!", "alert"));
+        }
+        Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
+    }
+
     //接收aps应急优化回调接口
     public void interactiveAps() {
         ActionContext context = ActionContext.getContext();

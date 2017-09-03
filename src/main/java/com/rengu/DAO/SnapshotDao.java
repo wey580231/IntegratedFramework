@@ -30,8 +30,7 @@ public class SnapshotDao {
         distanceMap.put("RJXZ", "RJXZPT_01");
         distanceMap.put("TKD-L", "AGV_L");
         distanceMap.put("TKD-R", "AGV_R");
-        distanceMap.put("CCJDJC", "AGV_R");
-//        distanceMap.put("CCJDJC", "CCJDJC");
+        distanceMap.put("CCJDJC", "UR5");
         distanceMap.put("XBC", "XBC");
         distanceMap.put("MTJDJC", "OnlineTest");
         distanceMap.put("ZHDXNJC", "AssembleAccuracyTest");
@@ -320,19 +319,11 @@ public class SnapshotDao {
                 String endSite = robotPlan.get(i + 1).getSiteByIdSite().getId();
 
                 if (!startSite.equals(endSite)) {
-                    RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
-                    //任务名
-                    nextResult.setTask("KR16_MG_Move");
-                    //货物名
-                    nextResult.setGoods("");
-                    //地点名
-                    nextResult.setSite(distanceMap.get(endSite));
-
                     Date startDate = sdf.parse(robotPlan.get(i).getT2Task());
 
                     long stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
 
-                    long lastTime = 2;
+                    long lastTime = 0;
 
                     Short currPeed = robotPlan.get(i).getResourceByIdResource().getMobility();
 
@@ -349,16 +340,27 @@ public class SnapshotDao {
                         }
                     }
 
-                    //开始时间
-                    nextResult.setStartTime((int) stime);
-                    //结束时间
-                    nextResult.setEndTime((int) (stime + lastTime));
-                    nextResult.setOrderEntity(robotPlan.get(i).getOrderByIdOrder());
+                    if(lastTime > 0)
+                    {
+                        RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
+                        //任务名
+                        nextResult.setTask("KR16_MG_Move");
+                        //货物名
+                        nextResult.setGoods("");
+                        //地点名
+                        nextResult.setSite(distanceMap.get(endSite));
 
-                    if (!isSignal) {
-                        nextResult.setSnapshotNodeEntity(robotPlan.get(i).getSnapShort());
+                        //开始时间
+                        nextResult.setStartTime((int) stime);
+                        //结束时间
+                        nextResult.setEndTime((int) (stime + lastTime));
+                        nextResult.setOrderEntity(robotPlan.get(i).getOrderByIdOrder());
+
+                        if (!isSignal) {
+                            nextResult.setSnapshotNodeEntity(robotPlan.get(i).getSnapShort());
+                        }
+                        session.save(nextResult);
                     }
-                    session.save(nextResult);
                 }
             }
         }
