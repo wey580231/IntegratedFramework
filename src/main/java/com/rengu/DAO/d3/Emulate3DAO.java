@@ -190,6 +190,7 @@ public class Emulate3DAO {
                     deviceNode.add(dev);
                 }
                 deviceNode.add("KR16_CQ");
+                deviceNode.add("UR5");
 
                 dataNode.put("id", entity.getId());
                 dataNode.put("name", entity.getName());
@@ -277,6 +278,7 @@ public class Emulate3DAO {
                 deviceNode.add(dev);
             }
             deviceNode.add("KR16_CQ");
+            deviceNode.add("UR5");
 
             dataNode.put("info", arrayNode);
             dataNode.put("device", deviceNode);

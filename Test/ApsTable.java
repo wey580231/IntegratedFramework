@@ -1,29 +1,33 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.actions.mes.MesConsumer;
 import com.rengu.actions.mes.MesSender;
-import com.rengu.util.APSDatabaseSync;
-import com.rengu.util.DatabaseInfo;
-import com.rengu.util.Tools;
+import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.util.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ApsTable {
     @Test
     public void tongbu() throws ParseException, SQLException, ClassNotFoundException {
 //        String[] tableName = {DatabaseInfo.APS_PRODUCT, DatabaseInfo.APS_PROCESS_TYPERESOURCE_SITE, DatabaseInfo.APS_TYPERESOURCE, DatabaseInfo.APS_GROUPRESOURCE, DatabaseInfo.APS_SITE, DatabaseInfo.APS_SHIFT, DatabaseInfo.APS_PROCESS, DatabaseInfo.APS_CLUB, DatabaseInfo.APS_USER, DatabaseInfo.APS_ORDER, DatabaseInfo.APS_RESOURCE};
-        String[] tableName = { DatabaseInfo.APS_SITE,DatabaseInfo.APS_SITE_SITE};
+        String[] tableName = {DatabaseInfo.APS_SITE, DatabaseInfo.APS_SITE_SITE};
         APSDatabaseSync.SyncAPSTable(tableName, DatabaseInfo.ORACLE, DatabaseInfo.APS);
     }
 
     @Test
     public void testDate() {
-        String dd = "2017-07-22 17:10:45";
-        Date date = Tools.parseStandTextDate(dd);
-        System.out.println(date);
+//        String dd = "2017-07-22 17:10:45";
+//        Date date = Tools.parseStandTextDate(dd);
+//        System.out.println(date);
     }
 
     @Test
@@ -89,5 +93,83 @@ public class ApsTable {
         dataNode.put("idProcess", "h");
 
         MesSender.instance().sendData("orderInfo", dataNode);
+    }
+
+    @Test
+    public void createPostBody() {
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        String latestScheduleId = UserConfigTools.getLatestSchedule("1");
+
+        if (latestScheduleId != null && latestScheduleId.length() > 0) {
+            RG_ScheduleEntity scheduleEntity = session.get(RG_ScheduleEntity.class, latestScheduleId);
+            if (scheduleEntity != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                ObjectNode mainNode = mapper.createObjectNode();
+
+                mainNode.put("name", "排程-" + Tools.formatToStandardDate(new Date()));
+                mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());
+                mainNode.put("rollTime", scheduleEntity.getRollTime());
+
+                ObjectNode apsNode = mapper.createObjectNode();
+
+                Date currDate = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(currDate);
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+
+                System.out.println(Tools.formatToStandardDate(calendar.getTime()));
+
+                apsNode.put("t0", calendar.getTime().getTime());
+
+                Calendar endCalendar = Calendar.getInstance();
+                endCalendar.setTime(currDate);
+                endCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                endCalendar.set(Calendar.MINUTE, 0);
+                endCalendar.set(Calendar.SECOND, 0);
+                endCalendar.set(Calendar.DAY_OF_MONTH, endCalendar.get(Calendar.DAY_OF_MONTH) + scheduleEntity.getScheduleWindow());
+
+                System.out.println(Tools.formatToStandardDate(endCalendar.getTime()));
+                apsNode.put("t2", endCalendar.getTime().getTime());
+
+                apsNode.put("modeScheduling", scheduleEntity.getApsModel());
+                mainNode.put("APSConfig", apsNode);
+
+                ObjectNode layoutNode = mapper.createObjectNode();
+                layoutNode.put("id", scheduleEntity.getLayout().getId());
+                mainNode.put("layout", layoutNode);
+
+                //Todo 待按照时间筛选出订单
+                ArrayNode orderNode = mapper.createArrayNode();
+
+
+                mainNode.put("orders", orderNode);
+
+                ArrayNode resourceNode = mapper.createArrayNode();
+                ObjectNode resNode = mapper.createObjectNode();
+                resNode.put("id", 2);
+                resourceNode.add(resNode);
+                mainNode.put("resources", resourceNode);
+
+                ArrayNode groupResourceNode = mapper.createArrayNode();
+                ObjectNode groupNode = mapper.createObjectNode();
+                groupNode.put("id", 2);
+                groupResourceNode.add(groupNode);
+                mainNode.put("groupResource", groupResourceNode);
+
+                ArrayNode sitesNode = mapper.createArrayNode();
+                ObjectNode siteNode = mapper.createObjectNode();
+                siteNode.put("id", 2);
+                sitesNode.add(siteNode);
+                mainNode.put("site", sitesNode);
+
+                try {
+                    System.out.println(mapper.writeValueAsString(mainNode));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

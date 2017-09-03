@@ -157,6 +157,7 @@
         <action name="emulateApsInterResult" class="com.rengu.actions.aps.FeedBackStateAction"
                 method="emulateApsInterResult"/>
         <action name="recoverInterX" class="com.rengu.actions.aps.FeedBackStateAction" method="recoverInterX"/>
+        <action name="deleteOrder" class="com.rengu.actions.aps.FeedBackStateAction" method="deleteOrder"/>
     </package>
 
     <!--异常处理-->
