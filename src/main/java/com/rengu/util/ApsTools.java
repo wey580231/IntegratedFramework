@@ -23,6 +23,9 @@ import java.util.regex.Pattern;
  */
 public class ApsTools {
 
+    public static boolean isRunning = false;
+    public static boolean isOrderDeleted = false;       //排程时，订单是否被删除
+
     public static final int UNKNOWN = -1;
     public static final int IDLE = 0;
     public static final int BUSY_EXECUTE = 0;        //请求执行项目
@@ -34,12 +37,14 @@ public class ApsTools {
 
     //aps部署的地址和端口号
     private static ApsTools apsTool = null;
-    private final String replyApsAction = "/aps/updateProgress";
+    private final String replyApsAction = "/aps/emulateApsInterResult";
     private final String interAction = "/aps/interactiveAps";                   //交互/应急优化
     private final String backupSnapshotAction = "/aps/backupSnapshot";          //备份aps快照
     private final String recoverSnapshotAction = "/aps/recoverSnapshot";        //恢复aps快照
     private final String dispatchOrderAction = "/aps/dispatchOrder";            //下发aps订单
     private final String interActiveXAction = "/aps/recoverInterX";             //恢复交互控件
+    private final String deleteOrderAction = "/aps/deleteOrder";                //删除订单
+
     private String apsHost;
     private int apsPort;
 
@@ -68,75 +73,6 @@ public class ApsTools {
         return apsTool;
     }
 
-    //生成快照，在收到一次aps反馈结果时，自动在aps中创建一个快照
-    public int createApsSnapshot(String nodeId) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Backup/Snapshot.n" +
-                "&" +
-                "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
-                "&" +
-                "REPLY=" + ApsTools.instance().getBackupSnapshotAddress() +
-                "&" +
-                "ID=" + nodeId +
-                "&" +
-                "DELAY=1000";
-        return executeCommand(result);
-    }
-
-    //交互/应急优化接口，交互优化后，查询aps订单的状态为0的数目，但个数大于0时，需要调用此接口进行优化
-    public int getInterAdjust() {
-        String result = "/NCL:RUN?Program=./Model/Script/ScriptResumeScheduling.n" +
-                "&" +
-                "BUFFER=001" +
-                "&" +
-                "REPLY=" + ApsTools.instance().getInterAddress() +
-                "&" +
-                "ID=" + Tools.getUUID() +
-                "&" +
-                "DELAY=1000";
-        return executeCommand(result);
-    }
-
-    //恢复指定快照，待确认下发mes后，将boottom节点的id号发给APS
-    public int recoverSnapshot(String nodeId) {
-        String result = "/NCL:RUN?Program=./Model/Interaction/Backup/RestoreByInput.n" +
-                "&" +
-                "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
-                "&" +
-                "REPLY=" + ApsTools.instance().getRecoverSnapshotAddress() +
-                "&" +
-                "ID=" + Tools.getUUID() +
-                "&" +
-                "DELAY=1000";
-
-        return executeCommand(result);
-    }
-
-    //发布所有订单
-    public int publishOrder(List<String> orderList) {
-
-        StringBuffer buff = new StringBuffer();
-        buff.append("1\n2");
-
-        for (int i = 0; i < orderList.size(); i++) {
-            buff.append("\n");
-            buff.append(orderList.get(i));
-            buff.append("\n");
-            buff.append("001");
-        }
-
-        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
-                "&" +
-                "BUFFER=001" +
-                "&" +
-                "REPLY=" + ApsTools.instance().getDispatchOrderAddress() +
-                "&" +
-                "ID=" + Tools.getUUID() +
-                "&" +
-                "DELAY=1000";
-
-        return executeCommand(result);
-    }
-
     //紧急插单
     public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
 
@@ -152,14 +88,14 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
-                "DELAY=1000";
+                "DELAY=100";
         System.out.println("APS链接地址：" + result);
         return result;
     }
 
     //获取工序调整
     public static String getAdjustProcessHandlingURL(RG_AdjustProcessEntity entity) {
-
+        ApsTools.isRunning = true;
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Task/MoveTask.n" +
                 "&" +
                 "BUFFER=1\\n2\\n" + entity.getIdTask() + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n1\\n6\\n" +
@@ -170,7 +106,7 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
-                "DELAY=1000";
+                "DELAY=100";
         System.out.println("APS链接地址：" + result);
         return result;
     }
@@ -244,12 +180,12 @@ public class ApsTools {
                 rg_planEntity.setProviderByIdProvider(session.get(RG_ProviderEntity.class, tempMap.get("IDPROVIDER").toString()));
 
                 RG_ProcessEntity processEntity = session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString());
-                if(processEntity != null){
+                if (processEntity != null) {
                     rg_planEntity.setProcessByIdProcess(processEntity);
 
                     RG_ProcessEntity parentProcess = processEntity.getProcessByIdProcess();
 
-                    if(parentProcess!=null){
+                    if (parentProcess != null) {
                         rg_planEntity.setProductByIdProduct(parentProcess.getProductByIdProduct());
                     }
                 }
@@ -266,6 +202,75 @@ public class ApsTools {
         MyLog.getLogger().info("APS_PLAN 表同步完成");
     }
 
+    //生成快照，在收到一次aps反馈结果时，自动在aps中创建一个快照
+    public int createApsSnapshot(String nodeId) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Backup/Snapshot.n" +
+                "&" +
+                "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
+                "&" +
+                "REPLY=" + ApsTools.instance().getBackupSnapshotAddress() +
+                "&" +
+                "ID=" + nodeId +
+                "&" +
+                "DELAY=100";
+        return executeCommand(result);
+    }
+
+    //交互/应急优化接口，交互优化后，查询aps订单的状态为0的数目，但个数大于0时，需要调用此接口进行优化
+    public int getInterAdjust() {
+        String result = "/NCL:RUN?Program=./Model/Script/ScriptResumeScheduling.n" +
+                "&" +
+                "BUFFER=001" +
+                "&" +
+                "REPLY=" + ApsTools.instance().getInterAddress() +
+                "&" +
+                "ID=" + Tools.getUUID() +
+                "&" +
+                "DELAY=100";
+        return executeCommand(result);
+    }
+
+    //恢复指定快照，待确认下发mes后，将boottom节点的id号发给APS
+    public int recoverSnapshot(String nodeId) {
+        String result = "/NCL:RUN?Program=./Model/Interaction/Backup/RestoreByInput.n" +
+                "&" +
+                "BUFFER=1\\n2\\n001\\n001\\n" + nodeId +
+                "&" +
+                "REPLY=" + ApsTools.instance().getRecoverSnapshotAddress() +
+                "&" +
+                "ID=" + Tools.getUUID() +
+                "&" +
+                "DELAY=100";
+
+        return executeCommand(result);
+    }
+
+    //发布所有订单
+    public int publishOrder(List<String> orderList) {
+
+        StringBuffer buff = new StringBuffer();
+        buff.append("1\n2");
+
+        for (int i = 0; i < orderList.size(); i++) {
+            buff.append("\n");
+            buff.append(orderList.get(i));
+            buff.append("\n");
+            buff.append("001");
+        }
+
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/LaunchAllOrder.n" +
+                "&" +
+                "BUFFER=001" +
+                "&" +
+                "REPLY=" + ApsTools.instance().getDispatchOrderAddress() +
+                "&" +
+                "ID=" + Tools.getUUID() +
+                "&" +
+                "DELAY=100";
+
+        return executeCommand(result);
+    }
+
     //设备资源取消
     public String getCancelDeviceURL(RG_AdjustDeviceEntity entity) {
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Resource/RejectResource.n" +
@@ -277,7 +282,7 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
-                "DELAY=1000";
+                "DELAY=100";
         System.out.println("APS链接地址：" + result);
         return result;
     }
@@ -293,9 +298,39 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
-                "DELAY=1000\n";
+                "DELAY=100\n";
         System.out.println("APS链接地址：" + result);
         return result;
+    }
+
+    //删除订单
+    public int deleteOrder(List<RG_OrderEntity> orders) {
+
+        StringBuffer buff = new StringBuffer();
+        buff.append("1\n2");
+
+        for (int i = 0; i < orders.size(); i++) {
+            buff.append("\n");
+            buff.append(orders.get(i).getId());
+            buff.append("\n");
+            buff.append("001");
+        }
+
+        buff.append("\\n2000-01-01\\t06:00\\n120");
+
+        String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/DeleteOrder.n" +
+                "&" +
+                "BUFFER=1\\n2\\n" + buff.toString() +
+                "&" +
+                "REPLY=" + ApsTools.instance().getDeleteOrderAddress() +
+                "&" +
+                "ID=" + Tools.getUUID() +
+                "&" +
+                "DELAY=100\n";
+
+        System.out.println("APS链接地址：" + result);
+
+        return executeCommand(result);
     }
 
     //将字符转中包含的\s替换成\t
@@ -419,7 +454,7 @@ public class ApsTools {
                 "&" +
                 "ID=" + middleId + "" +
                 "&" +
-                "DELAY=1000" +
+                "DELAY=100" +
                 "&" +
                 "buffer=001";
 
@@ -456,6 +491,9 @@ public class ApsTools {
         return localAddress + ":" + localPort + localProjectName + interActiveXAction;
     }
 
+    private String getDeleteOrderAddress(){
+        return localAddress + ":" + localPort + localProjectName + deleteOrderAction;
+    }
 
     //tomcat启动时根据当前排程信息来
     public void resetApsDatabase() {
@@ -495,7 +533,7 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() + "" +
                 "&" +
-                "DELAY=1000" +
+                "DELAY=100" +
                 "&" +
                 "buffer=001";
         return executeCommand(cmd);

@@ -279,15 +279,14 @@ public class Tools {
 
     //aps状态返回
     public static String apsCode(String result, String code, String description) {
-        String tmp = "";
-
-        tmp += "{" +
-                "\"result\":" + "\"" + result + "\"" + "," +
-                "\"code\":" + "\"" + code + "\"" + "," +
-                "\"description\":" + "\"" + description + "\"" +
-                "}";
-
-        return tmp;
+//        String tmp = "";
+//
+//        tmp += "{" +
+//                "\"result\":" + "\"" + result + "\"" + "," +
+//                "\"code\":" + "\"" + code + "\"" + "," +
+//                "\"description\":" + "\"" + description + "\"" +
+//                "}";
+        return "ok";
     }
 
     //获取时间戳

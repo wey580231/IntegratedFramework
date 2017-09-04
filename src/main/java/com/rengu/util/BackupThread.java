@@ -6,6 +6,8 @@ public class BackupThread implements Runnable {
     public static final int Reset_Activex = 1;                  //恢复成功后，调用APS的可视化接口进行交互控件的恢复
     public static final int Recover_Snapshot = 2;               //恢复快照
     public static final int Query_Order_State = 3;              //查询是否存在订单被取消的情况
+    public static final int Query_Resuming_State = 4;           //查询resum状态是否成功
+    public static final int Query_DeleteOrder_State = 5;        //查询删除订单的状态是否成功
 
     private String bottomShotId;
     private int operateState;
@@ -38,6 +40,16 @@ public class BackupThread implements Runnable {
                 if (apsState == ApsTools.IDLE) {
                     ApsTools.instance().getInterAdjust();
                 }
+            } else if (operateState == Query_Resuming_State) {
+                if (apsState == ApsTools.IDLE) {
+                    ApsTools.isRunning = false;
+                }
+                System.out.println(apsState + "~~~~~~~~~~~~~~~~~~~~~~~~~isRunning~~~~~~~~~~~~~~" + ApsTools.isRunning);
+            } else if (operateState == Query_DeleteOrder_State) {
+                if (apsState == ApsTools.IDLE) {
+                    ApsTools.isOrderDeleted = false;
+                }
+                System.out.println(apsState + "~~~~~~~haha删除订单~~~~~~~~~~~~~~" + ApsTools.isRunning);
             }
 
             MyLog.getLogger().info("======线程====" + apsState);

@@ -395,8 +395,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                     events: {
                         load: function () {
                             // set up the updating of the chart each second
-                            var series = this.series[0],
-                                chart = this;
+                            var series = this.series[0], chart = this;
                             setInterval(function () {
                                 var x = (new Date()).getTime(), y = dynamicData[dynamicData.length - 1].remainPower;
                                 series.addPoint([x, y]);

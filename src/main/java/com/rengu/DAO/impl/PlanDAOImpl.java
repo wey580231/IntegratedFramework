@@ -92,5 +92,6 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
             exception.printStackTrace();
             return null;
         }
+
     }
 }

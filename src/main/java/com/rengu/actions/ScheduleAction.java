@@ -10,7 +10,6 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -20,22 +19,32 @@ public class ScheduleAction extends SuperAction {
 
     public void beginSchedule() {
         //初始化APS数据库
-        try {
-            String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN, DatabaseInfo.APS_ORDER};
-            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
-            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '0'");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+//        try {
+//            String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_LOG, DatabaseInfo.APS_PLAN, DatabaseInfo.APS_ORDER};
+//            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+//            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, "update APS_RESOURCE set STATE = '0'");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+        //更新数据库表内容
+        String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
+
+        if(parseAndSnaphost(jsonString)){
+            Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
+        }else{
+            printError();
         }
+    }
+
+    public boolean parseAndSnaphost(String orginJson){
         Session session = null;
         Transaction tx = null;
         //初始化数据库表
         try {
-            //更新数据库表内容
-            String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
-            JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
+            JsonNode rootNode = Tools.jsonTreeModelParse(orginJson);
             RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
             rg_scheduleEntity.setId(Tools.getUUID());
 
@@ -48,12 +57,109 @@ public class ScheduleAction extends SuperAction {
             Date date = new Date();
             rg_scheduleEntity.setScheduleTime(new java.sql.Date(date.getTime()));
             rg_scheduleEntity.setStartCalcTime(date);
+
             //解析scheduleWindow
             JsonNode scheduleWindowNodes = rootNode.get("scheduleWindow");
             rg_scheduleEntity.setScheduleWindow(scheduleWindowNodes.asInt());
+
             //解析rollTime
             JsonNode rollTimeNodes = rootNode.get("rollTime");
             rg_scheduleEntity.setRollTime(rollTimeNodes.asInt());
+
+            //Yang 20170901查询上次排程的时间窗信息
+            String latesScheduleId = UserConfigTools.getLatestSchedule("1");
+
+            session = MySessionFactory.getSessionFactory().getCurrentSession();
+
+            tx = session.getTransaction();
+            if (!tx.isActive()) {
+                tx = session.beginTransaction();
+            }
+
+            JsonNode orderNodes = rootNode.get("orders");
+            Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<RG_OrderEntity>();
+
+            RG_ScheduleEntity latestSchedule = null;
+
+            if (latesScheduleId != null) {
+                latestSchedule = session.get(RG_ScheduleEntity.class, latesScheduleId);
+            }
+
+            if (latestSchedule != null) {
+                int lastScheduleWindow = latestSchedule.getScheduleWindow().intValue();
+                int lastScheduleRollTime = latestSchedule.getRollTime().intValue();
+
+                if (scheduleWindowNodes.asInt() > lastScheduleWindow) {
+
+                } else if (scheduleWindowNodes.asInt() < lastScheduleWindow) {
+                    Date lastScheduleDate = latestSchedule.getScheduleTime();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(lastScheduleDate);
+                    calendar.set(Calendar.HOUR_OF_DAY, 0);
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
+
+                    calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + lastScheduleWindow);
+                    Date lastScheduleEndTime = calendar.getTime();
+
+                    Date currDate = new Date();
+                    Calendar currClendar = Calendar.getInstance();
+                    currClendar.setTime(currDate);
+                    currClendar.set(Calendar.HOUR_OF_DAY, 0);
+                    currClendar.set(Calendar.MINUTE, 0);
+                    currClendar.set(Calendar.SECOND, 0);
+                    currClendar.set(Calendar.DAY_OF_MONTH, currClendar.get(Calendar.DAY_OF_MONTH) + scheduleWindowNodes.asInt());
+                    Date currScheduleEndTime = currClendar.getTime();
+
+                    NativeQuery tmpQuery = session.createNativeQuery("select * from rg_order entity where entity.t2 between ? and ? ", RG_OrderEntity.class);
+                    tmpQuery.setParameter(1, Tools.formatToStandardDate(currScheduleEndTime));
+                    tmpQuery.setParameter(2, Tools.formatToStandardDate(lastScheduleEndTime));
+
+                    List<RG_OrderEntity> list = tmpQuery.list();
+                    if (list.size() > 0) {
+                        ApsTools.isOrderDeleted = true;
+                        int tmpState = ApsTools.instance().deleteOrder(list);
+
+                        if (tmpState == ApsTools.STARTED) {
+                            int tmpCount = 0;
+                            while (ApsTools.isOrderDeleted && tmpCount < 30) {
+                                try {
+                                    tmpCount++;
+
+                                    System.out.println("=========等待结果=========");
+
+                                    Thread.sleep(5000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            if (ApsTools.isOrderDeleted || tmpCount >= 30) {
+                                throw new Exception();
+                            }
+                        }
+                    }
+                } else if (lastScheduleWindow == scheduleWindowNodes.asInt()) {
+
+                }
+            }
+
+            for (JsonNode tempNode : orderNodes) {
+                RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
+                if (rg_orderEntity != null) {
+                    rg_orderEntitySet.add(rg_orderEntity);
+                    String sql = "select * from " + DatabaseInfo.APS_ORDER + " where id='" + rg_orderEntity.getId() + "'";
+                    if (Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, sql).size() == 0) {
+                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
+                    }
+//                    else {
+//                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateSQLForAPS(rg_orderEntity));
+//                    }
+                }
+            }
+
+            rg_scheduleEntity.setOrders(rg_orderEntitySet);
+
             //解析APS_Config数据
             JsonNode APS_ConfigNode = rootNode.get("APSConfig");
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
@@ -71,13 +177,6 @@ public class ScheduleAction extends SuperAction {
                     rg_scheduleEntity.setApsModel(APS_ConfigNodeValue);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, APS_ConfigNodeValue));
                 }
-            }
-
-            session = MySessionFactory.getSessionFactory().getCurrentSession();
-
-            tx = session.getTransaction();
-            if (!tx.isActive()) {
-                tx = session.beginTransaction();
             }
 
             //解析Layout数据
@@ -194,23 +293,6 @@ public class ScheduleAction extends SuperAction {
                 rg_scheduleEntity.setLayout(layout);
             }
 
-            //解析订单数据
-            JsonNode orderNodes = rootNode.get("orders");
-            Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<RG_OrderEntity>();
-            for (JsonNode tempNode : orderNodes) {
-                RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
-                if (rg_orderEntity != null) {
-                    rg_orderEntitySet.add(rg_orderEntity);
-                    String sql = "select * from " + DatabaseInfo.APS_ORDER + " where id='" + rg_orderEntity.getId() + "'";
-                    if (Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, sql).size() == 0) {
-                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
-                    } else {
-                        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateSQLForAPS(rg_orderEntity));
-                    }
-                }
-            }
-            rg_scheduleEntity.setOrders(rg_orderEntitySet);
-
             //APS ID计算标识
             String apsId = String.valueOf(date.getTime());
             rg_scheduleEntity.setApsFlag(apsId);
@@ -270,14 +352,13 @@ public class ScheduleAction extends SuperAction {
                     //更新事件日志节点
                     Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.StandardTimeLineItem, rg_scheduleEntity.getName() + "-APS计算已启动", EventLogTools.createScheduleStartEventContent(rg_scheduleEntity), rg_scheduleEntity.getId());
                     tx.commit();
-                    Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
                 } else {
                     tx.rollback();
-                    printError();
+                    return false;
                 }
             } else {
                 tx.rollback();
-                printError();
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,8 +366,9 @@ public class ScheduleAction extends SuperAction {
             if (tx != null) {
                 tx.rollback();
             }
-            printError();
+            return false;
         }
+        return true;
     }
 
     //获取所有的排程
