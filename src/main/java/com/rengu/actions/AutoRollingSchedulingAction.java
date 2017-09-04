@@ -1,15 +1,20 @@
 package com.rengu.actions;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.RG_AdjustProcessEntity;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_PlanEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.*;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class AutoRollingSchedulingAction extends SuperAction {
     public void autoRollingScheduling() throws ParseException {
@@ -22,8 +27,21 @@ public class AutoRollingSchedulingAction extends SuperAction {
             //获取到最后一次排程信息
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("发现最后一次排程信息", "confirm"));
             //todo 产生未完成订单的代码
+            Set<RG_OrderEntity> temUunFinishedOrderList = rg_scheduleEntity.getOrders();
+            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYY-mm-dd");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(rg_scheduleEntity.getScheduleTime());
+            calendar.add(Calendar.DAY_OF_MONTH, rg_scheduleEntity.getRollTime());
+            System.out.println(calendar.getTime());
+            List<RG_OrderEntity> unFinishedOrderList = new ArrayList<>();
+            for (RG_OrderEntity rg_OrderEntity : temUunFinishedOrderList) {
+                Date orderTime = rg_OrderEntity.getT2();
+                Date rollTime = calendar.getTime();
+                if (orderTime.before(rollTime)) {
+                    unFinishedOrderList.add(rg_OrderEntity);
+                }
+            }
             //1.获取上次排程中以计算但是未完成的订单
-            List<RG_OrderEntity> unFinishedOrderList = DAOFactory.getOrdersDAOInstance().findAllByStateAndIsFinished(Byte.parseByte("3"), false);
             if (unFinishedOrderList.size() != 0) {
                 //查询到未完成订单
                 //产生订单未处理异常(模拟)
@@ -49,7 +67,6 @@ public class AutoRollingSchedulingAction extends SuperAction {
                         long length = 82740000 - (Tools.parseStandTextDate(rg_planEntity.getT2Task()).getTime() - Tools.parseStandTextDate(rg_planEntity.getT1Task()).getTime());
                         long t1 = Tools.stringConvertToDate(rg_planEntity.getT1Task()).getTime();
                         long sum = t1 + length;
-                        System.out.println(simpleDateFormat.format(sum));
                         Date dateTime = simpleDateFormat.parse(simpleDateFormat.format(sum));
 //                        Date dateTime = simpleDateFormat.parse(simpleDateFormat.format(Tools.stringConvertToDate(rg_planEntity.getT1Task()).getTime() + 60 * 60 * 1000 * 4));
                         rg_adjustProcessEntity.setAppointStartTime(dateTime);
@@ -81,6 +98,100 @@ public class AutoRollingSchedulingAction extends SuperAction {
             //【2】将订单下发给MES
 
             //【3】自动进行下一次排程，参见ApsTable的createPostBody方法
+            try {
+                String jsonString = createPostBody();
+                if (jsonString == null) {
+                    return;
+                } else {
+                    new ScheduleAction().parseAndSnaphost(jsonString);
+                }
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public String createPostBody() throws ParseException, JsonProcessingException {
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        String latestScheduleId = UserConfigTools.getLatestSchedule("1");
+
+        if (latestScheduleId != null && latestScheduleId.length() > 0) {
+            RG_ScheduleEntity scheduleEntity = session.get(RG_ScheduleEntity.class, latestScheduleId);
+            if (scheduleEntity != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                ObjectNode mainNode = mapper.createObjectNode();
+
+                mainNode.put("name", "排程-" + Tools.formatToStandardDate(new Date()));
+                mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());
+                mainNode.put("rollTime", scheduleEntity.getRollTime());
+
+                ObjectNode apsNode = mapper.createObjectNode();
+
+                Date currDate = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(currDate);
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+
+                System.out.println(Tools.formatToStandardDate(calendar.getTime()));
+
+                apsNode.put("t0", calendar.getTime().getTime());
+
+                Calendar endCalendar = Calendar.getInstance();
+                endCalendar.setTime(currDate);
+                endCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                endCalendar.set(Calendar.MINUTE, 0);
+                endCalendar.set(Calendar.SECOND, 0);
+                endCalendar.set(Calendar.DAY_OF_MONTH, endCalendar.get(Calendar.DAY_OF_MONTH) + scheduleEntity.getScheduleWindow());
+
+                System.out.println(Tools.formatToStandardDate(endCalendar.getTime()));
+                apsNode.put("t2", endCalendar.getTime().getTime());
+
+                apsNode.put("modeScheduling", scheduleEntity.getApsModel());
+                mainNode.put("APSConfig", apsNode);
+
+                ObjectNode layoutNode = mapper.createObjectNode();
+                layoutNode.put("id", scheduleEntity.getLayout().getId());
+                mainNode.put("layout", layoutNode);
+
+                //Todo 待按照时间筛选出订单
+                ArrayNode orderNode = mapper.createArrayNode();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ? and rg_orderEntity.state =:state";
+                Query query = session.createQuery(hql);
+                query.setParameter(0, simpleDateFormat.parse(simpleDateFormat.format(apsNode.get("t0").asLong())));
+                query.setParameter(1, simpleDateFormat.parse(simpleDateFormat.format(apsNode.get("t2").asLong())));
+                query.setParameter("state", Byte.parseByte("1"));
+                List<RG_OrderEntity> orderEntityList = query.list();
+                for (RG_OrderEntity rg_OrderEntity : orderEntityList) {
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("id", rg_OrderEntity.getId());
+                    orderNode.add(objectNode);
+                }
+                mainNode.put("orders", orderNode);
+
+                ArrayNode resourceNode = mapper.createArrayNode();
+                ObjectNode resNode = mapper.createObjectNode();
+                resNode.put("id", 2);
+                resourceNode.add(resNode);
+                mainNode.put("resources", resourceNode);
+
+                ArrayNode groupResourceNode = mapper.createArrayNode();
+                ObjectNode groupNode = mapper.createObjectNode();
+                groupNode.put("id", 2);
+                groupResourceNode.add(groupNode);
+                mainNode.put("groupResource", groupResourceNode);
+
+                ArrayNode sitesNode = mapper.createArrayNode();
+                ObjectNode siteNode = mapper.createObjectNode();
+                siteNode.put("id", 2);
+                sitesNode.add(siteNode);
+                mainNode.put("site", sitesNode);
+
+                return mapper.writeValueAsString(mainNode);
+            }
+        }
+        return null;
     }
 }

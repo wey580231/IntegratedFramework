@@ -316,11 +316,11 @@ public class ApsTools {
             buff.append("001");
         }
 
-        buff.append("\\n2000-01-01\\t06:00\\n120");
+        // buff.append("\\n2000-01-01\\t06:00\\n120");
 
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/DeleteOrder.n" +
                 "&" +
-                "BUFFER=1\\n2\\n" + buff.toString() +
+                "BUFFER=" + orders.size() + "\\n2\\n" + buff.toString() +
                 "&" +
                 "REPLY=" + ApsTools.instance().getDeleteOrderAddress() +
                 "&" +
@@ -491,7 +491,7 @@ public class ApsTools {
         return localAddress + ":" + localPort + localProjectName + interActiveXAction;
     }
 
-    private String getDeleteOrderAddress(){
+    private String getDeleteOrderAddress() {
         return localAddress + ":" + localPort + localProjectName + deleteOrderAction;
     }
 

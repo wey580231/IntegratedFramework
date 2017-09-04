@@ -2,18 +2,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.rengu.actions.mes.MesConsumer;
 import com.rengu.actions.mes.MesSender;
+import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.*;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.junit.Test;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ApsTable {
     @Test
@@ -96,7 +98,7 @@ public class ApsTable {
     }
 
     @Test
-    public void createPostBody() {
+    public void createPostBody() throws ParseException {
         Session session = MySessionFactory.getSessionFactory().openSession();
         String latestScheduleId = UserConfigTools.getLatestSchedule("1");
 
@@ -142,8 +144,18 @@ public class ApsTable {
 
                 //Todo 待按照时间筛选出订单
                 ArrayNode orderNode = mapper.createArrayNode();
-
-
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ? and rg_orderEntity.state =:state";
+                Query query = session.createQuery(hql);
+                query.setParameter(0, simpleDateFormat.parse(simpleDateFormat.format(apsNode.get("t0").asLong())));
+                query.setParameter(1, simpleDateFormat.parse(simpleDateFormat.format(apsNode.get("t2").asLong())));
+                query.setParameter("state", Byte.parseByte("1"));
+                List<RG_OrderEntity> orderEntityList = query.list();
+                for (RG_OrderEntity rg_OrderEntity : orderEntityList) {
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("id", rg_OrderEntity.getId());
+                    orderNode.add(objectNode);
+                }
                 mainNode.put("orders", orderNode);
 
                 ArrayNode resourceNode = mapper.createArrayNode();
