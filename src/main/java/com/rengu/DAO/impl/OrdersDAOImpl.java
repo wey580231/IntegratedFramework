@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -146,7 +147,9 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             //订单异常
             RG_AdjustOrderEntity rg_adjustOrderEntity = DAOFactory.getAdjustOrderDAOImplInstance().findAllByOrderId(orderId);
             //plan
-            RG_PlanEntity rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(orderId);
+            List<RG_PlanEntity> rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(orderId);
+
+
             //订单设备
             RG_AdjustDeviceEntity rg_adjustDeviceEntity = DAOFactory.getAdjustDeviceDAOImplInstance().findAllByOrderId(orderId);
 
@@ -166,7 +169,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                 //从订单异常删除订单
                 if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
                     return true;
-                } else if (DAOFactory.getPlanDAOImplInstance().delete(rg_PlanEntity) && super.delete(rg_orderEntity)) {
+                } else if (DAOFactory.getPlanDAOImplInstance().delete(orderId) && super.delete(rg_orderEntity)) {
                     //从plan删除订单
                     return true;
                 } else if (DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity) && super.delete(rg_orderEntity)) {
@@ -187,4 +190,12 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             return false;
         }
     }
+
+  /*  public boolean removeList(List<?> list) {
+        for(int i =0; i< list.size();i++){
+            System.out.println(list.get(i));
+            list.remove(i);
+        }
+        return true;
+    }*/
 }

@@ -12,6 +12,7 @@ public interface PlanDAO<T> extends SuperDAO {
 
     List<T> findAllBySnapshotId(String id);
 
-    T findAllByOrderId(String id);
+    /*T findAllByOrderId(String id);*/
 
+    List<T> findAllByOrderId(String id);
 }

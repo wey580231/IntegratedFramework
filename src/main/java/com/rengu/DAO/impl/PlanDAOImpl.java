@@ -71,7 +71,7 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
     }
 
     @Override
-    public RG_PlanEntity findAllByOrderId(String id) {
+    /*public RG_PlanEntity findAllByOrderId(String id) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -93,5 +93,38 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
             return null;
         }
 
+    }*/
+
+    public List<RG_PlanEntity> findAllByOrderId(String id) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.orderByIdOrder.id =:id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List list = query.list();
+        return list;
+    }
+
+    public boolean delete(String id) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
+            //String hql = "delete ";
+            session.createQuery("delete from RG_PlanEntity plan where plan.orderByIdOrder.id =:id").setParameter("id",id).executeUpdate();
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
