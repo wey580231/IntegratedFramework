@@ -1,5 +1,6 @@
 package com.rengu.DAO;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface OrdersDAO<T> extends SuperDAO {
 
     List<T> findAllByisFinishedAndDate(Date startDate, Date endDate, boolean isFinished);
 
-    List<T> findAllByStateAndIsFinished(Byte state, boolean isFinished);
+    List<T> findAllByStateAndIsFinished(Byte state, boolean isFinished) throws ParseException;
 }
