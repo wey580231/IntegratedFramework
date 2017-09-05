@@ -160,9 +160,18 @@ public class ScheduleAction extends SuperAction {
 //                    }
                 }
             }
-
             rg_scheduleEntity.setOrders(rg_orderEntitySet);
-
+            //查找优化开始和优化结束的时间
+            Date maxDate = rg_orderEntitySet.iterator().next().getT2();
+            Date minDate = rg_orderEntitySet.iterator().next().getT0();
+            for (RG_OrderEntity rg_orderEntity : rg_orderEntitySet) {
+                if (maxDate.before(rg_orderEntity.getT2())) {
+                    maxDate = rg_orderEntity.getT2();
+                }
+                if (minDate.after(rg_orderEntity.getT0())) {
+                    minDate = rg_orderEntity.getT0();
+                }
+            }
             //解析APS_Config数据
             JsonNode APS_ConfigNode = rootNode.get("APSConfig");
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
