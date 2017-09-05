@@ -9,7 +9,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.query.Query;
 
-import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -32,14 +31,14 @@ public class ScheduleAction extends SuperAction {
         //更新数据库表内容
         String jsonString = Tools.getHttpRequestBody(this.httpServletRequest);
 
-        if(parseAndSnaphost(jsonString)){
+        if (parseAndSnaphost(jsonString)) {
             Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
-        }else{
+        } else {
             printError();
         }
     }
 
-    public boolean parseAndSnaphost(String orginJson){
+    public boolean parseAndSnaphost(String orginJson) {
         Session session = null;
         Transaction tx = null;
         //初始化数据库表
@@ -65,6 +64,10 @@ public class ScheduleAction extends SuperAction {
             //解析rollTime
             JsonNode rollTimeNodes = rootNode.get("rollTime");
             rg_scheduleEntity.setRollTime(rollTimeNodes.asInt());
+
+            //解析可容忍天数
+            JsonNode scheduleOptionNodes = rootNode.get("scheduleOption");
+            rg_scheduleEntity.setScheduleOption(scheduleOptionNodes.asInt());
 
             //Yang 20170901查询上次排程的时间窗信息
             String latesScheduleId = UserConfigTools.getLatestSchedule("1");
