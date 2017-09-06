@@ -2,6 +2,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.rengu.actions.AutoRollingSchedulingAction;
 import com.rengu.actions.mes.MesSender;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ScheduleEntity;
@@ -186,5 +187,27 @@ public class ApsTable {
             }
         }
 //        return null;
+    }
+
+    @Test
+    public void deleteTest() {
+        AutoRollingSchedulingAction autoRollingSchedulingAction = new AutoRollingSchedulingAction();
+        for (int i = 0; i <= 30; i++) {
+            try {
+                autoRollingSchedulingAction.autoRollingScheduling();
+                while (autoRollingSchedulingAction.testFlag) {
+                    System.out.println("模拟第" + i + "天滚动计算中...");
+                    Thread.sleep(60000);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                break;
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
