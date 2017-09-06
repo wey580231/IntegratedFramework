@@ -262,9 +262,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         $scope.deleteOrder = function () {
             if (getInfo()) {
                 if (confirm.confirmDel()) {
-                    var idInfo = JSON.stringify(id_params);
+                    var params = {};
+                    params.id = idVal;
+                    var idInfo = JSON.stringify(params);
                     myHttpService.delete(serviceList.DeleteOrder, idInfo).then(function successCallback() {
-                        // location.reload(true);
                         myHttpService.get(serviceList.ListOrder).then(function (response) {
                             $scope.orderList = response.data;
                         })

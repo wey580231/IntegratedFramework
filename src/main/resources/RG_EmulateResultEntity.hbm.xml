@@ -7,7 +7,7 @@
     <class name="com.rengu.entity.RG_EmulateResultEntity" table="RG_EmulateResult" schema="testdatabase">
         <id name="id">
             <column name="id" sql-type="int"/>
-            <generator class="identity"></generator>
+            <generator class="identity"/>
         </id>
         <property name="task">
             <column name="task" sql-type="varchar(50)" length="50" not-null="false"/>
@@ -24,9 +24,9 @@
         <property name="site">
             <column name="site" sql-type="varchar(50)" length="50" not-null="false"/>
         </property>
-        <property name="idTask">
+        <!--<property name="idTask">
             <column name="idTask" sql-type="varchar(50)" length="50" not-null="false"/>
-        </property>
+        </property>-->
         <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity">
             <column name="idOrder" not-null="false"/>
         </many-to-one>

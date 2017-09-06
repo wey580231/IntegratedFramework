@@ -56,18 +56,18 @@
         </many-to-one>
 
         <set name="orders" inverse="false" cascade="save-update" table="schedule_order" lazy="false">
-            <key column="s_id"></key>
-            <many-to-many class="com.rengu.entity.RG_OrderEntity" column="o_id"></many-to-many>
+            <key column="s_id"/>
+            <many-to-many class="com.rengu.entity.RG_OrderEntity" column="o_id"/>
         </set>
 
         <set name="resources" inverse="false" cascade="all" table="schedule_Resource">
-            <key column="s_id"></key>
-            <many-to-many class="com.rengu.entity.RG_ResourceEntity" column="r_id"></many-to-many>
+            <key column="s_id"/>
+            <many-to-many class="com.rengu.entity.RG_ResourceEntity" column="r_id"/>
         </set>
 
         <set name="groups" inverse="false" cascade="all" table="schedule_groupresource">
-            <key column="s_id"></key>
-            <many-to-many class="com.rengu.entity.RG_GroupresourceEntity" column="g_id"></many-to-many>
+            <key column="s_id"/>
+            <many-to-many class="com.rengu.entity.RG_GroupresourceEntity" column="g_id"/>
         </set>
 
         <!--schedule和site是多对多关系，site和resource是多对多关系。
@@ -75,7 +75,7 @@
         因此把schedule的级联关系改成merge
         -->
         <set name="sites" inverse="false" cascade="merge" table="schedule_site">
-            <key column="s_id"></key>
+            <key column="s_id"/>
             <many-to-many class="com.rengu.entity.RG_SiteEntity" column="site_id"/>
         </set>
 

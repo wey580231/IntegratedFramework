@@ -1,9 +1,7 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.OrdersDAO;
-import com.rengu.entity.RG_AdjustOrderEntity;
-import com.rengu.entity.RG_OrderEntity;
-import com.rengu.entity.RG_ScheduleEntity;
+import com.rengu.entity.*;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
@@ -14,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -143,19 +142,32 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
 
     public boolean delete(Object object) {
         RG_OrderEntity rg_orderEntity;
+
         if (object instanceof RG_OrderEntity) {
             rg_orderEntity = (RG_OrderEntity) object;
+            System.out.println("rg_orderEntity1:" + rg_orderEntity);
             String orderId = rg_orderEntity.getId();
+            rg_orderEntity = findAllById(orderId);
+            System.out.println("id:" + orderId);
             //从排程记录里面删除订单
-            Set<RG_ScheduleEntity> rg_scheduleEntitySet = rg_orderEntity.getSchedules();
+            /*Set<RG_ScheduleEntity> rg_scheduleEntitySet = rg_orderEntity.getSchedules();
             if (rg_scheduleEntitySet != null) {
                 for (RG_ScheduleEntity rg_scheduleEntity : rg_scheduleEntitySet) {
                     rg_scheduleEntity.getOrders().remove(rg_orderEntity);
                 }
-            }
-            //从订单异常里面删除订单。
+            }*/
+
+            //订单异常
             RG_AdjustOrderEntity rg_adjustOrderEntity = DAOFactory.getAdjustOrderDAOImplInstance().findAllByOrderId(orderId);
-            if (rg_adjustOrderEntity != null) {
+            //plan
+            List<RG_PlanEntity> rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(orderId);
+
+
+            //订单设备
+            RG_AdjustDeviceEntity rg_adjustDeviceEntity = DAOFactory.getAdjustDeviceDAOImplInstance().findAllByOrderId(orderId);
+
+            //从订单异常里面删除订单。
+            /*if (rg_adjustOrderEntity != null) {
                 if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
                     return true;
                 } else {
@@ -164,10 +176,50 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             } else {
                 //直接删除
                 return super.delete(rg_orderEntity);
+            }*/
+
+            /*if (rg_adjustOrderEntity != null || rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
+                //从订单异常删除订单
+                if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
+                    return true;
+                } else if (DAOFactory.getPlanDAOImplInstance().delete(orderId) && super.delete(rg_orderEntity)) {
+                    //从plan删除订单
+                    return true;
+                } else if (DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity) && super.delete(rg_orderEntity)) {
+                    //从订单设备删除订单
+                    return true;
+                } else {
+                    return false;
+                }
+
+            } else {
+                //直接删除
+                return super.delete(rg_orderEntity);
+            }*/
+
+            if (rg_adjustOrderEntity != null || rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
+                //从订单异常删除订单
+                if (((rg_adjustOrderEntity != null && DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity)) ||
+                        (rg_PlanEntity .size() > 0 && DAOFactory.getPlanDAOImplInstance().delete(orderId)) ||
+                        (rg_adjustDeviceEntity != null && DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity)))
+                        && super.delete(rg_orderEntity)) {
+                    return true;
+                }  else {
+                    return false;
+                }
+
+            } else {
+                //直接删除
+                System.out.println("rg_orderEntity:" + rg_orderEntity);
+                return super.delete(rg_orderEntity);
             }
+
+
         } else {
             //参数错误
             return false;
         }
     }
+
+
 }
