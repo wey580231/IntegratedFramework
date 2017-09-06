@@ -107,11 +107,6 @@ public class ApsTable {
                 ObjectMapper mapper = new ObjectMapper();
                 ObjectNode mainNode = mapper.createObjectNode();
 
-                mainNode.put("name", "排程-" + Tools.formatToStandardDate(new Date()));
-                mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());
-                mainNode.put("rollTime", scheduleEntity.getRollTime());
-                mainNode.put("scheduleOption", scheduleEntity.getScheduleOption());
-
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
                 //Todo 待按照时间筛选出订单
@@ -122,10 +117,21 @@ public class ApsTable {
                 calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getRollTime());
                 Date endRollingTime = calendar.getTime();
 
+                calendar.setTime(startRollingTime);
+                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getScheduleWindow());
+                Date endSelectOrderTime = calendar.getTime();
+                calendar.setTime(endSelectOrderTime);
+                calendar.add(Calendar.DAY_OF_MONTH, -scheduleEntity.getRollTime());
+                Date startSelectOrderTime = calendar.getTime();
+                mainNode.put("name", "排程-" + Tools.formatToStandardDate(startRollingTime));
+                mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());
+                mainNode.put("rollTime", scheduleEntity.getRollTime());
+                mainNode.put("scheduleOption", scheduleEntity.getScheduleOption());
+
                 String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ? and rg_orderEntity.state =:state";
                 Query query = session.createQuery(hql);
-                query.setParameter(0, startRollingTime);
-                query.setParameter(1, endRollingTime);
+                query.setParameter(0, startSelectOrderTime);
+                query.setParameter(1, endSelectOrderTime);
                 query.setParameter("state", Byte.parseByte("0"));
                 List<RG_OrderEntity> orderEntityList = query.list();
                 for (RG_OrderEntity rg_OrderEntity : orderEntityList) {
