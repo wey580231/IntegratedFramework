@@ -26,6 +26,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
         if (rg_scheduleEntity == null) {
             //未获取到最后一次排程信息
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("未发现最后一次排程信息", "alert"));
+            testFlag = false;
         } else {
             //获取到最后一次排程信息
             WebSocketNotification.broadcast(Tools.creatNotificationMessage("发现最后一次排程信息", "confirm"));

@@ -196,8 +196,8 @@ public class ApsTable {
             try {
                 autoRollingSchedulingAction.autoRollingScheduling();
                 while (autoRollingSchedulingAction.testFlag) {
-                    System.out.println("模拟滚动计算中...");
-                    Thread.sleep(10000);
+                    System.out.println("模拟第" + i + "天滚动计算中...");
+                    Thread.sleep(60000);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
