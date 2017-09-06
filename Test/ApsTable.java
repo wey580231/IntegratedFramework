@@ -134,9 +134,16 @@ public class ApsTable {
                 query.setParameter(1, endSelectOrderTime);
                 query.setParameter("state", Byte.parseByte("0"));
                 List<RG_OrderEntity> orderEntityList = query.list();
+                //本次滚动新增的订单
                 for (RG_OrderEntity rg_OrderEntity : orderEntityList) {
                     ObjectNode objectNode = mapper.createObjectNode();
                     objectNode.put("id", rg_OrderEntity.getId());
+                    orderNode.add(objectNode);
+                }
+                //添加上次排程使用的订单信息
+                for (RG_OrderEntity rg_orderEntity : scheduleEntity.getOrders()) {
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("id", rg_orderEntity.getId());
                     orderNode.add(objectNode);
                 }
                 mainNode.put("orders", orderNode);
