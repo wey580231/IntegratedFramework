@@ -369,7 +369,15 @@ public class RG_OrderEntity {
         if (color != null ? !color.equals(that.color) : that.color != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (selected != null ? !selected.equals(that.selected) : that.selected != null) return false;
-        return nbTask != null ? nbTask.equals(that.nbTask) : that.nbTask == null;
+        if (nbTask != null ? !nbTask.equals(that.nbTask) : that.nbTask != null) return false;
+        if (productByIdProduct != null ? !productByIdProduct.equals(that.productByIdProduct) : that.productByIdProduct != null)
+            return false;
+        if (clubByIdClub != null ? !clubByIdClub.equals(that.clubByIdClub) : that.clubByIdClub != null) return false;
+        if (schedules != null ? !schedules.equals(that.schedules) : that.schedules != null) return false;
+        if (emulateDatas != null ? !emulateDatas.equals(that.emulateDatas) : that.emulateDatas != null) return false;
+        if (emulateResults != null ? !emulateResults.equals(that.emulateResults) : that.emulateResults != null)
+            return false;
+        return orderStates != null ? orderStates.equals(that.orderStates) : that.orderStates == null;
     }
 
     @Override
@@ -403,6 +411,12 @@ public class RG_OrderEntity {
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
         result = 31 * result + (finished ? 1 : 0);
+        result = 31 * result + (productByIdProduct != null ? productByIdProduct.hashCode() : 0);
+        result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
+        result = 31 * result + (schedules != null ? schedules.hashCode() : 0);
+        result = 31 * result + (emulateDatas != null ? emulateDatas.hashCode() : 0);
+        result = 31 * result + (emulateResults != null ? emulateResults.hashCode() : 0);
+        result = 31 * result + (orderStates != null ? orderStates.hashCode() : 0);
         return result;
     }
 }
