@@ -56,11 +56,11 @@
         <many-to-one name="schedule" class="com.rengu.entity.RG_ScheduleEntity" unique="true"/>
 
         <set name="plans" cascade="all" inverse="true">
-            <key column="idSnapshort"></key>
+            <key column="idSnapshort"/>
             <one-to-many class="com.rengu.entity.RG_PlanEntity"/>
         </set>
 
-        <list name="results">
+        <list name="results" cascade="save-update,delete">
             <key>
                 <column name="idSnapshort" not-null="false"/>
             </key>
