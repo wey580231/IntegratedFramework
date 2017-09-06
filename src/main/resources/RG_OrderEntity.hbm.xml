@@ -93,10 +93,10 @@
             <column name="finished" sql-type="tinyint(1)" not-null="false"/>
         </property>
 
-        <many-to-one name="productByIdProduct" class="com.rengu.entity.RG_ProductEntity">
+        <many-to-one name="productByIdProduct" lazy="false" fetch="join" class="com.rengu.entity.RG_ProductEntity">
             <column name="idProduct" not-null="false"/>
         </many-to-one>
-        <many-to-one name="clubByIdClub" class="com.rengu.entity.RG_ClubEntity">
+        <many-to-one name="clubByIdClub" lazy="false" fetch="join" class="com.rengu.entity.RG_ClubEntity">
             <column name="idClub" not-null="false"/>
         </many-to-one>
 
@@ -105,7 +105,7 @@
             <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
 
-        <list name="emulateDatas">
+        <list name="emulateDatas" cascade="save-update,delete">
             <key>
                 <column name="idOrder" not-null="false"/>
             </key>

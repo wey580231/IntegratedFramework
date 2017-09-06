@@ -135,14 +135,17 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
 
         if (object instanceof RG_OrderEntity) {
             rg_orderEntity = (RG_OrderEntity) object;
+            System.out.println("rg_orderEntity1:" + rg_orderEntity);
             String orderId = rg_orderEntity.getId();
+            rg_orderEntity = findAllById(orderId);
+            System.out.println("id:" + orderId);
             //从排程记录里面删除订单
-            Set<RG_ScheduleEntity> rg_scheduleEntitySet = rg_orderEntity.getSchedules();
+            /*Set<RG_ScheduleEntity> rg_scheduleEntitySet = rg_orderEntity.getSchedules();
             if (rg_scheduleEntitySet != null) {
                 for (RG_ScheduleEntity rg_scheduleEntity : rg_scheduleEntitySet) {
                     rg_scheduleEntity.getOrders().remove(rg_orderEntity);
                 }
-            }
+            }*/
 
             //订单异常
             RG_AdjustOrderEntity rg_adjustOrderEntity = DAOFactory.getAdjustOrderDAOImplInstance().findAllByOrderId(orderId);
@@ -165,7 +168,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                 return super.delete(rg_orderEntity);
             }*/
 
-            if (rg_adjustOrderEntity != null || rg_PlanEntity != null || rg_adjustDeviceEntity != null) {
+            /*if (rg_adjustOrderEntity != null || rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
                 //从订单异常删除订单
                 if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
                     return true;
@@ -182,6 +185,23 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             } else {
                 //直接删除
                 return super.delete(rg_orderEntity);
+            }*/
+
+            if (rg_adjustOrderEntity != null || rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
+                //从订单异常删除订单
+                if (((rg_adjustOrderEntity != null && DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity)) ||
+                        (rg_PlanEntity .size() > 0 && DAOFactory.getPlanDAOImplInstance().delete(orderId)) ||
+                        (rg_adjustDeviceEntity != null && DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity)))
+                        && super.delete(rg_orderEntity)) {
+                    return true;
+                }  else {
+                    return false;
+                }
+
+            } else {
+                //直接删除
+                System.out.println("rg_orderEntity:" + rg_orderEntity);
+                return super.delete(rg_orderEntity);
             }
 
 
@@ -191,11 +211,5 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         }
     }
 
-  /*  public boolean removeList(List<?> list) {
-        for(int i =0; i< list.size();i++){
-            System.out.println(list.get(i));
-            list.remove(i);
-        }
-        return true;
-    }*/
+
 }
