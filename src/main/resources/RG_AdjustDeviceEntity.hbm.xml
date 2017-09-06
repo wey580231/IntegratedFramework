@@ -48,9 +48,9 @@
         </property>
 
         <many-to-one name="orderEntity" class="com.rengu.entity.RG_OrderEntity" column="order_id"
-                     unique="true"></many-to-one>
+                     unique="true"/>
 
         <many-to-one name="resourceEntity" class="com.rengu.entity.RG_ResourceEntity" column="resource_id"
-                     unique="true"></many-to-one>
+                     unique="true"/>
     </class>
 </hibernate-mapping>

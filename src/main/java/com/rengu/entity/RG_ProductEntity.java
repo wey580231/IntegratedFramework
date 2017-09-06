@@ -134,4 +134,19 @@ public class RG_ProductEntity {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "RG_ProductEntity{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", ref='" + ref + '\'' +
+                ", depth='" + depth + '\'' +
+                ", stock=" + stock +
+                ", unit='" + unit + '\'' +
+                ", model='" + model + '\'' +
+                ", state='" + state + '\'' +
+                ", supplyMethod='" + supplyMethod + '\'' +
+                '}';
+    }
 }
