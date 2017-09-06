@@ -37,7 +37,8 @@ public class ApsTools {
 
     //aps部署的地址和端口号
     private static ApsTools apsTool = null;
-    private final String replyApsAction = "/aps/emulateApsInterResult";
+    private final String normalScheduleAction = "/aps/updateProgress";          //正常排程回调接口
+    private final String replyApsAction = "/aps/emulateApsInterResult";         //故障处理回调接口
     private final String interAction = "/aps/interactiveAps";                   //交互/应急优化
     private final String backupSnapshotAction = "/aps/backupSnapshot";          //备份aps快照
     private final String recoverSnapshotAction = "/aps/recoverSnapshot";        //恢复aps快照
@@ -450,7 +451,7 @@ public class ApsTools {
     public int startAPSSchedule(String middleId) {
         String cmd = "/NCL:RUN?Program=./Model/Script/ScriptAutoScheduling.n" +
                 "&" +
-                "REPLY=" + getResultReplyAddress() +
+                "REPLY=" + getNormalScheduleAddress() +
                 "&" +
                 "ID=" + middleId + "" +
                 "&" +
@@ -459,6 +460,12 @@ public class ApsTools {
                 "buffer=001";
 
         return executeCommand(cmd);
+    }
+
+    //获取普通排程的回调接口
+    public String getNormalScheduleAddress()
+    {
+        return localAddress + ":" + localPort + localProjectName + normalScheduleAction;
     }
 
     //获取aps计算完后返回结果地址

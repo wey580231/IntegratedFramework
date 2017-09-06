@@ -139,7 +139,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                 ArrayNode orderNode = mapper.createArrayNode();
                 calendar.setTime(simpleDateFormat.parse(simpleDateFormat.format(scheduleEntity.getScheduleTime())));
                 calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getRollTime());
-                Date startRollingTime = calendar.getTime();
+                Date startRollingTime = calendar.getTime();     //
                 calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getRollTime());
                 Date endRollingTime = calendar.getTime();
 
@@ -147,7 +147,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                 calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getScheduleWindow());
                 Date endSelectOrderTime = calendar.getTime();
                 calendar.setTime(endSelectOrderTime);
-                calendar.add(Calendar.DAY_OF_MONTH, -scheduleEntity.getRollTime());
+                calendar.add(Calendar.DAY_OF_MONTH, - scheduleEntity.getRollTime());
                 Date startSelectOrderTime = calendar.getTime();
                 mainNode.put("name", "排程-" + Tools.formatToStandardDate(startRollingTime));
                 mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());

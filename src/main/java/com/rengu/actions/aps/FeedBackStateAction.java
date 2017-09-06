@@ -118,7 +118,6 @@ public class FeedBackStateAction extends SuperAction {
                     session.beginTransaction();
                 }
 
-
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
                 String bottomId = userconfig.getBottomSnapshotId();
                 if (bottomId != null) {
