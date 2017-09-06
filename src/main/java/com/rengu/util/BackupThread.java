@@ -35,6 +35,8 @@ public class BackupThread implements Runnable {
             } else if (operateState == Recover_Snapshot) {
                 if (apsState == ApsTools.IDLE) {
                     ApsTools.instance().createApsSnapshot(bottomShotId);
+                    System.out.println("Recover_Snapshot");
+                    ApsTools.isRunning = false;
                 }
             } else if (operateState == Query_Order_State) {
                 if (apsState == ApsTools.IDLE) {
@@ -42,17 +44,13 @@ public class BackupThread implements Runnable {
                 }
             } else if (operateState == Query_Resuming_State) {
                 if (apsState == ApsTools.IDLE) {
-                    ApsTools.isRunning = false;
+
                 }
-                System.out.println(apsState + "~~~~~~~~~~~~~~~~~~~~~~~~~isRunning~~~~~~~~~~~~~~" + ApsTools.isRunning);
             } else if (operateState == Query_DeleteOrder_State) {
                 if (apsState == ApsTools.IDLE) {
                     ApsTools.isOrderDeleted = false;
                 }
-                System.out.println(apsState + "~~~~~~~haha删除订单~~~~~~~~~~~~~~" + ApsTools.isRunning);
             }
-
-            MyLog.getLogger().info("======线程====" + apsState);
 
             queryCount++;
 

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.entity.RG_EventLogEntity;
+import com.rengu.entity.RG_OrderEntity;
 import org.hibernate.Session;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +84,26 @@ public class Tools {
             e.printStackTrace();
         }
         return httpRequestBodyString;
+    }
+
+    public static void deleteAPSOrder(String databaseType, String companyName, List<RG_OrderEntity> orderList) {
+        for (RG_OrderEntity rg_orderEntity : orderList) {
+            try {
+                String deleteOrder = "DELETE FROM APS_ORDER WHERE id = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+                String updateOrder = "UPDATE APS_RESOURCE r SET RATE=101 WHERE EXISTS (SELECT 0 FROM APS_PLAN p WHERE r.id=p.idResource AND idOrder = '" + rg_orderEntity.getId() + "') AND idClub='001'";
+                String deletePlan = "DELETE FROM APS_PLAN WHERE idOrder = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+                String deleteTask = "DELETE FROM APS_TASK WHERE idOrder = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+                String deleteJob = "DELETE FROM APS_JOB WHERE idOrder = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+
+                executeSQLForUpdate(databaseType, companyName, deleteOrder);
+                executeSQLForUpdate(databaseType, companyName, updateOrder);
+                executeSQLForUpdate(databaseType, companyName, deletePlan);
+                executeSQLForUpdate(databaseType, companyName, deleteTask);
+                executeSQLForUpdate(databaseType, companyName, deleteJob);
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static Properties getDatabaseProperties() {

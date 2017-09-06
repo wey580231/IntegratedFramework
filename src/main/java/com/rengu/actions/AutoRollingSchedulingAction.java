@@ -17,7 +17,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class AutoRollingSchedulingAction extends SuperAction {
-    public void autoRollingScheduling() throws ParseException {
+    public boolean testFlag = false;
+
+    public void autoRollingScheduling() throws ParseException, JsonProcessingException {
+        testFlag = true;
         //获取最后一次排程信息
         RG_ScheduleEntity rg_scheduleEntity = DAOFactory.getScheduleDAOImplInstance().findAllById(UserConfigTools.getLatestSchedule("1"));
         if (rg_scheduleEntity == null) {
@@ -33,19 +36,31 @@ public class AutoRollingSchedulingAction extends SuperAction {
             calendar.setTime(rg_scheduleEntity.getScheduleTime());
             calendar.add(Calendar.DAY_OF_MONTH, rg_scheduleEntity.getRollTime());
             List<RG_OrderEntity> unFinishedOrderList = new ArrayList<>();
+            List<RG_OrderEntity> clearOrderlist = new ArrayList<>();
             for (RG_OrderEntity rg_OrderEntity : temUunFinishedOrderList) {
                 Date orderTime = rg_OrderEntity.getT2();
                 Date rollTime = calendar.getTime();
-                if (orderTime.before(rollTime)) {
+                System.out.println("产生异常订单的时间段：早于" + rollTime + "晚于" + rg_scheduleEntity.getScheduleTime());
+                if (orderTime.before(rollTime) && orderTime.after(rg_scheduleEntity.getScheduleTime())) {
                     unFinishedOrderList.add(rg_OrderEntity);
                 }
-            }
-            if ((int) (Math.random() * 100) % 2 == 0) {
-                unFinishedOrderList.clear();
+                if (orderTime.before(rollTime)) {
+                    clearOrderlist.add(rg_OrderEntity);
+                }
             }
             System.out.println("需要处理的异常数量为：" + unFinishedOrderList.size());
+            if ((int) (Math.random() * 100) % 2 == 0) {
+                System.out.println("真幸运不需要处理异常！！！直接删除订单");
+                Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, unFinishedOrderList);
+                unFinishedOrderList.clear();
+            }
             //1.获取上次排程中以计算但是未完成的订单
             if (unFinishedOrderList.size() != 0) {
+                //删除除了异常模拟之外的订单
+                for (RG_OrderEntity rg_orderEntity : unFinishedOrderList) {
+                    clearOrderlist.remove(rg_orderEntity);
+                }
+                Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, clearOrderlist);
                 //查询到未完成订单
                 //产生订单未处理异常(模拟)
                 for (RG_OrderEntity rg_OrderEntity : unFinishedOrderList) {
@@ -84,12 +99,12 @@ public class AutoRollingSchedulingAction extends SuperAction {
                 List<RG_AdjustProcessEntity> adjustProcessEntityList = DAOFactory.getAdjustProcessDAOImplInstance().findAllByErrorState(ErrorState.ERROR_UNSOLVED);
                 if (adjustProcessEntityList.size() > 0) {
                     for (RG_AdjustProcessEntity rg_adjustProcessEntity : adjustProcessEntityList) {
+                        System.out.println("当前APS服务器是否在进行计算：" + ApsTools.isRunning);
                         //处理拖期异常
                         ApsTools.instance().executeCommand(ApsTools.getAdjustProcessHandlingURL(rg_adjustProcessEntity));
-                        System.out.println("当前APS服务器是否在进行计算：" + ApsTools.isRunning);
                         while (ApsTools.isRunning) {
                             try {
-                                System.out.println("循环中");
+                                System.out.println("APS计算中...");
                                 Thread.sleep(10000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -98,20 +113,14 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     }
                 }
             }
+            //没有异常模拟直接删除所有已完成的订单
+            Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, clearOrderlist);
             //【2】将订单下发给MES
 
             //【3】自动进行下一次排程，参见ApsTable的createPostBody方法
-            try {
-                String jsonString = createPostBody();
-                if (jsonString == null) {
-                    return;
-                } else {
-                    new ScheduleAction().parseAndSnaphost(jsonString, calendar.getTime());
-                }
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
+            new ScheduleAction().parseAndSnaphost(createPostBody(), calendar.getTime());
         }
+        testFlag = false;
     }
 
     public String createPostBody() throws ParseException, JsonProcessingException {
