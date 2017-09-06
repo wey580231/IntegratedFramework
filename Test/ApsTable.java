@@ -145,7 +145,7 @@ public class ApsTable {
                 calendar.setTime(startRollingTime);
                 calendar.add(Calendar.DAY_OF_YEAR, -2);
                 apsNode.put("t0", calendar.getTime().getTime());
-                calendar.setTime(endRollingTime);
+                calendar.setTime(endSelectOrderTime);
                 calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getScheduleOption());
                 apsNode.put("t2", calendar.getTime().getTime());
                 apsNode.put("modeScheduling", scheduleEntity.getApsModel());
