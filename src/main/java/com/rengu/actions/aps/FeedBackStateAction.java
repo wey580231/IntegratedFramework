@@ -84,9 +84,6 @@ public class FeedBackStateAction extends SuperAction {
                             bottomSnapshot.setApsInteractive(false);
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急滚动优化失败!", "alert"));
                         }
-                        BackupThread queryThrad = new BackupThread(BackupThread.Query_Resuming_State);
-                        Thread thread = new Thread(queryThrad);
-                        thread.start();
                     }
                     session.update(bottomSnapshot);
                 }
@@ -436,6 +433,12 @@ public class FeedBackStateAction extends SuperAction {
                 session.getTransaction().commit();
             }
         }
+
+        if (ApsTools.isRunning) {
+            BackupThread queryThrad = new BackupThread(BackupThread.Query_Resuming_State);
+            Thread thread = new Thread(queryThrad);
+            thread.start();
+        }
     }
 
     //查询APS状态,在对APS数据库操作之前，都要先执行状态查询操作
@@ -446,6 +449,7 @@ public class FeedBackStateAction extends SuperAction {
             Tools.jsonPrint(result.toString(), this.httpServletResponse);
         } else {
             Tools.jsonPrint(Tools.resultCode("error", "Can't execute operation"), this.httpServletResponse);
+
         }
     }
 
@@ -496,7 +500,7 @@ public class FeedBackStateAction extends SuperAction {
             e.printStackTrace();
         }
 
-        MyLog.getLogger().info("===查询的订数量为:"+list.size()+"=====");
+        MyLog.getLogger().info("===查询的订数量为:" + list.size() + "=====");
 
         //【2】若不包含，则进行结果转换
         if (list.size() == 0) {

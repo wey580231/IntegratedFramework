@@ -8,6 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -115,17 +118,24 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     }
 
     @Override
-    public List<RG_OrderEntity> findAllByStateAndIsFinished(Byte state, boolean isFinished) {
+    public List<RG_OrderEntity> findAllByStateAndIsFinished(Byte state, boolean isFinished) throws ParseException {
         MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.state =:state and rg_orderEntity.finished =:isFinished";
+//        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.state =:state and rg_orderEntity.finished =:isFinished";
+        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ? and rg_orderEntity.state =:state";
         Query query = session.createQuery(hql);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        query.setParameter(0, simpleDateFormat.parse(simpleDateFormat.format(calendar.getTime())));
+        System.out.println(simpleDateFormat.parse(simpleDateFormat.format(calendar.getTime())));
+        query.setParameter(1, simpleDateFormat.parse(simpleDateFormat.format(new Date())));
+        System.out.println(simpleDateFormat.parse(simpleDateFormat.format(new Date())));
         query.setParameter("state", state);
-        query.setParameter("isFinished", isFinished);
         List list = query.list();
         return list;
     }

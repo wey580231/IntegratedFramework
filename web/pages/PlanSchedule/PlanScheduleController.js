@@ -599,6 +599,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             params.resources = resourceArr;
             params.groupResource = groupResourcesArr;
             params.site = sitesArr;
+            params.scheduleOption = scheduleOption;
             var data = JSON.stringify(params);
             $("#modal-add").hide();
             $(".modal-backdrop").remove();

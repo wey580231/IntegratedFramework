@@ -36,6 +36,7 @@ public class RG_ScheduleEntity {
 
     private Integer scheduleWindow;       //排程时间窗   30天
     private Integer rollTime;             //滚动周期     7天
+    private Integer scheduleOption;        //Aps计算可容忍天数
 
     //APS排程参数
     private Date apsStartTime;            //优化项目开始时间
@@ -127,6 +128,14 @@ public class RG_ScheduleEntity {
         this.rollTime = rollTime;
     }
 
+    public Integer getScheduleOption() {
+        return scheduleOption;
+    }
+
+    public void setScheduleOption(Integer scheduleOption) {
+        this.scheduleOption = scheduleOption;
+    }
+
     public Date getApsStartTime() {
         return apsStartTime;
     }
@@ -213,49 +222,5 @@ public class RG_ScheduleEntity {
 
     public void setSnapshot(RG_SnapshotNodeEntity snapshot) {
         this.snapshot = snapshot;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        RG_ScheduleEntity that = (RG_ScheduleEntity) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (scheduleTime != null ? !scheduleTime.equals(that.scheduleTime) : that.scheduleTime != null) return false;
-        if (startCalcTime != null ? !startCalcTime.equals(that.startCalcTime) : that.startCalcTime != null)
-            return false;
-        if (endCalcTime != null ? !endCalcTime.equals(that.endCalcTime) : that.endCalcTime != null) return false;
-        if (state != null ? !state.equals(that.state) : that.state != null) return false;
-        if (progress != null ? !progress.equals(that.progress) : that.progress != null) return false;
-        if (scheduleWindow != null ? !scheduleWindow.equals(that.scheduleWindow) : that.scheduleWindow != null)
-            return false;
-        if (rollTime != null ? !rollTime.equals(that.rollTime) : that.rollTime != null) return false;
-        if (apsStartTime != null ? !apsStartTime.equals(that.apsStartTime) : that.apsStartTime != null) return false;
-        if (apsEndTime != null ? !apsEndTime.equals(that.apsEndTime) : that.apsEndTime != null) return false;
-        if (apsModel != null ? !apsModel.equals(that.apsModel) : that.apsModel != null) return false;
-        if (apsObj != null ? !apsObj.equals(that.apsObj) : that.apsObj != null) return false;
-        return apsFlag != null ? apsFlag.equals(that.apsFlag) : that.apsFlag == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (scheduleTime != null ? scheduleTime.hashCode() : 0);
-        result = 31 * result + (startCalcTime != null ? startCalcTime.hashCode() : 0);
-        result = 31 * result + (endCalcTime != null ? endCalcTime.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + (progress != null ? progress.hashCode() : 0);
-        result = 31 * result + (scheduleWindow != null ? scheduleWindow.hashCode() : 0);
-        result = 31 * result + (rollTime != null ? rollTime.hashCode() : 0);
-        result = 31 * result + (apsStartTime != null ? apsStartTime.hashCode() : 0);
-        result = 31 * result + (apsEndTime != null ? apsEndTime.hashCode() : 0);
-        result = 31 * result + (apsModel != null ? apsModel.hashCode() : 0);
-        result = 31 * result + (apsObj != null ? apsObj.hashCode() : 0);
-        result = 31 * result + (apsFlag != null ? apsFlag.hashCode() : 0);
-        return result;
     }
 }
