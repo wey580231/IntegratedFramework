@@ -1,8 +1,9 @@
 package com.rengu.DAO.impl;
 
+import com.rengu.DAO.ConfigDAO;
 import com.rengu.DAO.UserConfigDAO;
+import com.rengu.entity.RG_ConfigEntity;
 import com.rengu.entity.RG_UserConfigEntity;
-import com.rengu.entity.RG_UserEntity;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,9 +11,12 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class UserConfigDAOImpl extends SuperDAOImpl implements UserConfigDAO<RG_UserConfigEntity> {
+/**
+ * Created by XY on 2017/9/6.
+ */
+public class ConfigDAOImpl extends SuperDAOImpl implements ConfigDAO<RG_ConfigEntity> {
 
-    public List<RG_UserConfigEntity> findAllByUserId(String id) {
+    public List<RG_ConfigEntity> findAllByUserId(String id) {
         MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Transaction transaction = session.getTransaction();
@@ -20,7 +24,7 @@ public class UserConfigDAOImpl extends SuperDAOImpl implements UserConfigDAO<RG_
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
-        String hql = "from RG_UserConfigEntity rg_userConfigEntity where rg_userConfigEntity.user.id =:id";
+        String hql = "from RG_ConfigEntity rg_configEntity where rg_configEntity.userByIdUser.id =:id";
         Query query = session.createQuery(hql);
         query.setParameter("id", id);
         List list = query.list();
@@ -35,7 +39,7 @@ public class UserConfigDAOImpl extends SuperDAOImpl implements UserConfigDAO<RG_
             if (!transaction.isActive()) {
                 transaction = session.beginTransaction();
             }
-            session.createQuery("delete from RG_UserConfigEntity userConfig where userConfig.user.id =:id").setParameter("id",id).executeUpdate();
+            session.createQuery("delete from RG_ConfigEntity config where config.userByIdUser.id =:id").setParameter("id",id).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {

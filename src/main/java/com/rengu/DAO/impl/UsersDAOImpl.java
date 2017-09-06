@@ -1,7 +1,8 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.UsersDAO;
-import com.rengu.entity.RG_UserEntity;
+import com.rengu.entity.*;
+import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -50,4 +51,42 @@ public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity
             return null;
         }
     }
+
+    public boolean delete(Object object) {
+        RG_UserEntity rg_userEntity;
+
+        if (object instanceof RG_UserEntity) {
+            rg_userEntity = (RG_UserEntity) object;
+            String userId = rg_userEntity.getId();
+            rg_userEntity = findAllById(userId);
+
+
+            //userConfig
+            List<RG_UserConfigEntity> rg_userConfigEntity = DAOFactory.getUserConfigDAOImplInstance().findAllByUserId(userId);
+
+            //config
+            List<RG_ConfigEntity> rg_configEntity = DAOFactory.getConfigDAOImplInstance().findAllByUserId(userId);
+
+            if((rg_userConfigEntity .size() > 0 || rg_configEntity .size() > 0) ){
+                //从user删除userConfig和config
+                if (((rg_userConfigEntity .size() > 0 && DAOFactory.getUserConfigDAOImplInstance().delete(userId)) ||
+                        (rg_configEntity .size() > 0 && DAOFactory.getConfigDAOImplInstance().delete(userId)))
+                        && super.delete(rg_userEntity)) {
+                        return true;
+                } else {
+                        return false;
+                }
+
+            } else {
+                //直接删除
+                return super.delete(rg_userEntity);
+            }
+
+
+        } else {
+            //参数错误
+            return false;
+        }
+    }
+
 }
