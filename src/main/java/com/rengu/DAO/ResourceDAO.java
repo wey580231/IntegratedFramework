@@ -9,4 +9,8 @@ public interface ResourceDAO<T> extends SuperDAO {
     List<T> findAll();
 
     T findAllById(String id);
+
+    List<T> findAllByClubId(String id);
+
+    boolean deleteByClubId(String id);
 }

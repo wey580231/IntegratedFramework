@@ -9,4 +9,6 @@ public interface ConfigDAO<T> extends SuperDAO {
 
     List<T> findAllByUserId(String id);
 
+    List<T> findAllByClubId(String id);
+
 }

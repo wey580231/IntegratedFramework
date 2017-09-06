@@ -31,6 +31,21 @@ public class ConfigDAOImpl extends SuperDAOImpl implements ConfigDAO<RG_ConfigEn
         return list;
     }
 
+    public List<RG_ConfigEntity> findAllByClubId(String id) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_ConfigEntity rg_configEntity where rg_configEntity.clubByIdClub.id =:id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List list = query.list();
+        return list;
+    }
+
     public boolean delete(String id) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();
@@ -40,6 +55,23 @@ public class ConfigDAOImpl extends SuperDAOImpl implements ConfigDAO<RG_ConfigEn
                 transaction = session.beginTransaction();
             }
             session.createQuery("delete from RG_ConfigEntity config where config.userByIdUser.id =:id").setParameter("id",id).executeUpdate();
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteByClubId(String id) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
+            session.createQuery("delete from RG_ConfigEntity config where config.clubByIdClub.id =:id").setParameter("id",id).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {
