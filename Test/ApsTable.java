@@ -27,9 +27,9 @@ public class ApsTable {
 
     @Test
     public void testDate() {
-//        String dd = "2017-07-22 17:10:45";
-//        Date date = Tools.parseStandTextDate(dd);
-//        System.out.println(date);
+        if ((int) (Math.random() * 100) % 2 == 0) {
+            System.out.println("1");
+        }
     }
 
     @Test
