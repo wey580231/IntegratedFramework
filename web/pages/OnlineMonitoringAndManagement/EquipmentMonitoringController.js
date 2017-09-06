@@ -390,7 +390,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             $('#dynamicChart').highcharts({
                 chart: {
                     type: 'spline',
-                    animation: Highcharts.svg, // don't animate in old IE
+                    animation: Highcharts.svg,
                     marginRight: 10,
                     events: {
                         load: function () {

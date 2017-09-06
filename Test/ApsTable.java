@@ -27,9 +27,9 @@ public class ApsTable {
 
     @Test
     public void testDate() {
-//        String dd = "2017-07-22 17:10:45";
-//        Date date = Tools.parseStandTextDate(dd);
-//        System.out.println(date);
+        if ((int) (Math.random() * 100) % 2 == 0) {
+            System.out.println("1");
+        }
     }
 
     @Test
@@ -98,65 +98,70 @@ public class ApsTable {
     }
 
     @Test
-    public void createPostBody() throws ParseException {
+    public void createPostBody() throws ParseException, JsonProcessingException {
         Session session = MySessionFactory.getSessionFactory().openSession();
         String latestScheduleId = UserConfigTools.getLatestSchedule("1");
-
         if (latestScheduleId != null && latestScheduleId.length() > 0) {
             RG_ScheduleEntity scheduleEntity = session.get(RG_ScheduleEntity.class, latestScheduleId);
             if (scheduleEntity != null) {
                 ObjectMapper mapper = new ObjectMapper();
                 ObjectNode mainNode = mapper.createObjectNode();
 
-                mainNode.put("name", "排程-" + Tools.formatToStandardDate(new Date()));
-                mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());
-                mainNode.put("rollTime", scheduleEntity.getRollTime());
-
-                ObjectNode apsNode = mapper.createObjectNode();
-
-                Date currDate = new Date();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTime(currDate);
-                calendar.set(Calendar.HOUR_OF_DAY, 0);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-
-                System.out.println(Tools.formatToStandardDate(calendar.getTime()));
-
-                apsNode.put("t0", calendar.getTime().getTime());
-
-                Calendar endCalendar = Calendar.getInstance();
-                endCalendar.setTime(currDate);
-                endCalendar.set(Calendar.HOUR_OF_DAY, 0);
-                endCalendar.set(Calendar.MINUTE, 0);
-                endCalendar.set(Calendar.SECOND, 0);
-                endCalendar.set(Calendar.DAY_OF_MONTH, endCalendar.get(Calendar.DAY_OF_MONTH) + scheduleEntity.getScheduleWindow());
-
-                System.out.println(Tools.formatToStandardDate(endCalendar.getTime()));
-                apsNode.put("t2", endCalendar.getTime().getTime());
-
-                apsNode.put("modeScheduling", scheduleEntity.getApsModel());
-                mainNode.put("APSConfig", apsNode);
-
-                ObjectNode layoutNode = mapper.createObjectNode();
-                layoutNode.put("id", scheduleEntity.getLayout().getId());
-                mainNode.put("layout", layoutNode);
-
                 //Todo 待按照时间筛选出订单
                 ArrayNode orderNode = mapper.createArrayNode();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                calendar.setTime(simpleDateFormat.parse(simpleDateFormat.format(scheduleEntity.getScheduleTime())));
+                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getRollTime());
+                Date startRollingTime = calendar.getTime();
+                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getRollTime());
+                Date endRollingTime = calendar.getTime();
+
+                calendar.setTime(startRollingTime);
+                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getScheduleWindow());
+                Date endSelectOrderTime = calendar.getTime();
+                calendar.setTime(endSelectOrderTime);
+                calendar.add(Calendar.DAY_OF_MONTH, -scheduleEntity.getRollTime());
+                Date startSelectOrderTime = calendar.getTime();
+                mainNode.put("name", "排程-" + Tools.formatToStandardDate(startRollingTime));
+                mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());
+                mainNode.put("rollTime", scheduleEntity.getRollTime());
+                mainNode.put("scheduleOption", scheduleEntity.getScheduleOption());
+
                 String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ? and rg_orderEntity.state =:state";
                 Query query = session.createQuery(hql);
-                query.setParameter(0, simpleDateFormat.parse(simpleDateFormat.format(apsNode.get("t0").asLong())));
-                query.setParameter(1, simpleDateFormat.parse(simpleDateFormat.format(apsNode.get("t2").asLong())));
-                query.setParameter("state", Byte.parseByte("1"));
+                query.setParameter(0, startSelectOrderTime);
+                query.setParameter(1, endSelectOrderTime);
+                query.setParameter("state", Byte.parseByte("0"));
                 List<RG_OrderEntity> orderEntityList = query.list();
+                //本次滚动新增的订单
                 for (RG_OrderEntity rg_OrderEntity : orderEntityList) {
                     ObjectNode objectNode = mapper.createObjectNode();
                     objectNode.put("id", rg_OrderEntity.getId());
                     orderNode.add(objectNode);
                 }
+                //添加上次排程使用的订单信息
+                for (RG_OrderEntity rg_orderEntity : scheduleEntity.getOrders()) {
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("id", rg_orderEntity.getId());
+                    orderNode.add(objectNode);
+                }
                 mainNode.put("orders", orderNode);
+
+                ObjectNode apsNode = mapper.createObjectNode();
+                calendar.setTime(startRollingTime);
+                calendar.add(Calendar.DAY_OF_YEAR, -2);
+                apsNode.put("t0", calendar.getTime().getTime());
+                calendar.setTime(endSelectOrderTime);
+                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getScheduleOption());
+                apsNode.put("t2", calendar.getTime().getTime());
+                apsNode.put("modeScheduling", scheduleEntity.getApsModel());
+
+                mainNode.put("APSConfig", apsNode);
+
+                ObjectNode layoutNode = mapper.createObjectNode();
+                layoutNode.put("id", scheduleEntity.getLayout().getId());
+                mainNode.put("layout", layoutNode);
 
                 ArrayNode resourceNode = mapper.createArrayNode();
                 ObjectNode resNode = mapper.createObjectNode();
@@ -176,12 +181,10 @@ public class ApsTable {
                 sitesNode.add(siteNode);
                 mainNode.put("site", sitesNode);
 
-                try {
-                    System.out.println(mapper.writeValueAsString(mainNode));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
+                System.out.println(mapper.writeValueAsString(mainNode));
+//                return mapper.writeValueAsString(mainNode);
             }
         }
+//        return null;
     }
 }
