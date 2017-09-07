@@ -26,7 +26,7 @@ public class FeedBackStateAction extends SuperAction {
     private ApsDao apsDao = new ApsDao();
 
     //Yang 20170901 删除订单回调接口
-    public void deleteOrder(){
+    public void deleteOrder() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
 
@@ -117,7 +117,6 @@ public class FeedBackStateAction extends SuperAction {
                 if (!session.getTransaction().isActive()) {
                     session.beginTransaction();
                 }
-
 
                 RG_UserConfigEntity userconfig = UserConfigTools.getUserConfig("1");
                 String bottomId = userconfig.getBottomSnapshotId();
@@ -489,7 +488,6 @@ public class FeedBackStateAction extends SuperAction {
     //模拟aps应急优化结果
     public void emulateApsInterResult() {
         MyLog.getLogger().info("=======APS 交互結果转换中======");
-
         //【1】查询APS的定单表是否含有state=0的订单，如果有，则先调用应急交互优化接口，重新计算
         List list = new ArrayList();
         try {
@@ -510,7 +508,6 @@ public class FeedBackStateAction extends SuperAction {
             Thread thread = new Thread(queryThrad);
             thread.start();
         }
-
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
     }
 }

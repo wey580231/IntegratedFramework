@@ -32,6 +32,9 @@
         <property name="rollTime" type="integer">
             <column name="rollTime" sql-type="int" not-null="false"/>
         </property>
+        <property name="scheduleOption" type="integer">
+            <column name="scheduleOption" sql-type="int" not-null="false"/>
+        </property>
         <property name="apsStartTime" type="java.util.Date">
             <column name="apsStartTime" sql-type="datetime" not-null="false"/>
         </property>
