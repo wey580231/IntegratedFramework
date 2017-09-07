@@ -1,10 +1,7 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.ProviderDAO;
-import com.rengu.entity.RG_ClubEntity;
-import com.rengu.entity.RG_ConfigEntity;
-import com.rengu.entity.RG_PlanEntity;
-import com.rengu.entity.RG_ProviderEntity;
+import com.rengu.entity.*;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
@@ -85,9 +82,13 @@ public class ProviderDAOImpl extends SuperDAOImpl implements ProviderDAO<RG_Prov
             //plan
             List<RG_PlanEntity> rg_planEntity = DAOFactory.getPlanDAOImplInstance().findAllByProviderId(providerId);
 
-            if(rg_planEntity .size() > 0 ){
-                //从user删除userConfig和config
-                if (DAOFactory.getPlanDAOImplInstance().deleteByProviderId(providerId) && super.delete(rg_providerEntity)) {
+            //groupResource
+            List<RG_GroupresourceEntity> rg_groupResourceEntity = DAOFactory.getGroupResourceInstance().findAllByProviderId(providerId);
+
+            if(rg_planEntity .size() > 0 || rg_groupResourceEntity .size() > 0){
+                if (((rg_planEntity .size() > 0 && DAOFactory.getPlanDAOImplInstance().deleteByProviderId(providerId)) ||
+                        (rg_groupResourceEntity .size() > 0 && DAOFactory.getGroupResourceInstance().deleteByProviderId(providerId)))
+                        && super.delete(rg_providerEntity)) {
                     return true;
                 } else {
                     return false;

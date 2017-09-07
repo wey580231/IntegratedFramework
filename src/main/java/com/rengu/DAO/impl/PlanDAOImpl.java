@@ -182,6 +182,22 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
         return list;
     }
 
+    @Override
+    public List<RG_PlanEntity> findAllByProductId(String id) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.productByIdProduct.id =:id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List list = query.list();
+        return list;
+    }
+
     public boolean delete(String id) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();
@@ -294,6 +310,23 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
                 transaction = session.beginTransaction();
             }
             session.createQuery("delete from RG_PlanEntity plan where plan.siteByIdSite.id =:id").setParameter("id",id).executeUpdate();
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteByProductId(String id) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
+            session.createQuery("delete from RG_PlanEntity plan where plan.productByIdProduct.id =:id").setParameter("id",id).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {

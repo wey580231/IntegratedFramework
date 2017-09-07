@@ -9,4 +9,8 @@ public interface AssisantprocessDAO<T> extends SuperDAO {
     List<T> findAll();
 
     T findAllById(String id);
+
+    List<T> findAllByProcessId(String id);
+
+    boolean deleteByProcessId(String id);
 }

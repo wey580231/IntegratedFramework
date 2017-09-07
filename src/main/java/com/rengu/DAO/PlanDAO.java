@@ -26,6 +26,8 @@ public interface PlanDAO<T> extends SuperDAO {
 
     List<T> findAllBySiteId(String id);
 
+    List<T> findAllByProductId(String id);
+
     boolean deleteByClubId(String id);
 
     boolean deleteByProviderId(String id);
@@ -37,5 +39,7 @@ public interface PlanDAO<T> extends SuperDAO {
     boolean deleteByGroupResourceId(String id);
 
     boolean deleteByBySiteId(String id);
+
+    boolean deleteByProductId(String id);
 
 }
