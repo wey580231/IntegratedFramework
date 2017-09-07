@@ -1,22 +1,16 @@
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.rengu.actions.AutoRollingSchedulingAction;
+import com.rengu.actions.ScheduleAction;
 import com.rengu.actions.mes.MesSender;
-import com.rengu.entity.RG_OrderEntity;
-import com.rengu.entity.RG_ScheduleEntity;
-import com.rengu.util.*;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
+import com.rengu.util.APSDatabaseSync;
+import com.rengu.util.DatabaseInfo;
 import org.junit.Test;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class ApsTable {
     @Test
@@ -99,115 +93,20 @@ public class ApsTable {
     }
 
     @Test
-    public void createPostBody() throws ParseException, JsonProcessingException {
-        Session session = MySessionFactory.getSessionFactory().openSession();
-        String latestScheduleId = UserConfigTools.getLatestSchedule("1");
-        if (latestScheduleId != null && latestScheduleId.length() > 0) {
-            RG_ScheduleEntity scheduleEntity = session.get(RG_ScheduleEntity.class, latestScheduleId);
-            if (scheduleEntity != null) {
-                ObjectMapper mapper = new ObjectMapper();
-                ObjectNode mainNode = mapper.createObjectNode();
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Calendar calendar = Calendar.getInstance();
-                //Todo 待按照时间筛选出订单
-                ArrayNode orderNode = mapper.createArrayNode();
-                calendar.setTime(simpleDateFormat.parse(simpleDateFormat.format(scheduleEntity.getScheduleTime())));
-                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getRollTime());
-                Date startRollingTime = calendar.getTime();
-                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getRollTime());
-                Date endRollingTime = calendar.getTime();
-
-                calendar.setTime(startRollingTime);
-                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getScheduleWindow());
-                Date endSelectOrderTime = calendar.getTime();
-                calendar.setTime(endSelectOrderTime);
-                calendar.add(Calendar.DAY_OF_MONTH, -scheduleEntity.getRollTime());
-                Date startSelectOrderTime = calendar.getTime();
-                mainNode.put("name", "排程-" + Tools.formatToStandardDate(startRollingTime));
-                mainNode.put("scheduleWindow", scheduleEntity.getScheduleWindow());
-                mainNode.put("rollTime", scheduleEntity.getRollTime());
-                mainNode.put("scheduleOption", scheduleEntity.getScheduleOption());
-
-                String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ? and rg_orderEntity.state =:state";
-                Query query = session.createQuery(hql);
-                query.setParameter(0, startSelectOrderTime);
-                query.setParameter(1, endSelectOrderTime);
-                query.setParameter("state", Byte.parseByte("0"));
-                List<RG_OrderEntity> orderEntityList = query.list();
-                //本次滚动新增的订单
-                for (RG_OrderEntity rg_OrderEntity : orderEntityList) {
-                    ObjectNode objectNode = mapper.createObjectNode();
-                    objectNode.put("id", rg_OrderEntity.getId());
-                    orderNode.add(objectNode);
-                }
-                //添加上次排程使用的订单信息
-                for (RG_OrderEntity rg_orderEntity : scheduleEntity.getOrders()) {
-                    ObjectNode objectNode = mapper.createObjectNode();
-                    objectNode.put("id", rg_orderEntity.getId());
-                    orderNode.add(objectNode);
-                }
-                mainNode.put("orders", orderNode);
-
-                ObjectNode apsNode = mapper.createObjectNode();
-                calendar.setTime(startRollingTime);
-                calendar.add(Calendar.DAY_OF_YEAR, -2);
-                apsNode.put("t0", calendar.getTime().getTime());
-                calendar.setTime(endSelectOrderTime);
-                calendar.add(Calendar.DAY_OF_YEAR, scheduleEntity.getScheduleOption());
-                apsNode.put("t2", calendar.getTime().getTime());
-                apsNode.put("modeScheduling", scheduleEntity.getApsModel());
-
-                mainNode.put("APSConfig", apsNode);
-
-                ObjectNode layoutNode = mapper.createObjectNode();
-                layoutNode.put("id", scheduleEntity.getLayout().getId());
-                mainNode.put("layout", layoutNode);
-
-                ArrayNode resourceNode = mapper.createArrayNode();
-                ObjectNode resNode = mapper.createObjectNode();
-                resNode.put("id", 2);
-                resourceNode.add(resNode);
-                mainNode.put("resources", resourceNode);
-
-                ArrayNode groupResourceNode = mapper.createArrayNode();
-                ObjectNode groupNode = mapper.createObjectNode();
-                groupNode.put("id", 2);
-                groupResourceNode.add(groupNode);
-                mainNode.put("groupResource", groupResourceNode);
-
-                ArrayNode sitesNode = mapper.createArrayNode();
-                ObjectNode siteNode = mapper.createObjectNode();
-                siteNode.put("id", 2);
-                sitesNode.add(siteNode);
-                mainNode.put("site", sitesNode);
-
-                System.out.println(mapper.writeValueAsString(mainNode));
-//                return mapper.writeValueAsString(mainNode);
-            }
+    public void createPostBodyTest() {
+        try {
+            String jsonString = AutoRollingSchedulingAction.createScheduleInfo();
+            System.out.println(jsonString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-//        return null;
     }
 
     @Test
-    public void deleteTest() {
-        AutoRollingSchedulingAction autoRollingSchedulingAction = new AutoRollingSchedulingAction();
-        for (int i = 0; i <= 30; i++) {
-            try {
-                autoRollingSchedulingAction.autoRollingScheduling();
-                while (autoRollingSchedulingAction.testFlag) {
-                    System.out.println("模拟第" + i + "天滚动计算中...");
-                    Thread.sleep(60000);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-                break;
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                break;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public void parseAndSnaphostTest() {
+        String jsonString = "{\"name\":\"排程-2017-09-07 00:18:37\",\"scheduleWindow\":7,\"rollTime\":1,\"APSConfig\":{\"t0\":1504564200000,\"t2\":1505730600000,\"modeScheduling\":\"正向\"},\"layout\":{\"id\":\"1\"},\"orders\":[{\"id\":\"Kqd-1\"},{\"id\":\"Kqd-2\"},{\"id\":\"Yqc-1\"},{\"id\":\"Yqc-2\"}],\"resources\":[{\"id\":2}],\"groupResource\":[{\"id\":2}],\"site\":[{\"id\":2}],\"scheduleOption\":5}";
+        new ScheduleAction().beginScheduleHandler(jsonString, new Date());
     }
 }

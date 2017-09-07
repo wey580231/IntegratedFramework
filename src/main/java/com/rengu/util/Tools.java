@@ -88,6 +88,7 @@ public class Tools {
 
     public static void deleteAPSOrder(String databaseType, String companyName, List<RG_OrderEntity> orderList) {
         for (RG_OrderEntity rg_orderEntity : orderList) {
+            System.out.println("删除订单ID：" + rg_orderEntity.getId() + "，名称：" + rg_orderEntity.getName());
             try {
                 String deleteOrder = "DELETE FROM APS_ORDER WHERE id = '" + rg_orderEntity.getId() + "' AND idClub='001'";
                 String updateOrder = "UPDATE APS_RESOURCE r SET RATE=101 WHERE EXISTS (SELECT 0 FROM APS_PLAN p WHERE r.id=p.idResource AND idOrder = '" + rg_orderEntity.getId() + "') AND idClub='001'";
@@ -187,13 +188,13 @@ public class Tools {
     }
 
     public static boolean executeSQLForUpdate(String databaseType, String companyName, String SQLString) throws ClassNotFoundException, SQLException {
-        System.out.println("执行SQL语句:" + SQLString);
+//        System.out.println("执行SQL语句:" + SQLString);
         Properties databaseProperties = getDatabaseProperties();
         String databaseUrl = databaseProperties.getProperty(companyName + databaseType + "DatabaseUrl");
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
-        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
+//        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -209,7 +210,7 @@ public class Tools {
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
-        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
+//        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -225,7 +226,7 @@ public class Tools {
         String databaseUsername = databaseProperties.getProperty(companyName + "DatabaseUsername");
         String databasePassword = databaseProperties.getProperty(companyName + "DatabasePassword");
         String databaseDriver = databaseProperties.getProperty(databaseType + "Driver");
-        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
+//        System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLString);
         Class.forName(databaseDriver);
         Connection connection = DriverManager.getConnection(databaseUrl, databaseUsername, databasePassword);
         Statement statement = connection.createStatement();
@@ -259,7 +260,7 @@ public class Tools {
         for (String tableName : tableList) {
 //            String SQLCommed = "TRUNCATE table " + tableName + ";";
             String SQLCommed = "delete from " + tableName + "";
-            System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLCommed);
+//            System.out.println("驱动：" + databaseDriver + "-----" + "链接地址：" + databaseUrl + "-----" + "执行命令：" + SQLCommed);
             statement.execute(SQLCommed);
         }
         statement.close();
