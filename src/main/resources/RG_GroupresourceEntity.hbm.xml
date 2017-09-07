@@ -34,7 +34,7 @@
             <one-to-many class="com.rengu.entity.RG_ResourceEntity"/>
         </set>
         <set name="sitesById" cascade="all">
-            <key column="groupresourceId"></key>
+            <key column="groupresourceId"/>
             <one-to-many class="com.rengu.entity.RG_SiteEntity"/>
         </set>
 

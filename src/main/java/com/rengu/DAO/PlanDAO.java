@@ -20,10 +20,22 @@ public interface PlanDAO<T> extends SuperDAO {
 
     List<T> findAllByResourceId(String id);
 
+    List<T> findAllByTypeResourceId(String id);
+
+    List<T> findAllByGroupResourceId(String id);
+
+    List<T> findAllBySiteId(String id);
+
     boolean deleteByClubId(String id);
 
     boolean deleteByProviderId(String id);
 
     boolean deleteByResourceId(String id);
+
+    boolean deleteByTypeResourceId(String id);
+
+    boolean deleteByGroupResourceId(String id);
+
+    boolean deleteByBySiteId(String id);
 
 }

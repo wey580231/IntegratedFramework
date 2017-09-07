@@ -131,10 +131,14 @@ public class ResourceDAOImpl extends SuperDAOImpl implements ResourceDAO<RG_Reso
             //plan
             List<RG_PlanEntity> rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllByResourceId(resourceId);
 
-            if (rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
+            //resourceTypeResource
+            List<RG_ResourceTyperesourceEntity> rg_resourceTypeResourceEntity = DAOFactory.getResourceTyperesourceInstance().findAllByResourceId(resourceId);
+
+            if (rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null || rg_resourceTypeResourceEntity.size() > 0) {
                 //从订单异常删除订单
-                if (((rg_PlanEntity .size() > 0 && DAOFactory.getPlanDAOImplInstance().delete(resourceId)) ||
-                        (rg_adjustDeviceEntity != null && DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity)))
+                if (((rg_PlanEntity .size() > 0 && DAOFactory.getPlanDAOImplInstance().deleteByResourceId(resourceId)) ||
+                        (rg_adjustDeviceEntity != null && DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity))||
+                        (rg_resourceTypeResourceEntity.size() > 0 && DAOFactory.getResourceTyperesourceInstance().deleteByResourceId(resourceId)))
                                 && super.delete(rg_resourceEntity)) {
                     return true;
                 }  else {

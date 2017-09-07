@@ -1,7 +1,10 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.SiteDAO;
+import com.rengu.entity.RG_GroupresourceEntity;
+import com.rengu.entity.RG_PlanEntity;
 import com.rengu.entity.RG_SiteEntity;
+import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -48,6 +51,35 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
         } catch (Exception exception) {
             exception.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean delete(Object object) {
+        RG_SiteEntity rg_siteEntity;
+
+        if (object instanceof RG_SiteEntity) {
+            rg_siteEntity = (RG_SiteEntity) object;
+            String siteId = rg_siteEntity.getId();
+            rg_siteEntity = findAllById(siteId);
+
+            //plan
+            List<RG_PlanEntity> rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllBySiteId(siteId);
+
+            if (rg_PlanEntity .size() > 0) {
+                if (DAOFactory.getPlanDAOImplInstance().deleteByBySiteId(siteId) && super.delete(rg_siteEntity)) {
+                    return true;
+                }  else {
+                    return false;
+                }
+
+            } else {
+                //直接删除
+                return super.delete(rg_siteEntity);
+            }
+
+        } else {
+            //参数错误
+            return false;
         }
     }
 }
