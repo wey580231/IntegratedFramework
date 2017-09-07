@@ -20,7 +20,7 @@
         <property name="exist">
             <column name="exist" sql-type="varchar(20)" length="20" not-null="false"/>
         </property>
-        <many-to-one name="layout" class="com.rengu.entity.RG_LayoutEntity">
+        <many-to-one name="layout" lazy="false" class="com.rengu.entity.RG_LayoutEntity">
             <column name="idLayout" not-null="false"/>
         </many-to-one>
     </class>

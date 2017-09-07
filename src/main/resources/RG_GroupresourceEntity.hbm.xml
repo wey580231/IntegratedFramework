@@ -38,9 +38,9 @@
             <one-to-many class="com.rengu.entity.RG_SiteEntity"/>
         </set>
 
-        <set name="schedules" inverse="true" cascade="save-update" table="schedule_groupresource">
-            <key column="g_id"></key>
-            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"></many-to-many>
+        <set name="schedules" inverse="true" cascade="all" table="schedule_groupresource">
+            <key column="g_id"/>
+            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
 
     </class>

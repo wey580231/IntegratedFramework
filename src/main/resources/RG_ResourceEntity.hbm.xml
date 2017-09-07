@@ -108,7 +108,7 @@
                           column="typeresource_id"/>
         </set>
 
-        <set name="schedules" inverse="true" cascade="save-update" table="schedule_Resource">
+        <set name="schedules" inverse="true" cascade="all" table="schedule_Resource">
             <key column="r_id"/>
             <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
