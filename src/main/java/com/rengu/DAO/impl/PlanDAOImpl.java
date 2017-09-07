@@ -102,6 +102,7 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
         return list;
     }
 
+    @Override
     public List<RG_PlanEntity> findAllByClubId(String id) {
         MySessionFactory.getSessionFactory().getCurrentSession().close();
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
@@ -111,6 +112,22 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
             session.beginTransaction();
         }
         String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.clubByIdClub.id =:id";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List list = query.list();
+        return list;
+    }
+
+    @Override
+    public List<RG_PlanEntity> findAllByResourceId(String id) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.resourceByIdResource.id =:id";
         Query query = session.createQuery(hql);
         query.setParameter("id", id);
         List list = query.list();
@@ -161,6 +178,23 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
                 transaction = session.beginTransaction();
             }
             session.createQuery("delete from RG_PlanEntity plan where plan.clubByIdClub.id =:id").setParameter("id",id).executeUpdate();
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteByResourceId(String id) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                transaction = session.beginTransaction();
+            }
+            session.createQuery("delete from RG_PlanEntity plan where plan.resourceByIdResource.id =:id").setParameter("id",id).executeUpdate();
             transaction.commit();
             return true;
         } catch (Exception e) {

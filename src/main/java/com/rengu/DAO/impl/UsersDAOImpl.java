@@ -67,10 +67,14 @@ public class UsersDAOImpl extends SuperDAOImpl implements UsersDAO<RG_UserEntity
             //config
             List<RG_ConfigEntity> rg_configEntity = DAOFactory.getConfigDAOImplInstance().findAllByUserId(userId);
 
-            if((rg_userConfigEntity .size() > 0 || rg_configEntity .size() > 0) ){
+            //resource
+            List<RG_ResourceEntity> rg_resourceEntity = DAOFactory.getResourceInstance().findAllByUserId(userId);
+
+            if(rg_userConfigEntity .size() > 0 || rg_configEntity .size() > 0 || rg_resourceEntity .size() > 0 ){
                 //从user删除userConfig和config
-                if (((rg_userConfigEntity .size() > 0 && DAOFactory.getUserConfigDAOImplInstance().delete(userId)) ||
-                        (rg_configEntity .size() > 0 && DAOFactory.getConfigDAOImplInstance().delete(userId)))
+                if (((rg_userConfigEntity .size() > 0 && DAOFactory.getUserConfigDAOImplInstance().deleteByUserId(userId)) ||
+                        (rg_configEntity .size() > 0 && DAOFactory.getConfigDAOImplInstance().deleteByUserId(userId)) ||
+                        (rg_resourceEntity .size() > 0 && DAOFactory.getResourceInstance().deleteByUserId(userId)))
                         && super.delete(rg_userEntity)) {
                         return true;
                 } else {

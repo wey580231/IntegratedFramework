@@ -27,7 +27,7 @@ public class UserConfigDAOImpl extends SuperDAOImpl implements UserConfigDAO<RG_
         return list;
     }
 
-    public boolean delete(String id) {
+    public boolean deleteByUserId(String id) {
         try {
             MySessionFactory.getSessionFactory().getCurrentSession().close();
             Session session = MySessionFactory.getSessionFactory().getCurrentSession();

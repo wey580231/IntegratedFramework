@@ -92,17 +92,17 @@
        	            如果均设置为true，那么插入时，只会往各自表中去插，不会去中间表去插入。
                                 如果均为false，那么在插入时，关系表会插入两次，导致数据重复而失败
          -->
-        <set name="sitesById" inverse="false" cascade="save-update" table="site_resource">
+        <set name="sitesById" inverse="false" cascade="all" table="site_resource">
             <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_SiteEntity"
                           column="site_id" lazy="false"/>
         </set>
-        <set name="shiftsById" inverse="false" cascade="save-update" table="shift_resource">
+        <set name="shiftsById" inverse="false" cascade="all" table="shift_resource">
             <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_ShiftEntity"
                           column="shift_id"/>
         </set>
-        <set name="typeresourcesById" inverse="false" cascade="save-update" table="typeresource_resource">
+        <set name="typeresourcesById" inverse="false" cascade="all" table="typeresource_resource">
             <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_TyperescourceEntity"
                           column="typeresource_id"/>
@@ -114,8 +114,8 @@
         </set>
 
         <set name="resourceState" inverse="true" cascade="all">
-            <key column="resourceId"></key>
-            <one-to-many class="com.rengu.entity.RG_ResourceStateEntity"></one-to-many>
+            <key column="resourceId"/>
+            <one-to-many class="com.rengu.entity.RG_ResourceStateEntity"/>
         </set>
 
     </class>
