@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Date;
 
 public class ApsTable {
     @Test
@@ -107,6 +106,6 @@ public class ApsTable {
     @Test
     public void parseAndSnaphostTest() {
         String jsonString = "{\"name\":\"排程-2017-09-07 00:18:37\",\"scheduleWindow\":7,\"rollTime\":1,\"APSConfig\":{\"t0\":1504564200000,\"t2\":1505730600000,\"modeScheduling\":\"正向\"},\"layout\":{\"id\":\"1\"},\"orders\":[{\"id\":\"Kqd-1\"},{\"id\":\"Kqd-2\"},{\"id\":\"Yqc-1\"},{\"id\":\"Yqc-2\"}],\"resources\":[{\"id\":2}],\"groupResource\":[{\"id\":2}],\"site\":[{\"id\":2}],\"scheduleOption\":5}";
-        new ScheduleAction().beginScheduleHandler(jsonString, new Date());
+        new ScheduleAction().beginScheduleHandler(jsonString);
     }
 }
