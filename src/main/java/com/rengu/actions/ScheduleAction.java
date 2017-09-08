@@ -1,6 +1,7 @@
 package com.rengu.actions;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.rengu.DAO.impl.ScheduleDAOImpl;
 import com.rengu.entity.*;
 import com.rengu.util.*;
 import org.hibernate.Session;
@@ -316,6 +317,14 @@ public class ScheduleAction extends SuperAction {
         } else {
             printError();
         }
+    }
+
+    //获取所有的排程
+    public void getAllSchedules() throws Exception {
+        ScheduleDAOImpl scheduleDAO = DAOFactory.getScheduleDAOImplInstance();
+        List list = scheduleDAO.findAll();
+        String jsonString = Tools.entityConvertToJsonString(list);
+        Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
 
     private void printError() {

@@ -50,7 +50,13 @@ public class AutoRollingSchedulingAction extends SuperAction {
                 //加入上次排程使用的订单
                 rg_orderEntityList.addAll(rg_scheduleEntity.getOrders());
                 // 除去以调用删除接口删除的订单
-                rg_orderEntityList.removeAll(deleteOrderList);
+//                rg_orderEntityList.removeAll(deleteOrderList);
+                for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
+                    if (rg_orderEntityList.contains(rg_orderEntity)) {
+                        System.out.println("移除订单ID：" + rg_orderEntity.getId());
+                        rg_orderEntityList.remove(rg_orderEntity);
+                    }
+                }
                 ArrayNode ordersNode = objectMapper.createArrayNode();
                 for (RG_OrderEntity rg_OrderEntity : rg_orderEntityList) {
                     ObjectNode objectNode = objectMapper.createObjectNode();
