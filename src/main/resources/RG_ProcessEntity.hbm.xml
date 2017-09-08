@@ -201,7 +201,7 @@
             <column name="pId" not-null="false"/>
         </many-to-one>
         <set name="childProcess" cascade="all" inverse="true">
-            <key column="pId"></key>
+            <key column="pId"/>
             <one-to-many class="com.rengu.entity.RG_ProcessEntity"/>
         </set>
     </class>

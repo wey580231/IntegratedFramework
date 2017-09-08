@@ -32,15 +32,15 @@
         <property name="capacity">
             <column name="capacity" sql-type="smallint(6)" not-null="false"/>
         </property>
-        <set name="resources" inverse="true" cascade="save-update" table="site_resource">
-            <key column="site_id"></key>
+        <set name="resources" inverse="true" cascade="all" table="site_resource">
+            <key column="site_id"/>
             <many-to-many class="com.rengu.entity.RG_ResourceEntity"
-                          column="resource_id"></many-to-many>
+                          column="resource_id"/>
         </set>
 
         <set name="schedules" inverse="true" cascade="save-update" table="schedule_site">
-            <key column="site_id"></key>
-            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"></many-to-many>
+            <key column="site_id"/>
+            <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
 
     </class>

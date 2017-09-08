@@ -162,7 +162,6 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
             //plan
             List<RG_PlanEntity> rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(orderId);
 
-
             //订单设备
             RG_AdjustDeviceEntity rg_adjustDeviceEntity = DAOFactory.getAdjustDeviceDAOImplInstance().findAllByOrderId(orderId);
 
@@ -178,24 +177,6 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                 return super.delete(rg_orderEntity);
             }*/
 
-            /*if (rg_adjustOrderEntity != null || rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
-                //从订单异常删除订单
-                if (DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity) && super.delete(rg_orderEntity)) {
-                    return true;
-                } else if (DAOFactory.getPlanDAOImplInstance().delete(orderId) && super.delete(rg_orderEntity)) {
-                    //从plan删除订单
-                    return true;
-                } else if (DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity) && super.delete(rg_orderEntity)) {
-                    //从订单设备删除订单
-                    return true;
-                } else {
-                    return false;
-                }
-
-            } else {
-                //直接删除
-                return super.delete(rg_orderEntity);
-            }*/
 
             if (rg_adjustOrderEntity != null || rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
                 //从订单异常删除订单
@@ -210,7 +191,6 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
 
             } else {
                 //直接删除
-                System.out.println("rg_orderEntity:" + rg_orderEntity);
                 return super.delete(rg_orderEntity);
             }
 

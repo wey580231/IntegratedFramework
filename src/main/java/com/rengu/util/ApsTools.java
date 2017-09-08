@@ -455,7 +455,9 @@ public class ApsTools {
                 "&" +
                 "ID=" + middleId + "" +
                 "&" +
-                "DELAY=100" +
+                "DELAY=2000" +
+                "&" +
+                "TIMEOUT=2000" +
                 "&" +
                 "buffer=001";
 

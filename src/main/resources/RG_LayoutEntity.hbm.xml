@@ -22,21 +22,17 @@
         <!-- 如果一方设置inverse=false时，如果在删除以及更新一方信息时，其会先在多方多执行一次更新操作。
         	 如果inverse为false，cascade为all，在删除一方时，会先更新多方与此关联数据，再执行删除操作，总数为N+1条。影响效率
          -->
-        <set name="details" inverse="true" lazy="true" cascade="all">
-            <key>
-                <column name="idLayout" not-null="false"/>
-            </key>
+        <set name="details" lazy="false" cascade="all">
+            <key column="idLayout" not-null="false"/>
             <one-to-many not-found="ignore" class="com.rengu.entity.RG_LayoutDetailEntity"/>
         </set>
 
-        <set name="schedules" inverse="true" lazy="true" cascade="all">
-            <key>
-                <column name="layoutId" not-null="false"/>
-            </key>
+        <set name="schedules" lazy="false" cascade="all">
+            <key column="layoutId" not-null="false"/>
             <one-to-many not-found="ignore" class="com.rengu.entity.RG_ScheduleEntity"/>
         </set>
 
-        <set name="errorLayouts" inverse="true" lazy="true" cascade="all">
+        <set name="errorLayouts" lazy="false" cascade="all">
             <key>
                 <column name="refLayout" not-null="false"/>
             </key>

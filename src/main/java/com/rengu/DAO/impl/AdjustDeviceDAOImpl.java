@@ -97,4 +97,28 @@ public class AdjustDeviceDAOImpl extends SuperDAOImpl implements AdjustDeviceDAO
             return null;
         }
     }
+
+    @Override
+    public RG_AdjustDeviceEntity findAllByResourceId(String id) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+
+            //SQL删除
+            NativeQuery query = session.createNativeQuery("select * from rg_adjustdevice where resource_id = ? ", RG_AdjustDeviceEntity.class);
+            query.setParameter(1, id);
+            List<RG_AdjustDeviceEntity> list = query.list();
+            if (list.size() > 0) {
+                return list.get(0);
+            }
+            return null;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
 }
