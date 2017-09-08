@@ -38,6 +38,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         var pageCount = 0;              //分页有关
         var currPage = 0;
         var pageTipCount = 0;
+        var orderList = [];  //订单信息
 
         $(function () {
             pageCount = $(".MyPage").size();
@@ -93,8 +94,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         //新建排程
         $scope.prepareNewSchedule = function () {
             myHttpService.get(serviceList.queryApsState).then(function (response) {
-                if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {
+                /*if (response.data.result == "ok") {
+                    if (response.data.data.state == 0) {*/
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
                         hideCalendar();
@@ -108,7 +109,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $("#delayTime").val(5);
 
                         initFullCalendar();
-                    } else {
+                    } /*else {
                         notification.sendNotification("alert", "查询APS状态失败");
                     }
                 } else {
@@ -116,7 +117,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 }
             }, function (response) {
 
-            });
+            }*/);
             resetContent();
         };
 
@@ -269,6 +270,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     PageInfo.data[currPage].push(response.data[i]);
                 }
                 $scope.ordinfo = PageInfo.data[currPage];
+                orderList = $scope.ordinfo;
 
             });
         }
@@ -497,6 +499,32 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 }
             }
         };
+
+        /*var updateSelectedAll = function (action, list) {
+
+            //list  = orderList;
+
+            for(var i = 0; list.length; i++){
+
+                if (action == 'add' & PageInfo.selectedIndex[currPage].indexOf(list[i].id) == -1) {
+                    PageInfo.selectedIndex[currPage].push(id);
+                    if (PageInfo.selectedIndex[currPage].length > 0) {
+                        $("#nextStep").removeAttr("disabled");
+                        $("#startSchedule").removeAttr("disabled");
+                    }
+                }
+
+                if (action == 'remove' && PageInfo.selectedIndex[currPage].indexOf(id) != -1) {
+                    PageInfo.selectedIndex[currPage].splice(PageInfo.selectedIndex[currPage].indexOf(id), 1);
+                    if (PageInfo.selectedIndex[currPage].length == 0) {
+                        $("#nextStep").attr("disabled", true);
+                        $("#startSchedule").attr("disabled", true);
+                    }
+                }
+
+            }
+
+        };*/
 
         $scope.isSelected = function (id) {
             return selectedCheckArray.indexOf(id) >= 0;
