@@ -122,6 +122,10 @@ public class AutoRollingSchedulingAction extends SuperAction {
     public void autoRollingScheduling() throws ParseException, JsonProcessingException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
+        //滚动排程时清除待删除列表
+        if (deleteOrderList.size() > 0) {
+            deleteOrderList.clear();
+        }
         if (UserConfigTools.getLatestSchedule("1") != null) {
             RG_ScheduleEntity rg_scheduleEntity = DAOFactory.getScheduleDAOImplInstance().findAllById(UserConfigTools.getLatestSchedule("1"));
             if (rg_scheduleEntity != null) {
