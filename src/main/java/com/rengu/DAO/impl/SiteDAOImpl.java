@@ -1,6 +1,7 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.SiteDAO;
+import com.rengu.entity.RG_DistanceEntity;
 import com.rengu.entity.RG_GroupresourceEntity;
 import com.rengu.entity.RG_PlanEntity;
 import com.rengu.entity.RG_SiteEntity;
@@ -65,8 +66,13 @@ public class SiteDAOImpl extends SuperDAOImpl implements SiteDAO<RG_SiteEntity> 
             //plan
             List<RG_PlanEntity> rg_PlanEntity = DAOFactory.getPlanDAOImplInstance().findAllBySiteId(siteId);
 
-            if (rg_PlanEntity .size() > 0) {
-                if (DAOFactory.getPlanDAOImplInstance().deleteByBySiteId(siteId) && super.delete(rg_siteEntity)) {
+            //distance
+            List<RG_DistanceEntity> rg_distanceEntity = DAOFactory.getDistanceDAOImplInstance().findAllBySiteId(siteId);
+
+            if (rg_PlanEntity .size() > 0 || rg_distanceEntity .size() > 0) {
+                if (((rg_PlanEntity .size() > 0 && DAOFactory.getPlanDAOImplInstance().deleteByBySiteId(siteId)) ||
+                        (rg_distanceEntity .size() > 0 && DAOFactory.getDistanceDAOImplInstance().deleteBySiteId(siteId)))
+                        && super.delete(rg_siteEntity)) {
                     return true;
                 }  else {
                     return false;

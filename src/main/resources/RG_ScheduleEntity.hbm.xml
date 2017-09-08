@@ -55,7 +55,7 @@
             <column name="layoutId" not-null="false"/>
         </many-to-one>
 
-        <set name="orders" inverse="false" cascade="all" table="schedule_order" lazy="false">
+        <set name="orders" inverse="true" cascade="save-update,delete" table="schedule_order">
             <key column="s_id"/>
             <many-to-many class="com.rengu.entity.RG_OrderEntity" column="o_id"/>
         </set>

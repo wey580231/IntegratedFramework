@@ -100,7 +100,7 @@
             <column name="idClub" not-null="false"/>
         </many-to-one>
 
-        <set name="schedules" inverse="true" cascade="all" table="schedule_order">
+        <set name="schedules" inverse="false" cascade="save-update,delete" table="schedule_order">
             <key column="o_id"/>
             <many-to-many class="com.rengu.entity.RG_ScheduleEntity" column="s_id"/>
         </set>
