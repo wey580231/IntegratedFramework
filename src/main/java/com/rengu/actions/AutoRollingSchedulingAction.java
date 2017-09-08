@@ -123,6 +123,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         //滚动排程时清除待删除列表
+        System.out.println(deleteOrderList.toString());
         if (deleteOrderList.size() > 0) {
             deleteOrderList.clear();
         }
