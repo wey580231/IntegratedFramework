@@ -17,10 +17,10 @@
         <property name="ratio">
             <column name="ratio" sql-type="float" precision="-1" not-null="false"/>
         </property>
-        <set name="resources" inverse="true" cascade="save-update" table="typeresource_resource">
-            <key column="typeresource_id"></key>
+        <set name="resources" inverse="true" cascade="all" table="typeresource_resource">
+            <key column="typeresource_id"/>
             <many-to-many class="com.rengu.entity.RG_ResourceEntity"
-                          column="resource_id"></many-to-many>
+                          column="resource_id"/>
         </set>
     </class>
 </hibernate-mapping>

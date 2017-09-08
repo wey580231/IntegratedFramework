@@ -13,4 +13,6 @@ public interface AdjustDeviceDAO<T> {
     T findAllById(String id);
 
     T findAllByOrderId(String id);
+
+    T findAllByResourceId(String id);
 }

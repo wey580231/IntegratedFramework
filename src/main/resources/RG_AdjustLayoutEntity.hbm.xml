@@ -29,7 +29,7 @@
         <property name="processTime" type="java.util.Date">
             <column name="processTime" sql-type="datetime" not-null="false"/>
         </property>
-        <many-to-one name="layout" class="com.rengu.entity.RG_LayoutEntity">
+        <many-to-one name="layout" lazy="false" class="com.rengu.entity.RG_LayoutEntity">
             <column name="refLayout" not-null="false"/>
         </many-to-one>
     </class>

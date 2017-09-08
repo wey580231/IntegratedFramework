@@ -40,6 +40,8 @@ public class DAOFactory {
     private static final AssemblyCenterInfoDAOImpl assemblyCenterInfoDAOImpl = new AssemblyCenterInfoDAOImpl();
     private static final DeportInfoDAOImpl deportInfoDAOImpl = new DeportInfoDAOImpl();
     private static final AGVInfoDAOImpl agvInfoDAOImpl = new AGVInfoDAOImpl();
+    private static final ConfigDAOImpl configDAOImpl = new ConfigDAOImpl();
+    private static final ResourceTyperesourceDAOImpl resourceTypeResourceDAOImpl = new ResourceTyperesourceDAOImpl();
 
     public static UsersDAOImpl getUserDAOInstance() {
         return usersDAOImpl;
@@ -160,5 +162,15 @@ public class DAOFactory {
     public static AGVInfoDAOImpl getAGVInfoDAOImplInstance() {
         return agvInfoDAOImpl;
     }
+
+    public static ConfigDAOImpl getConfigDAOImplInstance() {
+        return configDAOImpl;
+    }
+
+    public static ResourceTyperesourceDAOImpl getResourceTyperesourceInstance() {
+        return resourceTypeResourceDAOImpl;
+    }
+
+
 
 }
