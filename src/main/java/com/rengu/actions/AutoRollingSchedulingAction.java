@@ -50,11 +50,13 @@ public class AutoRollingSchedulingAction extends SuperAction {
                 //加入上次排程使用的订单
                 rg_orderEntityList.addAll(rg_scheduleEntity.getOrders());
                 // 除去以调用删除接口删除的订单
-//                rg_orderEntityList.removeAll(deleteOrderList);
                 for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
-                    if (rg_orderEntityList.contains(rg_orderEntity)) {
-                        System.out.println("移除订单ID：" + rg_orderEntity.getId());
-                        rg_orderEntityList.remove(rg_orderEntity);
+                    Iterator<RG_OrderEntity> rg_orderEntityIterator = rg_orderEntityList.iterator();
+                    while (rg_orderEntityIterator.hasNext()) {
+                        RG_OrderEntity temp = rg_orderEntityIterator.next();
+                        if (temp.getId().equals(rg_orderEntity.getId())) {
+                            rg_orderEntityIterator.remove();
+                        }
                     }
                 }
                 ArrayNode ordersNode = objectMapper.createArrayNode();
@@ -129,7 +131,6 @@ public class AutoRollingSchedulingAction extends SuperAction {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         //滚动排程时清除待删除列表
-        System.out.println(deleteOrderList.toString());
         if (deleteOrderList.size() > 0) {
             deleteOrderList.clear();
         }
@@ -163,7 +164,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, deleteOrderList);
                     //异常列表
                     List<RG_AdjustProcessEntity> rg_adjustProcessEntityList = new ArrayList<>();
-                    //异常模拟
+//                    //异常模拟
                     for (RG_OrderEntity rg_orderEntity : exceptionOrderList) {
                         //查找当前订单对应的工序信息列表
                         List<RG_PlanEntity> rg_planEntityList = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(rg_orderEntity.getId());
@@ -212,6 +213,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     }
                 }
                 //开始滚动排程
+                System.out.println("开始滚动排程计算------->");
                 ScheduleAction.beginScheduleHandler(createScheduleInfo());
             } else {
                 //未获取到最后一次排程信息
