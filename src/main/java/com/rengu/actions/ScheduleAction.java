@@ -131,15 +131,45 @@ public class ScheduleAction extends SuperAction {
 
             //解析APS_Config数据
             JsonNode APS_ConfigNode = rootNode.get("APSConfig");
+            //查询APS数据的语句
+            String SQLString = "select * from " + DatabaseInfo.APS_ORDER + "";
+            //查询APS数据库
+            List orderList = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
                 if (APS_ConfigNodeKey.equals("t0")) {
-                    rg_scheduleEntity.setApsStartTime(Tools.parseDate(APS_ConfigNodeValue));
+                    //设置前端发送的数据为优化开始时间
+                    Date apsStartTime = Tools.parseDate(APS_ConfigNodeValue);
+                    //遍历APS的Order表查询最早开始时间
+                    for (Object object : orderList) {
+                        if (object instanceof HashMap) {
+                            Map rowData = (HashMap) object;
+                            if (apsStartTime.after(Tools.parseStandTextDate(rowData.get("T0").toString().trim()))) {
+                                calendar.setTime(Tools.parseStandTextDate(rowData.get("T0").toString().trim()));
+                                calendar.add(Calendar.DAY_OF_YEAR, -2);
+                                apsStartTime = calendar.getTime();
+                            }
+                        }
+                    }
+                    rg_scheduleEntity.setApsStartTime(apsStartTime);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
                 }
                 if (APS_ConfigNodeKey.equals("t2")) {
-                    rg_scheduleEntity.setApsEndTime(Tools.parseDate(APS_ConfigNodeValue));
+                    //设置前端发送的数据为优化结束时间
+                    Date apsEndTime = Tools.parseDate(APS_ConfigNodeValue);
+                    //遍历APS的Order表查询最晚结束时间
+                    for (Object object : orderList) {
+                        if (object instanceof HashMap) {
+                            Map rowData = (HashMap) object;
+                            if (apsEndTime.before(Tools.parseStandTextDate(rowData.get("T2").toString().trim()))) {
+                                calendar.setTime(Tools.parseStandTextDate(rowData.get("T2").toString().trim()));
+                                calendar.add(Calendar.DAY_OF_YEAR, 5);
+                                apsEndTime = calendar.getTime();
+                            }
+                        }
+                    }
+                    rg_scheduleEntity.setApsEndTime(apsEndTime);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
                 }
                 if (APS_ConfigNodeKey.equals("modeScheduling")) {
