@@ -69,6 +69,18 @@ public class ScheduleAction extends SuperAction {
             if (UserConfigTools.getLatestSchedule("1") != null) {
                 RG_ScheduleEntity latestSchedule = session.get(RG_ScheduleEntity.class, UserConfigTools.getLatestSchedule("1"));
                 if (latestSchedule != null) {
+                    //从上一次排程的订单中清除已经拍成果的订单
+                    Set<RG_OrderEntity> rg_orderEntitySet = latestSchedule.getOrders();
+                    if (!rg_orderEntitySet.isEmpty()) {
+                        List<RG_OrderEntity> removeOrderList = new ArrayList<>();
+                        for (RG_OrderEntity rg_orderEntity : rg_orderEntitySet) {
+                            //选择待删除订单(结束时间在上次滚动结束之前的订单)
+                            if (rg_orderEntity.getT2().before(rg_scheduleEntity.getScheduleTime())) {
+                                removeOrderList.add(rg_orderEntity);
+                            }
+                        }
+                        Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, removeOrderList);
+                    }
                     //当前排程滚动周期大于上次泡成滚动周期（添加缺失订单）
                     if (scheduleWindowNodes.asInt() > latestSchedule.getScheduleWindow()) {
                         System.out.println("当前排程滚动周期大于上次排程滚动周期");
