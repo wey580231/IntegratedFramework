@@ -408,4 +408,23 @@ public class Tools {
 
         return null;
     }
+
+    //日期计算
+    public static Date dateCalculator(Date date, int offset) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR, offset);
+        return calendar.getTime();
+    }
+
+    //将Date类型格式化成需要的格式
+    public static Date dateFormater(Date date, String pattern) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            return simpleDateFormat.parse(simpleDateFormat.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
