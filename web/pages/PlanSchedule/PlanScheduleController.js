@@ -9,7 +9,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             controller: 'PlanScheduleController'
         })
     }])
-    .controller('PlanScheduleController', function ($scope, $location, $http, myHttpService, serviceList, renderTableService, validate, notification, dateService,enter) {
+    .controller('PlanScheduleController', function ($scope, $location, $http, myHttpService, serviceList, renderTableService, validate, notification, dateService, enter) {
 
         layer.load(0);
         enter.enterDown();
@@ -95,15 +95,16 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             $("div").removeClass("has-success");
 
         }
+
         //新建排程
         $scope.prepareNewSchedule = function () {
             myHttpService.get(serviceList.queryApsState).then(function (response) {
-                /*if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {*/
+                if (response.data.result == "ok") {
+                    if (response.data.data.state == 0) {
 
-                //nowTime = convertDateFromString($("input[id='nowTime-datepicker']").val());
-                var nowTime = (new Date($("input[id='nowTime-datepicker']").val())).getTime();
-                var startTime = moment(nowTime).format("YYYY-MM-DD hh:mm:ss");
+                        //nowTime = convertDateFromString($("input[id='nowTime-datepicker']").val());
+                        var nowTime = (new Date($("input[id='nowTime-datepicker']").val())).getTime();
+                        var startTime = moment(nowTime).format("YYYY-MM-DD hh:mm:ss");
 
 
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
@@ -113,17 +114,14 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $("#nextStep").attr("disabled", true);
                         $("#startSchedule").attr("disabled", true);
 
-                /*$("input[id='nowTime-datepicker']").val(dateService.formatDateTime(new Date()));
-                $("#scheduleName").val("排程-" + dateService.formatDateTime(new Date()));*/
-
-                //$("#scheduleName").val("排程-" + dateService.formatDateTime(new Date()));
-                //$("#scheduleName").val("排程-" + startTime);
+                        //$("#scheduleName").val("排程-" + dateService.formatDateTime(new Date()));
+                        //$("#scheduleName").val("排程-" + startTime);
                         $("#rollTime").val(1);
                         $("#scheduleTime").val(7);
                         $("#delayTime").val(5);
 
                         initFullCalendar();
-            } /*else {
+                    } else {
                         notification.sendNotification("alert", "查询APS状态失败");
                     }
                 } else {
@@ -131,7 +129,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 }
             }, function (response) {
 
-            }*/);
+            });
             resetContent();
         };
 
@@ -282,7 +280,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             var scheduleDays0 = scheduleDays;
 
-            var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
+            var endTime = moment(startTime).add(scheduleDays0, 'day').format("YYYY-MM-DD");
+
             cur.endTime = (new Date(endTime)).getTime();
 
             cur.isFinished = false;
@@ -438,7 +437,13 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
             //var startTime = convertDateFromString($("input[id='nowTime-datepicker']").val());
             var nowTime = (new Date($("input[id='nowTime-datepicker']").val())).getTime();
             var startTime = moment(nowTime).format("YYYY-MM-DD");
-            var endTime = moment().add(scheduleDays, 'day').format("YYYY-MM-DD");   //订单筛选结束时间
+
+            var scheduleDays0 = scheduleDays;
+
+            //var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
+            /*var endTime = new Date(startTime);
+            endTime.setDate(startTime.getDate() + scheduleDays0);*/
+            var endTime = moment(startTime).add(scheduleDays, 'day').format("YYYY-MM-DD");   //订单筛选结束时间
 
             var source = "http://localhost:8080/FullCalendar/getAllFullCalendarEvents.action?startTime=" + startTime + "&endTime=" + endTime;
 
@@ -602,7 +607,10 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
 
             var scheduleDays0 = scheduleDays;
 
-            var endTime = moment().add(scheduleDays0, 'day').format("YYYY-MM-DD");
+
+            var endTime = moment(startTime).add(scheduleDays0, 'day').format("YYYY-MM-DD");
+            /*var endTime = moment(startTime).add(scheduleDays0, 'day').format("YYYY-MM-DD");
+            console.log(scheduleDays0);*/
             console.log(endTime);
             cur.endTime = (new Date(endTime)).getTime();
             cur.startTime = (new Date(startTime)).getTime();
