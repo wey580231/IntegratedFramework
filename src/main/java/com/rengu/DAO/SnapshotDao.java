@@ -92,10 +92,12 @@ public class SnapshotDao {
         Session session = MySessionFactory.getSessionFactory().openSession();
         session.beginTransaction();
 
-        Query queryObject = session.createNativeQuery("truncate table rg_emulateresult");
+//        Query queryObject = session.createNativeQuery("TRUNCATE table rg_emulateresult");
+        Query queryObject = session.createNativeQuery("delete from rg_emulateresult");
+        int result = queryObject.executeUpdate();
 
-        if (queryObject.executeUpdate() >= 0) {
-
+        if (result >= 0) {
+            System.out.println("清空数据库：rg_emulateresult表已完成");
             try {
                 //【1】將快照對應的所有订单一并转换
                 switchPlanToEmulateResult(false, plans, session);
@@ -119,9 +121,9 @@ public class SnapshotDao {
                 e.printStackTrace();
             }
         }
+        System.out.println("清空数据表结束");
         session.getTransaction().commit();
         session.close();
-
         return flag;
     }
 
@@ -340,8 +342,7 @@ public class SnapshotDao {
                         }
                     }
 
-                    if(lastTime > 0)
-                    {
+                    if (lastTime > 0) {
                         RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
                         //任务名
                         nextResult.setTask("KR16_MG_Move");
