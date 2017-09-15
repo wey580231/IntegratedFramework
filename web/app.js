@@ -159,7 +159,7 @@ angular.module("IntegratedFramework", [
         service.beginSchedule = backUrl + "schedule/beginSchedule.action";
         service.ListSchedule = backUrl + "schedule/getAllSchedules.action";
         service.DeleteSchedule = backUrl + "schedule/delete.action";
-
+        service.autoRolling = backUrl + "schedule/autoRollingScheduling.action";
         service.getLastScheduleInfo = backUrl + "FullCalendar/getLastScheduleInfo.action";
         service.CurInfo = backUrl + "orders/findAllByisFinishedAndDate.action";
         <!--工序信息接口-->
@@ -396,7 +396,7 @@ angular.module("IntegratedFramework", [
     .factory("enter", function () {
         var service = {};
         service.enterDown = function () {
-            document.onkeydown=keyDownSearch;
+            document.onkeydown = keyDownSearch;
 
             function keyDownSearch(e) {
                 // 兼容FF和IE和Opera

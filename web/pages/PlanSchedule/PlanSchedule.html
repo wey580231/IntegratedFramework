@@ -127,6 +127,9 @@
                                 <i class="fa fa-plus"></i>
                                 新增排程
                             </button>
+                            <button type="button" class="btn btn-default btn-sm" ng-click="autoRollingScheduling()"><i
+                                    class="fa fa-bug"></i> 滚动
+                            </button>
                             <button type="button" class="btn btn-default btn-sm" ng-click="deleteSchedule()"><i
                                     class="fa fa-trash-o"></i> 删除
                             </button>
@@ -306,11 +309,11 @@
                                                 <div class="modal-body" style="height: 100%;">
                                                     <div class="box box-primary" style="height: 100%;">
                                                         <div class="box-body no-padding" style="height: 100%;">
-                                                        <!-- THE CALENDAR -->
-                                                        <div id="calendar" ng-init="renderCalendar($last)"></div>
+                                                            <!-- THE CALENDAR -->
+                                                            <div id="calendar" ng-init="renderCalendar($last)"></div>
+                                                        </div>
+                                                        <!-- /.box-body -->
                                                     </div>
-                                                    <!-- /.box-body -->
-                                                </div>
                                                 </div>
                                                 <!-- /. box -->
                                             </div>
