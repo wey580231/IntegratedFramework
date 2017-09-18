@@ -163,10 +163,10 @@ public class SnapshotDao {
             if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
                 String processId = plan.getProcessByIdProcess().getId();
 
-                if (switchedProcessList.contains(processId)) {
-                    continue;
-                }
-                switchedProcessList.add(processId);
+//                if (switchedProcessList.contains(processId)) {
+//                    continue;
+//                }
+//                switchedProcessList.add(processId);
 
                 NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
                 nquery.setParameter(1, processId);
@@ -427,8 +427,7 @@ public class SnapshotDao {
                         }
 
                         //生产工艺信息
-                        NativeQuery query = session.createNativeQuery("select id,idTask,idOrder,nameTask,rplan.idProduct,quantityTask,t1Task,t2Task " +
-                                "from rg_plan rplan left join rg_process rprocess on rplan.idProcess=rprocess.id where rprocess.transport = 0 and idSnapshort=:snapShot ");
+                        NativeQuery query = session.createNativeQuery("select rplan.id,idTask,idOrder,nameTask,rplan.idProduct,quantityTask,t1Task,t2Task from rg_plan rplan left join rg_process rprocess on rplan.idProcess=rprocess.id where rprocess.transport = 0 and idSnapshort=:snapShot ");
                         query.setParameter("snapShot", id);
                         List plans = query.list();
                         for (int i = 0; i < plans.size(); i++) {
@@ -448,7 +447,6 @@ public class SnapshotDao {
                             dataNode.put("t2Task", planResult[7].toString());
                             dataNode.put("nameUser", "1");
                             dataNode.put("scheduleTime", Tools.formatToStandardDate(rootParent.getSchedule().getScheduleTime()));
-
                             MesSender.instance().sendData("planInfo", dataNode);
                         }
 
@@ -477,6 +475,7 @@ public class SnapshotDao {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             result = false;
             tx.rollback();
         }
