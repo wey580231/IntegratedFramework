@@ -1,28 +1,20 @@
 package com.rengu.actions.mes;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rengu.entity.*;
-import com.rengu.util.ApsTools;
 import com.rengu.util.MessTable;
 import com.rengu.util.MySessionFactory;
 import com.rengu.util.Tools;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.hibernate.HibernateException;
+import com.rengu.util.UserConfigTools;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
-import javax.tools.Tool;
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -139,17 +131,42 @@ public class MesConsumer extends Thread {
                     for (int i = 0; i < dataNode.size(); i++) {
                         JsonNode subNode = dataNode.get(i);
 
-                        RG_SiteEntity site1 = (RG_SiteEntity) session.get(RG_SiteEntity.class, subNode.get("idSite1").asText());
-                        RG_SiteEntity site2 = (RG_SiteEntity) session.get(RG_SiteEntity.class, subNode.get("idSite2").asText());
+                        String idSite1 = subNode.get("idSite1").asText();
+                        String idSite2 = subNode.get("idSite2").asText();
+
+                        RG_SiteEntity site1 = (RG_SiteEntity) session.get(RG_SiteEntity.class, idSite1);
+                        RG_SiteEntity site2 = (RG_SiteEntity) session.get(RG_SiteEntity.class, idSite2);
+
 
                         if (site1 != null && site2 != null) {
                             RG_DistanceEntity distance = new RG_DistanceEntity();
-                            distance.setId(Tools.getUUID());
+
+                            RG_DistanceEntity distance2 = (RG_DistanceEntity) session.createQuery("select distance from RG_DistanceEntity distance where distance.startSite.id =:idSite1 and distance.endSite.id =:idSite2").setParameter("idSite1", idSite1).setParameter("idSite2", idSite2).uniqueResult();
+
+                            if (distance2 != null) {
+                                //String idDistance = distance2.getId();
+                                int distance3 = subNode.get("distance").asInt();
+                                session.createNativeQuery("update rg_distance set distance = ?").setParameter(1, distance3).executeUpdate();
+                                /*session.delete(distance2);
+                                distance.setId(idDistance);
+                                distance.setStartSite(site1);
+                                distance.setEndSite(site2);
+                                distance.setDistance(subNode.get("distance").asInt());*/
+                            } else {
+                                distance.setId(Tools.getUUID());
+                                distance.setStartSite(site1);
+                                distance.setEndSite(site2);
+                                distance.setDistance(subNode.get("distance").asInt());
+                                session.saveOrUpdate(distance);
+                            }
+
+
+                            /*distance.setId(Tools.getUUID());
                             distance.setStartSite(site1);
                             distance.setEndSite(site2);
-                            distance.setDistance(subNode.get("distance").asInt());
+                            distance.setDistance(subNode.get("distance").asInt());*/
 
-                            session.saveOrUpdate(distance);
+                            //session.saveOrUpdate(distance);
                         }
                     }
                 }
@@ -301,6 +318,30 @@ public class MesConsumer extends Thread {
                 orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
                 orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").toString());
 
+
+                //向工序页面插入异常
+                String idSnapshot = UserConfigTools.getLatestDispatchMesId("1");
+                List<RG_PlanEntity> planEntity = (List<RG_PlanEntity>) session.createQuery("select plan from RG_PlanEntity plan where plan.snapShort.id =:idSnapshot").setParameter("idSnapshot", idSnapshot).list();
+
+                for (RG_PlanEntity plan : planEntity) {
+                    String t1Task = plan.getT1Task();
+                    String t2Task = plan.getT2Task();
+
+                    if (!t1Task.equals(actualDispatchTime) || !t2Task.equals(actualFinsihTime)) {
+                        //调整工序异常
+                        RG_AdjustProcessEntity adjustProcess = new RG_AdjustProcessEntity();
+
+                        adjustProcess.setId(Tools.getUUID());
+                        adjustProcess.setIdOrder(idOrder);
+                        adjustProcess.setIdTask(idTask);
+                        adjustProcess.setState(1);
+
+                        session.save(adjustProcess);
+                    }
+
+                }
+
+
                 //TODO x已完成  计划完工量格式不对，框架需要转换((合格+不合格)/计划数)
                 short unqulifiedCount = Short.parseShort(dataNode.get("unqualifiedCount").asText());
                 short qualifiedCount = Short.parseShort(dataNode.get("qualifiedCount").asText());
@@ -331,7 +372,7 @@ public class MesConsumer extends Thread {
                             count++;  //订单拥有的排程数
 
                             //向工序页面插入异常
-                            List<RG_PlanEntity> planEntity=  (List<RG_PlanEntity>)session.createQuery("select plan from RG_PlanEntity plan where processByIdProcess.id =:idProcess").setParameter("idProcess",process2.getId()).list();
+                            /*List<RG_PlanEntity> planEntity=  (List<RG_PlanEntity>)session.createQuery("select plan from RG_PlanEntity plan where plan.processByIdProcess.id =:idProcess").setParameter("idProcess",process2.getId()).list();
 
                             for (RG_PlanEntity plan : planEntity) {
                                 String t1Task = plan.getT1Task();
@@ -349,7 +390,7 @@ public class MesConsumer extends Thread {
                                         session.save(adjustProcess);
                                     }
 
-                            }
+                            }*/
                         }
                     }
 
