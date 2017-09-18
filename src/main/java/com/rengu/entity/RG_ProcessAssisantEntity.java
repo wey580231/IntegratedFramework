@@ -12,6 +12,8 @@ public class RG_ProcessAssisantEntity {
     private String task;                            //任务信息
     private String goods;                           //货物
 
+    private String resource;                        //此道工序依赖的资源，解决一个订单对应多个产品问题
+
     private String autoCreatePreviouseProcess;      //是否需要创建前道工序
     private String previousProcessTasks;            //前道工序
     private String preProcessDistances;             //前道工序的距离集合
@@ -68,6 +70,14 @@ public class RG_ProcessAssisantEntity {
 
     public void setGoods(String goods) {
         this.goods = goods;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
     }
 
     public String getAutoCreatePreviouseProcess() {
