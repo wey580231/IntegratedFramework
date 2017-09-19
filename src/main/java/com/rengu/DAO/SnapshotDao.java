@@ -426,7 +426,7 @@ public class SnapshotDao {
 
                             dataNode.put("id", tmpOrder.getId());
                             dataNode.put("name", tmpOrder.getName());
-                            dataNode.put("idProduct", tmpOrder.getProductByIdProduct().getId());
+                            dataNode.put("idProduct", tmpOrder.getProductByIdProduct().getMesId());
                             dataNode.put("quantity", tmpOrder.getQuantity());
                             dataNode.put("priority", tmpOrder.getPriority());
                             dataNode.put("t0", Tools.formatToStandardDate(tmpOrder.getT0()));
