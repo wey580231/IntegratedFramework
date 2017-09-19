@@ -145,12 +145,14 @@ public class SnapshotDao {
         int perPlanDelayMinuteTime = 0;         //总体上每道计划偏移时间
         int currMultiPlan = -1;                 //对应APS中的第几种策略
 
-        List<String> switchedProcessList = new ArrayList<String>();
+//        List<String> switchedProcessList = new ArrayList<String>();
 
         List<RG_PlanEntity> robotPlan = new ArrayList<RG_PlanEntity>();
 
         //转换AGV、生产工艺
         for (int i = 0; i < plans.size(); i++) {
+
+            System.out.println(i + "+++++");
 
             RG_PlanEntity plan = plans.get(i);
 
@@ -162,6 +164,7 @@ public class SnapshotDao {
 
             if (res != null && res.getCritical() != null && res.getCritical().equals("T")) {
                 String processId = plan.getProcessByIdProcess().getId();
+                String resourceId = plan.getResourceByIdResource().getIdR();
 
 //                if (switchedProcessList.contains(processId)) {
 //                    continue;
@@ -176,6 +179,12 @@ public class SnapshotDao {
                     RG_EmulateResultEntity result = new RG_EmulateResultEntity();
 
                     RG_ProcessAssisantEntity entity = list.get(0);
+
+                    if (entity.getResource() != null) {
+                        if (!entity.getResource().toUpperCase().contains(resourceId)) {
+                            continue;
+                        }
+                    }
 
                     //第一道结果来决定以后的结果时间偏移量
                     if (i == 0 && entity.getAutoCreatePreviouseProcess() != null && entity.getPreProcessMobility() != null && entity.getAutoCreatePreviouseProcess().equals("Y")) {
@@ -317,8 +326,17 @@ public class SnapshotDao {
         //Yang 20170808转换运输工艺
         for (int i = 0; i < robotPlan.size(); i++) {
             if (i < robotPlan.size() - 1) {
-                String startSite = robotPlan.get(i).getSiteByIdSite().getId();
-                String endSite = robotPlan.get(i + 1).getSiteByIdSite().getId();
+                System.out.println("+++++:::" + i);
+
+                RG_SiteEntity startSiteEntity = robotPlan.get(i).getSiteByIdSite();
+                RG_SiteEntity endSiteEntity = robotPlan.get(i + 1).getSiteByIdSite();
+
+                if (startSiteEntity == null || endSiteEntity == null) {
+                    continue;
+                }
+
+                String startSite = startSiteEntity.getId();
+                String endSite = endSiteEntity.getId();
 
                 if (!startSite.equals(endSite)) {
                     Date startDate = sdf.parse(robotPlan.get(i).getT2Task());
