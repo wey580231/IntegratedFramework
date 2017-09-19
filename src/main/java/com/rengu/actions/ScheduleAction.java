@@ -196,6 +196,8 @@ public class ScheduleAction extends SuperAction {
                     String SQlString = "update APS_RESOURCE set STATE = '1' where id = '" + rg_layoutDetailEntity.getItem() + "'";
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
                 } else {
+                    String SQlString = "update APS_RESOURCE set STATE = '0' where id = '" + rg_layoutDetailEntity.getItem() + "'";
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQlString);
                     MyLog.getLogger().info(rg_layoutDetailEntity.getItem() + "资源不可用");
                 }
             }
