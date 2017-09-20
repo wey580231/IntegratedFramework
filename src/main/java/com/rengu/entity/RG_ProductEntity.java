@@ -17,6 +17,7 @@ public class RG_ProductEntity {
     private String model;
     private String state;
     private String supplyMethod;
+    private String mesId;
 
     public String getId() {
         return id;
@@ -98,6 +99,14 @@ public class RG_ProductEntity {
         this.supplyMethod = supplyMethod;
     }
 
+    public String getMesId() {
+        return mesId;
+    }
+
+    public void setMesId(String mesId) {
+        this.mesId = mesId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,8 +124,7 @@ public class RG_ProductEntity {
         if (model != null ? !model.equals(that.model) : that.model != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
         if (supplyMethod != null ? !supplyMethod.equals(that.supplyMethod) : that.supplyMethod != null) return false;
-
-        return true;
+        return mesId != null ? mesId.equals(that.mesId) : that.mesId == null;
     }
 
     @Override
@@ -131,6 +139,7 @@ public class RG_ProductEntity {
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (supplyMethod != null ? supplyMethod.hashCode() : 0);
+        result = 31 * result + (mesId != null ? mesId.hashCode() : 0);
         return result;
     }
 
@@ -147,6 +156,7 @@ public class RG_ProductEntity {
                 ", model='" + model + '\'' +
                 ", state='" + state + '\'' +
                 ", supplyMethod='" + supplyMethod + '\'' +
+                ", mesId='" + mesId + '\'' +
                 '}';
     }
 }
