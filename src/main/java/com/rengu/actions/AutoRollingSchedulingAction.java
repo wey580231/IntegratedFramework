@@ -43,6 +43,8 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     for (RG_OrderEntity rg_orderEntity : lastScheduleOrderSet) {
                         //随机选择异常订单
                         if (rg_orderEntity.getT2().after(lastScheduleRollingStartDate) && rg_orderEntity.getT2().before(lastScheduleRollingEndDate) && random()) {
+                            //设置订单状态为异常
+                            DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Excepiton);
                             exceptionOrderList.add(rg_orderEntity);
                         }
                         //选择待删除订单(结束时间在上次滚动结束之前的订单)
@@ -53,6 +55,10 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     //在删除订单中除去异常订单
                     deleteOrderList.removeAll(exceptionOrderList);
                     Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, deleteOrderList);
+                    //设置订单状态为已完成
+                    for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
+                        DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Finished);
+                    }
                     //异常列表
                     List<RG_AdjustProcessEntity> rg_adjustProcessEntityList = new ArrayList<>();
 //                    //异常模拟
@@ -91,6 +97,9 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     System.out.println("待处理异常数量：" + rg_adjustProcessEntityList.size());
                     for (RG_AdjustProcessEntity rg_adjustProcessEntity : rg_adjustProcessEntityList) {
                         System.out.println("当前APS服务器是否在进行计算：" + ApsTools.isRunning);
+                        //根据id查找Order
+                        RG_OrderEntity rg_orderEntity = DAOFactory.getOrdersDAOInstance().findAllById(rg_adjustProcessEntity.getIdOrder());
+                        DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Calculating);
                         //处理拖期异常
                         ApsTools.instance().executeCommand(ApsTools.getAdjustProcessHandlingURL(rg_adjustProcessEntity));
                         while (ApsTools.isRunning) {
@@ -101,6 +110,8 @@ public class AutoRollingSchedulingAction extends SuperAction {
                                 e.printStackTrace();
                             }
                         }
+                        //设置订单状态为计算完成
+                        DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Calculated);
                     }
                 }
                 //开始滚动排程

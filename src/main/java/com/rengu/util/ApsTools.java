@@ -76,7 +76,6 @@ public class ApsTools {
 
     //紧急插单
     public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
-
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
                 "&" +
                 "BUFFER=1\\n2\\n" + "null" + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n" + entity.getOrd().getId() + "\\n" + entity.getOrd().getName()

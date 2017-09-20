@@ -76,6 +76,8 @@ public class ScheduleAction extends SuperAction {
                         for (RG_OrderEntity rg_orderEntity : rg_orderEntitySet) {
                             //选择待删除订单(结束时间在上次滚动结束之前的订单)
                             if (rg_orderEntity.getT2().before(rg_scheduleEntity.getScheduleTime())) {
+                                //设置订单状态为已完成
+                                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Finished);
                                 removeOrderList.add(rg_orderEntity);
                             }
                         }
@@ -109,6 +111,10 @@ public class ScheduleAction extends SuperAction {
                         //删除多余订单
                         if (deleteOrderList.size() > 0) {
                             Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, deleteOrderList);
+                            //将删除的订单状态改变为计划
+                            for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
+                                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Plan);
+                            }
                         }
                     }
                 }
@@ -118,6 +124,8 @@ public class ScheduleAction extends SuperAction {
             Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<>();
             for (JsonNode order : orderNodes) {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, order.get("id").asText());
+                //设置订单状态为已下发
+                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.SendToAPS);
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
                     String sql = "select * from " + DatabaseInfo.APS_ORDER + " where id='" + rg_orderEntity.getId() + "'";
@@ -325,12 +333,11 @@ public class ScheduleAction extends SuperAction {
                 //调用排程接口
                 int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
                 if (result == ApsTools.STARTED) {
-                    //更新订单状态
+                    //更新订单状态为计算中
                     for (JsonNode tempNode : orderNodes) {
                         RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
                         if (rg_orderEntity != null) {
-                            rg_orderEntity.setState(Byte.parseByte("1"));
-                            session.save(rg_orderEntity);
+                            DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Calculating);
                         }
                     }
                     //更新事件日志节点
