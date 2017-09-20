@@ -54,19 +54,13 @@ public class MesConsumer extends Thread {
     //信息解析
     private void parseMessage(String message) {
         try {
-            System.out.println("接受到消息+:" + message);
-
             JsonNode root = Tools.jsonTreeModelParse(message);
-
             String mesType = root.get("FC").asText();                //功能编码
             String UUID = root.get("UUID").asText();                 //接收消息UUID，用于在回复时加入
-
             JsonNode dataNode = root.get("DATA");
-
             Session session = MySessionFactory.getSessionFactory().openSession();
-
             session.beginTransaction();
-
+            System.out.println("消息类型：" + mesType + "，接受到消息+:" + message);
             //【已调】产品
             if (mesType.equals(MessTable.MES_PRODUCT)) {
 
@@ -104,11 +98,11 @@ public class MesConsumer extends Thread {
             }
             //【已调】地点
             else if (mesType.equals(MessTable.MES_SITE)) {
-                if (dataNode.get("data").isArray()) {
-                    for (int i = 0; i < dataNode.get("data").size(); i++) {
-                        JsonNode subNode = dataNode.get("data").get(i);
-                        RG_SiteEntity site = null;
 
+                if (dataNode.isArray()) {
+                    for (int i = 0; i < dataNode.size(); i++) {
+                        JsonNode subNode = dataNode.get(i);
+                        RG_SiteEntity site = null;
                         site = session.get(RG_SiteEntity.class, subNode.get("id").asText());
 
                         if (site == null) {
@@ -314,7 +308,7 @@ public class MesConsumer extends Thread {
                 String actualDispatchTime = dataNode.get("realExcuteTime").toString();
                 String actualFinsihTime = dataNode.get("realFinishTime").toString();
 
-                orderState .setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
+                orderState.setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
                 orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
                 orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").toString());
 
@@ -347,7 +341,7 @@ public class MesConsumer extends Thread {
                 short qualifiedCount = Short.parseShort(dataNode.get("qualifiedCount").asText());
 
                 float actualFinishCount = 0;
-                if(planCount != 0){
+                if (planCount != 0) {
                     actualFinishCount = (float) (unqulifiedCount + qualifiedCount) / planCount;
                 }
 
@@ -363,12 +357,12 @@ public class MesConsumer extends Thread {
                 RG_OrderEntity orderEntity = (RG_OrderEntity) session.get(RG_OrderEntity.class, idOrder);
                 String idProduct = orderEntity.getProductByIdProduct().getId();
 
-                List<RG_ProcessEntity> processEntity=  (List<RG_ProcessEntity>)session.createQuery("select process from RG_ProcessEntity process where process.productByIdProduct.id =:idProduct").setParameter("idProduct",idProduct).list();
+                List<RG_ProcessEntity> processEntity = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process where process.productByIdProduct.id =:idProduct").setParameter("idProduct", idProduct).list();
                 int count = 0;
                 for (RG_ProcessEntity process : processEntity) {
-                    List<RG_ProcessEntity> processEntity2=  (List<RG_ProcessEntity>)session.createQuery("select process from RG_ProcessEntity process").list();
+                    List<RG_ProcessEntity> processEntity2 = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process").list();
                     for (RG_ProcessEntity process2 : processEntity2) {
-                        if(process2.getIdRoot().equals(process.getId()) && !process2.isTransport()){
+                        if (process2.getIdRoot().equals(process.getId()) && !process2.isTransport()) {
                             count++;  //订单拥有的排程数
 
                             //向工序页面插入异常
@@ -397,7 +391,7 @@ public class MesConsumer extends Thread {
                 }
                 System.out.println("count....:" + count);
                 float finishPercent = 0;
-                if(count != 0){
+                if (count != 0) {
                     finishPercent = actualFinishCount / count;
                     orderState.setFinishPercent(finishPercent);
                 }
@@ -423,7 +417,7 @@ public class MesConsumer extends Thread {
                     data.setValue(dataNode.get("value").asText());
                 }
                 //Yang 20170825新增idTask
-                data.setIdTask(dataNode.get("idTask").asText());
+//                data.setIdTask(dataNode.get("idTask").asText());
                 session.save(data);
             }
             //【已调】设备调整

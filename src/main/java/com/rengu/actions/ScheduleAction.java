@@ -132,7 +132,7 @@ public class ScheduleAction extends SuperAction {
             //解析APS_Config数据
             JsonNode APS_ConfigNode = rootNode.get("APSConfig");
             //查询APS数据的语句
-            String SQLString = "select * from " + DatabaseInfo.APS_ORDER + " where STATE = 0";
+            String SQLString = "select * from " + DatabaseInfo.APS_ORDER;
             //查询APS数据库
             List orderList = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
@@ -147,12 +147,13 @@ public class ScheduleAction extends SuperAction {
                             Map rowData = (HashMap) object;
                             Date date = Tools.parseStandTextDate(rowData.get("T0").toString().trim());
                             if (apsStartTime.after(date)) {
-                                calendar.setTime(date);
-                                calendar.add(Calendar.DAY_OF_YEAR, -2);
-                                apsStartTime = calendar.getTime();
+                                apsStartTime = date;
                             }
                         }
                     }
+                    calendar.setTime(apsStartTime);
+                    calendar.add(Calendar.DAY_OF_YEAR, -2);
+                    apsStartTime = calendar.getTime();
                     System.out.println("优化开始时间：" + apsStartTime);
                     rg_scheduleEntity.setApsStartTime(apsStartTime);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
@@ -166,12 +167,14 @@ public class ScheduleAction extends SuperAction {
                             Map rowData = (HashMap) object;
                             Date date = Tools.parseStandTextDate(rowData.get("T2").toString().trim());
                             if (apsEndTime.before(date)) {
-                                calendar.setTime(date);
-                                calendar.add(Calendar.DAY_OF_YEAR, 5);
-                                apsEndTime = calendar.getTime();
+                                apsEndTime = date;
+
                             }
                         }
                     }
+                    calendar.setTime(apsEndTime);
+                    calendar.add(Calendar.DAY_OF_YEAR, 5);
+                    apsEndTime = calendar.getTime();
                     System.out.println("优化结束时间：" + apsEndTime);
                     rg_scheduleEntity.setApsEndTime(apsEndTime);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
