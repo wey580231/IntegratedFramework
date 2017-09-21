@@ -115,7 +115,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     }
                 }
                 //开始滚动排程
-                System.out.println("开始滚动排程计算------->");
+                System.out.println("开始滚动排程计算");
                 ScheduleAction.beginScheduleHandler(createScheduleInfo());
             } else {
                 //未获取到最后一次排程信息

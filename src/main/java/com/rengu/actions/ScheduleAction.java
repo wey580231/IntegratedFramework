@@ -153,9 +153,11 @@ public class ScheduleAction extends SuperAction {
                     for (Object object : orderList) {
                         if (object instanceof HashMap) {
                             Map rowData = (HashMap) object;
-                            Date date = Tools.parseStandTextDate(rowData.get("T0").toString().trim());
-                            if (apsStartTime.after(date)) {
-                                apsStartTime = date;
+                            if (rowData.get("T0") != null) {
+                                Date date = Tools.parseStandTextDate(rowData.get("T0").toString().trim());
+                                if (apsStartTime.after(date)) {
+                                    apsStartTime = date;
+                                }
                             }
                         }
                     }

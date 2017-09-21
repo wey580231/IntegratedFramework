@@ -427,4 +427,15 @@ public class Tools {
             return null;
         }
     }
+
+    //将Date类型格式化成需要的格式
+    public static Date dateFormater(String string, String pattern) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            return simpleDateFormat.parse(string);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

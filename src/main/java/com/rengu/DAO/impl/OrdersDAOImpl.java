@@ -145,6 +145,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
     public void configOrderState(RG_OrderEntity rg_orderEntity, Session session, Byte orderState) {
         rg_orderEntity.setState(orderState);
         session.saveOrUpdate(rg_orderEntity);
+        System.out.println("设置订单ID：" + rg_orderEntity.getId() + "的状态为：" + rg_orderEntity.getState());
     }
 
     @Override
@@ -157,6 +158,7 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         }
         rg_orderEntity.setState(orderState);
         session.saveOrUpdate(rg_orderEntity);
+        System.out.println("设置订单ID：" + rg_orderEntity.getId() + "的状态为：" + rg_orderEntity.getState());
     }
 
     public boolean delete(Object object) {
