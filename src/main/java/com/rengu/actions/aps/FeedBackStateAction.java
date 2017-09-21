@@ -314,7 +314,7 @@ public class FeedBackStateAction extends SuperAction {
                             nodeName = "基础计算结果";
                             setOrdersState("3", schedule);
                             //更新订单计划数据
-                            getOrderPlan(session);
+                            OrderTools.syncOrderPlanDate(session);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS计算完成!", schedule.getId());
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算完成!", "confirm"));
                         } else {
@@ -324,7 +324,7 @@ public class FeedBackStateAction extends SuperAction {
                             }
                             setOrdersState("3", schedule);
                             //更新订单计划数据
-                            getOrderPlan(session);
+                            OrderTools.syncOrderPlanDate(session);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS优化计算完成!", schedule.getId());
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS优化计算完成!", "confirm"));
                         }
@@ -345,7 +345,7 @@ public class FeedBackStateAction extends SuperAction {
                             nodeName = "基础计算结果";
                             setOrdersState("3", schedule);
                             //更新订单计划数据
-                            getOrderPlan(session);
+                            OrderTools.syncOrderPlanDate(session);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_APS_FINISH);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急计算完成!", schedule.getId());
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急计算完成!", "confirm"));
@@ -356,7 +356,7 @@ public class FeedBackStateAction extends SuperAction {
                             }
                             setOrdersState("3", schedule);
                             //更新订单计划数据
-                            getOrderPlan(session);
+                            OrderTools.syncOrderPlanDate(session);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ADJUSTED);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急优化完成!", schedule.getId());
                             WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急优化完成!", "confirm"));
@@ -514,27 +514,5 @@ public class FeedBackStateAction extends SuperAction {
             thread.start();
         }
         Tools.jsonPrint(Tools.apsCode("ok", "1", "recive execute operation"), this.httpServletResponse);
-    }
-
-    private void getOrderPlan(Session session) {
-        try {
-            String sql = "SELECT * FROM " + DatabaseInfo.APS_ORDER;
-            List orderList = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, sql);
-            for (Object object : orderList) {
-                if (object instanceof HashMap) {
-                    Map tempMap = (HashMap) object;
-                    RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempMap.get("ID").toString());
-                    if (rg_orderEntity != null) {
-                        rg_orderEntity.setT1Plan(Tools.dateFormater(tempMap.get("T1PLAN").toString(), "yyyy-MM-dd HH:mm:ss"));
-                        rg_orderEntity.setT2Plan(Tools.dateFormater(tempMap.get("T2PLAN").toString(), "yyyy-MM-dd HH:mm:ss"));
-                        session.saveOrUpdate(rg_orderEntity);
-                    }
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -71,4 +71,17 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
             return null;
         }
     }
+
+    @Override
+    public void configState(RG_AdjustProcessEntity rg_adjustProcessEntity, Integer errorState) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        rg_adjustProcessEntity.setState(errorState);
+        session.saveOrUpdate(rg_adjustProcessEntity);
+        System.out.println("更新异常ID：" + rg_adjustProcessEntity.getId() + "的状态为：" + rg_adjustProcessEntity.getState());
+    }
 }

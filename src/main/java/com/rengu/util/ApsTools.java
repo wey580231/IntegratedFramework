@@ -226,6 +226,8 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
+                "TIMEOUT=7200000" +
+                "&" +
                 "DELAY=100";
         return executeCommand(result);
     }
@@ -456,7 +458,7 @@ public class ApsTools {
                 "&" +
                 "DELAY=2000" +
                 "&" +
-                "TIMEOUT=2000" +
+                "TIMEOUT=7200000" +
                 "&" +
                 "buffer=001";
 
@@ -464,8 +466,7 @@ public class ApsTools {
     }
 
     //获取普通排程的回调接口
-    public String getNormalScheduleAddress()
-    {
+    public String getNormalScheduleAddress() {
         return localAddress + ":" + localPort + localProjectName + normalScheduleAction;
     }
 

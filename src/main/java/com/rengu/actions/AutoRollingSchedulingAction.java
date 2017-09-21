@@ -61,7 +61,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     }
                     //异常列表
                     List<RG_AdjustProcessEntity> rg_adjustProcessEntityList = new ArrayList<>();
-//                    //异常模拟
+                    //异常模拟
                     for (RG_OrderEntity rg_orderEntity : exceptionOrderList) {
                         //查找当前订单对应的工序信息列表
                         List<RG_PlanEntity> rg_planEntityList = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(rg_orderEntity.getId());
@@ -112,6 +112,8 @@ public class AutoRollingSchedulingAction extends SuperAction {
                         }
                         //设置订单状态为计算完成
                         DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Calculated);
+                        //设置异常的状态为已处理
+                        DAOFactory.getAdjustProcessDAOImplInstance().configState(rg_adjustProcessEntity, ErrorState.ERROR_FINISH);
                     }
                 }
                 //开始滚动排程

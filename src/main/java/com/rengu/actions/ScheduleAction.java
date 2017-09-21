@@ -65,6 +65,8 @@ public class ScheduleAction extends SuperAction {
             if (!transaction.isActive()) {
                 transaction = session.beginTransaction();
             }
+            //同步订单计划信息
+            OrderTools.syncOrderPlanDate(session);
             //获取上次排程信息-处理订单
             if (UserConfigTools.getLatestSchedule("1") != null) {
                 RG_ScheduleEntity latestSchedule = session.get(RG_ScheduleEntity.class, UserConfigTools.getLatestSchedule("1"));
@@ -75,7 +77,7 @@ public class ScheduleAction extends SuperAction {
                         List<RG_OrderEntity> removeOrderList = new ArrayList<>();
                         for (RG_OrderEntity rg_orderEntity : rg_orderEntitySet) {
                             //选择待删除订单(结束时间在上次滚动结束之前的订单)
-                            if (rg_orderEntity.getT2().before(rg_scheduleEntity.getScheduleTime())) {
+                            if (rg_orderEntity.getT2().before(Tools.dateCalculator(latestSchedule.getScheduleTime(), latestSchedule.getRollTime()))) {
                                 //设置订单状态为已完成
                                 DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Finished);
                                 removeOrderList.add(rg_orderEntity);
