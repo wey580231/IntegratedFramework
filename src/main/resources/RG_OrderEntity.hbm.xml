@@ -93,6 +93,10 @@
             <column name="finished" sql-type="tinyint(1)" not-null="false"/>
         </property>
 
+        <property name="sendToMES">
+            <column name="sendToMES" sql-type="tinyint(1)" not-null="false"/>
+        </property>
+
         <many-to-one name="productByIdProduct" lazy="false" fetch="join" class="com.rengu.entity.RG_ProductEntity">
             <column name="idProduct" not-null="false"/>
         </many-to-one>

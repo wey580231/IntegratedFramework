@@ -312,25 +312,29 @@ public class FeedBackStateAction extends SuperAction {
                         if (apsReplyCount == 0) {
                             schedule.setState(RG_ScheduleEntity.APS_SUCCESS);
                             nodeName = "基础计算结果";
-                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算完成!", "confirm"));
                             setOrdersState("3", schedule);
+                            //更新订单计划数据
+                            OrderTools.syncOrderPlanDate(session);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS计算完成!", schedule.getId());
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算完成!", "confirm"));
                         } else {
                             schedule.setState(RG_ScheduleEntity.APS_ADJUST);
                             if (middleSnapshot != null) {
                                 nodeName = "优化调整" + middleSnapshot.getChilds().size();
                             }
-                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS优化计算完成!", "confirm"));
                             setOrdersState("3", schedule);
+                            //更新订单计划数据
+                            OrderTools.syncOrderPlanDate(session);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS优化计算完成!", schedule.getId());
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS优化计算完成!", "confirm"));
                         }
                     }
                     //计算失败
                     else if (!(replyState.equals(APS_RESULT_SUCCESS))) {
                         schedule.setState(RG_ScheduleEntity.APS_FAIL);
-                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算失败!", "alert"));
                         setOrdersState("0", schedule);
                         Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS计算失败!", schedule.getId());
+                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算失败!", "alert"));
                     }
                 }
                 //故障应急排程
@@ -339,29 +343,32 @@ public class FeedBackStateAction extends SuperAction {
                         if (apsReplyCount == 0) {
                             schedule.setState(RG_ScheduleEntity.ERROR_SUCCESS);
                             nodeName = "基础计算结果";
-                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急计算完成!", "confirm"));
                             setOrdersState("3", schedule);
+                            //更新订单计划数据
+                            OrderTools.syncOrderPlanDate(session);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_APS_FINISH);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急计算完成!", schedule.getId());
-
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急计算完成!", "confirm"));
                         } else {
                             schedule.setState(RG_ScheduleEntity.ERROR_ADJUST);
                             if (middleSnapshot != null) {
                                 nodeName = "应急优化调整" + middleSnapshot.getChilds().size();
                             }
-                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急优化完成!", "confirm"));
                             setOrdersState("3", schedule);
+                            //更新订单计划数据
+                            OrderTools.syncOrderPlanDate(session);
                             setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ADJUSTED);
                             Tools.createEventLog(session, EventLogTools.ScheduleCreateEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急优化完成!", schedule.getId());
+                            WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急优化完成!", "confirm"));
                         }
                     }
                     //计算失败
                     else if (!(replyState.equals(APS_RESULT_SUCCESS))) {
                         schedule.setState(RG_ScheduleEntity.ERROR_FAIL);
-                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急处理失败!", "alert"));
                         setOrdersState("0", schedule);
                         setErrorState(userconfig.getErrorType(), userconfig.getErrorId(), ErrorState.ERROR_ERROR);
                         Tools.createEventLog(session, EventLogTools.ScheduleFailedEvent, EventLogTools.SimpleTimeLineItem, schedule.getName() + "-" + nodeName, ":APS应急处理失败!", schedule.getId());
+                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS应急处理失败!", "alert"));
                     }
                 }
 
@@ -419,9 +426,9 @@ public class FeedBackStateAction extends SuperAction {
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        session.getTransaction().rollback();
-                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算结果转换出错!", "alert"));
                         setOrdersState("0", schedule);
+                        WebSocketNotification.broadcast(Tools.creatNotificationMessage("APS计算结果转换出错!", "alert"));
+                        session.getTransaction().rollback();
                     }
                 } else {
                     session.update(schedule);
@@ -468,10 +475,8 @@ public class FeedBackStateAction extends SuperAction {
         Set<RG_OrderEntity> rg_orderEntitySet = rg_scheduleEntity.getOrders();
         if (rg_orderEntitySet.size() > 0) {
             for (RG_OrderEntity orderEntity : rg_orderEntitySet) {
-                if (orderEntity.getState() != Byte.parseByte("2")) {
-                    orderEntity.setState(Byte.parseByte(state));
-                    session.save(orderEntity);
-                }
+                orderEntity.setState(Byte.parseByte(state));
+                session.saveOrUpdate(orderEntity);
             }
         }
     }

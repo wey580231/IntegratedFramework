@@ -1,7 +1,10 @@
 package com.rengu.DAO.impl;
 
 import com.rengu.DAO.OrdersDAO;
-import com.rengu.entity.*;
+import com.rengu.entity.RG_AdjustDeviceEntity;
+import com.rengu.entity.RG_AdjustOrderEntity;
+import com.rengu.entity.RG_OrderEntity;
+import com.rengu.entity.RG_PlanEntity;
 import com.rengu.util.DAOFactory;
 import com.rengu.util.MySessionFactory;
 import org.hibernate.Session;
@@ -12,9 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by hanchangming on 2017/5/22.
@@ -140,6 +141,26 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         return list;
     }
 
+    @Override
+    public void configOrderState(RG_OrderEntity rg_orderEntity, Session session, Byte orderState) {
+        rg_orderEntity.setState(orderState);
+        session.saveOrUpdate(rg_orderEntity);
+        System.out.println("设置订单ID：" + rg_orderEntity.getId() + "的状态为：" + rg_orderEntity.getState());
+    }
+
+    @Override
+    public void configOrderState(RG_OrderEntity rg_orderEntity, Byte orderState) {
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+        rg_orderEntity.setState(orderState);
+        session.saveOrUpdate(rg_orderEntity);
+        System.out.println("设置订单ID：" + rg_orderEntity.getId() + "的状态为：" + rg_orderEntity.getState());
+    }
+
     public boolean delete(Object object) {
         RG_OrderEntity rg_orderEntity;
 
@@ -197,14 +218,14 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
                 return super.delete(rg_orderEntity);
             }*/
 
-            if (rg_adjustOrderEntity != null || rg_PlanEntity .size() > 0 || rg_adjustDeviceEntity != null) {
+            if (rg_adjustOrderEntity != null || rg_PlanEntity.size() > 0 || rg_adjustDeviceEntity != null) {
                 //从订单异常删除订单
                 if (((rg_adjustOrderEntity != null && DAOFactory.getAdjustOrderDAOImplInstance().delete(rg_adjustOrderEntity)) ||
-                        (rg_PlanEntity .size() > 0 && DAOFactory.getPlanDAOImplInstance().delete(orderId)) ||
+                        (rg_PlanEntity.size() > 0 && DAOFactory.getPlanDAOImplInstance().delete(orderId)) ||
                         (rg_adjustDeviceEntity != null && DAOFactory.getAdjustDeviceDAOImplInstance().delete(rg_adjustDeviceEntity)))
                         && super.delete(rg_orderEntity)) {
                     return true;
-                }  else {
+                } else {
                     return false;
                 }
 

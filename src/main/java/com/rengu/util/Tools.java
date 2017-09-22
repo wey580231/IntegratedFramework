@@ -107,6 +107,26 @@ public class Tools {
         }
     }
 
+    public static void deleteAPSOrder(String databaseType, String companyName, RG_OrderEntity rg_orderEntity) {
+        System.out.println("删除订单ID：" + rg_orderEntity.getId() + "，名称：" + rg_orderEntity.getName());
+        String deleteOrder = "DELETE FROM APS_ORDER WHERE id = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+        String updateOrder = "UPDATE APS_RESOURCE r SET RATE=101 WHERE EXISTS (SELECT 0 FROM APS_PLAN p WHERE r.id=p.idResource AND idOrder = '" + rg_orderEntity.getId() + "') AND idClub='001'";
+        String deletePlan = "DELETE FROM APS_PLAN WHERE idOrder = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+        String deleteTask = "DELETE FROM APS_TASK WHERE idOrder = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+        String deleteJob = "DELETE FROM APS_JOB WHERE idOrder = '" + rg_orderEntity.getId() + "' AND idClub='001'";
+        try {
+            executeSQLForUpdate(databaseType, companyName, deleteOrder);
+            executeSQLForUpdate(databaseType, companyName, updateOrder);
+            executeSQLForUpdate(databaseType, companyName, deletePlan);
+            executeSQLForUpdate(databaseType, companyName, deleteTask);
+            executeSQLForUpdate(databaseType, companyName, deleteJob);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Properties getDatabaseProperties() {
         synchronized (flag) {
             if (properties == null) {
@@ -417,11 +437,30 @@ public class Tools {
         return calendar.getTime();
     }
 
+    //日期计算
+    public static Date dateCalculator(Date date, int type, int offset) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(type, offset);
+        return calendar.getTime();
+    }
+
     //将Date类型格式化成需要的格式
     public static Date dateFormater(Date date, String pattern) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             return simpleDateFormat.parse(simpleDateFormat.format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //将Date类型格式化成需要的格式
+    public static Date dateFormater(String string, String pattern) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            return simpleDateFormat.parse(string);
         } catch (ParseException e) {
             e.printStackTrace();
             return null;

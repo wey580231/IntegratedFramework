@@ -25,6 +25,10 @@ public class ScheduleAction extends SuperAction {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat simpleDateFormat1WithTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<RG_OrderEntity> unFinishedOrder = new ArrayList<>();
+        List<RG_OrderEntity> sendToMESOrder = new ArrayList<>();
+        List<RG_OrderEntity> finishedOrder = new ArrayList<>();
+        List<RG_OrderEntity> unSendToMESOrder = new ArrayList<>();
         try {
             JsonNode rootNode = Tools.jsonTreeModelParse(jsonString);
             RG_ScheduleEntity rg_scheduleEntity = new RG_ScheduleEntity();
@@ -45,7 +49,7 @@ public class ScheduleAction extends SuperAction {
                 //有开始事件节点
                 startDate = simpleDateFormat1WithTime.parse(beginScheduleNode.asText());
             }
-            rg_scheduleEntity.setScheduleTime(new java.sql.Date(startDate.getTime()));
+            rg_scheduleEntity.setScheduleTime(startDate);
             rg_scheduleEntity.setStartCalcTime(startDate);
 
             //解析scheduleWindow
@@ -65,6 +69,14 @@ public class ScheduleAction extends SuperAction {
             if (!transaction.isActive()) {
                 transaction = session.beginTransaction();
             }
+
+            //解析Layout数据
+            JsonNode layoutNodes = rootNode.get("layout");
+            RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
+            Set<RG_LayoutDetailEntity> rg_layoutDetailEntitySet = layout.getDetails();
+
+            //同步订单计划信息
+            OrderTools.syncOrderPlanDate(session);
             //获取上次排程信息-处理订单
             if (UserConfigTools.getLatestSchedule("1") != null) {
                 RG_ScheduleEntity latestSchedule = session.get(RG_ScheduleEntity.class, UserConfigTools.getLatestSchedule("1"));
@@ -72,14 +84,28 @@ public class ScheduleAction extends SuperAction {
                     //从上一次排程的订单中清除已经拍成果的订单
                     Set<RG_OrderEntity> rg_orderEntitySet = latestSchedule.getOrders();
                     if (!rg_orderEntitySet.isEmpty()) {
-                        List<RG_OrderEntity> removeOrderList = new ArrayList<>();
+                        //获取下发给MES的订单
                         for (RG_OrderEntity rg_orderEntity : rg_orderEntitySet) {
-                            //选择待删除订单(结束时间在上次滚动结束之前的订单)
-                            if (rg_orderEntity.getT2().before(rg_scheduleEntity.getScheduleTime())) {
-                                removeOrderList.add(rg_orderEntity);
+                            //订单的计划开始时间在上次滚动周期内的订单（已下发MES）
+                            if (rg_orderEntity.getT1Plan().after(latestSchedule.getScheduleTime()) && rg_orderEntity.getT1Plan().before(Tools.dateCalculator(latestSchedule.getScheduleTime(), Calendar.DAY_OF_YEAR, latestSchedule.getRollTime()))) {
+                                sendToMESOrder.add(rg_orderEntity);
+                            } else {
+                                unSendToMESOrder.add(rg_orderEntity);
                             }
                         }
-                        Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, removeOrderList);
+                        //滚动周期内未完成的订单
+                        for (RG_OrderEntity rg_orderEntity : sendToMESOrder) {
+                            //订单的计划结束事件早于当前排程的开始时间
+                            if (rg_orderEntity.getT2Plan().before(rg_scheduleEntity.getScheduleTime())) {
+                                finishedOrder.add(rg_orderEntity);
+                                //设置订单状态为已完成
+                                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Finished);
+                            } else {
+                                //已下发但是未完成的订单
+                                unFinishedOrder.add(rg_orderEntity);
+                            }
+                        }
+                        Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, finishedOrder);
                     }
                     //当前排程滚动周期大于上次泡成滚动周期（添加缺失订单）
                     if (scheduleWindowNodes.asInt() > latestSchedule.getScheduleWindow()) {
@@ -93,22 +119,32 @@ public class ScheduleAction extends SuperAction {
                     if (scheduleWindowNodes.asInt() < latestSchedule.getScheduleWindow()) {
                         System.out.println("当前排程滚动周期小于上次排程滚动周期");
                         //计算当前排程结束时间
-                        calendar.setTime(simpleDateFormat.parse(simpleDateFormat.format(startDate)));
-                        calendar.add(Calendar.DAY_OF_YEAR, scheduleWindowNodes.asInt());
-                        Date currentScheduleEndDate = calendar.getTime();
+                        Date currentScheduleEndDate = Tools.dateCalculator(rg_scheduleEntity.getScheduleTime(), Calendar.DAY_OF_YEAR, rg_scheduleEntity.getScheduleWindow());
                         //计算当上次程结束时间
-                        calendar.setTime(simpleDateFormat.parse(simpleDateFormat.format(latestSchedule.getScheduleTime())));
-                        calendar.add(Calendar.DAY_OF_YEAR, latestSchedule.getScheduleWindow());
-                        Date lastScheduleEndDate = calendar.getTime();
+                        Date lastScheduleEndDate = Tools.dateCalculator(latestSchedule.getScheduleTime(), Calendar.DAY_OF_YEAR, latestSchedule.getScheduleWindow());
                         //查询需要删除的订单
-                        String hql = "from RG_OrderEntity rg_orderEntity where rg_orderEntity.t2 between ? and ?";
-                        Query query = session.createQuery(hql);
-                        query.setParameter(0, currentScheduleEndDate);
-                        query.setParameter(1, lastScheduleEndDate);
-                        List<RG_OrderEntity> deleteOrderList = query.list();
-                        //删除多余订单
-                        if (deleteOrderList.size() > 0) {
-                            Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, deleteOrderList);
+                        List<RG_OrderEntity> deleteOrderList = new ArrayList<>();
+                        for (RG_OrderEntity rg_orderEntity : unSendToMESOrder) {
+                            if (rg_orderEntity.getT2().after(currentScheduleEndDate) && rg_orderEntity.getT2().after(lastScheduleEndDate)) {
+                                //从APS里面删除多余订单
+                                Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, rg_orderEntity);
+                                //将多余的订单状态设置为计划
+                                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Plan);
+                                deleteOrderList.add(rg_orderEntity);
+                            }
+                        }
+                        //从unSendToMESOrder中移除删除的订单
+                        unSendToMESOrder.removeAll(deleteOrderList);
+                    }
+                    //如果排程布局有改动
+                    if (!latestSchedule.getLayout().getId().equals(layout.getId())) {
+                        //清除APS数据库
+                        String[] tableNames = {DatabaseInfo.APS_JOB, DatabaseInfo.APS_TASK, DatabaseInfo.APS_PLAN, DatabaseInfo.APS_LOG, DatabaseInfo.APS_ORDER};
+                        Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+                        //将原有有订单插入
+                        for (RG_OrderEntity rg_orderEntity : unSendToMESOrder) {
+                            DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.SendToAPS);
+                            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_orderEntity));
                         }
                     }
                 }
@@ -116,8 +152,14 @@ public class ScheduleAction extends SuperAction {
             //解析订单数据
             JsonNode orderNodes = rootNode.get("orders");
             Set<RG_OrderEntity> rg_orderEntitySet = new HashSet<>();
+            //插入上次排程使用的订单
+            for (RG_OrderEntity rg_orderEntity : unSendToMESOrder) {
+                rg_orderEntitySet.add(rg_orderEntity);
+            }
             for (JsonNode order : orderNodes) {
                 RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, order.get("id").asText());
+                //设置订单状态为已下发
+                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.SendToAPS);
                 if (rg_orderEntity != null) {
                     rg_orderEntitySet.add(rg_orderEntity);
                     String sql = "select * from " + DatabaseInfo.APS_ORDER + " where id='" + rg_orderEntity.getId() + "'";
@@ -132,26 +174,41 @@ public class ScheduleAction extends SuperAction {
             //解析APS_Config数据
             JsonNode APS_ConfigNode = rootNode.get("APSConfig");
             //查询APS数据的语句
-            String SQLString = "select * from " + DatabaseInfo.APS_ORDER + "";
+            String SQLString = "select * from " + DatabaseInfo.APS_ORDER;
             //查询APS数据库
             List orderList = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+            RG_ScheduleEntity latestSchedule = session.get(RG_ScheduleEntity.class, UserConfigTools.getLatestSchedule("1"));
             for (Iterator<String> it = APS_ConfigNode.fieldNames(); it.hasNext(); ) {
                 String APS_ConfigNodeKey = it.next();
                 String APS_ConfigNodeValue = APS_ConfigNode.get(APS_ConfigNodeKey).asText();
                 if (APS_ConfigNodeKey.equals("t0")) {
-                    //设置前端发送的数据为优化开始时间
-                    Date apsStartTime = Tools.parseDate(APS_ConfigNodeValue);
-                    //遍历APS的Order表查询最早开始时间
-                    for (Object object : orderList) {
-                        if (object instanceof HashMap) {
-                            Map rowData = (HashMap) object;
-                            if (apsStartTime.after(Tools.parseStandTextDate(rowData.get("T0").toString().trim()))) {
-                                calendar.setTime(Tools.parseStandTextDate(rowData.get("T0").toString().trim()));
-                                calendar.add(Calendar.DAY_OF_YEAR, -2);
-                                apsStartTime = calendar.getTime();
+                    Date apsStartTime = null;
+                    if (latestSchedule != null) {
+                        //存在上次排程
+                        if (latestSchedule.getLayout().getId().equals(layout.getId())) {
+                            //布局没有变化
+                            apsStartTime = calApsStartDate(APS_ConfigNodeValue, orderList);
+                        } else {
+                            //布局有变化
+                            if (unFinishedOrder.size() == 0) {
+                                //没有为完成的订单
+                                apsStartTime = calApsStartDate(APS_ConfigNodeValue, orderList);
+                            } else {
+                                //有未完成的订单
+                                apsStartTime = unFinishedOrder.get(0).getT2Plan();
+                                for (RG_OrderEntity rg_orderEntity : unFinishedOrder) {
+                                    if (rg_orderEntity.getT2Plan().after(apsStartTime)) {
+                                        apsStartTime = rg_orderEntity.getT2Plan();
+                                    }
+                                }
+                                apsStartTime = Tools.dateCalculator(apsStartTime, Calendar.HOUR_OF_DAY, 2);
                             }
                         }
+                    } else {
+                        //上次拍成不存在
+                        apsStartTime = calApsStartDate(APS_ConfigNodeValue, orderList);
                     }
+                    System.out.println("优化开始时间：" + apsStartTime);
                     rg_scheduleEntity.setApsStartTime(apsStartTime);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsStartTime())));
                 }
@@ -162,13 +219,17 @@ public class ScheduleAction extends SuperAction {
                     for (Object object : orderList) {
                         if (object instanceof HashMap) {
                             Map rowData = (HashMap) object;
-                            if (apsEndTime.before(Tools.parseStandTextDate(rowData.get("T2").toString().trim()))) {
-                                calendar.setTime(Tools.parseStandTextDate(rowData.get("T2").toString().trim()));
-                                calendar.add(Calendar.DAY_OF_YEAR, 5);
-                                apsEndTime = calendar.getTime();
+                            Date date = Tools.parseStandTextDate(rowData.get("T2").toString().trim());
+                            if (apsEndTime.before(date)) {
+                                apsEndTime = date;
+
                             }
                         }
                     }
+                    calendar.setTime(apsEndTime);
+                    calendar.add(Calendar.DAY_OF_YEAR, 5);
+                    apsEndTime = calendar.getTime();
+                    System.out.println("优化结束时间：" + apsEndTime);
                     rg_scheduleEntity.setApsEndTime(apsEndTime);
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.updateAPSConfigSQL(APS_ConfigNodeKey, Tools.dateConvertToString(rg_scheduleEntity.getApsEndTime())));
                 }
@@ -178,10 +239,6 @@ public class ScheduleAction extends SuperAction {
                 }
             }
 
-            //解析Layout数据
-            JsonNode layoutNodes = rootNode.get("layout");
-            RG_LayoutEntity layout = session.get(RG_LayoutEntity.class, layoutNodes.get("id").asText());
-            Set<RG_LayoutDetailEntity> rg_layoutDetailEntitySet = layout.getDetails();
             //更新资源可用情况
             int znzpNum = 0, rjxzNum = 0;
             for (RG_LayoutDetailEntity rg_layoutDetailEntity : rg_layoutDetailEntitySet) {
@@ -318,12 +375,11 @@ public class ScheduleAction extends SuperAction {
                 //调用排程接口
                 int result = ApsTools.instance().startAPSSchedule(middleShot.getId());
                 if (result == ApsTools.STARTED) {
-                    //更新订单状态
+                    //更新订单状态为计算中
                     for (JsonNode tempNode : orderNodes) {
                         RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, tempNode.get("id").asText());
                         if (rg_orderEntity != null) {
-                            rg_orderEntity.setState(Byte.parseByte("1"));
-                            session.save(rg_orderEntity);
+                            DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Calculating);
                         }
                     }
                     //更新事件日志节点
@@ -380,5 +436,24 @@ public class ScheduleAction extends SuperAction {
         String scheduleId = jsonNode.get("id").asText();
         RG_ScheduleEntity rg_scheduleEntity = DAOFactory.getScheduleDAOImplInstance().findAllById(scheduleId);
         DAOFactory.getScheduleDAOImplInstance().delete(rg_scheduleEntity);
+    }
+
+    private static Date calApsStartDate(String APS_ConfigNodeValue, List<RG_OrderEntity> orderList) {
+        //设置前端发送的数据为优化开始时间
+        Date apsStartTime = Tools.parseDate(APS_ConfigNodeValue);
+        //遍历APS的Order表查询最早开始时间
+        for (Object object : orderList) {
+            if (object instanceof HashMap) {
+                Map rowData = (HashMap) object;
+                if (rowData.get("T0") != null) {
+                    Date date = Tools.parseStandTextDate(rowData.get("T0").toString().trim());
+                    if (apsStartTime.after(date)) {
+                        apsStartTime = date;
+                    }
+                }
+            }
+        }
+        apsStartTime = Tools.dateCalculator(apsStartTime, -2);
+        return apsStartTime;
     }
 }

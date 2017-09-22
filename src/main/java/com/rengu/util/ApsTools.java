@@ -76,7 +76,6 @@ public class ApsTools {
 
     //紧急插单
     public static String getAdjustOrderHandlingURL(RG_AdjustOrderEntity entity) {
-
         String result = "/NCL:RUN?Program=./Model/Interaction/Rescheduling/Order/AcceptOrder.n" +
                 "&" +
                 "BUFFER=1\\n2\\n" + "null" + "\\n001\\n2000-01-01\\t06:00:00\\n120\\n" + entity.getOrd().getId() + "\\n" + entity.getOrd().getName()
@@ -106,6 +105,8 @@ public class ApsTools {
                 "REPLY=" + ApsTools.instance().getResultReplyAddress() +
                 "&" +
                 "ID=" + Tools.getUUID() +
+                "&" +
+                "TIMEOUT=7200000" +
                 "&" +
                 "DELAY=100";
         System.out.println("APS链接地址：" + result);
@@ -226,6 +227,8 @@ public class ApsTools {
                 "REPLY=" + ApsTools.instance().getInterAddress() +
                 "&" +
                 "ID=" + Tools.getUUID() +
+                "&" +
+                "TIMEOUT=7200000" +
                 "&" +
                 "DELAY=100";
         return executeCommand(result);
@@ -457,7 +460,7 @@ public class ApsTools {
                 "&" +
                 "DELAY=2000" +
                 "&" +
-                "TIMEOUT=2000" +
+                "TIMEOUT=7200000" +
                 "&" +
                 "buffer=001";
 
@@ -465,8 +468,7 @@ public class ApsTools {
     }
 
     //获取普通排程的回调接口
-    public String getNormalScheduleAddress()
-    {
+    public String getNormalScheduleAddress() {
         return localAddress + ":" + localPort + localProjectName + normalScheduleAction;
     }
 

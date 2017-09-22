@@ -153,10 +153,13 @@
                                                     <span ng-if="x.processTime ==null">--</span>
                                                     <span ng-if="x.processTime !=null">{{x.processTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                                                 </td>
+
                                                 <td>
+                                                    <span ng-if="x.state == 1">
                                                     <button type="button" class="btn btn-block btn-sm btn-info"
                                                             ng-click="exceptionHandling($event)">处理
                                                     </button>
+                                                        </span>
                                                 </td>
                                             </tr>
                                             </tbody>

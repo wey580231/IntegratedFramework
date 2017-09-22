@@ -71,7 +71,6 @@ public class ErrorProcessAction extends SuperAction {
                 result = dao.processOrderError(id[0]);
             }
         }
-
         if (result == ApsTools.STARTED) {
             Tools.jsonPrint(Tools.resultCode("ok", "Aps is computing..."), this.httpServletResponse);
         } else {
