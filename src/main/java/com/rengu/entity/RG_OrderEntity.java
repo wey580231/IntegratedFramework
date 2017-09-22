@@ -39,6 +39,7 @@ public class RG_OrderEntity {
     private Byte selected;                          //是否被选中
     private Short nbTask;                           //订单工序数(系统生成)
     private boolean finished;                       //是否完工
+    private boolean sendToMES;                       //是否下发给MES
     private RG_ProductEntity productByIdProduct;
     private RG_ClubEntity clubByIdClub;
     @JsonIgnore
@@ -282,6 +283,14 @@ public class RG_OrderEntity {
         this.finished = finished;
     }
 
+    public boolean isSendToMES() {
+        return sendToMES;
+    }
+
+    public void setSendToMES(boolean sendToMES) {
+        this.sendToMES = sendToMES;
+    }
+
     public RG_ProductEntity getProductByIdProduct() {
         return productByIdProduct;
     }
@@ -338,6 +347,7 @@ public class RG_OrderEntity {
         RG_OrderEntity that = (RG_OrderEntity) o;
 
         if (finished != that.finished) return false;
+        if (sendToMES != that.sendToMES) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (origin != null ? !origin.equals(that.origin) : that.origin != null) return false;
@@ -411,6 +421,7 @@ public class RG_OrderEntity {
         result = 31 * result + (selected != null ? selected.hashCode() : 0);
         result = 31 * result + (nbTask != null ? nbTask.hashCode() : 0);
         result = 31 * result + (finished ? 1 : 0);
+        result = 31 * result + (sendToMES ? 1 : 0);
         result = 31 * result + (productByIdProduct != null ? productByIdProduct.hashCode() : 0);
         result = 31 * result + (clubByIdClub != null ? clubByIdClub.hashCode() : 0);
         result = 31 * result + (schedules != null ? schedules.hashCode() : 0);

@@ -106,6 +106,8 @@ public class ApsTools {
                 "&" +
                 "ID=" + Tools.getUUID() +
                 "&" +
+                "TIMEOUT=7200000" +
+                "&" +
                 "DELAY=100";
         System.out.println("APS链接地址：" + result);
         return result;

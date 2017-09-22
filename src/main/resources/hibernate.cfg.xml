@@ -4,6 +4,18 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/TestDatabase?useUnicode=true&amp;serverTimezone=GMT%2b8&amp;characterEncoding=UTF-8</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+        <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">false</property>
+
+        <property name="hbm2ddl.auto">update</property>
+        <property name="connection.autocommit">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
         <!--C3P0配置 -->
         <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider
         </property>
@@ -18,19 +30,6 @@
         <property name="c3p0.idleConnectionTestPeriod">18000</property>
         <property name="c3p0.maxIdleTime">25000</property>
         <property name="c3p0.idle_test_period">120</property>
-
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/TestDatabase?useUnicode=true&amp;serverTimezone=GMT%2b8&amp;characterEncoding=UTF-8</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
-        <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-        <property name="show_sql">false</property>
-        <property name="format_sql">false</property>
-
-        <property name="hbm2ddl.auto">update</property>
-        <property name="connection.autocommit">true</property>
-        <property name="hibernate.current_session_context_class">thread</property>
 
         <!-- APS车间接口 -->
         <mapping resource="RG_ShiftEntity.hbm.xml"/>
@@ -89,7 +88,6 @@
         <mapping resource="RG_EventLogEntity.hbm.xml"/>
 
         <mapping resource="RG_TaskEntity.hbm.xml"/>
-
 
     </session-factory>
 </hibernate-configuration>

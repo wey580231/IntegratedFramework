@@ -35,7 +35,6 @@ public class BackupThread implements Runnable {
             } else if (operateState == Recover_Snapshot) {
                 if (apsState == ApsTools.IDLE) {
                     ApsTools.instance().createApsSnapshot(bottomShotId);
-                    System.out.println("Recover_Snapshot");
                     ApsTools.isRunning = false;
                 }
             } else if (operateState == Query_Order_State) {

@@ -160,8 +160,8 @@ public class AutoRollingSchedulingAction extends SuperAction {
                 Date currentScheduleEndDate = calendar.getTime();
                 //获取新增滚动进来的订单
                 List<RG_OrderEntity> rg_orderEntityList = DAOFactory.getOrdersDAOInstance().findAllByisFinishedAndDate(lastScheduleEndDate, currentScheduleEndDate, false);
-                //加入上次排程使用的订单
-                rg_orderEntityList.addAll(rg_scheduleEntity.getOrders());
+//                //加入上次排程使用的订单
+//                rg_orderEntityList.addAll(rg_scheduleEntity.getOrders());
                 // 除去以调用删除接口删除的订单
                 for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
                     Iterator<RG_OrderEntity> rg_orderEntityIterator = rg_orderEntityList.iterator();
