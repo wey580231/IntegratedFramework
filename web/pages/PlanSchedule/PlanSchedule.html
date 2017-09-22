@@ -81,7 +81,7 @@
     }
 
     /*全选按钮*/
-    .btn-group-sm > .btn, .btn-sm {
+    .btn-group-sm > .btn, .btn-sm{
         padding: 1px 6px;
         font-size: 12px;
         line-height: 1.5;
@@ -126,9 +126,6 @@
                                     ng-click="prepareNewSchedule();">
                                 <i class="fa fa-plus"></i>
                                 新增排程
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="autoRollingScheduling()"><i
-                                    class="fa fa-bug"></i> 滚动
                             </button>
                             <button type="button" class="btn btn-default btn-sm" ng-click="deleteSchedule()"><i
                                     class="fa fa-trash-o"></i> 删除
@@ -216,8 +213,7 @@
                                             <div class="col-md-4" style="height: 100%;">
                                                 <div class="modal-body" style="height: 100%;">
                                                     <form class="form-horizontal" style="height: 100%;">
-                                                        <div class="box-body"
-                                                             style="height: 100%;/*margin-top: -10px*/">
+                                                        <div class="box-body" style="height: 100%;/*margin-top: -10px*/">
                                                             <div class="form-group" id="add-name">
                                                                 <label class="col-sm-4 control-label">排程名称</label>
 
@@ -271,8 +267,7 @@
                                                             <div class="form-group" id="now">
                                                                 <label class="col-sm-4 control-label">当前时间</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" class="form-control pull-right"
-                                                                           id="nowTime-datepicker"
+                                                                    <input type="text" class="form-control pull-right" id="nowTime-datepicker"
                                                                            onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                                                                 </div>
                                                             </div>
@@ -307,13 +302,13 @@
                                             <!-- /.col -->
                                             <div class="col-md-8" style="height: 130%;overflow: hidden;">
                                                 <div class="modal-body" style="height: 100%;">
-                                                    <div class="box box-primary" style="height: 100%;">
-                                                        <div class="box-body no-padding" style="height: 100%;">
-                                                            <!-- THE CALENDAR -->
-                                                            <div id="calendar" ng-init="renderCalendar($last)"></div>
-                                                        </div>
-                                                        <!-- /.box-body -->
+                                                <div class="box box-primary" style="height: 100%;">
+                                                    <div class="box-body no-padding" style="height: 100%;">
+                                                        <!-- THE CALENDAR -->
+                                                        <div id="calendar" ng-init="renderCalendar($last)"></div>
                                                     </div>
+                                                    <!-- /.box-body -->
+                                                </div>
                                                 </div>
                                                 <!-- /. box -->
                                             </div>
@@ -329,8 +324,7 @@
                             <div class="MyPage">
 
                                 <div class="table-responsive mailbox-messages" style="height: 100%">
-                                    <table class="table table-hover table-striped" id="layouts"
-                                           style="overflow: scroll">
+                                    <table class="table table-hover table-striped" id="layouts" style="overflow: scroll">
                                         <tbody style="height: 70%;">
                                         <tr>
                                             <td></td>
@@ -340,8 +334,7 @@
                                         </tr>
                                         <tr ng-repeat="x in layout">
                                             <td style="line-height: 70px;height:70px">
-                                                <input name="check1" type="checkbox" ng-checked="isSelected(x.id)"
-                                                       ng-click="updateSelection($event,x.id)">
+                                                <input name="check1" type="checkbox" ng-checked="isSelected(x.id)" ng-click="updateSelection($event,x.id)">
                                             </td>
                                             <td style="display:none">{{x.id}}</td>
                                             <td style="line-height: 70px;height:70px">{{x.name}}</td>
@@ -356,19 +349,15 @@
                             </div>
                             <div class="MyPage">
                                 <div class="table-responsive mailbox-messages" style="height: 100%">
-                                    <div class="mailbox-controls">
-                                        <!-- Check all button -->
-                                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                class="fa fa-square-o"></i>
-                                        </button>
-                                    </div>
+
                                     <table class="table table-hover table-striped" id="orders" style="overflow: scroll">
                                         <tbody style="height: 70%;">
                                         <tr>
                                             <td>
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                        class="fa fa-square-o"></i>
+                                                <button type="button" id="checkAll" class="btn btn-default btn-sm checkbox-toggle" ng-click="selectAll(ordinfo)"><i class="fa fa-square-o"></i>
                                                 </button>
+                                                <!--<input id="checkAll" name="check1" type="checkbox" class="btn btn-default btn-sm checkbox-toggle"
+                                                       ng-click="selectAll($event,ordinfo)"></td>-->
                                             </td>
                                             <td>名称</td>
                                             <td>来源</td>
@@ -378,7 +367,7 @@
                                             <td>最晚开工</td>
                                         </tr>
                                         <tr ng-repeat="x in ordinfo">
-                                            <td><input id="check1" name="check1" type="checkbox"
+                                            <td><input id="check1" name="check2" type="checkbox"
                                                        ng-checked="isSelected(x.id)"
                                                        ng-click="updateSelection($event,x.id)"></td>
                                             <td style="display:none">{{x.id}}</td>

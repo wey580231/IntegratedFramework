@@ -23,9 +23,17 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         var slot;
 
         //Timepicker
-       /*  $(".timepicker").timepicker({
-         showInputs: false
-         });*/
+        /*$('.timepicker').timepicker({
+            showInputs: false
+        });*/
+        /*laydate.render({
+            elem: '#modal-add-slot1-timepicker', //指定元素
+            type: 'time'
+        });
+        laydate.render({
+            elem: '#modal-add-slot2-timepicker', //指定元素
+            type: 'time'
+        });*/
 
         $(function () {
             loadRightFloatMenu();
@@ -94,15 +102,16 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
              params.slot = slot3.toString();
              console.log(params.slot);*/
 
-            params.extra = parseInt($("input[name='add-extra']").val());
+            //加班 去掉
+            /*params.extra = parseInt($("input[name='add-extra']").val());*/
             addData = JSON.stringify(params);
-            if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
+            /*if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
                 $("#add-name").removeClass(" has-success");
                 $("#add-name").addClass(" has-error");
             } else {
                 $("#add-name").removeClass(" has-error");
                 $("#add-name").addClass(" has-success");
-            }
+            }*/
 
             /*if (!validate.checkLength(slot1)) {
              $("#add-slot1").removeClass("has-success");
@@ -120,35 +129,82 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
              $("#add-slot2").addClass(" has-success");
              }*/
 
-            if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
-                $("#add-extra").removeClass("has-success");
-                $("#add-extra").addClass("has-error");
+            if (!validate.checkTime(slot1)) {
+                $("#add-slot1").removeClass("has-success");
+                $("#add-slot1").addClass("has-error");
             } else {
-                $("#add-extra").removeClass("has-error");
-                $("#add-extra").addClass(" has-success");
+                $("#add-slot1").removeClass("has-error");
+                $("#add-slot1").addClass(" has-success");
             }
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
+            if (!validate.checkTime(slot2)) {
+                $("#add-slot2").removeClass("has-success");
+                $("#add-slot2").addClass("has-error");
+            } else {
+                $("#add-slot2").removeClass("has-error");
+                $("#add-slot2").addClass(" has-success");
+            }
+
+            // validate.checkLength(params.name) && validate.checkString(params.name)&&validate.checkLength(params.extra) && validate.checkNumber(params.extra)
+            if (validate.checkTime(params.slot1) && validate.checkTime(params.slot2)) {
                 return true;
             } else {
 
                 return false;
             }
         };
-        //添加新班次
-        $scope.addNewWork = function () {
 
+        //班次添加判断
+        var workAddValidate = function () {
             var slot1 = document.getElementById("modal-add-slot1-timepicker").value;
             var slot2 = document.getElementById("modal-add-slot2-timepicker").value;
 
-            var opt = document.createElement("option");
-            opt.value = slot1 + "-" + slot2;
-            opt.innerHTML = slot1 + "-" + slot2;
+            if (!validate.checkTime(slot1)) {
+                $("#add-slot1").removeClass("has-success");
+                $("#add-slot1").addClass("has-error");
+            } else {
+                $("#add-slot1").removeClass("has-error");
+                $("#add-slot1").addClass(" has-success");
+            }
 
-            document.getElementById("addWorkList").appendChild(opt);
+            if (!validate.checkTime(slot2)) {
+                $("#add-slot2").removeClass("has-success");
+                $("#add-slot2").addClass("has-error");
+            } else {
+                $("#add-slot2").removeClass("has-error");
+                $("#add-slot2").addClass(" has-success");
+            }
+
+            if (validate.checkTime(slot1) && validate.checkTime(slot2)) {
+                return true;
+            } else {
+
+                return false;
+            }
+        };
+
+        //添加新班次
+        $scope.addNewWork = function () {
+            if(workAddValidate()){
+                var slot1 = document.getElementById("modal-add-slot1-timepicker").value;
+                var slot2 = document.getElementById("modal-add-slot2-timepicker").value;
+
+                var opt = document.createElement("option");
+                opt.value = "{" + slot1 + ".." + slot2 + "}";
+                opt.innerHTML = "{" + slot1 + ".." + slot2 + "}";
+
+                document.getElementById("addWorkList").appendChild(opt);
+            }else {
+                notification.sendNotification("alert", "参数错误");
+            }
+
+            /*var slot1 = document.getElementById("modal-add-slot1-timepicker").value;
+            var slot2 = document.getElementById("modal-add-slot2-timepicker").value;*/
+
+
 
         };
+        //删除班次
         $scope.deleWork = function () {
             var dele = document.getElementById("addWorkList");
             var index = dele.selectedIndex;
@@ -175,6 +231,8 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 notification.sendNotification("alert", "请求失败");
             })
         }*/
+
+      //弹框添加判断
         var workNewAddValidate = function () {
             var workList = document.getElementById("addWorkList");
             var workStr = [];
@@ -185,40 +243,38 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             var form = document.getElementById("addWorkList");
             var elements = {};
             elements.name = document.getElementById("workName").value;
+            elements.time1 = document.getElementById("")
             elements.slot = workStr.join(",");
-            elements.extra = document.getElementById("workExtra").value;
+            //elements.extra = document.getElementById("workExtra").value;
 
             addData = JSON.stringify(elements);
-            if (!validate.checkString(elements.name) || !validate.checkLength(elements.name)) {
+            /*if (!validate.checkString(elements.name) || !validate.checkLength(elements.name)) {
                 $("#add-name").removeClass(" has-success");
                 $("#add-name").addClass(" has-error");
             } else {
                 $("#add-name").removeClass(" has-error");
                 $("#add-name").addClass(" has-success");
-            }
-            if (!validate.checkNumber(elements.extra) || !validate.checkLength(elements.extra)) {
-                $("#add-extra").removeClass("has-success");
-                $("#add-extra").addClass("has-error");
-            } else {
-                $("#add-extra").removeClass("has-error");
-                $("#add-extra").addClass(" has-success");
-            }
+            }*/
 
-            if (validate.checkLength(elements.name) && validate.checkString(elements.name) &&
-                validate.checkLength(elements.extra) && validate.checkNumber(elements.extra)) {
+            //&&validate.checkLength(elements.extra) && validate.checkNumber(elements.extra)
+            /*if (validate.checkLength(elements.name) && validate.checkString(elements.name) ) {*/
                 return true;
-            } else {
+            /*} else {
 
                 return false;
-            }
+            }*/
         };
+
+        //弹框添加
         $scope.addNewWorkInfo = function () {
             if (workNewAddValidate()) {
                 $("#modal-add").modal('hide');
                 console.log(addData);
+
                 myHttpService.post(serviceList.AddShift, addData).then(function successCallback() {
-                    //用强制刷新解决按钮不能连续响应
-                    //location.reload();
+                    myHttpService.get(serviceList.ListShift).then(function (response) {
+                        $scope.workList = response.data;
+                    });
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 })
@@ -233,7 +289,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             params.name = $("input[name='edit-name']").val();
             /*params.slot = $("input[name='edit-slot']").val();*/
             params.slot = slot;
-            params.extra = parseInt($("input[name='edit-extra']").val());
+            //params.extra = parseInt($("input[name='edit-extra']").val());
             editData = params;
 
             if (!validate.checkString(params.name) || !validate.checkLength(params.name)) {
@@ -245,16 +301,16 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
             }
 
 
-            if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
+            /*if (!validate.checkNumber(params.extra) || !validate.checkLength(params.extra)) {
                 $("#edit-extra").removeClass("has-success");
                 $("#edit-extra").addClass("has-error");
             } else {
                 $("#edit-extra").removeClass("has-error");
                 $("#edit-extra").addClass(" has-success");
-            }
+            }*/
 
-            if (validate.checkLength(params.name) && validate.checkString(params.name) &&
-                /* validate.checkLength(params.slot) && validate.checkNumber(params.slot) &&*/ validate.checkLength(params.extra) && validate.checkNumber(params.extra)) {
+            if (validate.checkLength(params.name) && validate.checkString(params.name)
+                /* && validate.checkLength(params.slot) && validate.checkNumber(params.slot) && validate.checkLength(params.extra) && validate.checkNumber(params.extra)*/) {
                 return true;
             } else {
 
@@ -263,7 +319,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         };
 
         //新增订单
-        $scope.addWork = function () {
+        /*$scope.addWork = function () {
             if (workAddValidate()) {
                 $("#modal-add").modal('hide');
                 console.log(addData);
@@ -277,7 +333,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 notification.sendNotification("alert", "参数错误");
             }
             //addData.splice(0, addData.length);
-        };
+        };*/
 
         //获得表单信息
         var getInfo = function () {
@@ -325,7 +381,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 edit_params.name = editData.name;
                 edit_params.type = editData.type;
                 edit_params.slot = editData.slot;
-                edit_params.extra = editData.extra;
+                //edit_params.extra = editData.extra;
                 var update_data = angular.toJson(edit_params);
                 myHttpService.post(serviceList.UpdateShift, update_data).then(function successCallback() {
                     location.reload();
@@ -347,7 +403,9 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
                 console.log("删除的id信息");
                 console.log(idInfo);
                 myHttpService.delete(serviceList.DeleteShift, idInfo).then(function successCallback() {
-                    location.reload();
+                    myHttpService.get(serviceList.ListShift).then(function (response) {
+                        $scope.workList = response.data;
+                    });
                 }, function errorCallback() {
                     notification.sendNotification("alert", "请求失败");
                 });
