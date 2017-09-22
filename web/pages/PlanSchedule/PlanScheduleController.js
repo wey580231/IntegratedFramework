@@ -775,5 +775,12 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 content: content
             });
         }
+
+        //滚动排程按钮
+        $scope.autoRollingScheduling = function () {
+            myHttpService.get(serviceList.autoRolling).then(function (response) {
+                notification.sendNotification("confirm", "触发自动滚动");
+            });
+        }
     })
 ;
