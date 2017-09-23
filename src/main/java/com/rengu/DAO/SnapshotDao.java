@@ -391,6 +391,14 @@ public class SnapshotDao {
 
         Session session = MySessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
+        //重置所有订单的下发mes状态
+        String hql = "from RG_OrderEntity rg_orderEntity";
+        Query queryList = session.createQuery(hql);
+        List<RG_OrderEntity> rg_orderEntityList = queryList.list();
+        for (RG_OrderEntity rg_orderEntity : rg_orderEntityList) {
+            rg_orderEntity.setSendToMES(false);
+            session.saveOrUpdate(rg_orderEntity);
+        }
 
         try {
             RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, id);
@@ -410,7 +418,7 @@ public class SnapshotDao {
                     //【1】更新订单状态
                     while (iter.hasNext()) {
                         RG_OrderEntity tmpOrder = iter.next();
-                        tmpOrder.setState(Byte.parseByte("2"));
+                        tmpOrder.setSendToMES(true);
                         orderList.add(tmpOrder.getId());
                         session.update(tmpOrder);
                     }
