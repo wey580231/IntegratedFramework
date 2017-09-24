@@ -5,13 +5,10 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.ShiftDAO;
 import com.rengu.DAO.impl.ShiftDAOImpl;
 import com.rengu.entity.RG_ShiftEntity;
-import com.rengu.entity.RG_SiteTypeEntity;
 import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,12 +41,21 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
     }
 
     public void delete() throws Exception {
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        RG_ShiftEntity rg_shiftEntity = Tools.jsonConvertToEntity(jsonString, RG_ShiftEntity.class);
-        ShiftDAOImpl shiftDAOInstance = DAOFactory.getShiftInstance();
-        if (shiftDAOInstance.delete(rg_shiftEntity)) {
-        } else {
-            WebSocketNotification.broadcast(Tools.creatNotificationMessage("Shift删除失败", "alert"));
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(httpServletRequest));
+        String id = jsonNode.get("id").asText();
+        RG_ShiftEntity rg_shiftEntity = DAOFactory.getShiftInstance().findAllById(session, id);
+        if (rg_shiftEntity != null) {
+            boolean isDelete = DAOFactory.getShiftInstance().delete(session, rg_shiftEntity);
+            if (isDelete) {
+                transaction.commit();
+                System.out.println("删除成功");
+            } else {
+                transaction.rollback();
+                System.out.println("删除失败");
+            }
         }
     }
 
@@ -81,12 +87,12 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
             Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
         }*/
 
-        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
-        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
-        String shiftId = jsonNode.get("id").asText();
-        ShiftDAOImpl shiftDAO = DAOFactory.getShiftInstance();
-        RG_ShiftEntity rg_shiftEntity = shiftDAO.findAllById(shiftId);
-
+        Session session = MySessionFactory.getSessionFactory().openSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(httpServletRequest));
+        String id = jsonNode.get("id").asText();
+        RG_ShiftEntity rg_shiftEntity = DAOFactory.getShiftInstance().findAllById(session, id);
         //插入
         Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_shiftEntity));
     }
