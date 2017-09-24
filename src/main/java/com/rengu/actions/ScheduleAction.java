@@ -99,6 +99,7 @@ public class ScheduleAction extends SuperAction {
                             if (rg_orderEntity.getT2Plan().before(rg_scheduleEntity.getScheduleTime())) {
                                 finishedOrder.add(rg_orderEntity);
                                 //设置订单状态为已完成
+                                rg_orderEntity.setFinished(true);
                                 DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, session, OrderState.Finished);
                             } else {
                                 //已下发但是未完成的订单
