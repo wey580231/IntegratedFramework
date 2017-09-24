@@ -27,10 +27,15 @@ public class SnapshotDao {
 
     static {
         distanceMap.put("ZNZP", "ZNZPPT_01");
+        distanceMap.put("ZNZPPT_01", "ZNZPPT_01");
+        distanceMap.put("ZNZPPT_02", "ZNZPPT_02");
         distanceMap.put("RJXZ", "RJXZPT_01");
+        distanceMap.put("RJXZPT_01", "RJXZPT_01");
+        distanceMap.put("RJXZPT_02", "RJXZPT_02");
         distanceMap.put("TKD-L", "AGV_L");
         distanceMap.put("TKD-R", "AGV_R");
         distanceMap.put("CCJDJC", "UR5");
+        distanceMap.put("UR5", "UR5");
         distanceMap.put("XBC", "XBC");
         distanceMap.put("MTJDJC", "OnlineTest");
         distanceMap.put("ZHDXNJC", "AssembleAccuracyTest");
@@ -166,11 +171,6 @@ public class SnapshotDao {
                 String processId = plan.getProcessByIdProcess().getId();
                 String resourceId = plan.getResourceByIdResource().getIdR();
 
-//                if (switchedProcessList.contains(processId)) {
-//                    continue;
-//                }
-//                switchedProcessList.add(processId);
-
                 NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
                 nquery.setParameter(1, processId);
                 List<RG_ProcessAssisantEntity> list = nquery.list();
@@ -197,8 +197,9 @@ public class SnapshotDao {
                     result.setTask(entity.getTask());
                     //货物名
                     result.setGoods(entity.getGoods());
-                    //地点名(若不存在为null)
-                    result.setSite(entity.getSite());
+
+                    String site = getSite(session, entity, entity.getSite(), plan.getT1Task());
+                    result.setSite(site);
 
                     Date startDate = sdf.parse(plan.getT1Task());
                     Date endDate = sdf.parse(plan.getT2Task());
@@ -326,30 +327,48 @@ public class SnapshotDao {
         //Yang 20170808转换运输工艺
         for (int i = 0; i < robotPlan.size(); i++) {
             if (i < robotPlan.size() - 1) {
-                System.out.println("+++++:::" + i);
+                String startProcessId = robotPlan.get(i).getProcessByIdProcess().getId();
+                String endProcessId = robotPlan.get(i + 1).getProcessByIdProcess().getId();
+
+                RG_ProcessAssisantEntity startProcessAssisantEntity = getProcessAssisant(session, startProcessId);
+                RG_ProcessAssisantEntity endProcessAssisantEntity = getProcessAssisant(session, endProcessId);
 
                 RG_SiteEntity startSiteEntity = robotPlan.get(i).getSiteByIdSite();
                 RG_SiteEntity endSiteEntity = robotPlan.get(i + 1).getSiteByIdSite();
 
-                if (startSiteEntity == null || endSiteEntity == null) {
+                if (startProcessAssisantEntity == null || endProcessAssisantEntity == null || startSiteEntity == null || endSiteEntity == null) {
                     continue;
                 }
 
-                String startSite = startSiteEntity.getId();
-                String endSite = endSiteEntity.getId();
+                String startSite = getSite(session, startProcessAssisantEntity, startSiteEntity.getId(), robotPlan.get(i).getT1Task());
+
+                String endSite = getSite(session, endProcessAssisantEntity, endSiteEntity.getId(), robotPlan.get(i + 1).getT1Task());
 
                 if (!startSite.equals(endSite)) {
                     Date startDate = sdf.parse(robotPlan.get(i).getT2Task());
 
                     long stime = (startDate.getTime() - initialDate.getTime()) / 1000 + 1 + perPlanDelayMinuteTime;
-
                     long lastTime = 0;
 
                     Short currPeed = robotPlan.get(i).getResourceByIdResource().getMobility();
 
                     NativeQuery nquery = session.createNativeQuery("select * from rg_distance where idSite1 =:site1 and idSite2 =:site2").addEntity(RG_DistanceEntity.class);
-                    nquery.setParameter("site1", startSite);
-                    nquery.setParameter("site2", endSite);
+
+                    if (startSite.toLowerCase().contains("znzp")) {
+                        nquery.setParameter("site1", "ZNZP");
+                    } else if (startSite.toLowerCase().contains("rjxz")) {
+                        nquery.setParameter("site1", "RJXZ");
+                    } else {
+                        nquery.setParameter("site1", startSite);
+                    }
+
+                    if (endSite.toLowerCase().contains("znzp")) {
+                        nquery.setParameter("site2", "ZNZP");
+                    } else if (endSite.toLowerCase().contains("rjxz")) {
+                        nquery.setParameter("site2", "RJXZ");
+                    } else {
+                        nquery.setParameter("site2", endSite);
+                    }
 
                     List list = nquery.list();
 
@@ -358,6 +377,8 @@ public class SnapshotDao {
                         if (distanceEntity != null && currPeed != null && distanceEntity.getDistance() > 0 && currPeed > 0) {
                             lastTime = distanceEntity.getDistance() / currPeed;
                         }
+                    } else {
+                        System.out.println(startSite + "_**__Yang_" + endSite + "_::_" + startSiteEntity.getId() + "_^^_" + endSiteEntity.getId());
                     }
 
                     if (lastTime > 0) {
@@ -385,12 +406,58 @@ public class SnapshotDao {
         }
     }
 
+    private String getSite(Session session, RG_ProcessAssisantEntity entity, String processAssisantSite, String t1Task) {
+        String site = "";
+        if (entity.getSiteRource() != null) {
+            NativeQuery planQuery = session.createNativeQuery("select * from rg_plan where t1Task = ?", RG_PlanEntity.class);
+            planQuery.setParameter(1, t1Task);
+            List<RG_PlanEntity> planList = planQuery.list();
+            if (planList.size() > 0) {
+                Iterator<RG_PlanEntity> planIter = planList.iterator();
+                while (planIter.hasNext()) {
+                    RG_PlanEntity tmpPlan = planIter.next();
+                    if (!(tmpPlan.getResourceByIdResource().getIdR().toUpperCase().equals("KR16_MG")) && entity.getSiteRource().contains(tmpPlan.getSiteByIdSite().getId())) {
+                        site = tmpPlan.getSiteByIdSite().getId();
+                        break;
+                    }
+                }
+            } else {
+                site = processAssisantSite;
+            }
+        } else {
+            site = processAssisantSite;
+        }
+        return site;
+    }
+
+    private RG_ProcessAssisantEntity getProcessAssisant(Session session, String processId) {
+        NativeQuery nquery = session.createNativeQuery("select * from rg_processassisant where processId = ? ", RG_ProcessAssisantEntity.class);
+        nquery.setParameter(1, processId);
+        List<RG_ProcessAssisantEntity> startList = nquery.list();
+
+        RG_ProcessAssisantEntity entity = null;
+
+        if (startList.size() > 0) {
+            entity = startList.get(0);
+        }
+        return entity;
+    }
+
     //将结果下发给MES，添加对订单状态的修改
+
     public boolean switchResultToMess(String s, String id) {
         boolean result = false;
 
         Session session = MySessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
+        //重置所有订单的下发mes状态
+        String hql = "from RG_OrderEntity rg_orderEntity";
+        Query queryList = session.createQuery(hql);
+        List<RG_OrderEntity> rg_orderEntityList = queryList.list();
+        for (RG_OrderEntity rg_orderEntity : rg_orderEntityList) {
+            rg_orderEntity.setSendToMES(false);
+            session.saveOrUpdate(rg_orderEntity);
+        }
 
         try {
             RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, id);
@@ -410,7 +477,7 @@ public class SnapshotDao {
                     //【1】更新订单状态
                     while (iter.hasNext()) {
                         RG_OrderEntity tmpOrder = iter.next();
-                        tmpOrder.setState(Byte.parseByte("2"));
+                        tmpOrder.setSendToMES(true);
                         orderList.add(tmpOrder.getId());
                         session.update(tmpOrder);
                     }

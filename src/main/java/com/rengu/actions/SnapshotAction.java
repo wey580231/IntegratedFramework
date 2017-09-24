@@ -48,16 +48,13 @@ public class SnapshotAction extends SuperAction {
     public void dispatcherResultToMess() {
         ActionContext context = ActionContext.getContext();
         Map<String, Object> parameterMap = context.getParameters();
-
         boolean opresult = false;
-
         if (parameterMap.size() == 1) {
             String[] ids = (String[]) parameterMap.get("id");
             if (ids.length == 1) {
                 opresult = snapshotDao.switchResultToMess("1", ids[0]);
             }
         }
-
         if (opresult) {
             Tools.jsonPrint(Tools.resultCode("ok", "Execute operation"), this.httpServletResponse);
         } else {
