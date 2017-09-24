@@ -92,7 +92,7 @@
        	            如果均设置为true，那么插入时，只会往各自表中去插，不会去中间表去插入。
                                 如果均为false，那么在插入时，关系表会插入两次，导致数据重复而失败
          -->
-        <set name="sitesById" inverse="false" cascade="save-update" table="site_resource">
+        <set name="sitesById" inverse="true" cascade="save-update,delete" table="site_resource">
             <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_SiteEntity"
                           column="site_id" lazy="false"/>

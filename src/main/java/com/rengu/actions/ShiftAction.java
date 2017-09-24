@@ -5,10 +5,13 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.rengu.DAO.ShiftDAO;
 import com.rengu.DAO.impl.ShiftDAOImpl;
 import com.rengu.entity.RG_ShiftEntity;
-import com.rengu.util.DAOFactory;
-import com.rengu.util.Tools;
-import com.rengu.util.WebSocketNotification;
+import com.rengu.entity.RG_SiteTypeEntity;
+import com.rengu.util.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -69,5 +72,22 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
         RG_ShiftEntity rg_shiftEntity = shiftDAO.findAllById(shiftId);
         String resultString = Tools.entityConvertToJsonString(rg_shiftEntity);
         Tools.jsonPrint(resultString, this.httpServletResponse);
+    }
+
+    public void saveAPS() throws Exception {
+        //清空APS数据库
+        /*String[] tableNames = {DatabaseInfo.APS_SHIFT};
+        if(tableNames != null){
+            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+        }*/
+
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
+        String shiftId = jsonNode.get("id").asText();
+        ShiftDAOImpl shiftDAO = DAOFactory.getShiftInstance();
+        RG_ShiftEntity rg_shiftEntity = shiftDAO.findAllById(shiftId);
+
+        //插入
+        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_shiftEntity));
     }
 }

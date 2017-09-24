@@ -147,6 +147,7 @@ angular.module("IntegratedFramework", [
         service.UpdateShift = backUrl + "shift/update.action";
         service.AddShift = backUrl + "shift/save.action";
         service.GetShiftById = backUrl + "shift/findAllById.action";
+        service.saveAPS = backUrl + "shift/saveAPS.action";
         <!--3D信息-->
         service.query3DState = backUrl + "3d/query3DState.action";
         service.config3D = backUrl + "3d/config3D.action";
