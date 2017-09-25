@@ -154,10 +154,9 @@ public class SnapshotDao {
 
         List<RG_PlanEntity> robotPlan = new ArrayList<RG_PlanEntity>();
 
+        System.out.println("总计需要转换" + plans.size() + "条记录");
         //转换AGV、生产工艺
         for (int i = 0; i < plans.size(); i++) {
-
-            System.out.println(i + "+++++");
 
             RG_PlanEntity plan = plans.get(i);
 
