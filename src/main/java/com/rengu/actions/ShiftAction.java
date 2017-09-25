@@ -81,19 +81,20 @@ public class ShiftAction extends SuperAction implements ModelDriven<RG_ShiftEnti
     }
 
     public void saveAPS() throws Exception {
-        //清空APS数据库
-        /*String[] tableNames = {DatabaseInfo.APS_SHIFT};
-        if(tableNames != null){
-            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
-        }*/
-
         Session session = MySessionFactory.getSessionFactory().openSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
         JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(httpServletRequest));
         String id = jsonNode.get("id").asText();
         RG_ShiftEntity rg_shiftEntity = DAOFactory.getShiftInstance().findAllById(session, id);
-        //插入
-        Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_shiftEntity));
+        if (rg_shiftEntity != null) {
+            //清空APS数据库
+            String[] tableNames = {DatabaseInfo.APS_SHIFT};
+            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNames);
+            //插入
+            String sql = "UPDATE " + DatabaseInfo.APS_RESOURCE + " SET IDSHIFT = '{\"" + rg_shiftEntity.getId() + "\"}'";
+            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(rg_shiftEntity));
+            Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, sql);
+        }
     }
 }

@@ -48,7 +48,6 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         //确认下发APS
         function confirmDispatchAps() {
             layer.load();
-
             if (getInfo()) {
                 var params = {};
                 params.id = idVal;
