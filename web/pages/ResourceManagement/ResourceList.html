@@ -118,9 +118,7 @@
                                     <label class="col-sm-2 control-label">正常班次</label>
                                     <div class="col-sm-10">
                                         <select id="selectAdd" class="form-control" name="add-nameShift">
-                                            <option value="08:30:00至12:00:00">08:30:00至12:00:00</option>
-                                            <option value="13:30:00至17:00:00">13:30:00至17:00:00</option>
-                                            <option value="18:30:00至20:00:00">18:30:00至20:00:00</option>
+                                            <option ng-repeat="data in workList">{{data.name}}</option>
                                         </select>
                                     </div>
 
@@ -195,9 +193,7 @@
                                     <label class="col-sm-2 control-label">正常班次</label>
                                     <div class="col-sm-10">
                                         <select id="selectEdit" class="form-control" name="edit-nameShift">
-                                            <option value="08:30:00至12:00:00">08:30:00至12:00:00</option>
-                                            <option value="13:30:00至17:00:00">13:30:00至17:00:00</option>
-                                            <option value="18:30:00至20:00:00">18:30:00至20:00:00</option>
+                                            <option ng-repeat="data in workList">{{data.name}}</option>
                                         </select>
                                     </div>
                                 </div>

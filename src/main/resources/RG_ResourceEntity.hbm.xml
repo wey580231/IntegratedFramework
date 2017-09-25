@@ -97,7 +97,7 @@
             <many-to-many class="com.rengu.entity.RG_SiteEntity"
                           column="site_id" lazy="false"/>
         </set>
-        <set name="shiftsById" inverse="false" cascade="save-update" table="shift_resource">
+        <set name="shiftsById" inverse="true" cascade="save-update" table="shift_resource">
             <key column="resource_id"/>
             <many-to-many class="com.rengu.entity.RG_ShiftEntity"
                           column="shift_id"/>
