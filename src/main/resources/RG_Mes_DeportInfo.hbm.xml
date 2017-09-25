@@ -6,7 +6,7 @@
 
     <class name="com.rengu.entity.RG_Mes_DeportInfo" table="RG_DeportInfo" schema="testdatabase">
         <id name="id">
-            <column name="id" sql-type="varchar(100)" length="100"/>
+            <column name="id" sql-type="varchar(255)" length="100"/>
         </id>
         <property name="deportId">
             <column name="deportId" sql-type="varchar(255)" not-null="false"/>
