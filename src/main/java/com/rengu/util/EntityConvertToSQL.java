@@ -151,7 +151,7 @@ public class EntityConvertToSQL {
     }*/
 
     public static String insertSQLForAPS(RG_ShiftEntity rg_shiftEntity) {
-        String SQLString = "INSERT INTO " + DatabaseInfo.APS_SHIFT + " (id,name,Slot) VALUES ('" + rg_shiftEntity.getId() + "','" + rg_shiftEntity.getName() + "','" + rg_shiftEntity.getSlot() + "');";
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_SHIFT + " (id,name,Slot) VALUES ('" + rg_shiftEntity.getId() + "','" + rg_shiftEntity.getName() + "','" + rg_shiftEntity.getSlot() + "')";
         return SQLString;
     }
 
