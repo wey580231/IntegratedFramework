@@ -98,8 +98,8 @@ public class RG_ShiftEntity {
     }
 
     @ManyToMany
-    @JoinTable(name="shift_resource",joinColumns =
-            {@JoinColumn(name="shift_id")},inverseJoinColumns = {@JoinColumn(name="resource_id")})
+    @JoinTable(name = "shift_resource", joinColumns =
+            {@JoinColumn(name = "shift_id")}, inverseJoinColumns = {@JoinColumn(name = "resource_id")})
     public Set<RG_ResourceEntity> getResources() {
         return resources;
     }
