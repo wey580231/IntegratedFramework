@@ -28,6 +28,28 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         var defualtAssemblyCarryListPageNum = 0;
         var defualtAssemblyCenterListPageNum = 0;
 
+       //原carryPre
+        /* $scope.carryListPagePrvButton = function () {
+            defualtCarryListPageNum = defualtCarryListPageNum - 1;
+            var carryBody = {};
+            carryBody.maxResults = maxTableLineNum;
+            carryBody.firstResult = defualtCarryListPageNum * carryBody.maxResults;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        };*/
+
         $scope.carryListPagePrvButton = function () {
             defualtCarryListPageNum = defualtCarryListPageNum - 1;
             var carryBody = {};
@@ -48,6 +70,28 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 hideLoadingPage();
             });
         };
+
+        //原carryNext
+        /*$scope.carryListPageNextButton = function () {
+            defualtCarryListPageNum = defualtCarryListPageNum + 1;
+            var carryBody = {};
+            carryBody.maxResults = maxTableLineNum;
+            carryBody.firstResult = defualtCarryListPageNum * carryBody.maxResults;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });
+        };*/
 
         $scope.carryListPageNextButton = function () {
             defualtCarryListPageNum = defualtCarryListPageNum + 1;
@@ -70,7 +114,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             });
         };
 
-        $scope.AssemblyCarryListPagePrvButton = function () {
+        /*$scope.AssemblyCarryListPagePrvButton = function () {
             defualtAssemblyCarryListPageNum = defualtAssemblyCarryListPageNum - 1;
             var assemblyCarryInfoBody = {};
             assemblyCarryInfoBody.maxResults = maxTableLineNum;
@@ -110,13 +154,13 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        };
+        };*/
 
         $scope.AssemblyCenterTablePrvButton = function () {
             defualtAssemblyCenterListPageNum = defualtAssemblyCenterListPageNum - 1;
             var AssemblyCenterInfoBody = {};
             AssemblyCenterInfoBody.maxResults = maxTableLineNum;
-            AssemblyCenterInfoBody.firstResult = defualtAssemblyCenterListPageNum * assemblyCarryInfoBody.maxResults;
+            AssemblyCenterInfoBody.firstResult = defualtAssemblyCenterListPageNum * AssemblyCenterInfoBody.maxResults;
             myHttpService.post(serviceList.getAllAssemblyCentersByFirstResultAndMaxResults, AssemblyCenterInfoBody).then(function successCallback(response) {
                 var responseBody = response.data;
                 $scope.AssemblyCenterList = responseBody.tableList;
@@ -137,7 +181,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             defualtAssemblyCenterListPageNum = defualtAssemblyCenterListPageNum + 1;
             var AssemblyCenterInfoBody = {};
             AssemblyCenterInfoBody.maxResults = maxTableLineNum;
-            AssemblyCenterInfoBody.firstResult = defualtAssemblyCenterListPageNum * assemblyCarryInfoBody.maxResults;
+            AssemblyCenterInfoBody.firstResult = defualtAssemblyCenterListPageNum * AssemblyCenterInfoBody.maxResults;
             myHttpService.post(serviceList.getAllAssemblyCentersByFirstResultAndMaxResults, AssemblyCenterInfoBody).then(function successCallback(response) {
                 var responseBody = response.data;
                 $scope.AssemblyCenterList = responseBody.tableList;
@@ -154,7 +198,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             });
         };
 
-        function getFirst(){
+        /*function getFirst(){
             var carryBody = {};
             carryBody.maxResults = maxTableLineNum;
             carryBody.firstResult = 0;
@@ -172,7 +216,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        }
+        }*/
 
         layer.load(0);
         $(function () {
@@ -212,7 +256,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                         loadRightFloatMenu();
                         hideLoadingPage();
 
-                        deport();
+                        //deport();
                     });
 
                     //deport();
@@ -222,6 +266,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
             deport();
 
+
             /*myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
                 deportData = response.data;
                 $scope.deportData = response.data;
@@ -230,7 +275,97 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             });*/
 
 
-            var assemblyCarryInfoBody = {};
+            var deport3 = function(){
+                $timeout(function(){
+
+                    var carryInfoBody = {};
+                    carryInfoBody.maxResults = maxTableLineNum;
+                    //carryInfoBody.firstResult = 0;
+                    carryInfoBody.firstResult = defualtCarryListPageNum * carryInfoBody.maxResults;
+                    myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryInfoBody).then(function successCallback(response) {
+                        var responseBody = response.data;
+                        $scope.CarryList = responseBody.tableList;
+                        $('#carryTableNextButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                            $('#carryTableNextButton').attr('disabled', "true");
+                        }
+                        $('#carryTableNextButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum - 1 <= 0) {
+                            $('#carryTableNextButton').attr('disabled', "true");
+                        }
+                        loadRightFloatMenu();
+                        hideLoadingPage();
+
+                        deport3();
+                    });
+
+                },8000)
+            };
+
+            deport3();
+
+
+            /*var carryInfoBody = {};
+            carryInfoBody.maxResults = maxTableLineNum;
+            carryInfoBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCarryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+            });*/
+
+
+            /*var deport4 = function(){
+                $timeout(function(){
+
+                    var assemblyCarryInfoBody = {};
+                    assemblyCarryInfoBody.maxResults = maxTableLineNum;
+                    assemblyCarryInfoBody.firstResult = defualtAssemblyCarryListPageNum * assemblyCarryInfoBody.maxResults;
+
+                    myHttpService.post(serviceList.getAllAssemblyCarrysByFirstResultAndMaxResults, assemblyCarryInfoBody).then(function successCallback(response) {
+                        var responseBody = response.data;
+                        $scope.AssemblyCarryList = responseBody.tableList;
+
+                        $('#assemblyCarryTableNextButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                            $('#assemblyCarryTableNextButton').attr('disabled', "true");
+                        }
+                        $('#assemblyCarryTablePrvButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum - 1 <= 0) {
+                            $('#assemblyCarryTablePrvButton').attr('disabled', "true");
+                        }
+
+                        /!*$('#assemblyCarryTableNextButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                            $('#assemblyCarryTableNextButton').attr('disabled', "true");
+                        }
+                        $('#assemblyCarryTablePrvButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum - 1 <= 0) {
+                            $('#assemblyCarryTablePrvButton').attr('disabled', "true");
+                        }*!/
+                        loadRightFloatMenu();
+                        hideLoadingPage();
+
+
+                        deport4();
+                    });
+
+
+                },8000)
+            };
+
+            deport4();*/
+
+            /*var assemblyCarryInfoBody = {};
             assemblyCarryInfoBody.maxResults = maxTableLineNum;
             assemblyCarryInfoBody.firstResult = 0;
             myHttpService.post(serviceList.getAllAssemblyCarrysByFirstResultAndMaxResults, assemblyCarryInfoBody).then(function successCallback(response) {
@@ -246,6 +381,54 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 }
                 loadRightFloatMenu();
                 hideLoadingPage();
+            });*/
+
+
+            var deport5 = function(){
+                $timeout(function(){
+                    var AssemblyCenterInfoBody = {};
+                    AssemblyCenterInfoBody.maxResults = maxTableLineNum;
+                    AssemblyCenterInfoBody.firstResult = defualtAssemblyCenterListPageNum * AssemblyCenterInfoBody.maxResults;
+
+                    myHttpService.post(serviceList.getAllAssemblyCentersByFirstResultAndMaxResults, AssemblyCenterInfoBody).then(function successCallback(response) {
+                        var responseBody = response.data;
+                        $scope.AssemblyCenterList = responseBody.tableList;
+                        $('#assemblyCenterTableNextButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                            $('#assemblyCenterTableNextButton').attr('disabled', "true");
+                        }
+                        $('#assemblyCenterTablePrvButton').removeAttr("disabled");
+                        if (responseBody.firstIndexNum - 1 <= 0) {
+                            $('#assemblyCenterTablePrvButton').attr('disabled', "true");
+                        }
+                        loadRightFloatMenu();
+                        hideLoadingPage();
+
+                        deport5();
+                    });
+
+                },8000)
+            };
+
+            deport5();
+
+            var carryInfoBody = {};
+            carryInfoBody.maxResults = maxTableLineNum;
+            carryInfoBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllCarrysByFirstResultAndMaxResults, carryInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.CarryList = responseBody.tableList;
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                $('#carryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#carryTableNextButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
+
             });
 
             var AssemblyCenterInfoBody = {};
@@ -391,7 +574,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         /*
          * 动图
          * */
-        myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
+        /*myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
             dynamicData = response.data;
             hideLoadingPage();
 
@@ -414,12 +597,21 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                     events: {
                         load: function () {
                             // set up the updating of the chart each second
-                            var series = this.series[0], chart = this;
+                            var series = this.series[0],
+                                chart = this;
+                            var x = null, y = null;
                             setInterval(function () {
-                                var x = (new Date()).getTime(), y = dynamicData[dynamicData.length - 1].remainPower;
+                                if(dynamicData.length <= 0){
+                                    x = (new Date()).getTime(),
+                                    y = Math.random();
+                                }else{
+                                    x = (new Date()).getTime(),
+                                    y = dynamicData[dynamicData.length - 1].remainPower;
+                                }
+
                                 series.addPoint([x, y]);
                                 activeLastPointToolip(chart)
-                            }, 10 * 1000);  //隔多长时间加载一次数据
+                            }, 30 * 1000);  //隔多长时间加载一次数据
                         }
                     }
                 },
@@ -460,21 +652,151 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                     data: (function () {
                         // generate an array of random data
                         var data = [];
-                        dynamicData.forEach(
-                            function handleFunction(value) {
-                                data.push({
-                                    x: value.reportTime,
-                                    y: value.remainPower
-                                });
-                            }
-                        );
+                        if(dynamicData.length <= 0){
+                            var data = [],
+                                time = (new Date()).getTime(),
+                                i;
+                            data.push({
+                                x : time + i * 1000,
+                                y : 100
+                            });
+
+                        }else{
+                            dynamicData.forEach(
+                                function handleFunction(value) {
+                                    data.push({
+                                        x: value.reportTime,
+                                        y: value.remainPower
+                                    });
+                                }
+                            );
+                        }
+
                         return data;
                     }())
                 }]
             }, function (c) {
                 activeLastPointToolip(c)
             });
-        });
+        });*/
+
+        /*var deport2 = function(){
+            $timeout(function(){
+                myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
+                    dynamicData = response.data;
+                    hideLoadingPage();
+
+                    Highcharts.setOptions({
+                        global: {
+                            useUTC: false
+                        }
+                    });
+
+                    function activeLastPointToolip(chart) {
+                        var points = chart.series[0].points;
+                        chart.tooltip.refresh(points[points.length - 1]);
+                    }
+
+                    $('#dynamicChart').highcharts({
+                        chart: {
+                            type: 'spline',
+                            animation: Highcharts.svg,
+                            marginRight: 10,
+                            events: {
+                                load: function () {
+                                    // set up the updating of the chart each second
+                                    var series = this.series[0],
+                                        chart = this;
+                                    var x = null, y = null;
+                                    setInterval(function () {
+                                        if(dynamicData.length <= 0){
+                                            x = (new Date()).getTime();
+                                                y = Math.random();
+                                        }else{
+                                            x = (new Date()).getTime();
+                                            y = dynamicData[dynamicData.length - 1].remainPower;
+                                        }
+
+                                        series.addPoint([x, y]);
+                                        activeLastPointToolip(chart)
+                                    }, 5 * 1000);  //隔多长时间加载一次数据
+                                }
+                            }
+                        },
+                        title: {
+                            text: '动态模拟实时数据'
+                        },
+                        xAxis: {
+                            type: 'datetime',
+                            maxZoom: 48 * 60 * 1000,  //x轴两点相隔10min
+                            tickPixelInterval: 100  //x轴两点之间的间距（像素）
+                        },
+                        yAxis: {
+                            title: {
+                                text: '电量'
+                            },
+                            minRange: 20,
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            formatter: function () {
+                                return '<b>' + this.series.name + '</b><br/>' +
+                                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                                    Highcharts.numberFormat(this.y, 2);
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        exporting: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: '随机数据',
+                            data: (function () {
+                                // generate an array of random data
+                                var data = [];
+                                if(dynamicData.length <= 0){
+                                    var data = [],
+                                        time = (new Date()).getTime(),
+                                        i;
+                                    data.push({
+                                        x : time + i * 1000,
+                                        y : 100
+                                    });
+
+                                }else{
+                                    dynamicData.forEach(
+                                        function handleFunction(value) {
+                                            data.push({
+                                                x: value.reportTime,
+                                                y: value.remainPower
+                                            });
+                                        }
+                                    );
+                                }
+
+                                return data;
+                            }())
+                        }]
+                    }, function (c) {
+                        activeLastPointToolip(c)
+                    });
+
+                    deport2();
+                });
+
+                //deport();
+
+            },5000)
+        };
+
+        deport2();*/
+
 
         function view() {
             document.getElementById("pieChart").style.display = "";
