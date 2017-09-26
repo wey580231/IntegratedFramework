@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         })
     }])
 
-    .controller('EquipmentMonitoringController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService) {
+    .controller('EquipmentMonitoringController', function ($scope, $http, $timeout, myHttpService, serviceList, validate, notification, renderTableService) {
 
         var deportData = [];  //下拉框数据
         var pieNodes = [];  //饼图的数据
@@ -184,7 +184,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             view();
 
             //loadAGVInfo();
-            setInterval(getFirst,3000);
+            //setInterval(getFirst,3000);
 
            /* var carryBody = {};
             carryBody.maxResults = maxTableLineNum;
@@ -204,12 +204,30 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 hideLoadingPage();
             });*/
 
-            myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
+            var deport = function(){
+                $timeout(function(){
+                    myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
+                        deportData = response.data;
+                        $scope.deportData = response.data;
+                        loadRightFloatMenu();
+                        hideLoadingPage();
+
+                        deport();
+                    });
+
+                    //deport();
+
+                },5000)
+            };
+
+            deport();
+
+            /*myHttpService.post(serviceList.AllDeportInfoList).then(function successCallback(response) {
                 deportData = response.data;
                 $scope.deportData = response.data;
                 loadRightFloatMenu();
                 hideLoadingPage();
-            });
+            });*/
 
 
             var assemblyCarryInfoBody = {};
@@ -271,6 +289,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 var id = JSON.stringify(params);
 
                 layer.load();
+
 
                 myHttpService.post(serviceList.DeportInfoList, id).then(function successCallback(response) {
                     var datas = response.data;
