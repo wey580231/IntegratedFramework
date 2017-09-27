@@ -114,7 +114,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             });
         };
 
-        /*$scope.AssemblyCarryListPagePrvButton = function () {
+        $scope.AssemblyCarryListPagePrvButton = function () {
             defualtAssemblyCarryListPageNum = defualtAssemblyCarryListPageNum - 1;
             var assemblyCarryInfoBody = {};
             assemblyCarryInfoBody.maxResults = maxTableLineNum;
@@ -154,7 +154,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
-        };*/
+        };
 
         $scope.AssemblyCenterTablePrvButton = function () {
             defualtAssemblyCenterListPageNum = defualtAssemblyCenterListPageNum - 1;
@@ -289,9 +289,9 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                         if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
                             $('#carryTableNextButton').attr('disabled', "true");
                         }
-                        $('#carryTableNextButton').removeAttr("disabled");
+                        $('#carryTablePrvButton').removeAttr("disabled");
                         if (responseBody.firstIndexNum - 1 <= 0) {
-                            $('#carryTableNextButton').attr('disabled', "true");
+                            $('#carryTablePrvButton').attr('disabled', "true");
                         }
                         loadRightFloatMenu();
                         hideLoadingPage();
@@ -324,7 +324,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             });*/
 
 
-            /*var deport4 = function(){
+            var deport4 = function(){
                 $timeout(function(){
 
                     var assemblyCarryInfoBody = {};
@@ -344,14 +344,6 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                             $('#assemblyCarryTablePrvButton').attr('disabled', "true");
                         }
 
-                        /!*$('#assemblyCarryTableNextButton').removeAttr("disabled");
-                        if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
-                            $('#assemblyCarryTableNextButton').attr('disabled', "true");
-                        }
-                        $('#assemblyCarryTablePrvButton').removeAttr("disabled");
-                        if (responseBody.firstIndexNum - 1 <= 0) {
-                            $('#assemblyCarryTablePrvButton').attr('disabled', "true");
-                        }*!/
                         loadRightFloatMenu();
                         hideLoadingPage();
 
@@ -363,7 +355,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 },8000)
             };
 
-            deport4();*/
+            deport4();
 
             /*var assemblyCarryInfoBody = {};
             assemblyCarryInfoBody.maxResults = maxTableLineNum;
@@ -429,6 +421,24 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                 loadRightFloatMenu();
                 hideLoadingPage();
 
+            });
+
+            var assemblyCarryInfoBody = {};
+            assemblyCarryInfoBody.maxResults = maxTableLineNum;
+            assemblyCarryInfoBody.firstResult = 0;
+            myHttpService.post(serviceList.getAllAssemblyCarrysByFirstResultAndMaxResults, assemblyCarryInfoBody).then(function successCallback(response) {
+                var responseBody = response.data;
+                $scope.AssemblyCarryList = responseBody.tableList;
+                $('#assemblyCarryTableNextButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum + responseBody.maxIndexNum > responseBody.totalPageNum) {
+                    $('#assemblyCarryTableNextButton').attr('disabled', "true");
+                }
+                $('#assemblyCarryTablePrvButton').removeAttr("disabled");
+                if (responseBody.firstIndexNum - 1 <= 0) {
+                    $('#assemblyCarryTablePrvButton').attr('disabled', "true");
+                }
+                loadRightFloatMenu();
+                hideLoadingPage();
             });
 
             var AssemblyCenterInfoBody = {};
