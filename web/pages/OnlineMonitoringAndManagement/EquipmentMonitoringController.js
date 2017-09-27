@@ -584,7 +584,7 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
         /*
          * 动图
          * */
-        /*myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
+        myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
             dynamicData = response.data;
             hideLoadingPage();
 
@@ -609,15 +609,17 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                             // set up the updating of the chart each second
                             var series = this.series[0],
                                 chart = this;
-                            var x = null, y = null;
                             setInterval(function () {
-                                if(dynamicData.length <= 0){
-                                    x = (new Date()).getTime(),
+                                /*if(dynamicData.length <= 0){
+                                    x = (new Date()).getTime();
                                     y = Math.random();
                                 }else{
-                                    x = (new Date()).getTime(),
+                                    x = (new Date()).getTime();
                                     y = dynamicData[dynamicData.length - 1].remainPower;
-                                }
+                                }*/
+
+                                var x = (new Date()).getTime(),
+                                y = Math.random();
 
                                 series.addPoint([x, y]);
                                 activeLastPointToolip(chart)
@@ -662,9 +664,8 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                     data: (function () {
                         // generate an array of random data
                         var data = [];
-                        if(dynamicData.length <= 0){
-                            var data = [],
-                                time = (new Date()).getTime(),
+                        /*if(dynamicData.length <= 0){
+                            var time = (new Date()).getTime(),
                                 i;
                             data.push({
                                 x : time + i * 1000,
@@ -680,6 +681,14 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                                     });
                                 }
                             );
+                        }*/
+                        var time = (new Date()).getTime(),
+                            i;
+                        for(i = 10; i <= 40; i += 1){
+                            data.push({
+                                x : time + i * 1000,
+                                y : 100
+                            });
                         }
 
                         return data;
@@ -688,9 +697,9 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
             }, function (c) {
                 activeLastPointToolip(c)
             });
-        });*/
+        });
 
-        /*var deport2 = function(){
+        var deport2 = function(){
             $timeout(function(){
                 myHttpService.get(serviceList.AllAGVInfoList).then(function (response) {
                     dynamicData = response.data;
@@ -717,19 +726,27 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                                     // set up the updating of the chart each second
                                     var series = this.series[0],
                                         chart = this;
-                                    var x = null, y = null;
                                     setInterval(function () {
-                                        if(dynamicData.length <= 0){
-                                            x = (new Date()).getTime();
-                                                y = Math.random();
+                                        /*if(dynamicData.length <= 0){
+                                            var m = (new Date()).getTime(),
+                                                n = 100;
+
+                                            series.addPoint([m, n]);
                                         }else{
-                                            x = (new Date()).getTime();
+                                            var x = (new Date()).getTime(),
                                             y = dynamicData[dynamicData.length - 1].remainPower;
-                                        }
+
+                                            series.addPoint([x, y]);
+                                        }*/
+
+                                        var x = (new Date()).getTime(),
+                                            y = dynamicData[dynamicData.length - 1].remainPower;
 
                                         series.addPoint([x, y]);
+
+                                        //series.addPoint([x, y]);
                                         activeLastPointToolip(chart)
-                                    }, 5 * 1000);  //隔多长时间加载一次数据
+                                    }, 30 * 1000);  //隔多长时间加载一次数据
                                 }
                             }
                         },
@@ -771,13 +788,15 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
                                 // generate an array of random data
                                 var data = [];
                                 if(dynamicData.length <= 0){
-                                    var data = [],
-                                        time = (new Date()).getTime(),
+                                    var time = (new Date()).getTime(),
                                         i;
-                                    data.push({
-                                        x : time + i * 1000,
-                                        y : 100
-                                    });
+                                    for(i = 10; i <= 40; i += 1){
+                                        data.push({
+                                            x : time + i * 1000,
+                                            y : 100
+                                        });
+                                    }
+
 
                                 }else{
                                     dynamicData.forEach(
@@ -802,10 +821,10 @@ angular.module("IntegratedFramework.EquipmentMonitoringController", ['ngRoute'])
 
                 //deport();
 
-            },5000)
+            },50000)
         };
 
-        deport2();*/
+        deport2();
 
 
         function view() {
