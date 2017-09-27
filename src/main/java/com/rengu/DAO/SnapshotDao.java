@@ -143,7 +143,7 @@ public class SnapshotDao {
     private void switchPlanToEmulateResult(boolean isSignal, List<RG_PlanEntity> plans, Session session) throws ParseException {
         //【1】将当前快照对应的所有订单按照时间升序转换
         RG_PlanEntity startPlan = plans.get(0);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Date initialDate = sdf.parse(startPlan.getT1Task());
 
