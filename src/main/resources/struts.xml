@@ -28,6 +28,8 @@
         <action name="update" class="com.rengu.actions.OrdersAction" method="update"/>
         <action name="findAllByisFinishedAndDate" class="com.rengu.actions.OrdersAction"
                 method="findAllByisFinishedAndDate"/>
+        <action name="findByState" class="com.rengu.actions.OrdersAction"
+                method="findByState"/>
         <action name="deleteById" class="com.rengu.actions.OrdersAction" method="deleteById"/>
     </package>
 

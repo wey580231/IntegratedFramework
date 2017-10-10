@@ -31,70 +31,185 @@
         <div class="box box-primary">
             <!-- /.box-header -->
             <div class="box-body no-padding">
-                <div class="mailbox-controls">
-                    <!-- Check all button -->
-                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
-                    </button>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <!-- /.btn-group -->
-                    <div class="pull-right">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                    data-target="#modal-add"
-                                    class="btn btn-default" ng-click="reset()"><i class="fa fa-plus"></i> 新增
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
-                                    class="btn btn-default" ng-click="update()"><i class="fa fa-wrench"></i> 修改
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
-                                    class="fa fa-trash-o"></i> 删除
-                            </button>
+
+                <!--tab-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Custom Tabs -->
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="/AdjustOrder/#tab_1" data-toggle="tab">订单详情</a></li>
+                                <li><a href="/AdjustOrder/#tab_2" data-toggle="tab">状态筛选</a></li>
+                                <!--<li style="left: 53%">
+                                    <div class="form-group">
+                                        <label>请选择查看</label>
+                                        <select class="form-control select2" style="width:150px;"
+                                                id="selects">
+                                            <option selected="selected"></option>
+                                            <option>运输工艺</option>
+                                            <option>生产工艺</option>
+                                            <option>显示全部</option>
+                                        </select>
+                                    </div>
+                                </li>-->
+                                <!--<li style="left: 22%;top: 7px;" class="fa fa-refresh" title="恢复dag原图" ng-click="refresh()"></li>-->
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1">
+                                    <div class="mailbox-controls">
+                                        <!-- Check all button -->
+                                        <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+                                        </button>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i></button>
+                                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.btn-group -->
+                                        <div class="pull-right">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                                        data-target="#modal-add"
+                                                        class="btn btn-default" ng-click="reset()"><i class="fa fa-plus"></i> 新增
+                                                </button>
+                                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal"
+                                                        class="btn btn-default" ng-click="update()"><i class="fa fa-wrench"></i> 修改
+                                                </button>
+                                                <button type="button" class="btn btn-default btn-sm" ng-click="deleteOrder()"><i
+                                                        class="fa fa-trash-o"></i> 删除
+                                                </button>
+                                            </div>
+                                            <!-- /.btn-group -->
+                                        </div>
+                                        <!-- /.pull-right -->
+                                    </div>
+                                    <div class="table-responsive mailbox-messages">
+                                        <table class="table table-hover table-striped" id="table_value">
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <th>名称</th>
+                                                <th>订单来源</th>
+                                                <th>优先级</th>
+                                                <th>数量</th>
+                                                <th>下单时间</th>
+                                                <th>完工时间</th>
+                                                <th>状态</th>
+                                            </tr>
+                                            <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" id="value">
+                                                <td><input id="check" name="check" type="checkbox"></td>
+                                                <td style="display:none">{{order.id}}</td>
+                                                <td>{{order.name}}</td>
+                                                <td>
+                                                    <span ng-if="order.origin == 0">手动输入</span>
+                                                    <span ng-if="order.origin == 1">云排产</span>
+                                                </td>
+                                                <td>{{order.priority}}</td>
+                                                <td>{{order.quantity}}</td>
+                                                <td>{{order.t0 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{order.t2 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                                <td>
+                                                    <span class="label label-primary" ng-if="order.state == 0">计划</span>
+                                                    <span class="label label-warning" ng-if="order.state == 1">已下发</span>
+                                                    <span class="label label-warning" ng-if="order.state == 2">计算中</span>
+                                                    <span class="label label-success" ng-if="order.state == 3">计算完成</span>
+                                                    <span class="label label-success" ng-if="order.state == 4">已完工</span>
+                                                    <span class="label label-danger" ng-if="order.state == 5">异常</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- /.table -->
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_2">
+
+                                    <!--<div class="mailbox-controls">-->
+                                        <!--<div style="height: auto;margin-bottom: 3px;">-->
+                                    <div class="mailbox-controls">
+                                        <div>
+                                                    <h2>请选择状态:</h2>
+                                                </div>
+                                        <br/>
+                                        <div class="form-group">
+                                                    <select class="form-control select2" style="width: 100%;" id="select">
+                                                        <option selected="selected"></option>
+                                                        <option>计划</option>
+                                                        <option>已下发</option>
+                                                        <option>计算中</option>
+                                                        <option>计算完成</option>
+                                                        <option>已完工</option>
+                                                        <option>异常</option>
+
+                                                    </select>
+                                                </div>
+                                                <!--<div class="form-group">
+                                                    <div class="col-md-3">
+                                                        <h2>请选择状态:</h2>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control select2" style="width: 100%;" id="select">
+                                                            <option selected="selected"></option>
+                                                            <option>计划</option>
+                                                            <option>已下发</option>
+                                                            <option>计算中</option>
+                                                            <option>计算完成</option>
+                                                            <option>已完工</option>
+                                                            <option>异常</option>
+
+                                                        </select>
+                                                    </div>
+
+
+                                                </div>-->
+                                    </div>
+                                    <br/>
+                                    <!--</div>-->
+                                    <div class="table-responsive mailbox-messages">
+                                        <table class="table table-hover table-striped">
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <th>名称</th>
+                                                <th>订单来源</th>
+                                                <th>优先级</th>
+                                                <th>数量</th>
+                                                <th>下单时间</th>
+                                                <th>完工时间</th>
+                                                <th>状态</th>
+                                            </tr>
+                                            <tr ng-repeat="order in orderStateList" ng-init="renderTable($last)">
+                                                <td><input id="check1" name="check" type="checkbox"></td>
+                                                <td style="display:none">{{order.id}}</td>
+                                                <td>{{order.name}}</td>
+                                                <td>
+                                                    <span ng-if="order.origin == 0">手动输入</span>
+                                                    <span ng-if="order.origin == 1">云排产</span>
+                                                </td>
+                                                <td>{{order.priority}}</td>
+                                                <td>{{order.quantity}}</td>
+                                                <td>{{order.t0 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{order.t2 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                                <td>
+                                                    <span class="label label-primary" ng-if="order.state == 0">计划</span>
+                                                    <span class="label label-warning" ng-if="order.state == 1">已下发</span>
+                                                    <span class="label label-warning" ng-if="order.state == 2">计算中</span>
+                                                    <span class="label label-success" ng-if="order.state == 3">计算完成</span>
+                                                    <span class="label label-success" ng-if="order.state == 4">已完工</span>
+                                                    <span class="label label-danger" ng-if="order.state == 5">异常</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- /.table -->
+                                    </div>
+
+                                </div><!--/.well -->
+                            </div>
+                            <!-- /.tab-content -->
                         </div>
-                        <!-- /.btn-group -->
+                        <!-- nav-tabs-custom -->
                     </div>
-                    <!-- /.pull-right -->
-                </div>
-                <div class="table-responsive mailbox-messages">
-                    <table class="table table-hover table-striped" id="table_value">
-                        <tbody>
-                        <tr>
-                            <td></td>
-                            <th>名称</th>
-                            <th>订单来源</th>
-                            <th>优先级</th>
-                            <th>数量</th>
-                            <th>下单时间</th>
-                            <th>完工时间</th>
-                            <th>状态</th>
-                        </tr>
-                        <tr ng-repeat="order in orderList track by $index" ng-init="renderTable($last)" id="value">
-                            <td><input id="check" name="check" type="checkbox"></td>
-                            <td style="display:none">{{order.id}}</td>
-                            <td>{{order.name}}</td>
-                            <td>
-                                <span ng-if="order.origin == 0">手动输入</span>
-                                <span ng-if="order.origin == 1">云排产</span>
-                            </td>
-                            <td>{{order.priority}}</td>
-                            <td>{{order.quantity}}</td>
-                            <td>{{order.t0 | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-                            <td>{{order.t2 | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                            <td>
-                                <span class="label label-primary" ng-if="order.state == 0">计划</span>
-                                <span class="label label-warning" ng-if="order.state == 1">已下发</span>
-                                <span class="label label-warning" ng-if="order.state == 2">计算中</span>
-                                <span class="label label-success" ng-if="order.state == 3">计算完成</span>
-                                <span class="label label-success" ng-if="order.state == 4">已完工</span>
-                                <span class="label label-danger" ng-if="order.state == 5">异常</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- /.table -->
                 </div>
                 <!-- /.mail-box-messages -->
             </div>

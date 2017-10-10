@@ -16,6 +16,10 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         enter.enterDown();
 
         $(function () {
+
+            //初始化下拉数据
+            $(".select2").select2();
+
             loadRightFloatMenu();
 
             myHttpService.get(serviceList.ListOrder).then(function (response) {
@@ -31,6 +35,45 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
         var idVal;
         var id_params = {}; //保存选中的记录的id信息
 
+
+        //下拉框事件改变
+        $("#select").change(function () {
+
+            var state;
+            var val = $(this).children('option:selected').val();
+
+
+            if (val.length > 0) {
+                if(val == "计划"){
+                    state = 0;
+                }else if(val == "已下发"){
+                    state = 1;
+                }else if(val == "计算中"){
+                    state = 2;
+                }else if(val == "计算完成"){
+                    state = 3;
+                }else if(val == "已完工"){
+                    state = 4;
+                }else if(val == "异常"){
+                    state = 5;
+                }
+
+                var params = {};
+                params.state = state;
+                var orderState = JSON.stringify(params);
+
+                layer.load();
+
+
+                myHttpService.post(serviceList.GetOrderByState, orderState).then(function successCallback(response) {
+                    $scope.orderStateList = response.data;
+                    hideLoadingPage();
+                });
+            } else {
+                $scope.$apply();
+            }
+
+        });
 
         //渲染checkBox样式
         $scope.renderTable = function ($last) {
