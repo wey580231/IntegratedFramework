@@ -37,7 +37,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             myHttpService.post(serviceList.isRootNode, dataTrue).then(function successCallback(response) {
                 rootData = response.data;
                 $scope.rootdata = response.data;
-                $scope.processdata = response.data;
+                //$scope.processdata = response.data;
                 loadRightFloatMenu();
                 hideLoadingPage();
             });
@@ -196,12 +196,29 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
             function zTreeOnClick(e, treeId, treeNode) {
                 refresh();
 
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                zTree.expandNode(treeNode);
+                /*var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                zTree.expandNode(treeNode);*/
 
                 //节点点击显示具体信息
                 $scope.processData = treeNode;
                 $scope.$apply();
+
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+
+                if (treeNode.level == 0) {
+                    zTree.expandNode(treeNode);
+                } else if (treeNode.level == 1) {
+
+                    var params = {};
+                    params.id = treeNode.id;
+                    var data = JSON.stringify(params);
+                    layer.load();
+                    myHttpService.post(serviceList.isChildNode, data).then(function successCallback(response) {
+                        $scope.processDetail = response.data;
+                        console.log($scope.processDetail);
+                        hideLoadingPage();
+                    });
+                }
 
                 for (var j = 0; j < option.series[0].data.length; j++) {
                     //根节点的折叠展开
@@ -366,7 +383,7 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
         //浏览器大小改变时重置大小
         window.onresize = function () {
             myChartContainer();
-            myChart.resize();
+            //myChart.resize();
         };
 
 

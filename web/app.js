@@ -104,6 +104,8 @@ angular.module("IntegratedFramework", [
 
         service.GetOrderById = backUrl + "orders/findAllById.action";
 
+        service.GetOrderByState = backUrl + "orders/findByState.action";
+
 
         <!--订单监控-->
         service.ComListOrder = backUrl + "online/findByState.action";

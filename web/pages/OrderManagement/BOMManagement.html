@@ -238,12 +238,13 @@
                                                         <th>校验时间</th>
                                                         <th>数量</th>
                                                     </tr>
-                                                    <tr ng-repeat="process in processdata" ng-init="renderTable($last)">
+                                                    <tr  ng-init="renderTable($last)">
                                                         <td><input name="check" type="checkbox"></td>
-                                                        <td>{{process.name}}</td>
-                                                        <td>{{process.postTime}}</td>
-                                                        <td>{{process.checkTime}}</td>
-                                                        <td>{{process.quantity}}</td>
+                                                        <td>{{processDetail.name}}</td>
+                                                        <td>{{processDetail.postTime}}</td>
+                                                        <!--<td>{{process.checkTime}}</td>-->
+                                                        <td>{{processDetail.unitTime}}</td>
+                                                        <td>{{processDetail.quantity}}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -280,7 +281,6 @@
             </div>
         </div>
         <!-- /.col -->
-</div>
 <!-- /.row -->
 </section>
 <!-- /.content -->

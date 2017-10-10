@@ -63,17 +63,21 @@
                         <tr>
                             <td></td>
                             <th>类型编号集合</th>
-                            <th>工位编码</th>
+                            <th>地点编码</th>
                             <th>最少资源数量</th>
                             <th>最多资源数量</th>
                         </tr>
                         <tr ng-repeat="resourcedis in resourcedisList track by $index" ng-init="renderTable($last)">
                             <td><input name="check" type="checkbox"></td>
-                            <td style="display:none">{{resourcedis.id}}</td>
-                            <td>{{resourcedis.grp}}</td>
+                            <td style="display:none">{{resourcedis.IDPROCESS}}</td>
+                            <td>{{resourcedis.IDTYPERESOURCE}}</td>
+                            <td>{{resourcedis.IDSITE}}</td>
+                            <td>{{resourcedis.MINRESOURCE}}</td>
+                            <td>{{resourcedis.MAXRESOURCE}}</td>
+                            <!--<td>{{resourcedis.grp}}</td>
                             <td>{{resourcedis.idSite}}</td>
                             <td>{{resourcedis.minResource}}</td>
-                            <td>{{resourcedis.maxResource}}</td>
+                            <td>{{resourcedis.maxResource}}</td>-->
                         </tr>
                         </tbody>
                     </table>

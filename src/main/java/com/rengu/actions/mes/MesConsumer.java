@@ -203,9 +203,9 @@ public class MesConsumer extends Thread {
 
                             if (realData.get("name") != null && realData.get("name").isArray()) {
                                 JsonNode nameNode = realData.get("name");
-                                for (int j = 0; j < nameNode.size(); j++) {
-
-                                }
+                                /*for (int j = 0; j < nameNode.size(); j++) {
+                                }*/
+                                deportInfo.setDeportName(nameNode.toString());
                             }
 
                             if (realData.get("productId") != null && realData.get("productId").isArray()) {

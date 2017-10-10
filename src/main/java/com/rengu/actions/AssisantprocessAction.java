@@ -5,6 +5,7 @@ import com.rengu.DAO.AssisantprocessDAO;
 import com.rengu.DAO.impl.AssisantprocessDAOImpl;
 import com.rengu.entity.RG_AssisantprocessEntity;
 import com.rengu.util.DAOFactory;
+import com.rengu.util.DatabaseInfo;
 import com.rengu.util.Tools;
 import com.rengu.util.WebSocketNotification;
 
@@ -16,8 +17,14 @@ import java.util.List;
 public class AssisantprocessAction extends SuperAction {
 
     public void getAllAssisantProcess() throws Exception {
-        AssisantprocessDAO assisantprocessDAO = DAOFactory.getAssisantprocessDAOInstance();
-        List list = assisantprocessDAO.findAll();
+        AssisantprocessDAOImpl assisantprocessDAO = DAOFactory.getAssisantprocessDAOInstance();
+        //List list = assisantprocessDAO.findAll();
+
+        //查询APS数据的语句
+        String SQLString = "select * from " + DatabaseInfo.APS_PROCESS_TYPERESOURCE_SITE;
+        //查询APS数据库
+        List list = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
+
         String jsonString = Tools.entityConvertToJsonString(list);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
