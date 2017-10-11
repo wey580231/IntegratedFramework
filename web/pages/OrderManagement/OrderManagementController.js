@@ -48,7 +48,7 @@ angular.module("IntegratedFramework.OrderManagementController", ['ngRoute'])
                     state = 0;
                 }else if(val == "已下发"){
                     state = 1;
-                }else if(val == "计算中"){
+                }else if(val == "计算中?"){
                     state = 2;
                 }else if(val == "计算完成"){
                     state = 3;
