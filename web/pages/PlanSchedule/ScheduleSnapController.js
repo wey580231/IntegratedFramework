@@ -21,6 +21,18 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var queryApsRecoverBackupTime = 0;          //定时查询aps恢复快照的状态
         var hasReciveSnapshotFlag = false;
 
+        var PageInfo = {};
+        PageInfo.selectedIndex = [];     //每个页面中保存选择的索引
+        PageInfo.data = [];              //每个页面对应的数据信息，只加载一次
+
+        var pageCount = 0;              //分页有关
+        var currPage = 0;
+        var pageTipCount = 0;
+
+        var idSch;                    //快照第一页所选排程
+        var bottomInfo = [];         //底层节点
+        var validScheduleBaseInfo;   //是否为有效排程，为false时不可以排程
+
         $(function () {
             //初始化下拉数据
             $(".select2").select2();
@@ -35,6 +47,30 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             });
             $scope.hasDispatchMes = false;
             $scope.interactiveCount = "";
+
+
+            //快照对比页
+            pageCount = $(".MyPage").size();
+
+            for (var i = 0; i < pageCount; i++) {
+                PageInfo.selectedIndex[i] = [];
+                PageInfo.data[i] = [];
+            }
+
+            resetContent();
+
+            $(".MyPageTip").each(function () {
+                $(this).css("width", 1 / pageTipCount * 100 + "%");
+            });
+            $("#tipHover").css("width", 1 / pageTipCount * 100 + "%");
+
+           /* $("#nextStep").attr("disabled", true);
+            $("#startSchedule").attr("disabled", true);*/
+
+            myHttpService.get(serviceList.ListSchedule).then(function (response) {
+                $scope.scheduleList = response.data;
+                hideLoadingPage();
+            });
         });
 
         //3D车间查看转换结果
@@ -292,6 +328,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                             } else {
                                 middleNode.icon = "images/bom_img/interactive.png";
                             }
+
+                            console.log(bottomNode);
                         }
                         datas.icon = "images/bom_img/rootNode.png";
                         var temp = datas.childs;
@@ -400,4 +438,306 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 $(this).attr('disabled', buttState);
             });
         }
+
+        //快照对比
+        $scope.compareSnapshot = function () {
+
+         /*myHttpService.get(serviceList.queryApsState).then(function (response) {
+
+         });*/
+
+             $('#modal-add').modal({backdrop: 'static', keyboard: false});
+             $("#modal-add").show();
+
+             /*$("#nextStep").attr("disabled", true);
+             $("#startSchedule").attr("disabled", true);*/
+
+             //下拉框事件改变
+             $("#select2").change(function () {
+
+                 $scope.hasDispatchMes = false;
+                 $scope.messStatus = "--";
+
+                 var idRoot;
+                 var val = $(this).children('option:selected').val();
+                 if (val.length > 0) {
+                 for (var i = 0; i < rootData.length; i++) {
+                     if (rootData[i].name == val) {
+                         idRoot = rootData[i].id;
+                         break;
+                     }
+                 }
+                 var params = {};
+                 params.id = idRoot;
+                 idSch = JSON.stringify(params);
+
+                 console.log(idSch);
+
+                 }
+             });
+             //console.log(val2);
+             /*resetContent();*/
+         };
+
+        //重置页面内容信息
+        function resetContent() {
+            /*$("#startSchedule").hide();
+            $("#previouseStep").hide();
+            $("#nextStep").show();*/
+
+            pageCount = $(".MyPage").size();
+            pageTipCount = $(".MyPageTip").size();
+
+            validScheduleBaseInfo = false;
+
+            $(".MyPage").eq(currPage).hide();
+            currPage = 0;
+            $(".MyPage").eq(currPage).show();
+
+            choosePageTip();
+
+
+            //清空页面信息
+            for (var i = 0; i < pageCount; i++) {
+                PageInfo.selectedIndex[i].splice(0, PageInfo.selectedIndex[i].length);
+                PageInfo.data[i].splice(0, PageInfo.data[i].length);
+            }
+        }
+
+        function choosePageTip() {
+            $("#tipHover").animate({"left": currPage / pageTipCount * 100 + "%"}, 250, function () {
+                $("#tipHover").text($(".MyPageTip").eq(currPage).text());
+            });
+        }
+
+        //上一步
+        /*$scope.previous = function () {
+            if (currPage >= 0) {
+                $("#startSchedule").hide();
+                $("#nextStep").show();
+
+                $(".MyPage").eq(currPage).hide();
+                currPage -= 1;
+                $(".MyPage").eq(currPage).show();
+            }
+
+            if (currPage == 0) {
+                $("#previouseStep").hide();
+                $("#nextStep").show();
+            }
+            choosePageTip();
+
+            //布局查询
+            if (currPage == 1) {
+                if (PageInfo.selectedIndex[currPage].length <= 0) {
+                    $("#nextStep").attr("disabled", true);
+                } else {
+                    $("#nextStep").removeAttr("disabled");
+                }
+            }
+            //订单查询
+            else if (currPage == 2) {
+                if (PageInfo.selectedIndex[currPage].length <= 0) {
+                    $("#startSchedule").attr("disabled", true);
+                } else {
+                    $("#startSchedule").removeAttr("disabled");
+                }
+            }
+            //第一页
+            else {
+                $("#nextStep").removeAttr("disabled");
+            }
+        };*/
+
+        //下一步
+        $scope.next = function () {
+
+            /*if (currPage == 0 && (!validateBaseInfo(true))) {
+                return;
+            }*/
+
+            if (currPage < pageCount - 1) {
+                /*$("#previouseStep").show();*/
+                $(".MyPage").eq(currPage).hide();
+                currPage += 1;
+                /*$(".MyPage").eq(currPage).show();*/
+                $(".previouseStep").eq(currPage).show();
+            }
+
+            /*if (currPage == pageCount - 1) {
+                $("#nextStep").hide();
+                $("#startSchedule").show();
+            }*/
+            choosePageTip();
+
+            //布局查询
+            if (currPage == 1) {
+                if (PageInfo.data[currPage].length == 0) {
+                    selectSnapshot();
+                }
+                if (PageInfo.selectedIndex[currPage].length <= 0) {
+                    //$("#nextStep").attr("disabled", true);
+                } else {
+                    //$("#nextStep").removeAttr("disabled");
+                }
+            }
+            //订单查询
+            /*else if (currPage == 2) {
+                if (PageInfo.data[currPage].length == 0) {
+                    showOrderInfo();
+                }
+                if (PageInfo.selectedIndex[currPage].length <= 0) {
+                    $("#startSchedule").attr("disabled", true);
+                } else {
+                    $("#startSchedule").removeAttr("disabled");
+                }
+            }*/
+        };
+
+        //选择快照
+        function selectSnapshot() {
+
+            var idSch = $("#select0 option:selected").val();
+            console.log(idSch);
+
+            if (idSch.length > 0) {
+                for (var i = 0; i < rootData.length; i++) {
+                    if (rootData[i].name == idSch) {
+                        var idS = rootData[i].id;
+                        break;
+                    }
+                }
+                var params = {};
+                params.id = idS;
+                idSch = JSON.stringify(params);
+            }
+
+            myHttpService.post(serviceList.getTree, idSch).then(function successCallback(response) {
+                $scope.snapShotData = response.data;
+                var datas = response.data;
+
+                console.log(datas);
+
+                if (datas.hasOwnProperty("childs")) {
+                    var middleNodeList = datas.childs;
+                    console.log(middleNodeList);
+                    sortSnapshot(middleNodeList);
+                    for (var j = 0; j < middleNodeList.length; j++) {
+
+                        var middleNode = middleNodeList[j];
+
+                        if (middleNode.hasOwnProperty("childs")) {
+
+                            sortSnapshot(middleNode.childs);
+
+                            for (var k = 0; k < middleNode.childs.length; k++) {
+                                var bottomNode = middleNode.childs[k];
+
+                                bottomInfo.push(bottomNode);
+                            }
+                            /*var temps = middleNode.childs;
+                            delete(middleNode.childs);
+                            middleNode.children = temps;
+                            middleNode = middleNode;
+                            middleNode.schedule = response.data.schedule;
+                            treeInfo.push(middleNode);*/
+                        }
+
+                    }
+                    /*var temp = datas.childs;
+                    delete(datas.childs);
+                    datas.children = temp;
+                    treeInfo.push(datas);*/
+                }
+                console.log(bottomInfo);
+            });
+
+        }
+
+        //查询订单信息
+        /*function showOrderInfo() {
+            //开始访问当前未完成的记录
+            var cur = {};
+
+            var nowTime = (new Date($("input[id='nowTime-datepicker']").val())).getTime();
+            var startTime = moment(nowTime).format("YYYY-MM-DD");
+            cur.startTime = (new Date(startTime)).getTime();
+
+            var scheduleDays0 = scheduleDays;
+
+            var endTime = moment(startTime).add(scheduleDays0, 'day').format("YYYY-MM-DD");
+
+            cur.endTime = (new Date(endTime)).getTime();
+
+            cur.isFinished = false;
+
+            var data = JSON.stringify(cur);
+
+            myHttpService.post(serviceList.CurInfo, data).then(function (response) {
+                for (var i = 0; i < response.data.length; i++) {
+                    PageInfo.data[currPage].push(response.data[i]);
+                }
+                $scope.ordinfo = PageInfo.data[currPage];
+
+            });
+        }*/
+
+        //验证基本信息输入，validateDate用于控制是否需要对日期进行验证
+        function validateBaseInfo(validateDate) {
+            /*var params = {};
+             params.schedule = $(this).children('option:selected').val();*/
+
+            var val = $(this).children('option:selected').val();
+
+            if (val == null) {
+
+                validScheduleBaseInfo = true;
+                return true;
+
+            }
+            validScheduleBaseInfo = false;
+            return false;
+        }
+
+        //基本信息检验
+        $scope.infoValidate = function () {
+            if (validateBaseInfo(false)) {
+                selectSnapshot();
+                /*$("#nextStep").removeAttr('disabled');*/
+            } else {
+                /*$("#nextStep").attr("disabled", true);*/
+            }
+        };
+
+
+        //表格信息重置
+        $scope.reset = function () {
+            $("input").val('');
+            $("div").removeClass("has-error");
+            $("div").removeClass("has-success");
+        };
+
+
+        //开始排程
+        $scope.submitForm = function () {
+            layer.load(0);
+
+            //var params = {};
+
+            for (var i = 0; i < pageCount; i++) {
+                if (i == 1) {
+                    layouts.id = PageInfo.selectedIndex[i][0];
+                }
+                else if (i == 2) {
+                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
+                        var params = {};
+                        params.id = PageInfo.selectedIndex[i][j];
+                        orders.push(params);
+                    }
+
+                }
+            }
+            configAPS();
+        };
+
     });

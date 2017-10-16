@@ -46,6 +46,92 @@
     .box {
         position: unset;
     }
+
+    .modal-dialog {
+        width: 70%;
+        height: 80%;
+    }
+
+    .modal-body, .modal-content {
+        height: 100%;
+        padding: 0px;
+    }
+
+    .col-sm-4 {
+        padding-left: 13px;
+    }
+
+    #MyContainer {
+        width: 100%;
+        height: 95%;
+        overflow: hidden;
+        padding: 5px;
+    }
+
+    .MyPage {
+        width: 100%;
+        /*height: 100%;*/
+        height: 87%;
+        float: left;
+        position: relative;
+    }
+
+    #MyUl {
+        list-style: none;
+        margin: 0px;
+        height: 30px;
+        width: 100%;
+        background-color: rgba(200, 200, 200, 0.2);
+    }
+
+    .MyPageTip {
+        float: left;
+        display: block;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    #tipHover {
+        position: absolute;
+        background-color: #f44336;
+        box-shadow: 0 16px 26px -10px rgba(244, 67, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(244, 67, 54, 0.2);
+        height: 32px;
+        border-radius: 2px;
+        line-height: 32px;
+        text-align: center;
+        color: white;
+        font-weight: 600;
+    }
+
+    .myInput {
+        height: 27px;
+    }
+
+    .form-group {
+        margin-bottom: 13px;
+    }
+
+
+    .form-horizontal .control-label {
+        padding-top: 4px;
+    }
+
+    .MyPage {
+        height: 92%;
+    }
+
+    /*全选按钮*/
+    .btn-group-sm > .btn, .btn-sm{
+        padding: 1px 6px;
+        font-size: 12px;
+        line-height: 1.5;
+        border-radius: 3px;
+    }
+
+    .fc-scroller {
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
 </style>
 
 <div>
@@ -79,7 +165,7 @@
                 </a>
             </li>
             <li>
-                <a class="home" href=""><i class="fa fa-usb" aria-hidden="true"></i>
+                <a class="home" href="" ng-click="compareSnapshot()"><i class="fa fa-usb" aria-hidden="true"></i>
                     <span>快照对比</span>
                 </a>
             </li>
@@ -236,6 +322,94 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+
+        <!--快照对比-->
+        <div class="modal fade " id="modal-add">
+            <div class="modal-dialog" style="height: 75%;">
+                <div class="modal-content" style="height:100%;">
+                    <div class="modal-header" style="height: 10%;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h2 style="font-size:23px;">快照对比</h2>
+                    </div>
+                    <div class="modal-body" style="height: 90%;">
+                        <div id="MyContainer">
+                            <div style="height: 8%;">
+                                <div id="tipHover"></div>
+                                <ul id="MyUl">
+                                    <li class="MyPageTip">选择排程</li>
+                                    <li class="MyPageTip">快照对比</li>
+                                    <li class="MyPageTip">对比结果</li>
+                                </ul>
+                            </div>
+                            <!--新增排程页面时，只需要新增div并且class='MyPage'即可-->
+                            <div class="MyPage">
+                                <div class="" style="height: 100%;">
+                                    <section class="content" style="height: 100%;">
+                                        <div class="row" style="height: 100%;overflow: auto;">
+                                            <div class="col-md-12" style="height: 100%;">
+                                                <div class="modal-body" style="height: 100%;">
+                                                    <form class="form-horizontal" style="height: 100%;">
+                                                        <div class="box-body" style="height: 100%;/*margin-top: -10px*/">
+
+                                                            <div class="form-group" id="select-schecule">
+                                                                <label>选择排程</label>
+                                                                <select class="form-control select2" style="width: 100%;float:left;" id="select0">
+                                                                    <option selected="selected"></option>
+                                                                    <option ng-repeat="data in dataArr">{{data.name}}</option>
+                                                                </select>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </section>
+
+                                </div>
+
+                            </div>
+
+                            <div class="MyPage">
+
+                                <div class="form-group" id="select-snapShot">
+                                    <label>快照1</label>
+                                    <select class="form-control select2" style="width: 100%;float:left;" id="select1">
+                                        <option selected="selected"></option>
+                                        <option>1</option>
+                                    </select>
+
+                                    <label>快照2</label>
+                                    <select class="form-control select2" style="width: 100%;float:left;" id="select2">
+                                        <option selected="selected"></option>
+                                        <option>1</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="MyPage">
+                                <label>对比结果如下</label>
+                                <div class="table-responsive mailbox-messages" style="height: 100%">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer" style="clear:both;height:15%">
+                            <button id="previouseStep" type="submit" class="btn btn-default" ng-click="previous()">上一步
+                            </button>
+                            <button id="nextStep" type="submit" class="btn btn-info pull-right" ng-click="next()">下一步
+                            </button>
+                            <button id="startSchedule" type="submit" class="btn btn-info pull-right"
+                                    ng-click="submitForm()">开始排程
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
     <!-- /.content -->
 </div>
