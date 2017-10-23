@@ -165,16 +165,25 @@ public class Emulate3DAO {
                         node.put("good", emulateData.getGoods());
                         node.put("startTime", emulateData.getStartTime());
                         node.put("endTime", emulateData.getEndTime());
+
                         if (emulateData.getSite() != null && emulateData.getSite().length() > 0) {
                             node.put("site", emulateData.getSite());
                         } else {
                             node.put("site", "");
                         }
+
                         if (emulateData.getIdTask() != null && emulateData.getIdTask().length() > 0) {
                             node.put("idTask", emulateData.getIdTask());
                         } else {
                             node.put("idTask", "");
                         }
+
+                        if (emulateData.getOrderEntity() != null && emulateData.getOrderEntity().getId().length() > 0) {
+                            node.put("idOrder", emulateData.getOrderEntity().getId());
+                        } else {
+                            node.put("idOrder", "");
+                        }
+
                         arrayNode.add(node);
                     }
                 }
@@ -248,6 +257,8 @@ public class Emulate3DAO {
 
             ArrayNode arrayNode = mapper.createArrayNode();
 
+            List<OrderInfo> orderInfo = new ArrayList<OrderInfo>();
+
             for (int i = 0; i < results.size(); i++) {
                 RG_EmulateResultEntity entity = results.get(i);
                 ObjectNode node = mapper.createObjectNode();
@@ -256,16 +267,46 @@ public class Emulate3DAO {
                 node.put("good", entity.getGoods());
                 node.put("startTime", entity.getStartTime());
                 node.put("endTime", entity.getEndTime());
+
                 if (entity.getSite() != null) {
                     node.put("site", entity.getSite());
                 } else {
                     node.put("site", "");
                 }
+
                 if (entity.getIdTask() != null) {
                     node.put("idTask", entity.getIdTask());
                 } else {
                     node.put("idTask", "");
                 }
+
+                if (entity.getOrderEntity() != null && entity.getOrderEntity().getId().length() > 0) {
+                    node.put("idOrder", entity.getOrderEntity().getId());
+                } else {
+                    node.put("idOrder", "");
+                }
+
+                //Yang-20171023计算多个订单中每个订单的开始、结束时间
+                boolean exist = false;
+                for (OrderInfo info : orderInfo) {
+                    if (entity.getOrderEntity() != null) {
+                        if (info.getName().equals(entity.getOrderEntity().getId())) {
+
+                            info.setMaxTime(entity.getEndTime());
+
+                            exist = true;
+                        }
+                    }
+                }
+
+                if (!exist) {
+                    OrderInfo info = new OrderInfo();
+                    info.setName(entity.getOrderEntity().getId());
+                    info.setMinTime(entity.getStartTime());
+                    info.setMaxTime(entity.getEndTime());
+                    orderInfo.add(info);
+                }
+
                 arrayNode.add(node);
             }
             ArrayNode deviceNode = mapper.createArrayNode();
@@ -284,6 +325,19 @@ public class Emulate3DAO {
             dataNode.put("device", deviceNode);
 
             array.add(dataNode);
+
+            ArrayNode orderTimeNode = mapper.createArrayNode();
+
+            for (OrderInfo info : orderInfo) {
+                ObjectNode node = mapper.createObjectNode();
+                node.put("name", info.getName());
+                node.put("startTime", info.getMinTime());
+                node.put("endTime", info.getMaxTime());
+
+                orderTimeNode.add(node);
+            }
+
+            dataNode.put("orderTime", orderTimeNode);
 
             root.put("data", array);
 
@@ -307,5 +361,35 @@ public class Emulate3DAO {
         MyLog.getLogger().info("*********************************************************************");
 
         return flag;
+    }
+}
+
+class OrderInfo {
+    private String name;
+    private int minTime;
+    private int MaxTime;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getMinTime() {
+        return minTime;
+    }
+
+    public void setMinTime(int minTime) {
+        this.minTime = minTime;
+    }
+
+    public int getMaxTime() {
+        return MaxTime;
+    }
+
+    public void setMaxTime(int maxTime) {
+        MaxTime = maxTime;
     }
 }

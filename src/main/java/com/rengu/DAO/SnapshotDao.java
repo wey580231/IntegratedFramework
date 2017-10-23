@@ -233,7 +233,7 @@ public class SnapshotDao {
                                 RG_EmulateResultEntity nextResult = new RG_EmulateResultEntity();
                                 //任务名
                                 nextResult.setTask(taskList[m]);
-                                //货物名
+                                //货物名perPlanDelayMinuteTime
                                 nextResult.setGoods(entity.getGoods());
                                 //地点名(若不存在为null)
                                 if (entity.getPreProcessSites() != null) {
