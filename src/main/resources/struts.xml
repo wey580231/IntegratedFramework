@@ -28,6 +28,8 @@
         <action name="update" class="com.rengu.actions.OrdersAction" method="update"/>
         <action name="findAllByisFinishedAndDate" class="com.rengu.actions.OrdersAction"
                 method="findAllByisFinishedAndDate"/>
+        <action name="findByState" class="com.rengu.actions.OrdersAction"
+                method="findByState"/>
         <action name="deleteById" class="com.rengu.actions.OrdersAction" method="deleteById"/>
     </package>
 
@@ -90,6 +92,7 @@
         <action name="update" class="com.rengu.actions.ShiftAction" method="update"/>
         <action name="findAll" class="com.rengu.actions.ShiftAction" method="findAll"/>
         <action name="findAllById" class="com.rengu.actions.ShiftAction" method="findAllById"/>
+        <action name="saveAPS" class="com.rengu.actions.ShiftAction" method="saveAPS"/>
     </package>
 
     <!--计划排程接口-->

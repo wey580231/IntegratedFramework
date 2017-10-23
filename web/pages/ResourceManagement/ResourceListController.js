@@ -29,6 +29,11 @@ angular.module("IntegratedFramework.ResourceListController", ['ngRoute'])
 
                 hideLoadingPage();
             });
+
+            myHttpService.get(serviceList.ListShift).then(function (response) {
+                $scope.workList = response.data;
+                hideLoadingPage();
+            });
         });
 
         //确认下发APS

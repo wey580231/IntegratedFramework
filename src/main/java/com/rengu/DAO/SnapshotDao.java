@@ -143,7 +143,7 @@ public class SnapshotDao {
     private void switchPlanToEmulateResult(boolean isSignal, List<RG_PlanEntity> plans, Session session) throws ParseException {
         //【1】将当前快照对应的所有订单按照时间升序转换
         RG_PlanEntity startPlan = plans.get(0);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Date initialDate = sdf.parse(startPlan.getT1Task());
 
@@ -154,10 +154,9 @@ public class SnapshotDao {
 
         List<RG_PlanEntity> robotPlan = new ArrayList<RG_PlanEntity>();
 
+        System.out.println("总计需要转换" + plans.size() + "条记录");
         //转换AGV、生产工艺
         for (int i = 0; i < plans.size(); i++) {
-
-            System.out.println(i + "+++++");
 
             RG_PlanEntity plan = plans.get(i);
 
@@ -450,6 +449,14 @@ public class SnapshotDao {
 
         Session session = MySessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
+        //重置所有订单的下发mes状态
+        String hql = "from RG_OrderEntity rg_orderEntity";
+        Query queryList = session.createQuery(hql);
+        List<RG_OrderEntity> rg_orderEntityList = queryList.list();
+        for (RG_OrderEntity rg_orderEntity : rg_orderEntityList) {
+            rg_orderEntity.setSendToMES(false);
+            session.saveOrUpdate(rg_orderEntity);
+        }
 
         try {
             RG_SnapshotNodeEntity snapshot = session.get(RG_SnapshotNodeEntity.class, id);
@@ -469,7 +476,7 @@ public class SnapshotDao {
                     //【1】更新订单状态
                     while (iter.hasNext()) {
                         RG_OrderEntity tmpOrder = iter.next();
-                        tmpOrder.setState(Byte.parseByte("2"));
+                        tmpOrder.setSendToMES(true);
                         orderList.add(tmpOrder.getId());
                         session.update(tmpOrder);
                     }

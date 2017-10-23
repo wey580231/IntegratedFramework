@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import javax.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -274,6 +275,7 @@ public class RG_ResourceEntity {
         this.sitesById = sitesById;
     }
 
+    @ManyToMany(mappedBy = "resources")
     public Set<RG_ShiftEntity> getShiftsById() {
         return shiftsById;
     }

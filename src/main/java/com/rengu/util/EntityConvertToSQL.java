@@ -145,8 +145,13 @@ public class EntityConvertToSQL {
         return SQLString;
     }
 
-    public static String insertSQLForAPS(RG_ShiftEntity rg_shiftEntity) {
+    /*public static String insertSQLForAPS(RG_ShiftEntity rg_shiftEntity) {
         String SQLString = "INSERT INTO " + DatabaseInfo.APS_SHIFT + " (id,name,type,Slot) VALUES ('" + rg_shiftEntity.getId() + "','" + rg_shiftEntity.getName() + "','" + rg_shiftEntity.getType() + "','" + rg_shiftEntity.getSlot() + "');";
+        return SQLString;
+    }*/
+
+    public static String insertSQLForAPS(RG_ShiftEntity rg_shiftEntity) {
+        String SQLString = "INSERT INTO " + DatabaseInfo.APS_SHIFT + " (id,name,Slot) VALUES ('" + rg_shiftEntity.getId() + "','" + rg_shiftEntity.getName() + "','" + rg_shiftEntity.getSlot() + "')";
         return SQLString;
     }
 

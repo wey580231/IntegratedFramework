@@ -57,6 +57,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, deleteOrderList);
                     //设置订单状态为已完成
                     for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
+                        rg_orderEntity.setFinished(true);
                         DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Finished);
                     }
                     //异常列表
@@ -102,6 +103,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                         DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Calculating);
                         //处理拖期异常
                         ApsTools.instance().executeCommand(ApsTools.getAdjustProcessHandlingURL(rg_adjustProcessEntity));
+                        DAOFactory.getAdjustProcessDAOImplInstance().configState(rg_adjustProcessEntity, ErrorState.ERROR_APS_PROCESS);
                         while (ApsTools.isRunning) {
                             try {
                                 System.out.println("APS计算中...");
@@ -113,7 +115,7 @@ public class AutoRollingSchedulingAction extends SuperAction {
                         //设置订单状态为计算完成
                         DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Calculated);
                         //设置异常的状态为已处理
-                        DAOFactory.getAdjustProcessDAOImplInstance().configState(rg_adjustProcessEntity, ErrorState.ERROR_FINISH);
+                        DAOFactory.getAdjustProcessDAOImplInstance().configState(rg_adjustProcessEntity, ErrorState.ERROR_APS_FINISH);
                     }
                 }
                 //开始滚动排程

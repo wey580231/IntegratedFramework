@@ -10,7 +10,7 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         })
     }])
 
-    .controller('WorkListController', function ($scope, $http, myHttpService, serviceList, validate, notification, renderTableService, dispatchApsService,enter) {
+    .controller('WorkListController', function ($scope, $http, myHttpService, serviceList, validate, notification, confirm, renderTableService, dispatchApsService,enter) {
 
         layer.load(0);
         enter.enterDown();
@@ -48,11 +48,23 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         //确认下发APS
         function confirmDispatchAps() {
             layer.load();
-            setTimeout(function () {
-                notification.sendNotification("alert", "已下发");
-                hideLoadingPage();
-            }, 2000);
-        }
+            if (getInfo()) {
+                var params = {};
+                params.id = idVal;
+                var idInfo = JSON.stringify(params);
+
+                myHttpService.post(serviceList.saveAPS,idInfo).then(function successCallback() {
+                }, function errorCallback() {
+                    notification.sendNotification("alert", "请求失败");
+                });
+
+                setTimeout(function () {
+                    notification.sendNotification("alert", "已下发");
+                    hideLoadingPage();
+                }, 2000);
+            }
+
+        };
 
         //取消下发APS
         function resetDispatchAps() {
@@ -397,18 +409,21 @@ angular.module("IntegratedFramework.WorkListController", ['ngRoute'])
         //删除订单
         $scope.deleteWork = function () {
             if (getInfo()) {
-                var params = {};
-                params.id = idVal;
-                var idInfo = JSON.stringify(params);
-                console.log("删除的id信息");
-                console.log(idInfo);
-                myHttpService.delete(serviceList.DeleteShift, idInfo).then(function successCallback() {
-                    myHttpService.get(serviceList.ListShift).then(function (response) {
-                        $scope.workList = response.data;
+                if (confirm.confirmDel()) {
+                    var params = {};
+                    params.id = idVal;
+                    var idInfo = JSON.stringify(params);
+                    console.log("删除的id信息");
+                    console.log(idInfo);
+                    myHttpService.delete(serviceList.DeleteShift, idInfo).then(function successCallback() {
+                        myHttpService.get(serviceList.ListShift).then(function (response) {
+                            $scope.workList = response.data;
+                        });
+                    }, function errorCallback() {
+                        notification.sendNotification("alert", "请求失败");
                     });
-                }, function errorCallback() {
-                    notification.sendNotification("alert", "请求失败");
-                });
+                }
+
             }
         };
 
