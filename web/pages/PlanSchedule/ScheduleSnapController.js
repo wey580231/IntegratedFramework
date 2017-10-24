@@ -21,6 +21,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var queryApsRecoverBackupTime = 0;          //定时查询aps恢复快照的状态
         var hasReciveSnapshotFlag = false;
 
+        var selectedCheckArray = []; //选中的checkbox的id值集合
+
         var PageInfo = {};
         PageInfo.selectedIndex = [];     //每个页面中保存选择的索引
         PageInfo.data = [];              //每个页面对应的数据信息，只加载一次
@@ -33,7 +35,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         var bottomInfo = [];         //底层节点
 
         var snaps = [];              //存放快照的id
-        var idS = [];
+        var idS;
+
+        var selsnap = {};
 
         $(function () {
             //初始化下拉数据
@@ -469,9 +473,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                  }
                  var params = {};
                  params.id = idRoot;
-                 idSch = JSON.stringify(params);
+                 var idSch1 = JSON.stringify(params);
 
-                 console.log(idSch);
+                 //console.log(idSch1);
 
                  }
              });
@@ -494,7 +498,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             choosePageTip();
 
             snaps.splice(0, snaps.length);
-            idS.splice(0, idS.length);
+            //idS.splice(0, idS.length);
 
             //清空页面信息
             for (var i = 0; i < pageCount; i++) {
@@ -598,6 +602,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             var idSch = $("#select0 option:selected").val();
             console.log(idSch);
 
+            //selsnap.id = idSch;
+
             if (idSch.length > 0) {
                 for (var i = 0; i < rootData.length; i++) {
                     if (rootData[i].name == idSch) {
@@ -605,12 +611,17 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                         break;
                     }
                 }
+
+
                 var params = {};
                 params.id = idS;
                 idSch = JSON.stringify(params);
             }
 
+            //delete selsnap.id;
+
             myHttpService.post(serviceList.getTree, idSch).then(function successCallback(response) {
+                idS = "";
                 $scope.snapShotData = response.data;
                 var datas = response.data;
 
@@ -631,24 +642,18 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                             for (var k = 0; k < middleNode.childs.length; k++) {
                                 var bottomNode = middleNode.childs[k];
 
-                                bottomInfo.push(bottomNode);
+                                //改
+                                //bottomInfo.push(bottomNode);
+                                PageInfo.data[currPage].push(bottomNode);
                             }
-                            /*var temps = middleNode.childs;
-                            delete(middleNode.childs);
-                            middleNode.children = temps;
-                            middleNode = middleNode;
-                            middleNode.schedule = response.data.schedule;
-                            treeInfo.push(middleNode);*/
                         }
 
                     }
-                    /*var temp = datas.childs;
-                    delete(datas.childs);
-                    datas.children = temp;
-                    treeInfo.push(datas);*/
                 }
-                $scope.bottomInfo = bottomInfo;
-                console.log(bottomInfo);
+                //改
+                //$scope.bottomInfo = bottomInfo;
+                $scope.bottomInfo = PageInfo.data[currPage];
+                //console.log(bottomInfo);
             });
 
         }
@@ -674,9 +679,19 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             params.snaps = snaps;
             var data = JSON.stringify(params);
 
+
             myHttpService.post(serviceList.getAllResult, data).then(function successCallback(response) {
+
+
+                //清空所用的数组和变量
+                selectedCheckArray.splice(0, selectedCheckArray.length);
+                snaps.splice(0,snaps.length);
+                console.log(snaps);
+
                 $scope.resultList = response.data;
                 //$scope.rateList = response.data.useRate;
+
+
                 hideLoadingPage();
             });
 
@@ -735,6 +750,10 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             }
         };
 
+        $scope.isSelected = function (id) {
+            return selectedCheckArray.indexOf(id) >= 0;
+        };
+
 
 
         //显示利用率
@@ -749,7 +768,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             if (target.parentNode.tagName.toLowerCase() == "td") {
                 var rowIndex = target.parentNode.parentNode.rowIndex;
                 var id = document.getElementById("table_result").rows[rowIndex].cells[0].innerHTML;
-                alert(id);
+                //alert(id);
 
                 var params = {};
                 params.id = id;
