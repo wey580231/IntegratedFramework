@@ -577,7 +577,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                     layouts.id = PageInfo.selectedIndex[i][0];
                 }
                 else if (i == 2) {
-                        for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
+
+                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
                             var params = {};
                             params.id = PageInfo.selectedIndex[i][j];
                             orders.push(params);

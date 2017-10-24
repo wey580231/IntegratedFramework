@@ -175,6 +175,8 @@ angular.module("IntegratedFramework", [
         service.view3DEmulate = backUrl + "snapshot/view3DEmulate.action";
         service.dispatchMes = backUrl + "snapshot/dispatcherResultToMess.action";
         service.getAllPlan = backUrl + "plan/getAllPlanBySnapshotId.action";
+        service.getAllResult = backUrl + "plan/getAllResultBySnapshotId.action";
+        service.getAllRate = backUrl + "plan/fingRateById.action";
 
         <!--高级调整分析-->
         service.AdjustProcess = backUrl + "ExceptionList/getAllAdjustProcessException.action";
