@@ -46,6 +46,96 @@
     .box {
         position: unset;
     }
+
+    .modal-dialog {
+        width: 70%;
+        height: 80%;
+    }
+
+    .modal-body, .modal-content {
+        height: 100%;
+        padding: 0px;
+    }
+
+    .col-sm-4 {
+        padding-left: 13px;
+    }
+
+    #MyContainer {
+        width: 100%;
+        height: 95%;
+        overflow: hidden;
+        padding: 5px;
+    }
+
+    .MyPage {
+        width: 100%;
+        /*height: 100%;*/
+        height: 87%;
+        float: left;
+        position: relative;
+    }
+
+    #MyUl {
+        list-style: none;
+        margin: 0px;
+        height: 30px;
+        width: 100%;
+        background-color: rgba(200, 200, 200, 0.2);
+    }
+
+    .MyPageTip {
+        float: left;
+        display: block;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    #tipHover {
+        position: absolute;
+        background-color: #f44336;
+        box-shadow: 0 16px 26px -10px rgba(244, 67, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(244, 67, 54, 0.2);
+        height: 32px;
+        border-radius: 2px;
+        line-height: 32px;
+        text-align: center;
+        color: white;
+        font-weight: 600;
+    }
+
+    .myInput {
+        height: 27px;
+    }
+
+    .form-group {
+        margin-bottom: 13px;
+    }
+
+    .result {
+        margin-bottom: 30px;
+    }
+
+
+    .form-horizontal .control-label {
+        padding-top: 4px;
+    }
+
+    .MyPage {
+        height: 92%;
+    }
+
+    /*全选按钮*/
+    .btn-group-sm > .btn, .btn-sm{
+        padding: 1px 6px;
+        font-size: 12px;
+        line-height: 1.5;
+        border-radius: 3px;
+    }
+
+    .fc-scroller {
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
 </style>
 
 <div>
@@ -79,7 +169,7 @@
                 </a>
             </li>
             <li>
-                <a class="home" href=""><i class="fa fa-usb" aria-hidden="true"></i>
+                <a class="home" href="" ng-click="compareSnapshot()"><i class="fa fa-usb" aria-hidden="true"></i>
                     <span>快照对比</span>
                 </a>
             </li>
@@ -236,6 +326,235 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+
+        <!--快照对比-->
+        <div class="modal fade " id="modal-add">
+            <div class="modal-dialog" style="height: 75%;">
+                <div class="modal-content" style="height:100%;">
+                    <div class="modal-header" style="height: 10%;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h2 style="font-size:23px;">快照对比</h2>
+                    </div>
+                    <div class="modal-body" style="height: 90%;">
+                        <div id="MyContainer">
+                            <div style="height: 8%;">
+                                <div id="tipHover"></div>
+                                <ul id="MyUl">
+                                    <li class="MyPageTip">选择排程</li>
+                                    <li class="MyPageTip">快照对比</li>
+                                    <li class="MyPageTip">对比结果</li>
+                                </ul>
+                            </div>
+                            <!--新增排程页面时，只需要新增div并且class='MyPage'即可-->
+                            <div class="MyPage">
+                                <div class="" style="height: 100%;">
+                                    <section class="content" style="height: 100%;">
+                                        <div class="row" style="height: 100%;overflow: auto;">
+                                            <div class="col-md-12" style="height: 100%;">
+                                                <div class="modal-body" style="height: 100%;">
+                                                    <form class="form-horizontal" style="height: 100%;">
+                                                        <div class="box-body" style="height: 100%;/*margin-top: -10px*/">
+
+                                                            <div class="form-group" id="select-schecule">
+                                                                <label>请选择</label>
+                                                                <select class="form-control select2" style="width: 100%;float:left;" id="select0">
+                                                                    <option selected="selected"></option>
+                                                                    <option ng-repeat="data in dataArr">{{data.name}}</option>
+                                                                </select>
+
+                                                            </div>
+
+                                                            <div>
+                                                                <button type="submit" id="submitBtn"
+                                                                        class="btn btn-primary btn-flat pull-right"
+                                                                        style="width: 30%;margin-right: 35%;margin-top: 90px;"
+                                                                        ng-click="infoValidate();">确定
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </section>
+
+                                </div>
+
+                            </div>
+
+                            <div class="MyPage">
+
+                                <div class="form-group" id="select-snapShot">
+                                    <div id="snap1">
+                                        <label>请选择</label>
+                                        <!--<select class="form-control select2" style="width: 100%;float:left;" id="select1">
+                                            <option selected="selected"></option>
+                                            <option ng-repeat="data in bottomInfo">{{data.name}}</option>
+                                        </select>-->
+                                        <div class="table-responsive mailbox-messages" style="height: 100%">
+                                            <table class="table table-hover table-striped" id="layouts" style="overflow: scroll">
+                                                <tbody style="height: 70%;">
+                                                <tr>
+                                                    <td></td>
+                                                    <td>快照节点</td>
+                                                </tr>
+                                                <tr ng-repeat="x in bottomInfo">
+                                                    <td style="line-height: 70px;height:70px">
+                                                        <input name="check1" type="checkbox" ng-checked="isSelected(x.id)" ng-click="updateSelection($event,x.id)">
+                                                    </td>
+                                                    <td style="display:none">{{x.id}}</td>
+                                                    <td style="line-height: 70px;height:70px">{{x.name}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+
+                                    <!--<div id="snap2">
+                                        <label>快照2</label>
+                                        <select class="form-control select2" style="width: 100%;float:left;" id="select2">
+                                            <option selected="selected"></option>
+                                            <option ng-repeat="data in bottomInfo">{{data.name}}</option>
+                                        </select>
+                                    </div>-->
+
+                                </div>
+                            </div>
+                            <div class="MyPage">
+                                <!--<label>对比结果如下</label>-->
+                                <!--<div class="table-responsive mailbox-messages" style="height: 100%">
+
+                                    <div class="form-group result" id="taskSpanDiv">
+                                        <label class="col-sm-4 control-label">跨度</label>
+
+                                        <div class="col-sm-8">
+                                            <input id="taskSpan" class="myInput form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group result" id="delayOrderDiv">
+                                        <label class="col-sm-4 control-label">拖期订单数量</label>
+
+                                        <div class="col-sm-8">
+                                            <input id="delayOrder" class="myInput form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group result" id="delaySumDiv">
+                                        <label class="col-sm-4 control-label">拖期量累加值</label>
+
+                                        <div class="col-sm-8">
+                                            <input id="delaySum" class="myInput form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group result" id="useDiv">
+                                        <label class="col-sm-4 control-label">资源利用率</label>
+
+                                        <div class="col-sm-8">
+                                            <input id="use" class="myInput form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group result" id="changeNumDiv">
+                                        <label class="col-sm-4 control-label">工序资源有变化的工序数量</label>
+
+                                        <div class="col-sm-8">
+                                            <input id="changeNum" class="myInput form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group result" id="overSpanDiv">
+                                        <label class="col-sm-4 control-label">工序时间跨度超过滚动周期的工序数量</label>
+
+                                        <div class="col-sm-8">
+                                            <input id="overSpan" class="myInput form-control">
+                                        </div>
+                                    </div>
+
+                                </div>-->
+                                <div class="table-responsive mailbox-messages" style="margin-top: 20px;">
+                                    <table class="table table-hover table-striped" id="table_result">
+                                        <tbody>
+                                        <tr>
+                                            <th>跨度</th>
+                                            <th>拖期订单数</th>
+                                            <th>拖期累加值</th>
+                                            <th>资源利用率</th>
+                                            <th>工序资源有变化的工序数量</th>
+                                            <th>工序时间跨度超过滚动周期的工序数量</th>
+                                        </tr>
+                                        <tr ng-repeat="result in resultList track by $index" ng-init="renderTable($last)">
+                                            <td style="display:none">{{result.id}}</td>
+                                            <td>{{result.span}}秒</td>
+                                            <td>{{result.delayOrder}}个</td>
+                                            <td>{{result.delaySum}}秒</td>
+                                            <td>
+                                                <button type="button" class="btn btn-block btn-sm btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#modal-rate"
+                                                        ng-click="findRate($event)">详情
+                                                </button>
+                                            </td>
+                                            <td>{{result.changeNum}}个</td>
+                                            <td>{{result.overSpan}}个</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- /.table -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer" style="clear:both;height:15%">
+                            <button id="previouseStep" type="submit" class="btn btn-default" ng-click="previous()">上一步
+                            </button>
+                            <button id="nextStep" type="submit" class="btn btn-info pull-right" ng-click="next()">下一步
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--显示利用率-->
+        <div class="modal fade" id="modal-rate" style="height: 100%;min-height: 425px;">
+            <div class="modal-dialog" style="height: 80%;">
+                <div class="modal-content" style="width: 70%;margin-left: 15%;height: 100%;">
+                    <div class="modal-header" style="height: 11%;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="reset()">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">资源利用率</h4>
+                    </div>
+                    <div class="modal-body" style="height: 84%;">
+                        <!-- form start -->
+                        <div class="table-responsive mailbox-messages" style="height: 100%">
+                            <table class="table table-hover table-striped" style="overflow: scroll">
+                                <tbody style="height: 70%;">
+                                <tr>
+                                    <th>资源名称</th>
+                                    <th>利用率</th>
+                                </tr>
+                                <tr ng-repeat="rate in rateList" ng-init="renderTable($last)">
+                                    <td>{{rate.IDRESOURCE}}</td>
+                                    <td>{{rate.RATE}}</td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
     <!-- /.content -->
 </div>

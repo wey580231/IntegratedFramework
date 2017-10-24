@@ -215,6 +215,8 @@
     <!--plan表-->
     <package name="Plan" namespace="/plan" extends="struts-default">
         <action name="getAllPlanBySnapshotId" class="com.rengu.actions.PlanAction" method="getAllPlanBySnapshotId"/>
+        <action name="getAllResultBySnapshotId" class="com.rengu.actions.PlanAction" method="getAllResultBySnapshotId"/>
+        <action name="fingRateById" class="com.rengu.actions.PlanAction" method="fingRateById"/>
     </package>
     <!--测试接口-->
     <package name="test" namespace="/test" extends="struts-default">

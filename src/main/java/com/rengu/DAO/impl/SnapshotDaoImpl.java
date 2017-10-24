@@ -49,4 +49,27 @@ public class SnapshotDaoImpl extends SuperDAOImpl {
             return null;
         }
     }
+
+    /*public RG_SnapshotNodeEntity findBottomNodeById(String id) {
+        try {
+            MySessionFactory.getSessionFactory().getCurrentSession().close();
+            Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.getTransaction();
+            if (!transaction.isActive()) {
+                session.beginTransaction();
+            }
+            String hql = "from RG_SnapshotNodeEntity rg_snapshotNodeEntity where rg_snapshotNodeEntity.id =:id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            if (!query.list().isEmpty()) {
+                RG_SnapshotNodeEntity rg_snapshotNodeEntity = (RG_SnapshotNodeEntity) query.list().get(0);
+                return rg_snapshotNodeEntity;
+            } else {
+                return null;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }*/
 }

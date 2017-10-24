@@ -136,4 +136,17 @@ public class SnapshotAction extends SuperAction {
         String jsonString = Tools.entityConvertToJsonString(rg_snapshotNodeEntity);
         Tools.jsonPrint(jsonString, this.httpServletResponse);
     }
+
+    //获取某个top节点下的bottom节点
+    public void getBottomNodeById() throws Exception {
+        JsonNode jsonNode = Tools.jsonTreeModelParse(Tools.getHttpRequestBody(this.httpServletRequest));
+        String snapshotId = jsonNode.get("id").asText();
+        SnapshotDaoImpl snapshotDao = DAOFactory.getSnapshotDaoImplInstance();
+        RG_SnapshotNodeEntity rg_snapshotNodeEntity = snapshotDao.findAllById(snapshotId);
+        if(rg_snapshotNodeEntity != null){
+
+        }
+        String jsonString = Tools.entityConvertToJsonString(rg_snapshotNodeEntity);
+        Tools.jsonPrint(jsonString, this.httpServletResponse);
+    }
 }
