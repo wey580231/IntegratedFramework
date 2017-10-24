@@ -70,6 +70,14 @@ public class PlanDAOImpl extends SuperDAOImpl implements PlanDAO<RG_PlanEntity> 
         return list;
     }
 
+    public List<RG_PlanEntity> findAllBySnapshotId(String id,Session session) {
+        String hql = "from RG_PlanEntity rg_planEntity where rg_planEntity.snapShort.id =:id order by rg_planEntity.t1Task asc";
+        Query query = session.createQuery(hql);
+        query.setParameter("id", id);
+        List list = query.list();
+        return list;
+    }
+
     @Override
     /*public RG_PlanEntity findAllByOrderId(String id) {
         try {

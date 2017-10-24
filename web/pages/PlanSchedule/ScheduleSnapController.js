@@ -31,7 +31,9 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
         var idSch;                    //快照第一页所选排程
         var bottomInfo = [];         //底层节点
-        var validScheduleBaseInfo;   //是否为有效排程，为false时不可以排程
+
+        var snaps = [];              //存放快照的id
+        var idS = [];
 
         $(function () {
             //初始化下拉数据
@@ -64,8 +66,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             });
             $("#tipHover").css("width", 1 / pageTipCount * 100 + "%");
 
-           /* $("#nextStep").attr("disabled", true);
-            $("#startSchedule").attr("disabled", true);*/
+           // $("#nextStep").attr("disabled", true);
 
             myHttpService.get(serviceList.ListSchedule).then(function (response) {
                 $scope.scheduleList = response.data;
@@ -449,8 +450,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
              $('#modal-add').modal({backdrop: 'static', keyboard: false});
              $("#modal-add").show();
 
-             /*$("#nextStep").attr("disabled", true);
-             $("#startSchedule").attr("disabled", true);*/
+             $("#nextStep").attr("disabled", true);
 
              //下拉框事件改变
              $("#select2").change(function () {
@@ -476,19 +476,16 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                  }
              });
              //console.log(val2);
-             /*resetContent();*/
+             resetContent();
          };
 
         //重置页面内容信息
         function resetContent() {
-            /*$("#startSchedule").hide();
             $("#previouseStep").hide();
-            $("#nextStep").show();*/
+            $("#nextStep").show();
 
             pageCount = $(".MyPage").size();
             pageTipCount = $(".MyPageTip").size();
-
-            validScheduleBaseInfo = false;
 
             $(".MyPage").eq(currPage).hide();
             currPage = 0;
@@ -496,6 +493,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
 
             choosePageTip();
 
+            snaps.splice(0, snaps.length);
+            idS.splice(0, idS.length);
 
             //清空页面信息
             for (var i = 0; i < pageCount; i++) {
@@ -511,9 +510,8 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
         }
 
         //上一步
-        /*$scope.previous = function () {
+        $scope.previous = function () {
             if (currPage >= 0) {
-                $("#startSchedule").hide();
                 $("#nextStep").show();
 
                 $(".MyPage").eq(currPage).hide();
@@ -525,9 +523,14 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 $("#previouseStep").hide();
                 $("#nextStep").show();
             }
+
+            if (currPage == pageCount - 1) {
+                $("#previouseStep").hide();
+            }
+
             choosePageTip();
 
-            //布局查询
+            //快照选择
             if (currPage == 1) {
                 if (PageInfo.selectedIndex[currPage].length <= 0) {
                     $("#nextStep").attr("disabled", true);
@@ -535,39 +538,39 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     $("#nextStep").removeAttr("disabled");
                 }
             }
-            //订单查询
+            //显示结果
             else if (currPage == 2) {
                 if (PageInfo.selectedIndex[currPage].length <= 0) {
-                    $("#startSchedule").attr("disabled", true);
-                } else {
-                    $("#startSchedule").removeAttr("disabled");
+
                 }
             }
             //第一页
             else {
                 $("#nextStep").removeAttr("disabled");
             }
-        };*/
+
+
+        };
 
         //下一步
         $scope.next = function () {
 
-            /*if (currPage == 0 && (!validateBaseInfo(true))) {
-                return;
-            }*/
+            if (currPage == 0) {
+                $("#nextStep").removeAttr('disabled');
+            }
 
             if (currPage < pageCount - 1) {
-                /*$("#previouseStep").show();*/
+                $("#previouseStep").show();
                 $(".MyPage").eq(currPage).hide();
                 currPage += 1;
-                /*$(".MyPage").eq(currPage).show();*/
+                $(".MyPage").eq(currPage).show();
                 $(".previouseStep").eq(currPage).show();
             }
 
-            /*if (currPage == pageCount - 1) {
+            if (currPage == pageCount - 1) {
                 $("#nextStep").hide();
-                $("#startSchedule").show();
-            }*/
+                $("#previouseStep").hide();
+            }
             choosePageTip();
 
             //布局查询
@@ -576,22 +579,17 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     selectSnapshot();
                 }
                 if (PageInfo.selectedIndex[currPage].length <= 0) {
-                    //$("#nextStep").attr("disabled", true);
+                    $("#nextStep").attr("disabled", true);
                 } else {
-                    //$("#nextStep").removeAttr("disabled");
+                    $("#nextStep").removeAttr("disabled");
                 }
             }
             //订单查询
-            /*else if (currPage == 2) {
+            else if (currPage == 2) {
                 if (PageInfo.data[currPage].length == 0) {
-                    showOrderInfo();
+                    showCompareInfo();
                 }
-                if (PageInfo.selectedIndex[currPage].length <= 0) {
-                    $("#startSchedule").attr("disabled", true);
-                } else {
-                    $("#startSchedule").removeAttr("disabled");
-                }
-            }*/
+            }
         };
 
         //选择快照
@@ -603,7 +601,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
             if (idSch.length > 0) {
                 for (var i = 0; i < rootData.length; i++) {
                     if (rootData[i].name == idSch) {
-                        var idS = rootData[i].id;
+                        idS = rootData[i].id;
                         break;
                     }
                 }
@@ -616,7 +614,7 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                 $scope.snapShotData = response.data;
                 var datas = response.data;
 
-                console.log(datas);
+                //console.log(datas);
 
                 if (datas.hasOwnProperty("childs")) {
                     var middleNodeList = datas.childs;
@@ -649,95 +647,118 @@ angular.module("IntegratedFramework.ScheduleSnapController", ['ngRoute'])
                     datas.children = temp;
                     treeInfo.push(datas);*/
                 }
+                $scope.bottomInfo = bottomInfo;
                 console.log(bottomInfo);
             });
 
         }
 
-        //查询订单信息
-        /*function showOrderInfo() {
-            //开始访问当前未完成的记录
-            var cur = {};
+        //显示对比结果信息
+        function showCompareInfo() {
+            layer.load(0);
 
-            var nowTime = (new Date($("input[id='nowTime-datepicker']").val())).getTime();
-            var startTime = moment(nowTime).format("YYYY-MM-DD");
-            cur.startTime = (new Date(startTime)).getTime();
+            for (var i = 0; i < pageCount; i++) {
+                if (i == 1) {
+                    //snaps.id = PageInfo.selectedIndex[i][0];
 
-            var scheduleDays0 = scheduleDays;
-
-            var endTime = moment(startTime).add(scheduleDays0, 'day').format("YYYY-MM-DD");
-
-            cur.endTime = (new Date(endTime)).getTime();
-
-            cur.isFinished = false;
-
-            var data = JSON.stringify(cur);
-
-            myHttpService.post(serviceList.CurInfo, data).then(function (response) {
-                for (var i = 0; i < response.data.length; i++) {
-                    PageInfo.data[currPage].push(response.data[i]);
+                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
+                        var params = {};
+                        params.id = PageInfo.selectedIndex[i][j];
+                        snaps.push(params);
+                    }
                 }
-                $scope.ordinfo = PageInfo.data[currPage];
-
-            });
-        }*/
-
-        //验证基本信息输入，validateDate用于控制是否需要对日期进行验证
-        function validateBaseInfo(validateDate) {
-            /*var params = {};
-             params.schedule = $(this).children('option:selected').val();*/
-
-            var val = $(this).children('option:selected').val();
-
-            if (val == null) {
-
-                validScheduleBaseInfo = true;
-                return true;
 
             }
-            validScheduleBaseInfo = false;
-            return false;
+
+            var params = {};
+            params.snaps = snaps;
+            var data = JSON.stringify(params);
+
+            myHttpService.post(serviceList.getAllResult, data).then(function successCallback(response) {
+                $scope.resultList = response.data;
+                //$scope.rateList = response.data.useRate;
+                hideLoadingPage();
+            });
+
         }
 
+
         //基本信息检验
-        $scope.infoValidate = function () {
-            if (validateBaseInfo(false)) {
-                selectSnapshot();
-                /*$("#nextStep").removeAttr('disabled');*/
-            } else {
-                /*$("#nextStep").attr("disabled", true);*/
+        $scope.infoValidate = function (){
+
+            //alert("haha");
+            var coun=$("#select0").val();
+            //console.log(coun);
+            if(coun != 0) {
+                $("#nextStep").removeAttr('disabled');
+            }else{
+                $("#nextStep").attr("disabled", true);
             }
+
         };
 
 
         //表格信息重置
         $scope.reset = function () {
             $("input").val('');
+            //$("#select0").select2("val","");
             $("div").removeClass("has-error");
             $("div").removeClass("has-success");
         };
 
 
-        //开始排程
-        $scope.submitForm = function () {
-            layer.load(0);
+        //用于监控点击事件，checkbox选择了就更新
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
 
-            //var params = {};
 
-            for (var i = 0; i < pageCount; i++) {
-                if (i == 1) {
-                    layouts.id = PageInfo.selectedIndex[i][0];
-                }
-                else if (i == 2) {
-                    for (var j = 0; j < PageInfo.selectedIndex[i].length; j++) {
-                        var params = {};
-                        params.id = PageInfo.selectedIndex[i][j];
-                        orders.push(params);
-                    }
+            updateSelected(action, id);
 
-                }
-            }
-            configAPS();
         };
 
+        //添加或取消勾选时更新对应页面的列表
+        var updateSelected = function (action, id) {
+
+            if (action == 'add' & PageInfo.selectedIndex[currPage].indexOf(id) == -1) {
+                PageInfo.selectedIndex[currPage].push(id);
+                if (PageInfo.selectedIndex[currPage].length > 0) {
+                    $("#nextStep").removeAttr("disabled");
+                }
+            }
+
+            if (action == 'remove' && PageInfo.selectedIndex[currPage].indexOf(id) != -1) {
+                PageInfo.selectedIndex[currPage].splice(PageInfo.selectedIndex[currPage].indexOf(id), 1);
+                if (PageInfo.selectedIndex[currPage].length == 0) {
+                    $("#nextStep").attr("disabled", true);
+                }
+            }
+        };
+
+
+
+        //显示利用率
+
+        $scope.findRate = function (event) {
+            processError(event);
+        };
+
+        function processError(event) {
+            var e = event || window.event;
+            var target = e.target || e.srcElement;
+            if (target.parentNode.tagName.toLowerCase() == "td") {
+                var rowIndex = target.parentNode.parentNode.rowIndex;
+                var id = document.getElementById("table_result").rows[rowIndex].cells[0].innerHTML;
+                alert(id);
+
+                var params = {};
+                params.id = id;
+                var idInfo = JSON.stringify(params);
+
+                myHttpService.post(serviceList.getAllRate,idInfo).then(function successCallback(response) {
+                    $scope.rateList = response.data;
+                    hideLoadingPage();
+                })
+            }
+        }
     });
