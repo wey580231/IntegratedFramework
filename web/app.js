@@ -309,6 +309,7 @@ angular.module("IntegratedFramework", [
                 layer.confirm('将选中数据下发APS？', {
                     btn: ['下发', '取消'] //按钮
                 }, function () {
+                    layer.closeAll('dialog');
                     confirmDispatchAps();
                 }, function () {
                     resetDispatchAps();
