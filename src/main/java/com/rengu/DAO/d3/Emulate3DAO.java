@@ -205,6 +205,15 @@ public class Emulate3DAO {
                 dataNode.put("name", entity.getName());
                 dataNode.put("info", arrayNode);
                 dataNode.put("device", deviceNode);
+
+                ObjectNode orderInfoNode = mapper.createObjectNode();
+                orderInfoNode.put("id", entity.getId());
+                orderInfoNode.put("name", entity.getName());
+                orderInfoNode.put("startTime", emulateDatas.get(0).getStartTime());
+                orderInfoNode.put("endTime", emulateDatas.get(emulateDatas.size() - 1).getEndTime());
+
+                dataNode.put("orderTime",orderInfoNode);
+
                 array.add(dataNode);
             }
 
@@ -290,7 +299,7 @@ public class Emulate3DAO {
                 boolean exist = false;
                 for (OrderInfo info : orderInfo) {
                     if (entity.getOrderEntity() != null) {
-                        if (info.getName().equals(entity.getOrderEntity().getId())) {
+                        if (info.getId().equals(entity.getOrderEntity().getId())) {
 
                             info.setMaxTime(entity.getEndTime());
 
@@ -301,7 +310,8 @@ public class Emulate3DAO {
 
                 if (!exist) {
                     OrderInfo info = new OrderInfo();
-                    info.setName(entity.getOrderEntity().getId());
+                    info.setId(entity.getOrderEntity().getId());
+                    info.setName(entity.getOrderEntity().getName());
                     info.setMinTime(entity.getStartTime());
                     info.setMaxTime(entity.getEndTime());
                     orderInfo.add(info);
@@ -330,6 +340,7 @@ public class Emulate3DAO {
 
             for (OrderInfo info : orderInfo) {
                 ObjectNode node = mapper.createObjectNode();
+                node.put("id", info.getId());
                 node.put("name", info.getName());
                 node.put("startTime", info.getMinTime());
                 node.put("endTime", info.getMaxTime());
@@ -365,9 +376,18 @@ public class Emulate3DAO {
 }
 
 class OrderInfo {
+    private String id;
     private String name;
     private int minTime;
     private int MaxTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
