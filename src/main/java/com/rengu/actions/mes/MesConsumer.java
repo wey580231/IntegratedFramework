@@ -248,7 +248,7 @@ public class MesConsumer extends Thread {
                     agvInfo.setIdOrder(subDataNode.get("idOrder").asText());
                     agvInfo.setRemainPower(Float.parseFloat(subDataNode.get("remainPower").asText()));
                     agvInfo.setReportTime(new Date());
-                    agvInfo.setSite(subDataNode.get("site").asText());
+//                    agvInfo.setSite(subDataNode.get("site").asText());
 
                     session.save(agvInfo);
                 }
@@ -282,8 +282,8 @@ public class MesConsumer extends Thread {
 
                 RG_ResourceStateEntity stateEntity = new RG_ResourceStateEntity();
                 stateEntity.setId(Tools.getUUID());
-                stateEntity.setResourceName(dataNode.get("resourceName").asText());
-                stateEntity.setManufacturer(dataNode.get("manufacturer").asText());
+//                stateEntity.setResourceName(dataNode.get("resourceName").asText());
+//                stateEntity.setManufacturer(dataNode.get("manufacturer").asText());
                 stateEntity.setIdTask(dataNode.get("idTask").asText());
                 stateEntity.setIdProcess(Short.parseShort(dataNode.get("idProcess").asText()));
                 stateEntity.setIdProduct(dataNode.get("idProduct").asText());
