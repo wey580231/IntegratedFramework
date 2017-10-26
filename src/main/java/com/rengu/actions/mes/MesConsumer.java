@@ -2,10 +2,7 @@ package com.rengu.actions.mes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.entity.*;
-import com.rengu.util.MessTable;
-import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
-import com.rengu.util.UserConfigTools;
+import com.rengu.util.*;
 import org.hibernate.Session;
 
 import javax.jms.JMSException;
@@ -32,6 +29,7 @@ public class MesConsumer extends Thread {
         this.messages = messages;
     }
 
+    @Override
     public void run() {
         while (runningFlag) {
             try {
@@ -314,7 +312,10 @@ public class MesConsumer extends Thread {
                 //获取task表中的nameTask字段
                 String idTask = dataNode.get("idTask").asText();
                 RG_TaskEntity taskEntity = (RG_TaskEntity) session.get(RG_TaskEntity.class, idTask);
-                orderState.setNameTask(taskEntity.getName());
+
+                if (taskEntity != null) {
+                    orderState.setNameTask(taskEntity.getName());
+                }
 
                 orderState.setPlanDevice(dataNode.get("planDevice").toString());
 
@@ -332,25 +333,30 @@ public class MesConsumer extends Thread {
 
                 //向工序页面插入异常
                 String idSnapshot = UserConfigTools.getLatestDispatchMesId("1");
-                List<RG_PlanEntity> planEntity = (List<RG_PlanEntity>) session.createQuery("select plan from RG_PlanEntity plan where plan.snapShort.id =:idSnapshot").setParameter("idSnapshot", idSnapshot).list();
+                List<RG_PlanEntity> planEntity = (List<RG_PlanEntity>) session.createQuery("select plan from RG_PlanEntity plan where plan.snapShort.id =:idSnapshot and plan.idTask =:idTask").setParameter("idSnapshot", idSnapshot).setParameter("idTask", idTask).list();
 
-                for (RG_PlanEntity plan : planEntity) {
-                    String t1Task = plan.getT1Task();
-                    String t2Task = plan.getT2Task();
+                if (planEntity != null) {
+                    for (RG_PlanEntity plan : planEntity) {
+                        String t1Task = plan.getT1Task();
+                        String t2Task = plan.getT2Task();
 
-                    if (!t1Task.equals(actualDispatchTime) || !t2Task.equals(actualFinsihTime)) {
-                        //调整工序异常
-                        RG_AdjustProcessEntity adjustProcess = new RG_AdjustProcessEntity();
+                        if (!t1Task.equals(actualDispatchTime) || !t2Task.equals(actualFinsihTime)) {
+                            //调整工序异常
+                            RG_AdjustProcessEntity adjustProcess = new RG_AdjustProcessEntity();
 
-                        adjustProcess.setId(Tools.getUUID());
-                        adjustProcess.setIdOrder(idOrder);
-                        adjustProcess.setIdTask(idTask);
-                        adjustProcess.setState(1);
+                            adjustProcess.setId(Tools.getUUID());
+                            adjustProcess.setIdOrder(idOrder);
+                            adjustProcess.setIdTask(idTask);
+                            adjustProcess.setState(1);
 
-                        session.save(adjustProcess);
+                            session.save(adjustProcess);
+
+                            Tools.createEventLog(EventLogTools.AdjustProcessEvent, EventLogTools.StandardTimeLineItem, "工序异常", EventLogTools.createAdjustProcessEventContent(adjustProcess), adjustProcess.getId());
+                        }
+
                     }
-
                 }
+
 
 
                 //TODO x已完成  计划完工量格式不对，框架需要转换((合格+不合格)/计划数)
