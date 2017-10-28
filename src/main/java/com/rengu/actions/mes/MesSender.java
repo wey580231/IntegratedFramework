@@ -93,11 +93,8 @@ public class MesSender {
         rootNode.put("REVICER", messSender);
         rootNode.put("SENDER", messReciver);
         rootNode.put("UUID", Tools.getUUID());
-
         rootNode.put("DATA", dataNode);
-
         MyLog.getLogger().info(rootNode.toString());
-
         sendMessage(rootNode.toString());
     }
 
@@ -111,5 +108,4 @@ public class MesSender {
         }
         return sender;
     }
-
 }

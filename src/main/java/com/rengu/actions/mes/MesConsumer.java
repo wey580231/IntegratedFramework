@@ -283,7 +283,7 @@ public class MesConsumer extends Thread {
 //                stateEntity.setResourceName(dataNode.get("resourceName").asText());
 //                stateEntity.setManufacturer(dataNode.get("manufacturer").asText());
                 stateEntity.setIdTask(dataNode.get("idTask").asText());
-                stateEntity.setIdProcess(Short.parseShort(dataNode.get("idProcess").asText()));
+                stateEntity.setIdProcess(dataNode.get("idProcess").asText());
                 stateEntity.setIdProduct(dataNode.get("idProduct").asText());
                 stateEntity.setProductName(dataNode.get("productName").asText());
                 stateEntity.setT1Task(Tools.parseStandTextDate(dataNode.get("t1PlanTask").asText()));
