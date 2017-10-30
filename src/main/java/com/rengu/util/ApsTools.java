@@ -184,9 +184,7 @@ public class ApsTools {
                 RG_ProcessEntity processEntity = session.get(RG_ProcessEntity.class, tempMap.get("IDPROCESS").toString());
                 if (processEntity != null) {
                     rg_planEntity.setProcessByIdProcess(processEntity);
-
                     RG_ProcessEntity parentProcess = processEntity.getProcessByIdProcess();
-
                     if (parentProcess != null) {
                         rg_planEntity.setProductByIdProduct(parentProcess.getProductByIdProduct());
                     }
