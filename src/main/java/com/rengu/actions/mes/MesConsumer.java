@@ -79,6 +79,7 @@ public class MesConsumer extends Thread {
             JsonNode root = Tools.jsonTreeModelParse(message);
             String mesType = root.get("FC").asText();                //功能编码
             String UUID = root.get("UUID").asText();                 //接收消息UUID，用于在回复时加入
+            String sender = root.get("SENDER").asText();
             JsonNode dataNode = root.get("DATA");
             Session session = MySessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
@@ -257,7 +258,9 @@ public class MesConsumer extends Thread {
                     carryInfo.setCarryId(dataNode.get("id").asText());
                     carryInfo.setState(Boolean.parseBoolean(dataNode.get("state").asText()));
                     carryInfo.setJobDesc(dataNode.get("jobDesc").asText());
-                    carryInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    if (dataNode.has("idOrder")) {
+                        carryInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    }
                     carryInfo.setReportTime(new Date());
 
                     session.save(carryInfo);
@@ -284,8 +287,12 @@ public class MesConsumer extends Thread {
 //                stateEntity.setManufacturer(dataNode.get("manufacturer").asText());
                 stateEntity.setIdTask(dataNode.get("idTask").asText());
                 stateEntity.setIdProcess(dataNode.get("idProcess").asText());
-                stateEntity.setIdProduct(dataNode.get("idProduct").asText());
-                stateEntity.setProductName(dataNode.get("productName").asText());
+                if (dataNode.has("idProduct")) {
+                    stateEntity.setIdProduct(dataNode.get("idProduct").asText());
+                }
+                if (dataNode.has("productName")) {
+                    stateEntity.setProductName(dataNode.get("productName").asText());
+                }
                 stateEntity.setT1Task(Tools.parseStandTextDate(dataNode.get("t1PlanTask").asText()));
                 stateEntity.setT2Task(Tools.parseStandTextDate(dataNode.get("t2PlanTask").asText()));
                 stateEntity.setCurrTime(new Date());
@@ -324,10 +331,12 @@ public class MesConsumer extends Thread {
                 orderState.setPlanCount(planCount);
 
                 String actualDispatchTime = dataNode.get("realExcuteTime").toString();
-                String actualFinsihTime = dataNode.get("realFinishTime").toString();
+                String actualFinsihTime = dataNode.has("realFinishTime") ? dataNode.get("realFinishTime").toString() : null;
 
                 orderState.setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
-                orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
+                if (dataNode.has("realFinishTime")) {
+                    orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
+                }
                 orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").toString());
 
 
@@ -356,7 +365,6 @@ public class MesConsumer extends Thread {
 
                     }
                 }
-
 
 
                 //TODO x已完成  计划完工量格式不对，框架需要转换((合格+不合格)/计划数)
@@ -463,7 +471,7 @@ public class MesConsumer extends Thread {
             }
 
             //接收MES确认消息后，发送确认消息
-            MesSender.instance().sendReplyMessage(mesType, UUID);
+            MesSender.instance().sendReplyMessage(mesType, UUID, sender);
 
             session.getTransaction().commit();
             session.close();

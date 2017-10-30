@@ -86,6 +86,23 @@ public class MesSender {
         sendMessage(rootNode.toString());
     }
 
+    public void sendReplyMessage(String messType, String uuid, String revicer) {
+
+        rootNode = objMapper.createObjectNode();
+        rootNode.put("FC", messType);
+        rootNode.put("REVICER", revicer);
+        rootNode.put("SENDER", messReciver);
+        rootNode.put("UUID", uuid);
+
+        ObjectNode dataNode = objMapper.createObjectNode();
+        dataNode.put("result", "OK");
+        dataNode.put("type", "1");
+
+        rootNode.put("DATA", dataNode);
+
+        sendMessage(rootNode.toString());
+    }
+
     //发送计划、订单等消息
     public void sendData(String messType, ObjectNode dataNode) {
         rootNode = objMapper.createObjectNode();

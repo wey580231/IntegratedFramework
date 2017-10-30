@@ -228,7 +228,7 @@ DROP TABLE IF EXISTS `rg_deportinfo`;
 CREATE TABLE `rg_deportinfo` (
   `id`         VARCHAR(255) NOT NULL,
   `deportId`   VARCHAR(255) DEFAULT NULL,
-  `deportName` VARCHAR(100) DEFAULT NULL,
+  `deportName` VARCHAR(255) DEFAULT NULL,
   `stock`      INT(11)      DEFAULT NULL,
   `freePlace`  INT(11)      DEFAULT NULL,
   `reportTime` DATETIME     DEFAULT NULL,
