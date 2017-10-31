@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.entity.*;
 import com.rengu.util.*;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -81,6 +82,7 @@ public class MesConsumer extends Thread {
             String UUID = root.get("UUID").asText();                 //接收消息UUID，用于在回复时加入
             String sender = root.get("SENDER").asText();
             JsonNode dataNode = root.get("DATA");
+            String idSnapShort = UserConfigTools.getLatestDispatchMesId("1");
             Session session = MySessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
             System.out.println("消息类型：" + mesType + "，接受到消息+:" + message);
@@ -98,7 +100,9 @@ public class MesConsumer extends Thread {
                 product.setName(dataNode.get("name").asText());
                 product.setStock((short) dataNode.get("stock").asInt());
                 product.setUnit(dataNode.get("unit").asText());
-                product.setModel(dataNode.get("model").asText());
+                if (dataNode.has("model")) {
+                    product.setModel(dataNode.get("model").asText());
+                }
 
                 session.saveOrUpdate(product);
             }
@@ -157,32 +161,26 @@ public class MesConsumer extends Thread {
                         if (site1 != null && site2 != null) {
                             RG_DistanceEntity distance = new RG_DistanceEntity();
 
-                            RG_DistanceEntity distance2 = (RG_DistanceEntity) session.createQuery("select distance from RG_DistanceEntity distance where distance.startSite.id =:idSite1 and distance.endSite.id =:idSite2").setParameter("idSite1", idSite1).setParameter("idSite2", idSite2).uniqueResult();
+                            List<RG_DistanceEntity> rg_distanceEntityList = session.createQuery("select distance from RG_DistanceEntity distance where distance.startSite.id =:idSite1 and distance.endSite.id =:idSite2").setParameter("idSite1", idSite1).setParameter("idSite2", idSite2).list();
 
-                            if (distance2 != null) {
-                                //String idDistance = distance2.getId();
-                                int distance3 = subNode.get("distance").asInt();
-                                session.createNativeQuery("update rg_distance set distance = ?").setParameter(1, distance3).executeUpdate();
-                                /*session.delete(distance2);
-                                distance.setId(idDistance);
-                                distance.setStartSite(site1);
-                                distance.setEndSite(site2);
-                                distance.setDistance(subNode.get("distance").asInt());*/
-                            } else {
-                                distance.setId(Tools.getUUID());
-                                distance.setStartSite(site1);
-                                distance.setEndSite(site2);
-                                distance.setDistance(subNode.get("distance").asInt());
-                                session.saveOrUpdate(distance);
+                            for (RG_DistanceEntity rg_distanceEntity : rg_distanceEntityList) {
+                                if (rg_distanceEntity != null) {
+                                    String idDistance = rg_distanceEntity.getId();
+                                    int distance3 = subNode.get("distance").asInt();
+                                    session.createNativeQuery("update rg_distance set distance = ?").setParameter(1, distance3).executeUpdate();
+                                    session.delete(rg_distanceEntity);
+                                    distance.setId(idDistance);
+                                    distance.setStartSite(site1);
+                                    distance.setEndSite(site2);
+                                    distance.setDistance(subNode.get("distance").asInt());
+                                } else {
+                                    distance.setId(Tools.getUUID());
+                                    distance.setStartSite(site1);
+                                    distance.setEndSite(site2);
+                                    distance.setDistance(subNode.get("distance").asInt());
+                                    session.saveOrUpdate(distance);
+                                }
                             }
-
-
-                            /*distance.setId(Tools.getUUID());
-                            distance.setStartSite(site1);
-                            distance.setEndSite(site2);
-                            distance.setDistance(subNode.get("distance").asInt());*/
-
-                            //session.saveOrUpdate(distance);
                         }
                     }
                 }
@@ -285,7 +283,9 @@ public class MesConsumer extends Thread {
                 stateEntity.setId(Tools.getUUID());
 //                stateEntity.setResourceName(dataNode.get("resourceName").asText());
 //                stateEntity.setManufacturer(dataNode.get("manufacturer").asText());
-                stateEntity.setIdTask(dataNode.get("idTask").asText());
+                if (dataNode.has("idTask")) {
+                    stateEntity.setIdTask(dataNode.get("idTask").asText());
+                }
                 stateEntity.setIdProcess(dataNode.get("idProcess").asText());
                 if (dataNode.has("idProduct")) {
                     stateEntity.setIdProduct(dataNode.get("idProduct").asText());
@@ -296,138 +296,98 @@ public class MesConsumer extends Thread {
                 stateEntity.setT1Task(Tools.parseStandTextDate(dataNode.get("t1PlanTask").asText()));
                 stateEntity.setT2Task(Tools.parseStandTextDate(dataNode.get("t2PlanTask").asText()));
                 stateEntity.setCurrTime(new Date());
-                stateEntity.setT1RealTask(Tools.parseStandTextDate(dataNode.get("t1RealTask").asText()));
-                stateEntity.setT2RealTask(Tools.parseStandTextDate(dataNode.get("t2RealTask").asText()));
+                if (dataNode.has("t1RealTask")) {
+                    stateEntity.setT1RealTask(Tools.parseStandTextDate(dataNode.get("t1RealTask").asText()));
+                }
+                if (dataNode.has("t2RealTask")) {
+                    stateEntity.setT2RealTask(Tools.parseStandTextDate(dataNode.get("t2RealTask").asText()));
+                }
+
                 stateEntity.setState(Short.parseShort(dataNode.get("state").asText()));
 
                 session.save(stateEntity);
             }
             //订单执行信息
             else if (mesType.equals(MessTable.MES_ORDERSTATE_INFO)) {
-
                 //获取订单id
                 String idOrder = dataNode.get("idOrder").asText();
-
-                //TODO 完工数量待以后确定
-                //String completeNum = dataNode.get("completeNum").asText();
-
-                //订单状态
-                RG_OrderStateEntity orderState = new RG_OrderStateEntity();
-
-                orderState.setIdTask(dataNode.get("idTask").asText());
-
-                //获取task表中的nameTask字段
                 String idTask = dataNode.get("idTask").asText();
-                RG_TaskEntity taskEntity = (RG_TaskEntity) session.get(RG_TaskEntity.class, idTask);
-
-                if (taskEntity != null) {
-                    orderState.setNameTask(taskEntity.getName());
-                }
-
-                orderState.setPlanDevice(dataNode.get("planDevice").toString());
-
-                //x
-                short planCount = Short.parseShort(dataNode.get("planCount").asText());
-                orderState.setPlanCount(planCount);
-
-                String actualDispatchTime = dataNode.get("realExcuteTime").toString();
-                String actualFinsihTime = dataNode.has("realFinishTime") ? dataNode.get("realFinishTime").toString() : null;
-
-                orderState.setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
-                if (dataNode.has("realFinishTime")) {
-                    orderState.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
-                }
-                orderState.setActualDispatchDevice(dataNode.get("realDispatchDevice").toString());
-
-
-                //向工序页面插入异常
-                String idSnapshot = UserConfigTools.getLatestDispatchMesId("1");
-                List<RG_PlanEntity> planEntity = (List<RG_PlanEntity>) session.createQuery("select plan from RG_PlanEntity plan where plan.snapShort.id =:idSnapshot and plan.idTask =:idTask").setParameter("idSnapshot", idSnapshot).setParameter("idTask", idTask).list();
-
-                if (planEntity != null) {
-                    for (RG_PlanEntity plan : planEntity) {
-                        String t1Task = plan.getT1Task();
-                        String t2Task = plan.getT2Task();
-
-                        if (!t1Task.equals(actualDispatchTime) || !t2Task.equals(actualFinsihTime)) {
-                            //调整工序异常
-                            RG_AdjustProcessEntity adjustProcess = new RG_AdjustProcessEntity();
-
-                            adjustProcess.setId(Tools.getUUID());
-                            adjustProcess.setIdOrder(idOrder);
-                            adjustProcess.setIdTask(idTask);
-                            adjustProcess.setState(1);
-
-                            session.save(adjustProcess);
-
-                            Tools.createEventLog(EventLogTools.AdjustProcessEvent, EventLogTools.StandardTimeLineItem, "工序异常", EventLogTools.createAdjustProcessEventContent(adjustProcess), adjustProcess.getId());
-                        }
-
-                    }
-                }
-
-
-                //TODO x已完成  计划完工量格式不对，框架需要转换((合格+不合格)/计划数)
-                short unqulifiedCount = Short.parseShort(dataNode.get("unqualifiedCount").asText());
-                short qualifiedCount = Short.parseShort(dataNode.get("qualifiedCount").asText());
-
-                float actualFinishCount = 0;
-                if (planCount != 0) {
-                    actualFinishCount = (float) (unqulifiedCount + qualifiedCount) / planCount;
-                }
-
-                //x
-                orderState.setUnqualifiedCount(unqulifiedCount);
-                orderState.setQualifiedCount(qualifiedCount);
-                orderState.setActualFinishCount(actualFinishCount);//实际完工量
-
-                orderState.setCurrTime(new Date());
-                orderState.setFinished(Boolean.parseBoolean(dataNode.get("isCompleted").asText()));
-
-                //x获取订单拥有的排程数
-                RG_OrderEntity orderEntity = (RG_OrderEntity) session.get(RG_OrderEntity.class, idOrder);
-                String idProduct = orderEntity.getProductByIdProduct().getId();
-
-                List<RG_ProcessEntity> processEntity = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process where process.productByIdProduct.id =:idProduct").setParameter("idProduct", idProduct).list();
-                int count = 0;
-                for (RG_ProcessEntity process : processEntity) {
-                    List<RG_ProcessEntity> processEntity2 = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process").list();
-                    for (RG_ProcessEntity process2 : processEntity2) {
-                        if (process2.getIdRoot().equals(process.getId()) && !process2.isTransport()) {
-                            count++;  //订单拥有的排程数
-
-                            //向工序页面插入异常
-                            /*List<RG_PlanEntity> planEntity=  (List<RG_PlanEntity>)session.createQuery("select plan from RG_PlanEntity plan where plan.processByIdProcess.id =:idProcess").setParameter("idProcess",process2.getId()).list();
-
-                            for (RG_PlanEntity plan : planEntity) {
-                                String t1Task = plan.getT1Task();
-                                String t2Task = plan.getT2Task();
-
-                                    if(!t1Task.equals(actualDispatchTime) || !t2Task.equals(actualFinsihTime)) {
-                                        //调整工序异常
-                                        RG_AdjustProcessEntity adjustProcess = new RG_AdjustProcessEntity();
-
-                                        adjustProcess.setId(Tools.getUUID());
-                                        adjustProcess.setIdOrder(idOrder);
-                                        adjustProcess.setIdTask(idTask);
-                                        adjustProcess.setState(1);
-
-                                        session.save(adjustProcess);
-                                    }
-
-                            }*/
+                //查询工序()
+                Query query = session.createQuery("from RG_PlanEntity rg_planEntity where rg_planEntity.idTask =:idTask and rg_planEntity.snapShort.id =:idSnapShort");
+                query.setParameter("idTask", idTask);
+                query.setParameter("idSnapShort", idSnapShort);
+                List list = query.list();
+                if (list != null) {
+                    for (Object object : list) {
+                        if (object instanceof RG_PlanEntity) {
+                            RG_PlanEntity rg_planEntity = (RG_PlanEntity) object;
+                            Date planStartTime = Tools.dateFormater(rg_planEntity.getT1Task(), "yy-MM-dd HH:mm:ss");
+                            Date planFinishTime = Tools.dateFormater(rg_planEntity.getT2Task(), "yy-MM-dd HH:mm:ss");
+                            RG_OrderStateEntity rg_orderStateEntity = new RG_OrderStateEntity();
+                            rg_orderStateEntity.setPlanStartTime(planStartTime);
+                            rg_orderStateEntity.setPlanFinishTime(planFinishTime);
+//                            rg_orderStateEntity.setOrderEntity((RG_OrderEntity) session.get(idOrder, RG_OrderEntity.class));
+                            rg_orderStateEntity.setIdTask(rg_planEntity.getIdTask());
+                            rg_orderStateEntity.setNameTask(rg_planEntity.getNameTask());
+                            rg_orderStateEntity.setPlanDevice(dataNode.get("planDevice").toString());
+                            rg_orderStateEntity.setPlanCount(Short.parseShort(dataNode.get("planCount").asText()));
+                            rg_orderStateEntity.setActualDispatchDevice(dataNode.get("realDispatchDevice").toString());
+                            if (dataNode.has("realExcuteTime")) {
+                                rg_orderStateEntity.setActualDispatchTime(Tools.parseStandTextDate(dataNode.get("realExcuteTime").asText()));
+                                Date startTime = Tools.dateFormater(rg_orderStateEntity.getActualDispatchTime(), "yy-MM-dd HH:mm:ss am");
+                                if (startTime.after(planStartTime)) {
+                                    RG_AdjustProcessEntity rg_adjustProcessEntity = new RG_AdjustProcessEntity();
+                                    rg_adjustProcessEntity.setId(Tools.getUUID());
+                                    rg_adjustProcessEntity.setIdOrder(idOrder);
+                                    rg_adjustProcessEntity.setIdTask(idTask);
+                                    rg_adjustProcessEntity.setState(1);
+                                    session.save(rg_adjustProcessEntity);
+                                    Tools.createEventLog(EventLogTools.AdjustProcessEvent, EventLogTools.StandardTimeLineItem, "工序异常", EventLogTools.createAdjustProcessEventContent(rg_adjustProcessEntity), rg_adjustProcessEntity.getId());
+                                }
+                            }
+                            if (dataNode.has("realFinishTime")) {
+                                rg_orderStateEntity.setActualFinsihTime(Tools.parseStandTextDate(dataNode.get("realFinishTime").asText()));
+                                Date finishTime = Tools.dateFormater(rg_orderStateEntity.getActualFinsihTime(), "yy-MM-dd HH:mm:ss am");
+                                if (finishTime.after(planFinishTime)) {
+                                    RG_AdjustProcessEntity rg_adjustProcessEntity = new RG_AdjustProcessEntity();
+                                    rg_adjustProcessEntity.setId(Tools.getUUID());
+                                    rg_adjustProcessEntity.setIdOrder(idOrder);
+                                    rg_adjustProcessEntity.setIdTask(idTask);
+                                    rg_adjustProcessEntity.setState(1);
+                                    session.save(rg_adjustProcessEntity);
+                                    Tools.createEventLog(EventLogTools.AdjustProcessEvent, EventLogTools.StandardTimeLineItem, "工序异常", EventLogTools.createAdjustProcessEventContent(rg_adjustProcessEntity), rg_adjustProcessEntity.getId());
+                                }
+                            }
+                            short planCount = Short.parseShort(dataNode.get("planCount").asText());
+                            rg_orderStateEntity.setUnqualifiedCount(Short.parseShort(dataNode.get("unqualifiedCount").asText()));
+                            rg_orderStateEntity.setQualifiedCount(Short.parseShort(dataNode.get("qualifiedCount").asText()));
+                            rg_orderStateEntity.setActualFinishCount((float) (rg_orderStateEntity.getUnqualifiedCount() + rg_orderStateEntity.getQualifiedCount()) / planCount);//实际完工量
+                            rg_orderStateEntity.setCurrTime(new Date());
+                            rg_orderStateEntity.setFinished(Boolean.parseBoolean(dataNode.get("isCompleted").asText()));
+                            session.save(rg_orderStateEntity);
                         }
                     }
-
                 }
-                System.out.println("count....:" + count);
-                float finishPercent = 0;
-                if (count != 0) {
-                    finishPercent = actualFinishCount / count;
-                    orderState.setFinishPercent(finishPercent);
-                }
-
-                session.save(orderState);
+//                //x获取订单拥有的排程数
+//                RG_OrderEntity orderEntity = (RG_OrderEntity) session.get(RG_OrderEntity.class, idOrder);
+//                String idProduct = orderEntity.getProductByIdProduct().getId();
+//
+//                List<RG_ProcessEntity> processEntity = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process where process.productByIdProduct.id =:idProduct").setParameter("idProduct", idProduct).list();
+//                int count = 0;
+//                for (RG_ProcessEntity process : processEntity) {
+//                    List<RG_ProcessEntity> processEntity2 = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process").list();
+//                    for (RG_ProcessEntity process2 : processEntity2) {
+//                        if (process2.getIdRoot().equals(process.getId()) && !process2.isTransport()) {
+//                            count++;  //订单拥有的排程数
+//                        }
+//                    }
+//
+//                }
+//                System.out.println("count....:" + count);
+//                float finishPercent = 0;
+//                if (count != 0) {
+//                    finishPercent = actualFinishCount / count;
+//                    orderState.setFinishPercent(finishPercent);
 //                }
             }
             //【已调】工序指令信息
