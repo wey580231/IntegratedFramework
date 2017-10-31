@@ -46,6 +46,7 @@ public class PlanAction extends SuperAction {
             String snapshotId = snap.get("id").asText();
             PlanDAOImpl planDAO = DAOFactory.getPlanDAOImplInstance();
             List<RG_PlanEntity> rg_planEntityList = planDAO.findAllBySnapshotId(snapshotId, session);
+            List<RG_OrderEntity> rg_orderEntityList = (List<RG_OrderEntity>)session.createQuery("select DISTINCT plan.orderByIdOrder from RG_PlanEntity plan where plan.snapShort.id =:id").setParameter("id", snapshotId).list();
 
             //获取排程时间跨度
             //RG_SnapshotNodeEntity snapshotEntity = (RG_SnapshotNodeEntity) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where id =:id").setParameter("id", snapshotId);
@@ -63,7 +64,9 @@ public class PlanAction extends SuperAction {
             Date t2Task = sdf.parse(maxT2Task);
             Date t1Task = sdf.parse(minT1Task);
 
-            long taskSpan = t2Task.getTime() - t1Task.getTime();
+            long taskSpan0 = t2Task.getTime() - t1Task.getTime();
+            System.out.println(taskSpan0);
+            long taskSpan = (long)(taskSpan0/1000);
             System.out.println(taskSpan);
 
             int count = 0;          //拖期订单数量
@@ -71,12 +74,39 @@ public class PlanAction extends SuperAction {
             int countChange = 0;   //有变化的工序数量
             int overSpan = 0;       //工序时间跨度超过滚动周期的
 
+            for(RG_OrderEntity order : rg_orderEntityList){
+                String idOrder = order.getId();
+                String maxT2TaskSum = (String) session.createQuery("select MAX(t2Task) from RG_PlanEntity plan  where plan.snapShort.id =:id and plan.orderByIdOrder.id =:idOrder").setParameter("id", snapshotId).setParameter("idOrder", idOrder).uniqueResult();
+                String t2OrderSum = (String) session.createQuery("select DISTINCT t2Order from RG_PlanEntity plan  where plan.snapShort.id =:id and plan.orderByIdOrder.id =:idOrder").setParameter("id", snapshotId).setParameter("idOrder", idOrder).uniqueResult();
+
+                Date t2TaskSum = sdf.parse(maxT2TaskSum);
+                Date t2Order2Sum = sdf.parse(t2OrderSum);
+
+                long delayOrder0 = t2Order2Sum.getTime() - t2TaskSum.getTime();
+                System.out.println(delayOrder0);
+                long delayOrder = (long)(delayOrder0/1000);
+                System.out.println(delayOrder);
+
+                if (delayOrder < 0) {
+                    //计算拖期订单数量
+                    count++;
+                    //TODO 此处结果可能有精度问题，待测试
+                    //计算拖期量累加值
+                    sum += delayOrder;
+                }
+            }
+
+
             if (rg_planEntityList != null) {
 
                 for (RG_PlanEntity plan : rg_planEntityList) {
-                    String t2Order1 = plan.getT2Order();
+                    /*String t2Order1 = plan.getT2Order();
                     Date t2Order2 = sdf.parse(t2Order1);
-                    long delayOrder = t2Order2.getTime() - t2Task.getTime();
+                    long delayOrder0 = t2Order2.getTime() - t2Task.getTime();
+                    System.out.println(delayOrder0);
+                    long delayOrder = (long)(delayOrder0/1000);
+                    System.out.println(delayOrder);
+
 
                     if (delayOrder < 0) {
                         //计算拖期订单数量
@@ -84,7 +114,7 @@ public class PlanAction extends SuperAction {
                         //TODO 此处结果可能有精度问题，待测试
                         //计算拖期量累加值
                         sum += delayOrder;
-                    }
+                    }*/
 
                     //计算工序资源有变化的工序数量
                     String idTask = plan.getIdTask();
@@ -182,7 +212,8 @@ public class PlanAction extends SuperAction {
                         Date slot11 = sdf2.parse(slot1);
                         Date slot12 = sdf2.parse(slot2);
 
-                        shiftSpan = slot12.getTime() - slot11.getTime();
+                        long shiftSpan0 = slot12.getTime() - slot11.getTime();
+                        shiftSpan = (long)(shiftSpan0/1000);
 
 
                         RG_ResourceRateEntity resourceRate = new RG_ResourceRateEntity();
@@ -282,9 +313,9 @@ public class PlanAction extends SuperAction {
                     long spanminus = spanvalue1.getTime() - spankey2.getTime();
 
                     if (spanminus > 0) { //相交
-                        spanSum += (spanvalue2.getTime() - spankey1.getTime());
+                        spanSum += ((spanvalue2.getTime() - spankey1.getTime())/1000);
                     } else {
-                        spanSum += (spanvalue1.getTime() - spankey1.getTime()) + (spanvalue2.getTime() - spankey2.getTime());
+                        spanSum += ((spanvalue1.getTime() - spankey1.getTime())/1000) + ((spanvalue2.getTime() - spankey2.getTime())/1000);
                     }
                 }
 
