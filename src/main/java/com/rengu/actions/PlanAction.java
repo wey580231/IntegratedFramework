@@ -74,39 +74,21 @@ public class PlanAction extends SuperAction {
             int countChange = 0;   //有变化的工序数量
             int overSpan = 0;       //工序时间跨度超过滚动周期的
 
-            for(RG_OrderEntity order : rg_orderEntityList){
-                String idOrder = order.getId();
-                String maxT2TaskSum = (String) session.createQuery("select MAX(t2Task) from RG_PlanEntity plan  where plan.snapShort.id =:id and plan.orderByIdOrder.id =:idOrder").setParameter("id", snapshotId).setParameter("idOrder", idOrder).uniqueResult();
-                String t2OrderSum = (String) session.createQuery("select DISTINCT t2Order from RG_PlanEntity plan  where plan.snapShort.id =:id and plan.orderByIdOrder.id =:idOrder").setParameter("id", snapshotId).setParameter("idOrder", idOrder).uniqueResult();
 
-                Date t2TaskSum = sdf.parse(maxT2TaskSum);
-                Date t2Order2Sum = sdf.parse(t2OrderSum);
+            //计算拖期量累加值
+            if(rg_orderEntityList != null){
+                for(RG_OrderEntity order : rg_orderEntityList){
+                    String idOrder = order.getId();
+                    String maxT2TaskSum = (String) session.createQuery("select MAX(t2Task) from RG_PlanEntity plan  where plan.snapShort.id =:id and plan.orderByIdOrder.id =:idOrder").setParameter("id", snapshotId).setParameter("idOrder", idOrder).uniqueResult();
+                    String t2OrderSum = (String) session.createQuery("select DISTINCT t2Order from RG_PlanEntity plan  where plan.snapShort.id =:id and plan.orderByIdOrder.id =:idOrder").setParameter("id", snapshotId).setParameter("idOrder", idOrder).uniqueResult();
 
-                long delayOrder0 = t2Order2Sum.getTime() - t2TaskSum.getTime();
-                System.out.println(delayOrder0);
-                long delayOrder = (long)(delayOrder0/1000);
-                System.out.println(delayOrder);
+                    Date t2TaskSum = sdf.parse(maxT2TaskSum);
+                    Date t2Order2Sum = sdf.parse(t2OrderSum);
 
-                if (delayOrder < 0) {
-                    //计算拖期订单数量
-                    count++;
-                    //TODO 此处结果可能有精度问题，待测试
-                    //计算拖期量累加值
-                    sum += delayOrder;
-                }
-            }
-
-
-            if (rg_planEntityList != null) {
-
-                for (RG_PlanEntity plan : rg_planEntityList) {
-                    /*String t2Order1 = plan.getT2Order();
-                    Date t2Order2 = sdf.parse(t2Order1);
-                    long delayOrder0 = t2Order2.getTime() - t2Task.getTime();
+                    long delayOrder0 = t2Order2Sum.getTime() - t2TaskSum.getTime();
                     System.out.println(delayOrder0);
                     long delayOrder = (long)(delayOrder0/1000);
                     System.out.println(delayOrder);
-
 
                     if (delayOrder < 0) {
                         //计算拖期订单数量
@@ -114,7 +96,82 @@ public class PlanAction extends SuperAction {
                         //TODO 此处结果可能有精度问题，待测试
                         //计算拖期量累加值
                         sum += delayOrder;
-                    }*/
+                    }
+                }
+
+                sum = sum * (-1);
+            }
+
+
+            //计算工序资源有变化的工序数量
+
+            //获取此节点下的所有idTask
+            List<String> taskList = (List<String>) session.createQuery("select DISTINCT idTask from RG_PlanEntity plan where plan.snapShort.id =:snapshotId").setParameter("snapshotId", snapshotId).list();
+
+            for(String idTask : taskList){
+                //初次排程使用的资源
+                List<RG_ResourceEntity> resourceEntity1 = (List<RG_ResourceEntity>) session.createQuery("select plan.resourceByIdResource from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapshotId").setParameter("idTask", idTask).setParameter("snapshotId", snapshotId).list();
+
+                //找到此工序的最小的t1
+                String t1TaskResource1 = (String) session.createQuery("select MIN(t1Task) from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapshotId").setParameter("idTask", idTask).setParameter("snapshotId", snapshotId).uniqueResult();
+                Date t1TaskResource11 = sdf.parse(t1TaskResource1);
+
+                //找到此节点的根节点
+                String rootId = (String) session.createQuery("select snapshot.rootParent.id from RG_SnapshotNodeEntity snapshot where snapshot.id =:id").setParameter("id", snapshotId).uniqueResult();
+
+                RG_SnapshotNodeEntity snapshotEntity0 = (RG_SnapshotNodeEntity) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where id =:id").setParameter("id", rootId).uniqueResult();
+
+                //找到此根节点下的所有子节点
+                Set<RG_SnapshotNodeEntity> snapshotNodes = snapshotEntity0.getChilds();
+
+                boolean flag = false;
+
+                //遍历这些节点,并找到每个节点下此工序所使用的资源
+                for(RG_SnapshotNodeEntity snapshot : snapshotNodes){
+                    String idSnap = snapshot.getId();
+
+                    //判断，从子节点中将此节点去掉
+                    if(idSnap != snapshotId){
+
+                        //拖拽后排程使用的资源
+                        List<RG_ResourceEntity> resourceEntity2 = (List<RG_ResourceEntity>) session.createQuery("select plan.resourceByIdResource from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapshotId").setParameter("idTask", idTask).setParameter("snapshotId", idSnap).list();
+
+                        String t1TaskResource2 = (String) session.createQuery("select MIN(t1Task) from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapshotId").setParameter("idTask", idTask).setParameter("snapshotId", idSnap).uniqueResult();
+
+                        if(resourceEntity2 != null){        //判断工序所使用的资源是否正确
+                            if (resourceEntity1 != resourceEntity2) {
+                                flag = true;
+
+                            }
+                        }
+
+                        if(t1TaskResource2 != null){
+                            Date t1TaskResource22 = sdf.parse(t1TaskResource2);
+
+                            long taskSpan12 = (long)((t1TaskResource22.getTime() - t1TaskResource11.getTime())/1000);
+
+                            if ((t1TaskResource11 != null) && (t1TaskResource22 != null) && taskSpan12 > (24 * 60 * 60)) {
+                                overSpan++;
+                            }
+                        }
+
+                    }
+
+                }
+
+                if(flag){
+                    //工序资源有变化的工序数量
+                    countChange++;
+                }
+
+
+            }
+            System.out.println("工序有变化的工序数量countChange: " + countChange);
+            System.out.println("超过滚动周期的工序数量overSpan: " + overSpan);
+
+            /*if (rg_planEntityList != null) {
+
+                for (RG_PlanEntity plan : rg_planEntityList) {
 
                     //计算工序资源有变化的工序数量
                     String idTask = plan.getIdTask();
@@ -136,22 +193,22 @@ public class PlanAction extends SuperAction {
 
                             if (!snapId.equals(snapshotId)) {  //找到此快照节点外的其他快照节点
 
-                                List<RG_ResourceEntity> resourceEntity2 = (List<RG_ResourceEntity>) session.createQuery("select plan.resourceByIdResource from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapId").setParameter("idTask", idTask).setParameter("snapId", snapId).list();
+                                *//*List<RG_ResourceEntity> resourceEntity2 = (List<RG_ResourceEntity>) session.createQuery("select plan.resourceByIdResource from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapId").setParameter("idTask", idTask).setParameter("snapId", snapId).list();
                                 if (resourceEntity1 != resourceEntity2) {
                                     countChange++;
-                                }
+                                }*//*
 
 
                                 String rootId = (String) session.createQuery("select snapshot.rootParent.id from RG_SnapshotNodeEntity snapshot where snapshot.id =:id").setParameter("id", snapId).uniqueResult();
-                                /*List<RG_SnapshotNodeEntity> snapshotEntity2 = (List<RG_SnapshotNodeEntity>) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where snapshot.rootParent.id =:id and level =:level").setParameter("id", rootId).setParameter("level","bottom").list();*/
+                                *//*List<RG_SnapshotNodeEntity> snapshotEntity2 = (List<RG_SnapshotNodeEntity>) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where snapshot.rootParent.id =:id and level =:level").setParameter("id", rootId).setParameter("level","bottom").list();*//*
 
                                 String middleId = (String) session.createQuery("select snapshot.parent.id from RG_SnapshotNodeEntity snapshot where snapshot.id =:id").setParameter("id", snapId).uniqueResult();
                                 List<RG_SnapshotNodeEntity> snapshotEntity2 = (List<RG_SnapshotNodeEntity>) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where snapshot.rootParent.id =:rootId and snapshot.parent.id <>:id").setParameter("rootId", rootId).setParameter("id", middleId).list();
 
-                                /*for(RG_ResourceEntity resource : resourceEntity2){
+                                *//*for(RG_ResourceEntity resource : resourceEntity2){
                                     long second = getTimeSpan(resource,session);    //初次排程的时间跨度
                                     secondSum += second;
-                                }*/
+                                }*//*
 
                                 if (snapshotEntity2 != null) {
                                     for (RG_SnapshotNodeEntity snapshot2 : snapshotEntity2) {
@@ -180,7 +237,7 @@ public class PlanAction extends SuperAction {
 
 
                 }
-                sum = sum * (-1);
+
 
 
                 //计算资源利用率
@@ -226,10 +283,10 @@ public class PlanAction extends SuperAction {
                             resourceRate.setRate(rate);
                             listRate.add(resourceRate);
 
-                           /* String sql = "insert into rg_resourcerate(id,idSnapshot,idResource,rate) values(id,snapshotId,res,?)";
+                           *//* String sql = "insert into rg_resourcerate(id,idSnapshot,idResource,rate) values(id,snapshotId,res,?)";
                             session.createNativeQuery("select * from rg_resourcestate where resourceId = ? order by currTime desc limit 0,1").addEntity(RG_ResourceStateEntity.class);
                             query.setParameter(1, code);
-                            List list = query.list();*/
+                            List list = query.list();*//*
                         }
 
 
@@ -245,9 +302,21 @@ public class PlanAction extends SuperAction {
                 rg_result.setDelaySum(sum);
                 rg_result.setUseRate(listRate);
                 rg_result.setChangeNum(countChange);
-                rg_result.setChangeNum(overSpan);
+                rg_result.setOverSpan(overSpan);
                 resultList.add(rg_result);
-            }
+            }*/
+
+            System.out.println(session.isOpen());
+            RG_SnapShotResult rg_result = new RG_SnapShotResult();
+            //rg_result.setId(Tools.getUUID());
+            rg_result.setId(snapshotId);
+            rg_result.setSpan(taskSpan);
+            rg_result.setDelayOrder(count);
+            rg_result.setDelaySum(sum);
+            //rg_result.setUseRate(listRate);
+            rg_result.setChangeNum(countChange);
+            rg_result.setOverSpan(overSpan);
+            resultList.add(rg_result);
         }
 
         System.out.println(session.isOpen());
