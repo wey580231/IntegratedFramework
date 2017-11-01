@@ -355,7 +355,7 @@ CREATE TABLE `rg_mesmessagelog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `receiveTime` datetime DEFAULT NULL,
   `messageType` varchar(255) DEFAULT NULL,
-  `message` varchar(1000) DEFAULT NULL,
+  `message` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -15,7 +15,7 @@
             <column name="messageType" sql-type="varchar(255)" length="255" not-null="false"/>
         </property>
         <property name="message">
-            <column name="message" sql-type="varchar(1000)" length="1000" not-null="false"/>
+            <column name="message" sql-type="varchar(5000)" length="5000" not-null="false"/>
         </property>
     </class>
 </hibernate-mapping>
