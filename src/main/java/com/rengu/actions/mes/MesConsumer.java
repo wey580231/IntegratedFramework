@@ -139,9 +139,9 @@ public class MesConsumer extends Thread {
                         query.setParameter("mesId", subNode.get("id").asText());
                         RG_SiteEntity rg_siteEntity = (RG_SiteEntity) query.uniqueResult();
                         if (rg_siteEntity != null) {
-                            rg_siteEntity.setX(Short.parseShort(subNode.get("x").asText()));
-                            rg_siteEntity.setY(Short.parseShort(subNode.get("y").asText()));
-                            rg_siteEntity.setCapacity(Short.parseShort(subNode.get("capacity").asText()));
+//                            rg_siteEntity.setX(Short.parseShort(subNode.get("x").asText()));
+//                            rg_siteEntity.setY(Short.parseShort(subNode.get("y").asText()));
+//                            rg_siteEntity.setCapacity(Short.parseShort(subNode.get("capacity").asText()));
                         }
                     }
                 }
