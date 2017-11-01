@@ -135,20 +135,14 @@ public class MesConsumer extends Thread {
                 if (dataNode.isArray()) {
                     for (int i = 0; i < dataNode.size(); i++) {
                         JsonNode subNode = dataNode.get(i);
-                        RG_SiteEntity site = null;
-                        site = session.get(RG_SiteEntity.class, subNode.get("id").asText());
-
-                        if (site == null) {
-                            site = new RG_SiteEntity();
+                        Query query = session.createQuery("from RG_SiteEntity rg_siteEntity where rg_siteEntity.mesId =:mesId");
+                        query.setParameter("mesId", subNode.get("id").asText());
+                        RG_SiteEntity rg_siteEntity = (RG_SiteEntity) query.uniqueResult();
+                        if (rg_siteEntity != null) {
+                            rg_siteEntity.setX(Short.parseShort(subNode.get("x").asText()));
+                            rg_siteEntity.setY(Short.parseShort(subNode.get("y").asText()));
+                            rg_siteEntity.setCapacity(Short.parseShort(subNode.get("capacity").asText()));
                         }
-
-                        site.setId(subNode.get("id").asText());
-                        site.setName(subNode.get("name").asText());
-                        site.setX((short) subNode.get("x").asInt());
-                        site.setY((short) subNode.get("y").asInt());
-                        site.setCapacity((short) subNode.get("capacity").asInt());
-
-                        session.saveOrUpdate(site);
                     }
                 }
             }
