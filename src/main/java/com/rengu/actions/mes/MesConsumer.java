@@ -326,7 +326,6 @@ public class MesConsumer extends Thread {
                             RG_OrderStateEntity rg_orderStateEntity = new RG_OrderStateEntity();
                             rg_orderStateEntity.setPlanStartTime(planStartTime);
                             rg_orderStateEntity.setPlanFinishTime(planFinishTime);
-//                            rg_orderStateEntity.setOrderEntity((RG_OrderEntity) session.get(idOrder, RG_OrderEntity.class));
                             rg_orderStateEntity.setIdTask(rg_planEntity.getIdTask());
                             rg_orderStateEntity.setNameTask(rg_planEntity.getNameTask());
                             rg_orderStateEntity.setPlanDevice(dataNode.get("planDevice").toString());
@@ -364,31 +363,23 @@ public class MesConsumer extends Thread {
                             rg_orderStateEntity.setActualFinishCount((float) (rg_orderStateEntity.getUnqualifiedCount() + rg_orderStateEntity.getQualifiedCount()) / planCount);//实际完工量
                             rg_orderStateEntity.setCurrTime(new Date());
                             rg_orderStateEntity.setFinished(Boolean.parseBoolean(dataNode.get("isCompleted").asText()));
+                            RG_OrderEntity rg_orderEntity = session.get(RG_OrderEntity.class, idOrder);
+                            if (rg_orderEntity != null) {
+                                rg_orderStateEntity.setOrderEntity(rg_orderEntity);
+                                List<RG_ProcessEntity> rg_processEntityList = (List<RG_ProcessEntity>) session.createQuery("from RG_ProcessEntity rg_processEntity where rg_processEntity.productByIdProduct.id =:idProduct").setParameter("idProduct", rg_orderEntity.getProductByIdProduct().getId()).list();
+                                int count = 0;
+                                for (RG_ProcessEntity rg_processEntity : rg_processEntityList) {
+                                    List<RG_ProcessEntity> processEntityList = session.createQuery("from RG_ProcessEntity rg_processEntity where rg_processEntity.transport =:transport and rg_processEntity.idRoot =:idRoot").setParameter("transport", false).setParameter("idRoot", rg_processEntity.getId()).list();
+                                    count = count + processEntityList.size();
+                                }
+                                if (count != 0) {
+                                    rg_orderStateEntity.setFinishPercent(rg_orderStateEntity.getActualFinishCount() / count);
+                                }
+                            }
                             session.save(rg_orderStateEntity);
                         }
                     }
                 }
-//                //x获取订单拥有的排程数
-//                RG_OrderEntity orderEntity = (RG_OrderEntity) session.get(RG_OrderEntity.class, idOrder);
-//                String idProduct = orderEntity.getProductByIdProduct().getId();
-//
-//                List<RG_ProcessEntity> processEntity = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process where process.productByIdProduct.id =:idProduct").setParameter("idProduct", idProduct).list();
-//                int count = 0;
-//                for (RG_ProcessEntity process : processEntity) {
-//                    List<RG_ProcessEntity> processEntity2 = (List<RG_ProcessEntity>) session.createQuery("select process from RG_ProcessEntity process").list();
-//                    for (RG_ProcessEntity process2 : processEntity2) {
-//                        if (process2.getIdRoot().equals(process.getId()) && !process2.isTransport()) {
-//                            count++;  //订单拥有的排程数
-//                        }
-//                    }
-//
-//                }
-//                System.out.println("count....:" + count);
-//                float finishPercent = 0;
-//                if (count != 0) {
-//                    finishPercent = actualFinishCount / count;
-//                    orderState.setFinishPercent(finishPercent);
-//                }
             }
             //【已调】工序指令信息
             else if (mesType.equals(MessTable.MES_INSTRUCT_INFO)) {
