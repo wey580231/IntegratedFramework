@@ -87,19 +87,18 @@ public class MesSender {
     }
 
     public void sendReplyMessage(String messType, String uuid, String revicer) {
-
+        if (revicer == null) {
+            sendReplyMessage(messType, uuid);
+        }
         rootNode = objMapper.createObjectNode();
         rootNode.put("FC", messType);
         rootNode.put("REVICER", revicer);
         rootNode.put("SENDER", messReciver);
         rootNode.put("UUID", uuid);
-
         ObjectNode dataNode = objMapper.createObjectNode();
         dataNode.put("result", "OK");
         dataNode.put("type", "1");
-
         rootNode.put("DATA", dataNode);
-
         sendMessage(rootNode.toString());
     }
 

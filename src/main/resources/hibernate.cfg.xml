@@ -88,6 +88,7 @@
         <mapping resource="RG_EventLogEntity.hbm.xml"/>
 
         <mapping resource="RG_TaskEntity.hbm.xml"/>
+        <mapping resource="RG_MesMessageLog.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

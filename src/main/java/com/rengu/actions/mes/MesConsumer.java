@@ -85,6 +85,13 @@ public class MesConsumer extends Thread {
             String idSnapShort = UserConfigTools.getLatestDispatchMesId("1");
             Session session = MySessionFactory.getSessionFactory().openSession();
             session.beginTransaction();
+            //保存消息历史
+            RG_MesMessageLog rg_mesMessageLog = new RG_MesMessageLog();
+            rg_mesMessageLog.setId(Tools.getUUID());
+            rg_mesMessageLog.setMessageType(mesType);
+            rg_mesMessageLog.setReceiveTime(new Date());
+            rg_mesMessageLog.setMessage(message);
+            session.save(rg_mesMessageLog);
             System.out.println("消息类型：" + mesType + "，接受到消息+:" + message);
             //【已调】产品
             if (mesType.equals(MessTable.MES_PRODUCT)) {
