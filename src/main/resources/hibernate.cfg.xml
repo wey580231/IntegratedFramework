@@ -90,5 +90,9 @@
         <mapping resource="RG_TaskEntity.hbm.xml"/>
         <mapping resource="RG_MesMessageLog.hbm.xml"/>
 
+        <mapping resource="RG_DegreeAccuracyInfo.hbm.xml"/>
+        <mapping resource="RG_ElectricityInfo.hbm.xml"/>
+        <mapping resource="RG_ManMachineInfo.hbm.xml"/>
+        <mapping resource="RG_ModelTestInfo.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

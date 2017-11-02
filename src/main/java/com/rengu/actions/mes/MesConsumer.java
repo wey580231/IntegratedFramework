@@ -224,6 +224,50 @@ public class MesConsumer extends Thread {
                         }
                     }
                 }
+                //尺寸精度检测
+                else if (type.equals(MessTable.MES_DEGREE_INFO)) {
+                    RG_DegreeAccuracyInfo rg_degreeAccuracyInfo = new RG_DegreeAccuracyInfo();
+                    rg_degreeAccuracyInfo.setId(Tools.getUUID());
+                    rg_degreeAccuracyInfo.setReportTime(new Date());
+                    rg_degreeAccuracyInfo.setCarryId(dataNode.get("id").asText());
+                    rg_degreeAccuracyInfo.setJobDesc(dataNode.get("jobDesc").asText());
+                    rg_degreeAccuracyInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    rg_degreeAccuracyInfo.setState(dataNode.get("state").asBoolean());
+                    session.save(rg_degreeAccuracyInfo);
+                }
+                //电性能检测
+                else if (type.equals(MessTable.MES_ELECTRICITY_INFO)) {
+                    RG_ElectricityInfo rg_electricityInfo = new RG_ElectricityInfo();
+                    rg_electricityInfo.setId(Tools.getUUID());
+                    rg_electricityInfo.setReportTime(new Date());
+                    rg_electricityInfo.setCarryId(dataNode.get("id").asText());
+                    rg_electricityInfo.setJobDesc(dataNode.get("jobDesc").asText());
+                    rg_electricityInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    rg_electricityInfo.setState(dataNode.get("state").asBoolean());
+                    session.save(rg_electricityInfo);
+                }
+                //人机协作平台
+                else if (type.equals(MessTable.MES_MAN_MANCHINE_INFO)) {
+                    RG_ManMachineInfo rg_manMachineInfo = new RG_ManMachineInfo();
+                    rg_manMachineInfo.setId(Tools.getUUID());
+                    rg_manMachineInfo.setReportTime(new Date());
+                    rg_manMachineInfo.setCarryId(dataNode.get("id").asText());
+                    rg_manMachineInfo.setJobDesc(dataNode.get("jobDesc").asText());
+                    rg_manMachineInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    rg_manMachineInfo.setState(dataNode.get("state").asBoolean());
+                    session.save(rg_manMachineInfo);
+                }
+                //模态检测
+                else if (type.equals(MessTable.MES_MODEL_TEST_INFO)) {
+                    RG_ModelTestInfo rg_modelTestInfo = new RG_ModelTestInfo();
+                    rg_modelTestInfo.setId(Tools.getUUID());
+                    rg_modelTestInfo.setReportTime(new Date());
+                    rg_modelTestInfo.setCarryId(dataNode.get("id").asText());
+                    rg_modelTestInfo.setJobDesc(dataNode.get("jobDesc").asText());
+                    rg_modelTestInfo.setIdOrder(dataNode.get("idOrder").asText());
+                    rg_modelTestInfo.setState(dataNode.get("state").asBoolean());
+                    session.save(rg_modelTestInfo);
+                }
                 //仓库搬运机器人信息
                 else if (type.equals(MessTable.MES_CARRY_INFO)) {
                     RG_Mes_CarryInfo carryInfo = new RG_Mes_CarryInfo();
