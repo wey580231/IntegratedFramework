@@ -7,6 +7,9 @@ import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +43,25 @@ public class PlanAction extends SuperAction {
         if (!transaction.isActive()) {
             session.beginTransaction();
         }
+
+        //连接数据库
+        //加载驱动
+        Class.forName("com.mysql.jdbc.Driver");
+        String url = "jdbc:mysql://localhost:3306/testdatabase?serverTimezone=UTC";
+        String username = "root";
+        String password = "root";
+
+        //得到连接对象
+        Connection conn = DriverManager.getConnection(url,username,password);
+
+
+        //每次先清空利用率表
+        String sql0 = "delete from rg_resourcerate";
+
+        //得到PreparedStatement对象
+        PreparedStatement pstmt0 = conn.prepareStatement(sql0);
+        pstmt0.executeUpdate();
+
         for (JsonNode snap : snapNodes) {
             // RG_SnapshotNodeEntity rg_snapEntity = session.get(RG_SnapshotNodeEntity.class, snap.get("id").asText());
 
@@ -169,9 +191,10 @@ public class PlanAction extends SuperAction {
             System.out.println("工序有变化的工序数量countChange: " + countChange);
             System.out.println("超过滚动周期的工序数量overSpan: " + overSpan);
 
-            /*if (rg_planEntityList != null) {
+            //注释
+            if (rg_planEntityList != null) {
 
-                for (RG_PlanEntity plan : rg_planEntityList) {
+                /*for (RG_PlanEntity plan : rg_planEntityList) {
 
                     //计算工序资源有变化的工序数量
                     String idTask = plan.getIdTask();
@@ -193,14 +216,14 @@ public class PlanAction extends SuperAction {
 
                             if (!snapId.equals(snapshotId)) {  //找到此快照节点外的其他快照节点
 
-                                *//*List<RG_ResourceEntity> resourceEntity2 = (List<RG_ResourceEntity>) session.createQuery("select plan.resourceByIdResource from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapId").setParameter("idTask", idTask).setParameter("snapId", snapId).list();
+                                List<RG_ResourceEntity> resourceEntity2 = (List<RG_ResourceEntity>) session.createQuery("select plan.resourceByIdResource from RG_PlanEntity plan where plan.idTask =:idTask and plan.snapShort.id =:snapId").setParameter("idTask", idTask).setParameter("snapId", snapId).list();
                                 if (resourceEntity1 != resourceEntity2) {
                                     countChange++;
-                                }*//*
+                                }
 
 
                                 String rootId = (String) session.createQuery("select snapshot.rootParent.id from RG_SnapshotNodeEntity snapshot where snapshot.id =:id").setParameter("id", snapId).uniqueResult();
-                                *//*List<RG_SnapshotNodeEntity> snapshotEntity2 = (List<RG_SnapshotNodeEntity>) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where snapshot.rootParent.id =:id and level =:level").setParameter("id", rootId).setParameter("level","bottom").list();*//*
+                                //List<RG_SnapshotNodeEntity> snapshotEntity2 = (List<RG_SnapshotNodeEntity>) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where snapshot.rootParent.id =:id and level =:level").setParameter("id", rootId).setParameter("level","bottom").list();*//**//*
 
                                 String middleId = (String) session.createQuery("select snapshot.parent.id from RG_SnapshotNodeEntity snapshot where snapshot.id =:id").setParameter("id", snapId).uniqueResult();
                                 List<RG_SnapshotNodeEntity> snapshotEntity2 = (List<RG_SnapshotNodeEntity>) session.createQuery("select snapshot from RG_SnapshotNodeEntity snapshot where snapshot.rootParent.id =:rootId and snapshot.parent.id <>:id").setParameter("rootId", rootId).setParameter("id", middleId).list();
@@ -236,7 +259,7 @@ public class PlanAction extends SuperAction {
                     //计算跨度超过滚动周期的工序数量
 
 
-                }
+                }*/
 
 
 
@@ -246,11 +269,30 @@ public class PlanAction extends SuperAction {
                 //1、找到所有资源
                 List<RG_ResourceEntity> resourceEntity = (List<RG_ResourceEntity>) session.createQuery("select DISTINCT plan.resourceByIdResource from RG_PlanEntity plan where plan.snapShort.id =:idSnapshot").setParameter("idSnapshot", snapshotId).list();
 
+                /*//连接数据库
+                //加载驱动
+                Class.forName("com.mysql.jdbc.Driver");
+                String url = "jdbc:mysql://localhost:3306/testdatabase?serverTimezone=UTC";
+                String username = "root";
+                String password = "root";
+
+                //得到连接对象
+                Connection conn = DriverManager.getConnection(url,username,password);
+
+
+                //每次先清空利用率表
+                String sql0 = "delete from rg_resourcerate";
+
+                //得到PreparedStatement对象
+                PreparedStatement pstmt0 = conn.prepareStatement(sql0);
+                pstmt0.executeUpdate();*/
+
                 //2、遍历每个资源，获取它所对应的t1Task和t2Task
 
                 String slot = null;
                 long shiftSpan = 0;
                 List<RG_ResourceRateEntity> listRate = new ArrayList<RG_ResourceRateEntity>();
+
                 if (resourceEntity != null) {
                     for (RG_ResourceEntity resource : resourceEntity) {   //11个
 
@@ -258,13 +300,16 @@ public class PlanAction extends SuperAction {
 
                         //TODO 计算班次时间跨度
                         Set<RG_ShiftEntity> shifts = resource.getShiftsById();
-                        for (RG_ShiftEntity shift : shifts) {
+                        for (RG_ShiftEntity shift : shifts) {   //只有一个班次
                             slot = shift.getSlot();
 
                         }
 
                         String slot1 = slot.substring(1, 9);
                         String slot2 = slot.substring(11, 19);
+
+                        /*Date slot11 = sdf2.parse(slot1);
+                        Date slot12 = sdf2.parse(slot2);*/
 
                         Date slot11 = sdf2.parse(slot1);
                         Date slot12 = sdf2.parse(slot2);
@@ -278,22 +323,38 @@ public class PlanAction extends SuperAction {
                             double rate = (double) (100.0 * spanSum / (scheduleWindow * shiftSpan));
 
                             String id = Tools.getUUID();
-                            resourceRate.setId(Tools.getUUID());
-                            resourceRate.setIdResource(resource);
+                            String idSnapshot = snapshotId;
+                            String idResource = resource.getIdR();
+                            /*resourceRate.setId(Tools.getUUID());
+                            resourceRate.setIdResource(resource.getIdR());
+                            resourceRate.setIdSnapshot(snapshotId);
                             resourceRate.setRate(rate);
-                            listRate.add(resourceRate);
+                            listRate.add(resourceRate);*/
 
-                           *//* String sql = "insert into rg_resourcerate(id,idSnapshot,idResource,rate) values(id,snapshotId,res,?)";
+                            //sql
+                            String sql = "insert into rg_resourcerate(id,idSnapshot,idResource,rate) values(?,?,?,?)";
+
+                            //得到PreparedStatement对象
+                            PreparedStatement pstmt = conn.prepareStatement(sql);
+                            pstmt.setString(1,id);
+                            pstmt.setString(2,idSnapshot);
+                            pstmt.setString(3,idResource);
+                            pstmt.setDouble(4,rate);
+                            pstmt.executeUpdate();
+
+                           /* String sql = "insert into rg_resourcerate(id,idSnapshot,idResource,rate) values(id,snapshotId,res,?)";
                             session.createNativeQuery("select * from rg_resourcestate where resourceId = ? order by currTime desc limit 0,1").addEntity(RG_ResourceStateEntity.class);
                             query.setParameter(1, code);
-                            List list = query.list();*//*
+                            List list = query.list();*/
                         }
 
 
                         //resource.setRate();
                     }
                 }
-                System.out.println(session.isOpen());
+
+
+                /*System.out.println(session.isOpen());
                 RG_SnapShotResult rg_result = new RG_SnapShotResult();
                 //rg_result.setId(Tools.getUUID());
                 rg_result.setId(snapshotId);
@@ -303,8 +364,8 @@ public class PlanAction extends SuperAction {
                 rg_result.setUseRate(listRate);
                 rg_result.setChangeNum(countChange);
                 rg_result.setOverSpan(overSpan);
-                resultList.add(rg_result);
-            }*/
+                resultList.add(rg_result);*/
+            }
 
             System.out.println(session.isOpen());
             RG_SnapShotResult rg_result = new RG_SnapShotResult();
@@ -318,6 +379,8 @@ public class PlanAction extends SuperAction {
             rg_result.setOverSpan(overSpan);
             resultList.add(rg_result);
         }
+
+        conn.close();
 
         System.out.println(session.isOpen());
         String jsonString = Tools.entityConvertToJsonString(resultList);
@@ -383,10 +446,18 @@ public class PlanAction extends SuperAction {
 
                     if (spanminus > 0) { //相交
                         spanSum += ((spanvalue2.getTime() - spankey1.getTime())/1000);
-                    } else {
-                        spanSum += ((spanvalue1.getTime() - spankey1.getTime())/1000) + ((spanvalue2.getTime() - spankey2.getTime())/1000);
+                        //TODO 两两相交
+                    } else if(spanminus < 0){ //不相交
+                        if(spanSum == 0 ){  //开始时前两个相加
+                            spanSum += ((spanvalue1.getTime() - spankey1.getTime())/1000) + ((spanvalue2.getTime() - spankey2.getTime())/1000);
+                        }else{
+                            spanSum += ((spanvalue2.getTime() - spankey2.getTime())/1000);
+                        }
+
                     }
                 }
+
+                key1 = key2;
 
             }
         }
@@ -415,9 +486,12 @@ public class PlanAction extends SuperAction {
         if (resourceEntity != null) {
             for (RG_ResourceEntity resource : resourceEntity) {   //11个
                 String resourceID = resource.getIdR();
-                List list1 = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, "select * from APS_ORDER_RESOURCE_RATE where IDRESOURCE =" + "\'" + resourceID + "\'");
+                /*List list1 = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, "select * from APS_ORDER_RESOURCE_RATE where IDRESOURCE =" + "\'" + resourceID + "\'");
 
-                list.add(list1.get(0));
+                list.add(list1.get(0));*/
+
+                RG_ResourceRateEntity rateEntity = (RG_ResourceRateEntity)session.createQuery("select rg_resourcerate from RG_ResourceRateEntity rg_resourcerate where idResource =:idResource and idSnapshot =:idSnapshot").setParameter("idResource",resourceID).setParameter("idSnapshot",snapshotId).uniqueResult();
+                list.add(rateEntity);
             }
         }
 

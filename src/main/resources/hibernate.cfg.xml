@@ -52,6 +52,8 @@
         <mapping resource="RG_PlanEntity.hbm.xml"/>
         <mapping resource="RG_SnapshotNodeEntity.hbm.xml"/>
 
+        <mapping resource="RG_ResourceRateEntity.hbm.xml"/>
+
         <!--告警中心-->
         <mapping resource="RG_WarnEntity.hbm.xml"/>
 
