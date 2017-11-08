@@ -199,6 +199,9 @@ angular.module("IntegratedFramework", [
         service.queryApsState = backUrl + "aps/apsState.action";
         service.currSheduleInfo = backUrl + "aps/scheduleDetail.action";
         service.emulateApsInterResult = backUrl + "aps/emulateApsInterResult.action";
+
+        service.switchModel = backUrl + "aps/switchAPSModel.action";
+
         //获取异常数量接口
         service.findAllExceptionUrl = backUrl + "mainpage/getAllExcepitonNumInfo.action";
         //获取EvenLog接口
