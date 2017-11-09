@@ -184,8 +184,11 @@ angular.module("IntegratedFramework.BOMManagementController", ['ngRoute'])
                 layer.load();
 
 
-                myHttpService.post(serviceList.switchModel, modelNum).then(function successCallback(response) {
+                myHttpService.post(serviceList.switchModel, modelNum).then(function successCallback() {
                     hideLoadingPage();
+                    notification.sendNotification("confirm", "切换成功！");
+                }, function errorCallback() {
+                    notification.sendNotification("alert", "切换失败");
                 });
             } else {
                 $scope.$apply();

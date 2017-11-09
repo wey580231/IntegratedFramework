@@ -3,11 +3,10 @@ package com.rengu.entity;
 import javax.persistence.*;
 
 /**
- * Created by XY on 2017/11/8.
+ * Created by XY on 2017/11/9.
  */
 @Entity
 @Table(name = "aps_resource1", schema = "testdatabase", catalog = "")
-@IdClass(ApsResource1EntityPK.class)
 public class ApsResource1Entity {
     private String id;
     private String name;
@@ -299,7 +298,7 @@ public class ApsResource1Entity {
         this.makespan = makespan;
     }
 
-    @Id
+    @Basic
     @Column(name = "idClub")
     public String getIdClub() {
         return idClub;

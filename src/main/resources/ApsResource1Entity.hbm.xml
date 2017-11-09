@@ -5,10 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.rengu.entity.ApsResource1Entity" table="aps_resource1" schema="testdatabase">
-        <composite-id mapped="true" class="com.rengu.entity.ApsResource1EntityPK">
-            <key-property name="id" column="id"/>
-            <key-property name="idClub" column="idClub"/>
-        </composite-id>
+        <id name="id" column="id"/>
         <property name="name" column="name"/>
         <property name="unit" column="unit"/>
         <property name="idTypeResource" column="IdTypeResource"/>
@@ -34,6 +31,7 @@
         <property name="sizeIcon" column="sizeIcon"/>
         <property name="idIcon" column="idIcon"/>
         <property name="makespan" column="makespan"/>
+        <property name="idClub" column="idClub"/>
         <property name="idUser" column="idUser"/>
         <property name="sameTypeSequence" column="sameTypeSequence"/>
     </class>

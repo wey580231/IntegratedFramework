@@ -1,12 +1,9 @@
 package com.rengu.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
- * Created by XY on 2017/11/8.
+ * Created by XY on 2017/11/9.
  */
 @Entity
 @Table(name = "aps_process1", schema = "testdatabase", catalog = "")
@@ -77,7 +74,7 @@ public class ApsProcess1Entity {
     private String idTypeResourceNext;
     private Integer apsSwitch;
 
-    @Basic
+    @Id
     @Column(name = "id")
     public String getId() {
         return id;

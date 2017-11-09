@@ -5,7 +5,7 @@
 <hibernate-mapping>
 
     <class name="com.rengu.entity.ApsProcess1Entity" table="aps_process1" schema="testdatabase">
-        <property name="id" column="id"/>
+        <id name="id" column="id"/>
         <property name="nameEn" column="name_en"/>
         <property name="idPrecSwitch" column="IdPrecSwitch"/>
         <property name="color" column="color"/>
@@ -17,43 +17,113 @@
         <property name="idRoot" column="idRoot"/>
         <property name="idProduct" column="idProduct"/>
         <property name="ordToParent" column="ordToParent"/>
-        <property name="ordToRoot" column="ordToRoot"/>
         <property name="ordToRootChild" column="OrdToRootChild"/>
         <property name="idExclusive" column="IdExclusive"/>
-        <property name="minTimeSucc" column="minTimeSucc"/>
-        <property name="maxTimeSucc" column="maxTimeSucc"/>
+        <property name="minTimeSucc" type="integer">
+            <column name="minTimeSucc" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maxTimeSucc" type="integer">
+            <column name="maxTimeSucc" sql-type="int" not-null="false"/>
+        </property>
         <property name="slot1" column="Slot1"/>
         <property name="slot2" column="Slot2"/>
-        <property name="typeShift" column="typeShift"/>
-        <property name="initTime" column="initTime"/>
-        <property name="unitQuantity" column="unitQuantity"/>
-        <property name="unitTime" column="unitTime"/>
-        <property name="postTime" column="postTime"/>
-        <property name="checkTime" column="checkTime"/>
-        <property name="delta" column="delta"/>
-        <property name="estimate" column="estimate"/>
+        <property name="initTime">
+            <column name="initTime" sql-type="double" not-null="false"/>
+        </property>
+        <property name="unitTime">
+            <column name="unitTime" sql-type="double" not-null="false"/>
+        </property>
+        <property name="postTime">
+            <column name="postTime" sql-type="double" not-null="false"/>
+        </property>
+        <property name="checkTime">
+            <column name="checkTime" sql-type="double" not-null="false"/>
+        </property>
+        <property name="delta">
+            <column name="delta" sql-type="double" not-null="false"/>
+        </property>
+        <property name="estimate">
+            <column name="estimate" sql-type="double" not-null="false"/>
+        </property>
         <property name="continuous" column="continuous"/>
         <property name="supply" column="supply"/>
-        <property name="quantity" column="quantity"/>
-        <property name="modQtySwitch" column="modQtySwitch"/>
-        <property name="minQtySwitch" column="minQtySwitch"/>
-        <property name="maxQtySwitch" column="maxQtySwitch"/>
-        <property name="modResourceDivision" column="modResourceDivision"/>
-        <property name="minResourceDivision" column="minResourceDivision"/>
-        <property name="maxResourceDivision" column="maxResourceDivision"/>
-        <property name="modQtyDivision" column="modQtyDivision"/>
-        <property name="minQtyDivision" column="minQtyDivision"/>
-        <property name="maxQtyDivision" column="maxQtyDivision"/>
-        <property name="modTimeDivision" column="modTimeDivision"/>
-        <property name="minTimeDivision" column="minTimeDivision"/>
-        <property name="maxTimeDivision" column="maxTimeDivision"/>
+        <property name="quantity" type="integer">
+            <column name="quantity" sql-type="int" not-null="false"/>
+        </property>
+        <property name="minQtySwitch" type="integer">
+            <column name="minQtySwitch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maxQtySwitch" type="integer">
+            <column name="maxQtySwitch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="apsSwitch" type="integer">
+            <column name="apsSwitch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="minTimeDivision" type="integer">
+            <column name="minTimeDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="minQtyDivision" type="integer">
+            <column name="minQtyDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="minQtyBatch" type="integer">
+            <column name="minQtyBatch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="minTimeBatch" type="integer">
+            <column name="minTimeBatch" sql-type="int" not-null="false"/>
+        </property>
+
+        <property name="ordToRoot">
+            <column name="ordToRoot" sql-type="double" not-null="false"/>
+        </property>
+        <property name="typeShift" type="integer">
+            <column name="typeShift" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maxQtyDivision" type="integer">
+            <column name="maxQtyDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maxTimeDivision" type="integer">
+            <column name="maxTimeDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maxQtyBatch" type="integer">
+            <column name="maxQtyBatch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maxTimeBatch" type="integer">
+            <column name="maxTimeBatch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="unitQuantity" type="integer">
+            <column name="unitQuantity" sql-type="int" not-null="false"/>
+        </property>
+
+        <property name="modQtySwitch" type="integer">
+            <column name="modQtySwitch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="modQtyBatch" type="integer">
+            <column name="modQtyBatch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="modResourceDivision" type="integer">
+            <column name="modResourceDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="modTimeBatch" type="integer">
+            <column name="modTimeBatch" sql-type="int" not-null="false"/>
+        </property>
+        <property name="modQtyDivision" type="integer">
+            <column name="modQtyDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="modTimeDivision" type="integer">
+            <column name="modTimeDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="minResourceDivision" type="integer">
+            <column name="minResourceDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="maxResourceDivision" type="integer">
+            <column name="maxResourceDivision" sql-type="int" not-null="false"/>
+        </property>
+        <property name="nbTask" type="integer">
+            <column name="nbTask" sql-type="int" not-null="false"/>
+        </property>
+
+
         <property name="batch" column="batch"/>
-        <property name="modQtyBatch" column="modQtyBatch"/>
-        <property name="minQtyBatch" column="minQtyBatch"/>
-        <property name="maxQtyBatch" column="maxQtyBatch"/>
-        <property name="modTimeBatch" column="modTimeBatch"/>
-        <property name="minTimeBatch" column="minTimeBatch"/>
-        <property name="maxTimeBatch" column="maxTimeBatch"/>
         <property name="idCoupled" column="IdCoupled"/>
         <property name="idCoupledTypeShift" column="IdCoupledTypeShift"/>
         <property name="idCoupledShift" column="IdCoupledShift"/>
@@ -67,8 +137,6 @@
         <property name="exclusiveOrder" column="exclusiveOrder"/>
         <property name="coupledTypeOrder" column="coupledTypeOrder"/>
         <property name="idIcon" column="idIcon"/>
-        <property name="nbTask" column="nbTask"/>
         <property name="idTypeResourceNext" column="IdTypeResourceNext"/>
-        <property name="apsSwitch" column="apsSwitch"/>
     </class>
 </hibernate-mapping>

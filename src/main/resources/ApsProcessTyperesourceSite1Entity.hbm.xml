@@ -6,6 +6,7 @@
 
     <class name="com.rengu.entity.ApsProcessTyperesourceSite1Entity" table="aps_process_typeresource_site1"
            schema="testdatabase">
+        <id name="id" column="id"/>
         <property name="idProcess" column="idProcess"/>
         <property name="idTypeResource" column="IdTypeResource"/>
         <property name="primaryForTime" column="primaryForTime"/>
