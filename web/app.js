@@ -222,6 +222,11 @@ angular.module("IntegratedFramework", [
         service.AllDeportInfoList = backUrl + "mes/getAllDeportInfo.action";
         service.AllAGVInfoList = backUrl + "mes/getAllAGVInfo.action";
 
+        //撤销资源
+        service.CancelResource = backUrl + "exceptionHandling/cancelResource.action";
+        //恢复资源
+        service.ResumeResource = backUrl + "exceptionHandling/resumeResource.action";
+
 
         return service;
     })

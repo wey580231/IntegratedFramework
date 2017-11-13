@@ -39,6 +39,9 @@ public class RG_ResourceEntity {
 
     private String assisantResource;            //是否需要载具，在人机协作平台和智能装配平台上此字段有意义
 
+
+    private String idTypeResource;   //资源类型
+
     private RG_ClubEntity clubByIdClub;
     private RG_UserEntity userByIdUser;
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "GroupresourceId")
@@ -50,6 +53,15 @@ public class RG_ResourceEntity {
     private Set<RG_ScheduleEntity> schedules;
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ResourceStateId")
     private Set<RG_ResourceStateEntity> resourceState = new HashSet<RG_ResourceStateEntity>();
+
+
+    public String getIdTypeResource() {
+        return idTypeResource;
+    }
+
+    public void setIdTypeResource(String idTypeResource) {
+        this.idTypeResource = idTypeResource;
+    }
 
     public String getIdR() {
         return idR;

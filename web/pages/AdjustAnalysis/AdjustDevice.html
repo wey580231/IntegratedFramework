@@ -63,14 +63,14 @@
                             <td>
                                 <span ng-if="device.state == 1">
                                     <button type="button" class="btn btn-block btn-sm btn-info"
-                                            ng-click="cancelResource($event)">撤销
+                                            ng-click="HandleResource($event)">撤销
                                     </button>
 
                                 </span>
 
-                                <span ng-if="device.state == 2">
+                                <span ng-if="device.state == 0">
                                     <button type="button" class="btn btn-block btn-sm btn-info"
-                                            ng-click="resumeResource($event)">恢复
+                                            ng-click="HandleResource($event)">恢复
                                     </button>
 
                                 </span>

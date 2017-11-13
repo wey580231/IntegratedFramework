@@ -3,10 +3,9 @@ package com.rengu.actions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.rengu.DAO.impl.AdjustDeviceDAOImpl;
 import com.rengu.entity.RG_AdjustDeviceEntity;
-import com.rengu.util.DAOFactory;
-import com.rengu.util.DatabaseInfo;
-import com.rengu.util.MySessionFactory;
-import com.rengu.util.Tools;
+import com.rengu.entity.RG_OrderEntity;
+import com.rengu.entity.RG_ResourceEntity;
+import com.rengu.util.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -42,10 +41,42 @@ public class AdjustDeviceAction extends SuperAction {
             session.beginTransaction();
         }
 
-        //String idResource = session.createQuery("");
+        //找到此id对应的设备资源的idResource
+        RG_AdjustDeviceEntity adjustDeviceEntity = (RG_AdjustDeviceEntity)session.createQuery("select adjustDevice from RG_AdjustDeviceEntity adjustDevice where id =:id").setParameter("id",id).uniqueResult();
+        //String idResource = (String)session.createQuery("select resoureId from RG_AdjustDeviceEntity adjustDevice where id =:id").setParameter("id",id).uniqueResult();
+        String idResource = adjustDeviceEntity.getResoureId();
+
+        //从资源表找到对应的资源
+        RG_ResourceEntity resourceEntity = (RG_ResourceEntity)session.createQuery("select resource from RG_ResourceEntity resource where id =:id").setParameter("id",idResource).uniqueResult();
+
+        //此资源的类型
+        String idTypeResource = resourceEntity.getIdTypeResource();
+
+        //找到此类型的资源的集合
+        List<RG_ResourceEntity> resourceEntityList = (List<RG_ResourceEntity>)session.createQuery("select resource from RG_ResourceEntity resource where resource.idTypeResource =:idTypeResource").setParameter("idTypeResource",idTypeResource).list();
+
+        //判断资源是否单个
+        if(resourceEntityList.size() == 1){  //单个
+            ApsTools.instance().executeCommand(ApsTools.instance().getCancelDeviceURL(adjustDeviceEntity));
+
+        }else if(resourceEntityList.size() > 1){  //不是单个
+            ApsTools.instance().executeCommand(ApsTools.instance().getCancelDeviceURL(adjustDeviceEntity));
+
+            //判断是否有候选订单，state=0
+            List<RG_OrderEntity> orderEntityList = (List<RG_OrderEntity>)session.createQuery("select order from RG_OrderEntity order where order.state =:state").setParameter("state",0).list();
+
+            if(orderEntityList.size() > 0){
+                ApsTools.instance().getInterAdjust();
+            }
+
+        }
+
+
+
+
 
         //查找所有资源
-        String SQLString = "select * from " + DatabaseInfo.APS_RESOURCE + "where STATE = 1";
+        /*String SQLString = "select * from " + DatabaseInfo.APS_RESOURCE + "where STATE = 1";
         List resourceList = Tools.executeSQLForList(DatabaseInfo.ORACLE, DatabaseInfo.APS, SQLString);
 
         //1.先判断撤销的资源是否是单个
@@ -55,7 +86,7 @@ public class AdjustDeviceAction extends SuperAction {
                 Map rowData = (HashMap) object;
 
                 if (rowData.get("IDTYPERESOURCE") != null) {
-                    String idTypeResource = rowData.get("IDTYPERESOURCE").toString();
+                    //String idTypeResource = rowData.get("IDTYPERESOURCE").toString();
 
                     //查找所有类型为idTypeResource的资源的数量
                     String SQLStringEXC = "select * from " + DatabaseInfo.APS_RESOURCE + "where STATE = 1 and IDTYPERESOURCE = '" + idTypeResource +"'";
@@ -67,23 +98,49 @@ public class AdjustDeviceAction extends SuperAction {
                     }else if(resourceListEXC.size() > 1){ //不是单个
 
                     }
-
                 }
             }
 
-        }
-
-        //2.调用撤销资源接口rejactresource
-
-        //3.如果撤销的资源是单个资源，那么什么都不做，不调继续优化接口reusumeScheduling （此时资源不够，无法计算）
-
-        //4.如果撤销的资源不是单个资源，那么先判断是否有候选订单（order表中state=0的订单为候选订单）；如果有候选订单，则调继续优化接口reusumeScheduling，否则什么都不做。
-
+        }*/
 
     }
 
     //恢复资源
     public void resumeResource() throws Exception {
+        String jsonString = Tools.getHttpRequestBody(httpServletRequest);
+        JsonNode jsonNode = Tools.jsonTreeModelParse(jsonString);
+        String id = jsonNode.get("id").asText();
+
+        MySessionFactory.getSessionFactory().getCurrentSession().close();
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        //transaction.begin();
+        if (!transaction.isActive()) {
+            session.beginTransaction();
+        }
+
+        //找到此id对应的设备资源的idResource
+        RG_AdjustDeviceEntity adjustDeviceEntity = (RG_AdjustDeviceEntity)session.createQuery("select adjustDevice from RG_AdjustDeviceEntity adjustDevice where id =:id").setParameter("id",id).uniqueResult();
+        //String idResource = (String)session.createQuery("select resoureId from RG_AdjustDeviceEntity adjustDevice where id =:id").setParameter("id",id).uniqueResult();
+        String idResource = adjustDeviceEntity.getResoureId();
+
+        //从资源表找到对应的资源
+        RG_ResourceEntity resourceEntity = (RG_ResourceEntity)session.createQuery("select resource from RG_ResourceEntity resource where id =:id").setParameter("id",idResource).uniqueResult();
+
+        //将资源表该资源State更新为1
+        Byte b = 1;
+        resourceEntity.setState(b);
+
+        //调重启订单接口
+        ApsTools.instance().executeCommand(ApsTools.ResumeOrderHandlingURL());
+
+        //判断是否有候选订单，如果有候选订单，再调reusumeScheduling
+        List<RG_OrderEntity> orderEntityList = (List<RG_OrderEntity>)session.createQuery("select order from RG_OrderEntity order where order.state =:state").setParameter("state",0).list();
+
+        if(orderEntityList.size() > 0){
+            ApsTools.instance().getInterAdjust();
+        }
+
 
     }
 }

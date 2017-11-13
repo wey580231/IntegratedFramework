@@ -232,7 +232,7 @@ public class MesConsumer extends Thread {
                     rg_degreeAccuracyInfo.setCarryId(dataNode.get("id").asText());
                     rg_degreeAccuracyInfo.setJobDesc(dataNode.get("jobDesc").asText());
                     rg_degreeAccuracyInfo.setIdOrder(dataNode.get("idOrder").asText());
-                    rg_degreeAccuracyInfo.setState(dataNode.get("                                                                                                                                                      ").asBoolean());
+                    rg_degreeAccuracyInfo.setState(dataNode.get("                                                                                                         ").asBoolean());
                     session.save(rg_degreeAccuracyInfo);
                 }
                 //电性能检测
