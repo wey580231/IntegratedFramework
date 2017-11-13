@@ -1,6 +1,7 @@
 package com.rengu.actions.mes;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.rengu.actions.AdjustDeviceAction;
 import com.rengu.entity.*;
 import com.rengu.util.*;
 import org.hibernate.Session;
@@ -232,7 +233,15 @@ public class MesConsumer extends Thread {
                     rg_degreeAccuracyInfo.setCarryId(dataNode.get("id").asText());
                     rg_degreeAccuracyInfo.setJobDesc(dataNode.get("jobDesc").asText());
                     rg_degreeAccuracyInfo.setIdOrder(dataNode.get("idOrder").asText());
-                    rg_degreeAccuracyInfo.setState(dataNode.get("                                                                                                         ").asBoolean());
+
+                    String mesSign = "degree";
+
+                    String idOrder = dataNode.get("idOrder").asText();
+
+                    Boolean stateMes = dataNode.get("state").asBoolean();
+
+                    AdjustDeviceAction.saveAdjustDevice(session,idOrder,mesSign,stateMes);
+
                     session.save(rg_degreeAccuracyInfo);
                 }
                 //电性能检测
@@ -244,6 +253,32 @@ public class MesConsumer extends Thread {
                     rg_electricityInfo.setJobDesc(dataNode.get("jobDesc").asText());
                     rg_electricityInfo.setIdOrder(dataNode.get("idOrder").asText());
                     rg_electricityInfo.setState(dataNode.get("state").asBoolean());
+
+                    String mesSign = "elec";
+
+                    String idOrder = dataNode.get("idOrder").asText();
+
+                    Boolean stateMes = dataNode.get("state").asBoolean();
+
+                    AdjustDeviceAction.saveAdjustDevice(session,idOrder,mesSign,stateMes);
+
+                    /*RG_ResourceEntity resource = (RG_ResourceEntity)session.createQuery("select resource from RG_ResourceEntity resource where resource.mesSign =:mesSign").setParameter("mesSign",mesSign).uniqueResult();
+                    String idResource = resource.getIdR();
+                    Byte state = resource.getState();
+                    Boolean flag = false;
+
+
+                    if(state==0){
+                        flag = false;
+                    }else {
+                        flag = true;
+                    }
+
+                    if(flag != stateMes){
+                        AdjustDeviceAction.saveAdjustDevice(session,idOrder,idResource);
+                    }*/
+
+
                     session.save(rg_electricityInfo);
                 }
                 //人机协作平台
@@ -255,6 +290,15 @@ public class MesConsumer extends Thread {
                     rg_manMachineInfo.setJobDesc(dataNode.get("jobDesc").asText());
                     rg_manMachineInfo.setIdOrder(dataNode.get("idOrder").asText());
                     rg_manMachineInfo.setState(dataNode.get("state").asBoolean());
+
+                    String mesSign = "manMachine";
+
+                    String idOrder = dataNode.get("idOrder").asText();
+
+                    Boolean stateMes = dataNode.get("state").asBoolean();
+
+                    AdjustDeviceAction.saveAdjustDevice(session,idOrder,mesSign,stateMes);
+
                     session.save(rg_manMachineInfo);
                 }
                 //模态检测
@@ -266,6 +310,15 @@ public class MesConsumer extends Thread {
                     rg_modelTestInfo.setJobDesc(dataNode.get("jobDesc").asText());
                     rg_modelTestInfo.setIdOrder(dataNode.get("idOrder").asText());
                     rg_modelTestInfo.setState(dataNode.get("state").asBoolean());
+
+                    String mesSign = "model";
+
+                    String idOrder = dataNode.get("idOrder").asText();
+
+                    Boolean stateMes = dataNode.get("state").asBoolean();
+
+                    AdjustDeviceAction.saveAdjustDevice(session,idOrder,mesSign,stateMes);
+
                     session.save(rg_modelTestInfo);
                 }
                 //仓库搬运机器人信息
@@ -292,6 +345,14 @@ public class MesConsumer extends Thread {
                     agvInfo.setReportTime(new Date());
 //                    agvInfo.setSite(subDataNode.get("site").asText());
 
+                    String mesSign = "agv";
+
+                    String idOrder = dataNode.get("idOrder").asText();
+
+                    Boolean stateMes = dataNode.get("state").asBoolean();
+
+                    AdjustDeviceAction.saveAdjustDevice(session,idOrder,mesSign,stateMes);
+
                     session.save(agvInfo);
                 }
                 //【已调】装配线搬运机器人信息
@@ -306,6 +367,14 @@ public class MesConsumer extends Thread {
                     }
                     carryInfo.setReportTime(new Date());
 
+                    String mesSign = "assemblyCarry";
+
+                    String idOrder = dataNode.get("idOrder").asText();
+
+                    Boolean stateMes = dataNode.get("state").asBoolean();
+
+                    AdjustDeviceAction.saveAdjustDevice(session,idOrder,mesSign,stateMes);
+
                     session.save(carryInfo);
                 }
                 //【已调】智能装配中心信息
@@ -317,6 +386,14 @@ public class MesConsumer extends Thread {
                     centerInfo.setJobDesc(dataNode.get("jobDesc").asText());
                     centerInfo.setIdOrder(dataNode.get("idOrder").asText());
                     centerInfo.setReportTime(new Date());
+
+                    String mesSign = "assemblyCenter";
+
+                    String idOrder = dataNode.get("idOrder").asText();
+
+                    Boolean stateMes = dataNode.get("state").asBoolean();
+
+                    AdjustDeviceAction.saveAdjustDevice(session,idOrder,mesSign,stateMes);
 
                     session.save(centerInfo);
                 }

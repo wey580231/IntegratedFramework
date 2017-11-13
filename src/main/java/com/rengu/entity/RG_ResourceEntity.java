@@ -16,6 +16,7 @@ public class RG_ResourceEntity {
     private String idR;
     private String name;
     private String idFeatureResource;
+    private String mesSign;
     private String idSiteGroupResource;
     private String typeSite;
     private Short mobility;
@@ -54,6 +55,13 @@ public class RG_ResourceEntity {
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "ResourceStateId")
     private Set<RG_ResourceStateEntity> resourceState = new HashSet<RG_ResourceStateEntity>();
 
+    public String getMesSign() {
+        return mesSign;
+    }
+
+    public void setMesSign(String mesSign) {
+        this.mesSign = mesSign;
+    }
 
     public String getIdTypeResource() {
         return idTypeResource;

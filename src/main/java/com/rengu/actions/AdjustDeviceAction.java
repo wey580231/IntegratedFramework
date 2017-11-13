@@ -6,9 +6,11 @@ import com.rengu.entity.RG_AdjustDeviceEntity;
 import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_ResourceEntity;
 import com.rengu.util.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,39 @@ public class AdjustDeviceAction extends SuperAction {
         List<RG_AdjustDeviceEntity> adjustDeviceEntityList = adjustProcessDAO.findAll();
         String jsonString = Tools.entityConvertToJsonString(adjustDeviceEntityList);
         Tools.jsonPrint(jsonString, httpServletResponse);
+    }
+
+    public static void saveAdjustDevice(Session session, String orderId, String mesSign, Boolean stateMes) throws Exception{
+
+        List<RG_ResourceEntity> resourceList = (List<RG_ResourceEntity>)session.createQuery("select resource from RG_ResourceEntity resource where resource.mesSign =:mesSign").setParameter("mesSign",mesSign).uniqueResult();
+
+        for(RG_ResourceEntity resource : resourceList){
+
+            RG_AdjustDeviceEntity adjustDeviceEntity = new RG_AdjustDeviceEntity();
+
+            String resourceId = resource.getIdR();
+            Byte state = resource.getState();
+            Boolean flag = false;
+
+
+            if(state==0){
+                flag = false;
+            }else {
+                flag = true;
+            }
+
+            if(flag != stateMes){
+                adjustDeviceEntity.setId(Tools.getUUID());
+                adjustDeviceEntity.setOrderId(orderId);
+                adjustDeviceEntity.setResoureId(resourceId);
+                adjustDeviceEntity.setReportTime(new Date());
+                adjustDeviceEntity.setOrigin("MES");
+
+                session.save(adjustDeviceEntity);
+            }
+        }
+
+
     }
 
     //撤销资源
