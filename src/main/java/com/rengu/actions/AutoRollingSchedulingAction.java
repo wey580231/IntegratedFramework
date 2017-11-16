@@ -25,6 +25,8 @@ public class AutoRollingSchedulingAction extends SuperAction {
         if (deleteOrderList.size() > 0) {
             deleteOrderList.clear();
         }
+
+        //获取上次排程信息
         if (UserConfigTools.getLatestSchedule("1") != null) {
             RG_ScheduleEntity rg_scheduleEntity = DAOFactory.getScheduleDAOImplInstance().findAllById(UserConfigTools.getLatestSchedule("1"));
             if (rg_scheduleEntity != null) {
@@ -39,14 +41,19 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     calendar.add(Calendar.DAY_OF_YEAR, rg_scheduleEntity.getRollTime());
                     Date lastScheduleRollingEndDate = calendar.getTime();
                     //获取其中上个滚动周期内的订单
-                    List<RG_OrderEntity> exceptionOrderList = new ArrayList<>();
+                    List<RG_OrderEntity> exceptionOrderList = new ArrayList<>();  //异常订单
                     for (RG_OrderEntity rg_orderEntity : lastScheduleOrderSet) {
-                        //随机选择异常订单
-                        if (rg_orderEntity.getT2().after(lastScheduleRollingStartDate) && rg_orderEntity.getT2().before(lastScheduleRollingEndDate) && random()) {
+
+                        if (rg_orderEntity.getT2().after(lastScheduleRollingStartDate) && rg_orderEntity.getT2().before(lastScheduleRollingEndDate)) {
                             //设置订单状态为异常
                             DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Excepiton);
+                        }
+
+                        //随机选择异常订单
+                        if((rg_orderEntity.getState()  == 5) && random()){
                             exceptionOrderList.add(rg_orderEntity);
                         }
+
                         //选择待删除订单(结束时间在上次滚动结束之前的订单)
                         if (rg_orderEntity.getT2().before(lastScheduleRollingEndDate)) {
                             deleteOrderList.add(rg_orderEntity);
