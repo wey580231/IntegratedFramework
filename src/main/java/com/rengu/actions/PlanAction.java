@@ -445,8 +445,13 @@ public class PlanAction extends SuperAction {
                     long spanminus = spanvalue1.getTime() - spankey2.getTime();
 
                     if (spanminus > 0) { //相交
-                        spanSum += ((spanvalue2.getTime() - spankey1.getTime())/1000);
-                        //TODO 两两相交
+
+                        if(spanSum == 0){
+                            spanSum += ((spanvalue2.getTime() - spankey1.getTime())/1000);
+                        }else{
+                            spanSum += ((spanvalue2.getTime() - spankey1.getTime())/1000) - ((spanvalue1.getTime() - spankey1.getTime())/1000);
+                        }
+
                     } else if(spanminus < 0){ //不相交
                         if(spanSum == 0 ){  //开始时前两个相加
                             spanSum += ((spanvalue1.getTime() - spankey1.getTime())/1000) + ((spanvalue2.getTime() - spankey2.getTime())/1000);
