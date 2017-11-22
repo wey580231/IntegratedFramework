@@ -466,4 +466,12 @@ public class Tools {
             return null;
         }
     }
+
+
+    //字符串是否传空值问题
+    public static String insertIfNull(String s){
+
+        //+ "'," + (apsResource1Entity.getName() == null ? null : "'"+apsResource1Entity.getName()+"'")
+        return (s == null ? null : "'"+ s +"'");
+    }
 }

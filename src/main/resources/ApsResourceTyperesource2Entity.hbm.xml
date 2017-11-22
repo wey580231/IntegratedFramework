@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.rengu.entity.ApsResourceTyperesource2Entity" table="aps_resource_typeresource2"
+           schema="testdatabase">
+        <id name="id" column="id"/>
+        <property name="idResource" column="idResource"/>
+        <property name="idTypeResource" column="idTypeResource"/>
+        <property name="uniGroupResource" column="uniGroupResource"/>
+        <property name="minCapacityParallel" column="minCapacityParallel"/>
+        <property name="maxCapacityParallel" column="maxCapacityParallel"/>
+        <property name="capacitySequence" column="capacitySequence"/>
+        <property name="delaySequence" column="delaySequence"/>
+        <property name="ratio" column="ratio"/>
+        <property name="idIcon" column="idIcon"/>
+    </class>
+</hibernate-mapping>
