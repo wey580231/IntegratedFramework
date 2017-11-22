@@ -46,7 +46,7 @@ public class ScheduleAction extends SuperAction {
                 //没有开始时间节点
                 startDate = new Date();
             } else {
-                //有开始事件节点
+                //有开始时间节点
                 startDate = simpleDateFormat1WithTime.parse(beginScheduleNode.asText());
             }
             rg_scheduleEntity.setScheduleTime(startDate);
@@ -81,7 +81,7 @@ public class ScheduleAction extends SuperAction {
             if (UserConfigTools.getLatestSchedule("1") != null) {
                 RG_ScheduleEntity latestSchedule = session.get(RG_ScheduleEntity.class, UserConfigTools.getLatestSchedule("1"));
                 if (latestSchedule != null) {
-                    //从上一次排程的订单中清除已经拍成果的订单
+                    //从上一次排程的订单中清除已经排程过的订单
                     Set<RG_OrderEntity> rg_orderEntitySet = latestSchedule.getOrders();
                     if (!rg_orderEntitySet.isEmpty()) {
                         //获取下发给MES的订单
@@ -95,7 +95,7 @@ public class ScheduleAction extends SuperAction {
                         }
                         //滚动周期内未完成的订单
                         for (RG_OrderEntity rg_orderEntity : sendToMESOrder) {
-                            //订单的计划结束事件早于当前排程的开始时间
+                            //订单的计划结束时间早于当前排程的开始时间
                             if (rg_orderEntity.getT2Plan().before(rg_scheduleEntity.getScheduleTime())) {
                                 finishedOrder.add(rg_orderEntity);
                                 //设置订单状态为已完成
@@ -108,7 +108,7 @@ public class ScheduleAction extends SuperAction {
                         }
                         Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, finishedOrder);
                     }
-                    //当前排程滚动周期大于上次泡成滚动周期（添加缺失订单）
+                    //当前排程滚动周期大于上次排程滚动周期（添加缺失订单）
                     if (scheduleWindowNodes.asInt() > latestSchedule.getScheduleWindow()) {
                         System.out.println("当前排程滚动周期大于上次排程滚动周期");
                     }
