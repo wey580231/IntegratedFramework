@@ -24,7 +24,7 @@ public class RG_UserConfigEntity {
 
     private String apsCurrSnapshotId;               //aps当前的快照对应bottomId，如果为null或者size=0，则用最新一次排程的bottomId
 
-    private RG_UserConfigEntity user;               //
+    private RG_UserEntity user;               //
 
     public Integer getId() {
         return id;
@@ -138,11 +138,11 @@ public class RG_UserConfigEntity {
         this.apsCurrSnapshotId = apsCurrSnapshotId;
     }
 
-    public RG_UserConfigEntity getUser() {
+    public RG_UserEntity getUser() {
         return user;
     }
 
-    public void setUser(RG_UserConfigEntity user) {
+    public void setUser(RG_UserEntity user) {
         this.user = user;
     }
 }

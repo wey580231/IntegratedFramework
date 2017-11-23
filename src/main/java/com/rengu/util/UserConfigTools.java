@@ -142,16 +142,18 @@ public class UserConfigTools {
     }
 
     //根据ID，更新
-    public static int updateApsReplyCount(String userId, int count) {
+    public static void updateApsReplyCount(String userId, int count) {
         Session session = MySessionFactory.getSessionFactory().getCurrentSession();
         Query query = session.createQuery("update RG_UserConfigEntity userconfig set apsReplyCount =:apsReplyCount where userconfig.user.id =:idUser");
         query.setParameter("apsReplyCount", count);
         query.setParameter("idUser", userId);
 
+        //int number = query.executeUpdate();
+
         /*NativeQuery query = session.createNativeQuery("update rg_userconfig set apsReplyCount = ? where idUser = ?");
         query.setParameter(1, count);
         query.setParameter(2, userId);*/
-        return query.executeUpdate();
+       // return number;
     }
 
     //获取最新排程信息
