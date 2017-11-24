@@ -50,6 +50,10 @@ public class SwitchAPSAction  extends SuperAction {
             String[] tableNamesResource = {DatabaseInfo.APS_RESOURCE};
             Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNamesResource);
 
+            //清空APS_RESOURCE数据库
+            String[] tableNamesResourceTypeResource = {DatabaseInfo.APS_RESOURCE_TYPERESOURCE};
+            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNamesResourceTypeResource);
+
 
             //简化模型的process表
             List<ApsProcess1Entity> process1EntityList = (List<ApsProcess1Entity>)session.createQuery("select APSProcess1 from ApsProcess1Entity APSProcess1").list();
@@ -59,6 +63,8 @@ public class SwitchAPSAction  extends SuperAction {
             List<ApsProcessTyperesourceSite1Entity> processTyperesource1EntityList = (List<ApsProcessTyperesourceSite1Entity>)session.createQuery("select APSProcessTyperesource1 from ApsProcessTyperesourceSite1Entity APSProcessTyperesource1").list();
             //简化模型的APS_RESOURCE表
             List<ApsResource1Entity> resource1EntityList = (List<ApsResource1Entity>)session.createQuery("select APSResource1 from ApsResource1Entity APSResource1").list();
+            //简化模型的APS_RESOURCE_TYPERESOURCE表
+            List<ApsResourceTyperesource1Entity> resourceTyperesource1EntityList = (List<ApsResourceTyperesource1Entity>)session.createQuery("select APSResourceTypeResource1 from ApsResourceTyperesource1Entity APSResourceTypeResource1").list();
 
             //插入process表
             if(process1EntityList != null){
@@ -96,6 +102,15 @@ public class SwitchAPSAction  extends SuperAction {
                 }
             }
 
+            //插入resourceTyperesource表
+            if(resourceTyperesource1EntityList != null){
+                for(ApsResourceTyperesource1Entity resourceeTyperesource1 : resourceTyperesource1EntityList){
+
+                    //插入APS数据库
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(resourceeTyperesource1));
+                }
+            }
+
         }else if(id.equals("2")){   //细化模型
             //清空APS_PROCESS数据库
             String[] tableNames = {DatabaseInfo.APS_PROCESS};
@@ -113,6 +128,10 @@ public class SwitchAPSAction  extends SuperAction {
             String[] tableNamesResource = {DatabaseInfo.APS_RESOURCE};
             Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNamesResource);
 
+            //清空APS_RESOURCE数据库
+            String[] tableNamesResourceTypeResource = {DatabaseInfo.APS_RESOURCE_TYPERESOURCE};
+            Tools.executeSQLForInitTable(DatabaseInfo.ORACLE, DatabaseInfo.APS, tableNamesResourceTypeResource);
+
 
             //细化模型的process表
             List<ApsProcess2Entity> process2EntityList = (List<ApsProcess2Entity>)session.createQuery("select APSProcess2 from ApsProcess2Entity APSProcess2").list();
@@ -122,7 +141,8 @@ public class SwitchAPSAction  extends SuperAction {
             List<ApsProcessTyperesourceSite2Entity> processTyperesource2EntityList = (List<ApsProcessTyperesourceSite2Entity>)session.createQuery("select APSProcessTyperesource2 from ApsProcessTyperesourceSite2Entity APSProcessTyperesource2").list();
             //细化模型的APS_RESOURCE表
             List<ApsResource2Entity> resource2EntityList = (List<ApsResource2Entity>)session.createQuery("select APSResource2 from ApsResource2Entity APSResource2").list();
-
+            //简化模型的APS_RESOURCE_TYPERESOURCE表
+            List<ApsResourceTyperesource2Entity> resourceTyperesource2EntityList = (List<ApsResourceTyperesource2Entity>)session.createQuery("select APSResourceTypeResource2 from ApsResourceTyperesource2Entity APSResourceTypeResource2").list();
 
 
             //插入process表
@@ -159,6 +179,15 @@ public class SwitchAPSAction  extends SuperAction {
 
                     //插入APS数据库
                     Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(resource2));
+                }
+            }
+
+            //插入resourceTyperesource表
+            if(resourceTyperesource2EntityList != null){
+                for(ApsResourceTyperesource2Entity resourceeTyperesource2 : resourceTyperesource2EntityList){
+
+                    //插入APS数据库
+                    Tools.executeSQLForUpdate(DatabaseInfo.ORACLE, DatabaseInfo.APS, EntityConvertToSQL.insertSQLForAPS(resourceeTyperesource2));
                 }
             }
 

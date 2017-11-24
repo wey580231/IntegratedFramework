@@ -87,7 +87,10 @@ public class ScheduleAction extends SuperAction {
                         //获取下发给MES的订单
                         for (RG_OrderEntity rg_orderEntity : rg_orderEntitySet) {
                             //订单的计划开始时间在上次滚动周期内的订单（已下发MES）
-                            if (rg_orderEntity.getT1Plan().after(latestSchedule.getScheduleTime()) && rg_orderEntity.getT1Plan().before(Tools.dateCalculator(latestSchedule.getScheduleTime(), Calendar.DAY_OF_YEAR, latestSchedule.getRollTime()))) {
+                            Date  tmpdate = rg_orderEntity.getT1Plan();
+                            Date scheduleTime = latestSchedule.getScheduleTime();
+                            if (tmpdate != null && scheduleTime != null && tmpdate.after(scheduleTime)
+                                    && tmpdate.before(Tools.dateCalculator(scheduleTime, Calendar.DAY_OF_YEAR, latestSchedule.getRollTime()))) {
                                 sendToMESOrder.add(rg_orderEntity);
                             } else {
                                 unSendToMESOrder.add(rg_orderEntity);

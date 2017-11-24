@@ -9,6 +9,8 @@ import com.rengu.entity.RG_OrderEntity;
 import com.rengu.entity.RG_PlanEntity;
 import com.rengu.entity.RG_ScheduleEntity;
 import com.rengu.util.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +21,12 @@ public class AutoRollingSchedulingAction extends SuperAction {
     private static List<RG_OrderEntity> deleteOrderList = new ArrayList<>();
 
     public void autoRollingScheduling() throws ParseException, JsonProcessingException {
+        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        if (!transaction.isActive()) {
+            transaction = session.beginTransaction();
+        }
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         //滚动排程时清除待删除列表
@@ -67,9 +75,11 @@ public class AutoRollingSchedulingAction extends SuperAction {
                         rg_orderEntity.setFinished(true);
                         DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Finished);
                     }
-                    //异常列表
-                    List<RG_AdjustProcessEntity> rg_adjustProcessEntityList = new ArrayList<>();
-                    //异常模拟
+
+                    //异常模拟列表
+                    //List<RG_AdjustProcessEntity> rg_adjustProcessTestList = new ArrayList<>();
+
+                    //异常模拟  自己模拟生成工序异常
                     for (RG_OrderEntity rg_orderEntity : exceptionOrderList) {
                         //查找当前订单对应的工序信息列表
                         List<RG_PlanEntity> rg_planEntityList = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(rg_orderEntity.getId());
@@ -97,12 +107,20 @@ public class AutoRollingSchedulingAction extends SuperAction {
                             long sum = t1 + length - 10000;
                             Date dateTime = simpleDateFormatWithClock.parse(simpleDateFormatWithClock.format(sum));
                             rg_adjustProcessEntity.setAppointStartTime(dateTime);
-                            rg_adjustProcessEntityList.add(rg_adjustProcessEntity);
+                            //rg_adjustProcessTestList.add(rg_adjustProcessEntity);
                             DAOFactory.getAdjustProcessDAOImplInstance().save(rg_adjustProcessEntity);
                         }
                     }
+
+                    //TODO 看异常是否都正确产生了，并且状态是否改变
+
+                    //rg_adjustProcessEntityList这个应该是从异常表里读，然后处理
+                    Integer state = 1;  //异常状态
+                    List<RG_AdjustProcessEntity> rg_adjustProcessEntityList = (List<RG_AdjustProcessEntity>)session.createQuery("select adjustProcess from RG_AdjustProcessEntity adjustProcess where state =:state").setParameter("state",state).list();
+
                     //异常处理
                     System.out.println("待处理异常数量：" + rg_adjustProcessEntityList.size());
+
                     for (RG_AdjustProcessEntity rg_adjustProcessEntity : rg_adjustProcessEntityList) {
                         System.out.println("当前APS服务器是否在进行计算：" + ApsTools.isRunning);
                         //根据id查找Order

@@ -9,7 +9,6 @@
         <property name="connection.url">jdbc:mysql://localhost:3306/TestDatabase?useUnicode=true&amp;serverTimezone=GMT%2b8&amp;characterEncoding=UTF-8</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
-        <!-- transaction is supported by org.hibernate.dialect.MySQL5InnoDBDialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
         <property name="show_sql">false</property>
         <property name="format_sql">false</property>
@@ -20,11 +19,11 @@
         <!--C3P0配置 -->
         <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider
         </property>
-        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.max_size">60</property>
         <property name="hibernate.c3p0.min_size">5</property>
         <property name="hibernate.c3p0.timeout">120</property>
         <property name="automaticTestTable">Test</property>
-        <property name="hibernate.c3p0.max_statements">100</property>
+        <property name="hibernate.c3p0.max_statements">200</property>
         <property name="hibernate.c3p0.idle_test_period">120</property>
         <property name="hibernate.c3p0.acquire_increment">1</property>
         <property name="c3p0.testConnectionOnCheckout">true</property>
@@ -107,5 +106,7 @@
         <mapping resource="ApsResource2Entity.hbm.xml"/>
         <mapping resource="ApsTyperesource1Entity.hbm.xml"/>
         <mapping resource="ApsTyperesource2Entity.hbm.xml"/>
+        <mapping resource="ApsResourceTyperesource1Entity.hbm.xml"/>
+        <mapping resource="ApsResourceTyperesource2Entity.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
