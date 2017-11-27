@@ -82,6 +82,10 @@ public class AdjustProcessDAOImpl extends SuperDAOImpl implements AdjustProcessD
         }
         rg_adjustProcessEntity.setState(errorState);
         session.saveOrUpdate(rg_adjustProcessEntity);
+
+        session.getTransaction().commit();
+        session.close();
+
         System.out.println("更新异常ID：" + rg_adjustProcessEntity.getId() + "的状态为：" + rg_adjustProcessEntity.getState());
     }
 }
