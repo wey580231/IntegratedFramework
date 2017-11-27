@@ -21,12 +21,6 @@ public class AutoRollingSchedulingAction extends SuperAction {
     private static List<RG_OrderEntity> deleteOrderList = new ArrayList<>();
 
     public void autoRollingScheduling() throws ParseException, JsonProcessingException {
-        Session session = MySessionFactory.getSessionFactory().getCurrentSession();
-        Transaction transaction = session.getTransaction();
-        if (!transaction.isActive()) {
-            transaction = session.beginTransaction();
-        }
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         //滚动排程时清除待删除列表
@@ -53,64 +47,87 @@ public class AutoRollingSchedulingAction extends SuperAction {
                     for (RG_OrderEntity rg_orderEntity : lastScheduleOrderSet) {
 
                         if (rg_orderEntity.getT2().after(lastScheduleRollingStartDate) && rg_orderEntity.getT2().before(lastScheduleRollingEndDate)) {
-                            //设置订单状态为异常
-                            DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Excepiton);
+
+                            if(random()){
+                                //设置订单状态为异常
+                                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Excepiton);
+
+                                //查找当前订单对应的工序信息列表
+                                List<RG_PlanEntity> rg_planEntityList = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(rg_orderEntity.getId());
+                                if (rg_planEntityList.size() > 0) {
+                                    //从列表中随机获取工序
+                                    int i = (int) (Math.random() * 50);
+                                    RG_PlanEntity rg_planEntity = rg_planEntityList.get(i);
+                                    //根据随机的Plan信息生成工序异常
+                                    RG_AdjustProcessEntity rg_adjustProcessEntity = new RG_AdjustProcessEntity();
+                                    rg_adjustProcessEntity.setId(Tools.getUUID());
+                                    rg_adjustProcessEntity.setReportTime(lastScheduleRollingEndDate);
+                                    rg_adjustProcessEntity.setIdTask(rg_planEntity.getIdTask());
+                                    rg_adjustProcessEntity.setIdJob(rg_planEntity.getIdJob());
+                                    rg_adjustProcessEntity.setIdOrder(rg_planEntity.getOrderByIdOrder().getId());
+                                    if(rg_planEntity.getResourceByIdResource() != null){
+                                        rg_adjustProcessEntity.setOriginalResource(rg_planEntity.getResourceByIdResource().getIdR());
+                                        rg_adjustProcessEntity.setAppointResource(rg_planEntity.getResourceByIdResource().getIdR());
+                                    }
+
+                                    rg_adjustProcessEntity.setOriginalStartTime(Tools.parseStandTextDate(rg_planEntity.getT1Task()));
+                                    rg_adjustProcessEntity.setOrigin("自动模拟");
+                                    rg_adjustProcessEntity.setState(ErrorState.ERROR_UNSOLVED);
+                                    //生成指定拖期时间
+                                    SimpleDateFormat simpleDateFormatWithClock = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    // 工序时间长度
+                                    long length = 82740000 - (Tools.parseStandTextDate(rg_planEntity.getT2Task()).getTime() - Tools.parseStandTextDate(rg_planEntity.getT1Task()).getTime());
+                                    long t1 = Tools.stringConvertToDate(rg_planEntity.getT1Task()).getTime();
+                                    long sum = t1 + length - 10000;
+                                    Date dateTime = simpleDateFormatWithClock.parse(simpleDateFormatWithClock.format(sum));
+                                    rg_adjustProcessEntity.setAppointStartTime(dateTime);
+                                    //rg_adjustProcessTestList.add(rg_adjustProcessEntity);
+                                    DAOFactory.getAdjustProcessDAOImplInstance().save(rg_adjustProcessEntity);
+                                }
+
+                            }else{
+                                //设置订单状态为已完成
+                                rg_orderEntity.setFinished(true);
+                                DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Finished);
+                            }
+
                         }
 
                         //随机选择异常订单
-                        if((rg_orderEntity.getState()  == 5) && random()){
+                        /*if((rg_orderEntity.getState()  == 5) && random()){
                             exceptionOrderList.add(rg_orderEntity);
-                        }
+                        }*/
 
                         //选择待删除订单(结束时间在上次滚动结束之前的订单)
-                        if (rg_orderEntity.getT2().before(lastScheduleRollingEndDate)) {
+                        /*if (rg_orderEntity.getT2().before(lastScheduleRollingEndDate)) {
                             deleteOrderList.add(rg_orderEntity);
-                        }
+                        }*/
                     }
+
+
+                    Session session = MySessionFactory.getSessionFactory().getCurrentSession();
+                    Transaction transaction = session.getTransaction();
+                    if (!transaction.isActive()) {
+                        transaction = session.beginTransaction();
+                    }
+
                     //在删除订单中除去异常订单
-                    deleteOrderList.removeAll(exceptionOrderList);
-                    Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, deleteOrderList);
+                    //deleteOrderList.removeAll(exceptionOrderList);
+                    List<RG_OrderEntity> orderList = (List<RG_OrderEntity>)session.createQuery("select orderList from RG_OrderEntity orderList where finished = true").list();
+                    Tools.deleteAPSOrder(DatabaseInfo.ORACLE, DatabaseInfo.APS, orderList);
                     //设置订单状态为已完成
-                    for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
+                    /*for (RG_OrderEntity rg_orderEntity : deleteOrderList) {
                         rg_orderEntity.setFinished(true);
                         DAOFactory.getOrdersDAOInstance().configOrderState(rg_orderEntity, OrderState.Finished);
-                    }
+                    }*/
 
                     //异常模拟列表
                     //List<RG_AdjustProcessEntity> rg_adjustProcessTestList = new ArrayList<>();
 
                     //异常模拟  自己模拟生成工序异常
-                    for (RG_OrderEntity rg_orderEntity : exceptionOrderList) {
-                        //查找当前订单对应的工序信息列表
-                        List<RG_PlanEntity> rg_planEntityList = DAOFactory.getPlanDAOImplInstance().findAllByOrderId(rg_orderEntity.getId());
-                        if (rg_planEntityList.size() > 0) {
-                            //从列表中随机获取工序
-                            int i = (int) (Math.random() * 50);
-                            RG_PlanEntity rg_planEntity = rg_planEntityList.get(i);
-                            //根据随机的Plan信息生成工序异常
-                            RG_AdjustProcessEntity rg_adjustProcessEntity = new RG_AdjustProcessEntity();
-                            rg_adjustProcessEntity.setId(Tools.getUUID());
-                            rg_adjustProcessEntity.setReportTime(lastScheduleRollingEndDate);
-                            rg_adjustProcessEntity.setIdTask(rg_planEntity.getIdTask());
-                            rg_adjustProcessEntity.setIdJob(rg_planEntity.getIdJob());
-                            rg_adjustProcessEntity.setIdOrder(rg_planEntity.getOrderByIdOrder().getId());
-                            rg_adjustProcessEntity.setOriginalResource(rg_planEntity.getResourceByIdResource().getIdR());
-                            rg_adjustProcessEntity.setAppointResource(rg_planEntity.getResourceByIdResource().getIdR());
-                            rg_adjustProcessEntity.setOriginalStartTime(Tools.parseStandTextDate(rg_planEntity.getT1Task()));
-                            rg_adjustProcessEntity.setOrigin("自动模拟");
-                            rg_adjustProcessEntity.setState(ErrorState.ERROR_UNSOLVED);
-                            //生成指定拖期时间
-                            SimpleDateFormat simpleDateFormatWithClock = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            // 工序时间长度
-                            long length = 82740000 - (Tools.parseStandTextDate(rg_planEntity.getT2Task()).getTime() - Tools.parseStandTextDate(rg_planEntity.getT1Task()).getTime());
-                            long t1 = Tools.stringConvertToDate(rg_planEntity.getT1Task()).getTime();
-                            long sum = t1 + length - 10000;
-                            Date dateTime = simpleDateFormatWithClock.parse(simpleDateFormatWithClock.format(sum));
-                            rg_adjustProcessEntity.setAppointStartTime(dateTime);
-                            //rg_adjustProcessTestList.add(rg_adjustProcessEntity);
-                            DAOFactory.getAdjustProcessDAOImplInstance().save(rg_adjustProcessEntity);
-                        }
-                    }
+                    /*for (RG_OrderEntity rg_orderEntity : exceptionOrderList) {
+
+                    }*/
 
                     //TODO 看异常是否都正确产生了，并且状态是否改变
 

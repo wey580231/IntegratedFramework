@@ -158,6 +158,10 @@ public class OrdersDAOImpl extends SuperDAOImpl implements OrdersDAO<RG_OrderEnt
         }
         rg_orderEntity.setState(orderState);
         session.saveOrUpdate(rg_orderEntity);
+
+        session.getTransaction().commit();
+        session.close();
+
         System.out.println("设置订单ID：" + rg_orderEntity.getId() + "的状态为：" + rg_orderEntity.getState());
     }
 
