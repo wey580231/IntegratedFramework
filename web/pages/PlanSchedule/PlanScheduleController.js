@@ -98,9 +98,8 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
         //新建排程
         $scope.prepareNewSchedule = function () {
             myHttpService.get(serviceList.queryApsState).then(function (response) {
-                /*if (response.data.result == "ok") {
-                    if (response.data.data.state == 0) {*/
-
+                if (response.data.result == "ok") {
+                    if (response.data.data.state == 0) {
 
                         $('#modal-add').modal({backdrop: 'static', keyboard: false});
                         $("#modal-add").show();
@@ -116,7 +115,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                         $("#delayTime").val(5);
 
                         initFullCalendar();
-                    } /*else {
+                    } else {
                         notification.sendNotification("alert", "查询APS状态失败");
                     }
                 } else {
@@ -124,7 +123,7 @@ angular.module("IntegratedFramework.PlanScheduleController", ['ngRoute'])
                 }
             }, function (response) {
 
-            }*/);
+            });
             resetContent();
         };
 
